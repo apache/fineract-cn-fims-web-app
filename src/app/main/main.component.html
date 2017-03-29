@@ -1,0 +1,94 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-sidenav-container fullscreen>
+  <md-sidenav #sideMenu mode="side" opened="true">
+    <md-toolbar>
+      <div layout="column">
+        <span layout="row" layout-align="start center">
+          <md-icon *ngIf="icon">{{icon}}</md-icon>
+          <md-icon *ngIf="logo" class="md-icon-logo"></md-icon>
+          <span class="md-subhead">fims</span>
+        </span>
+      </div>
+      <md-menu #menu="mdMenu" x-position="before">
+        <button md-menu-item (click)="goToSettings()">{{'Settings' | translate}}</button>
+        <button md-menu-item (click)="logout()">{{'Sign Out' | translate}}</button>
+      </md-menu>
+      <span flex></span>
+      <button md-icon-button [md-menu-trigger-for]="menu">
+        <md-icon>account_circle</md-icon>
+      </button>
+    </md-toolbar>
+    <md-nav-list>
+      <a md-list-item></a>
+      <ng-container>
+        <a md-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+          <md-icon md-list-avatar>dashboard</md-icon>
+          <h3 md-line translate>Dashboard</h3>
+          <p md-line translate>Quickly access latest information</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'office_offices', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/offices']" routerLinkActive="active">
+          <md-icon md-list-avatar>store</md-icon>
+          <h3 md-line translate>Offices</h3>
+          <p md-line translate>Manage offices</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'office_employees', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/employees']" routerLinkActive="active">
+          <md-icon md-list-avatar>group</md-icon>
+          <h3 md-line translate>Employees</h3>
+          <p md-line translate>Manage employees</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'identity_roles', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/roles']" routerLinkActive="active">
+          <md-icon md-list-avatar>https</md-icon>
+          <h3 md-line translate>Roles/Permissions</h3>
+          <p md-line translate>Manage roles and permissions</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/accounting']" routerLinkActive="active">
+          <md-icon md-list-avatar>receipt</md-icon>
+          <h3 md-line translate>Accounting</h3>
+          <p md-line translate>Manage ledger accounts</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'customer_customers', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/customers']" routerLinkActive="active">
+          <md-icon md-list-avatar>face</md-icon>
+          <h3 md-line translate>Customer</h3>
+          <p md-line translate>Manage customers</p>
+        </a>
+      </ng-container>
+      <ng-container *hasPermission="{ id: 'portfolio_products', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/loans']" routerLinkActive="active">
+          <md-icon md-list-avatar>credit_card</md-icon>
+          <h3 md-line translate>Loan products</h3>
+          <p md-line translate>Manage loan products</p>
+        </a>
+      </ng-container>
+    </md-nav-list>
+  </md-sidenav>
+  <div layout="column" layout-fill class="md-content content">
+    <md-progress-bar *ngIf="isLoading" mode="indeterminate"></md-progress-bar>
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-container>
+<fims-notification></fims-notification>

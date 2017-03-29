@@ -1,0 +1,46 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<div [formGroup]="form">
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput type="text" [placeholder]="minPlaceholder" [formControlName]="minControlName"/>
+      <md-hint *ngIf="!form.controls[minControlName].pristine" class="tc-red-600">
+        <span *ngIf="form.controls[minControlName].hasError('required')" translate>Required</span>
+        <span *ngIf="form.controls[minControlName].hasError('minValue')" translate>Must be greater than 0</span>
+        <span *ngIf="form.controls[minControlName].hasError('precision')">
+        {{ 'Must have precision of' | translate:{value: form.controls[minControlName].errors.precision.value} }}
+      </span>
+        <span *ngIf="form.controls[minControlName].hasError('isNumber')" translate>Must be a number</span>
+      </md-hint>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput type="text" [placeholder]="maxPlaceholder" [formControlName]="maxControlName"/>
+      <md-hint *ngIf="!form.controls[maxControlName].pristine" class="tc-red-600">
+        <span *ngIf="form.controls[maxControlName].hasError('required')" translate>Required</span>
+        <span *ngIf="form.controls[maxControlName].hasError('minValue')" translate>Must be greater than 0</span>
+        <span *ngIf="form.controls[maxControlName].hasError('precision')">
+        {{ 'Must have precision of' | translate:{value: form.controls[maxControlName].errors.precision.value} }}
+      </span>
+        <span *ngIf="form.controls[maxControlName].hasError('isNumber')" translate>Must be a number</span>
+        <span *ngIf="form.hasError('greaterThan')" translate>Must be greater than Minimum</span>
+      </md-hint>
+    </md-input-container>
+  </div>
+
+</div>

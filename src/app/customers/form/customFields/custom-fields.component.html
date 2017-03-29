@@ -1,0 +1,74 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<form [formGroup]="form">
+  <ng-container *ngFor="let catalog of _catalogs">
+    <h4>{{catalog.name}}</h4>
+    <div *ngFor="let field of catalog.fields" [ngSwitch]="field.dataType" layout="row">
+      <md-input-container layout-margin flex>
+        <input mdInput *ngSwitchCase="'TEXT'" type="text" placeholder="{{field.label}}"
+                  [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim title="{{field.hint}}"/>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 class="tc-red-600" translate>Required
+        </md-hint>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
+                 class="tc-red-600" [translate]="'Only characters allowed.'" [translateParams]="{value: field.length}">
+        </md-hint>
+      </md-input-container>
+
+      <md-input-container layout-margin flex>
+        <input mdInput *ngSwitchCase="'NUMBER'" type="number" placeholder="{{field.label}}"
+                  [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim title="{{field.hint}}"/>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 class="tc-red-600" translate>Required
+        </md-hint>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxPrecision"
+                 class="tc-red-600" [translate]="'Value precision must be smaller or equals'" [translateParams]="{value: field.precision}">
+        </md-hint>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
+                 class="tc-red-600" [translate]="'Only numbers allowed.'" [translateParams]="{value: field.length}">
+        </md-hint>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.minValue"
+                 class="tc-red-600" [translate]="'Value must be greater than or equals'" [translateParams]="{value: field.minValue}">
+        </md-hint>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxValue"
+                 class="tc-red-600" [translate]="'Value must be smaller than or equals'" [translateParams]="{value: field.maxValue}">
+        </md-hint>
+      </md-input-container>
+
+      <md-input-container layout-margin flex>
+        <input mdInput *ngSwitchCase="'DATE'" type="date" placeholder="{{field.label}}"
+                  [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim  title="{{field.hint}}"/>
+        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 class="tc-red-600" translate>Required
+        </md-hint>
+      </md-input-container>
+
+      <ng-container *ngSwitchCase="'SINGLE_SELECTION'">
+        <h5>{{field.label}}</h5>
+        <div layout="row">
+          <md-radio-group [formControl]="getControlForCatalog(catalog.identifier, field.identifier)">
+            <md-radio-button style="padding-right:10px;" *ngFor="let option of field.options"
+                             [value]="option.value" title="{{field.hint}}">
+              {{option.label}}
+            </md-radio-button>
+          </md-radio-group>
+        </div>
+      </ng-container>
+    </div>
+
+  </ng-container>
+</form>

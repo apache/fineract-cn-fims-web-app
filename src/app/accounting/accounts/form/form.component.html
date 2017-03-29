@@ -1,0 +1,66 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Account details' | translate}}" [state]="">
+    <form [formGroup]="form">
+      <div layout="row">
+        <md-radio-group formControlName="type" [disabled]="true">
+          <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
+            {{type.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="number" formControlName="balance" placeholder="{{'Balance' | translate}}"/>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <fims-customer-select flex [preSelection]="account.holders" (onSelectionChange)="onHoldersSelectionChange($event)" title="{{'Holders' | translate}}"></fims-customer-select>
+      </div>
+      <div layout="row">
+        <fims-customer-select flex [preSelection]="account.signatureAuthorities" (onSelectionChange)="onAuthoritySelectionChange($event)" title="{{'Signature Authorities' | translate}}"></fims-customer-select>
+      </div>
+      <div layout="row">
+        <fims-select-list flex
+                            [data]="accounts"
+                            id="identifier"
+                            displayName="identifier"
+                            listIcon="view_module"
+                            [preSelection]="account.referenceAccount ? [account.referenceAccount] : []"
+                            [multiple]="false"
+                            (onSearch)="onAccountSearch($event)"
+                            (onSelectionChange)="accountSelectionChange($event)"
+                            title="Reference account"
+                            noResultsMessage="No account was found."
+                            noSelectionMessage="No account selected"
+        ></fims-select-list>
+      </div>
+    </form>
+    <template td-step-actions>
+      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!valid">
+        {{'CREATE ACCOUNT' | translate}}
+      </button>
+      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!valid">
+        {{'UPDATE ACCOUNT' | translate}}
+      </button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+</td-steps>

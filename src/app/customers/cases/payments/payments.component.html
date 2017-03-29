@@ -1,0 +1,51 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary">
+  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Customer loan' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over title="{{'Planned payments' | translate}}">
+  <div layout="row" layout-margin>
+    <md-input-container layout-margin>
+      <input mdInput type="date" placeholder="{{'Start date' | translate}}" [(ngModel)]="startDate">
+    </md-input-container>
+    <span>
+        <button layout-margin md-button md-icon-button (click)="fetchPayments(startDate)"><md-icon>search</md-icon></button>
+      </span>
+  </div>
+  <table td-data-table>
+    <th td-data-table-column [sortable]="false" [active]="true" translate>Date</th>
+    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Loan Origination Fee</th>
+    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Interest</th>
+    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Payment</th>
+    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Late fee</th>
+    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Remaining principal</th>
+    <tr td-data-table-row *ngFor="let payment of (paymentPage | async).elements">
+      <td td-data-table-cell [numeric]="false">{{payment.date | date}}</td>
+      <ng-container *ngFor="let component of payment.costComponents">
+        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'loan-origination-fee'">{{component.amount | number}}</td>
+        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'interest'">{{component.amount | number}}</td>
+        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'payment'">{{component.amount | number}}</td>
+        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'late-fee'">{{component.amount | number}}</td>
+      </ng-container>
+      <td td-data-table-cell [numeric]="true">{{payment.remainingPrincipal | number}}</td>
+    </tr>
+  </table>
+</fims-layout-card-over>

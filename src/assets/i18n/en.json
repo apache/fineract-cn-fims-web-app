@@ -1,0 +1,14 @@
+{
+  "Issued by": "Issued by {{value}}",
+  "Please verify the following tasks before you can action this customer": "Please verify the following tasks before you can {{value}} this customer",
+  "Only characters allowed.": "Only {{value}} characters allowed.",
+  "Value precision must be smaller or equals": "Value precision must be smaller or equals {{value}}",
+  "Only numbers allowed.": "Only {{value}} numbers allowed.",
+  "Value must be greater than or equals": "Value must be greater than or equals {{value}}",
+  "Value must be smaller than or equals": "Value must be smaller than or equals {{value}}",
+  "Value must be greater than": "Value must be greater than {{value}}",
+  "Value must be smaller than": "Value must be smaller than {{value}}",
+  "Must have precision of": "Must have precision of {{value}}",
+  "Customer is assigned to office:": "Customer is assigned to office: {{value}}",
+  "Ledger with name": "Ledger {{value}}"
+}

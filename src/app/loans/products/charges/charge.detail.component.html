@@ -1,0 +1,58 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Charges' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over [title]="charge.name" [subTitle]="charge.description">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <button md-icon-button (click)="deleteCharge()" title="{{'Delete this charge' | translate}}"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <md-list>
+        <md-list-item>
+          <md-icon md-list-avatar>account_balance</md-icon>
+          <h3 md-line translate>Action</h3>
+          <p md-line>{{charge.chargeAction}}</p>
+        </md-list-item>
+        <md-list-item>
+          <md-icon md-list-avatar>person</md-icon>
+          <h3 md-line translate>Amount</h3>
+          <p md-line>{{charge.amount | number}}</p>
+        </md-list-item>
+        <md-list-item>
+          <md-icon md-list-avatar>person</md-icon>
+          <h3 md-line translate>Charge method</h3>
+          <p md-line>{{charge.chargeMethod}}</p>
+        </md-list-item>
+        <md-list-item>
+          <md-icon md-list-avatar>person</md-icon>
+          <h3 md-line translate>Cycle</h3>
+          <p md-line>{{charge.forCycleSizeUnit}}</p>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+</fims-layout-card-over>
+
+<!--<a md-fab color="accent" class="position-bottom-right" title="{{'Edit charge' | translate}}" [routerLink]="['edit']">
+  <md-icon>edit_mode</md-icon>
+</a>-->

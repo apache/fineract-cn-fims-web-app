@@ -1,0 +1,37 @@
+{
+  "/identity": {
+    "target": "http://localhost:2021",
+    "secure": false,
+    "pathRewrite": {
+      "^/identity": "/identity"
+    }
+  },
+  "/office": {
+    "target": "http://localhost:2022",
+    "secure": false,
+    "pathRewrite": {
+      "^/office": "/office"
+    }
+  },
+  "/customer": {
+    "target": "http://localhost:2023",
+    "secure": false,
+    "pathRewrite": {
+      "^/customer": "/customer"
+    }
+  },
+  "/accounting": {
+    "target": "http://localhost:2024",
+    "secure": false,
+    "pathRewrite": {
+      "^/accounting": "/accounting"
+    }
+  },
+  "/portfolio": {
+    "target": "http://localhost:2025",
+    "secure": false,
+    "pathRewrite": {
+      "^/portfolio": "/portfolio"
+    }
+  }
+}

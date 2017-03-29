@@ -1,0 +1,103 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['/accounting/ledgers/detail', account.ledger, 'accounts']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Accounts' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over title="{{'Account' | translate:{ value: account.identifier } }}">
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <div layout-gt-md="row">
+          <div flex-gt-md="30">
+            <md-nav-list>
+              <h3 md-subheader translate>Management</h3>
+              <a md-list-item [routerLink]="['./entries']">
+                <md-icon md-list-avatar>assignment</md-icon>
+                <h3 md-line translate>Account entries</h3>
+                <p md-line translate>Account entries</p>
+              </a>
+              <a md-list-item [routerLink]="['./tasks']">
+                <md-icon md-list-avatar>playlist_add_check</md-icon>
+                <h3 md-line translate>Tasks</h3>
+                <p md-line translate>Change the status of this account</p>
+              </a>
+              <a md-list-item [routerLink]="['./activities']">
+                <md-icon md-list-avatar>event</md-icon>
+                <h3 md-line translate>Activities</h3>
+                <p md-line translate>Recent activities</p>
+              </a>
+              <h3 md-subheader translate>Navigation</h3>
+              <a md-list-item [routerLink]="['/accounting/ledgers/detail', account.ledger]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">
+                <md-icon md-list-avatar>book</md-icon>
+                <h3 md-line translate>Ledger</h3>
+                <p md-line translate>Navigate to ledger of this account</p>
+              </a>
+              <a *ngIf="account.referenceAccount" md-list-item [routerLink]="['../', account.referenceAccount]">
+                <md-icon md-list-avatar>view_module</md-icon>
+                <h3 md-line translate>Reference account</h3>
+                <p md-line translate>Navigate to reference account</p>
+              </a>
+            </md-nav-list>
+          </div>
+          <div flex-gt-md="70">
+            <div layout="row">
+              <md-list>
+                <h3 md-subheader translate>Current status</h3>
+                <fims-state-display [state]="account.state"></fims-state-display>
+                <md-list-item>
+                  <md-icon md-list-avatar>account_balance</md-icon>
+                  <h3 md-line translate>Type</h3>
+                  <p md-line>{{account.type}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon md-list-avatar>person</md-icon>
+                  <h3 md-line translate>Holders</h3>
+                  <p md-line *ngIf="account.holders">{{account.holders.join(', ')}}</p>
+                  <p md-line *ngIf="!account.holders" translate>No holders available</p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon md-list-avatar>verified_user</md-icon>
+                  <h3 md-line translate>Signature authorities</h3>
+                  <p md-line *ngIf="account.signatureAuthorities">{{account.signatureAuthorities.join(', ')}}</p>
+                  <p md-line *ngIf="!account.signatureAuthorities" translate>No signature authorities available</p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon md-list-avatar>view_module</md-icon>
+                  <h3 md-line translate>Reference account</h3>
+                  <p md-line *ngIf="account.referenceAccount">{{account.referenceAccount}}</p>
+                  <p md-line *ngIf="!account.referenceAccount" translate>No reference account available</p>
+                </md-list-item>
+                <md-list-item>
+                  <md-icon md-list-avatar>payment</md-icon>
+                  <h3 md-line translate>Balance</h3>
+                  <p md-line>{{account.balance | number}}</p>
+                </md-list-item>
+              </md-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fims-layout-card-over>
+<a md-fab color="accent" class="position-bottom-right" title="{{ 'Edit account' | translate }}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['edit']" >
+  <md-icon>mode_edit</md-icon>
+</a>

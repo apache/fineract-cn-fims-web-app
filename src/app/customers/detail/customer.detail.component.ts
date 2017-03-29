@@ -1,0 +1,144 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {Catalog} from '../../../services/catalog/domain/catalog.model';
+import {Field} from '../../../services/catalog/domain/field.model';
+import {Option} from '../../../services/catalog/domain/option.model';
+import * as fromEmployees from '../store';
+import {Subscription} from 'rxjs';
+import {CustomersStore} from '../store/index';
+import {SelectAction} from '../store/customer.actions';
+import {LOAD_ALL} from '../store/catalogs/catalog.actions';
+
+interface CatalogFieldPair{
+  catalog: Catalog;
+  field: Field;
+}
+
+interface CustomCatalog{
+  label: string;
+  fields: CustomDetailField[]
+}
+
+interface CustomDetailField{
+  label: string,
+  value: string;
+}
+
+@Component({
+  templateUrl: './customer.detail.component.html',
+  styleUrls: ['./customer.detail.component.scss']
+})
+export class CustomerDetailComponent implements OnInit, OnDestroy{
+
+  private actionsSubscription: Subscription;
+
+  private catalogsSubscription: Subscription;
+
+  private customerSubscription: Subscription;
+
+  private identityCard: boolean = true;
+
+  private _customer: Customer;
+
+  private _catalogs: Catalog[];
+
+  private customCatalogs: CustomCatalog[] = [];
+
+  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
+
+  ngOnInit(): void {
+    this.actionsSubscription = this.route.params
+      .map(params => new SelectAction(params['id']))
+      .subscribe(this.store);
+
+    this.customerSubscription = this.store.select(fromEmployees.getSelectedCustomer)
+      .subscribe(customer => this.customer = customer);
+
+    this.catalogsSubscription = this.store.select(fromEmployees.getAllCustomerCatalogEntities)
+      .subscribe(catalogs => this.catalogs = catalogs);
+
+    this.store.dispatch({ type: LOAD_ALL });
+  }
+
+  ngOnDestroy(): void {
+    this.actionsSubscription.unsubscribe();
+    this.customerSubscription.unsubscribe();
+    this.catalogsSubscription.unsubscribe();
+  }
+
+  searchCustomer(term): void{
+    if(term){
+      this.router.navigate(['../../../'], { queryParams: { term: term }, relativeTo: this.route });
+    }
+  }
+
+  private set customer(customer: Customer){
+    this._customer = customer;
+
+    let customCatalogs: CustomCatalog[] = [];
+
+    if(customer.customValues){
+      for(let value of customer.customValues){
+        let catalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === value.catalogIdentifier);
+        let field: Field = catalog.fields.find((field: Field) => field.identifier === value.fieldIdentifier);
+
+        let valueString: string = value.value;
+
+        switch(field.dataType){
+          case 'DATE':
+            valueString = valueString ? valueString.substr(0, 10) : '';
+            break;
+          case 'SINGLE_SELECTION':
+            let option = field.options.find((option: Option) => option.value === Number(valueString));
+            valueString = option.label;
+            break;
+        }
+
+        let customField: CustomDetailField = {
+          label: field.label,
+          value: valueString
+        };
+
+        // If catalog does not exists
+        if(!customCatalogs[value.catalogIdentifier]){
+          customCatalogs[value.catalogIdentifier] = {
+            label: catalog.name,
+            fields: []
+          }
+        }
+        customCatalogs[value.catalogIdentifier].fields.push(customField);
+      }
+    }
+
+    // change from associative array to array
+    for(let catalogIdentifier in customCatalogs){
+      this.customCatalogs.push(customCatalogs[catalogIdentifier]);
+    }
+  };
+
+  private get customer(): Customer{
+    return this._customer;
+  }
+
+  private set catalogs(catalogs: Catalog[]){
+    this._catalogs = catalogs;
+  }
+
+}

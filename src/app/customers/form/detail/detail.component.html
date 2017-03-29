@@ -1,0 +1,51 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<form [formGroup]="form">
+  <div layout="row">
+    <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
+      <md-hint *ngIf="!form.controls.firstName.pristine && form.controls.firstName.errors?.required"
+               class="tc-red-600" translate>Required
+      </md-hint>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput placeholder="{{'Middle name(optional)' | translate}}" formControlName="middleName"
+             tdAutoTrim/>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
+      <md-hint *ngIf="!form.controls.lastName.pristine && form.controls.lastName.errors?.required"
+               class="tc-red-600" translate>Required
+      </md-hint>
+    </md-input-container>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin>
+      <input mdInput type="date" placeholder="{{'Day of birth' | translate}}" formControlName="dayOfBirth"/>
+      <md-hint *ngIf="!form.controls.dayOfBirth.pristine && form.controls.dayOfBirth.errors?.required"
+               class="tc-red-600" translate>Required
+      </md-hint>
+    </md-input-container>
+  </div>
+</form>

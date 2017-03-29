@@ -1,0 +1,60 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="detailForm">
+      <div layout="row">
+        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-radio-group formControlName="chargeMethod">
+          <md-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
+            {{basis.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <div layout="row">
+        <md-input-container>
+          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
+        </md-input-container>
+        <md-select placeholder="{{'Applied when' | translate}}" formControlName="chargeAction" layout-margin>
+          <md-option *ngFor="let actionOption of chargeActionOptions" [value]="actionOption.type">
+            {{actionOption.label}}
+          </md-option>
+        </md-select>
+      </div>
+
+    </form>
+
+    <template td-step-actions>
+      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary">{{'SAVE CHARGE' | translate}}</button>
+      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary">{{'UPDATE CHARGE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+</td-steps>

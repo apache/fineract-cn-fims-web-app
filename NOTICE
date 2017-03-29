@@ -1,0 +1,20 @@
+mifos.io - fims
+Copyright 2008-2017 The Apache Software Foundation
+
+This product includes software developed by The Apache Software
+Foundation (http://www.apache.org/).
+
+fims - notice for binary distribution
+==========================================
+fims includes caniuse(https://github.com/Fyrd/caniuse).
+fims elects to include this software in this distribution under the
+CC-BY-4.0 license. You can obtain a copy of the License at:
+https://creativecommons.org/licenses/by/4.0/
+
+fims includes spdx-expression-parse.js(https://github.com/kemitchell/spdx-expression-parse.js).
+The Linux Foundation and its contributors license the SPDX standard under the terms
+of the Creative Commons Attribution License 3.0 Unported (SPDX: "CC-BY-3.0").
+"SPDX" is a United States federally registered trademark of the Linux Foundation.
+fims elects to include this software in this distribution under the
+CC-BY-3.0 license. You can obtain a copy of the License at:
+http://spdx.org/licenses/CC-BY-3.0

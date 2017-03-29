@@ -1,0 +1,103 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<form [formGroup]="form">
+  <div layout="row">
+    <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  </div>
+  <div layout="row">
+    <md-input-container layout-margin flex>
+      <input mdInput type="number" placeholder="{{'Principal Amount' | translate}}" formControlName="principalAmount" step="any"/>
+      <md-hint *ngIf="!form.get('principalAmount').pristine" class="tc-red-600">
+        <span *ngIf="form.get('principalAmount').hasError('required')" translate>Required</span>
+        <span *ngIf="form.get('principalAmount').hasError('minValue')" translate>Must be greater than 0</span>
+      </md-hint>
+    </md-input-container>
+  </div>
+
+  <div layout="row" layout-margin>
+    <md-input-container>
+      <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
+      <md-hint *ngIf="!form.get('term').pristine" class="tc-red-600">
+        <span *ngIf="form.get('term').hasError('required')" translate>Required</span>
+        <span *ngIf="form.get('term').hasError('minValue')" translate>Must be greater than 0</span>
+      </md-hint>
+    </md-input-container>
+    <md-select formControlName="termTemporalUnit" layout-margin>
+      <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
+        {{basis.label | translate}}
+      </md-option>
+    </md-select>
+  </div>
+  <div layout="row" layout-margin>
+    <md-input-container>
+      <input mdInput type="number" placeholder="{{'Repay every' | translate}}" formControlName="paymentPeriod"/>
+      <md-hint *ngIf="!form.get('paymentPeriod').pristine" class="tc-red-600">
+        <span *ngIf="form.get('paymentPeriod').hasError('required')" translate>Required</span>
+        <span *ngIf="form.get('paymentPeriod').hasError('minValue')" translate>Must be greater than 0</span>
+      </md-hint>
+    </md-input-container>
+    <md-select formControlName="paymentTemporalUnit" layout-margin placeholder="">
+      <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
+        {{alignment.label | translate}}
+      </md-option>
+    </md-select>
+  </div>
+  <div layout="row" *ngIf="form.get('paymentTemporalUnit').value === 'WEEKS'">
+    <md-select formControlName="alignmentDay" layout-margin placeholder="{{'on' | translate}}">
+      <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
+        {{alignment.label | translate}}
+      </md-option>
+    </md-select>
+  </div>
+  <div layout="column" *ngIf="form.get('paymentTemporalUnit').value !== 'WEEKS'">
+    <md-radio-group formControlName="alignmentDaySetting">
+      <div layout="row">
+        <md-radio-button layout-margin value="fixed"></md-radio-button>
+        <md-select formControlName="alignmentDay" placeholder="{{'on the' | translate}}" layout-margin
+                   [disabled]="form.get('alignmentDaySetting').value !== 'fixed'">
+          <md-option *ngFor="let alignment of monthDays" [value]="alignment.type">
+            {{alignment.label}}
+          </md-option>
+        </md-select>
+        <p translate>Day</p>
+      </div>
+      <div layout="row">
+        <ng-container>
+          <md-radio-button layout-margin value="relative"></md-radio-button>
+          <md-select formControlName="alignmentWeek" placeholder="{{'on the' | translate}}" layout-margin
+                     [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
+            <md-option *ngFor="let alignment of alignment" [value]="alignment.type">
+              {{alignment.label | translate}}
+            </md-option>
+          </md-select>
+        </ng-container>
+        <md-select formControlName="alignmentDay" layout-margin placeholder=""
+                   [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
+          <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
+            {{alignment.label | translate}}
+          </md-option>
+        </md-select>
+      </div>
+    </md-radio-group>
+  </div>
+  <md-select formControlName="alignmentMonth" placeholder="{{'in' | translate}}" *ngIf="form.get('paymentTemporalUnit').value === 'YEARS'"
+             layout-margin>
+    <md-option *ngFor="let alignment of months" [value]="alignment.type">
+      {{alignment.label | translate}}
+    </md-option>
+  </md-select>
+</form>

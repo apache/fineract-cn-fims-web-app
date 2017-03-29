@@ -1,0 +1,128 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="detailForm" layout="column">
+      <div layout="row">
+        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-hint *ngIf="!detailForm.get('name').pristine && detailForm.get('name').errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          <md-hint *ngIf="!detailForm.get('description').pristine && detailForm.get('description').errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency code' | translate }}">
+          <md-option *ngFor="let code of ['USD', 'EUR', 'XCD', 'BZD']" [value]="code">
+            {{code}}
+          </md-option>
+        </md-select>
+        <md-select formControlName="minorCurrencyUnitDigits" layout-margin placeholder="{{ 'Currency digits' | translate }}">
+          <md-option *ngFor="let digit of [0,1,2,3,4,5]" [value]="digit">
+            {{digit}}
+          </md-option>
+        </md-select>
+      </div>
+      <div layout="row">
+        <fims-min-max flex minPlaceholder="{{'Minimum principal amount' | translate}}" maxPlaceholder="{{'Maximum principal amount' | translate}}" [form]="detailForm" minControlName="minimumBalance" maxControlName="maximumBalance"></fims-min-max>
+      </div>
+      <div layout="column">
+        <md-slide-toggle formControlName="multipleDispersals" translate>
+          {{'Multiple disbursals?' | translate}}
+        </md-slide-toggle>
+        <div layout="row">
+          <md-input-container layout-margin flex>
+            <input mdInput type="number" placeholder="{{'Maximum dispersal count' | translate}}" formControlName="dispersalCount" step="any" [disabled]="!detailForm.get('dispersalCount').value"/>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container layout-margin flex>
+            <input mdInput type="number" placeholder="{{'Maximum dispersal amount' | translate}}" formControlName="dispersalAmount" step="any" [disabled]="!detailForm.get('dispersalAmount').value"/>
+          </md-input-container>
+        </div>
+      </div>
+    </form>
+
+    <template td-step-actions>
+      <button (click)="termStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+  <td-step #termStep label="{{'Term range' | translate}}" [state]="termForm.valid ? 'complete' : termForm.pristine ? 'none' : 'required'">
+    <fims-product-term-form #termForm [formData]="termFormData"></fims-product-term-form>
+    <template td-step-actions>
+      <button (click)="interestStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+  <td-step #interestStep label="{{'Interest settings' | translate}}" [state]="interestForm.valid ? 'complete' : interestForm.pristine ? 'none' : 'required'">
+    <fims-product-interests-form #interestForm [formData]="interestFormData"></fims-product-interests-form>
+    <template td-step-actions>
+      <button (click)="feesStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+  <td-step #feesStep label="{{'Fee income accounts' | translate}}" [state]="feeForm.valid ? 'complete' : feeForm.pristine ? 'none' : 'required'">
+    <fims-product-fee-form #feeForm [formData]="feeFormData"></fims-product-fee-form>
+    <template td-step-actions>
+      <button (click)="arrearsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+  <td-step #arrearsStep label="{{'Arrears allowance reserve account' | translate}}" [state]="arrearsAllowanceForm.valid ? 'complete' : arrearsAllowanceForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="arrearsAllowanceForm">
+      <fims-account-select title="{{'Arrears allowance' | translate}}" formControlName="account">
+        <ng-container *ngIf="!arrearsAllowanceForm.get('account').pristine && arrearsAllowanceForm.get('account').hasError('required')">
+          Required
+        </ng-container>
+        <ng-container *ngIf="arrearsAllowanceForm.get('account').hasError('invalidAccount')">
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+    </form>
+    <template td-step-actions>
+      <button (click)="moratoriumStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+  <td-step #moratoriumStep label="{{'Moratorium(optional)' | translate}}">
+    <fims-product-moratorium-form #moratoriumForm [formData]="moratoriumFormData"></fims-product-moratorium-form>
+    <template td-step-actions>
+      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid">{{'CREATE PRODUCT' | translate}}</button>
+      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid">{{'UPDATE PRODUCT' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+
+</td-steps>

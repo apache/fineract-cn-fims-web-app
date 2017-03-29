@@ -1,0 +1,130 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Employee details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="detailForm">
+      <div layout="row">
+        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
+          <md-hint *ngIf="!detailForm.controls.firstName.pristine && detailForm.controls.firstName.errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'Middle name(optional)' | translate}}" formControlName="middleName"
+                    tdAutoTrim/>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
+          <md-hint *ngIf="!detailForm.controls.lastName.pristine && detailForm.controls.lastName.errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" tdAutoTrim/>
+          <md-hint *ngIf="!detailForm.controls.password.pristine && detailForm.controls.password.errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-input-container>
+      </div>
+    </form>
+
+    <template td-step-actions>
+      <button (click)="roleStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+
+  <td-step #roleStep label="{{'Assign role to employee' | translate}}"
+           [state]="roleForm.valid ? 'complete' : roleForm.pristine ? 'none' : 'required'">
+    <fims-select-list #roleList flex
+                        [data]="roles"
+                        id="identifier"
+                        listIcon="group"
+                        (onSearch)="searchRole($event)"
+                        (onSelectionChange)="assignRole($event)"
+                        [preSelection]="roleForm.controls.role.value ? [roleForm.controls.role.value] : []"
+                        title="Assigned Role"
+                        noResultsMessage="{{'No role was found.' | translate}}"
+                        noSelectionMessage="{{'No role assigned to employee, yet.' | translate}}"
+    ></fims-select-list>
+
+    <template td-step-actions>
+      <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+
+  <td-step #officeStep label="{{'Assign employee to office(optional)' | translate}}"
+           [state]="officeForm.controls.assignedOffice.value ? 'complete' : 'none'">
+
+    <fims-select-list #officeList flex
+                        [data]="offices"
+                        id="identifier"
+                        listIcon="store"
+                        [preSelection]="officeForm.controls.assignedOffice.value ? [officeForm.controls.assignedOffice.value] : []"
+                        (onSearch)="searchOffice($event)"
+                        (onSelectionChange)="assignOffice($event)"
+                        title="{{'Assigned Office' | translate}}"
+                        noResultsMessage="{{'No office was found.' | translate}}"
+                        noSelectionMessage="{{'No office assigned to employee, yet.' | translate}}"
+    ></fims-select-list>
+    <template td-step-actions>
+      <button (click)="contactStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+
+  <td-step #contactStep label="{{'Employee contact(optional)' | translate}}" [state]="contactForm.valid && !contactForm.pristine ? 'complete' : contactForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="contactForm">
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput flex placeholder="{{'Email(optional)' | translate}}" formControlName="email" tdAutoTrim/>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'Phone(optional)' | translate}}" formControlName="phone" tdAutoTrim/>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput placeholder="{{'Mobile(optional)' | translate}}" formControlName="mobile" tdAutoTrim/>
+        </md-input-container>
+      </div>
+    </form>
+    <template td-step-actions>
+      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'CREATE EMPLOYEE' | translate}}</button>
+      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'UPDATE EMPLOYEE' | translate}}</button>
+      <span flex></span>
+      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    </template>
+  </td-step>
+
+</td-steps>

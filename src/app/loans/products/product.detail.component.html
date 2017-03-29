@@ -1,0 +1,77 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Loan products' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over [title]="product.name" [subTitle]="product.description">
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <div layout-gt-md="row">
+          <div flex-gt-md="30">
+            <md-nav-list>
+              <h3 md-subheader translate>Management</h3>
+              <a md-list-item [routerLink]="['./charges']">
+                <md-icon md-list-avatar>assignment</md-icon>
+                <h3 md-line translate>Charges</h3>
+                <p md-line translate>Charges</p>
+              </a>
+              <a md-list-item [routerLink]="['./tasks']">
+                <md-icon md-list-avatar>playlist_add_check</md-icon>
+                <h3 md-line translate>Tasks</h3>
+                <p md-line translate>Manage tasks of this product</p>
+              </a>
+            </md-nav-list>
+          </div>
+          <div flex-gt-md="70">
+            <div layout="row">
+              <md-list>
+                <md-list-item>
+                  <md-slide-toggle [formControl]="enabledControl">
+                    <span *ngIf="enabledControl.value" translate>Enabled</span>
+                    <span *ngIf="!enabledControl.value" translate>Disabled</span>
+                  </md-slide-toggle>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Balance range</h3>
+                  <p md-line>{{product.balanceRange.minimum | number}} - {{product.balanceRange.maximum | number}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Interest range</h3>
+                  <p md-line>{{product.interestBasis | translate}}</p>
+                  <p md-line>{{product.interestRange.minimum | number}} - {{product.interestRange.maximum | number}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Term</h3>
+                  <p md-line>{{product.termRange.maximum | number}} {{product.termRange.temporalUnit | translate}}</p>
+                </md-list-item>
+              </md-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fims-layout-card-over>
+
+<a md-fab color="accent" class="position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']">
+  <md-icon>edit_mode</md-icon>
+</a>

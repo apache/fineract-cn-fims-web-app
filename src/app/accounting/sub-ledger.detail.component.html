@@ -1,0 +1,63 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+</md-toolbar>
+
+<fims-layout-card-over title="{{'Ledger with name' | translate:{value: ledger.name} }}" [subTitle]="ledger.description">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <div layout-gt-md="row">
+          <div flex-gt-md="30">
+            <md-nav-list>
+              <h3 md-subheader translate>Details</h3>
+              <a md-list-item [routerLink]="['./accounts']" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'READ' }">
+                <md-icon md-list-avatar>view_module</md-icon>
+                <h3 md-line translate>Accounts</h3>
+                <p md-line translate>View accounts for this ledger</p>
+              </a>
+            </md-nav-list>
+          </div>
+          <div flex-gt-md="70">
+            <div layout="row">
+              <md-list>
+                <md-list-item>
+                  <md-icon md-list-avatar>account_balance</md-icon>
+                  <h3 md-line translate>Type</h3>
+                  <p md-line>{{ledger.type}}</p>
+                </md-list-item>
+              </md-list>
+            </div>
+            <div layout="row">
+              <div layout="column" flex-gt-md="100">
+                <h3 translate>Subledger</h3>
+                <fims-data-table flex (onFetch)="fetchLedgers($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fims-layout-card-over>
+<a md-fab color="accent" class="position-bottom-right" title="{{'Create subledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
+  <md-icon>add</md-icon>
+</a>
