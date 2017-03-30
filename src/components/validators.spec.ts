@@ -20,12 +20,12 @@ import {FormControl, FormGroup} from '@angular/forms';
 describe('Validators', () => {
   describe('urlSafe', () => {
 
-    it('should not return error', () => {
+    it('should not return error when url safe', () => {
       let validator = FimsValidators.urlSafe();
       expect(validator(new FormControl('test-test'))).toBeNull();
     });
 
-    it('should return error', () => {
+    it('should return error when not url safe', () => {
       let validator = FimsValidators.urlSafe();
       expect(validator(new FormControl(' '))).toEqual({ urlSafe: true });
     })
@@ -34,7 +34,7 @@ describe('Validators', () => {
 
   describe('precision', () => {
 
-    it('should not return error', () => {
+    it('should not return error when precision matches', () => {
       let validator = FimsValidators.precision(1);
       expect(validator(new FormControl(1.1))).toBeNull();
     });

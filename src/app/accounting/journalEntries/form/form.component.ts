@@ -16,7 +16,7 @@
 import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
 import {FormComponent} from '../../../../components/forms/form.component';
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {FormBuilder, Validators, FormControl} from '@angular/forms';
+import {FormBuilder, Validators, FormControl, FormGroup, FormArray} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TdStepComponent} from '@covalent/core';
 import {Creditor} from '../../../../services/accounting/domain/creditor.model';
@@ -32,6 +32,7 @@ import {CREATE} from '../../store/ledger/journal-entry/journal-entry.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {SEARCH} from '../../../reducers/account/account.actions';
 import {AccountingStore} from '../../store/index';
+import {JournalEntryValidators} from './journal-entry.validator';
 
 @Component({
   selector: 'fims-journal-entry-form-component',
@@ -46,10 +47,6 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
   private selectedClerk: string;
-
-  private selectedCreditors: Creditor[] = [];
-
-  private selectedDebitors: Debtor[] = [];
 
   private term = new FormControl();
 
@@ -90,8 +87,10 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
       transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       transactionDate: [new Date().toISOString().slice(0, 10), Validators.required],
       note: [''],
-      message: ['']
-    });
+      message: [''],
+      creditors: this.formBuilder.array([], JournalEntryValidators.minItems(1)),
+      debtors: this.formBuilder.array([], JournalEntryValidators.minItems(1))
+    }, { validator: JournalEntryValidators.equalSum('creditors', 'debtors') });
 
     this.term.valueChanges
       .debounceTime(500)
@@ -105,7 +104,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     this.userNameSubscription.unsubscribe();
   }
 
-  onClerkSelectionChange(selections: string[]): void{
+  onClerkSelectionChange(selections: string[]): void {
     this.selectedClerk = selections[0];
   }
 
@@ -118,8 +117,8 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
       clerk: this.selectedClerk,
       note: this.form.get('note').value,
       message: this.form.get('message').value,
-      creditors: this.selectedCreditors,
-      debtors: this.selectedDebitors,
+      creditors: this.form.get('creditors').value,
+      debtors: this.form.get('debtors').value,
     };
 
     this.store.dispatch({ type: CREATE, payload: {
@@ -128,34 +127,32 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     } });
   }
 
-  addCreditor(accountNumber: string): void{
-    let foundCreditors = this.selectedCreditors.filter((creditor: Creditor) => creditor.accountNumber === accountNumber);
-
-    if(foundCreditors.length > 0) return;
-
-    this.selectedCreditors.push({
-      accountNumber: accountNumber,
-      amount: 0
-    })
+  addCreditor(accountNumber: string): void {
+    const control: FormArray = this.form.get('creditors') as FormArray;
+    control.push(this.initCreditor(accountNumber));
   }
 
-  removeCreditor(accountNumber: string): void{
-    this.selectedCreditors = this.selectedCreditors.filter((creditor: Creditor) => creditor.accountNumber !== accountNumber);
+  removeCreditor(index: number): void {
+    const control: FormArray = this.form.get('creditors') as FormArray;
+    control.removeAt(index);
   }
 
-  addDebtor(accountNumber: string): void{
-    let foundDebitors = this.selectedDebitors.filter((debitor: Debtor) => debitor.accountNumber === accountNumber);
-
-    if(foundDebitors.length > 0) return;
-
-    this.selectedDebitors.push({
-      accountNumber: accountNumber,
-      amount: 0
-    })
+  addDebtor(accountNumber: string): void {
+    const control: FormArray = this.form.get('debtors') as FormArray;
+    control.push(this.initDebtor(accountNumber));
   }
 
-  removeDebtor(accountNumber: string): void{
-    this.selectedDebitors = this.selectedDebitors.filter((debitor: Debtor) => debitor.accountNumber !== accountNumber);
+  removeDebtor(index: number): void {
+    const control: FormArray = this.form.get('debtors') as FormArray;
+    control.removeAt(index);
+  }
+
+  onCancel() {
+    this.navigateAway();
+  }
+
+  navigateAway(): void {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   private onAccountSearch(searchTerm?: string): void{
@@ -170,11 +167,18 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
-  onCancel() {
-    this.navigateAway();
+  private initCreditor(accountNumber: string): FormGroup {
+    return this.formBuilder.group({
+      accountNumber: [accountNumber],
+      amount: [0]
+    })
   }
 
-  navigateAway(): void {
-    this.router.navigate(['../'], {relativeTo: this.route});
+  private initDebtor(accountNumber: string): FormGroup {
+    return this.formBuilder.group({
+      accountNumber: [accountNumber],
+      amount: [0]
+    })
   }
+
 }
