@@ -25,6 +25,8 @@ import * as fromCustomerSearch from './customer/search.reducer';
 import * as fromAccountSearch from './account/search.reducer';
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
+import {compose} from '@ngrx/core/compose';
+import {localStorageSync} from 'ngrx-store-localstorage';
 
 export interface State {
   authentication: fromAuthentication.State;
@@ -47,7 +49,7 @@ export const reducers = {
 };
 
 export function createReducer(asyncReducers = {}): ActionReducer<any>{
-  return combineReducers(Object.assign(reducers, asyncReducers));
+  return compose(localStorageSync(['authentication', 'authorization'], true), combineReducers)(Object.assign(reducers, asyncReducers));
 }
 
 export const productionReducer: ActionReducer<State> = createReducer();

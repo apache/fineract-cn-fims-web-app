@@ -13,20 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from '@angular/core';
+
+import {Component, OnInit} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
+import * as fromRoot from './reducers';
+import {Store} from '@ngrx/store';
+import {LoginSuccessAction} from './reducers/security/security.actions';
 
 @Component({
   selector: 'fims-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
 
-  constructor(private translate: TranslateService) {
-    translate.addLangs(["en", "es"]);
-    translate.setDefaultLang('en');
-    translate.use('en');
+  constructor(private translate: TranslateService, private store: Store<fromRoot.State>) {}
+
+  ngOnInit(): void {
+    this.translate.addLangs(['en', 'es']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+
+    this.store.select(fromRoot.getAuthenticationState)
+      .filter(state => !!state.authentication)
+      .take(1)
+      .map(state => ({
+        username: state.username,
+        tenant: state.tenant,
+        authentication: state.authentication
+      }))
+      .map(payload => new LoginSuccessAction(payload))
+      .do((action: LoginSuccessAction) => this.store.dispatch(action))
   }
-
 }
