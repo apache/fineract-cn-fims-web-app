@@ -80,14 +80,4 @@ export const getCaseTasksEntities = createSelector(getCaseTasksState, fromCaseTa
 
 export const getCasePaymentsSearchState = (state: State) => state.casePayments;
 
-export const getSearchCasePayments = createSelector(getCasePaymentsSearchState, fromCasePayments.getPayments);
-export const getCasePaymentsSearchTotalElements = createSelector(getCasePaymentsSearchState, fromCasePayments.getTotalElements);
-export const getCasePaymentsSearchTotalPages = createSelector(getCasePaymentsSearchState, fromCasePayments.getTotalPages);
-
-export const getCasePaymentSearchResults = createSelector(getSearchCasePayments, getCasePaymentsSearchTotalElements, getCasePaymentsSearchTotalPages, (payments, totalPages, totalElements) => {
-  return {
-    payments: payments,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+export const getSearchCasePaymentPage = createSelector(getCasePaymentsSearchState, fromCasePayments.getPaymentPage);

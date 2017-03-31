@@ -31,21 +31,16 @@
       </span>
   </div>
   <table td-data-table>
-    <th td-data-table-column [sortable]="false" [active]="true" translate>Date</th>
-    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Loan Origination Fee</th>
-    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Interest</th>
-    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Payment</th>
-    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Late fee</th>
-    <th td-data-table-column [sortable]="false" [active]="true" [numeric]="true" translate>Remaining principal</th>
-    <tr td-data-table-row *ngFor="let payment of (paymentPage | async).elements">
-      <td td-data-table-cell [numeric]="false">{{payment.date | date}}</td>
-      <ng-container *ngFor="let component of payment.costComponents">
-        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'loan-origination-fee'">{{component.amount | number}}</td>
-        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'interest'">{{component.amount | number}}</td>
-        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'payment'">{{component.amount | number}}</td>
-        <td td-data-table-cell [numeric]="true" *ngIf="component.chargeIdentifier === 'late-fee'">{{component.amount | number}}</td>
-      </ng-container>
-      <td td-data-table-cell [numeric]="true">{{payment.remainingPrincipal | number}}</td>
+    <th td-data-table-column [active]="true" translate>Date</th>
+    <th td-data-table-column [active]="true" [numeric]="true" *ngFor="let col of (columns | async)" translate>{{col.name}}</th>
+    <th td-data-table-column [active]="true" [numeric]="true" translate>Remaining principal</th>
+
+    <tr td-data-table-row *ngFor="let row of (rows | async)">
+      <td td-data-table-cell>{{row.date | date}}</td>
+      <td td-data-table-cell [numeric]="true" *ngFor="let col of (columns | async)">
+        {{row.costComponents[col.identifier]?.amount | number}}
+      </td>
+      <td td-data-table-cell [numeric]="true">{{row.remainingPrincipal | number}}</td>
     </tr>
   </table>
 </fims-layout-card-over>

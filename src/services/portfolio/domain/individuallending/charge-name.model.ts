@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-import {PlannedPayment} from './planned-payment.model';
-import {ChargeName} from './charge-name.model';
-
-export class PlannedPaymentPage{
-  elements: PlannedPayment[];
-  chargeNames: ChargeName[];
-  totalPages: number;
-  totalElements: number;
+export interface ChargeName {
+  identifier: string;
+  name: string;
 }

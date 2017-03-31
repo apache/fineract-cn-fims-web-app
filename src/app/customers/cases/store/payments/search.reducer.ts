@@ -20,17 +20,18 @@ import {SearchPaymentsPayload} from './payment.actions';
 import {PlannedPaymentPage} from '../../../../../services/portfolio/domain/individuallending/planned-payment-page.model';
 
 export interface State {
-  payments: PlannedPayment[];
-  totalPages: number,
-  totalElements: number,
+  paymentPage: PlannedPaymentPage;
   loading: boolean;
   initialDisbursalDate: string;
 }
 
 const initialState: State = {
-  payments: [],
-  totalPages: 0,
-  totalElements: 0,
+  paymentPage: {
+    chargeNames: [],
+    elements: [],
+    totalElements: 0,
+    totalPages: 0
+  },
   loading: false,
   initialDisbursalDate: null
 };
@@ -52,10 +53,8 @@ export function reducer(state = initialState, action: paymentActions.Actions): S
       const paymentsPage: PlannedPaymentPage = action.payload;
 
       return {
-        payments: paymentsPage.elements,
+        paymentPage: paymentsPage,
         loading: false,
-        totalElements: paymentsPage.totalElements,
-        totalPages: paymentsPage.totalPages,
         initialDisbursalDate: state.initialDisbursalDate
       };
     }
@@ -67,10 +66,6 @@ export function reducer(state = initialState, action: paymentActions.Actions): S
 }
 
 
-export const getPayments = (state: State) => state.payments;
+export const getPaymentPage = (state: State) => state.paymentPage;
 
 export const getLoading = (state: State) => state.loading;
-
-export const getTotalPages = (state: State) => state.totalPages;
-
-export const getTotalElements = (state: State) => state.totalElements;
