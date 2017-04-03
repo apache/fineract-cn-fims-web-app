@@ -15,12 +15,12 @@
  */
 
 import * as product from './product.actions';
-import { createSelector } from 'reselect';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {createSelector} from 'reselect';
+import {FimsProduct} from './model/fims-product.model';
 
 export interface State {
   ids: string[];
-  entities: { [id: string]: Product };
+  entities: { [id: string]: FimsProduct };
   selectedProductId: string | null;
 }
 

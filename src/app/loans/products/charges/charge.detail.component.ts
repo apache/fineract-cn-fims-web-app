@@ -23,6 +23,7 @@ import {Product} from '../../../../services/portfolio/domain/product.model';
 import {DELETE, SelectAction} from '../store/charges/charge.actions';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './charge.detail.component.html'
@@ -35,7 +36,7 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
 
   private chargeSubscription: Subscription;
 
-  private product: Product;
+  private product: FimsProduct;
 
   charge: ChargeDefinition;
 

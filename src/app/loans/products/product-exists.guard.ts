@@ -22,6 +22,7 @@ import {LoadAction} from './store/product.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {mapToFimsProduct} from './store/model/fims-product.mapper';
 
 @Injectable()
 export class ProductExistsGuard implements CanActivate {
@@ -43,7 +44,7 @@ export class ProductExistsGuard implements CanActivate {
           .map(enabled => (Object.assign({}, product, {
             enabled: enabled
           })))
-      ).map(productEntity => new LoadAction(productEntity))
+      ).map(productEntity => new LoadAction(mapToFimsProduct(productEntity)))
       .do((action: LoadAction) => this.store.dispatch(action))
       .map(product => !!product)
       .catch(() => {

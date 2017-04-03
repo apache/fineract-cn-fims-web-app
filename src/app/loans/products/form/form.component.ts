@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-import {Component, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {InterestFormData, ProductInterestFormComponent} from './interests/interests.component';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
-import {ProductFeeFormComponent, FeeFormData} from './fees/fee.component';
+import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
 import {ProductTermFormComponent, TermRangeFormData} from '../components/term/term.component';
-import {setSelections} from '../../../../components/forms/form-helper';
 import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
 import {ProductMoratoriumFormComponent} from './moratorium/moratorium.component';
 import {Moratorium} from '../../../../services/portfolio/domain/individuallending/moratorium.model';
 import {FimsValidators} from '../../../../components/validators';
 import {accountExists} from '../../../../components/account-exists.validator';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   selector: 'fims-product-form-component',
@@ -53,7 +53,7 @@ export class ProductFormComponent implements OnInit{
 
   @Input('editMode') editMode: boolean;
 
-  @Input('product') set product(product: Product){
+  @Input('product') set product(product: FimsProduct){
     this.prepareDetailForm(product);
     this.prepareTermForm(product);
     this.prepareInterestForm(product);
@@ -152,9 +152,8 @@ export class ProductFormComponent implements OnInit{
     this.onCancel.emit();
   }
 
-  prepareDetailForm(product: Product): void{
+  prepareDetailForm(product: FimsProduct): void{
     let balanceRange = product.balanceRange;
-    let productParameter = this.parseParameter(product.parameters);
     this.detailForm = this.formBuilder.group({
       identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       name: [product.name, [Validators.required]],
@@ -164,12 +163,12 @@ export class ProductFormComponent implements OnInit{
       minimumBalance: [balanceRange ? balanceRange.minimum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange ? balanceRange.maximum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       multipleDispersals: [''],
-      dispersalAmount: [productParameter.maximumDispersalAmount],
-      dispersalCount: [productParameter.maximumDispersalCount],
+      dispersalAmount: [product.parameters.maximumDispersalAmount],
+      dispersalCount: [product.parameters.maximumDispersalCount],
     }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
   }
 
-  private prepareInterestForm(product: Product) {
+  private prepareInterestForm(product: FimsProduct) {
     let interestIncome = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
     let interestAccrual = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
     let interestRange = product.interestRange;
@@ -182,16 +181,15 @@ export class ProductFormComponent implements OnInit{
     }
   }
 
-  private prepareMoratoriumForm(product: Product) {
-    let productParameter = this.parseParameter(product.parameters);
-    this.moratoriumFormData = productParameter.moratoriums;
+  private prepareMoratoriumForm(product: FimsProduct) {
+    this.moratoriumFormData = product.parameters.moratoriums;
   }
 
   private parseParameter(parameters: string): ProductParameters{
     return JSON.parse(parameters);
   }
 
-  private prepareFeeForm(product: Product) {
+  private prepareFeeForm(product: FimsProduct) {
     let processingFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
     let disbursementFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
     let lateFeeIncomeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
@@ -206,7 +204,7 @@ export class ProductFormComponent implements OnInit{
       originationFeeAccount: this.accountIdentifier(loanOriginationFeeDesignator)
     }
   }
-  private prepareTermForm(product: Product) {
+  private prepareTermForm(product: FimsProduct) {
     let termRange = product.termRange;
     this.termFormData = {
       term: termRange ? termRange.maximum : undefined,
@@ -214,7 +212,7 @@ export class ProductFormComponent implements OnInit{
     }
   }
 
-  private prepareAllowanceForm(product: Product) {
+  private prepareAllowanceForm(product: FimsProduct) {
     let allowanceDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
     this.arrearsAllowanceForm = this.formBuilder.group({
       account: [this.accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],

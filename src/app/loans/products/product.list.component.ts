@@ -23,6 +23,7 @@ import {PortfolioStore} from './store/index';
 import * as fromPortfolio from './store';
 import {Observable} from 'rxjs';
 import {SEARCH} from './store/product.actions';
+import {FimsProduct} from './store/model/fims-product.model';
 
 @Component({
   templateUrl: './product.list.component.html'
@@ -52,7 +53,7 @@ export class ProductListComponent implements OnInit{
     this.store.dispatch({ type: SEARCH });
   }
 
-  rowSelect(product: Product): void{
+  rowSelect(product: FimsProduct): void{
     this.router.navigate(['detail', product.identifier], { relativeTo: this.route })
   }
 }

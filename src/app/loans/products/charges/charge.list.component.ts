@@ -17,7 +17,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../../../../components/data-table/data-table.component';
-import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ITdDataTableColumn} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../../components/domain/action-option.model';
@@ -25,6 +24,7 @@ import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
 import {Observable, Subscription} from 'rxjs';
 import {LOAD_ALL} from '../store/charges/charge.actions';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './charge.list.component.html'
@@ -33,7 +33,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
 
   private productSubscription: Subscription;
 
-  private product: Product;
+  private product: FimsProduct;
 
   private chargesData$: Observable<TableData>;
 

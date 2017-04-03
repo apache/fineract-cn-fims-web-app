@@ -16,13 +16,12 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
-import {Product} from '../../../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationType} from '../../../../../services/notification/notification.service';
 import {Subscription} from 'rxjs';
 import {CREATE, SelectAction} from '../../store/charges/charge.actions';
 import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
+import {FimsProduct} from '../../store/model/fims-product.model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -35,7 +34,7 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy{
 
   private chargeSubscription: Subscription;
 
-  private product: Product;
+  private product: FimsProduct;
 
   private charge: ChargeDefinition;
 

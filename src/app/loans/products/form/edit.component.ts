@@ -21,6 +21,7 @@ import {PortfolioStore} from '../store/index';
 import {SelectAction, UPDATE} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -31,7 +32,7 @@ export class ProductEditComponent implements OnInit, OnDestroy{
 
   private actionsSubscription: Subscription;
 
-  product: Product;
+  product: FimsProduct;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 

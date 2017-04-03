@@ -15,11 +15,11 @@
  */
 
 import * as product from './product.actions';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {FimsProduct} from './model/fims-product.model';
 
 
 export interface State {
-  products: Product[];
+  products: FimsProduct[];
   totalPages: number,
   totalElements: number,
   loading: boolean;

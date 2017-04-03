@@ -16,9 +16,9 @@
 
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
-import {Product} from '../../../../services/portfolio/domain/product.model';
 import {type} from '../../../util';
 import {RoutePayload} from '../../../../components/store/route-payload';
+import {FimsProduct} from './model/fims-product.model';
 
 export const SEARCH = type('[Product] Search');
 export const SEARCH_COMPLETE = type('[Product] Search Complete');
@@ -39,11 +39,11 @@ export const ENABLE_SUCCESS = type('[Product] Enable Success');
 export const ENABLE_FAIL = type('[Product] Enable Fail');
 
 export interface ProductRoutePayload extends RoutePayload{
-  product: Product
+  product: FimsProduct
 }
 
 export interface EnableProductPayload{
-  product: Product;
+  product: FimsProduct;
   enable: boolean;
 }
 
@@ -56,13 +56,13 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: Product[]) { }
+  constructor(public payload: FimsProduct[]) { }
 }
 
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Product) { }
+  constructor(public payload: FimsProduct) { }
 }
 
 export class SelectAction implements Action {
