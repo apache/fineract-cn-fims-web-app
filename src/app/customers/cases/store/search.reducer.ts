@@ -18,9 +18,10 @@ import * as caseActions from './case.actions';
 import {Case} from '../../../../services/portfolio/domain/case.model';
 import {SearchCasePayload} from './case.actions';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {FimsCase} from './model/fims-case.model';
 
 export interface State {
-  cases: Case[];
+  cases: FimsCase[];
   totalPages: number,
   totalElements: number,
   loading: boolean;

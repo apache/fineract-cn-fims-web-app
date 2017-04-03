@@ -16,13 +16,14 @@
 
 import {Component, Input, OnInit} from '@angular/core';
 import {FormComponent} from '../../../../../components/forms/form.component';
-import {Validators, FormBuilder} from '@angular/forms';
+import {Validators, FormBuilder, FormControl} from '@angular/forms';
 import {FimsValidators} from '../../../../../components/validators';
 import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
 import {alignmentOptions} from '../../../../../components/domain/alignment.model';
 import {weekDayOptions} from '../../../../../components/domain/week-days.model';
 import {monthOptions} from '../../../../../components/domain/months.model';
 import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
+import {Product} from '../../../../../services/portfolio/domain/product.model';
 
 export interface DetailFormData{
   identifier: string,
@@ -42,6 +43,8 @@ export interface DetailFormData{
 })
 export class CaseDetailFormComponent extends FormComponent<DetailFormData> implements OnInit{
 
+  private _product: Product;
+
   alignment: any[] = alignmentOptions;
 
   monthDays: any[] = [];
@@ -55,16 +58,45 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   @Input() set formData(formData: DetailFormData) {
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
-      principalAmount: [formData.principalAmount, [ Validators.required, FimsValidators.minValue(0) ]],
-      term: [formData.term, [ Validators.required, FimsValidators.minValue(0), FimsValidators.precision(0) ]],
+      principalAmount: [formData.principalAmount],
+      term: [formData.term],
       termTemporalUnit: [formData.termTemporalUnit, Validators.required],
-      paymentTemporalUnit: [formData.paymentTemporalUnit, Validators.required],
-      paymentPeriod: [formData.paymentPeriod, [ Validators.required, FimsValidators.minValue(0)]],
+      paymentTemporalUnit: [formData.paymentTemporalUnit, [ Validators.required, FimsValidators.minValue(1) ]],
+      paymentPeriod: [formData.paymentPeriod, [ Validators.required, FimsValidators.minValue(1)]],
       alignmentDay: [formData.paymentAlignmentDay],
       alignmentWeek: [formData.paymentAlignmentWeek],
       alignmentMonth: [formData.paymentAlignmentMonth],
       alignmentDaySetting: [formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
     });
+  }
+
+  @Input() set product(product: Product) {
+    this._product = product;
+
+    if(!product) return;
+
+    // Override validator with product constaints
+
+    this.form.get('principalAmount').setValidators([
+      Validators.required,
+      FimsValidators.minValue(product.balanceRange.minimum),
+      FimsValidators.maxValue(product.balanceRange.maximum)
+    ]);
+
+    // pre set temporal unit from product
+    const termTemporalUnit: FormControl = this.form.get('termTemporalUnit') as FormControl;
+    termTemporalUnit.setValue(product.termRange.temporalUnit);
+
+    const term: FormControl = this.form.get('term') as FormControl;
+    term.setValidators([
+      Validators.required,
+      FimsValidators.minValue(1),
+      FimsValidators.maxValue(product.termRange.maximum)
+    ]);
+  }
+
+  get product(): Product {
+    return this._product;
   }
 
   constructor(private formBuilder: FormBuilder) {

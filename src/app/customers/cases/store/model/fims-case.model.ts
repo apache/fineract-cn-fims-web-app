@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-import {AccountAssignment} from './account-assignment.model';
-import {CaseState} from './case-state.model';
+import {CaseState} from '../../../../../services/portfolio/domain/case-state.model';
+import {AccountAssignment} from '../../../../../services/portfolio/domain/account-assignment.model';
+import {CaseParameters} from '../../../../../services/portfolio/domain/individuallending/case-parameters.model';
 
-export interface Case{
+/**
+ * Model interface with concrete CaseParameters instead of JSON string.
+ */
+
+export interface FimsCase{
   identifier: string;
   productIdentifier: string;
-  parameters: string;
+  parameters: CaseParameters;
   accountAssignments: AccountAssignment[];
   currentState: CaseState;
   createdOn?: string;
@@ -28,3 +33,5 @@ export interface Case{
   lastModifiedOn?: string;
   lastModifiedBy?: string;
 }
+
+

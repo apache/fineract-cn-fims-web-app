@@ -25,6 +25,7 @@ import {PlannedPayment} from '../../../../services/portfolio/domain/individualle
 import {ITdDataTableColumn} from '@covalent/core';
 import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 import {ChargeName} from '../../../../services/portfolio/domain/individuallending/charge-name.model';
+import {FimsCase} from '../store/model/fims-case.model';
 
 interface CostComponents {
   [id: string]: CostComponent
@@ -44,7 +45,7 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
-  caseInstance: Case;
+  caseInstance: FimsCase;
 
   rows: Observable<PaymentRow[]>;
 

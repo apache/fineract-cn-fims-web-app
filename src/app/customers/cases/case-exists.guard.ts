@@ -22,6 +22,7 @@ import {of} from 'rxjs/observable/of';
 import {CasesStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
+import {mapToFimsCase} from './store/model/fims-case.mapper';
 
 @Injectable()
 export class CaseExistsGuard implements CanActivate {
@@ -38,7 +39,7 @@ export class CaseExistsGuard implements CanActivate {
 
   hasCaseInApi(productId: string, caseId: string): Observable<boolean> {
     return this.portfolioService.getCase(productId, caseId)
-      .map(chargeEntity => new LoadAction(chargeEntity))
+      .map(caseEntity => new LoadAction(mapToFimsCase(caseEntity)))
       .do((action: LoadAction) => this.store.dispatch(action))
       .map(caseEntity => !!caseEntity)
       .catch(() => {

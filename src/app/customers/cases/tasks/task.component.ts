@@ -23,6 +23,7 @@ import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import {Observable, Subscription} from 'rxjs';
 import {LOAD_ALL} from '../store/tasks/task.actions';
+import {FimsCase} from '../store/model/fims-case.model';
 
 @Component({
   templateUrl: './task.component.html'
@@ -31,7 +32,7 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
-  caseInstance: Case;
+  caseInstance: FimsCase;
 
   tasksData$: Observable<TableData>;
 

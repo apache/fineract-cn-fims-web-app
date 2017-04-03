@@ -60,7 +60,7 @@ export class SelectListComponent implements OnInit{
       .subscribe((event) => this.onSearch.emit(event))
   }
 
-  doSelect(id: any): void{
+  doSelect(id: any): void {
     if(this.selections.indexOf(id) > -1) return;
 
     if(this.multiple){

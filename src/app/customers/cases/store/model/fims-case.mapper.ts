@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import {AccountAssignment} from './account-assignment.model';
-import {CaseState} from './case-state.model';
+import {FimsCase} from './fims-case.model';
+import {Case} from '../../../../../services/portfolio/domain/case.model';
 
-export interface Case{
-  identifier: string;
-  productIdentifier: string;
-  parameters: string;
-  accountAssignments: AccountAssignment[];
-  currentState: CaseState;
-  createdOn?: string;
-  createdBy?: string;
-  lastModifiedOn?: string;
-  lastModifiedBy?: string;
+export function mapToCase(caseInstance: FimsCase): Case {
+  return Object.assign({}, caseInstance, {
+    parameters: JSON.stringify(caseInstance.parameters)
+  })
+}
+
+export function mapToFimsCase(caseInstance: Case): FimsCase {
+  return Object.assign({}, caseInstance, {
+    parameters: JSON.parse(caseInstance.parameters)
+  })
 }

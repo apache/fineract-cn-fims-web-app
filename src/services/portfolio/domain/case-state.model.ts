@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-import {AccountAssignment} from './account-assignment.model';
-import {CaseState} from './case-state.model';
-
-export interface Case{
-  identifier: string;
-  productIdentifier: string;
-  parameters: string;
-  accountAssignments: AccountAssignment[];
-  currentState: CaseState;
-  createdOn?: string;
-  createdBy?: string;
-  lastModifiedOn?: string;
-  lastModifiedBy?: string;
-}
+export type CaseState = 'CREATED' | 'PENDING' | 'APPROVED' | 'ACTIVE' | 'CLOSED';

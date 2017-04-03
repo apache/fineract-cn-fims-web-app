@@ -14,17 +14,24 @@
  * limitations under the License.
  */
 
-import {AccountAssignment} from './account-assignment.model';
-import {CaseState} from './case-state.model';
+import {FimsCase} from './fims-case.model';
+import {CasePage} from '../../../../../services/portfolio/domain/case-page.model';
+import {mapToFimsCase} from './fims-case.mapper';
 
-export interface Case{
-  identifier: string;
-  productIdentifier: string;
-  parameters: string;
-  accountAssignments: AccountAssignment[];
-  currentState: CaseState;
-  createdOn?: string;
-  createdBy?: string;
-  lastModifiedOn?: string;
-  lastModifiedBy?: string;
+export interface FimsCasePage{
+  elements: FimsCase[];
+  totalPages: number;
+  totalElements: number;
+}
+
+export function mapToFimsCasePage(casePage: CasePage): FimsCasePage {
+  let elements = [];
+  for(let caseInstance of casePage.elements) {
+    elements.push(mapToFimsCase(caseInstance));
+  }
+  return {
+    elements: elements,
+    totalPages: casePage.totalPages,
+    totalElements: casePage.totalElements
+  }
 }

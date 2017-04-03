@@ -81,7 +81,7 @@ export class FimsValidators {
 
   static minValue(minValue: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
-      if (c.value != null && (c.value <= minValue)) {
+      if (c.value != null && (c.value < minValue)) {
         return {
           minValue: {
             valid: false,
@@ -95,7 +95,7 @@ export class FimsValidators {
 
   static maxValue(maxValue: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
-      if (c.value != null && (c.value >= maxValue)) {
+      if (c.value != null && (c.value > maxValue)) {
         return {
           maxValue: {
             valid: false,

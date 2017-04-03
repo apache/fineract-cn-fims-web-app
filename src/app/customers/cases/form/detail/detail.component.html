@@ -23,7 +23,11 @@
       <input mdInput type="number" placeholder="{{'Principal Amount' | translate}}" formControlName="principalAmount" step="any"/>
       <md-hint *ngIf="!form.get('principalAmount').pristine" class="tc-red-600">
         <span *ngIf="form.get('principalAmount').hasError('required')" translate>Required</span>
-        <span *ngIf="form.get('principalAmount').hasError('minValue')" translate>Must be greater than 0</span>
+        <span *ngIf="form.get('principalAmount').hasError('minValue')" translate>Value must be greater than or equals {{form.get('principalAmount').getError('minValue').value}}</span>
+        <span *ngIf="form.get('principalAmount').hasError('maxValue')" translate>Value must be lower than or equals {{form.get('principalAmount').getError('maxValue').value}}</span>
+      </md-hint>
+      <md-hint align="end">
+        {{product?.balanceRange.minimum}} - {{product?.balanceRange.maximum}}
       </md-hint>
     </md-input-container>
   </div>
@@ -33,10 +37,11 @@
       <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
       <md-hint *ngIf="!form.get('term').pristine" class="tc-red-600">
         <span *ngIf="form.get('term').hasError('required')" translate>Required</span>
-        <span *ngIf="form.get('term').hasError('minValue')" translate>Must be greater than 0</span>
+        <span *ngIf="form.get('term').hasError('minValue')" translate>Value must be greater than or equals {{form.get('term').getError('minValue').value}}</span>
+        <span *ngIf="form.get('term').hasError('maxValue')" translate>Value must be lower than or equals {{form.get('term').getError('maxValue').value}}</span>
       </md-hint>
     </md-input-container>
-    <md-select formControlName="termTemporalUnit" layout-margin>
+    <md-select formControlName="termTemporalUnit" layout-margin [disabled]="true">
       <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
         {{basis.label | translate}}
       </md-option>
@@ -47,10 +52,10 @@
       <input mdInput type="number" placeholder="{{'Repay every' | translate}}" formControlName="paymentPeriod"/>
       <md-hint *ngIf="!form.get('paymentPeriod').pristine" class="tc-red-600">
         <span *ngIf="form.get('paymentPeriod').hasError('required')" translate>Required</span>
-        <span *ngIf="form.get('paymentPeriod').hasError('minValue')" translate>Must be greater than 0</span>
+        <span *ngIf="form.get('paymentPeriod').hasError('minValue')" translate>Value must be greater than or equals {{form.get('paymentPeriod').getError('minValue').value}}</span>
       </md-hint>
     </md-input-container>
-    <md-select formControlName="paymentTemporalUnit" layout-margin placeholder="">
+    <md-select formControlName="paymentTemporalUnit" layout-margin>
       <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
         {{alignment.label | translate}}
       </md-option>
@@ -85,8 +90,7 @@
             </md-option>
           </md-select>
         </ng-container>
-        <md-select formControlName="alignmentDay" layout-margin placeholder=""
-                   [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
+        <md-select formControlName="alignmentDay" layout-margin [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
           <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
             {{alignment.label | translate}}
           </md-option>

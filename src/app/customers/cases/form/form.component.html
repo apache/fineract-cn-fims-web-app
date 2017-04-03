@@ -18,6 +18,18 @@
   <td-step #productSelection label="{{'Select loan product' | translate}}" [state]="productForm.valid ? 'complete' : productForm.pristine ? 'none' : 'required'">
     <fims-product-select title="{{'Product' | translate}}" [preSelection]="productForm.get('identifier').value" (onSelectionChange)="onProductSelection($event)"></fims-product-select>
 
+    <template td-step-summary>
+      <h2 class="md-headline">
+        {{(selectedProduct | async)?.name}}
+      </h2>
+      <h3 class="md-subhead">
+        {{(selectedProduct | async)?.description}}
+      </h3>
+      <p>Allowed contraints</p>
+      <p>Principal range from {{(selectedProduct | async)?.balanceRange.minimum}} to {{(selectedProduct | async)?.balanceRange.maximum}}</p>
+      <p>Max term: {{(selectedProduct | async)?.termRange.maximum}}</p>
+    </template>
+
     <template td-step-actions>
       <button (click)="detailsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
@@ -25,7 +37,7 @@
     </template>
   </td-step>
   <td-step #detailsStep label="{{'Loan details' | translate}}" [disabled]="!productForm.valid" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <fims-case-detail-form #detailForm [formData]="detailFormData"></fims-case-detail-form>
+    <fims-case-detail-form #detailForm [formData]="detailFormData" [product]="selectedProduct | async"></fims-case-detail-form>
 
     <template td-step-actions>
       <button (click)="savingsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>

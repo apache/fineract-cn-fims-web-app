@@ -32,7 +32,7 @@ export class ProductSelectComponent implements OnInit{
 
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
 
-  private products: Observable<Product[]>;
+  products: Observable<Product[]>;
 
   constructor(private portfolioService: PortfolioService) {}
 
@@ -41,13 +41,6 @@ export class ProductSelectComponent implements OnInit{
   }
 
   onSearch(searchTerm?: string): void{
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 5
-      },
-      searchTerm: searchTerm
-    };
     this.products = this.portfolioService.findAllProducts();
   }
 

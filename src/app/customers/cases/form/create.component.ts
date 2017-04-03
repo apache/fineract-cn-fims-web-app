@@ -17,16 +17,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Case} from '../../../../services/portfolio/domain/case.model';
-import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 import {CaseFormComponent} from './form.component';
+import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import * as fromCases from '../store/index';
 import {Subscription} from 'rxjs';
 import {CREATE} from '../store/case.actions';
 import {Error} from '../../../../services/domain/error.model';
-
+import {FimsCase} from '../store/model/fims-case.model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -41,39 +40,11 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
 
   customer: Customer;
 
-  case: Case = {
+  caseInstance: FimsCase = {
+    currentState: 'CREATED',
     identifier: '',
     productIdentifier: '',
-    parameters: '',
-    accountAssignments: []
-  };
-
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
-
-  ngOnInit(): void {
-    this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
-      .subscribe(customer => this.customer = customer);
-
-    this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if(!payload.error) return;
-
-        switch(payload.error.status){
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            let detailForm = this.formComponent.detailForm;
-            let errors = detailForm.form.get('identifier').errors || {};
-            errors['unique'] = true;
-            detailForm.form.get('identifier').setErrors(errors);
-            this.formComponent.detailsStep.open();
-            break;
-        }
-      });
-
-    let parameter: CaseParameters = {
+    parameters: {
       customerIdentifier: '',
       balanceRange: {
         minimum: 0,
@@ -91,9 +62,34 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
         temporalUnit: 'MONTHS',
         maximum: 1
       }
-    };
+    },
+    accountAssignments: []
+  };
 
-    this.case.parameters = JSON.stringify(parameter);
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
+
+  ngOnInit(): void {
+    this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
+      .subscribe(customer => this.customer = customer);
+
+    this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
+      .subscribe((error: Error) => {
+
+        if(!error) return;
+
+        switch(error.status){
+          case 400:
+            //This should not happen
+            break;
+          case 409:
+            let detailForm = this.formComponent.detailForm;
+            let errors = detailForm.form.get('identifier').errors || {};
+            errors['unique'] = true;
+            detailForm.form.get('identifier').setErrors(errors);
+            this.formComponent.detailsStep.open();
+            break;
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -101,10 +97,10 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.formStateSubscription.unsubscribe();
   }
 
-  onSave(caseInstance: Case): void {
+  onSave(caseToSave: Case): void {
     this.casesStore.dispatch({ type: CREATE, payload: {
-      productId: caseInstance.productIdentifier,
-      case: caseInstance,
+      productId: caseToSave.productIdentifier,
+      caseInstance: caseToSave,
       activatedRoute: this.route
     }});
   }

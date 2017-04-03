@@ -64,7 +64,7 @@ describe('Validators', () => {
 
     it('should not return error when min value 0', () => {
       let validator = FimsValidators.minValue(0);
-      expect(validator(new FormControl(1))).toBeNull();
+      expect(validator(new FormControl(0))).toBeNull();
     });
 
     it('should return error when min value 0', () => {
@@ -83,12 +83,12 @@ describe('Validators', () => {
 
     it('should not return error when max value 10', () => {
       let validator = FimsValidators.maxValue(10);
-      expect(validator(new FormControl(9))).toBeNull();
+      expect(validator(new FormControl(10))).toBeNull();
     });
 
     it('should return error when max value 10', () => {
       let validator = FimsValidators.maxValue(10);
-      expect(validator(new FormControl(10))).toEqual({
+      expect(validator(new FormControl(11))).toEqual({
         maxValue: {
           valid: false,
           value: 10
