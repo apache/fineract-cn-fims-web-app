@@ -3,35 +3,35 @@
     "target": "http://localhost:2021",
     "secure": false,
     "pathRewrite": {
-      "^/identity": "/identity"
+      "/identity": "/identity"
     }
   },
-  "/office": {
+  "/api/office": {
     "target": "http://localhost:2022",
     "secure": false,
     "pathRewrite": {
-      "^/office": "/office"
+      "^/api/office": "/office"
     }
   },
-  "/customer": {
+  "/api/customer": {
     "target": "http://localhost:2023",
     "secure": false,
     "pathRewrite": {
-      "^/customer": "/customer"
+      "^/api/customer": "/customer"
     }
   },
-  "/accounting": {
+  "/api/accounting": {
     "target": "http://localhost:2024",
     "secure": false,
     "pathRewrite": {
-      "^/accounting": "/accounting"
+      "^/api/accounting": "/accounting"
     }
   },
-  "/portfolio": {
+  "/api/portfolio": {
     "target": "http://localhost:2025",
     "secure": false,
     "pathRewrite": {
-      "^/portfolio": "/portfolio"
+      "^/api/portfolio": "/portfolio"
     }
   }
 }
