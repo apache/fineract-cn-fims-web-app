@@ -22,7 +22,6 @@ import {GeneralLedgerComponent} from './general-ledger.component';
 import {TrailBalanceComponent} from './trailBalance/trial-balance.component';
 import {AccountComponent} from './accounts/account.component';
 import {SubLedgerDetailComponent} from './sub-ledger.detail.component';
-import {LedgerResolver} from './ledger.resolver';
 import {AccountResolver} from './accounts/account.resolver';
 import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
@@ -42,7 +41,7 @@ import {EditLedgerFormComponent} from './form/edit/edit.form.component';
 import {CreateLedgerFormComponent} from './form/create/create.form.component';
 import {LedgerExistsGuard} from './ledger-exists.guard';
 import {AccountExistsGuard} from './accounts/account-exists.guard';
-import {AccountingStore, accountingModuleReducer, accountingStoreFactory} from './store/index';
+import {AccountingStore, accountingStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 
 @NgModule({
@@ -71,7 +70,6 @@ import {Store} from '@ngrx/store';
     JournalEntryFormComponent
   ],
   providers: [
-    LedgerResolver,
     AccountResolver,
     CommandsResolver,
     TrialBalanceResolver,
