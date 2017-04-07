@@ -79,7 +79,7 @@
           <md-card flex>
             <md-list formArrayName="debtors">
               <h3 md-subheader translate>Debtor</h3>
-              <md-list-item class="active" *ngFor="let debtor of form.get('debtors').controls; let i = index;">
+              <md-list-item class="active" *ngFor="let debtor of debtors; let i = index;">
                 <div layout="row" layout-align="start center" style="width: 100%;" [formGroupName]="i">
                   <md-icon md-list-avatar>search</md-icon>
                   <div flex>
@@ -99,7 +99,7 @@
           <md-card flex>
             <md-list formArrayName="creditors">
               <h3 md-subheader translate>Creditor</h3>
-              <md-list-item class="active" *ngFor="let creditor of form.get('creditors').controls; let i = index;">
+              <md-list-item class="active" *ngFor="let creditor of creditors; let i = index;">
                 <div layout="row" layout-align="start center" style="width: 100%;" [formGroupName]="i">
                   <md-icon md-list-avatar>search</md-icon>
                   <div flex>

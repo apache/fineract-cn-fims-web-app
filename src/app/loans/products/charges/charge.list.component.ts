@@ -16,7 +16,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ITdDataTableColumn} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../../components/domain/action-option.model';
@@ -70,11 +70,11 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
     this.productSubscription.unsubscribe();
   }
 
-  fetchCharges(): void {
+  fetchCharges(event?: TableFetchRequest): void {
     this.portfolioStore.dispatch({ type: LOAD_ALL, payload: this.product.identifier });
   }
 
-  rowSelect(chargeDefinition: ChargeDefinition): void{
+  rowSelect(chargeDefinition: ChargeDefinition): void {
     this.router.navigate(['detail', chargeDefinition.identifier], { relativeTo: this.route })
   }
 }

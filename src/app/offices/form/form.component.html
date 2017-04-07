@@ -24,7 +24,7 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Name' | translate}}" formControlName="name" tdAutoTrim/>
-          <md-hint *ngIf="!detailForm.controls.name.pristine && detailForm.controls.name.errors?.required"
+          <md-hint *ngIf="!detailForm.get('name').pristine && detailForm.get('name').hasError('required')"
                    class="tc-red-600" translate>Required
           </md-hint>
         </md-input-container>
@@ -48,7 +48,7 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
           <md-hint
-            *ngIf="!addressForm.controls.street.pristine && addressForm.controls.street.errors?.required"
+            *ngIf="!addressForm.get('street').pristine && addressForm.get('street').hasError('required')"
             class="tc-red-600" translate>Required
           </md-hint>
         </md-input-container>
@@ -57,7 +57,7 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{ 'City' | translate}}" formControlName="city" tdAutoTrim/>
           <md-hint
-            *ngIf="!addressForm.controls.city.pristine && addressForm.controls.city.errors?.required"
+            *ngIf="!addressForm.get('city').pristine && addressForm.get('city').hasError('required')"
             class="tc-red-600" translate>Required
           </md-hint>
         </md-input-container>
@@ -66,7 +66,7 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{ 'Postal code(optional)' | translate }}" formControlName="postalCode" tdAutoTrim/>
           <md-hint
-            *ngIf="!addressForm.controls.postalCode.pristine && addressForm.controls.postalCode.errors?.maxlength"
+            *ngIf="!addressForm.get('postalCode').pristine && addressForm.get('postalCode').hasError('maxlength')"
             class="tc-red-600" translate>Only 5 figures allowed
           </md-hint>
         </md-input-container>
@@ -82,7 +82,7 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Country short name' | translate}}" formControlName="countryShortName" tdAutoTrim/>
           <md-hint
-            *ngIf="!addressForm.controls.countryShortName.pristine && addressForm.controls.countryShortName.errors"
+            *ngIf="!addressForm.get('countryShortName').pristine && addressForm.get('countryShortName').invalid"
             class="tc-red-600" translate>Required, Only 2 characters allowed
           </md-hint>
         </md-input-container>
@@ -91,7 +91,7 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" tdAutoTrim/>
           <md-hint
-            *ngIf="!addressForm.controls.country.pristine && addressForm.controls.country.errors?.required"
+            *ngIf="!addressForm.get('country').pristine && addressForm.get('country').hasError('required')"
             class="tc-red-600" translate>Required
           </md-hint>
         </md-input-container>

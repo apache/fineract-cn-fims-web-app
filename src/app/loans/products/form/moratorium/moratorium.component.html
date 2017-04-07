@@ -16,7 +16,7 @@
 
 <form [formGroup]="form">
   <div layout-gt-xs="column" layout-margin formArrayName="moratoriums" flex="30">
-    <div *ngFor="let moratorium of form.get('moratoriums').controls; let i=index" layout="row" [formGroupName]="i">
+    <div *ngFor="let moratorium of moratoriums; let i=index" layout="row" [formGroupName]="i">
       <md-input-container flex="20">
         <input mdInput type="number" placeholder="{{'Period' | translate}}" formControlName="period" step="any"/>
       </md-input-container>

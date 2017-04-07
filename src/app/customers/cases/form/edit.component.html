@@ -19,7 +19,7 @@
 <fims-layout-card-over title="Edit loan for customer">
   <fims-case-form-component #form
                               (onSave)="onSave($event)"
-                              (onCancel)="onCancel($event)"
+                              (onCancel)="onCancel()"
                               [case]="caseInstance"
                               [customerId]="customer.identifier"
                               [editMode]="true">

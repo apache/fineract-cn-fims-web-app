@@ -17,7 +17,7 @@
 import {Component, OnInit, Input, EventEmitter, Output, ViewChild} from '@angular/core';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {TdStepComponent} from '@covalent/core';
-import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from '@angular/forms';
 import {ActionOption} from '../../../../../components/domain/action-option.model';
 import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FimsValidators} from '../../../../../components/validator/validators';
@@ -94,6 +94,11 @@ export class ProductTaskFormComponent implements OnInit{
   removeAction(index: number): void{
     let actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.removeAt(index);
+  }
+
+  get actions(): AbstractControl[] {
+    const actions: FormArray = this.detailForm.get('actions') as FormArray;
+    return actions.controls;
   }
 
   save(): void{

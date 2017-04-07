@@ -17,7 +17,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
 import {PortfolioStore} from '../store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SelectAction} from '../store/product.actions';
@@ -71,11 +71,11 @@ export class ProductStatusComponent implements OnInit, OnDestroy{
     this.productSubscription.unsubscribe();
   }
 
-  fetchTasks(): void{
+  fetchTasks(event?: TableFetchRequest): void {
     this.portfolioStore.dispatch({ type: LOAD_ALL, payload: this.product.identifier });
   }
 
-  rowSelect(taskDefinition: TaskDefinition): void{
+  rowSelect(taskDefinition: TaskDefinition): void {
     this.router.navigate(['detail', taskDefinition.identifier], { relativeTo: this.route })
   }
 }

@@ -42,7 +42,7 @@
       </div>
       <div layout-gt-xs="column" layout-margin formArrayName="actions">
         <h4 translate>Task needs to be executed, before loan</h4>
-        <div *ngFor="let address of detailForm.controls.actions.controls; let i=index" layout="row" [formGroupName]="i">
+        <div *ngFor="let address of actions; let i=index" layout="row" [formGroupName]="i">
           <md-select formControlName="action" flex-gt-xs="15">
             <md-option *ngFor="let actionOption of actionOptions" [value]="actionOption.type">
               {{actionOption.label}}

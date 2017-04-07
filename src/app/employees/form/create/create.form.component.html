@@ -19,7 +19,7 @@
 <fims-layout-card-over title="{{'Create new employee' | translate}}">
   <fims-employee-form-component #form
                                   (onSave)="onSave($event)"
-                                  (onCancel)="onCancel($event)"
+                                  (onCancel)="onCancel()"
                                   [employee]="employee"
                                   [user]="user">
   </fims-employee-form-component>

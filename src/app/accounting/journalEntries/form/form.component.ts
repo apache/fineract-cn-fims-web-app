@@ -16,7 +16,7 @@
 import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
 import {FormComponent} from '../../../../components/forms/form.component';
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {FormBuilder, Validators, FormControl, FormGroup, FormArray} from '@angular/forms';
+import {FormBuilder, Validators, FormControl, FormGroup, FormArray, AbstractControl} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {TdStepComponent} from '@covalent/core';
 import {Creditor} from '../../../../services/accounting/domain/creditor.model';
@@ -153,6 +153,16 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
   navigateAway(): void {
     this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  get debtors(): AbstractControl[] {
+    const debtors: FormArray = this.form.get('debtors') as FormArray;
+    return debtors.controls;
+  }
+
+  get creditors(): AbstractControl[] {
+    const creditors: FormArray = this.form.get('creditors') as FormArray;
+    return creditors.controls;
   }
 
   private onAccountSearch(searchTerm?: string): void{

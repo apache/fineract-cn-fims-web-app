@@ -17,5 +17,5 @@
 <md-toolbar color="primary" class="md-whiteframe-z1"></md-toolbar>
 
 <fims-layout-card-over title="{{'Edit task definition' | translate}}">
-  <fims-product-task-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [task]="task" [editMode]="true"></fims-product-task-form-component>
+  <fims-product-task-form-component (onSave)="onSave($event)" (onCancel)="onCancel()" [task]="task" [editMode]="true"></fims-product-task-form-component>
 </fims-layout-card-over>

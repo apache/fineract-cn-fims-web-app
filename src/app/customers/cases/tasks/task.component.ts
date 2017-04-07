@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TableData} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
 import {Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {Case} from '../../../../services/portfolio/domain/case.model';
@@ -67,7 +67,7 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
     this.router.navigate(['tasks', task.identifier]);
   }
 
-  fetchTasks(): void{
+  fetchTasks(event?: TableFetchRequest): void{
     this.casesStore.dispatch({ type: LOAD_ALL, payload: {
       caseId: this.caseInstance.identifier,
       productId: this.caseInstance.productIdentifier

@@ -18,5 +18,5 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Create new office' | translate}}">
-  <fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office"></fims-office-form-component>
+  <fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel()" [office]="office"></fims-office-form-component>
 </fims-layout-card-over>
