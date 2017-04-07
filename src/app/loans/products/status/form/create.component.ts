@@ -39,7 +39,7 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
 
   private product: FimsProduct;
 
-  private task: TaskDefinition = {
+  task: TaskDefinition = {
     identifier: '',
     name: '',
     description: '',

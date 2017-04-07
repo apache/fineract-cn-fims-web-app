@@ -24,7 +24,7 @@ export class LayoutCardOverComponentTags{ }
   templateUrl: './layout-card-over.component.html',
   styleUrls: ['./layout-card-over.component.scss']
 })
-export class LayoutCardOverComponent implements OnInit{
+export class LayoutCardOverComponent implements OnInit {
 
   @Input() title: string;
 

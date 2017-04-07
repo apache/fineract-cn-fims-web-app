@@ -30,7 +30,7 @@ export class RoleComponent implements OnInit{
 
   rolesData$: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id' }
   ];
 

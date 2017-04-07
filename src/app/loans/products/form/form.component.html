@@ -79,35 +79,35 @@
       </div>
     </form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="settingsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
   <td-step #settingsStep label="{{'Ledger and Account Settings' | translate}}" [state]="settingsForm.valid ? 'complete' : settingsForm.pristine ? 'none' : 'required'">
     <fims-product-settings-form #settingsForm [formData]="settingsFormData"></fims-product-settings-form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="interestStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
   <td-step #interestStep label="{{'Interest settings' | translate}}" [state]="interestForm.valid ? 'complete' : interestForm.pristine ? 'none' : 'required'">
     <fims-product-interests-form #interestForm [formData]="interestFormData"></fims-product-interests-form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="feesStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
   <td-step #feesStep label="{{'Fee income accounts' | translate}}" [state]="feeForm.valid ? 'complete' : feeForm.pristine ? 'none' : 'required'">
     <fims-product-fee-form #feeForm [formData]="feeFormData"></fims-product-fee-form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="arrearsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
   <td-step #arrearsStep label="{{'Arrears allowance reserve account' | translate}}" [state]="arrearsAllowanceForm.valid ? 'complete' : arrearsAllowanceForm.pristine ? 'none' : 'required'">
     <form [formGroup]="arrearsAllowanceForm">
@@ -120,12 +120,12 @@
         </ng-container>
       </fims-account-select>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'CREATE PRODUCT' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'UPDATE PRODUCT' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
 </td-steps>

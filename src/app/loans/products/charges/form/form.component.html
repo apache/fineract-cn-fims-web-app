@@ -50,11 +50,11 @@
 
     </form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary">{{'SAVE CHARGE' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary">{{'UPDATE CHARGE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 </td-steps>

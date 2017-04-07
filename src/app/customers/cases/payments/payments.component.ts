@@ -45,6 +45,8 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
+  startDate: string;
+
   caseInstance: FimsCase;
 
   rows: Observable<PaymentRow[]>;

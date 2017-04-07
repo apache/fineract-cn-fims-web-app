@@ -32,7 +32,7 @@ export class ProductListComponent implements OnInit{
 
   productData: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' }
   ];

@@ -36,7 +36,7 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
 
   tasksData$: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'description', label: 'Description' }
@@ -63,11 +63,11 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
     this.caseSubscription.unsubscribe();
   }
 
-  private rowSelect(task: TaskDefinition): void{
+  rowSelect(task: TaskDefinition): void{
     this.router.navigate(['tasks', task.identifier]);
   }
 
-  private fetchTasks(): void{
+  fetchTasks(): void{
     this.casesStore.dispatch({ type: LOAD_ALL, payload: {
       caseId: this.caseInstance.identifier,
       productId: this.caseInstance.productIdentifier

@@ -58,7 +58,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
 
   private _catalogs: Catalog[];
 
-  private customCatalogs: CustomCatalog[] = [];
+  customCatalogs: CustomCatalog[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
 
@@ -83,7 +83,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     }
   }
 
-  private set customer(customer: Customer){
+  set customer(customer: Customer){
     this._customer = customer;
 
     let customCatalogs: CustomCatalog[] = [];
@@ -127,11 +127,11 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     }
   };
 
-  private get customer(): Customer{
+  get customer(): Customer{
     return this._customer;
   }
 
-  private set catalogs(catalogs: Catalog[]){
+  set catalogs(catalogs: Catalog[]){
     this._catalogs = catalogs;
   }
 

@@ -23,7 +23,7 @@
     <td-step #detailsStep label="{{'Journal Entry details' | translate}}">
 
         <div layout="row">
-          <fims-id-input [form]="form" controlName="transactionIdentifier" [readonly]="editMode"></fims-id-input>
+          <fims-id-input [form]="form" controlName="transactionIdentifier" [readonly]="false"></fims-id-input>
         </div>
         <div layout="row">
           <md-input-container layout-margin flex>
@@ -43,11 +43,11 @@
         <div layout="row">
           <fims-employee-select flex [preSelection]="selectedClerk" [multiple]="false" (onSelectionChange)="onClerkSelectionChange($event)" title="{{'Clerk' | translate}}"></fims-employee-select>
         </div>
-      <template td-step-actions>
+      <ng-template td-step-actions>
         <button (click)="accountsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
         <span flex></span>
         <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
-      </template>
+      </ng-template>
     </td-step>
     <td-step #accountsStep label="{{'Affected Accounts' | translate}}">
       <div layout-gt-xs="column">
@@ -121,11 +121,11 @@
           Sum of Debtors and sum of Creditors must match.
         </p>
       </div>
-      <template td-step-actions>
+      <ng-template td-step-actions>
         <button (click)="save()" md-raised-button color="primary" [disabled]="!valid">{{'CREATE JOURNAL ENTRY' | translate}}</button>
         <span flex></span>
         <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
-      </template>
+      </ng-template>
     </td-step>
   </td-steps>
   </form>

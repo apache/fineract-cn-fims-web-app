@@ -33,11 +33,11 @@ import {DatePipe} from '@angular/common';
 })
 export class JournalEntryListComponent implements OnInit{
 
-  private form: FormGroup;
+  form: FormGroup;
 
-  private journalEntryData$: Observable<TableData>;
+  journalEntryData$: Observable<TableData>;
 
-  private columns: ITdDataTableColumn[];
+  columns: ITdDataTableColumn[];
 
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
 
@@ -67,11 +67,11 @@ export class JournalEntryListComponent implements OnInit{
     this.fetchJournalEntries()
   }
 
-  private rowSelect(account: Account): void{
+  rowSelect(account: Account): void{
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  private fetchJournalEntries(): void{
+  fetchJournalEntries(): void{
     let startDate = this.form.get('startDate').value;
     let endDate = this.form.get('endDate').value;
 

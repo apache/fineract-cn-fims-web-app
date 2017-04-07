@@ -31,9 +31,11 @@ export class CustomerTaskFormComponent implements OnInit, OnDestroy{
 
   private customerSubscription: Subscription;
 
-  private customer: Customer;
+  selectedTask: string;
 
-  private tasks: TaskDefinition[];
+  customer: Customer;
+
+  tasks: TaskDefinition[];
 
   constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
 

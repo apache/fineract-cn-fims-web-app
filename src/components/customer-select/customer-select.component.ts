@@ -33,7 +33,7 @@ export class CustomerSelectComponent implements OnInit{
 
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
 
-  private customers: Observable<Customer[]>;
+  customers: Observable<Customer[]>;
 
   constructor(private customerService: CustomerService) {}
 

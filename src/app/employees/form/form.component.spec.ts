@@ -19,18 +19,12 @@ import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {EmployeeFormComponent, EmployeeSaveEvent} from './form.component';
 import {User} from '../../../services/identity/domain/user.model';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentCoreModule} from '@covalent/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
-import {OfficeService} from '../../../services/office/office.service';
 import {Observable} from 'rxjs';
-import {EmployeePage} from '../../../services/office/domain/employee-page.model';
-import {OfficePage} from '../../../services/office/domain/office-page.model';
-import {IdentityService} from '../../../services/identity/identity.service';
-import {Role} from '../../../services/identity/domain/role.model';
-import {EmployeesStore} from '../store/index';
 import {Store} from '@ngrx/store';
 
 let employeeTemplate: Employee = {

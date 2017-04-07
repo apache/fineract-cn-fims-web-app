@@ -66,23 +66,23 @@ export class CustomerFormComponent implements OnInit {
   @ViewChild('detailsStep') step: TdStepComponent;
 
   @ViewChild('detailForm') detailForm: CustomerDetailFormComponent;
-  private detailFormData: CustomerDetailFormData;
+  detailFormData: CustomerDetailFormData;
 
   @ViewChild('contactForm') contactForm: CustomerContactFormComponent;
-  private contactFormData: ContactDetail[];
+  contactFormData: ContactDetail[];
 
   @ViewChild('identityCardForm') identityCardForm: CustomerIdentityCardFormComponent;
-  private identityCardFormData: IdentificationCard;
+  identityCardFormData: IdentificationCard;
 
   @ViewChild('addressForm') addressForm: CustomerAddressFormComponent;
-  private addressFormData: Address;
+  addressFormData: Address;
 
-  private selectedOffices: string[];
+  selectedOffices: string[] = [];
 
-  private selectedEmployees: string[];
+  selectedEmployees: string[] = [];
 
   @ViewChild('customFieldsForm') customFieldsForm: CustomerCustomFieldsComponent;
-  private customFieldsFormData: Value[];
+  customFieldsFormData: Value[];
 
   ngOnInit() {
     this.openDetailStep();

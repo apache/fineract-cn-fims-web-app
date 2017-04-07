@@ -55,16 +55,16 @@ export class CustomerComponent implements OnInit{
     });
   }
 
-  private search(searchTerm: string): void{
+  search(searchTerm: string): void{
     this.searchTerm = searchTerm;
     this.fetchCustomers();
   }
 
-  private rowSelect(customer: Customer): void{
+  rowSelect(customer: Customer): void{
     this.router.navigate(['detail', customer.identifier], { relativeTo: this.route });
   }
 
-  private fetchCustomers(fetchRequest?: TableFetchRequest): void{
+  fetchCustomers(fetchRequest?: TableFetchRequest): void{
     if(fetchRequest){
       this.lastFetchRequest = fetchRequest;
     }

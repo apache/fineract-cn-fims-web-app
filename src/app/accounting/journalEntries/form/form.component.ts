@@ -46,11 +46,11 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-  private selectedClerk: string;
+  selectedClerk: string;
 
-  private term = new FormControl();
+  term = new FormControl();
 
-  private accounts: Observable<Account[]>;
+  accounts: Observable<Account[]>;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private store: AccountingStore) {
     super();

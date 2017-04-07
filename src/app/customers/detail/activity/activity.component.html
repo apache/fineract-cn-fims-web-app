@@ -24,9 +24,9 @@
 <fims-layout-card-over title="{{'Activities' | translate}}">
   <md-list>
     <h3 md-subheader translate>Latest activity</h3>
-    <template let-item let-last="last" ngFor [ngForOf]="commands">
+    <ng-template let-item let-last="last" ngFor [ngForOf]="commands">
       <fims-command-display [command]="item"></fims-command-display>
       <md-divider *ngIf="!last" md-inset></md-divider>
-    </template>
+    </ng-template>
   </md-list>
 </fims-layout-card-over>

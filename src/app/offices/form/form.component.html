@@ -35,11 +35,11 @@
         </md-input-container>
       </div>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="addressStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
   <td-step #addressStep label="{{'Office Address(optional)' | translate}}"
            [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
@@ -97,11 +97,11 @@
         </md-input-container>
       </div>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'CREATE OFFICE' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'UPDATE OFFICE' | translate}}</button>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
 </td-steps>

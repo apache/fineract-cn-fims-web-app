@@ -34,6 +34,8 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
 
   private _formData: Value[];
 
+  private _catalogs: Catalog[];
+
   @Input() set formData(formData: Value[]){
     this._formData = formData;
   };
@@ -62,13 +64,15 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     return values;
   }
 
-  private _catalogs: Catalog[];
-
-  private set catalogs(catalogs: Catalog[]){
+  set catalogs(catalogs: Catalog[]){
     for(let catalog of catalogs){
       this.form.setControl(catalog.identifier, this.buildFormGroup(catalog));
     }
     this._catalogs = catalogs;
+  }
+
+  get catalogs() : Catalog[] {
+    return this._catalogs;
   }
 
   private getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl{

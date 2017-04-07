@@ -32,7 +32,7 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
 
   private product: FimsProduct;
 
-  private charge: ChargeDefinition = {
+  charge: ChargeDefinition = {
     identifier: '',
     name: '',
     description: '',

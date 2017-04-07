@@ -34,11 +34,11 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
 
   private ledgerSubscription: Subscription;
 
-  private parentLedger: Ledger;
-
   @ViewChild('form') formComponent: LedgerFormComponent;
 
-  private ledger: Ledger = {
+  parentLedger: Ledger;
+
+  ledger: Ledger = {
     identifier: '',
     type: 'ASSET',
     name: '',

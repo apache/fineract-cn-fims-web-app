@@ -36,7 +36,7 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy{
 
   private product: FimsProduct;
 
-  private charge: ChargeDefinition;
+  charge: ChargeDefinition;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 

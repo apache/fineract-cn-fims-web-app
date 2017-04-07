@@ -54,11 +54,11 @@
       </div>
     </form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="save()" *ngIf="!editMode" [disabled]="!detailForm.valid" md-raised-button color="primary">{{'SAVE TASK' | translate}}</button>
       <button (click)="save()" *ngIf="editMode" [disabled]="!detailForm.valid" md-raised-button color="primary">{{'UPDATE TASK' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 </td-steps>

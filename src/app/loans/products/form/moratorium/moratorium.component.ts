@@ -57,12 +57,12 @@ export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]>{
     })
   }
 
-  private addMoratorium(): void{
+  addMoratorium(): void{
     let moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
     moratoriums.push(this.initMoratorium());
   }
 
-  private removeMoratorium(index: number): void{
+  removeMoratorium(index: number): void{
     let moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
     moratoriums.removeAt(index);
   }

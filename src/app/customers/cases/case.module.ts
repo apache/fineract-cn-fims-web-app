@@ -30,11 +30,24 @@ import {CasesStore, caseStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {CaseExistsGuard} from './case-exists.guard';
 import {CaseDetailPaymentCycleComponent} from './payment-cycle/payment-cycle.component';
+import {CasePaymentsApiEffects} from './store/payments/effects/service.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {CaseTasksApiEffects} from './store/tasks/effects/service.effects';
+import {CaseNotificationEffects} from './store/effects/notification.effects';
+import {CaseRouteEffects} from './store/effects/route.effects';
+import {CaseApiEffects} from './store/effects/service.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(CaseRoutes),
-    CommonModule
+    CommonModule,
+
+    EffectsModule.run(CaseApiEffects),
+    EffectsModule.run(CaseRouteEffects),
+    EffectsModule.run(CaseNotificationEffects),
+
+    EffectsModule.run(CaseTasksApiEffects),
+    EffectsModule.run(CasePaymentsApiEffects)
   ],
   declarations: [
     CaseListComponent,

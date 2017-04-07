@@ -27,7 +27,7 @@ import {SEARCH} from '../../../reducers/office/office.actions';
 })
 export class CustomerOfficesComponent implements OnInit{
 
-  private offices: Observable<Office[]>;
+  offices: Observable<Office[]>;
 
   @Input() preSelection: string;
 

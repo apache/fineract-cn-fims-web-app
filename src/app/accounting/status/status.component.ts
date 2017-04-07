@@ -32,7 +32,7 @@ export class AccountStatusComponent implements OnInit{
 
   private accountIdentifier: string;
 
-  private statusCommands: StatusCommand[] = [
+  statusCommands: StatusCommand[] = [
     { action: 'LOCK' },
     { action: 'UNLOCK' },
     { action: 'CLOSE' },
@@ -45,7 +45,7 @@ export class AccountStatusComponent implements OnInit{
     this.route.params.subscribe((params: Params) => this.accountIdentifier = params['id']);
   }
 
-  private executeCommand(statusCommand: StatusCommand): void{
+  executeCommand(statusCommand: StatusCommand): void{
     let command: AccountCommand = {
       comment: statusCommand.comment,
       action: statusCommand.action

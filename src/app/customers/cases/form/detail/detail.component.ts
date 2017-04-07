@@ -45,6 +45,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
   private _product: Product;
 
+  @Input() editMode: boolean;
+
   alignments: any[] = alignmentOptions;
 
   monthDays: any[] = [];

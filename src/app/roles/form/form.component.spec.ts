@@ -22,7 +22,7 @@ import {Observable} from 'rxjs';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {MaterialModule} from '@angular/material';
 import {Role} from '../../../services/identity/domain/role.model';
-import {TranslateLoader, TranslateModule} from 'ng2-translate';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
 

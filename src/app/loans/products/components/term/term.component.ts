@@ -32,7 +32,7 @@ export interface TermRangeFormData{
 })
 export class ProductTermFormComponent extends FormComponent<TermRangeFormData>{
 
-  private temporalOptions = temporalOptionList;
+  temporalOptions = temporalOptionList;
 
   @Input() set formData(termRange: TermRangeFormData){
     this.form = this.formBuilder.group({

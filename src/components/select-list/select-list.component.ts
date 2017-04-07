@@ -24,7 +24,7 @@ import { Observable } from 'rxjs';
 })
 export class SelectListComponent implements OnInit{
 
-  private selections: string[];
+  selections: string[];
 
   term = new FormControl();
 

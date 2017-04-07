@@ -20,7 +20,7 @@ import {
   NotificationService
 } from '../../services/notification/notification.service';
 import {MdSnackBarConfig, MdSnackBarRef, MdSnackBar} from '@angular/material';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
 import {Subscription} from 'rxjs';

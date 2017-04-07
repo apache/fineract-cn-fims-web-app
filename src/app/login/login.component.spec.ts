@@ -22,7 +22,7 @@ import {DebugElement} from '@angular/core';
 import {CovalentCoreModule} from '@covalent/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Authentication} from '../../services/identity/domain/authentication.model';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../reducers/security/security.actions';

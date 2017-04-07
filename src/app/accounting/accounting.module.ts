@@ -42,11 +42,38 @@ import {LedgerExistsGuard} from './ledger-exists.guard';
 import {AccountExistsGuard} from './accounts/account-exists.guard';
 import {AccountingStore, accountingStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
+import {AccountCommandNotificationEffects} from './store/account/task/effects/notification.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {AccountCommandApiEffects} from './store/account/task/effects/service.effects';
+import {AccountNotificationEffects} from './store/account/effects/notification.effects';
+import {AccountEntryApiEffects} from './store/account/entries/effects/service.effect';
+import {AccountRouteEffects} from './store/account/effects/route.effects';
+import {AccountApiEffects} from './store/account/effects/service.effects';
+import {JournalEntryNotificationEffects} from './store/ledger/journal-entry/effects/notification.effects';
+import {JournalEntryRouteEffects} from './store/ledger/journal-entry/effects/route.effects';
+import {JournalEntryApiEffects} from './store/ledger/journal-entry/effects/service.effects';
+import {LedgerNotificationEffects} from './store/ledger/effects/notification.effects';
+import {LedgerRouteEffects} from './store/ledger/effects/route.effects';
+import {LedgerApiEffects} from './store/ledger/effects/service.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(AccountingRoutes),
-    CommonModule
+    CommonModule,
+    EffectsModule.run(LedgerApiEffects),
+    EffectsModule.run(LedgerRouteEffects),
+    EffectsModule.run(LedgerNotificationEffects),
+
+    EffectsModule.run(JournalEntryApiEffects),
+    EffectsModule.run(JournalEntryRouteEffects),
+    EffectsModule.run(JournalEntryNotificationEffects),
+
+    EffectsModule.run(AccountApiEffects),
+    EffectsModule.run(AccountRouteEffects),
+    EffectsModule.run(AccountNotificationEffects),
+    EffectsModule.run(AccountEntryApiEffects),
+    EffectsModule.run(AccountCommandApiEffects),
+    EffectsModule.run(AccountCommandNotificationEffects),
   ],
   declarations: [
     GeneralLedgerComponent,

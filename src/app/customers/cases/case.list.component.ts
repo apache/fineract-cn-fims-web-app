@@ -35,9 +35,9 @@ export class CaseListComponent implements OnInit{
 
   private customer: Customer;
 
-  private casesData$: Observable<TableData>;
+  casesData$: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'currentState', label: 'Current status' }
   ];

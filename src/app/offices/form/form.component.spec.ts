@@ -18,7 +18,7 @@ import {Component, ViewChild, EventEmitter, Output} from '@angular/core';
 import {Office} from '../../../services/office/domain/office.model';
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {OfficeFormComponent} from './form.component';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {CovalentCoreModule} from '@covalent/core';
 import {ReactiveFormsModule, FormControl, AbstractControl} from '@angular/forms';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';

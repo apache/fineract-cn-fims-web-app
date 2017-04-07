@@ -27,12 +27,19 @@ import {CommonModule} from '../../components/common.module';
 import {RoleExistsGuard} from './role-exists.guard';
 import {RolesStore, roleStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
+import {RoleNotificationEffects} from './store/effects/notification.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {RoleRouteEffects} from './store/effects/route.effects';
+import {RoleApiEffects} from './store/effects/service.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(RoleRoutes),
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EffectsModule.run(RoleApiEffects),
+    EffectsModule.run(RoleRouteEffects),
+    EffectsModule.run(RoleNotificationEffects)
   ],
   declarations: [
     RoleComponent,

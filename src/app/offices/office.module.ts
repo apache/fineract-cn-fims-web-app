@@ -29,12 +29,20 @@ import {HeadquarterNotFoundComponent} from './headquarter/headquarter-not-found.
 import {OfficeExistsGuard} from './office-exists.guard';
 import {Store} from '@ngrx/store';
 import {OfficesStore, officeStoreFactory} from './store/index';
+import {OfficeNotificationEffects} from './store/effects/notification.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {OfficeRouteEffects} from './store/effects/route.effects';
+import {OfficeApiEffects} from './store/effects/service.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(OfficeRoutes),
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    EffectsModule.run(OfficeApiEffects),
+    EffectsModule.run(OfficeRouteEffects),
+    EffectsModule.run(OfficeNotificationEffects),
   ],
   declarations: [
     OfficeComponent,

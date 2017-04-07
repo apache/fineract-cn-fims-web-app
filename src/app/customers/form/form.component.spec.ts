@@ -25,7 +25,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentCoreModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';

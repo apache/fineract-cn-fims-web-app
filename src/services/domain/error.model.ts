@@ -30,7 +30,7 @@ export class Error {
     this.statusText = statusText;
   }
 
-  static handleError(errorResponse: any): ErrorObservable<Error> {
+  static handleError(errorResponse: any): ErrorObservable {
     let error: Error = new Error(errorResponse.status, errorResponse.statusText, errorResponse.message);
 
     console.error(error.getErrorMessage());

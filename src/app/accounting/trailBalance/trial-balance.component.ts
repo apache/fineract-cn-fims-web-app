@@ -25,9 +25,9 @@ import {AccountingStore} from '../store/index';
 })
 export class TrailBalanceComponent implements OnInit{
 
-  private includeEmptyEntries: boolean = true;
+  includeEmptyEntries: boolean = true;
 
-  private trialBalance: Observable<TrialBalance>;
+  trialBalance: Observable<TrialBalance>;
 
   constructor(private store: AccountingStore){}
 
@@ -36,7 +36,7 @@ export class TrailBalanceComponent implements OnInit{
     this.fetchTrialBalance();
   }
 
-  private fetchTrialBalance(): void{
+  fetchTrialBalance(): void{
     this.store.dispatch({ type: LOAD_TRIAL_BALANCE, payload: this.includeEmptyEntries });
   }
 

@@ -28,17 +28,6 @@ import {FimsValidators} from '../../../../../components/validator/validators';
 })
 export class ProductTaskFormComponent implements OnInit{
 
-  private actionOptions: ActionOption[] = [
-    { type: 'OPEN', label: 'can be opened' },
-    { type: 'DENY', label: 'can be denied' },
-    { type: 'APPROVE', label: 'can be approved' },
-    { type: 'DISBURSE', label: 'can be disbursed' },
-    { type: 'WRITE_OFF', label: 'can be written off' },
-    { type: 'CLOSE', label: 'can be closed' },
-    { type: 'RECOVER', label: 'can recovered' },
-    { type: 'ACCEPT_PAYMENT', label: 'can be repayed' },
-  ];
-
   @Input('task') set task(task: TaskDefinition){
     this.prepareDetailForm(task);
   };
@@ -52,6 +41,17 @@ export class ProductTaskFormComponent implements OnInit{
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
   detailForm: FormGroup;
+
+  actionOptions: ActionOption[] = [
+    { type: 'OPEN', label: 'can be opened' },
+    { type: 'DENY', label: 'can be denied' },
+    { type: 'APPROVE', label: 'can be approved' },
+    { type: 'DISBURSE', label: 'can be disbursed' },
+    { type: 'WRITE_OFF', label: 'can be written off' },
+    { type: 'CLOSE', label: 'can be closed' },
+    { type: 'RECOVER', label: 'can recovered' },
+    { type: 'ACCEPT_PAYMENT', label: 'can be repayed' },
+  ];
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -86,17 +86,17 @@ export class ProductTaskFormComponent implements OnInit{
     })
   }
 
-  private addAction(): void{
+  addAction(): void{
     let actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.push(this.initAction());
   }
 
-  private removeAction(index: number): void{
+  removeAction(index: number): void{
     let actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.removeAt(index);
   }
 
-  private save(): void{
+  save(): void{
     let actions: any[] = this.detailForm.get('actions').value;
     let rawActions: WorkflowAction[] = [];
     actions.forEach(action => rawActions.push(action.action));
@@ -112,7 +112,7 @@ export class ProductTaskFormComponent implements OnInit{
     this.onSave.emit(task);
   }
 
-  private cancel(): void{
+  cancel(): void{
     this.onCancel.emit();
   }
 

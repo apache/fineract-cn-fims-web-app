@@ -29,7 +29,7 @@ export class GeneralLedgerComponent implements OnInit{
 
   ledgerData: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id', tooltip: 'Id' },
     { name: 'name', label: 'Name', tooltip: 'Name' },
     { name: 'description', label: 'Description', tooltip: 'Description' }
@@ -50,7 +50,7 @@ export class GeneralLedgerComponent implements OnInit{
     });
   }
 
-  private rowSelect(ledger: Ledger): void{
+  rowSelect(ledger: Ledger): void{
     this.router.navigate(['ledgers/detail', ledger.identifier], { relativeTo: this.route });
   }
 
