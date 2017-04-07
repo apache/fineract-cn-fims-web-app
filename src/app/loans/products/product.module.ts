@@ -42,6 +42,7 @@ import {PortfolioStore, portfolioStoreFactory} from './store/index';
 import {ProductExistsGuard} from './product-exists.guard';
 import {ProductTaskExistsGuard} from './status/task-exists.guard';
 import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
+import {ProductSettingsFormComponent} from './form/settings/settings.component';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
     ProductInterestFormComponent,
     ProductTermFormComponent,
     ProductMoratoriumFormComponent,
+    ProductSettingsFormComponent,
 
     // charge
     ProductChargeListComponent,

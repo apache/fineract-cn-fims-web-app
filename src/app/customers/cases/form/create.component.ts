@@ -52,9 +52,9 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
       },
       initialBalance: 0,
       paymentCycle: {
-        alignmentDay: 0,
-        alignmentMonth: 0,
-        alignmentWeek: 0,
+        alignmentDay: null,
+        alignmentMonth: null,
+        alignmentWeek: null,
         period: 1,
         temporalUnit: 'MONTHS',
       },

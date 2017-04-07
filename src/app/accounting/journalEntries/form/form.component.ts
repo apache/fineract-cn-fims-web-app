@@ -25,7 +25,7 @@ import {FetchRequest} from '../../../../services/domain/paging/fetch-request.mod
 import {Account} from '../../../../services/accounting/domain/account.model';
 import {Observable, Subscription} from 'rxjs';
 import {toLongISOString} from '../../../../services/domain/date.converter';
-import {FimsValidators} from '../../../../components/validators';
+import {FimsValidators} from '../../../../components/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../reducers';
 import {CREATE} from '../../store/ledger/journal-entry/journal-entry.actions';

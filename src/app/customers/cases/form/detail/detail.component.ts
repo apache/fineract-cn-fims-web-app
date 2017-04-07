@@ -17,7 +17,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormComponent} from '../../../../../components/forms/form.component';
 import {Validators, FormBuilder, FormControl} from '@angular/forms';
-import {FimsValidators} from '../../../../../components/validators';
+import {FimsValidators} from '../../../../../components/validator/validators';
 import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
 import {alignmentOptions} from '../../../../../components/domain/alignment.model';
 import {weekDayOptions} from '../../../../../components/domain/week-days.model';
@@ -45,7 +45,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
   private _product: Product;
 
-  alignment: any[] = alignmentOptions;
+  alignments: any[] = alignmentOptions;
 
   monthDays: any[] = [];
 
@@ -66,7 +66,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       alignmentDay: [formData.paymentAlignmentDay],
       alignmentWeek: [formData.paymentAlignmentWeek],
       alignmentMonth: [formData.paymentAlignmentMonth],
-      alignmentDaySetting: [formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
+      alignmentDaySetting: [formData.paymentAlignmentWeek !== null ? 'relative' : 'fixed'],
     });
   }
 
@@ -76,16 +76,18 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     if(!product) return;
 
     // Override validator with product constaints
-
-    this.form.get('principalAmount').setValidators([
+    const principalAmount = this.form.get('principalAmount') as FormControl;
+    principalAmount.setValidators([
       Validators.required,
       FimsValidators.minValue(product.balanceRange.minimum),
       FimsValidators.maxValue(product.balanceRange.maximum)
     ]);
+    principalAmount.updateValueAndValidity();
 
     // pre set temporal unit from product
     const termTemporalUnit: FormControl = this.form.get('termTemporalUnit') as FormControl;
     termTemporalUnit.setValue(product.termRange.temporalUnit);
+    termTemporalUnit.updateValueAndValidity();
 
     const term: FormControl = this.form.get('term') as FormControl;
     term.setValidators([
@@ -93,6 +95,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       FimsValidators.minValue(1),
       FimsValidators.maxValue(product.termRange.maximum)
     ]);
+    term.updateValueAndValidity();
   }
 
   get product(): Product {
@@ -104,9 +107,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   }
 
   ngOnInit(): void {
-    for(let i = 0; i < 30; i++){
+    for(let i = 0; i < 30; i++) {
       this.monthDays.push({
-        type: `${i}`, label: `${i+1}.`
+        type: i, label: `${i+1}.`
       })
     }
   }

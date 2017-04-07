@@ -63,4 +63,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
     this.actionsSubscription.unsubscribe();
     this.productSubscription.unsubscribe();
   }
+
+  get numberFormat(): string {
+    let digits = 2;
+    if(this.product){
+      digits = this.product.minorCurrencyUnitDigits;
+    }
+    return `1.${digits}-${digits}`;
+  }
+
 }

@@ -17,10 +17,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Case} from '../../../../services/portfolio/domain/case.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationType} from '../../../../services/notification/notification.service';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 import {CasesStore} from '../store/index';
 import {SelectAction, UPDATE} from '../store/case.actions';
+import * as customerActions from '../../store/customer.actions';
 import {Subscription} from 'rxjs';
 import * as fromCases from '../store/index';
 import * as fromCustomers from '../../store/index';

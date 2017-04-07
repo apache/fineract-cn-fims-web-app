@@ -35,9 +35,9 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
 
   private product: FimsProduct;
 
-  private chargesData$: Observable<TableData>;
+  chargesData$: Observable<TableData>;
 
-  private columns: ITdDataTableColumn[] = [
+  columns: ITdDataTableColumn[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'amount', label: 'Amount', numeric: true, format: value => value.toFixed(2) },
@@ -70,7 +70,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
     this.productSubscription.unsubscribe();
   }
 
-  fetchCharges(): void{
+  fetchCharges(): void {
     this.portfolioStore.dispatch({ type: LOAD_ALL, payload: this.product.identifier });
   }
 

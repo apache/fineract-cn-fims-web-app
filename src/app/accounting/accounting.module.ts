@@ -27,7 +27,6 @@ import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
 import {AccountActivityComponent} from './activity/activity.component';
 import {CommandsResolver} from './activity/commands.resolver';
-import {TrialBalanceResolver} from './trailBalance/trial-balance.resolver';
 import {AccountFormComponent} from './accounts/form/form.component';
 import {CreateAccountFormComponent} from './accounts/form/create/create.form.component';
 import {AccountListComponent} from './accounts/account.list.component';
@@ -72,7 +71,6 @@ import {Store} from '@ngrx/store';
   providers: [
     AccountResolver,
     CommandsResolver,
-    TrialBalanceResolver,
     LedgerExistsGuard,
     AccountExistsGuard,
     { provide: AccountingStore, useFactory: accountingStoreFactory, deps: [Store]}

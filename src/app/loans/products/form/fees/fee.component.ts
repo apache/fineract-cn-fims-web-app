@@ -17,8 +17,8 @@
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../../../components/forms/form.component';
 import {FormBuilder, Validators} from '@angular/forms';
-import {accountExists} from '../../../../../components/account-exists.validator';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
+import {accountExists} from '../../../../../components/validator/account-exists.validator';
 
 export interface FeeFormData {
   processingFeeAccount: string;

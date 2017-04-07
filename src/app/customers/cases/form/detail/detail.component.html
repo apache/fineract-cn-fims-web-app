@@ -85,7 +85,7 @@
           <md-radio-button layout-margin value="relative"></md-radio-button>
           <md-select formControlName="alignmentWeek" placeholder="{{'on the' | translate}}" layout-margin
                      [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
-            <md-option *ngFor="let alignment of alignment" [value]="alignment.type">
+            <md-option *ngFor="let alignment of alignments" [value]="alignment.type">
               {{alignment.label | translate}}
             </md-option>
           </md-select>
@@ -104,4 +104,5 @@
       {{alignment.label | translate}}
     </md-option>
   </md-select>
+  {{ form.getRawValue() | json }}
 </form>

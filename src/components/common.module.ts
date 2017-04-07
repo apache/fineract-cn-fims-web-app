@@ -31,6 +31,7 @@ import {ProductSelectComponent} from './product-select/product-select.component'
 import {TranslateModule} from 'ng2-translate';
 import {MinMaxComponent} from './min-max/min-max.component';
 import {ValidateOnBlurDirective} from './validate-on-blur.directive';
+import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import {ValidateOnBlurDirective} from './validate-on-blur.directive';
     CustomerSelectComponent,
     EmployeeSelectComponent,
     AccountSelectComponent,
+    LedgerSelectComponent,
     ProductSelectComponent,
     IdInputComponent,
     PermissionDirective,
@@ -61,6 +63,7 @@ import {ValidateOnBlurDirective} from './validate-on-blur.directive';
     CustomerSelectComponent,
     EmployeeSelectComponent,
     AccountSelectComponent,
+    LedgerSelectComponent,
     ProductSelectComponent,
     IdInputComponent,
     PermissionDirective,

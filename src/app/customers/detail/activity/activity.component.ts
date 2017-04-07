@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, Input, OnDestroy} from '@angular/core';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Command} from '../../../../services/customer/domain/command.model';
-import {ActivatedRoute} from '@angular/router';
 import {CustomersStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/commands/commands.actions';
-import {SelectAction} from '../../store/customer.actions';
 import {Subscription} from 'rxjs';
 import * as fromCustomers from '../../store';
 
@@ -31,24 +28,15 @@ export class CustomerActivityComponent implements OnInit, OnDestroy{
 
   private commandsSubscription: Subscription;
 
-  private selectionSubscription: Subscription;
-
   private customerSubscription: Subscription;
 
-  private customer: Customer;
+  commands: Command[];
 
-  private commands: Command[];
-
-  constructor(private route: ActivatedRoute, private store: CustomersStore){}
+  constructor(private store: CustomersStore){}
 
   ngOnInit(): void {
-    this.selectionSubscription = this.route.parent.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
-      .do(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier }))
-      .subscribe(customer => this.customer = customer);
+      .subscribe(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier }));
 
     this.commandsSubscription = this.store.select(fromCustomers.getAllCustomerCommands)
       .subscribe(commands => this.commands = commands);
@@ -56,7 +44,6 @@ export class CustomerActivityComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.commandsSubscription.unsubscribe();
-    this.selectionSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
   }
 }

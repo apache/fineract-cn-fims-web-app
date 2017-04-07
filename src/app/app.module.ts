@@ -84,6 +84,7 @@ import {CaseRouteEffects} from './customers/cases/store/effects/route.effects';
 import {CaseNotificationEffects} from './customers/cases/store/effects/notification.effects';
 import {CaseTasksApiEffects} from './customers/cases/store/tasks/effects/service.effects';
 import {CasePaymentsApiEffects} from './customers/cases/store/payments/effects/service.effects';
+import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
 
 export function createTranslateLoader(http: Http){
   return new TranslateStaticLoader(http, '/assets/i18n', '.json');
@@ -121,6 +122,7 @@ export function createTranslateLoader(http: Http){
     EffectsModule.run(CustomerSearchApiEffects),
     EffectsModule.run(AccountSearchApiEffects),
     EffectsModule.run(RoleSearchApiEffects),
+    EffectsModule.run(LedgerSearchApiEffects),
 
 
     /**

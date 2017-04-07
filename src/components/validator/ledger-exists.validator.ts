@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import {AccountingService} from '../services/accounting/accounting.service';
 import {AsyncValidatorFn, AbstractControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {FetchRequest} from '../services/domain/paging/fetch-request.model';
+import {AccountingService} from '../../services/accounting/accounting.service';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 
-export function accountExists(accountingService: AccountingService): AsyncValidatorFn {
+export function ledgerExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
@@ -32,14 +32,14 @@ export function accountExists(accountingService: AccountingService): AsyncValida
     };
 
     return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => accountingService.fetchAccounts(fetchRequest))
-      .map(accountPage => accountPage.accounts)
-      .map(accounts => {
-        if(accounts.length === 1 && accounts[0].identifier === control.value){
+      .switchMap(fetchRequest => accountingService.fetchLedgers(true, fetchRequest))
+      .map(ledgerPage => ledgerPage.ledgers)
+      .map(ledgers => {
+        if(ledgers.length === 1 && ledgers[0].identifier === control.value){
           return null;
         }
         return {
-          invalidAccount: true
+          invalidLedger: true
         }
       });
   }

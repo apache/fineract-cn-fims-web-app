@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, EventEmitter, Output, Input, ViewChild, OnDestroy} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Case} from '../../../../services/portfolio/domain/case.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {accountExists} from '../../../../components/account-exists.validator';
 import {setSelections} from '../../../../components/forms/form-helper';
-import {CasesStore} from '../store/index';
 import * as fromCases from '../store/index';
+import {CasesStore} from '../store/index';
 import {LOAD_PRODUCT, UNLOAD_PRODUCT} from '../store/case.actions';
 import {Product} from '../../../../services/portfolio/domain/product.model';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {FimsCase} from '../store/model/fims-case.model';
+import {accountExists} from '../../../../components/validator/account-exists.validator';
 
 @Component({
   selector: 'fims-case-form-component',
@@ -38,7 +37,7 @@ import {FimsCase} from '../store/model/fims-case.model';
 })
 export class CaseFormComponent implements OnInit{
 
-  _caseInstance: FimsCase;
+  private _caseInstance: FimsCase;
 
   selectedProduct: Observable<Product>;
 
@@ -61,8 +60,7 @@ export class CaseFormComponent implements OnInit{
     this._caseInstance = caseInstance;
 
     this.prepareProductForm(caseInstance);
-    this.preparePaymentsForm(caseInstance);
-    this.prepareSavingsForm(caseInstance);
+    this.prepareDetailForm(caseInstance);
   };
 
   get caseInstance(): FimsCase {
@@ -72,7 +70,7 @@ export class CaseFormComponent implements OnInit{
   @Output('onSave') onSave = new EventEmitter<FimsCase>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService, private casesStore: CasesStore) {}
+  constructor(private formBuilder: FormBuilder, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
     this.productStep.open();
@@ -80,13 +78,13 @@ export class CaseFormComponent implements OnInit{
     this.selectedProduct = this.casesStore.select(fromCases.getCaseFormProduct);
   }
 
-  private prepareProductForm(caseInstance: FimsCase): void{
+  private prepareProductForm(caseInstance: FimsCase): void {
     this.productForm = this.formBuilder.group({
       identifier: [caseInstance.productIdentifier, [Validators.required]]
     });
   }
 
-  private preparePaymentsForm(caseInstance: FimsCase): void{
+  private prepareDetailForm(caseInstance: FimsCase): void {
     this.detailFormData = {
       identifier: caseInstance.identifier,
       principalAmount: caseInstance.parameters.initialBalance,
@@ -100,13 +98,6 @@ export class CaseFormComponent implements OnInit{
     };
   }
 
-  private prepareSavingsForm(caseInstance: FimsCase) {
-    let designator = caseInstance.accountAssignments.find(assignment => assignment.designator === AccountDesignators.CUSTOMER_LOAN);
-    this.savingsForm = this.formBuilder.group({
-      savingsAccount: [designator ? designator.accountIdentifier : undefined, [Validators.required], accountExists(this.accountingService)]
-    });
-  }
-
   onProductSelection(selections: string[]): void {
     setSelections('identifier', this.productForm, selections);
 
@@ -118,14 +109,15 @@ export class CaseFormComponent implements OnInit{
   }
 
   get isValid(): boolean{
-    return this.productForm.valid && this.detailForm.valid && this.savingsForm.valid;
+    return this.productForm.valid
+      && this.detailForm.valid;
   }
 
   private collectAccountAssignments(): AccountAssignment[]{
     let assignments: AccountAssignment[] = [];
 
     assignments.push({
-      accountIdentifier: this.savingsForm.get('savingsAccount').value,
+      accountIdentifier: 'placeholder',
       designator: AccountDesignators.CUSTOMER_LOAN
     });
 
@@ -137,7 +129,7 @@ export class CaseFormComponent implements OnInit{
       customerIdentifier: this.customerId,
       balanceRange: {
         minimum: 0,
-        maximum: 100
+        maximum: this.detailForm.formData.principalAmount
       },
       initialBalance: this.detailForm.formData.principalAmount,
       paymentCycle: {

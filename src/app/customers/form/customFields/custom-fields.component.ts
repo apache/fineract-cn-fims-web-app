@@ -20,7 +20,7 @@ import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@ang
 import {Field} from '../../../../services/catalog/domain/field.model';
 import {Value} from '../../../../services/catalog/domain/value.model';
 import {FormComponent} from '../../../../components/forms/form.component';
-import {FimsValidators} from '../../../../components/validators';
+import {FimsValidators} from '../../../../components/validator/validators';
 import * as fromCustomers from '../../store';
 import {CustomersStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/catalogs/catalog.actions';

@@ -28,6 +28,7 @@ import {AccountEntryPage} from './domain/account-entry-page.model';
 import {AccountPage} from './domain/account-page.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {buildSearchParams, buildDateRangeParam} from '../domain/paging/search-param.builder';
+import {LedgerPage} from './domain/ledger-page.model';
 
 @Injectable()
 export class AccountingService{
@@ -38,13 +39,15 @@ export class AccountingService{
     return this.http.post(`${this.baseUrl}/ledgers`, ledger);
   }
 
-  public fetchLedgers(): Observable<Ledger[]>{
-    return this.http.get(`${this.baseUrl}/ledgers`);
-  }
+  public fetchLedgers(includeSubLedgers = false, fetchRequest?: FetchRequest): Observable<LedgerPage>{
+    let params: URLSearchParams = buildSearchParams(fetchRequest);
+    params.append('includeSubLedgers', String(includeSubLedgers));
 
-  public fetchSubLedgers(identifier: string): Observable<Ledger[]>{
-    // TODO implement in accounting
-    return this.http.get(`${this.baseUrl}/ledgers`);
+    let requestOptions: RequestOptionsArgs = {
+      search: params
+    };
+
+    return this.http.get(`${this.baseUrl}/ledgers`, requestOptions);
   }
 
   public findLedger(identifier: string): Observable<Ledger>{

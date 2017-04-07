@@ -17,10 +17,12 @@
 /**
  * A debit is an accounting entry that either increases an asset or expense account, or decreases a liability or equity account.
  * It is positioned to the left in an accounting entry.
+ *
  * A credit is an accounting entry that either increases a liability or equity account, or decreases an asset or expense account.
  */
 
 export class AccountDesignators{
+
   public static readonly CUSTOMER_LOAN: string = "customer-loan";
 
   public static readonly CONSUMER_LOAN_LEDGER: string = "consumer-loan-ledger";

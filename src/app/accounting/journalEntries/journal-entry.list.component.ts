@@ -19,7 +19,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {todayAsISOString} from '../../../services/domain/date.converter';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
 import {Observable} from 'rxjs';

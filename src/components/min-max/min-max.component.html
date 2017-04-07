@@ -38,7 +38,7 @@
         {{ 'Must have precision of' | translate:{value: form.controls[maxControlName].errors.precision.value} }}
       </span>
         <span *ngIf="form.controls[maxControlName].hasError('isNumber')" translate>Must be a number</span>
-        <span *ngIf="form.hasError('greaterThan')" translate>Must be greater than Minimum</span>
+        <span *ngIf="form.hasError('greaterThan')" translate>Must be greater than minimum</span>
       </md-hint>
     </md-input-container>
   </div>

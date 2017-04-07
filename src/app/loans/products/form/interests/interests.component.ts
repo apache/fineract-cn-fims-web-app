@@ -17,13 +17,10 @@
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../../../components/forms/form.component';
 import {InterestBasis} from '../../../../../services/portfolio/domain/interest-basis.model';
-import {Validators, FormBuilder, AsyncValidatorFn, AbstractControl} from '@angular/forms';
-import {FimsValidators} from '../../../../../components/validators';
-import {Observable} from 'rxjs';
+import {FormBuilder, Validators} from '@angular/forms';
+import {FimsValidators} from '../../../../../components/validator/validators';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {AccountPage} from '../../../../../services/accounting/domain/account-page.model';
-import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
-import {accountExists} from '../../../../../components/account-exists.validator';
+import {accountExists} from '../../../../../components/validator/account-exists.validator';
 
 interface InterestBasisOption{
   type: InterestBasis;
@@ -45,8 +42,8 @@ export interface InterestFormData{
 export class ProductInterestFormComponent extends FormComponent<InterestFormData> {
 
   interestBasisOptions: InterestBasisOption[] = [
-    {type: 'CURRENT_BALANCE', label: 'Declining'},
-    {type: 'BEGINNING_BALANCE', label: 'Flat'}
+    {type: 'CURRENT_BALANCE', label: 'CURRENT_BALANCE'},
+    {type: 'BEGINNING_BALANCE', label: 'BEGINNING_BALANCE'}
   ];
 
   @Input() set formData(interestFormData: InterestFormData) {

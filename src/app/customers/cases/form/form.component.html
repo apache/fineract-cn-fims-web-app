@@ -17,21 +17,8 @@
 <td-steps mode="'vertical'">
   <td-step #productSelection label="{{'Select loan product' | translate}}" [state]="productForm.valid ? 'complete' : productForm.pristine ? 'none' : 'required'">
     <fims-product-select title="{{'Product' | translate}}" [preSelection]="productForm.get('identifier').value" (onSelectionChange)="onProductSelection($event)"></fims-product-select>
-
-    <template td-step-summary>
-      <h2 class="md-headline">
-        {{(selectedProduct | async)?.name}}
-      </h2>
-      <h3 class="md-subhead">
-        {{(selectedProduct | async)?.description}}
-      </h3>
-      <p>Allowed contraints</p>
-      <p>Principal range from {{(selectedProduct | async)?.balanceRange.minimum}} to {{(selectedProduct | async)?.balanceRange.maximum}}</p>
-      <p>Max term: {{(selectedProduct | async)?.termRange.maximum}}</p>
-    </template>
-
     <template td-step-actions>
-      <button (click)="detailsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
+      <button (click)="detailsStep.open()" md-raised-button color="primary" [disabled]="!productForm.valid">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
     </template>
@@ -39,24 +26,6 @@
   <td-step #detailsStep label="{{'Loan details' | translate}}" [disabled]="!productForm.valid" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
     <fims-case-detail-form #detailForm [formData]="detailFormData" [product]="selectedProduct | async"></fims-case-detail-form>
 
-    <template td-step-actions>
-      <button (click)="savingsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
-  </td-step>
-
-  <td-step #savingsStep label="{{'Account settings' | translate}}" [state]="savingsForm.valid ? 'complete' : savingsForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="savingsForm">
-      <fims-account-select title="{{ 'Savings account' | translate }}" formControlName="savingsAccount">
-        <ng-container *ngIf="!savingsForm.get('savingsAccount').pristine && savingsForm.get('savingsAccount').hasError('required')" translate>
-          Required
-        </ng-container>
-        <ng-container *ngIf="savingsForm.get('savingsAccount').hasError('invalidAccount')" translate>
-          Invalid account
-        </ng-container>
-      </fims-account-select>
-    </form>
     <template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'CREATE CUSTOMER LOAN' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'UPDATE CUSTOMER LOAN' | translate}}</button>

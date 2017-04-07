@@ -35,7 +35,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
 
   @ViewChild('form') formComponent: ProductFormComponent;
 
-  private product: FimsProduct = {
+  product: FimsProduct = {
     identifier: '',
     name: '',
     termRange: {

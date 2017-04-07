@@ -20,7 +20,7 @@ import {TdStepComponent} from '@covalent/core';
 import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {ActionOption} from '../../../../../components/domain/action-option.model';
 import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
-import {FimsValidators} from '../../../../../components/validators';
+import {FimsValidators} from '../../../../../components/validator/validators';
 
 @Component({
   selector: 'fims-product-task-form-component',

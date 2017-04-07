@@ -21,7 +21,7 @@ import {PermittableGroup} from '../../../services/anubis/permittable-group.model
 import {IdentityService} from '../../../services/identity/identity.service';
 import {Permission, AllowedOperation} from '../../../services/identity/domain/permission.model';
 import {FormPermission} from './model/form-permission.model';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
 import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
 
 @Component({

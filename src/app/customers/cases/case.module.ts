@@ -29,6 +29,7 @@ import {CaseEditComponent} from './form/edit.component';
 import {CasesStore, caseStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {CaseExistsGuard} from './case-exists.guard';
+import {CaseDetailPaymentCycleComponent} from './payment-cycle/payment-cycle.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {CaseExistsGuard} from './case-exists.guard';
     CaseEditComponent,
     CaseDetailFormComponent,
     CaseDetailComponent,
+    CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
     CaseTasksComponent
   ],

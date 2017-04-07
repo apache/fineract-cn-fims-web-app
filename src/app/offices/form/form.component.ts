@@ -18,7 +18,7 @@ import {Component, Input, Output, ViewChild, EventEmitter, OnInit} from '@angula
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../../services/office/domain/office.model';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
 
 @Component({
   selector: 'fims-office-form-component',

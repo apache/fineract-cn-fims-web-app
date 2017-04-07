@@ -47,7 +47,6 @@ interface CustomDetailField{
 })
 export class CustomerDetailComponent implements OnInit, OnDestroy{
 
-  private actionsSubscription: Subscription;
 
   private catalogsSubscription: Subscription;
 
@@ -64,10 +63,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
   constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.customerSubscription = this.store.select(fromEmployees.getSelectedCustomer)
       .subscribe(customer => this.customer = customer);
 
@@ -78,7 +73,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
     this.catalogsSubscription.unsubscribe();
   }
