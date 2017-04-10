@@ -21,7 +21,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {FormComponent} from '../../../../components/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
 import {AccountTypeOption} from '../../account-types.model';

@@ -30,7 +30,7 @@ import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';

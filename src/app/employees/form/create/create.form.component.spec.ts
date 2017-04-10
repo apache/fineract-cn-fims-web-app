@@ -23,7 +23,7 @@ import {SelectListComponent} from '../../../../components/select-list/select-lis
 import {IdInputComponent} from '../../../../components/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LayoutCardOverComponent} from '../../../../components/layout-card-over/layout-card-over.component';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CreateEmployeeFormComponent} from './create.form.component';
 import {mapEmployee, mapUser} from '../form.mapper';
 import {EmployeesStore} from '../../store/index';

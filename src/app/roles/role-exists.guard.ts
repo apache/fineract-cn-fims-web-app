@@ -18,7 +18,7 @@ import {Store} from '@ngrx/store';
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromRoles from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 import {IdentityService} from '../../services/identity/identity.service';
 import {LoadAction} from './store/role.actions';

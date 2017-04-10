@@ -16,7 +16,7 @@
 
 import {NotificationService, NotificationType} from '../../../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as taskActions from '../task.actions';

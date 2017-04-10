@@ -15,7 +15,7 @@
  */
 import {Component, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../../services/office/domain/office.model';
 import {Employee} from '../../../services/office/domain/employee.model';

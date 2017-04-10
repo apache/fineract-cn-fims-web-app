@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Effect, Actions} from '@ngrx/effects';
 import * as journalEntryActions from '../entries.actions'
 import {Injectable} from '@angular/core';

@@ -20,7 +20,7 @@ import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {TableData} from '../../components/data-table/data-table.component';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from '../reducers/employee/employee.actions';
 
 @Component({

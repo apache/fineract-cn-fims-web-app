@@ -21,7 +21,7 @@ import {TableData} from '../../../components/data-table/data-table.component';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {PortfolioStore} from './store/index';
 import * as fromPortfolio from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from './store/product.actions';
 import {FimsProduct} from './store/model/fims-product.model';
 

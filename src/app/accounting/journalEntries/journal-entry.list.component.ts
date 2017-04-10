@@ -22,7 +22,7 @@ import {todayAsISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../components/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
 import {ITdDataTableColumn} from '@covalent/core';
 import {DatePipe} from '@angular/common';

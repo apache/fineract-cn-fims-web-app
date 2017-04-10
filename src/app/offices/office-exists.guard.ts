@@ -19,7 +19,7 @@ import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../services/office/office.service';
 import {State, getOfficeEntities, OfficesStore} from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {LoadAction} from './store/office.actions';
 import {of} from 'rxjs/observable/of';
 

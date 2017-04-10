@@ -18,7 +18,7 @@ import {TestBed, ComponentFixture, async} from '@angular/core/testing';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {MaterialModule} from '@angular/material';
 import {Role} from '../../../services/identity/domain/role.model';

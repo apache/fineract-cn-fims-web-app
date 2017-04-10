@@ -27,7 +27,7 @@ import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import {LOAD_PRODUCT, UNLOAD_PRODUCT} from '../store/case.actions';
 import {Product} from '../../../../services/portfolio/domain/product.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FimsCase} from '../store/model/fims-case.model';
 import {accountExists} from '../../../../components/validator/account-exists.validator';
 

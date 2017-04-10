@@ -17,7 +17,7 @@
 import {AuthGuard} from './auth-guard.service';
 import {Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
 import {TestBed, inject} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../app/reducers';
 

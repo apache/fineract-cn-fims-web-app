@@ -16,7 +16,7 @@
 
 import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Product} from '../../services/portfolio/domain/product.model';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 

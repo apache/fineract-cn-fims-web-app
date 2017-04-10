@@ -19,7 +19,7 @@ import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TableData} from '../../components/data-table/data-table.component';
 import * as fromAccounting from './store';
 import {LOAD_ALL_TOP_LEVEL} from './store/ledger/ledger.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingStore} from './store/index';
 
 @Component({

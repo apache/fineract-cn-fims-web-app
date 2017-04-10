@@ -17,7 +17,7 @@
 import {Injectable} from '@angular/core';
 import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
 import {Account} from '../../../services/accounting/domain/account.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 
 @Injectable()

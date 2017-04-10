@@ -19,7 +19,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../services/identity/domain/role.model';
 import {TableData} from '../../components/data-table/data-table.component';
 import * as fromRoot from '../reducers'
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from '../reducers/role/role.actions';
 import {RolesStore} from './store/index';
 

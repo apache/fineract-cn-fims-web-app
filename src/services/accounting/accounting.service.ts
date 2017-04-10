@@ -17,7 +17,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient} from '../http/http.service';
 import {Ledger} from './domain/ledger.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Account} from './domain/account.model';
 import {AccountEntry} from './domain/account-entry.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';

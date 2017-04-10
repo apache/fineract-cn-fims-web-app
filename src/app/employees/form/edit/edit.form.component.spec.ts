@@ -26,7 +26,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LayoutCardOverComponent} from '../../../../components/layout-card-over/layout-card-over.component';
 import {User} from '../../../../services/identity/domain/user.model';
 import {Employee} from '../../../../services/office/domain/employee.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {EmployeesStore} from '../../store/index';
 import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';

@@ -17,7 +17,7 @@
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromProducts from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {LoadAction} from './store/product.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from './store/index';

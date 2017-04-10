@@ -16,7 +16,7 @@
 
 import {Injectable, Inject} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Catalog} from './domain/catalog.model';
 @Injectable()
 export class CatalogService{

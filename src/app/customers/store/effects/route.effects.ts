@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as customerActions from '../customer.actions';
 import {Router} from '@angular/router';

@@ -17,7 +17,7 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {SecurityApiEffects} from './service.effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {IdentityService} from '../../../../services/identity/identity.service';
 import {AuthenticationService} from '../../../../services/security/authn/authentication.service';
 import {Authentication} from '../../../../services/identity/domain/authentication.model';
