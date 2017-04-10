@@ -34,7 +34,7 @@ import {OfficeService} from '../../../services/office/office.service';
 import {HttpClient} from '../../../services/http/http.service';
 import {AuthenticationService} from '../../../services/security/authn/authentication.service';
 import {OfficePage} from '../../../services/office/domain/office-page.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {EmployeePage} from '../../../services/office/domain/employee-page.model';
 import {CatalogService} from '../../../services/catalog/catalog.service';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';

@@ -15,7 +15,7 @@
  */
 
 import {AsyncValidatorFn, AbstractControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 

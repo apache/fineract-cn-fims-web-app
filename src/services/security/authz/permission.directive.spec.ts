@@ -19,7 +19,7 @@ import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {PermissionDirective} from './permission.directive';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from './fims-permission.model';
 
 describe('Test permission directive', () => {

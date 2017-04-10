@@ -16,7 +16,7 @@
 
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Product} from './domain/product.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TaskDefinition} from './domain/task-definition.model';

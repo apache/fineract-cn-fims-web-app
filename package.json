@@ -13,11 +13,12 @@
     "karma": "karma start ./karma.conf.js --single-run",
     "dev": "ng serve --proxy-config proxy.conf.json",
     "runProd": "ng serve --proxy-config proxy.conf.json --prod --aot",
-    "build": "ng build --prod --aot",
-    "checkLicenses": "license-to-fail ./license.config.js"
+    "build": "ng build --prod --aot --stats-json",
+    "checkLicenses": "license-to-fail ./license.config.js",
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
-    "node": ">4.4 < 5",
+    "node": ">4.4 < 7",
     "npm": ">3"
   },
   "repository": {
@@ -79,6 +80,7 @@
     "protractor": "5.1.0",
     "ts-node": "2.1.0",
     "tslint": "4.5.1",
-    "typescript": "2.2.0"
+    "typescript": "2.2.2",
+    "webpack-bundle-analyzer": "^2.3.1"
   }
 }

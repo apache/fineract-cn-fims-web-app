@@ -93,13 +93,16 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy{
       });
   }
 
-  set ledger(ledger: Ledger){
+  set ledger(ledger: Ledger) {
     this._ledger = ledger;
-    this.ledgerData.data = ledger.subLedgers;
-    this.ledgerData.totalElements = ledger.subLedgers.length;
+
+    if(this.ledger.subLedgers) {
+      this.ledgerData.data = ledger.subLedgers;
+      this.ledgerData.totalElements = ledger.subLedgers.length;
+    }
   }
 
-  get ledger(): Ledger{
+  get ledger(): Ledger {
     return this._ledger;
   }
 }

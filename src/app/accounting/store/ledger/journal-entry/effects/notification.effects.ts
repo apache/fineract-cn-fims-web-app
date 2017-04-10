@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
 import {NotificationService, NotificationType} from '../../../../../../services/notification/notification.service';

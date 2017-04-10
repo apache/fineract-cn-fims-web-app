@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import * as caseActions from '../case.actions';

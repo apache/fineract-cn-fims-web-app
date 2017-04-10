@@ -15,7 +15,7 @@
  */
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {AccountSelectComponent} from './account-select.component';
 import {ReactiveFormsModule, FormControl, Validators} from '@angular/forms';

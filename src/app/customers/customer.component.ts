@@ -18,7 +18,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {TableData, TableFetchRequest} from '../../components/data-table/data-table.component';
 import {Customer} from '../../services/customer/domain/customer.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../reducers';
 import {SEARCH} from '../reducers/customer/customer.actions';
 import {CustomersStore} from './store/index';

@@ -22,7 +22,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as fromOffice from './store';
 
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {SEARCH} from '../reducers/office/office.actions';
 import {OfficesStore} from './store/index';
 

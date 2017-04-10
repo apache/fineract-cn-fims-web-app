@@ -18,7 +18,7 @@ import {HttpClient, TENANT_HEADER, AUTHORIZATION_HEADER, USER_HEADER} from './ht
 import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
 import {Authentication} from '../identity/domain/authentication.model';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {ReflectiveInjector} from '@angular/core';
 
 describe('Test http client', () => {

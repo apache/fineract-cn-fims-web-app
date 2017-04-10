@@ -24,7 +24,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentCoreModule} from '@covalent/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 
 let employeeTemplate: Employee = {

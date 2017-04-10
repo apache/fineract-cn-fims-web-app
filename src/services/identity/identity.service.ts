@@ -15,7 +15,7 @@
  */
 
 import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Error} from '../domain/error.model';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';

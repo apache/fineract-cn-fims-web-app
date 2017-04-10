@@ -15,7 +15,7 @@
  */
 
 import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Customer} from './domain/customer.model';
 import {HttpClient} from '../http/http.service';
 import {CustomerPage} from './domain/customer-page.model';

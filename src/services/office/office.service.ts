@@ -15,7 +15,7 @@
  */
 
 import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {HttpClient} from '../http/http.service';
 import {Error} from '../domain/error.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';

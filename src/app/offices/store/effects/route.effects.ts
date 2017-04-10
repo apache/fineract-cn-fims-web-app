@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
 import {Router} from '@angular/router';

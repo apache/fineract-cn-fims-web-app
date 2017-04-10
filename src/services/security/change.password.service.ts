@@ -15,7 +15,7 @@
  */
 import {Injectable} from '@angular/core';
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Authentication} from '../identity/domain/authentication.model';
 import * as fromRoot from '../../app/reducers';
 import {Store} from '@ngrx/store';

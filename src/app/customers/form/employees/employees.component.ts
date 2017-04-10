@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Employee} from '../../../../services/office/domain/employee.model';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import * as fromRoot from '../../../reducers';

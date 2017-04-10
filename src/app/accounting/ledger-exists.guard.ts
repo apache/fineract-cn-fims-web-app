@@ -18,7 +18,7 @@ import {Store} from '@ngrx/store';
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromAccounting from './store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {LoadAction} from './store/ledger/ledger.actions';
 import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../services/accounting/accounting.service';

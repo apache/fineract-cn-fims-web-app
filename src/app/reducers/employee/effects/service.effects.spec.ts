@@ -17,7 +17,7 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {EmployeeSearchApiEffects} from './service.effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {OfficeService} from '../../../../services/office/office.service';
 import {SearchAction, SearchCompleteAction} from '../employee.actions';
 import {EmployeePage} from '../../../../services/office/domain/employee-page.model';

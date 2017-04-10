@@ -17,7 +17,7 @@
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as paymentActions from '../payment.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
