@@ -34,7 +34,7 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
 
   private parentIdentifier: string;
 
-  office: Office = { identifier: '', parentIdentifier: '', name: '', address: { street: '', city: '', region: '', countryCode: '', country: ''}};
+  office: Office = { identifier: '', parentIdentifier: '', name: '' };
 
   @ViewChild('form') formComponent: OfficeFormComponent;
 
@@ -45,7 +45,7 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
 
       if(!payload.error) return;
 
-      switch(payload.error.status){
+      switch(payload.error.status) {
         case 409:
           let officeDetailForm = this.formComponent.detailForm;
           let errors = officeDetailForm.get('identifier').errors || {};

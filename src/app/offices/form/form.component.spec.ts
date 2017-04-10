@@ -59,7 +59,7 @@ describe('Test office form', () => {
     testComponent = fixture.componentInstance;
   });
 
-  it('should always save address', (done: DoneFn) => {
+  it('should save address when pristine', (done: DoneFn) => {
     fixture.detectChanges();
 
     testComponent.saveEmitter.subscribe((office) => {
@@ -82,12 +82,12 @@ describe('Test office form', () => {
     fixture.detectChanges();
 
     testComponent.triggerSave();
-  })
+  });
 
 });
 
 @Component({
-  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office"></fims-office-form-component>'
+  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false"></fims-office-form-component>'
 })
 class TestComponent{
 

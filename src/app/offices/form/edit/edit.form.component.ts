@@ -34,17 +34,14 @@ export class EditOfficeFormComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {}
 
   ngOnInit(){
-    this.officeSubscription = this.store.select(getSelectedOffice).subscribe((office: Office) => {
-      office.address = office.address || { street: '', city: '', region: '', countryCode: '', country: ''};
-      this.office = office;
-    });
+    this.officeSubscription = this.store.select(getSelectedOffice).subscribe((office: Office) => this.office = office);
   }
 
   ngOnDestroy(): void {
     this.officeSubscription.unsubscribe();
   }
 
-  onSave(office: Office){
+  onSave(office: Office) {
     office.parentIdentifier = this.office.parentIdentifier;
     this.store.dispatch({ type: UPDATE, payload: {
       office,
