@@ -29,6 +29,7 @@ import {mapEmployee, mapUser} from '../form.mapper';
 import {EmployeesStore} from '../../store/index';
 import {CREATE} from '../../store/employee.actions';
 import {Store} from '@ngrx/store';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 let eventMock: EmployeeSaveEvent = {
@@ -75,7 +76,8 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: Router, useValue: router},

@@ -31,6 +31,7 @@ import {EmployeesStore} from '../../store/index';
 import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let userMock: User = {
   identifier: 'test',
@@ -80,7 +81,8 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: Router, useValue: router},

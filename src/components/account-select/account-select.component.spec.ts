@@ -57,7 +57,7 @@ describe('Test account selection', () => {
       ],
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule
       ],
       providers: [
         HttpClient,

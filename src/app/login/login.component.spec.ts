@@ -26,6 +26,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../reducers/security/security.actions';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('Test Login Component', () => {
 
@@ -50,8 +51,9 @@ describe('Test Login Component', () => {
       declarations: [LoginComponent],
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot(),
-        TranslateModule.forRoot()
+        CovalentCoreModule,
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
       ],
       providers: [
         {provide: 'tenantId', useValue: 'tenantId'},

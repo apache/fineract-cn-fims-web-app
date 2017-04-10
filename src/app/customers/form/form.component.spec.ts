@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {TestBed, ComponentFixture} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CustomerDetailFormComponent} from './detail/detail.component';
 import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
@@ -30,16 +30,10 @@ import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
-import {OfficeService} from '../../../services/office/office.service';
-import {HttpClient} from '../../../services/http/http.service';
-import {AuthenticationService} from '../../../services/security/authn/authentication.service';
-import {OfficePage} from '../../../services/office/domain/office-page.model';
 import {Observable} from 'rxjs/Observable';
-import {EmployeePage} from '../../../services/office/domain/employee-page.model';
-import {CatalogService} from '../../../services/catalog/catalog.service';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let customerTemplate: Customer = {
   identifier: 'test',
@@ -103,7 +97,8 @@ describe('Test customer form', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule,
+        NoopAnimationsModule
       ],
       providers: [
         {

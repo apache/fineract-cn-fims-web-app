@@ -26,6 +26,7 @@ import {IdInputComponent} from '../../../components/id-input/id-input.component'
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let employeeTemplate: Employee = {
   identifier: 'test',
@@ -63,7 +64,8 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule,
+        NoopAnimationsModule
       ],
       providers: [
         {

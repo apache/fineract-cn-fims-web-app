@@ -22,6 +22,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CovalentCoreModule} from '@covalent/core';
 import {ReactiveFormsModule, FormControl, AbstractControl} from '@angular/forms';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let officeTemplate: Office = {
   identifier: 'test',
@@ -46,8 +47,9 @@ describe('Test office form', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot(),
-        TranslateModule.forRoot()
+        CovalentCoreModule,
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
       ],
       providers: [],
       declarations: [IdInputComponent, OfficeFormComponent, TestComponent]
