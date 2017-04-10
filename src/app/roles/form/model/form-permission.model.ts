@@ -14,32 +14,37 @@
  * limitations under the License.
  */
 
-import {PermittableGroupIdMapper} from '../../../../services/security/authz/permittable-group-id-mapper';
-
 export class FormPermission{
   private _groupIdentifier: string;
   private _read: boolean = false;
   private _change: boolean = false;
   private _remove: boolean = false;
-  private _groupIdMapper: PermittableGroupIdMapper;
 
-  constructor(groupIdentifier: string, groupIdMapper: PermittableGroupIdMapper) {
+  private _label: string = '';
+  private _readOnly: boolean = true;
+
+  constructor(groupIdentifier: string) {
     this._groupIdentifier = groupIdentifier;
-    this._groupIdMapper = groupIdMapper;
   }
 
   get groupIdentifier(): string {
     return this._groupIdentifier;
   }
 
-  get label(): string{
-    var descriptor = this._groupIdMapper.map(this._groupIdentifier);
-    return descriptor.label;
+  get label(): string {
+    return this._label;
   }
 
-  get readOnly(): boolean{
-    var descriptor = this._groupIdMapper.map(this._groupIdentifier);
-    return descriptor.readOnly;
+  set label(value: string) {
+    this._label = value;
+  }
+
+  get readOnly(): boolean {
+    return this._readOnly;
+  }
+
+  set readOnly(value: boolean) {
+    this._readOnly = value;
   }
 
   get read(): boolean {
