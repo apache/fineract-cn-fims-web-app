@@ -16,7 +16,7 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {ITdLoadingConfig, LoadingType, TdLoadingService} from '@covalent/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from '@ngx-translate/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as fromRoot from '../reducers';
 import {Store} from '@ngrx/store';

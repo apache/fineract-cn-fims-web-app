@@ -15,7 +15,6 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Product} from '../../../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {ProductTaskFormComponent} from './form.component';
@@ -24,6 +23,7 @@ import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
 import {CREATE} from '../../store/tasks/task.actions';
 import {Error} from '../../../../../services/domain/error.model';
+import {FimsProduct} from '../../store/model/fims-product.model';
 
 
 @Component({
@@ -37,9 +37,9 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
 
   @ViewChild('form') formComponent: ProductTaskFormComponent;
 
-  private product: Product;
+  private product: FimsProduct;
 
-  private task: TaskDefinition = {
+  task: TaskDefinition = {
     identifier: '',
     name: '',
     description: '',

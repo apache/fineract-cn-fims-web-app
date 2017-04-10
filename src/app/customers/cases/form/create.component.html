@@ -19,8 +19,9 @@
 <fims-layout-card-over title="{{'Create new loan for customer' | translate}}">
   <fims-case-form-component #form
                                  (onSave)="onSave($event)"
-                                 (onCancel)="onCancel($event)"
-                                 [case]="case"
-                                 [customerId]="customer.identifier">
+                                 (onCancel)="onCancel()"
+                                 [case]="caseInstance"
+                                 [customerId]="customer.identifier"
+                                 [editMode]="false">
   </fims-case-form-component>
 </fims-layout-card-over>

@@ -15,13 +15,13 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Product} from '../../../../../services/portfolio/domain/product.model';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../../store/index';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../../store';
 import {UPDATE} from '../../store/tasks/task.actions';
+import {FimsProduct} from '../../store/model/fims-product.model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -32,9 +32,9 @@ export class ProductStatusEditFormComponent implements OnInit, OnDestroy{
 
   private productSubscription: Subscription;
 
-  private product: Product;
+  private product: FimsProduct;
 
-  private task: TaskDefinition;
+  task: TaskDefinition;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 

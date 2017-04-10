@@ -38,13 +38,13 @@ export class IdentityService {
     return btoa(password);
   }
 
-  changePassword(id: string, password: Password): Observable<void> {
+  changePassword(id: string, password: Password): Observable<any> {
     password.password = IdentityService.encodePassword(password.password);
     return this.http.put(this.baseUrl + '/users/' + id + '/password', password)
       .catch(Error.handleError);
   }
 
-  createUser(user: UserWithPassword): Observable<void> {
+  createUser(user: UserWithPassword): Observable<any> {
     user.password = IdentityService.encodePassword(user.password);
     return this.http.post(this.baseUrl + '/users', user)
       .catch(Error.handleError);
@@ -55,7 +55,7 @@ export class IdentityService {
       .catch(Error.handleError);
   }
 
-  changeUserRole(user: string, roleIdentifier: RoleIdentifier): Observable<void>{
+  changeUserRole(user: string, roleIdentifier: RoleIdentifier): Observable<any>{
     return this.http.put(this.baseUrl + '/users/' + user + '/roleIdentifier', roleIdentifier)
       .catch(Error.handleError);
   }
@@ -70,17 +70,17 @@ export class IdentityService {
       .catch(Error.handleError);
   }
 
-  createRole(role: Role): Observable<void> {
+  createRole(role: Role): Observable<any> {
     return this.http.post(this.baseUrl + '/roles', role)
       .catch(Error.handleError);
   }
 
-  changeRole(role: Role): Observable<void> {
+  changeRole(role: Role): Observable<any> {
     return this.http.put(this.baseUrl + '/roles/' + role.identifier, role)
       .catch(Error.handleError);
   }
 
-  deleteRole(id: String): Observable<void> {
+  deleteRole(id: String): Observable<any> {
     return this.http.delete(this.baseUrl + '/roles/' + id, {})
       .catch(Error.handleError);
   }

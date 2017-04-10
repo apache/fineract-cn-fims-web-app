@@ -40,8 +40,6 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
 
   private tasksSubscription: Subscription;
 
-  private selectionSubscription: Subscription;
-
   private customerSubscription: Subscription;
 
   customer: Customer;
@@ -60,10 +58,6 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
     this.tasksSubscription = this.store.select(fromCustomers.getAllCustomerTaskEntities)
       .subscribe(tasks => this.mergeTasks(tasks));
 
-    this.selectionSubscription = this.route.parent.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .do(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier }))
       .subscribe(customer => this.customer = customer);
@@ -71,7 +65,6 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.tasksSubscription.unsubscribe();
-    this.selectionSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
   }
 

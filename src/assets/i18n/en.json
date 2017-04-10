@@ -1,4 +1,6 @@
 {
+  "BEGINNING_BALANCE": "Flat",
+  "CURRENT_BALANCE": "Declining",
   "Issued by": "Issued by {{value}}",
   "Please verify the following tasks before you can action this customer": "Please verify the following tasks before you can {{value}} this customer",
   "Only characters allowed.": "Only {{value}} characters allowed.",

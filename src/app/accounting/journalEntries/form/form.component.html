@@ -18,11 +18,12 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Create new journal entry' | translate}}">
+  <form [formGroup]="form">
   <td-steps mode="'vertical'">
     <td-step #detailsStep label="{{'Journal Entry details' | translate}}">
-      <form [formGroup]="form">
+
         <div layout="row">
-          <fims-id-input [form]="form" controlName="transactionIdentifier" [readonly]="editMode"></fims-id-input>
+          <fims-id-input [form]="form" controlName="transactionIdentifier" [readonly]="false"></fims-id-input>
         </div>
         <div layout="row">
           <md-input-container layout-margin flex>
@@ -40,14 +41,13 @@
           </md-input-container>
         </div>
         <div layout="row">
-          <fims-employee-select flex [preSelection]="selectedClerk ? [selectedClerk] : []" [multiple]="false" (onSelectionChange)="onClerkSelectionChange($event)" title="{{'Clerk' | translate}}"></fims-employee-select>
+          <fims-employee-select flex [preSelection]="selectedClerk" [multiple]="false" (onSelectionChange)="onClerkSelectionChange($event)" title="{{'Clerk' | translate}}"></fims-employee-select>
         </div>
-      </form>
-      <template td-step-actions>
+      <ng-template td-step-actions>
         <button (click)="accountsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
         <span flex></span>
         <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
-      </template>
+      </ng-template>
     </td-step>
     <td-step #accountsStep label="{{'Affected Accounts' | translate}}">
       <div layout-gt-xs="column">
@@ -77,51 +77,57 @@
         </md-card>
         <div layout="row">
           <md-card flex>
-            <md-list>
+            <md-list formArrayName="debtors">
               <h3 md-subheader translate>Debtor</h3>
-              <md-list-item class="active" *ngFor="let debitor of selectedDebitors">
-                <div layout="row" layout-align="start center" style="width: 100%;">
+              <md-list-item class="active" *ngFor="let debtor of debtors; let i = index;">
+                <div layout="row" layout-align="start center" style="width: 100%;" [formGroupName]="i">
                   <md-icon md-list-avatar>search</md-icon>
                   <div flex>
-                    {{debitor.accountNumber}}
+                    {{debtor.get('accountNumber').value}}
                   </div>
                   <md-input-container layout-margin>
-                    <input mdInput type="number" placeholder="{{'amount' | translate}}" [(ngModel)]="debitor.amount"/>
+                    <input mdInput type="number" placeholder="{{'amount' | translate}}" formControlName="amount"/>
                   </md-input-container>
                   <div>
-                    <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeDebtor(debitor.accountNumber)">{{'Remove' | translate}}</button>
+                    <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeDebtor(i)">{{'Remove' | translate}}</button>
                   </div>
                 </div>
               </md-list-item>
+              <h3 md-subheader *ngIf="form.get('debtors').hasError('minItemsInvalid')" class="tc-red-600" translate>Please add minimum one debtor.</h3>
             </md-list>
           </md-card>
           <md-card flex>
-            <md-list>
+            <md-list formArrayName="creditors">
               <h3 md-subheader translate>Creditor</h3>
-              <md-list-item class="active" *ngFor="let creditor of selectedCreditors">
-                <div layout="row" layout-align="start center" style="width: 100%;">
+              <md-list-item class="active" *ngFor="let creditor of creditors; let i = index;">
+                <div layout="row" layout-align="start center" style="width: 100%;" [formGroupName]="i">
                   <md-icon md-list-avatar>search</md-icon>
                   <div flex>
-                    {{creditor.accountNumber}}
+                    {{creditor.get('accountNumber').value}}
                   </div>
                   <md-input-container layout-margin>
-                    <input mdInput type="number" placeholder="{{'amount' | translate}}" [(ngModel)]="creditor.amount"/>
+                    <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
                   </md-input-container>
                   <div>
-                    <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeCreditor(creditor.accountNumber)">{{'Remove' | translate}}</button>
+                    <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeCreditor(i)">{{'Remove' | translate}}</button>
                   </div>
                 </div>
               </md-list-item>
+              <h3 md-subheader *ngIf="form.get('creditors').hasError('minItemsInvalid')" class="tc-red-600" translate>Please add minimum one creditor.</h3>
             </md-list>
           </md-card>
-
         </div>
+        <p *ngIf="!form.pristine && form.hasError('sumInvalid')" class="tc-red-600" translate>
+          Sum of Debtors and sum of Creditors must match.
+        </p>
       </div>
-      <template td-step-actions>
+      <ng-template td-step-actions>
         <button (click)="save()" md-raised-button color="primary" [disabled]="!valid">{{'CREATE JOURNAL ENTRY' | translate}}</button>
         <span flex></span>
         <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
-      </template>
+      </ng-template>
     </td-step>
   </td-steps>
+  </form>
+
 </fims-layout-card-over>

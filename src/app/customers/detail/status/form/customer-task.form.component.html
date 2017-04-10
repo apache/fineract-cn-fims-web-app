@@ -23,7 +23,7 @@
       <md-list>
         <h3 md-subheader translate>Choose one task</h3>
         <md-radio-group [(ngModel)]="selectedTask">
-          <template let-item let-last="last" ngFor [ngForOf]="tasks">
+          <ng-template let-item let-last="last" ngFor [ngForOf]="tasks">
             <md-list-item>
               <md-icon md-list-avatar>playlist_add_check</md-icon>
               <h3 md-line>{{item.name}}</h3>
@@ -33,7 +33,7 @@
               <md-radio-button label-position="before" [value]="item.identifier"></md-radio-button>
             </md-list-item>
             <md-divider *ngIf="!last" md-inset></md-divider>
-          </template>
+          </ng-template>
         </md-radio-group>
       </md-list>
     </div>

@@ -19,7 +19,7 @@
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
       <md-hint
-        *ngIf="!form.controls.street.pristine && form.controls.street.errors?.required"
+        *ngIf="!form.get('street').pristine && form.get('street').hasError('required')"
         class="tc-red-600" translate>Required
       </md-hint>
     </md-input-container>
@@ -28,7 +28,7 @@
     <md-input-container layout-margin flex>
       <input mdInput flex placeholder="{{'City' | translate}}" formControlName="city" tdAutoTrim/>
       <md-hint
-        *ngIf="!form.controls.city.pristine && form.controls.city.errors?.required"
+        *ngIf="!form.get('city').pristine && form.get('city').hasError('required')"
         class="tc-red-600" translate>Required
       </md-hint>
     </md-input-container>
@@ -37,7 +37,7 @@
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Postal code(optional)' | translate}}" formControlName="postalCode" tdAutoTrim/>
       <md-hint
-        *ngIf="!form.controls.postalCode.pristine && form.controls.postalCode.errors?.maxlength"
+        *ngIf="!form.get('postalCode').pristine && form.get('postalCode').hasError('maxlength')"
         class="tc-red-600" translate>Only 5 figures allowed
       </md-hint>
     </md-input-container>
@@ -51,7 +51,7 @@
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Country short name' | translate}}" formControlName="countryShortName" tdAutoTrim/>
       <md-hint
-        *ngIf="!form.controls.countryShortName.pristine && form.controls.countryShortName.errors"
+        *ngIf="!form.get('countryShortName').pristine && form.get('countryShortName').errors !== null"
         class="tc-red-600" translate>Required, Only 2 characters allowed
       </md-hint>
     </md-input-container>
@@ -60,7 +60,7 @@
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" tdAutoTrim/>
       <md-hint
-        *ngIf="!form.controls.country.pristine && form.controls.country.errors?.required"
+        *ngIf="!form.get('country').pristine && form.get('country').hasError('required')"
         class="tc-red-600" translate>Required
       </md-hint>
     </md-input-container>

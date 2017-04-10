@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import './polyfills.ts';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -29,8 +28,8 @@ platformBrowserDynamic([
   { provide: 'tenantId', useValue: 'provisioning_integration_test' },
   { provide: 'tokenExpiryBuffer', useValue: 1000 * 60},
   { provide: 'identityBaseUrl', useValue: '/identity/v1' },
-  { provide: 'officeBaseUrl', useValue: '/office/v1' },
-  { provide: 'customerBaseUrl', useValue: '/customer/v1' },
-  { provide: 'accountingBaseUrl', useValue: '/accounting/v1' },
-  { provide: 'portfolioBaseUrl', useValue: '/portfolio/v1' }
+  { provide: 'officeBaseUrl', useValue: '/api/office/v1' },
+  { provide: 'customerBaseUrl', useValue: '/api/customer/v1' },
+  { provide: 'accountingBaseUrl', useValue: '/api/accounting/v1' },
+  { provide: 'portfolioBaseUrl', useValue: '/api/portfolio/v1' }
 ]).bootstrapModule(AppModule);

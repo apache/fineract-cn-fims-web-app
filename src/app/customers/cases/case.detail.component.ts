@@ -21,6 +21,12 @@ import {CasesStore} from './store/index';
 import * as fromCases from './store/index';
 import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';
+import {FimsCase} from './store/model/fims-case.model';
+import {monthOptions} from '../../../components/domain/months.model';
+import {weekDayOptions} from '../../../components/domain/week-days.model';
+import {alignmentOptions} from '../../../components/domain/alignment.model';
+import {temporalOptionList} from '../../../components/domain/temporal.domain';
+import {ChronoUnit} from '../../../services/portfolio/domain/chrono-unit.model';
 
 @Component({
   templateUrl: './case.detail.component.html'
@@ -31,7 +37,7 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
-  caseInstance: Case;
+  caseInstance: FimsCase;
 
   constructor(private route: ActivatedRoute, private casesStore: CasesStore) {}
 
@@ -41,7 +47,6 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
       .subscribe(this.casesStore);
 
     this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
-      .map(caseInstance => Object.assign({}, caseInstance, { parameters: JSON.parse(caseInstance.parameters) }))
       .subscribe(caseInstance => this.caseInstance = caseInstance);
   }
 
@@ -57,4 +62,5 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
   repay(): void{
     // TODO: Implement when API available
   }
+
 }

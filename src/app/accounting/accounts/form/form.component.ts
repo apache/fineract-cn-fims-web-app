@@ -35,13 +35,13 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
 
   @ViewChild('detailsStep') step: TdStepComponent;
 
-  private holders: string[];
+  holders: string[];
 
-  private signatureAuthorities: string[];
+  signatureAuthorities: string[];
 
-  private referenceAccount: string;
+  referenceAccount: string;
 
-  private accounts: Observable<Account[]>;
+  accounts: Observable<Account[]>;
 
   @Input() account: Account;
 
@@ -51,7 +51,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  private accountTypeOptions: AccountTypeOption[] = accountTypes;
+  accountTypeOptions: AccountTypeOption[] = accountTypes;
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
     super();
@@ -86,15 +86,15 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     return;
   }
 
-  private onHoldersSelectionChange(selection: string[]): void{
+  onHoldersSelectionChange(selection: string[]): void{
     this.holders = selection;
   }
 
-  private onAuthoritySelectionChange(selection: string[]): void{
+  onAuthoritySelectionChange(selection: string[]): void{
     this.signatureAuthorities = selection;
   }
 
-  private onAccountSearch(searchTerm?: string): void{
+  onAccountSearch(searchTerm?: string): void{
     let fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
@@ -105,11 +105,11 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     this.accounts = this.accountingService.fetchAccounts(fetchRequest).map((accountPage: AccountPage) => accountPage.accounts);
   }
 
-  private accountSelectionChange(selection: string[]): void{
+  accountSelectionChange(selection: string[]): void{
     this.referenceAccount = selection && selection.length > 0 ? selection[0] : undefined;
   }
 
-  private save(): void{
+  save(): void{
     let account: Account = {
       identifier: this.form.get('identifier').value,
       type: this.form.get('type').value,
@@ -123,7 +123,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     this.onSave.emit(account);
   }
 
-  private cancel(): void{
+  cancel(): void{
     this.onCancel.emit();
   }
 

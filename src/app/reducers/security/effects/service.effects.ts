@@ -158,4 +158,8 @@ export class SecurityApiEffects {
         .catch(error => of(new securityActions.ChangePasswordFailAction(error)))
     );
 
+  @Effect()
+  logoutOnPasswordChange$: Observable<Action> = this.actions$
+    .ofType(securityActions.CHANGE_PASSWORD_SUCCESS)
+    .mergeMap(() => Observable.of(new securityActions.LogoutAction()));
 }

@@ -47,7 +47,6 @@ interface CustomDetailField{
 })
 export class CustomerDetailComponent implements OnInit, OnDestroy{
 
-  private actionsSubscription: Subscription;
 
   private catalogsSubscription: Subscription;
 
@@ -59,15 +58,11 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
 
   private _catalogs: Catalog[];
 
-  private customCatalogs: CustomCatalog[] = [];
+  customCatalogs: CustomCatalog[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.customerSubscription = this.store.select(fromEmployees.getSelectedCustomer)
       .subscribe(customer => this.customer = customer);
 
@@ -78,7 +73,6 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
     this.catalogsSubscription.unsubscribe();
   }
@@ -89,7 +83,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     }
   }
 
-  private set customer(customer: Customer){
+  set customer(customer: Customer){
     this._customer = customer;
 
     let customCatalogs: CustomCatalog[] = [];
@@ -133,11 +127,11 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     }
   };
 
-  private get customer(): Customer{
+  get customer(): Customer{
     return this._customer;
   }
 
-  private set catalogs(catalogs: Catalog[]){
+  set catalogs(catalogs: Catalog[]){
     this._catalogs = catalogs;
   }
 

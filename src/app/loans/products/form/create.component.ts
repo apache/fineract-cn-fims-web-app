@@ -24,6 +24,7 @@ import {CREATE} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Error} from '../../../../services/domain/error.model';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -34,7 +35,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
 
   @ViewChild('form') formComponent: ProductFormComponent;
 
-  private product: Product = {
+  product: FimsProduct = {
     identifier: '',
     name: '',
     termRange: {
@@ -53,22 +54,19 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     patternPackage: 'io.mifos.portfolio.individuallending.v1',
     description: '',
     accountAssignments: [],
-    parameters: '',
     currencyCode: 'USD',
     minorCurrencyUnitDigits: 2,
-    enabled: false
+    enabled: false,
+    parameters: {
+      maximumDispersalAmount: 0,
+      maximumDispersalCount: 0,
+      moratoriums: []
+    }
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    let productParameters: ProductParameters = {
-      maximumDispersalAmount: 0,
-      maximumDispersalCount: 0,
-      moratoriums: []
-    };
-    this.product.parameters = JSON.stringify(productParameters);
-
     this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductFormState)
       .filter(payload => !!payload.error)
       .subscribe((payload: {error: Error}) => {
@@ -91,7 +89,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     this.formStateSubscription.unsubscribe();
   }
 
-  onSave(product: Product): void {
+  onSave(product: FimsProduct): void {
     this.portfolioStore.dispatch({ type: CREATE, payload: {
       product: product,
       activatedRoute: this.route

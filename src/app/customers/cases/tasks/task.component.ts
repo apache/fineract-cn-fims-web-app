@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TableData} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
 import {Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {Case} from '../../../../services/portfolio/domain/case.model';
@@ -23,6 +23,7 @@ import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import {Observable, Subscription} from 'rxjs';
 import {LOAD_ALL} from '../store/tasks/task.actions';
+import {FimsCase} from '../store/model/fims-case.model';
 
 @Component({
   templateUrl: './task.component.html'
@@ -31,11 +32,11 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
-  caseInstance: Case;
+  caseInstance: FimsCase;
 
   tasksData$: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'description', label: 'Description' }
@@ -62,11 +63,11 @@ export class CaseTasksComponent implements OnInit, OnDestroy{
     this.caseSubscription.unsubscribe();
   }
 
-  private rowSelect(task: TaskDefinition): void{
+  rowSelect(task: TaskDefinition): void{
     this.router.navigate(['tasks', task.identifier]);
   }
 
-  private fetchTasks(): void{
+  fetchTasks(event?: TableFetchRequest): void{
     this.casesStore.dispatch({ type: LOAD_ALL, payload: {
       caseId: this.caseInstance.identifier,
       productId: this.caseInstance.productIdentifier

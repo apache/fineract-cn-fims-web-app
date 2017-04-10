@@ -19,7 +19,7 @@ import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TableData} from '../../components/data-table/data-table.component';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from '@ngx-translate/core';
 import * as fromAccounting from './store';
 import {SelectAction, DELETE} from './store/ledger/ledger.actions';
 import {AccountingStore} from './store/index';
@@ -35,13 +35,13 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy{
 
   private _ledger: Ledger;
 
-  private ledgerData: TableData = {
+  ledgerData: TableData = {
     totalElements: 0,
     totalPages: 1,
     data: []
   };
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'identifier', label: 'Id', tooltip: 'Id' },
     { name: 'name', label: 'Name', tooltip: 'Name' },
     { name: 'description', label: 'Description', tooltip: 'Description' }
@@ -93,13 +93,16 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy{
       });
   }
 
-  private set ledger(ledger: Ledger){
+  set ledger(ledger: Ledger) {
     this._ledger = ledger;
-    this.ledgerData.data = ledger.subLedgers;
-    this.ledgerData.totalElements = ledger.subLedgers.length;
+
+    if(this.ledger.subLedgers) {
+      this.ledgerData.data = ledger.subLedgers;
+      this.ledgerData.totalElements = ledger.subLedgers.length;
+    }
   }
 
-  private get ledger(): Ledger{
+  get ledger(): Ledger {
     return this._ledger;
   }
 }

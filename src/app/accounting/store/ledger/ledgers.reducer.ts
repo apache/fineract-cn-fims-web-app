@@ -36,10 +36,11 @@ export function reducer(state = initialState, action: ledger.Actions): State {
   switch (action.type) {
 
     case ledger.LOAD_ALL_TOP_LEVEL_COMPLETE: {
-      const ledgers = action.payload;
-      const newLedgers = ledgers.filter(ledger => !state.entities[ledger.identifier]);
+      const ledgers: Ledger[] = action.payload;
 
-      const newLedgerIds = newLedgers.map(ledger => ledger.identifier);
+      const newLedgers: Ledger[] = ledgers.filter(ledger => !state.entities[ledger.identifier]);
+
+      const newLedgerIds: string[] = newLedgers.map(ledger => ledger.identifier);
 
       const newLedgerEntities = newLedgers.reduce((entities: { [id: string]: Ledger }, ledger: Ledger) => {
         return Object.assign(entities, {
@@ -56,7 +57,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     }
 
     case ledger.LOAD: {
-      const ledger = action.payload;
+      const ledger: Ledger = action.payload;
 
       if (state.ids.indexOf(ledger.identifier) > -1) {
         return state;
@@ -82,7 +83,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     }
 
     case ledger.CREATE_SUCCESS: {
-      const ledger = action.payload.ledger;
+      const ledger: Ledger = action.payload.ledger;
 
       return {
         ids: [ ...state.ids, ledger.identifier ],
@@ -95,9 +96,9 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     }
 
     case ledger.CREATE_SUB_LEDGER_SUCCESS: {
-      const subLedger = action.payload.ledger;
+      const subLedger: Ledger = action.payload.ledger;
 
-      const parentLedger = Object.assign({}, state.entities[action.payload.parentLedgerId]);
+      const parentLedger: Ledger = Object.assign({}, state.entities[action.payload.parentLedgerId]);
 
       parentLedger.subLedgers.push(subLedger);
 
@@ -113,7 +114,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     }
 
     case ledger.UPDATE_SUCCESS: {
-      const ledger = action.payload.ledger;
+      const ledger: Ledger = action.payload.ledger;
 
       return {
         ids: [ ...state.ids ],
@@ -128,9 +129,9 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     case ledger.DELETE_SUCCESS: {
       const ledger: Ledger = action.payload.ledger;
 
-      const newIds = state.ids.filter(id => id !== ledger.identifier);
+      const newIds: string[] = state.ids.filter(id => id !== ledger.identifier);
 
-      const newTopLevelIds = state.topLevelIds.filter(id => id !== ledger.identifier);
+      const newTopLevelIds: string[] = state.topLevelIds.filter(id => id !== ledger.identifier);
 
       const newEntities = newIds.reduce((entities: { [id: string]: Ledger }, id: string) => {
         let ledger = state.entities[id];

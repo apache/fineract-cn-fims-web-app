@@ -39,7 +39,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  private accountTypeOptions: AccountTypeOption[] = accountTypes;
+  accountTypeOptions: AccountTypeOption[] = accountTypes;
 
   constructor(private formBuilder: FormBuilder) {
     super();

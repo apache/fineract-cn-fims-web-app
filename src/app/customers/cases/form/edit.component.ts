@@ -17,13 +17,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Case} from '../../../../services/portfolio/domain/case.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationType} from '../../../../services/notification/notification.service';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 import {CasesStore} from '../store/index';
 import {SelectAction, UPDATE} from '../store/case.actions';
+import * as customerActions from '../../store/customer.actions';
 import {Subscription} from 'rxjs';
 import * as fromCases from '../store/index';
 import * as fromCustomers from '../../store/index';
+import {FimsCase} from '../store/model/fims-case.model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -38,9 +39,9 @@ export class CaseEditComponent implements OnInit, OnDestroy{
 
   private productId: string;
 
-  private customer: Customer;
+  customer: Customer;
 
-  private caseInstance: Case;
+  caseInstance: FimsCase;
 
   constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
 
@@ -69,7 +70,7 @@ export class CaseEditComponent implements OnInit, OnDestroy{
   onSave(caseInstance: Case) {
     this.casesStore.dispatch({ type: UPDATE, payload: {
       productId: this.productId,
-      case: caseInstance,
+      caseInstance: caseInstance,
       activatedRoute: this.route
     }});
   }

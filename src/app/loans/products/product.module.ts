@@ -42,11 +42,34 @@ import {PortfolioStore, portfolioStoreFactory} from './store/index';
 import {ProductExistsGuard} from './product-exists.guard';
 import {ProductTaskExistsGuard} from './status/task-exists.guard';
 import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
+import {ProductSettingsFormComponent} from './form/settings/settings.component';
+import {ProductChargesNotificationEffects} from './store/charges/effects/notification.effects';
+import {ProductChargesRouteEffects} from './store/charges/effects/route.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {ProductChargesApiEffects} from './store/charges/effects/service.effects';
+import {ProductTasksNotificationEffects} from './store/tasks/effects/notification.effects';
+import {ProductTasksRouteEffects} from './store/tasks/effects/route.effects';
+import {ProductTasksApiEffects} from './store/tasks/effects/service.effects';
+import {ProductNotificationEffects} from './store/effects/notification.effects';
+import {ProductRouteEffects} from './store/effects/route.effects';
+import {ProductApiEffects} from './store/effects/service.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(ProductRoutes),
-    CommonModule
+    CommonModule,
+
+    EffectsModule.run(ProductApiEffects),
+    EffectsModule.run(ProductRouteEffects),
+    EffectsModule.run(ProductNotificationEffects),
+
+    EffectsModule.run(ProductTasksApiEffects),
+    EffectsModule.run(ProductTasksRouteEffects),
+    EffectsModule.run(ProductTasksNotificationEffects),
+
+    EffectsModule.run(ProductChargesApiEffects),
+    EffectsModule.run(ProductChargesRouteEffects),
+    EffectsModule.run(ProductChargesNotificationEffects),
   ],
   declarations: [
     // product
@@ -59,6 +82,7 @@ import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
     ProductInterestFormComponent,
     ProductTermFormComponent,
     ProductMoratoriumFormComponent,
+    ProductSettingsFormComponent,
 
     // charge
     ProductChargeListComponent,

@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-import {Component, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {Product} from '../../../../services/portfolio/domain/product.model';
 import {InterestFormData, ProductInterestFormComponent} from './interests/interests.component';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
-import {ProductFeeFormComponent, FeeFormData} from './fees/fee.component';
-import {ProductTermFormComponent, TermRangeFormData} from '../components/term/term.component';
-import {setSelections} from '../../../../components/forms/form-helper';
+import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
 import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {ProductMoratoriumFormComponent} from './moratorium/moratorium.component';
-import {Moratorium} from '../../../../services/portfolio/domain/individuallending/moratorium.model';
-import {FimsValidators} from '../../../../components/validators';
-import {accountExists} from '../../../../components/account-exists.validator';
+import {FimsValidators} from '../../../../components/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {FimsProduct} from '../store/model/fims-product.model';
+import {accountExists} from '../../../../components/validator/account-exists.validator';
+import {ProductSettingsFormComponent, SettingsFormData} from './settings/settings.component';
+import {temporalOptionList} from '../../../../components/domain/temporal.domain';
 
 @Component({
   selector: 'fims-product-form-component',
   templateUrl: './form.component.html'
 })
 export class ProductFormComponent implements OnInit{
+
+  temporalOptions = temporalOptionList;
 
   currencyUnitDigits: any = [
     { digits: 0, label: '0' },
@@ -53,29 +53,25 @@ export class ProductFormComponent implements OnInit{
 
   @Input('editMode') editMode: boolean;
 
-  @Input('product') set product(product: Product){
+  @Input('product') set product(product: FimsProduct){
     this.prepareDetailForm(product);
-    this.prepareTermForm(product);
+    this.prepareSettingsForm(product);
     this.prepareInterestForm(product);
     this.prepareFeeForm(product);
     this.prepareAllowanceForm(product);
-    this.prepareMoratoriumForm(product);
   };
 
-  @Output('onSave') onSave = new EventEmitter<Product>();
+  @Output('onSave') onSave = new EventEmitter<FimsProduct>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  @ViewChild('termForm') termForm: ProductTermFormComponent;
-  private termFormData: TermRangeFormData;
+  @ViewChild('settingsForm') settingsForm: ProductSettingsFormComponent;
+  settingsFormData: SettingsFormData;
 
   @ViewChild('interestForm') interestForm: ProductInterestFormComponent;
-  private interestFormData: InterestFormData;
-
-  @ViewChild('moratoriumForm') moratoriumForm: ProductMoratoriumFormComponent;
-  private moratoriumFormData: Moratorium[];
+  interestFormData: InterestFormData;
 
   @ViewChild('feeForm') feeForm: ProductFeeFormComponent;
-  private feeFormData: FeeFormData;
+  feeFormData: FeeFormData;
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
 
@@ -85,20 +81,19 @@ export class ProductFormComponent implements OnInit{
 
   get isValid(): boolean {
     return this.detailForm.valid &&
-      this.termForm.valid &&
+      this.settingsForm.valid &&
       this.interestForm.valid &&
-      this.arrearsAllowanceForm.valid &&
-      this.moratoriumForm.validWhenOptional;
+      this.arrearsAllowanceForm.valid;
   }
 
   save(): void{
-    let parameters = {
+    let parameters: ProductParameters = {
       maximumDispersalAmount: this.detailForm.get('dispersalAmount').value,
       maximumDispersalCount: this.detailForm.get('dispersalCount').value,
-      moratoriums: this.moratoriumForm.formData
+      moratoriums: []
     };
 
-    let product: Product = {
+    let product: FimsProduct = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value,
@@ -110,14 +105,14 @@ export class ProductFormComponent implements OnInit{
         maximum: this.interestForm.formData.maximum,
       },
       termRange: {
-        maximum: this.termForm.formData.term,
-        temporalUnit: this.termForm.formData.temporalUnit,
+        maximum: this.detailForm.get('term').value,
+        temporalUnit: this.detailForm.get('temporalUnit').value
       },
       balanceRange: {
         minimum: this.detailForm.get('minimumBalance').value,
         maximum: this.detailForm.get('maximumBalance').value
       },
-      parameters: JSON.stringify(parameters),
+      parameters: parameters,
       patternPackage: 'io.mifos.individuallending.api.v1',
       accountAssignments: this.collectAccountAssignments()
     };
@@ -127,23 +122,33 @@ export class ProductFormComponent implements OnInit{
   private collectAccountAssignments(): AccountAssignment[]{
     let assignments: AccountAssignment[] = [];
 
-    assignments.push(this.createAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
-    assignments.push(this.createAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
-    assignments.push(this.createAssignment(this.feeForm.formData.lateFeeIncomeAccount, AccountDesignators.LATE_FEE_INCOME));
-    assignments.push(this.createAssignment(this.feeForm.formData.lateFeeAccrualAccount, AccountDesignators.LATE_FEE_ACCRUAL));
-    assignments.push(this.createAssignment(this.feeForm.formData.originationFeeAccount, AccountDesignators.ORIGINATION_FEE_INCOME));
+    assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
+    assignments.push(this.createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
 
-    assignments.push(this.createAssignment(this.interestForm.formData.incomeAccount, AccountDesignators.INTEREST_INCOME));
-    assignments.push(this.createAssignment(this.interestForm.formData.accrualAccount, AccountDesignators.INTEREST_ACCRUAL));
+    assignments.push(this.createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
+    assignments.push(this.createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
+    assignments.push(this.createAccountAssignment(this.feeForm.formData.lateFeeIncomeAccount, AccountDesignators.LATE_FEE_INCOME));
+    assignments.push(this.createAccountAssignment(this.feeForm.formData.lateFeeAccrualAccount, AccountDesignators.LATE_FEE_ACCRUAL));
+    assignments.push(this.createAccountAssignment(this.feeForm.formData.originationFeeAccount, AccountDesignators.ORIGINATION_FEE_INCOME));
 
-    assignments.push(this.createAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.ARREARS_ALLOWANCE));
+    assignments.push(this.createAccountAssignment(this.interestForm.formData.incomeAccount, AccountDesignators.INTEREST_INCOME));
+    assignments.push(this.createAccountAssignment(this.interestForm.formData.accrualAccount, AccountDesignators.INTEREST_ACCRUAL));
+
+    assignments.push(this.createAccountAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.ARREARS_ALLOWANCE));
 
     return assignments;
   }
 
-  private createAssignment(identifier: string, designator: string): AccountAssignment{
+  private createAccountAssignment(identifier: string, designator: string): AccountAssignment {
     return {
       accountIdentifier: identifier,
+      designator: designator
+    }
+  }
+
+  private createLedgerAssignment(identifier: string, designator: string): AccountAssignment {
+    return {
+      ledgerIdentifier: identifier,
       designator: designator
     }
   }
@@ -152,9 +157,10 @@ export class ProductFormComponent implements OnInit{
     this.onCancel.emit();
   }
 
-  prepareDetailForm(product: Product): void{
-    let balanceRange = product.balanceRange;
-    let productParameter = this.parseParameter(product.parameters);
+  prepareDetailForm(product: FimsProduct): void{
+    const balanceRange = product.balanceRange;
+    const termRange = product.termRange;
+
     this.detailForm = this.formBuilder.group({
       identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       name: [product.name, [Validators.required]],
@@ -164,12 +170,24 @@ export class ProductFormComponent implements OnInit{
       minimumBalance: [balanceRange ? balanceRange.minimum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange ? balanceRange.maximum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       multipleDispersals: [''],
-      dispersalAmount: [productParameter.maximumDispersalAmount],
-      dispersalCount: [productParameter.maximumDispersalCount],
+      dispersalAmount: [product.parameters.maximumDispersalAmount],
+      dispersalCount: [product.parameters.maximumDispersalCount],
+      term: [termRange ? termRange.maximum : undefined, [ Validators.required, FimsValidators.minValue(0) ]],
+      temporalUnit: [termRange ? termRange.temporalUnit : undefined, Validators.required]
     }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
   }
 
-  private prepareInterestForm(product: Product) {
+  prepareSettingsForm(product: FimsProduct) {
+    const loanFoundAccount = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
+    const customerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
+
+    this.settingsFormData = {
+      loanFundAccount: this.accountIdentifier(loanFoundAccount),
+      customerLoanLedger: this.ledgerIdentifier(customerLoanLedger)
+    }
+  }
+
+  private prepareInterestForm(product: FimsProduct) {
     let interestIncome = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
     let interestAccrual = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
     let interestRange = product.interestRange;
@@ -182,16 +200,7 @@ export class ProductFormComponent implements OnInit{
     }
   }
 
-  private prepareMoratoriumForm(product: Product) {
-    let productParameter = this.parseParameter(product.parameters);
-    this.moratoriumFormData = productParameter.moratoriums;
-  }
-
-  private parseParameter(parameters: string): ProductParameters{
-    return JSON.parse(parameters);
-  }
-
-  private prepareFeeForm(product: Product) {
+  private prepareFeeForm(product: FimsProduct) {
     let processingFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
     let disbursementFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
     let lateFeeIncomeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
@@ -206,23 +215,20 @@ export class ProductFormComponent implements OnInit{
       originationFeeAccount: this.accountIdentifier(loanOriginationFeeDesignator)
     }
   }
-  private prepareTermForm(product: Product) {
-    let termRange = product.termRange;
-    this.termFormData = {
-      term: termRange ? termRange.maximum : undefined,
-      temporalUnit: termRange ? termRange.temporalUnit : undefined
-    }
-  }
 
-  private prepareAllowanceForm(product: Product) {
+  private prepareAllowanceForm(product: FimsProduct) {
     let allowanceDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
     this.arrearsAllowanceForm = this.formBuilder.group({
       account: [this.accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });
   }
 
-  private accountIdentifier(assignment: AccountAssignment): string{
+  private accountIdentifier(assignment: AccountAssignment): string {
     return assignment ? assignment.accountIdentifier : undefined;
+  }
+
+  private ledgerIdentifier(assignment: AccountAssignment): string {
+    return assignment ? assignment.ledgerIdentifier : undefined;
   }
 
   private findAccountDesignator(accountAssignments: AccountAssignment[], designator: string): AccountAssignment{

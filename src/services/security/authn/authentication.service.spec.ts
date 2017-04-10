@@ -30,8 +30,7 @@ describe('Test Authentication Service', () => {
     accessToken: 'accessToken',
     accessTokenExpiration: new Date().toISOString(),
     refreshTokenExpiration: new Date().toISOString(),
-    passwordExpiration: new Date().toISOString(),
-    passwordChangedBy: 'moss'
+    passwordExpiration: new Date().toISOString()
   };
 
   beforeEach(() => {

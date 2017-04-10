@@ -17,10 +17,11 @@
 import * as caseActions from './case.actions';
 import { createSelector } from 'reselect';
 import {Case} from '../../../../services/portfolio/domain/case.model';
+import {FimsCase} from './model/fims-case.model';
 
 export interface State {
   ids: string[];
-  entities: { [id: string]: Case };
+  entities: { [id: string]: FimsCase };
   selectedCaseId: string | null;
 }
 
@@ -40,7 +41,7 @@ export function reducer(state = initialState, action: caseActions.Actions): Stat
 
       const newCaseIds = newCases.map(caseEntity => caseEntity.identifier);
 
-      const newCaseEntities = newCases.reduce((entities: { [id: string]: Case }, caseEntity: Case) => {
+      const newCaseEntities = newCases.reduce((entities: { [id: string]: FimsCase }, caseEntity: FimsCase) => {
         return Object.assign(entities, {
           [caseEntity.identifier]: caseEntity
         });
@@ -79,7 +80,7 @@ export function reducer(state = initialState, action: caseActions.Actions): Stat
 
     case caseActions.CREATE_SUCCESS:
     case caseActions.UPDATE_SUCCESS: {
-      const caseEntity = action.payload.case;
+      const caseEntity = action.payload.caseInstance;
 
       return {
         ids: [ ...state.ids, caseEntity.identifier ],

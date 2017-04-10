@@ -15,12 +15,15 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as caseActions from '../case.actions';
 import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
+import {Product} from '../../../../../services/portfolio/domain/product.model';
+import {mapToFimsCasePage} from '../model/fims-case-page.model';
+import {mapToCase} from '../model/fims-case.mapper';
 
 @Injectable()
 export class CaseApiEffects {
@@ -37,7 +40,8 @@ export class CaseApiEffects {
 
       return this.portfolioService.getAllCasesForCustomer(payload.customerId, payload.fetchRequest)
         .takeUntil(nextSearch$)
-        .map(customerPage => new caseActions.SearchCompleteAction(customerPage))
+        .map(casePage => mapToFimsCasePage(casePage))
+        .map(fimsCasePage => new caseActions.SearchCompleteAction(fimsCasePage))
         .catch(() => of(new caseActions.SearchCompleteAction({
           totalElements: 0,
           totalPages: 0,
@@ -51,7 +55,7 @@ export class CaseApiEffects {
     .ofType(caseActions.CREATE)
     .map((action: caseActions.CreateCaseAction) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.createCase(payload.productId, payload.case)
+      this.portfolioService.createCase(payload.productId, mapToCase(payload.caseInstance))
         .map(() => new caseActions.CreateCaseSuccessAction(payload))
         .catch((error) => of(new caseActions.CreateCaseFailAction(error)))
     );
@@ -61,10 +65,20 @@ export class CaseApiEffects {
     .ofType(caseActions.UPDATE)
     .map((action: caseActions.UpdateCaseAction) => action.payload)
     .mergeMap(payload =>
-        this.portfolioService.changeCase(payload.productId, payload.case)
+        this.portfolioService.changeCase(payload.productId, mapToCase(payload.caseInstance))
           .map(() => new caseActions.UpdateCaseSuccessAction(payload))
           .catch((error) => of(new caseActions.UpdateCaseFailAction(error)))
 
+    );
+
+  @Effect()
+  loadProduct$: Observable<Action> = this.actions$
+    .ofType(caseActions.LOAD_PRODUCT)
+    .map((action: caseActions.LoadProductAction) => action.payload)
+    .mergeMap(productId =>
+      this.portfolioService.getProduct(productId)
+        .map((product: Product) => new caseActions.LoadProductSuccessAction(product))
+        .catch((error) => of(new caseActions.LoadProductFailAction(error)))
     );
 
 }

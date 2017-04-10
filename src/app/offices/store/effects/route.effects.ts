@@ -33,7 +33,7 @@ export class OfficeRouteEffects {
       if(payload.office.parentIdentifier){
         this.router.navigate(['../detail', payload.office.parentIdentifier], { relativeTo: payload.activatedRoute });
       }else{
-        this.router.navigate(['../', payload.office.identifier], { relativeTo: payload.activatedRoute });
+        this.router.navigate(['../detail', payload.office.identifier], { relativeTo: payload.activatedRoute });
       }
     });
 

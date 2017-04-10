@@ -37,11 +37,26 @@ import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form
 import {CustomerExistsGuard} from './customer-exists.guard';
 import {CustomersStore, customerStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
+import {CustomerNotificationEffects} from './store/effects/notification.effects';
+import {CustomerRouteEffects} from './store/effects/route.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {CustomerApiEffects} from './store/effects/service.effects';
+import {CustomerCommandApiEffects} from './store/commands/effects/service.effects';
+import {CustomerTasksNotificationEffects} from './store/tasks/effects/notification.effects';
+import {CustomerTasksApiEffects} from './store/tasks/effects/service.effects';
+import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(CustomerRoutes),
-    CommonModule
+    CommonModule,
+    EffectsModule.run(CustomerApiEffects),
+    EffectsModule.run(CustomerRouteEffects),
+    EffectsModule.run(CustomerNotificationEffects),
+    EffectsModule.run(CustomerTasksApiEffects),
+    EffectsModule.run(CustomerTasksRouteEffects),
+    EffectsModule.run(CustomerTasksNotificationEffects),
+    EffectsModule.run(CustomerCommandApiEffects),
   ],
   declarations: [
     CustomerComponent,

@@ -18,13 +18,16 @@ import {Component, Input, Output, ViewChild, EventEmitter, OnInit} from '@angula
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../../services/office/domain/office.model';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
+import {Address} from '../../../services/domain/address/address.model';
 
 @Component({
   selector: 'fims-office-form-component',
   templateUrl: './form.component.html'
 })
 export class OfficeFormComponent implements OnInit {
+
+  private _office: Office;
 
   detailForm: FormGroup;
 
@@ -35,6 +38,7 @@ export class OfficeFormComponent implements OnInit {
   @Input('editMode') editMode: boolean;
 
   @Input('office') set office(office: Office) {
+    this._office = office;
     this.prepareForm(office);
   }
 
@@ -52,13 +56,15 @@ export class OfficeFormComponent implements OnInit {
       description: [office.description]
     });
 
+    const address = office.address;
+
     this.addressForm = this.formBuilder.group({
-      street: [office.address.street, Validators.required],
-      city: [office.address.city, Validators.required],
-      postalCode: [office.address.postalCode, Validators.maxLength(5)],
-      region: [office.address.region],
-      countryShortName: [office.address.countryCode, [Validators.required, Validators.maxLength(2)]],
-      country: [office.address.country, Validators.required]
+      street: [address ? address.street : undefined, Validators.required],
+      city: [address ? address.city : undefined, Validators.required],
+      postalCode: [address ? address.postalCode : undefined, Validators.maxLength(5)],
+      region: [address ? address.region : undefined],
+      countryShortName: [address ? address.countryCode : undefined, [Validators.required, Validators.maxLength(2)]],
+      country: [address ? address.country : undefined, Validators.required]
     })
   }
 
@@ -77,19 +83,31 @@ export class OfficeFormComponent implements OnInit {
       description: this.detailForm.get('description').value
     };
 
-    office.address = {
+    if(this.addressForm.pristine) {
+      office.address = this.office.address;
+    } else {
+      office.address = this.getAddress();
+    }
+
+    this.onSave.emit(office);
+  }
+
+  private getAddress(): Address {
+    return {
       street: this.addressForm.get('street').value,
       city: this.addressForm.get('city').value,
       region: this.addressForm.get('region').value,
       postalCode: this.addressForm.get('postalCode').value,
       countryCode: this.addressForm.get('countryShortName').value,
       country: this.addressForm.get('country').value
-    };
-
-    this.onSave.emit(office);
+    }
   }
 
   cancel(): void {
     this.onCancel.emit();
+  }
+
+  get office(): Office {
+    return this._office;
   }
 }

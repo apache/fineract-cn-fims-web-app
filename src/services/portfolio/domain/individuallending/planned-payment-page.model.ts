@@ -15,9 +15,11 @@
  */
 
 import {PlannedPayment} from './planned-payment.model';
+import {ChargeName} from './charge-name.model';
 
 export class PlannedPaymentPage{
   elements: PlannedPayment[];
+  chargeNames: ChargeName[];
   totalPages: number;
   totalElements: number;
 }

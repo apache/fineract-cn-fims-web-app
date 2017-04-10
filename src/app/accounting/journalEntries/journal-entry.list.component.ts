@@ -19,7 +19,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {todayAsISOString} from '../../../services/domain/date.converter';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
 import {Observable} from 'rxjs';
@@ -33,11 +33,11 @@ import {DatePipe} from '@angular/common';
 })
 export class JournalEntryListComponent implements OnInit{
 
-  private form: FormGroup;
+  form: FormGroup;
 
-  private journalEntryData$: Observable<TableData>;
+  journalEntryData$: Observable<TableData>;
 
-  private columns: ITdDataTableColumn[];
+  columns: ITdDataTableColumn[];
 
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
 
@@ -67,11 +67,11 @@ export class JournalEntryListComponent implements OnInit{
     this.fetchJournalEntries()
   }
 
-  private rowSelect(account: Account): void{
+  rowSelect(account: Account): void{
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  private fetchJournalEntries(): void{
+  fetchJournalEntries(): void{
     let startDate = this.form.get('startDate').value;
     let endDate = this.form.get('endDate').value;
 

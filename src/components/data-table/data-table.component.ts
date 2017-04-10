@@ -18,7 +18,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Sort} from '../../services/domain/paging/sort.model';
 import {Page} from '../../services/domain/paging/page.model';
 import {IPageChangeEvent, ITdDataTableSortChangeEvent, TdDataTableSortingOrder} from '@covalent/core';
-import {TranslateService} from 'ng2-translate';
+import {TranslateService} from '@ngx-translate/core';
 
 export interface TableData{
   data: any[];
@@ -59,7 +59,7 @@ export class DataTableComponent{
 
   constructor(private translate: TranslateService) {}
 
-  private pageSizes: number[] = [10, 15, 20];
+  pageSizes: number[] = [10, 15, 20];
 
   private currentPage: Page = {
     pageIndex: 0,
@@ -71,7 +71,7 @@ export class DataTableComponent{
     sortDirection: 'ASC'
   };
 
-  private page(pagingEvent: IPageChangeEvent): void{
+  page(pagingEvent: IPageChangeEvent): void{
     this.currentPage = {
       pageIndex: pagingEvent.page -1,
       size: pagingEvent.pageSize
@@ -79,7 +79,7 @@ export class DataTableComponent{
     this.fetch();
   }
 
-  private sortChanged(event: ITdDataTableSortChangeEvent): void {
+  sortChanged(event: ITdDataTableSortChangeEvent): void {
     this.currentSort = {
       sortDirection: event.order === TdDataTableSortingOrder.Ascending ? 'ASC' : 'DESC',
       sortColumn: event.name

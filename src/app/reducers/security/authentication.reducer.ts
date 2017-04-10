@@ -62,15 +62,6 @@ export function reducer(state = initialState, action: security.Actions): State {
       });
     }
 
-    case security.CHANGE_PASSWORD_SUCCESS: {
-      let authentication = Object.assign({}, state.authentication, {
-        passwordChangedBy: state.username
-      });
-      return Object.assign({}, state, {
-        authentication
-      });
-    }
-
     case security.CHANGE_PASSWORD_FAIL: {
       let error = action.payload;
       return Object.assign({}, state, {

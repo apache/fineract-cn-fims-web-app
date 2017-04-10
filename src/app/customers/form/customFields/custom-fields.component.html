@@ -15,7 +15,7 @@
 -->
 
 <form [formGroup]="form">
-  <ng-container *ngFor="let catalog of _catalogs">
+  <ng-container *ngFor="let catalog of catalogs">
     <h4>{{catalog.name}}</h4>
     <div *ngFor="let field of catalog.fields" [ngSwitch]="field.dataType" layout="row">
       <md-input-container layout-margin flex>

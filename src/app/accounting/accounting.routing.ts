@@ -18,15 +18,11 @@ import {Routes} from '@angular/router';
 import {GeneralLedgerComponent} from './general-ledger.component';
 import {TrailBalanceComponent} from './trailBalance/trial-balance.component';
 import {SubLedgerDetailComponent} from './sub-ledger.detail.component';
-import {LedgerResolver} from './ledger.resolver';
 import {AccountComponent} from './accounts/account.component';
-import {AccountResolver} from './accounts/account.resolver';
 import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
 import {CommandsResolver} from './activity/commands.resolver';
 import {AccountActivityComponent} from './activity/activity.component';
-import {TrialBalanceResolver} from './trailBalance/trial-balance.resolver';
-import {AccountFormComponent} from './accounts/form/form.component';
 import {CreateAccountFormComponent} from './accounts/form/create/create.form.component';
 import {AccountListComponent} from './accounts/account.list.component';
 import {SubLedgerComponent} from './sub-ledger.component';
@@ -85,7 +81,7 @@ export const AccountingRoutes: Routes = [
   {path: 'accounts/detail/:id/activities', component: AccountActivityComponent, canActivate: [AccountExistsGuard], resolve: {commands: CommandsResolver}, data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
   {path: 'accounts/detail/:id/entries', component: AccountEntryListComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
 
-  {path: 'trialBalance', component: TrailBalanceComponent, resolve: { trialBalance: TrialBalanceResolver }, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
+  {path: 'trialBalance', component: TrailBalanceComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
   {path: 'journalEntries', component: JournalEntryListComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'READ' }}},
   {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}}
 ];

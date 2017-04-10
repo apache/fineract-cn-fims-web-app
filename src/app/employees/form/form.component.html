@@ -52,11 +52,11 @@
       </div>
     </form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="roleStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #roleStep label="{{'Assign role to employee' | translate}}"
@@ -73,11 +73,11 @@
                         noSelectionMessage="{{'No role assigned to employee, yet.' | translate}}"
     ></fims-select-list>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #officeStep label="{{'Assign employee to office(optional)' | translate}}"
@@ -94,11 +94,11 @@
                         noResultsMessage="{{'No office was found.' | translate}}"
                         noSelectionMessage="{{'No office assigned to employee, yet.' | translate}}"
     ></fims-select-list>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="contactStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #contactStep label="{{'Employee contact(optional)' | translate}}" [state]="contactForm.valid && !contactForm.pristine ? 'complete' : contactForm.pristine ? 'none' : 'required'">
@@ -119,12 +119,12 @@
         </md-input-container>
       </div>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'CREATE EMPLOYEE' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'UPDATE EMPLOYEE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
 </td-steps>

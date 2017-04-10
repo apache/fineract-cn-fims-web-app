@@ -19,15 +19,16 @@ import * as fromAccounting from '../store';
 import {LOAD_TRIAL_BALANCE} from '../store/ledger/ledger.actions';
 import {Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
+import {MdCheckboxChange} from '@angular/material';
 
 @Component({
   templateUrl: './trail-balance.component.html'
 })
 export class TrailBalanceComponent implements OnInit{
 
-  private includeEmptyEntries: boolean = true;
+  includeEmptyEntries: boolean = true;
 
-  private trialBalance: Observable<TrialBalance>;
+  trialBalance: Observable<TrialBalance>;
 
   constructor(private store: AccountingStore){}
 
@@ -36,7 +37,7 @@ export class TrailBalanceComponent implements OnInit{
     this.fetchTrialBalance();
   }
 
-  private fetchTrialBalance(): void{
+  fetchTrialBalance(event?: MdCheckboxChange): void{
     this.store.dispatch({ type: LOAD_TRIAL_BALANCE, payload: this.includeEmptyEntries });
   }
 

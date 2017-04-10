@@ -66,8 +66,6 @@ export const getCaseSearchResults = createSelector(getSearchCases, getCaseSearch
 
 export const getCasesState = (state: State) => state.cases;
 
-export const getCaseFormState = (state: State) => state.caseForm;
-
 export const getCaseEntities = createSelector(getCasesState, fromCases.getEntities);
 export const getCaseIds = createSelector(getCasesState, fromCases.getIds);
 export const getSelectedCaseId = createSelector(getCasesState, fromCases.getSelectedId);
@@ -80,14 +78,10 @@ export const getCaseTasksEntities = createSelector(getCaseTasksState, fromCaseTa
 
 export const getCasePaymentsSearchState = (state: State) => state.casePayments;
 
-export const getSearchCasePayments = createSelector(getCasePaymentsSearchState, fromCasePayments.getPayments);
-export const getCasePaymentsSearchTotalElements = createSelector(getCasePaymentsSearchState, fromCasePayments.getTotalElements);
-export const getCasePaymentsSearchTotalPages = createSelector(getCasePaymentsSearchState, fromCasePayments.getTotalPages);
+export const getSearchCasePaymentPage = createSelector(getCasePaymentsSearchState, fromCasePayments.getPaymentPage);
 
-export const getCasePaymentSearchResults = createSelector(getSearchCasePayments, getCasePaymentsSearchTotalElements, getCasePaymentsSearchTotalPages, (payments, totalPages, totalElements) => {
-  return {
-    payments: payments,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+export const getCaseFormState = (state: State) => state.caseForm;
+
+export const getCaseFormProduct = createSelector(getCaseFormState, fromCaseForm.getFormProduct);
+
+export const getCaseFormError = createSelector(getCaseFormState, fromCaseForm.getFormError);

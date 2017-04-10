@@ -27,11 +27,18 @@ import {CommonModule} from '../../components/common.module';
 import {EmployeeExistsGuard} from './employee-exists.guard';
 import {Store} from '@ngrx/store';
 import {EmployeesStore, employeeStoreFactory} from './store/index';
+import {EmployeeNotificationEffects} from './store/effects/notification.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {EmployeeApiEffects} from './store/effects/service.effects';
+import {EmployeeRouteEffects} from './store/effects/route.effects';
 
 @NgModule({
   imports: [
     RouterModule.forChild(EmployeeRoutes),
-    CommonModule
+    CommonModule,
+    EffectsModule.run(EmployeeApiEffects),
+    EffectsModule.run(EmployeeRouteEffects),
+    EffectsModule.run(EmployeeNotificationEffects)
   ],
   declarations: [
     EmployeeComponent,

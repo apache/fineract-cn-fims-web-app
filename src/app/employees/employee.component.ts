@@ -66,7 +66,7 @@ export class EmployeeComponent implements OnInit{
     this.router.navigate(['detail', row.identifier], { relativeTo: this.route });
   }
 
-  private fetchEmployees(fetchRequest?: FetchRequest){
+  fetchEmployees(fetchRequest?: FetchRequest){
     if(fetchRequest){
       this.lastFetchRequest = fetchRequest;
     }

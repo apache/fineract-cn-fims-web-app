@@ -19,82 +19,82 @@
 
     <fims-customer-detail-form #detailForm [formData]="detailFormData" [editMode]="editMode"></fims-customer-detail-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="addressStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #addressStep label="{{'Customer Address' | translate}}" [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
 
     <fims-customer-address-form #addressForm [formData]="addressFormData"></fims-customer-address-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="contactStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #contactStep label="{{'Customer contact(optional)' | translate}}" [state]="contactForm.pristine ? 'none' : contactForm.valid ? 'completed' : 'required'">
 
     <fims-customer-contact-form #contactForm [formData]="contactFormData"></fims-customer-contact-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="identityCardStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #identityCardStep label="{{'Identity card(optional)' | translate}}" translate-sublabel [state]="identityCardForm.pristine ? 'none' : identityCardForm.valid ? 'completed' : 'required'">
 
     <fims-customer-identity-card-form #identityCardForm [formData]="identityCardFormData"></fims-customer-identity-card-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #officeStep label="{{'Assign customer to office(optional)' | translate}}"
-           [state]="selectedOffice ? 'complete' : 'none'">
+           [state]="selectedOffices.length ? 'complete' : 'none'">
 
     <fims-customer-offices-form [preSelection]="selectedOffices" (onSelectionChange)="selectOffice($event)"></fims-customer-offices-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="employeeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
-    <template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Customer is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
-    </template>
+    </ng-template>
+    <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Customer is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
+    </ng-template>
   </td-step>
 
   <td-step #employeeStep label="{{'Assign customer to employee(optional)' | translate}}"
-           [state]="selectedEmployee ? 'complete' : 'none'">
+           [state]="selectedEmployees.length ? 'complete' : 'none'">
 
     <fims-customer-employees-form [preSelection]="selectedEmployees" (onSelectionChange)="selectEmployee($event)"></fims-customer-employees-form>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button (click)="customFieldsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
   <td-step #customFieldsStep label="{{'Custom fields(optional)' | translate}}" [state]="customFieldsForm.pristine ? 'none' : customFieldsForm.valid ? 'completed' : 'required'">
 
     <fims-custom-fields-component #customFieldsForm [formData]="customFieldsFormData"></fims-custom-fields-component>
 
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'CREATE CUSTOMER' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'UPDATE CUSTOMER' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 
 </td-steps>

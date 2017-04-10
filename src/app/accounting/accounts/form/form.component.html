@@ -52,7 +52,7 @@
         ></fims-select-list>
       </div>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!valid">
         {{'CREATE ACCOUNT' | translate}}
       </button>
@@ -61,6 +61,6 @@
       </button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 </td-steps>

@@ -15,7 +15,7 @@
  */
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions, RequestOptionsArgs, RequestMethod, Request, Response, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/map';

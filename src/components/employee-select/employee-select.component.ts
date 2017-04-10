@@ -38,7 +38,7 @@ export class EmployeeSelectComponent implements OnInit{
 
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
 
-  private employees: Observable<Employee[]>;
+  employees: Observable<Employee[]>;
 
   constructor(private officeService: OfficeService) {}
 

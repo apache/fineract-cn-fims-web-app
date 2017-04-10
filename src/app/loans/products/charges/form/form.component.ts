@@ -21,7 +21,7 @@ import {ChargeMethod} from '../../../../../services/portfolio/domain/charge-meth
 import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
 import {TdStepComponent} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../../../components/domain/action-option.model';
-import {FimsValidators} from '../../../../../components/validators';
+import {FimsValidators} from '../../../../../components/validator/validators';
 
 interface ChargeMethodOption{
   type: ChargeMethod,

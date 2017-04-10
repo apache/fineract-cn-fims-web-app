@@ -16,12 +16,12 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Product} from '../../../services/portfolio/domain/product.model';
 import {FormControl} from '@angular/forms';
 import {PortfolioStore} from './store/index';
 import {ENABLE, SelectAction} from './store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from './store';
+import {FimsProduct} from './store/model/fims-product.model';
 
 @Component({
   templateUrl: './product.detail.component.html'
@@ -32,7 +32,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
 
   private actionsSubscription: Subscription;
 
-  product: Product;
+  product: FimsProduct;
 
   enabledControl: FormControl;
 
@@ -63,4 +63,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
     this.actionsSubscription.unsubscribe();
     this.productSubscription.unsubscribe();
   }
+
+  get numberFormat(): string {
+    let digits = 2;
+    if(this.product){
+      digits = this.product.minorCurrencyUnitDigits;
+    }
+    return `1.${digits}-${digits}`;
+  }
+
 }

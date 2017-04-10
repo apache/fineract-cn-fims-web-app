@@ -15,7 +15,7 @@
  */
 
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentCoreModule} from '@covalent/core';
 import {EditEmployeeFormComponent} from './edit.form.component';
@@ -27,12 +27,11 @@ import {LayoutCardOverComponent} from '../../../../components/layout-card-over/l
 import {User} from '../../../../services/identity/domain/user.model';
 import {Employee} from '../../../../services/office/domain/employee.model';
 import {Observable} from 'rxjs';
-import {Password} from '../../../../services/identity/domain/password.model';
-import {RoleIdentifier} from '../../../../services/identity/domain/role-identifier.model';
 import {EmployeesStore} from '../../store/index';
 import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let userMock: User = {
   identifier: 'test',
@@ -82,7 +81,8 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot()
+        CovalentCoreModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: Router, useValue: router},

@@ -78,19 +78,4 @@ describe('Authentication Reducer', () => {
     });
   });
 
-  describe('CHANGE_PASSWORD_SUCCESS', () => {
-    it('should set passwordChangedBy with current username', () => {
-      const authentication = mockAuthentication();
-
-      const initialState = mockInitialState(authentication);
-
-      const result = reducer(initialState, new ChangePasswordSuccessAction());
-
-      const expectedResult = Object.assign({}, authentication, {
-        passwordChangedBy: initialState.username
-      });
-
-      expect(result.authentication).toEqual(expectedResult);
-    })
-  });
 });

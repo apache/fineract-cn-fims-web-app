@@ -17,10 +17,10 @@
 <md-toolbar color="primary" class="md-whiteframe-z1">
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Create new role' | translate}}">
+<fims-layout-card-over title="Create new role">
   <fims-role-form-component #form
                               (onSave)="onSave($event)"
-                              (onCancel)="onCancel($event)"
+                              (onCancel)="onCancel()"
                               [role]="role">
   </fims-role-form-component>
 </fims-layout-card-over>

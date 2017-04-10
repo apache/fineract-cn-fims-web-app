@@ -36,7 +36,8 @@ export class LedgerApiEffects {
 
       return this.accountingService.fetchLedgers()
         .takeUntil(nextSearch$)
-        .map(ledgerPage => new ledgerActions.LoadAllTopLevelComplete(ledgerPage))
+        .map(ledgerPage => ledgerPage.ledgers)
+        .map(ledgers => new ledgerActions.LoadAllTopLevelComplete(ledgers))
         .catch(() => of(new ledgerActions.LoadAllTopLevelComplete([])));
     });
 

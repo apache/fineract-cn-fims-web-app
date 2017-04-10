@@ -20,7 +20,7 @@
 <fims-layout-card-over title="{{'Create new account' | translate}}">
   <fims-account-form-component #form
                                   (onSave)="onSave($event)"
-                                  (onCancel)="onCancel($event)"
+                                  (onCancel)="onCancel()"
                                   [account]="account">
   </fims-account-form-component>
 </fims-layout-card-over>

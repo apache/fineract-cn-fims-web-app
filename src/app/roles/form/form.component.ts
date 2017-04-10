@@ -21,8 +21,9 @@ import {PermittableGroup} from '../../../services/anubis/permittable-group.model
 import {IdentityService} from '../../../services/identity/identity.service';
 import {Permission, AllowedOperation} from '../../../services/identity/domain/permission.model';
 import {FormPermission} from './model/form-permission.model';
-import {FimsValidators} from '../../../components/validators';
+import {FimsValidators} from '../../../components/validator/validators';
 import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
+import {FimsPermissionDescriptor} from '../../../services/security/authz/fims-permission-descriptor';
 
 @Component({
   selector: 'fims-role-form-component',
@@ -39,7 +40,7 @@ export class RoleFormComponent implements OnInit{
 
   @Input() editMode: boolean;
 
-  @Input('role') set role(role: Role){
+  @Input('role') set role(role: Role) {
     this._role = role;
     this.prepareForm(role);
   }
@@ -60,23 +61,34 @@ export class RoleFormComponent implements OnInit{
   private buildFormPermissions(groups: PermittableGroup[], permissions: Permission[]): FormPermission[] {
     let result: FormPermission[] = [];
 
-    for(let permittableGroup of groups){
-      let foundPermissions: Permission[] = this.findPermission(permittableGroup.identifier, permissions);
-      let formPermission = new FormPermission(permittableGroup.identifier, this.idMapper);
+    for(let permittableGroup of groups) {
+      let foundPermission: Permission = this.findPermission(permittableGroup.identifier, permissions);
 
-      if(foundPermissions.length){
-        let permission: Permission = foundPermissions[0];
-        formPermission.read = permission.allowedOperations.indexOf('READ') > -1;
-        formPermission.change = permission.allowedOperations.indexOf('CHANGE') > -1;
-        formPermission.remove = permission.allowedOperations.indexOf('DELETE') > -1;
+      let descriptor: FimsPermissionDescriptor = this.idMapper.map(permittableGroup.identifier);
+
+      if(!descriptor) continue;
+
+      let formPermission = new FormPermission(permittableGroup.identifier);
+
+      formPermission.label = descriptor.label;
+      formPermission.readOnly = descriptor.readOnly;
+
+      if(foundPermission) {
+        formPermission.read = this.hasOperation(foundPermission.allowedOperations, 'READ');
+        formPermission.change = this.hasOperation(foundPermission.allowedOperations, 'CHANGE');
+        formPermission.remove = this.hasOperation(foundPermission.allowedOperations, 'DELETE');
       }
       result.push(formPermission)
     }
     return result;
   }
 
-  private findPermission(identifier: string, permissions: Permission[]): Permission[] {
-    return permissions.filter((permission) => permission.permittableEndpointGroupIdentifier === identifier);
+  private hasOperation(allowedOperations: AllowedOperation[], operation: AllowedOperation): boolean {
+    return allowedOperations.indexOf(operation) > -1;
+  }
+
+  private findPermission(identifier: string, permissions: Permission[]): Permission {
+    return permissions.find((permission: Permission) => permission.permittableEndpointGroupIdentifier === identifier);
   }
 
   private prepareForm(role: Role): void {

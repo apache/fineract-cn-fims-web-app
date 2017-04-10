@@ -17,16 +17,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Case} from '../../../../services/portfolio/domain/case.model';
-import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 import {CaseFormComponent} from './form.component';
+import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import * as fromCases from '../store/index';
 import {Subscription} from 'rxjs';
 import {CREATE} from '../store/case.actions';
 import {Error} from '../../../../services/domain/error.model';
-
+import {FimsCase} from '../store/model/fims-case.model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -41,10 +40,29 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
 
   customer: Customer;
 
-  case: Case = {
+  caseInstance: FimsCase = {
+    currentState: 'CREATED',
     identifier: '',
     productIdentifier: '',
-    parameters: '',
+    parameters: {
+      customerIdentifier: '',
+      balanceRange: {
+        minimum: 0,
+        maximum: 0
+      },
+      initialBalance: 0,
+      paymentCycle: {
+        alignmentDay: null,
+        alignmentMonth: null,
+        alignmentWeek: null,
+        period: 1,
+        temporalUnit: 'MONTHS',
+      },
+      termRange: {
+        temporalUnit: 'MONTHS',
+        maximum: 1
+      }
+    },
     accountAssignments: []
   };
 
@@ -54,12 +72,12 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
       .subscribe(customer => this.customer = customer);
 
-    this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormState)
-      .subscribe((payload: {error: Error}) => {
+    this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
+      .subscribe((error: Error) => {
 
-        if(!payload.error) return;
+        if(!error) return;
 
-        switch(payload.error.status){
+        switch(error.status){
           case 400:
             //This should not happen
             break;
@@ -72,28 +90,6 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
             break;
         }
       });
-
-    let parameter: CaseParameters = {
-      customerIdentifier: '',
-      balanceRange: {
-        minimum: 0,
-        maximum: 0
-      },
-      initialBalance: 0,
-      paymentCycle: {
-        alignmentDay: 0,
-        alignmentMonth: 0,
-        alignmentWeek: 0,
-        period: 1,
-        temporalUnit: 'MONTHS',
-      },
-      termRange: {
-        temporalUnit: 'MONTHS',
-        maximum: 1
-      }
-    };
-
-    this.case.parameters = JSON.stringify(parameter);
   }
 
   ngOnDestroy(): void {
@@ -101,10 +97,10 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.formStateSubscription.unsubscribe();
   }
 
-  onSave(caseInstance: Case): void {
+  onSave(caseToSave: Case): void {
     this.casesStore.dispatch({ type: CREATE, payload: {
-      productId: caseInstance.productIdentifier,
-      case: caseInstance,
+      productId: caseToSave.productIdentifier,
+      caseInstance: caseToSave,
       activatedRoute: this.route
     }});
   }

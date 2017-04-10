@@ -36,13 +36,13 @@ export class AccountListComponent implements OnInit, OnDestroy{
 
   private selectionSubscription: Subscription;
 
-  private ledger: Ledger;
-
   private lastFetchRequest: FetchRequest = {};
 
-  private accountData$: Observable<TableData>;
+  ledger: Ledger;
 
-  private columns: any[] = [
+  accountData$: Observable<TableData>;
+
+  columns: any[] = [
     { name: 'identifier', label: 'Id', tooltip: 'Id' },
     { name: 'state', label: 'State', tooltip: 'State' },
     { name: 'balance', label: 'Balance', tooltip: 'Balance' }
@@ -69,11 +69,11 @@ export class AccountListComponent implements OnInit, OnDestroy{
     this.selectionSubscription.unsubscribe();
   }
 
-  private rowSelect(account: Account): void{
+  rowSelect(account: Account): void{
     this.router.navigate(['/accounting/accounts/detail', account.identifier]);
   }
 
-  private fetchAccounts(fetchRequest?: TableFetchRequest): void{
+  fetchAccounts(fetchRequest?: TableFetchRequest): void{
     if(fetchRequest){
       this.lastFetchRequest = fetchRequest;
     }

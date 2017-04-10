@@ -21,6 +21,9 @@ import {RoutePayload} from '../../../../components/store/route-payload';
 import {Case} from '../../../../services/portfolio/domain/case.model';
 import {CasePage} from '../../../../services/portfolio/domain/case-page.model';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {FimsCase} from './model/fims-case.model';
+import {FimsCasePage} from './model/fims-case-page.model';
 
 export const SEARCH = type('[Case] Search');
 export const SEARCH_COMPLETE = type('[Case] Search Complete');
@@ -36,6 +39,12 @@ export const UPDATE = type('[Case] Update');
 export const UPDATE_SUCCESS = type('[Case] Update Success');
 export const UPDATE_FAIL = type('[Case] Update Fail');
 
+export const LOAD_PRODUCT = type('[Case] Form Load Product');
+export const LOAD_PRODUCT_SUCCESS = type('[Case] Form Load Product Success');
+export const LOAD_PRODUCT_FAIL = type('[Case] Form Load Product Fail');
+
+export const UNLOAD_PRODUCT = type('[Case] Form Unload Product');
+
 export interface SearchCasePayload{
   customerId: string;
   fetchRequest: FetchRequest;
@@ -43,7 +52,7 @@ export interface SearchCasePayload{
 
 export interface CaseRoutePayload extends RoutePayload{
   productId: string;
-  case: Case;
+  caseInstance: FimsCase;
 }
 
 export class SearchAction implements Action {
@@ -55,13 +64,13 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: CasePage) { }
+  constructor(public payload: FimsCasePage) { }
 }
 
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Case) { }
+  constructor(public payload: FimsCase) { }
 }
 
 export class SelectAction implements Action {
@@ -106,6 +115,31 @@ export class UpdateCaseFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class LoadProductAction implements Action {
+  readonly type = LOAD_PRODUCT;
+
+  constructor(public payload: string) { }
+}
+
+export class LoadProductSuccessAction implements Action {
+  readonly type = LOAD_PRODUCT_SUCCESS;
+
+  constructor(public payload: Product) { }
+}
+
+export class LoadProductFailAction implements Action {
+  readonly type = LOAD_PRODUCT_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export class UnloadProductAction implements Action {
+  readonly type = UNLOAD_PRODUCT;
+
+  constructor() { }
+}
+
+
 export type Actions
   = SearchAction
   | SearchCompleteAction
@@ -116,4 +150,8 @@ export type Actions
   | CreateCaseFailAction
   | UpdateCaseAction
   | UpdateCaseSuccessAction
-  | UpdateCaseFailAction;
+  | UpdateCaseFailAction
+  | LoadProductAction
+  | LoadProductSuccessAction
+  | LoadProductFailAction
+  | UnloadProductAction;

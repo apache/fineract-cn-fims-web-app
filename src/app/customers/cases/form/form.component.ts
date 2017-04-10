@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, EventEmitter, Output, Input, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Case} from '../../../../services/portfolio/domain/case.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {accountExists} from '../../../../components/account-exists.validator';
 import {setSelections} from '../../../../components/forms/form-helper';
+import * as fromCases from '../store/index';
+import {CasesStore} from '../store/index';
+import {LOAD_PRODUCT, UNLOAD_PRODUCT} from '../store/case.actions';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Observable} from 'rxjs';
+import {FimsCase} from '../store/model/fims-case.model';
+import {accountExists} from '../../../../components/validator/account-exists.validator';
 
 @Component({
   selector: 'fims-case-form-component',
   templateUrl: './form.component.html'
 })
 export class CaseFormComponent implements OnInit{
+
+  private _caseInstance: FimsCase;
+
+  selectedProduct: Observable<Product>;
 
   productForm: FormGroup;
 
@@ -47,67 +56,68 @@ export class CaseFormComponent implements OnInit{
 
   @Input('customerId') customerId: string;
 
-  @Input('case') set caseInstance(caseInstance: Case){
+  @Input('case') set caseInstance(caseInstance: FimsCase){
+    this._caseInstance = caseInstance;
+
     this.prepareProductForm(caseInstance);
-    this.preparePaymentsForm(caseInstance);
-    this.prepareSavingsForm(caseInstance);
+    this.prepareDetailForm(caseInstance);
   };
 
-  @Output('onSave') onSave = new EventEmitter<Case>();
+  get caseInstance(): FimsCase {
+    return this._caseInstance;
+  }
+
+  @Output('onSave') onSave = new EventEmitter<FimsCase>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
+  constructor(private formBuilder: FormBuilder, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
     this.productStep.open();
+
+    this.selectedProduct = this.casesStore.select(fromCases.getCaseFormProduct);
   }
 
-  private prepareProductForm(caseInstance: Case): void{
+  private prepareProductForm(caseInstance: FimsCase): void {
     this.productForm = this.formBuilder.group({
       identifier: [caseInstance.productIdentifier, [Validators.required]]
     });
   }
 
-  private preparePaymentsForm(caseInstance: Case): void{
-    let parameters = this.parseParameter(caseInstance.parameters);
-
+  private prepareDetailForm(caseInstance: FimsCase): void {
     this.detailFormData = {
       identifier: caseInstance.identifier,
-      principalAmount: parameters.initialBalance,
-      term: parameters.termRange.maximum,
-      termTemporalUnit: parameters.termRange.temporalUnit,
-      paymentTemporalUnit: parameters.paymentCycle.temporalUnit,
-      paymentPeriod: parameters.paymentCycle.period,
-      paymentAlignmentDay: parameters.paymentCycle.alignmentDay,
-      paymentAlignmentWeek: parameters.paymentCycle.alignmentWeek,
-      paymentAlignmentMonth: parameters.paymentCycle.alignmentMonth
+      principalAmount: caseInstance.parameters.initialBalance,
+      term: caseInstance.parameters.termRange.maximum,
+      termTemporalUnit: caseInstance.parameters.termRange.temporalUnit,
+      paymentTemporalUnit: caseInstance.parameters.paymentCycle.temporalUnit,
+      paymentPeriod: caseInstance.parameters.paymentCycle.period,
+      paymentAlignmentDay: caseInstance.parameters.paymentCycle.alignmentDay,
+      paymentAlignmentWeek: caseInstance.parameters.paymentCycle.alignmentWeek,
+      paymentAlignmentMonth: caseInstance.parameters.paymentCycle.alignmentMonth
     };
   }
 
-  private prepareSavingsForm(caseInstance: Case) {
-    let designator = caseInstance.accountAssignments.find(assignment => assignment.designator === AccountDesignators.CUSTOMER_LOAN);
-    this.savingsForm = this.formBuilder.group({
-      savingsAccount: [designator ? designator.accountIdentifier : undefined, [Validators.required], accountExists(this.accountingService)]
-    });
-  }
-
-  private parseParameter(parameters: string): CaseParameters{
-    return JSON.parse(parameters);
-  }
-
-  onProductSelection(selections: string[]): void{
+  onProductSelection(selections: string[]): void {
     setSelections('identifier', this.productForm, selections);
+
+    if(selections.length === 1) {
+      this.casesStore.dispatch({ type: LOAD_PRODUCT, payload: selections[0] });
+    }else{
+      this.casesStore.dispatch({ type: UNLOAD_PRODUCT });
+    }
   }
 
   get isValid(): boolean{
-    return this.productForm.valid && this.detailForm.valid && this.savingsForm.valid;
+    return this.productForm.valid
+      && this.detailForm.valid;
   }
 
   private collectAccountAssignments(): AccountAssignment[]{
     let assignments: AccountAssignment[] = [];
 
     assignments.push({
-      accountIdentifier: this.savingsForm.get('savingsAccount').value,
+      accountIdentifier: 'placeholder',
       designator: AccountDesignators.CUSTOMER_LOAN
     });
 
@@ -119,7 +129,7 @@ export class CaseFormComponent implements OnInit{
       customerIdentifier: this.customerId,
       balanceRange: {
         minimum: 0,
-        maximum: 100
+        maximum: this.detailForm.formData.principalAmount
       },
       initialBalance: this.detailForm.formData.principalAmount,
       paymentCycle: {
@@ -134,13 +144,15 @@ export class CaseFormComponent implements OnInit{
         maximum: this.detailForm.formData.term
       }
     };
-    let caseInstance: Case = {
+
+    let caseToSave: FimsCase = {
+      currentState: this.caseInstance.currentState,
       identifier: this.detailForm.formData.identifier,
       productIdentifier: this.productForm.get('identifier').value,
-      parameters: JSON.stringify(caseParameters),
-      accountAssignments: this.collectAccountAssignments(),
+      parameters: caseParameters,
+      accountAssignments: this.collectAccountAssignments()
     };
-    this.onSave.emit(caseInstance);
+    this.onSave.emit(caseToSave);
   }
 
   cancel(): void{

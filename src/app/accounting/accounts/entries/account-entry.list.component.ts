@@ -19,7 +19,7 @@ import {Account} from '../../../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {todayAsISOString, toLongISOString} from '../../../../services/domain/date.converter';
-import {FimsValidators} from '../../../../components/validators';
+import {FimsValidators} from '../../../../components/validator/validators';
 import * as fromAccounting from '../../store';
 import {Observable, Subscription} from 'rxjs';
 import {AccountingStore} from '../../store/index';
@@ -35,13 +35,13 @@ export class AccountEntryListComponent implements OnInit, OnDestroy{
 
   private accountSubscription: Subscription;
 
-  private form: FormGroup;
+  form: FormGroup;
 
-  private account: Account;
+  account: Account;
 
-  private accountEntryData$: Observable<TableData>;
+  accountEntryData$: Observable<TableData>;
 
-  private columns: any[] = [
+  columns: any[] = [
     { name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date' },
     { name: 'type', label: 'Type', tooltip: 'Type' },
     { name: 'message', label: 'Message', tooltip: 'Message' },
@@ -81,7 +81,7 @@ export class AccountEntryListComponent implements OnInit, OnDestroy{
     this.accountSubscription.unsubscribe();
   }
 
-  private fetchAccountsEntries(fetchRequest?: TableFetchRequest): void{
+  fetchAccountsEntries(fetchRequest?: TableFetchRequest): void{
     let startDate = toLongISOString(this.form.get('startDate').value);
     let endDate = toLongISOString(this.form.get('endDate').value);
 

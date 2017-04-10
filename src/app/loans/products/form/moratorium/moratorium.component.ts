@@ -17,7 +17,7 @@
 import {FormComponent} from '../../../../../components/forms/form.component';
 import {Component, Input} from '@angular/core';
 import {Moratorium} from '../../../../../services/portfolio/domain/individuallending/moratorium.model';
-import {FormArray, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
 import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
 
 @Component({
@@ -43,13 +43,13 @@ export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]>{
     return null;
   }
 
-  private initMoratoriums(moratoriums: Moratorium[]): FormArray{
-    let formControls: FormGroup[] = [];
+  private initMoratoriums(moratoriums: Moratorium[]): FormArray {
+    const formControls: FormGroup[] = [];
     moratoriums.forEach(value => formControls.push(this.initMoratorium(value)));
     return this.formBuilder.array(formControls);
   }
 
-  private initMoratorium(moratorium?: Moratorium): FormGroup{
+  private initMoratorium(moratorium?: Moratorium): FormGroup {
     return this.formBuilder.group({
       period: [moratorium ? moratorium.period : '1', Validators.required],
       chargeTask: [moratorium ? moratorium.chargeTask : '', Validators.required],
@@ -57,13 +57,18 @@ export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]>{
     })
   }
 
-  private addMoratorium(): void{
-    let moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
+  addMoratorium(): void {
+    const moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
     moratoriums.push(this.initMoratorium());
   }
 
-  private removeMoratorium(index: number): void{
-    let moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
+  removeMoratorium(index: number): void {
+    const moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
     moratoriums.removeAt(index);
+  }
+
+  get moratoriums(): AbstractControl[] {
+    const moratoriums: FormArray = this.form.get('moratoriums') as FormArray;
+    return moratoriums.controls;
   }
 }

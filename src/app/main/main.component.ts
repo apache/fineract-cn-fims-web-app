@@ -27,6 +27,10 @@ import {LOGOUT} from '../reducers/security/security.actions';
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
+  icon: string;
+
+  logo: string;
+
   isLoading: boolean;
 
   title: string;

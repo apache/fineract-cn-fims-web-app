@@ -23,14 +23,11 @@ import {AccountCommand} from '../../../services/accounting/domain/account-comman
 })
 export class AccountActivityComponent implements OnInit{
 
-  private accountIdentifier: string;
-
-  private commands: AccountCommand[];
+  commands: AccountCommand[];
 
   constructor(private route: ActivatedRoute){}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => this.accountIdentifier = params['id']);
     this.route.data.subscribe(( data: { commands: AccountCommand[]}) => this.commands = data.commands );
   }
 }

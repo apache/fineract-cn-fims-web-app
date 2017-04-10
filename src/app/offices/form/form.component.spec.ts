@@ -18,10 +18,11 @@ import {Component, ViewChild, EventEmitter, Output} from '@angular/core';
 import {Office} from '../../../services/office/domain/office.model';
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {OfficeFormComponent} from './form.component';
-import {TranslateModule} from 'ng2-translate';
+import {TranslateModule} from '@ngx-translate/core';
 import {CovalentCoreModule} from '@covalent/core';
 import {ReactiveFormsModule, FormControl, AbstractControl} from '@angular/forms';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 let officeTemplate: Office = {
   identifier: 'test',
@@ -46,8 +47,9 @@ describe('Test office form', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule.forRoot(),
-        TranslateModule.forRoot()
+        CovalentCoreModule,
+        TranslateModule.forRoot(),
+        NoopAnimationsModule
       ],
       providers: [],
       declarations: [IdInputComponent, OfficeFormComponent, TestComponent]
@@ -57,7 +59,7 @@ describe('Test office form', () => {
     testComponent = fixture.componentInstance;
   });
 
-  it('should always save address', (done: DoneFn) => {
+  it('should save address when pristine', (done: DoneFn) => {
     fixture.detectChanges();
 
     testComponent.saveEmitter.subscribe((office) => {
@@ -80,12 +82,12 @@ describe('Test office form', () => {
     fixture.detectChanges();
 
     testComponent.triggerSave();
-  })
+  });
 
 });
 
 @Component({
-  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office"></fims-office-form-component>'
+  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false"></fims-office-form-component>'
 })
 class TestComponent{
 

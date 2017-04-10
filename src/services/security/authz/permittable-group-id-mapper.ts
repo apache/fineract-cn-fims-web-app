@@ -38,11 +38,11 @@ export class PermittableGroupIdMapper {
   constructor() {
     this._permittableGroupMap[OfficePermittableGroupIds.EMPLOYEE_MANAGEMENT] = { id: 'office_employees', label: 'Employees' };
     this._permittableGroupMap[OfficePermittableGroupIds.OFFICE_MANAGEMENT] = { id: 'office_offices', label: 'Offices' };
-    this._permittableGroupMap[OfficePermittableGroupIds.SELF_MANAGEMENT] = { id: 'office_self', label: 'User created resources(Offices & Employees)', readOnly: true };
+    this._permittableGroupMap[OfficePermittableGroupIds.SELF_MANAGEMENT] = { id: 'office_self', label: 'User created resources(Offices & Employees)' };
 
     this._permittableGroupMap[IdentityPermittableGroupIds.IDENTITY_MANAGEMENT] = { id: 'identity_identities', label: 'Identities' };
     this._permittableGroupMap[IdentityPermittableGroupIds.ROLE_MANAGEMENT] = { id: 'identity_roles', label: 'Roles' };
-    this._permittableGroupMap[IdentityPermittableGroupIds.SELF_MANAGEMENT] = { id: 'identity_self', label: 'User created resources(Identity & Roles)', readOnly: true };
+    this._permittableGroupMap[IdentityPermittableGroupIds.SELF_MANAGEMENT] = { id: 'identity_self', label: 'User created resources(Identity & Roles)' };
 
     this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = { id: 'customer_customers', label: 'Customers' };
     this._permittableGroupMap[CustomerPermittableGroupIds.TASK_MANAGEMENT] = { id: 'customer_tasks', label: 'Tasks' };

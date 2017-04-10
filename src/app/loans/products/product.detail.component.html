@@ -52,12 +52,12 @@
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Balance range</h3>
-                  <p md-line>{{product.balanceRange.minimum | number}} - {{product.balanceRange.maximum | number}}</p>
+                  <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Interest range</h3>
                   <p md-line>{{product.interestBasis | translate}}</p>
-                  <p md-line>{{product.interestRange.minimum | number}} - {{product.interestRange.maximum | number}}</p>
+                  <p md-line>{{product.interestRange.minimum | number:numberFormat}} - {{product.interestRange.maximum | number:numberFormat}}</p>
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Term</h3>

@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
+import {mapToFimsProduct, mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
 
 @Injectable()
 export class ProductApiEffects {
@@ -36,7 +37,7 @@ export class ProductApiEffects {
 
       return this.portfolioService.findAllProducts()
         .takeUntil(nextSearch$)
-        .map(employeePage => new productActions.SearchCompleteAction(employeePage))
+        .map(products => new productActions.SearchCompleteAction(mapToFimsProducts(products)))
         .catch(() => of(new productActions.SearchCompleteAction([])));
     });
 
@@ -45,7 +46,7 @@ export class ProductApiEffects {
     .ofType(productActions.CREATE)
     .map((action: productActions.CreateProductAction) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.createProduct(payload.product)
+      this.portfolioService.createProduct(mapToProduct(payload.product))
         .map(() => new productActions.CreateProductSuccessAction(payload))
         .catch((error) => of(new productActions.CreateProductFailAction(error)))
     );
@@ -55,7 +56,7 @@ export class ProductApiEffects {
     .ofType(productActions.UPDATE)
     .map((action: productActions.UpdateProductAction) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.changeProduct(payload.product)
+      this.portfolioService.changeProduct(mapToProduct(payload.product))
         .map(() => new productActions.UpdateProductSuccessAction(payload))
         .catch((error) => of(new productActions.UpdateProductFailAction(error)))
     );

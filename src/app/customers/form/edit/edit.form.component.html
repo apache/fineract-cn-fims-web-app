@@ -20,7 +20,7 @@
 <fims-layout-card-over title="{{'Edit customer' | translate}}">
   <fims-customer-form-component #form
                                   (onSave)="onSave($event)"
-                                  (onCancel)="onCancel($event)"
+                                  (onCancel)="onCancel()"
                                   [customer]="customer"
                                   [editMode]="true">
   </fims-customer-form-component>

@@ -16,8 +16,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData} from '../../../../components/data-table/data-table.component';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ITdDataTableColumn} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../../components/domain/action-option.model';
@@ -25,6 +24,7 @@ import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
 import {Observable, Subscription} from 'rxjs';
 import {LOAD_ALL} from '../store/charges/charge.actions';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './charge.list.component.html'
@@ -33,11 +33,11 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
 
   private productSubscription: Subscription;
 
-  private product: Product;
+  private product: FimsProduct;
 
-  private chargesData$: Observable<TableData>;
+  chargesData$: Observable<TableData>;
 
-  private columns: ITdDataTableColumn[] = [
+  columns: ITdDataTableColumn[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'amount', label: 'Amount', numeric: true, format: value => value.toFixed(2) },
@@ -70,11 +70,11 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
     this.productSubscription.unsubscribe();
   }
 
-  fetchCharges(): void{
+  fetchCharges(event?: TableFetchRequest): void {
     this.portfolioStore.dispatch({ type: LOAD_ALL, payload: this.product.identifier });
   }
 
-  rowSelect(chargeDefinition: ChargeDefinition): void{
+  rowSelect(chargeDefinition: ChargeDefinition): void {
     this.router.navigate(['detail', chargeDefinition.identifier], { relativeTo: this.route })
   }
 }

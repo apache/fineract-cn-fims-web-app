@@ -20,7 +20,7 @@
 <fims-layout-card-over title="{{'Edit ledger' | translate}}">
   <fims-ledger-form-component #form
                                  (onSave)="onSave($event)"
-                                 (onCancel)="onCancel($event)"
+                                 (onCancel)="onCancel()"
                                  [ledger]="ledger"
                                  [editMode]="true">
   </fims-ledger-form-component>

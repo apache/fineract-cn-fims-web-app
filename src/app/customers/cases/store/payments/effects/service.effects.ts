@@ -41,7 +41,8 @@ export class CasePaymentsApiEffects {
         .catch(() => of(new paymentActions.SearchCompleteAction({
           totalElements: 0,
           totalPages: 0,
-          elements: []
+          elements: [],
+          chargeNames: []
         })));
     });
 }

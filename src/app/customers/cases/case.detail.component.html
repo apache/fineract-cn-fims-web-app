@@ -48,7 +48,7 @@
                       <div class="md-caption tc-grey-600">Due on the {{ '2016-07-11 09:59:59' | date }}</div>
                     </div>
                     <br/>
-                    <button md-raised-button color="primary" translate (click)="repay($event)">REPAY LOAN NOW</button>
+                    <button md-raised-button color="primary" translate (click)="repay()" translate>REPAY LOAN NOW</button>
                   </md-card-content>
                 </md-card>
               </div>
@@ -85,7 +85,7 @@
                       <div class="md-caption tc-grey-600">disbursed on {{ '2016-07-13 09:59:59' | timeAgo }}</div>
                     </div>
                     <br/>
-                    <button md-raised-button translate (click)="disburse($event)">DISBURSE LOAN</button>
+                    <button md-raised-button translate (click)="disburse()" translate>DISBURSE LOAN</button>
                   </md-card-content>
                   <md-card-actions>
 
@@ -103,14 +103,7 @@
                   <h3 md-line translate>Principal amount</h3>
                   <p md-line>{{caseInstance.parameters.initialBalance | number}}</p>
                 </md-list-item>
-                <md-list-item>
-                  <md-icon md-list-avatar>schedule</md-icon>
-                  <h3 md-line translate>Payment cycle</h3>
-                  <p md-line>Every {{caseInstance.parameters.paymentCycle.period}} {{caseInstance.parameters.paymentCycle.temporalUnit}}</p>
-                  <p md-line>on the {{caseInstance.parameters.paymentCycle.alignmentDay}} day</p>
-                  <p md-line>on the {{caseInstance.parameters.paymentCycle.alignmentWeek}} week</p>
-                  <p md-line>on the {{caseInstance.parameters.paymentCycle.alignmentMonth}} month</p>
-                </md-list-item>
+                <fims-case-detail-payment-cycle [paymentCycle]="caseInstance.parameters.paymentCycle"></fims-case-detail-payment-cycle>
                 <md-list-item>
                   <md-icon md-list-avatar>person</md-icon>
                   <h3 md-line translate>Balance range</h3>

@@ -37,11 +37,11 @@
         </md-input-container>
       </div>
     </form>
-    <template td-step-actions>
+    <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!form.valid">{{'CREATE LEDGER' | translate}}</button>
       <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!form.valid">{{'UPDATE LEDGER' | translate}}</button>
       <span flex></span>
       <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </template>
+    </ng-template>
   </td-step>
 </td-steps>

@@ -23,8 +23,11 @@ import * as fromEmployeeSearch from './employee/search.reducer';
 import * as fromRoleSearch from './role/search.reducer';
 import * as fromCustomerSearch from './customer/search.reducer';
 import * as fromAccountSearch from './account/search.reducer';
+import * as fromLedgerSearch from './ledger/search.reducer';
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
+import {compose} from '@ngrx/core/compose';
+import {localStorageSync} from 'ngrx-store-localstorage';
 
 export interface State {
   authentication: fromAuthentication.State;
@@ -34,6 +37,7 @@ export interface State {
   roleSearch: fromRoleSearch.State;
   customerSearch: fromCustomerSearch.State;
   accountSearch: fromAccountSearch.State;
+  ledgerSearch: fromLedgerSearch.State;
 }
 
 export const reducers = {
@@ -43,11 +47,12 @@ export const reducers = {
   employeeSearch: fromEmployeeSearch.reducer,
   roleSearch: fromRoleSearch.reducer,
   customerSearch: fromCustomerSearch.reducer,
-  accountSearch: fromAccountSearch.reducer
+  accountSearch: fromAccountSearch.reducer,
+  ledgerSearch: fromLedgerSearch.reducer,
 };
 
 export function createReducer(asyncReducers = {}): ActionReducer<any>{
-  return combineReducers(Object.assign(reducers, asyncReducers));
+  return compose(localStorageSync([], true), combineReducers)(Object.assign(reducers, asyncReducers));
 }
 
 export const productionReducer: ActionReducer<State> = createReducer();
@@ -137,6 +142,23 @@ export const getAccountSearchTotalPages = createSelector(getAccountSearchState, 
 export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements, (accounts, totalPages, totalElements) => {
   return {
     accounts: accounts,
+    totalPages: totalPages,
+    totalElements: totalElements
+  };
+});
+
+/**
+ * Ledger Search Selectors
+ */
+export const getLedgerSearchState = (state: State) => state.ledgerSearch;
+
+export const getSearchLedgers = createSelector(getLedgerSearchState, fromLedgerSearch.getLedgers);
+export const getLedgerSearchTotalElements = createSelector(getLedgerSearchState, fromLedgerSearch.getTotalElements);
+export const getLedgerSearchTotalPages = createSelector(getLedgerSearchState, fromLedgerSearch.getTotalPages);
+
+export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedgerSearchTotalElements, getLedgerSearchTotalPages, (ledgers, totalPages, totalElements) => {
+  return {
+    ledgers: ledgers,
     totalPages: totalPages,
     totalElements: totalElements
   };

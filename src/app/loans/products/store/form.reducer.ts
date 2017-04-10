@@ -18,23 +18,27 @@ import * as product from './product.actions';
 import {Error} from '../../../../services/domain/error.model';
 
 export interface State {
-  error?: Error;
+  error: Error;
 }
 
-export const initialState: State = {};
+export const initialState: State = {
+  error: null
+};
 
 export function reducer(state = initialState, action: product.Actions): State {
   switch (action.type) {
 
     case product.CREATE_FAIL:
-    case product.UPDATE_FAIL:
+    case product.UPDATE_FAIL: {
       return {
         error: action.payload
       };
+    }
 
     case product.CREATE_SUCCESS:
-    case product.UPDATE_SUCCESS:
-      return {};
+    case product.UPDATE_SUCCESS: {
+      return initialState;
+    }
 
     default:
       return state;

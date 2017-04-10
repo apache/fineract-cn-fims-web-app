@@ -17,27 +17,16 @@
 import {Component, OnInit, Input, EventEmitter, Output, ViewChild} from '@angular/core';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {TdStepComponent} from '@covalent/core';
-import {FormGroup, FormBuilder, Validators, FormArray} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from '@angular/forms';
 import {ActionOption} from '../../../../../components/domain/action-option.model';
 import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
-import {FimsValidators} from '../../../../../components/validators';
+import {FimsValidators} from '../../../../../components/validator/validators';
 
 @Component({
   selector: 'fims-product-task-form-component',
   templateUrl: './form.component.html'
 })
 export class ProductTaskFormComponent implements OnInit{
-
-  private actionOptions: ActionOption[] = [
-    { type: 'OPEN', label: 'can be opened' },
-    { type: 'DENY', label: 'can be denied' },
-    { type: 'APPROVE', label: 'can be approved' },
-    { type: 'DISBURSE', label: 'can be disbursed' },
-    { type: 'WRITE_OFF', label: 'can be written off' },
-    { type: 'CLOSE', label: 'can be closed' },
-    { type: 'RECOVER', label: 'can recovered' },
-    { type: 'ACCEPT_PAYMENT', label: 'can be repayed' },
-  ];
 
   @Input('task') set task(task: TaskDefinition){
     this.prepareDetailForm(task);
@@ -52,6 +41,17 @@ export class ProductTaskFormComponent implements OnInit{
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
   detailForm: FormGroup;
+
+  actionOptions: ActionOption[] = [
+    { type: 'OPEN', label: 'can be opened' },
+    { type: 'DENY', label: 'can be denied' },
+    { type: 'APPROVE', label: 'can be approved' },
+    { type: 'DISBURSE', label: 'can be disbursed' },
+    { type: 'WRITE_OFF', label: 'can be written off' },
+    { type: 'CLOSE', label: 'can be closed' },
+    { type: 'RECOVER', label: 'can recovered' },
+    { type: 'ACCEPT_PAYMENT', label: 'can be repayed' },
+  ];
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -86,17 +86,22 @@ export class ProductTaskFormComponent implements OnInit{
     })
   }
 
-  private addAction(): void{
+  addAction(): void{
     let actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.push(this.initAction());
   }
 
-  private removeAction(index: number): void{
+  removeAction(index: number): void{
     let actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.removeAt(index);
   }
 
-  private save(): void{
+  get actions(): AbstractControl[] {
+    const actions: FormArray = this.detailForm.get('actions') as FormArray;
+    return actions.controls;
+  }
+
+  save(): void{
     let actions: any[] = this.detailForm.get('actions').value;
     let rawActions: WorkflowAction[] = [];
     actions.forEach(action => rawActions.push(action.action));
@@ -112,7 +117,7 @@ export class ProductTaskFormComponent implements OnInit{
     this.onSave.emit(task);
   }
 
-  private cancel(): void{
+  cancel(): void{
     this.onCancel.emit();
   }
 

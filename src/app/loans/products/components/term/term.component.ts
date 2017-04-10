@@ -19,7 +19,7 @@ import {FormComponent} from '../../../../../components/forms/form.component';
 import {Validators, FormBuilder} from '@angular/forms';
 import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
 import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
-import {FimsValidators} from '../../../../../components/validators';
+import {FimsValidators} from '../../../../../components/validator/validators';
 
 export interface TermRangeFormData{
   temporalUnit: ChronoUnit;
@@ -32,7 +32,7 @@ export interface TermRangeFormData{
 })
 export class ProductTermFormComponent extends FormComponent<TermRangeFormData>{
 
-  private temporalOptions = temporalOptionList;
+  temporalOptions = temporalOptionList;
 
   @Input() set formData(termRange: TermRangeFormData){
     this.form = this.formBuilder.group({
