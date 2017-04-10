@@ -23,7 +23,7 @@ import {PermissionGuard} from '../../services/security/authz/permission.guard';
 
 export const MainRoutes: Routes = [
   {
-    path: '', component: MainComponent, canActivateChild: [PermissionGuard], children: [
+    path: '', component: MainComponent, canActivateChild: [ChangePasswordGuard, PermissionGuard], children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       { path: 'dashboard', component: DashboardComponent, data: { title: "Dashboard" } },
       { path: 'offices', loadChildren: './../offices/office.module#OfficeModule' },
@@ -44,4 +44,5 @@ export const MainRoutes: Routes = [
 
 export const mainRoutingProviders: any[] = [
   ChangePasswordGuard,
+  PermissionGuard
 ];

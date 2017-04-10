@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {Authentication} from '../identity/domain/authentication.model';
 import * as fromRoot from '../../app/reducers';
 import {Store} from '@ngrx/store';
 
 @Injectable()
-export class ChangePasswordGuard implements CanActivate {
+export class ChangePasswordGuard implements CanActivateChild {
 
   constructor(private store: Store<fromRoot.State>, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.isPasswordChangeNeeded()
       .switchMap(passwordChangeNeeded => {
         if(passwordChangeNeeded){
@@ -40,6 +39,7 @@ export class ChangePasswordGuard implements CanActivate {
 
   private isPasswordChangeNeeded(): Observable<boolean>{
     return this.store.select(fromRoot.getAuthenticationState)
-      .map(state => state.authentication.passwordChangedBy !== state.username);
+      .map(state => new Date(state.authentication.passwordExpiration))
+      .map(expiryDate => expiryDate.getTime() < new Date().getTime());
   }
 }

@@ -20,17 +20,15 @@ export class Authentication {
   accessTokenExpiration: string;
   refreshTokenExpiration: string;
   passwordExpiration: string;
-  passwordChangedBy: string;
 
   constructor(tokenType: string,
               accessToken: string, accessTokenExpiration: string,
               refreshTokenExpiration: string,
-              passwordExpiration: string, passwordChangedBy: string) {
+              passwordExpiration: string) {
     this.tokenType = tokenType;
     this.accessToken = accessToken;
     this.accessTokenExpiration = accessTokenExpiration;
     this.refreshTokenExpiration = refreshTokenExpiration;
     this.passwordExpiration = passwordExpiration;
-    this.passwordChangedBy = passwordChangedBy;
   }
 }

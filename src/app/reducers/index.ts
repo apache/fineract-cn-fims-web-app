@@ -52,7 +52,7 @@ export const reducers = {
 };
 
 export function createReducer(asyncReducers = {}): ActionReducer<any>{
-  return compose(localStorageSync(['authentication', 'authorization'], true), combineReducers)(Object.assign(reducers, asyncReducers));
+  return compose(localStorageSync([], true), combineReducers)(Object.assign(reducers, asyncReducers));
 }
 
 export const productionReducer: ActionReducer<State> = createReducer();

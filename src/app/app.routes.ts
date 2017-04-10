@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import {Routes, RouterModule, PreloadAllModules, NoPreloading} from '@angular/router';
+import {NoPreloading, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../services/security/authn/auth-guard.service';
-import {PermissionGuard} from '../services/security/authz/permission.guard';
 
 const routes: Routes = [
   {path: 'login', loadChildren: './login/login.module#LoginModule'},
@@ -24,8 +23,7 @@ const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-  AuthGuard,
-  PermissionGuard
+  AuthGuard
 ];
 
 export const appRoutes: any = RouterModule.forRoot(routes, { preloadingStrategy: NoPreloading });

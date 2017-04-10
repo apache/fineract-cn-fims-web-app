@@ -16,12 +16,11 @@
 
 import {Authentication} from '../../../../services/identity/domain/authentication.model';
 
-export function mockAuthentication(): Authentication{
+export function mockAuthentication(): Authentication {
   return {
     accessToken: '',
     accessTokenExpiration: new Date().toISOString(),
     refreshTokenExpiration: new Date().toISOString(),
-    passwordChangedBy: '',
     passwordExpiration: '',
     tokenType: ''
   };
