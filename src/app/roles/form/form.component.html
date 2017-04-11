@@ -35,6 +35,6 @@
   </md-list>
 </div>
 <div layout="row" layout-margin>
-  <button type="submit" md-raised-button color="primary" (click)="save()">{{'SAVE ROLE' | translate}}</button>
+  <button type="submit" md-raised-button color="primary" [disabled]="detailForm.invalid" (click)="save()">{{'SAVE ROLE' | translate}}</button>
   <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
 </div>
