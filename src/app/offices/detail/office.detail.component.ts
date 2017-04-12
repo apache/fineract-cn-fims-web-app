@@ -59,11 +59,12 @@ export class OfficeDetailComponent implements OnInit, OnDestroy{
       .map(params => new SelectAction(params['id']))
       .subscribe(this.store);
 
-    this.officeSubscription = this.store.select(getSelectedOffice).subscribe((office: Office) => {
-      this.office = office;
-      this.fetchBranches();
-    });
-
+    this.officeSubscription = this.store.select(getSelectedOffice)
+      .filter(office => !!office)
+      .subscribe((office: Office) => {
+        this.office = office;
+        this.fetchBranches();
+      });
   }
 
   fetchBranches(fetchRequest?: FetchRequest): void {
