@@ -25,6 +25,7 @@ import {Role} from '../../../services/identity/domain/role.model';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 class FakeLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -57,6 +58,7 @@ describe('Test roles form', () => {
     TestBed.configureTestingModule({
       declarations: [RoleFormComponent, IdInputComponent],
       imports: [
+        NoopAnimationsModule,
         TranslateModule.forRoot(),
         MaterialModule,
         FormsModule,

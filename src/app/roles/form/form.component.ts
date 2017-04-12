@@ -109,18 +109,18 @@ export class RoleFormComponent implements OnInit{
   private mapRole(identifier: string, formPermissions: FormPermission[]): Role{
     let permissions: Permission[] = [];
 
-    for(let formPermission of formPermissions){
+    for(let formPermission of formPermissions) {
       let allowedOperations: AllowedOperation[] = [];
 
-      if(formPermission.read){
+      if(formPermission.read) {
         allowedOperations.push('READ')
       }
 
-      if(formPermission.change){
+      if(formPermission.change) {
         allowedOperations.push('CHANGE')
       }
 
-      if(formPermission.remove){
+      if(formPermission.remove) {
         allowedOperations.push('DELETE')
       }
 
