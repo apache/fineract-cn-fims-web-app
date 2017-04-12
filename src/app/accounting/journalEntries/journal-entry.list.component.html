@@ -38,6 +38,6 @@
   </form>
   <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="journalEntryData$ | async" [sortable]="false" [selectable]="false" [actionColumn]="false"></fims-data-table>
 </fims-layout-card-over>
-<a md-fab color="accent" class="position-bottom-right" title="{{'Add Journal Entry' | translate}}" *hasPermission="{ id: 'accounting_journals', accessLevel: 'CHANGE' }" [routerLink]="['create']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add Journal Entry' | translate}}" *hasPermission="{ id: 'accounting_journals', accessLevel: 'CHANGE' }" [routerLink]="['create']">
   <md-icon>add</md-icon>
 </a>

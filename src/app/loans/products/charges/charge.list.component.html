@@ -25,6 +25,6 @@
   <fims-data-table flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="position-bottom-right" title="{{'Add new charge' | translate}}" [routerLink]="['create']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add new charge' | translate}}" [routerLink]="['create']">
   <md-icon>add</md-icon>
 </a>

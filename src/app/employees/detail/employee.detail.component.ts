@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Router, ActivatedRoute} from '@angular/router';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {TdDialogService} from '@covalent/core';
 import {Observable, Subscription} from 'rxjs';
 import {User} from '../../../services/identity/domain/user.model';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
 import * as fromEmployee from '../store';
 import {DELETE, SelectAction} from '../store/employee.actions';
 import {EmployeesStore} from '../store/index';
 
-
 @Component({
   selector: 'fims-employee-detail',
-  templateUrl: './employee.detail.component.html',
-  styleUrls: ['./employee.detail.component.scss'],
+  templateUrl: './employee.detail.component.html'
 })
 export class EmployeeDetailComponent implements OnInit, OnDestroy{
 

@@ -25,6 +25,6 @@
   <fims-data-table flex (onFetch)="fetchTasks($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="tasksData$ | async" [sortable]="false"></fims-data-table>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="position-bottom-right" title="{{'Create new task' | translate}}" [routerLink]="['create']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new task' | translate}}" [routerLink]="['create']">
   <md-icon>add</md-icon>
 </a>
