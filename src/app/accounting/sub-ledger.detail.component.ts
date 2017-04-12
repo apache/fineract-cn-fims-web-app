@@ -55,6 +55,7 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy{
       .subscribe(this.store);
 
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
+      .filter(ledger => !!ledger)
       .subscribe(ledger => this.ledger = ledger);
   }
 
