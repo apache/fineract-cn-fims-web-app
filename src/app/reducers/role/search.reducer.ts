@@ -18,21 +18,18 @@ import * as role from '../../reducers/role/role.actions';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Role} from '../../../services/identity/domain/role.model';
 
-
 export interface State {
   roles: Role[];
   totalPages: number,
   totalElements: number,
   loading: boolean;
-  fetchRequest: FetchRequest;
 }
 
 const initialState: State = {
   roles: [],
   totalPages: 0,
   totalElements: 0,
-  loading: false,
-  fetchRequest: null
+  loading: false
 };
 
 export function reducer(state = initialState, action: role.Actions): State {
@@ -40,10 +37,7 @@ export function reducer(state = initialState, action: role.Actions): State {
   switch (action.type) {
 
     case role.SEARCH: {
-      const fetchRequest = action.payload;
-
       return Object.assign({}, state, {
-        fetchRequest,
         loading: true
       });
     }
@@ -54,7 +48,6 @@ export function reducer(state = initialState, action: role.Actions): State {
       return {
         roles: roles,
         loading: false,
-        fetchRequest: state.fetchRequest,
         totalElements: roles.length,
         totalPages: 1
       };
@@ -68,8 +61,6 @@ export function reducer(state = initialState, action: role.Actions): State {
 
 
 export const getRoles = (state: State) => state.roles;
-
-export const getFetchRequest = (state: State) => state.fetchRequest;
 
 export const getLoading = (state: State) => state.loading;
 

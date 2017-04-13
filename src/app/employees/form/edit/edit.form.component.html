@@ -21,7 +21,6 @@
                                   [editMode]="true"
                                   (onSave)="onSave($event)"
                                   (onCancel)="onCancel()"
-                                  [employee]="employee"
-                                  [user]="user">
+                                  [formData]="formData | async">
   </fims-employee-form-component>
 </fims-layout-card-over>

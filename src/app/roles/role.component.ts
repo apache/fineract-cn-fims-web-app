@@ -44,7 +44,7 @@ export class RoleComponent implements OnInit{
           totalPages: rolePage.totalPages
         })
       );
-    this.store.dispatch({ type: SEARCH, payload: '' });
+    this.store.dispatch({ type: SEARCH });
   }
 
   rowSelect(role: Role): void{

@@ -24,7 +24,7 @@ export const SEARCH_COMPLETE = type('[Role] Search Complete');
 export class SearchAction implements Action {
   readonly type = SEARCH;
 
-  constructor(public payload: string) { }
+  constructor() { }
 }
 
 export class SearchCompleteAction implements Action {

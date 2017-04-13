@@ -67,7 +67,7 @@ export function mapUser(event: EmployeeSaveEvent): UserWithPassword{
   let userWithPassword: UserWithPassword = {
     identifier: event.detailForm.identifier,
     password: event.detailForm.password,
-    role: event.roleForm.role
+    role: event.detailForm.role
   };
 
   return userWithPassword;

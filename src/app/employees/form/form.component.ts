@@ -29,13 +29,19 @@ import * as fromRoot from '../../reducers';
 import {SEARCH as SEARCH_OFFICE} from '../../reducers/office/office.actions';
 import {SEARCH as SEARCH_ROLE} from '../../reducers/role/role.actions';
 
+export interface EmployeeFormData {
+  user: User;
+  employee: Employee;
+}
+
 export interface EmployeeSaveEvent{
   detailForm: {
     identifier: string,
     firstName: string,
     middleName: string,
     lastName: string,
-    password: string
+    password: string,
+    role: string
   },
   contactForm: {
     email: string,
@@ -44,9 +50,6 @@ export interface EmployeeSaveEvent{
   },
   officeForm: {
     assignedOffice: string,
-  },
-  roleForm: {
-    role: string
   }
 }
 
@@ -63,21 +66,16 @@ export class EmployeeFormComponent implements OnInit{
   detailForm: FormGroup;
   contactForm: FormGroup;
   officeForm: FormGroup;
-  roleForm: FormGroup;
 
   @ViewChild('detailsStep') step: TdStepComponent;
 
   @Input('editMode') editMode: boolean;
 
-  @Input('employee') set employee(employee: Employee){
-    this.prepareDetailForm(employee);
-    this.prepareOfficeForm(employee);
-    this.prepareContactForm(employee.contactDetails);
-  };
-
-  @Input('user') set user(user: User){
-    this.prepareRoleForm(user);
-  };
+  @Input('formData') set formData(formData: EmployeeFormData) {
+    this.prepareDetailForm(formData.employee, formData.user);
+    this.prepareOfficeForm(formData.employee);
+    this.prepareContactForm(formData.employee.contactDetails);
+  }
 
   @Output('onSave') onSave = new EventEmitter<EmployeeSaveEvent>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
@@ -87,24 +85,22 @@ export class EmployeeFormComponent implements OnInit{
   ngOnInit(): void{
     this.offices = this.store.select(fromRoot.getOfficeSearchResults)
       .map(officePage => officePage.offices);
+
     this.roles = this.store.select(fromRoot.getRoleSearchResults)
       .map(rolesPage => rolesPage.roles);
+
+    this.fetchRoles();
 
     this.step.open();
   }
 
-  prepareDetailForm(employee: Employee): void{
+  prepareDetailForm(employee: Employee, user: User): void {
     this.detailForm = this.formBuilder.group({
       identifier: [employee.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       firstName: [employee.givenName, Validators.required],
       middleName: [employee.middleName],
       lastName: [employee.surname, Validators.required],
-      password: ['', this.editMode ? Validators.nullValidator : Validators.required]
-    });
-  }
-
-  private prepareRoleForm(user: User) {
-    this.roleForm = this.formBuilder.group({
+      password: ['', this.editMode ? Validators.nullValidator : Validators.required],
       role: [user ? user.role : '', Validators.required]
     });
   }
@@ -143,16 +139,14 @@ export class EmployeeFormComponent implements OnInit{
   formsInvalid(): boolean{
     return (!this.officeForm.pristine && this.officeForm.invalid) ||
     (!this.contactForm.pristine && this.contactForm.invalid)
-      || this.detailForm.invalid
-      || this.roleForm.invalid;
+      || this.detailForm.invalid;
   }
 
   save(): void{
     this.onSave.emit({
       detailForm: this.detailForm.value,
       contactForm: this.contactForm.value,
-      officeForm: this.officeForm.value,
-      roleForm: this.roleForm.value
+      officeForm: this.officeForm.value
     });
   }
 
@@ -171,12 +165,8 @@ export class EmployeeFormComponent implements OnInit{
     this.setFormValue(this.officeForm, {'assignedOffice': selections && selections.length > 0 ? selections[0] : undefined});
   }
 
-  searchRole(term: string): void{
-    this.store.dispatch({ type: SEARCH_ROLE, payload: term });
-  }
-
-  assignRole(selections: string[]){
-    this.setFormValue(this.roleForm, { 'role': selections && selections.length > 0 ? selections[0] : undefined});
+  fetchRoles(): void {
+    this.store.dispatch({ type: SEARCH_ROLE });
   }
 
   private setFormValue(form: FormGroup, value: any){

@@ -38,7 +38,8 @@ let eventMock: EmployeeSaveEvent = {
     firstName: 'test',
     middleName: 'test',
     lastName: 'test',
-    password: 'test'
+    password: 'test',
+    role: 'test'
   },
   contactForm: {
     email: 'test',
@@ -47,9 +48,6 @@ let eventMock: EmployeeSaveEvent = {
   },
   officeForm: {
     assignedOffice: 'test'
-  },
-  roleForm: {
-    role: 'test'
   }
 };
 

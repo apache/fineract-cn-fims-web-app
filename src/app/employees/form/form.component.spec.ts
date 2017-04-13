@@ -17,7 +17,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Employee} from '../../../services/office/domain/employee.model';
-import {EmployeeFormComponent, EmployeeSaveEvent} from './form.component';
+import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from './form.component';
 import {User} from '../../../services/identity/domain/user.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -95,7 +95,7 @@ describe('Test employee form component', () => {
       expect(employeeTemplate.contactDetails.length).toEqual(1);
       expect(employeeTemplate.contactDetails[0].value).toEqual(saveEvent.contactForm.email);
 
-      expect(userTemplate.role).toEqual(saveEvent.roleForm.role);
+      expect(userTemplate.role).toEqual(saveEvent.detailForm.role);
     });
 
     testComponent.triggerSave();
@@ -104,7 +104,7 @@ describe('Test employee form component', () => {
 });
 
 @Component({
-  template: '<fims-employee-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [employee]="employee" [user]="user"></fims-employee-form-component>'
+  template: '<fims-employee-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [formData]="employeeFormData"></fims-employee-form-component>'
 })
 class TestComponent{
 
@@ -112,9 +112,10 @@ class TestComponent{
 
   @ViewChild('form') formComponent: EmployeeFormComponent;
 
-  employee: Employee = employeeTemplate;
-
-  user: User = userTemplate;
+  employeeFormData: EmployeeFormData = {
+    employee: employeeTemplate,
+    user: userTemplate
+  };
 
   triggerSave(): void{
     this.formComponent.save();
@@ -124,7 +125,4 @@ class TestComponent{
     this.saveEmitter.emit(event);
   }
 
-  onCancel(): void{
-
-  }
 }

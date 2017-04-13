@@ -60,7 +60,7 @@ export class IdentityService {
       .catch(Error.handleError);
   }
 
-  listRoles(term?: string): Observable<Role[]> {
+  listRoles(): Observable<Role[]> {
     return this.http.get(this.baseUrl + '/roles')
       .catch(Error.handleError);
   }

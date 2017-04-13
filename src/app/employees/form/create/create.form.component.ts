@@ -15,7 +15,7 @@
  */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EmployeeFormComponent, EmployeeSaveEvent} from '../form.component';
+import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from '../form.component';
 import {mapEmployee, mapUser} from '../form.mapper';
 import {Employee} from '../../../../services/office/domain/employee.model';
 import {User} from '../../../../services/identity/domain/user.model';
@@ -33,11 +33,12 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
 
   private formStateSubscription: Subscription;
 
-  employee: Employee = { identifier: '', givenName: '', surname: '', contactDetails: []};
-
-  user: User = { identifier: '', role: ''};
-
   @ViewChild('form') formComponent: EmployeeFormComponent;
+
+  employeeFormData: EmployeeFormData = {
+    user: { identifier: '', role: ''},
+    employee: { identifier: '', givenName: '', surname: '', contactDetails: [] }
+  };
 
   constructor(private router: Router, private route: ActivatedRoute, private store: EmployeesStore){}
 

@@ -44,9 +44,7 @@ export class OfficeComponent implements OnInit {
 
   private lastFetchRequest: FetchRequest = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {
-    //store.replaceReducer(fromOffice.officeModuleReducer);
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
