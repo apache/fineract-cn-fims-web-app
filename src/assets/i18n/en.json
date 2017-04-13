@@ -10,7 +10,7 @@
   "Value must be smaller than or equals": "Value must be smaller than or equals {{value}}",
   "Value must be greater than": "Value must be greater than {{value}}",
   "Value must be smaller than": "Value must be smaller than {{value}}",
-  "Must have precision of": "Must have precision of {{value}}",
+  "Must have decimal places": "Must have {{value}} decimal places",
   "Customer is assigned to office:": "Customer is assigned to office: {{value}}",
   "Ledger with name": "Ledger {{value}}"
 }

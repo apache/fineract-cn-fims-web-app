@@ -272,7 +272,7 @@
   "Moratorium": "Mora",
   "Multiple disbursals?": "¿Múltiples desembolsos?",
   "Must be greater than Minimum": "Debe ser mayor al mínimo",
-  "Must have precision of": "Tiene que haber precisión de",
+  "Must have decimal places": "",
   "Name": "Nombre",
   "Navigate to ledger of this account": "Navegar a través del libro principal de ésta cuenta",
   "Navigate to reference account": "Navegar en la cuenta de referencia\n",
