@@ -32,7 +32,7 @@ export class CustomerIdentityCardFormComponent extends FormComponent<Identificat
       type: [identificationCard.type, [Validators.required]],
       number: [identificationCard.number, Validators.required],
       expirationDate: [this.formatDate(identificationCard.expirationDate), Validators.required],
-      issuer: [identificationCard.issuer]
+      issuer: [identificationCard.issuer, Validators.required]
     })
   };
 
