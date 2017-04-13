@@ -43,6 +43,16 @@
         </md-input-container>
       </div>
       <div layout="row">
+        <md-select formControlName="role" layout-margin placeholder="{{ 'Role' | translate }}" flex="15">
+          <md-option *ngFor="let role of roles | async" [value]="role.identifier">
+            {{ role.identifier }}
+          </md-option>
+          <md-hint *ngIf="!detailForm.controls.role.pristine && detailForm.controls.role.errors?.required"
+                   class="tc-red-600" translate>Required
+          </md-hint>
+        </md-select>
+      </div>
+      <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" tdAutoTrim/>
           <md-hint *ngIf="!detailForm.controls.password.pristine && detailForm.controls.password.errors?.required"
@@ -51,27 +61,6 @@
         </md-input-container>
       </div>
     </form>
-
-    <ng-template td-step-actions>
-      <button (click)="roleStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </ng-template>
-  </td-step>
-
-  <td-step #roleStep label="{{'Assign role to employee' | translate}}"
-           [state]="roleForm.valid ? 'complete' : roleForm.pristine ? 'none' : 'required'">
-    <fims-select-list #roleList flex
-                        [data]="roles"
-                        id="identifier"
-                        listIcon="group"
-                        (onSearch)="searchRole($event)"
-                        (onSelectionChange)="assignRole($event)"
-                        [preSelection]="roleForm.controls.role.value ? [roleForm.controls.role.value] : []"
-                        title="Assigned Role"
-                        noResultsMessage="{{'No role was found.' | translate}}"
-                        noSelectionMessage="{{'No role assigned to employee, yet.' | translate}}"
-    ></fims-select-list>
 
     <ng-template td-step-actions>
       <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>

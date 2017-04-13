@@ -31,11 +31,10 @@ export class RoleSearchApiEffects {
   search$: Observable<Action> = this.actions$
     .ofType(roleActions.SEARCH)
     .debounceTime(300)
-    .map((action: roleActions.SearchAction) => action.payload)
-    .switchMap(term => {
+    .switchMap(() => {
       const nextSearch$ = this.actions$.ofType(roleActions.SEARCH).skip(1);
 
-      return this.identityService.listRoles(term)
+      return this.identityService.listRoles()
         .takeUntil(nextSearch$)
         .map(roles => new roleActions.SearchCompleteAction(roles))
         .catch(() => of(new roleActions.SearchCompleteAction([])));

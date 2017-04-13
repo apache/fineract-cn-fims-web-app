@@ -63,7 +63,7 @@ describe('Role Search Api Effects', () => {
 
       const expectedResult = new SearchCompleteAction(roles);
 
-      runner.queue(new SearchAction(''));
+      runner.queue(new SearchAction());
 
       let result = null;
       roleEffects.search$.subscribe(_result => result = _result);
@@ -79,7 +79,7 @@ describe('Role Search Api Effects', () => {
 
       const expectedResult = new SearchCompleteAction([]);
 
-      runner.queue(new SearchAction(''));
+      runner.queue(new SearchAction());
 
       let result = null;
       roleEffects.search$.subscribe(_result => result = _result);

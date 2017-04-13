@@ -15,22 +15,22 @@
  */
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {EmployeeSaveEvent, EmployeeFormComponent} from '../form.component';
+import {EmployeeSaveEvent, EmployeeFormComponent, EmployeeFormData} from '../form.component';
 import {mapEmployee, mapContactDetails} from '../form.mapper';
 import {Employee} from '../../../../services/office/domain/employee.model';
 import {User} from '../../../../services/identity/domain/user.model';
 import {UPDATE} from '../../store/employee.actions';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {EmployeesStore, getSelectedEmployee} from '../../store/index';
 
 @Component({
   templateUrl: './edit.form.component.html'
 })
-export class EditEmployeeFormComponent implements OnInit, OnDestroy {
-
-  private employeeSubscription: Subscription;
+export class EditEmployeeFormComponent implements OnInit {
 
   @ViewChild('form') formComponent: EmployeeFormComponent;
+
+  formData: Observable<EmployeeFormData>;
 
   employee: Employee;
 
@@ -39,16 +39,16 @@ export class EditEmployeeFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: EmployeesStore) {}
 
   ngOnInit() {
-    this.employeeSubscription = this.store.select(getSelectedEmployee)
-      .subscribe(employee => this.employee = employee);
-
-    this.route.data.subscribe((data: { user: User }) => {
-      this.user = data.user;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.employeeSubscription.unsubscribe();
+    this.formData = Observable.combineLatest(
+      this.store.select(getSelectedEmployee),
+      this.route.data,
+      (employee: Employee, data: { user: User }) => {
+        return {
+          user: data.user,
+          employee: employee
+        }
+      }
+    );
   }
 
   onSave(event: EmployeeSaveEvent) {
@@ -57,7 +57,7 @@ export class EditEmployeeFormComponent implements OnInit, OnDestroy {
     this.store.dispatch({ type: UPDATE, payload: {
       employee: employee,
       contactDetails: mapContactDetails(event.contactForm),
-      role: event.roleForm.role,
+      role: event.detailForm.role,
       password: event.detailForm.password,
       activatedRoute: this.route
     }});
