@@ -38,8 +38,7 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
 
   account: Account = {
     identifier: '',
-    holders: [],
-    signatureAuthorities: [],
+    name: '',
     ledger: '',
     balance: 0
   };

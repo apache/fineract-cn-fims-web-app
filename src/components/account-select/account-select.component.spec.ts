@@ -40,8 +40,7 @@ describe('Test account selection', () => {
         totalPages: 0,
         accounts: [{
           identifier: 'test',
-          holders: [],
-          signatureAuthorities: [],
+          name: 'test',
           ledger: ''
         }]
       };

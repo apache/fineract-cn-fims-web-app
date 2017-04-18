@@ -58,7 +58,7 @@ describe('Account Search Api Effects', () => {
     it('should return a new SearchCompleteAction with AccountPage', fakeAsync(() => {
       const accountPage: AccountPage = {
         accounts: [
-          { identifier: 'test', holders: [], ledger: '' }
+          { identifier: 'test', name: 'test', ledger: '' }
         ],
         totalElements: 1,
         totalPages: 1
@@ -117,7 +117,7 @@ describe('Account Search Api Effects', () => {
     it('should return a new SearchCompleteAction with AccountPage', fakeAsync(() => {
       const accountPage: AccountPage = {
         accounts: [
-          { identifier: 'test', holders: [], ledger: '' }
+          { identifier: 'test', name: 'test', ledger: '' }
         ],
         totalElements: 1,
         totalPages: 1

@@ -68,24 +68,6 @@
                   <p md-line>{{account.type}}</p>
                 </md-list-item>
                 <md-list-item>
-                  <md-icon md-list-avatar>person</md-icon>
-                  <h3 md-line translate>Holders</h3>
-                  <p md-line *ngIf="account.holders">{{account.holders.join(', ')}}</p>
-                  <p md-line *ngIf="!account.holders" translate>No holders available</p>
-                </md-list-item>
-                <md-list-item>
-                  <md-icon md-list-avatar>verified_user</md-icon>
-                  <h3 md-line translate>Signature authorities</h3>
-                  <p md-line *ngIf="account.signatureAuthorities">{{account.signatureAuthorities.join(', ')}}</p>
-                  <p md-line *ngIf="!account.signatureAuthorities" translate>No signature authorities available</p>
-                </md-list-item>
-                <md-list-item>
-                  <md-icon md-list-avatar>view_module</md-icon>
-                  <h3 md-line translate>Reference account</h3>
-                  <p md-line *ngIf="account.referenceAccount">{{account.referenceAccount}}</p>
-                  <p md-line *ngIf="!account.referenceAccount" translate>No reference account available</p>
-                </md-list-item>
-                <md-list-item>
                   <md-icon md-list-avatar>payment</md-icon>
                   <h3 md-line translate>Balance</h3>
                   <p md-line>{{account.balance | number}}</p>

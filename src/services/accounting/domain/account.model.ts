@@ -19,7 +19,8 @@ import {AccountState} from './account-state.model';
 export interface Account{
   type?: AccountType;
   identifier: string;
-  holders: string[];
+  name: string;
+  holders?: string[];
   signatureAuthorities?: string[];
   balance?: number;
   referenceAccount?: string;

@@ -43,9 +43,10 @@ export class AccountListComponent implements OnInit, OnDestroy{
   accountData$: Observable<TableData>;
 
   columns: any[] = [
-    { name: 'identifier', label: 'Id', tooltip: 'Id' },
-    { name: 'state', label: 'State', tooltip: 'State' },
-    { name: 'balance', label: 'Balance', tooltip: 'Balance' }
+    { name: 'identifier', label: 'Id' },
+    { name: 'name', label: 'Name' },
+    { name: 'state', label: 'State' },
+    { name: 'balance', label: 'Balance' }
   ];
 
   constructor(private router: Router, private store: AccountingStore) {}

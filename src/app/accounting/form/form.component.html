@@ -29,6 +29,7 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-error *ngIf="!form.get('name').pristine && form.get('name').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
