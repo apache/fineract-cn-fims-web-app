@@ -70,14 +70,15 @@ describe('Account Search Api Effects', () => {
         contactDetails: []
       };
 
-      const payload: UpdateEmployeePayload = {
+      const expectedResult = new UpdateEmployeeSuccessAction({
+        resource: employee,
+        activatedRoute: null
+      });
+
+      runner.queue(new UpdateEmployeeAction({
         employee: employee,
         activatedRoute: null
-      };
-
-      const expectedResult = new UpdateEmployeeSuccessAction(payload);
-
-      runner.queue(new UpdateEmployeeAction(payload));
+      }));
 
       let result = null;
       employeeEffects.updateEmployee$.subscribe(_result => result = _result);
@@ -101,7 +102,12 @@ describe('Account Search Api Effects', () => {
         contactDetails: []
       };
 
-      const payload: UpdateEmployeePayload = {
+      const expectedResult = new UpdateEmployeeSuccessAction({
+        resource: employee,
+        activatedRoute: null
+      });
+
+      runner.queue(new UpdateEmployeeAction({
         employee: employee,
         contactDetails: [
           {
@@ -112,11 +118,7 @@ describe('Account Search Api Effects', () => {
           }
         ],
         activatedRoute: null
-      };
-
-      const expectedResult = new UpdateEmployeeSuccessAction(payload);
-
-      runner.queue(new UpdateEmployeeAction(payload));
+      }));
 
       let result = null;
       employeeEffects.updateEmployee$.subscribe(_result => result = _result);
@@ -140,15 +142,16 @@ describe('Account Search Api Effects', () => {
         contactDetails: []
       };
 
-      const payload: UpdateEmployeePayload = {
+      const expectedResult = new UpdateEmployeeSuccessAction({
+        resource: employee,
+        activatedRoute: null
+      });
+
+      runner.queue(new UpdateEmployeeAction({
         employee: employee,
         password: 'test',
         activatedRoute: null
-      };
-
-      const expectedResult = new UpdateEmployeeSuccessAction(payload);
-
-      runner.queue(new UpdateEmployeeAction(payload));
+      }));
 
       let result = null;
       employeeEffects.updateEmployee$.subscribe(_result => result = _result);
@@ -172,15 +175,16 @@ describe('Account Search Api Effects', () => {
         contactDetails: []
       };
 
-      const payload: UpdateEmployeePayload = {
+      const expectedResult = new UpdateEmployeeSuccessAction({
+        resource: employee,
+        activatedRoute: null
+      });
+
+      runner.queue(new UpdateEmployeeAction({
         employee: employee,
         role: 'test',
         activatedRoute: null
-      };
-
-      const expectedResult = new UpdateEmployeeSuccessAction(payload);
-
-      runner.queue(new UpdateEmployeeAction(payload));
+      }));
 
       let result = null;
       employeeEffects.updateEmployee$.subscribe(_result => result = _result);

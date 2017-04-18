@@ -33,7 +33,10 @@ export class CustomerApiEffects {
     .map((action: customerActions.CreateCustomerAction) => action.payload)
     .mergeMap(payload =>
       this.customerService.createCustomer(payload.customer)
-        .map(() => new customerActions.CreateCustomerSuccessAction(payload))
+        .map(() => new customerActions.CreateCustomerSuccessAction({
+          resource: payload.customer,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new customerActions.CreateCustomerFailAction(error)))
     );
 
@@ -43,7 +46,10 @@ export class CustomerApiEffects {
     .map((action: customerActions.UpdateCustomerAction) => action.payload)
     .mergeMap(payload =>
       this.customerService.updateCustomer(payload.customer)
-        .map(() => new customerActions.UpdateCustomerSuccessAction(payload))
+        .map(() => new customerActions.UpdateCustomerSuccessAction({
+          resource: payload.customer,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new customerActions.UpdateCustomerFailAction(error)))
     );
 

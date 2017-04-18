@@ -21,6 +21,7 @@ import {AccountingService} from '../../../../services/accounting/accounting.serv
 import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
 import {SearchAction, SearchByLedgerAction, SearchCompleteAction} from '../account.actions';
 import {Observable} from 'rxjs';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 describe('Account Search Api Effects', () => {
   beforeEach(() => {
@@ -65,7 +66,11 @@ describe('Account Search Api Effects', () => {
 
       const { runner, accountEffects } = setup({ searchAccountsReturnValue: Observable.of(accountPage) });
 
-      const expectedResult = new SearchCompleteAction(accountPage);
+      const expectedResult = new SearchCompleteAction({
+        elements: accountPage.accounts,
+        totalPages: accountPage.totalPages,
+        totalElements: accountPage.totalElements
+      });
 
       runner.queue(new SearchAction({}));
 
@@ -81,11 +86,7 @@ describe('Account Search Api Effects', () => {
     it('should return a new SearchCompleteAction, with an empty array, if accounting service throws', fakeAsync(() => {
       const {runner, accountEffects} = setup({searchAccountsReturnValue: Observable.throw(new Error())});
 
-      const expectedResult = new SearchCompleteAction({
-        accounts: [],
-        totalElements: 0,
-        totalPages: 0
-      });
+      const expectedResult = new SearchCompleteAction(emptySearchResult());
 
       runner.queue(new SearchAction({}));
 
@@ -124,7 +125,11 @@ describe('Account Search Api Effects', () => {
 
       const { runner, accountEffects } = setup({ searchAccountsOfLedgerReturnValue: Observable.of(accountPage) });
 
-      const expectedResult = new SearchCompleteAction(accountPage);
+      const expectedResult = new SearchCompleteAction({
+        elements: accountPage.accounts,
+        totalPages: accountPage.totalPages,
+        totalElements: accountPage.totalElements
+      });
 
       runner.queue(new SearchByLedgerAction({
         ledgerId: 'abc',
@@ -144,7 +149,7 @@ describe('Account Search Api Effects', () => {
       const {runner, accountEffects} = setup({searchAccountsOfLedgerReturnValue: Observable.throw(new Error())});
 
       const expectedResult = new SearchCompleteAction({
-        accounts: [],
+        elements: [],
         totalElements: 0,
         totalPages: 0
       });

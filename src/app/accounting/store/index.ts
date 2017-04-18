@@ -15,21 +15,26 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromLedgers from './ledger/ledgers.reducer'
-import * as fromLedgerForm from './ledger/form.reducer'
-import * as fromTrialBalance from './ledger/trial-balance.reducer'
-import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer'
-import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer'
-import * as fromAccounts from './account/accounts.reducer'
-import * as fromAccountForm from './account/form.reducer'
-import * as fromAccountEntrySearch from './account/entries/search.reducer'
-import * as fromAccountCommands from './account/task/tasks.reducer'
+import * as fromLedgers from './ledger/ledgers.reducer';
+import * as fromLedgerForm from './ledger/form.reducer';
+import * as fromTrialBalance from './ledger/trial-balance.reducer';
+import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
+import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer';
+import * as fromAccountForm from './account/form.reducer';
+import * as fromAccountEntrySearch from './account/entries/search.reducer';
+import * as fromAccountCommands from './account/task/tasks.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer,
+  getResourceLoadedAt,
+  getResourceSelected,
+  ResourceState
+} from '../../../components/store/resource.reducer';
 
 export interface State extends fromRoot.State{
-  accounts: fromAccounts.State;
+  accounts: ResourceState;
   accountForm: fromAccountForm.State;
   accountEntrySearch: fromAccountEntrySearch.State;
   accountCommands: fromAccountCommands.State;
@@ -49,7 +54,7 @@ const reducers = {
   journalEntrySearch: fromJournalEntrySearch.reducer,
   journalEntryForm: fromJournalEntryForm.reducer,
 
-  accounts: fromAccounts.reducer,
+  accounts: createResourceReducer('Account'),
   accountForm: fromAccountForm.reducer,
   accountEntrySearch: fromAccountEntrySearch.reducer,
   accountCommands: fromAccountCommands.reducer,
@@ -74,19 +79,15 @@ export const getLedgerFormState = (state: State) => state.ledgerForm;
 export const getTrialBalanceState = (state: State) => state.trialBalance;
 
 export const getLedgerEntities = createSelector(getLedgerState, fromLedgers.getEntities);
-export const getLedgerIds = createSelector(getLedgerState, fromLedgers.getIds);
+export const getLedgersLoadedAt = createSelector(getLedgerState, fromLedgers.getLoadedAt);
 export const getLedgerTopLevelIds = createSelector(getLedgerState, fromLedgers.getTopLevelIds);
-export const getSelectedLedgerId = createSelector(getLedgerState, fromLedgers.getSelectedId);
 export const getSelectedLedger = createSelector(getLedgerState, fromLedgers.getSelected);
-
-export const getAllLedgerEntities = createSelector(getLedgerState, fromLedgers.getAll);
 
 export const getAllTopLevelLedgerEntities = createSelector(getLedgerTopLevelIds, getLedgerEntities, (topLevelIds, entities) => {
   return topLevelIds.map(id => entities[id]);
 });
 
 export const getTrialBalance = createSelector(getTrialBalanceState, fromTrialBalance.getTrialBalance);
-export const getIncludeEmpty = createSelector(getTrialBalanceState, fromTrialBalance.getIncludeEmpty);
 
 /**
  * Journal Entries Selectors
@@ -108,12 +109,8 @@ export const getJournalEntriesSearchResult = createSelector(getJournalEntryEntit
  */
 export const getAccountsState = (state: State) => state.accounts;
 
-export const getAccountFormState = (state: State) => state.accountForm;
-
-export const getAccountEntities = createSelector(getAccountsState, fromAccounts.getEntities);
-export const getAccountIds = createSelector(getAccountsState, fromAccounts.getIds);
-export const getSelectedAccountId = createSelector(getAccountsState, fromAccounts.getSelectedId);
-export const getSelectedAccount = createSelector(getAccountsState, fromAccounts.getSelected);
+export const getAccountsLoadedAt = createSelector(getAccountsState, getResourceLoadedAt);
+export const getSelectedAccount = createSelector(getAccountsState, getResourceSelected);
 
 
 export const getAccountEntrySearchState = (state: State) => state.accountEntrySearch;

@@ -33,7 +33,10 @@ export class RoleApiEffects {
     .map((action: roleActions.CreateRoleAction) => action.payload)
     .mergeMap(role =>
       this.identityService.createRole(role)
-        .map(() => new roleActions.CreateRoleSuccessAction(role))
+        .map(() => new roleActions.CreateRoleSuccessAction({
+          resource: role,
+          activatedRoute: null
+        }))
         .catch((error) => of(new roleActions.CreateRoleFailAction(error)))
     );
 
@@ -43,7 +46,10 @@ export class RoleApiEffects {
     .map((action: roleActions.UpdateRoleAction) => action.payload)
     .mergeMap(role =>
       this.identityService.changeRole(role)
-        .map(() => new roleActions.UpdateRoleSuccessAction(role))
+        .map(() => new roleActions.UpdateRoleSuccessAction({
+          resource: role,
+          activatedRoute: null
+        }))
         .catch((error) => of(new roleActions.UpdateRoleFailAction(error)))
     );
 
@@ -53,7 +59,10 @@ export class RoleApiEffects {
     .map((action: roleActions.DeleteRoleAction) => action.payload)
     .mergeMap(role =>
       this.identityService.deleteRole(role.identifier)
-        .map(() => new roleActions.DeleteRoleSuccessAction(role))
+        .map(() => new roleActions.DeleteRoleSuccessAction({
+          resource: role,
+          activatedRoute: null
+        }))
         .catch((error) => of(new roleActions.DeleteRoleFailAction(error)))
     );
 

@@ -23,34 +23,36 @@ import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {mapToFimsProduct} from './store/model/fims-product.mapper';
+import {ExistsGuardService} from '../../../components/guards/exists-guard';
 
 @Injectable()
 export class ProductExistsGuard implements CanActivate {
 
   constructor(private store: PortfolioStore,
               private portfolioService: PortfolioService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasProductInStore(id: string): Observable<boolean> {
-    return this.store.select(fromProducts.getProductEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromProducts.getProductsLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasProductInApi(id: string): Observable<boolean> {
-    return this.portfolioService.getProduct(id)
+    const getProduct = this.portfolioService.getProduct(id)
       .mergeMap(product =>
         this.portfolioService.getProductEnabled(product.identifier)
           .map(enabled => (Object.assign({}, product, {
             enabled: enabled
           })))
-      ).map(productEntity => new LoadAction(mapToFimsProduct(productEntity)))
+      ).map(productEntity => new LoadAction({
+        resource: mapToFimsProduct(productEntity)
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(product => !!product)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(product => !!product);
+
+    return this.existsGuardService.routeTo404OnError(getProduct);
   }
 
   hasProduct(id: string): Observable<boolean> {

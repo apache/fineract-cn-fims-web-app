@@ -22,29 +22,31 @@ import {Observable} from 'rxjs';
 import {LoadAction} from './store/employee.actions';
 import {of} from 'rxjs/observable/of';
 import {EmployeesStore} from './store/index';
+import {ExistsGuardService} from '../../components/guards/exists-guard';
 
 @Injectable()
 export class EmployeeExistsGuard implements CanActivate {
 
   constructor(private store: EmployeesStore,
               private officeService: OfficeService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasEmployeeInStore(id: string): Observable<boolean> {
-    return this.store.select(fromEmployees.getEmployeeEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromEmployees.getEmployeesLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasEmployeeInApi(id: string): Observable<boolean> {
-    return this.officeService.getEmployee(id)
-      .map(employeeEntity => new LoadAction(employeeEntity))
+    const getEmployee$ = this.officeService.getEmployee(id)
+      .map(employeeEntity => new LoadAction({
+        resource: employeeEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(employee => !!employee)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(employee => !!employee);
+
+    return this.existsGuardService.routeTo404OnError(getEmployee$);
   }
 
   hasEmployee(id: string): Observable<boolean> {

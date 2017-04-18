@@ -24,20 +24,27 @@ import * as fromCommands from './commands/commands.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer,
+  getResourceAll,
+  getResourceLoadedAt,
+  getResourceSelected,
+  ResourceState
+} from '../../../components/store/resource.reducer';
 
 export interface State extends fromRoot.State{
-  customers: fromCustomers.State;
+  customers: ResourceState;
   customerForm: fromCustomerForm.State;
-  customerTasks: fromCustomerTasks.State;
+  customerTasks: ResourceState;
   customerTaskForm: fromCustomerTaskForm.State;
   customerCatalogs: fromCatalogs.State;
   customerCommands: fromCommands.State;
 }
 
 const reducers = {
-  customers: fromCustomers.reducer,
+  customers: createResourceReducer('Customer', fromCustomers.reducer),
   customerForm: fromCustomerForm.reducer,
-  customerTasks: fromCustomerTasks.reducer,
+  customerTasks: createResourceReducer('Customer Task', fromCustomerTasks.reducer),
   customerTaskForm: fromCustomerTaskForm.reducer,
   customerCatalogs: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer
@@ -56,24 +63,15 @@ export const getCustomersState = (state: State) => state.customers;
 
 export const getCustomerFormState = (state: State) => state.customerForm;
 
-export const getCustomerEntities = createSelector(getCustomersState, fromCustomers.getEntities);
-export const getCustomerIds = createSelector(getCustomersState, fromCustomers.getIds);
-export const getSelectedCustomerId = createSelector(getCustomersState, fromCustomers.getSelectedId);
-export const getSelectedCustomer = createSelector(getCustomersState, fromCustomers.getSelected);
+export const getCustomerLoadedAt = createSelector(getCustomersState, getResourceLoadedAt);
+export const getSelectedCustomer = createSelector(getCustomersState, getResourceSelected);
 
 /**
  * Customer Task Selectors
  */
 export const getCustomerTasksState = (state: State) => state.customerTasks;
 
-export const getCustomerTaskFormState = (state: State) => state.customerTaskForm;
-
-export const getCustomerTaskEntities = createSelector(getCustomerTasksState, fromCustomerTasks.getEntities);
-export const getCustomerTaskIds = createSelector(getCustomerTasksState, fromCustomerTasks.getIds);
-export const getSelectedCustomerTaskId = createSelector(getCustomerTasksState, fromCustomerTasks.getSelectedId);
-export const getSelectedCustomerTask = createSelector(getCustomerTasksState, fromCustomerTasks.getSelected);
-
-export const getAllCustomerTaskEntities = createSelector(getCustomerTasksState, fromCustomerTasks.getAll);
+export const getAllCustomerTaskEntities = createSelector(getCustomerTasksState, getResourceAll);
 
 /**
  * Customer Catalog Selectors

@@ -21,6 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
 import {IdentityService} from '../../../../services/identity/identity.service';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 @Injectable()
 export class RoleSearchApiEffects {
@@ -36,8 +37,12 @@ export class RoleSearchApiEffects {
 
       return this.identityService.listRoles()
         .takeUntil(nextSearch$)
-        .map(roles => new roleActions.SearchCompleteAction(roles))
-        .catch(() => of(new roleActions.SearchCompleteAction([])));
+        .map(roles => new roleActions.SearchCompleteAction({
+          elements: roles,
+          totalPages: 1,
+          totalElements: roles.length
+        }))
+        .catch(() => of(new roleActions.SearchCompleteAction(emptySearchResult())));
     });
 
 }

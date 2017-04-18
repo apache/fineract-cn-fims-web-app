@@ -19,6 +19,10 @@ import {type} from '../../util';
 import {Office} from '../../../services/office/domain/office.model';
 import {Error} from '../../../services/domain/error.model';
 import {RoutePayload} from '../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../components/store/resource.reducer';
 
 export const LOAD = type('[Office] Load');
 export const SELECT = type('[Office] Select');
@@ -43,13 +47,13 @@ export interface OfficeRoutePayload extends RoutePayload{
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Office) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateOfficeAction implements Action {
@@ -67,7 +71,7 @@ export class CreateBranchOfficeAction implements Action {
 export class CreateOfficeSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: OfficeRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateOfficeFailAction implements Action {
@@ -85,7 +89,7 @@ export class UpdateOfficeAction implements Action {
 export class UpdateOfficeSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: OfficeRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateOfficeFailAction implements Action {
@@ -103,7 +107,7 @@ export class DeleteOfficeAction implements Action {
 export class DeleteOfficeSuccessAction implements Action {
   readonly type = DELETE_SUCCESS;
 
-  constructor(public payload: OfficeRoutePayload) { }
+  constructor(public payload: DeleteResourceSuccessPayload) { }
 }
 
 export class DeleteOfficeFailAction implements Action {

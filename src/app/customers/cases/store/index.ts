@@ -24,19 +24,28 @@ import * as fromCasePayments from './payments/search.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  getResourceSelectedId,
+  ResourceState
+} from '../../../../components/store/resource.reducer';
+import {
+  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  SearchState
+} from '../../../../components/store/search.reducer';
 
 export interface State extends fromCustomer.State{
-  cases: fromCases.State;
+  cases: ResourceState;
   caseForm: fromCaseForm.State;
-  caseSearch: fromCaseSearch.State;
+  caseSearch: SearchState;
   caseTasks: fromCaseTasks.State;
   casePayments: fromCasePayments.State;
 }
 
 const reducers = {
-  cases: fromCases.reducer,
+  cases: createResourceReducer('Case'),
   caseForm: fromCaseForm.reducer,
-  caseSearch: fromCaseSearch.reducer,
+  caseSearch: createSearchReducer('Case'),
   caseTasks: fromCaseTasks.reducer,
   casePayments: fromCasePayments.reducer
 };
@@ -52,9 +61,9 @@ export function caseStoreFactory(appStore: Store<fromCustomer.State>){
 
 export const getCaseSearchState = (state: State) => state.caseSearch;
 
-export const getSearchCases = createSelector(getCaseSearchState, fromCaseSearch.getCases);
-export const getCaseSearchTotalElements = createSelector(getCaseSearchState, fromCaseSearch.getTotalElements);
-export const getCaseSearchTotalPages = createSelector(getCaseSearchState, fromCaseSearch.getTotalPages);
+export const getSearchCases = createSelector(getCaseSearchState, getSearchEntities);
+export const getCaseSearchTotalElements = createSelector(getCaseSearchState, getSearchTotalElements);
+export const getCaseSearchTotalPages = createSelector(getCaseSearchState, getSearchTotalPages);
 
 export const getCaseSearchResults = createSelector(getSearchCases, getCaseSearchTotalPages, getCaseSearchTotalElements, (cases, totalPages, totalElements) => {
   return {
@@ -66,10 +75,11 @@ export const getCaseSearchResults = createSelector(getSearchCases, getCaseSearch
 
 export const getCasesState = (state: State) => state.cases;
 
-export const getCaseEntities = createSelector(getCasesState, fromCases.getEntities);
-export const getCaseIds = createSelector(getCasesState, fromCases.getIds);
-export const getSelectedCaseId = createSelector(getCasesState, fromCases.getSelectedId);
-export const getSelectedCase = createSelector(getCasesState, fromCases.getSelected);
+export const getCaseEntities = createSelector(getCasesState, getResourceEntities);
+export const getCasesLoadedAt = createSelector(getCasesState, getResourceLoadedAt);
+export const getCaseIds = createSelector(getCasesState, getResourceIds);
+export const getSelectedCaseId = createSelector(getCasesState, getResourceSelectedId);
+export const getSelectedCase = createSelector(getCasesState, getResourceSelected);
 
 export const getCaseTasksState = (state: State) => state.caseTasks;
 

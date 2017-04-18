@@ -45,6 +45,7 @@ import {SecurityApiEffects} from './reducers/security/effects/service.effects';
 import {SecurityNotificationEffects} from './reducers/security/effects/notification.effects';
 import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ExistsGuardService} from '../components/guards/exists-guard';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -98,6 +99,7 @@ export function HttpLoaderFactory(http: Http){
     AccountingService,
     PortfolioService,
     NotificationService,
+    ExistsGuardService,
     ...appRoutingProviders
   ],
   bootstrap: [ AppComponent ]

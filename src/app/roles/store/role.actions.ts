@@ -18,6 +18,10 @@ import {Action} from '@ngrx/store';
 import {type} from '../../util';
 import {Role} from '../../../services/identity/domain/role.model';
 import {Error} from '../../../services/domain/error.model';
+import {
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload, SelectResourcePayload,
+  UpdateResourceSuccessPayload
+} from '../../../components/store/resource.reducer';
 
 export const LOAD = type('[Role] Load');
 export const SELECT = type('[Role] Select');
@@ -37,13 +41,13 @@ export const DELETE_FAIL = type('[Role] Delete Fail');
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateRoleAction implements Action {
@@ -55,7 +59,7 @@ export class CreateRoleAction implements Action {
 export class CreateRoleSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateRoleFailAction implements Action {
@@ -73,7 +77,7 @@ export class UpdateRoleAction implements Action {
 export class UpdateRoleSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateRoleFailAction implements Action {
@@ -91,7 +95,7 @@ export class DeleteRoleAction implements Action {
 export class DeleteRoleSuccessAction implements Action {
   readonly type = DELETE_SUCCESS;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: DeleteResourceSuccessPayload) { }
 }
 
 export class DeleteRoleFailAction implements Action {

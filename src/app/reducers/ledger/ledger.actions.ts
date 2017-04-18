@@ -18,6 +18,7 @@ import {type} from '../../util';
 import {Action} from '@ngrx/store';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {LedgerPage} from '../../../services/accounting/domain/ledger-page.model';
+import {SearchResult} from '../../../components/store/search.reducer';
 
 export const SEARCH = type('[Ledger] Search');
 export const SEARCH_COMPLETE = type('[Ledger] Search Complete');
@@ -31,7 +32,7 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: LedgerPage) { }
+  constructor(public payload: SearchResult) { }
 }
 
 export type Actions

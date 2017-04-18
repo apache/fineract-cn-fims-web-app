@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 @Injectable()
 export class OfficeSearchApiEffects {
@@ -37,12 +38,12 @@ export class OfficeSearchApiEffects {
 
       return this.officeService.listOffices(fetchRequest)
         .takeUntil(nextSearch$)
-        .map(officePage => new officeActions.SearchCompleteAction(officePage))
-        .catch(() => of(new officeActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          offices: []
-        })));
+        .map(officePage => new officeActions.SearchCompleteAction({
+          elements: officePage.offices,
+          totalElements: officePage.totalElements,
+          totalPages: officePage.totalPages
+        }))
+        .catch(() => of(new officeActions.SearchCompleteAction(emptySearchResult())));
     });
 
 }

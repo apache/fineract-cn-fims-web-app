@@ -22,6 +22,10 @@ import {Error} from '../../../../services/domain/error.model';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {ActivatedRoute} from '@angular/router';
 import {RoutePayload} from '../../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../components/store/resource.reducer';
 
 export const LOAD = type('[Account] Load');
 export const SELECT = type('[Account] Select');
@@ -41,13 +45,13 @@ export interface AccountRoutePayload extends RoutePayload{
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Account) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateAccountAction implements Action {
@@ -59,7 +63,7 @@ export class CreateAccountAction implements Action {
 export class CreateAccountSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: AccountRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateAccountFailAction implements Action {
@@ -77,7 +81,7 @@ export class UpdateAccountAction implements Action {
 export class UpdateAccountSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: AccountRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateAccountFailAction implements Action {

@@ -19,6 +19,10 @@ import {type} from '../../util';
 import {Error} from '../../../services/domain/error.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {RoutePayload} from '../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../components/store/resource.reducer';
 
 export const LOAD = type('[Customer] Load');
 export const SELECT = type('[Customer] Select');
@@ -38,13 +42,13 @@ export interface CustomerRoutePayload extends RoutePayload{
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Customer) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateCustomerAction implements Action {
@@ -56,7 +60,7 @@ export class CreateCustomerAction implements Action {
 export class CreateCustomerSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: CustomerRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateCustomerFailAction implements Action {
@@ -74,7 +78,7 @@ export class UpdateCustomerAction implements Action {
 export class UpdateCustomerSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: CustomerRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateCustomerFailAction implements Action {

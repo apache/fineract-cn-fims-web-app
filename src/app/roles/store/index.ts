@@ -15,19 +15,24 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromRoles from './roles.reducer';
 import * as fromRoleForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer,
+  getResourceLoadedAt,
+  getResourceSelected,
+  ResourceState
+} from '../../../components/store/resource.reducer';
 
 export interface State extends fromRoot.State{
-  roles: fromRoles.State;
+  roles: ResourceState;
   roleForm: fromRoleForm.State;
 }
 
 const reducers = {
-  roles: fromRoles.reducer,
+  roles: createResourceReducer('Role'),
   rolesForm: fromRoleForm.reducer,
 };
 
@@ -44,7 +49,5 @@ export const getRolesState = (state: State) => state.roles;
 
 export const getRoleFormState = (state: State) => state.roleForm;
 
-export const getRoleEntities = createSelector(getRolesState, fromRoles.getEntities);
-export const getRoleIds = createSelector(getRolesState, fromRoles.getIds);
-export const getSelectedRoleId = createSelector(getRolesState, fromRoles.getSelectedId);
-export const getSelectedRole = createSelector(getRolesState, fromRoles.getSelected);
+export const getRolesLoadedAt = createSelector(getRolesState, getResourceLoadedAt);
+export const getSelectedRole = createSelector(getRolesState, getResourceSelected);

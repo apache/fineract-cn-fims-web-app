@@ -19,6 +19,11 @@ import {Error} from '../../../../services/domain/error.model';
 import {type} from '../../../util';
 import {RoutePayload} from '../../../../components/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
+import {SearchResult} from '../../../../components/store/search.reducer';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../components/store/resource.reducer';
 
 export const SEARCH = type('[Product] Search');
 export const SEARCH_COMPLETE = type('[Product] Search Complete');
@@ -56,19 +61,19 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: FimsProduct[]) { }
+  constructor(public payload: SearchResult) { }
 }
 
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: FimsProduct) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateProductAction implements Action {
@@ -80,7 +85,7 @@ export class CreateProductAction implements Action {
 export class CreateProductSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: ProductRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateProductFailAction implements Action {
@@ -98,7 +103,7 @@ export class UpdateProductAction implements Action {
 export class UpdateProductSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: ProductRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateProductFailAction implements Action {

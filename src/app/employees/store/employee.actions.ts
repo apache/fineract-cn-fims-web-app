@@ -21,6 +21,10 @@ import {Error} from '../../../services/domain/error.model';
 import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';
 import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
 import {RoutePayload} from '../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../components/store/resource.reducer';
 
 export const LOAD = type('[Employee] Load');
 export const SELECT = type('[Employee] Select');
@@ -54,13 +58,13 @@ export interface UpdateEmployeePayload extends EmployeeRoutePayload{
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: Employee) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateEmployeeAction implements Action {
@@ -72,7 +76,7 @@ export class CreateEmployeeAction implements Action {
 export class CreateEmployeeSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: CreateEmployeePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateEmployeeFailAction implements Action {
@@ -90,7 +94,7 @@ export class UpdateEmployeeAction implements Action {
 export class UpdateEmployeeSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: UpdateEmployeePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateEmployeeFailAction implements Action {
@@ -108,7 +112,7 @@ export class DeleteEmployeeAction implements Action {
 export class DeleteEmployeeSuccessAction implements Action {
   readonly type = DELETE_SUCCESS;
 
-  constructor(public payload: EmployeeRoutePayload) { }
+  constructor(public payload: DeleteResourceSuccessPayload) { }
 }
 
 export class DeleteEmployeeFailAction implements Action {

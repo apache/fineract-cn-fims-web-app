@@ -27,6 +27,7 @@ if (environment.production) {
 platformBrowserDynamic([
   { provide: 'tenantId', useValue: 'fineract-demo' },
   { provide: 'tokenExpiryBuffer', useValue: 1000 * 60},
+  { provide: 'cacheExpiry', useValue: 10000},
   { provide: 'identityBaseUrl', useValue: '/identity/v1' },
   { provide: 'officeBaseUrl', useValue: '/api/office/v1' },
   { provide: 'customerBaseUrl', useValue: '/api/customer/v1' },

@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as employeeActions from '../employee.actions';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 @Injectable()
 export class EmployeeSearchApiEffects {
@@ -37,12 +38,12 @@ export class EmployeeSearchApiEffects {
 
       return this.officeService.listEmployees(fetchRequest)
         .takeUntil(nextSearch$)
-        .map(employeePage => new employeeActions.SearchCompleteAction(employeePage))
-        .catch(() => of(new employeeActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          employees: []
-        })));
+        .map(employeePage => new employeeActions.SearchCompleteAction({
+          elements: employeePage.employees,
+          totalElements: employeePage.totalElements,
+          totalPages: employeePage.totalPages
+        }))
+        .catch(() => of(new employeeActions.SearchCompleteAction(emptySearchResult())));
     });
 
 }

@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {CustomerService} from '../../../../services/customer/customer.service';
 import {SearchAction, SearchCompleteAction} from '../customer.actions';
 import {CustomerPage} from '../../../../services/customer/domain/customer-page.model';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 describe('Customer Search Api Effects', () => {
   beforeEach(() => {
@@ -67,7 +68,11 @@ describe('Customer Search Api Effects', () => {
 
       const { runner, customerEffects } = setup({ searchCustomersReturnValue: Observable.of(customerPage) });
 
-      const expectedResult = new SearchCompleteAction(customerPage);
+      const expectedResult = new SearchCompleteAction({
+        elements: customerPage.customers,
+        totalPages: customerPage.totalPages,
+        totalElements: customerPage.totalElements
+      });
 
       runner.queue(new SearchAction({}));
 
@@ -83,11 +88,7 @@ describe('Customer Search Api Effects', () => {
     it('should return a new SearchCompleteAction, with an empty array, if customer service throws', fakeAsync(() => {
       const {runner, customerEffects} = setup({searchCustomersReturnValue: Observable.throw(new Error())});
 
-      const expectedResult = new SearchCompleteAction({
-        customers: [],
-        totalElements: 0,
-        totalPages: 0
-      });
+      const expectedResult = new SearchCompleteAction(emptySearchResult());
 
       runner.queue(new SearchAction({}));
 

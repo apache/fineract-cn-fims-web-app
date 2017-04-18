@@ -22,29 +22,31 @@ import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {LoadAction} from '../store/account/account.actions';
 import {AccountingStore} from '../store/index';
+import {ExistsGuardService} from '../../../components/guards/exists-guard';
 
 @Injectable()
 export class AccountExistsGuard implements CanActivate {
 
   constructor(private store: AccountingStore,
               private accountingService: AccountingService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasAccountInStore(id: string): Observable<boolean> {
-    return this.store.select(fromAccounting.getAccountEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$: Observable<number> = this.store.select(fromAccounting.getAccountsLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasAccountInApi(id: string): Observable<boolean> {
-    return this.accountingService.findAccount(id)
-      .map(accountEntity => new LoadAction(accountEntity))
+    const getAccount$ = this.accountingService.findAccount(id)
+      .map(accountEntity => new LoadAction({
+        resource: accountEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(employee => !!employee)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(employee => !!employee);
+
+    return this.existsGuardService.routeTo404OnError(getAccount$);
   }
 
   hasAccount(id: string): Observable<boolean> {

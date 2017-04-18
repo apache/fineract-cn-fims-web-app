@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {IdentityService} from '../../../../services/identity/identity.service';
 import {Role} from '../../../../services/identity/domain/role.model';
 import {SearchAction, SearchCompleteAction} from '../role.actions';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 describe('Role Search Api Effects', () => {
   beforeEach(() => {
@@ -61,7 +62,11 @@ describe('Role Search Api Effects', () => {
 
       const { runner, roleEffects } = setup({ searchRolesReturnValue: Observable.of(roles) });
 
-      const expectedResult = new SearchCompleteAction(roles);
+      const expectedResult = new SearchCompleteAction({
+        elements: roles,
+        totalPages: 1,
+        totalElements: roles.length
+      });
 
       runner.queue(new SearchAction());
 
@@ -74,10 +79,10 @@ describe('Role Search Api Effects', () => {
       expect(result).toEqual(expectedResult);
     }));
 
-    it('should return a new SearchCompleteAction, with an empty array, if identity service throws', fakeAsync(() => {
+    it('should return a new SearchCompleteAction, with empty search result, if identity service throws', fakeAsync(() => {
       const {runner, roleEffects} = setup({searchRolesReturnValue: Observable.throw(new Error())});
 
-      const expectedResult = new SearchCompleteAction([]);
+      const expectedResult = new SearchCompleteAction(emptySearchResult());
 
       runner.queue(new SearchAction());
 

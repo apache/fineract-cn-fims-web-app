@@ -17,20 +17,16 @@
 import * as task from './task.actions';
 import { createSelector } from 'reselect';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {ResourceState} from '../../../../../components/store/resource.reducer';
 
-export interface State {
-  ids: string[];
-  entities: { [id: string]: TaskDefinition };
-  selectedTaskId: string | null;
-}
-
-export const initialState: State = {
+export const initialState: ResourceState = {
   ids: [],
   entities: {},
-  selectedTaskId: null,
+  loadedAt: {},
+  selectedId: null
 };
 
-export function reducer(state = initialState, action: task.Actions): State {
+export function reducer(state = initialState, action: task.Actions): ResourceState {
 
   switch (action.type) {
 
@@ -49,44 +45,9 @@ export function reducer(state = initialState, action: task.Actions): State {
       return {
         ids: [ ...state.ids, ...newTaskIds ],
         entities: Object.assign({}, state.entities, newTaskEntities),
-        selectedTaskId: state.selectedTaskId
+        selectedId: state.selectedId,
+        loadedAt: state.loadedAt
       };
-    }
-
-    case task.LOAD: {
-      const task = action.payload;
-
-      if(state.ids.indexOf(task.identifier) > -1){
-        return state;
-      }
-
-      return {
-        ids: [ ...state.ids, task.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [task.identifier]: task
-        }),
-        selectedTaskId: state.selectedTaskId
-      };
-    }
-
-    case task.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedTaskId: action.payload
-      };
-    }
-
-    case task.CREATE_SUCCESS: {
-      const task = action.payload.task;
-
-      return {
-        ids: [ ...state.ids, task.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [task.identifier]: task
-        }),
-        selectedTaskId: state.selectedTaskId
-      }
     }
 
     default: {
@@ -94,17 +55,3 @@ export function reducer(state = initialState, action: task.Actions): State {
     }
   }
 }
-
-export const getEntities = (state: State) => state.entities;
-
-export const getIds = (state: State) => state.ids;
-
-export const getSelectedId = (state: State) => state.selectedTaskId;
-
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

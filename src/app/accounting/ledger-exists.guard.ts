@@ -22,29 +22,29 @@ import {Observable} from 'rxjs';
 import {LoadAction} from './store/ledger/ledger.actions';
 import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../services/accounting/accounting.service';
+import {ExistsGuardService} from '../../components/guards/exists-guard';
 
 @Injectable()
 export class LedgerExistsGuard implements CanActivate {
 
   constructor(private store: Store<fromAccounting.State>,
               private accountingService: AccountingService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasLedgerInStore(id: string): Observable<boolean> {
-    return this.store.select(fromAccounting.getLedgerEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromAccounting.getLedgersLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasLedgerInApi(id: string): Observable<boolean> {
-    return this.accountingService.findLedger(id)
+    const findLedger$ = this.accountingService.findLedger(id)
       .map(ledgerEntity => new LoadAction(ledgerEntity))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(ledger => !!ledger)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(ledger => !!ledger);
+
+    return this.existsGuardService.routeTo404OnError(findLedger$);
   }
 
   hasLedger(id: string): Observable<boolean> {

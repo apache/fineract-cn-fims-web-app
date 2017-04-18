@@ -17,11 +17,13 @@
 import * as ledger from './ledger.actions';
 import { createSelector } from 'reselect';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
+import {ResourceState} from '../../../../components/store/resource.reducer';
 
 export interface State {
   ids: string[];
   topLevelIds: string[];
   entities: { [id: string]: Ledger };
+  loadedAt: { [id: string]: number };
   selectedLedgerId: string | null;
 }
 
@@ -29,6 +31,7 @@ export const initialState: State = {
   ids: [],
   topLevelIds: [],
   entities: {},
+  loadedAt: {},
   selectedLedgerId: null,
 };
 
@@ -48,10 +51,17 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         });
       }, {});
 
+      const newLoadedAt = newLedgers.reduce((entities: { [id: string]: any }, ledger: Ledger) => {
+        return Object.assign(entities, {
+          [ledger.identifier]: Date.now()
+        });
+      }, {});
+
       return {
         ids: [ ...state.ids, ...newLedgerIds ],
         topLevelIds: [ ...state.topLevelIds, ...newLedgerIds],
         entities: Object.assign({}, state.entities, newLedgerEntities),
+        loadedAt: Object.assign({}, state.loadedAt, newLoadedAt),
         selectedLedgerId: state.selectedLedgerId
       };
     }
@@ -69,6 +79,9 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         entities: Object.assign({}, state.entities, {
           [ledger.identifier]: ledger
         }),
+        loadedAt: Object.assign({}, state.entities, {
+          [ledger.identifier]: Date.now()
+        }),
         selectedLedgerId: state.selectedLedgerId
       };
     }
@@ -78,7 +91,8 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         ids: state.ids,
         topLevelIds: state.topLevelIds,
         entities: state.entities,
-        selectedLedgerId: action.payload
+        selectedLedgerId: action.payload,
+        loadedAt: state.loadedAt
       };
     }
 
@@ -91,7 +105,8 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         entities: Object.assign({}, state.entities, {
           [ledger.identifier]: ledger
         }),
-        selectedLedgerId: state.selectedLedgerId
+        selectedLedgerId: state.selectedLedgerId,
+        loadedAt: state.loadedAt
       }
     }
 
@@ -109,7 +124,8 @@ export function reducer(state = initialState, action: ledger.Actions): State {
           [subLedger.identifier]: subLedger,
           [parentLedger.identifier]: parentLedger
         }),
-        selectedLedgerId: state.selectedLedgerId
+        selectedLedgerId: state.selectedLedgerId,
+        loadedAt: state.loadedAt
       }
     }
 
@@ -122,7 +138,8 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         entities: Object.assign({}, state.entities, {
           [ledger.identifier]: ledger
         }),
-        selectedLedgerId: state.selectedLedgerId
+        selectedLedgerId: state.selectedLedgerId,
+        loadedAt: state.loadedAt
       }
     }
 
@@ -140,10 +157,18 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         });
       }, {});
 
+      const newLoadedAt = newIds.reduce((entities: { [id: string]: any }, id: string) => {
+        let loadedAt = state.loadedAt[id];
+        return Object.assign(entities, {
+          [id]: loadedAt
+        });
+      }, {});
+
       return {
         ids: [...newIds],
         topLevelIds: [...newTopLevelIds],
         entities: newEntities,
+        loadedAt: newLoadedAt,
         selectedLedgerId: state.selectedLedgerId
       }
     }
@@ -155,6 +180,8 @@ export function reducer(state = initialState, action: ledger.Actions): State {
 }
 
 export const getEntities = (state: State) => state.entities;
+
+export const getLoadedAt = (state: State) => state.loadedAt;
 
 export const getIds = (state: State) => state.ids;
 

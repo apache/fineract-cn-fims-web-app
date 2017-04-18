@@ -17,20 +17,22 @@
 import * as charge from './charge.actions';
 import { createSelector } from 'reselect';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {ResourceState} from '../../../../../components/store/resource.reducer';
 
-export interface State {
+export interface State extends ResourceState {
   ids: string[];
   entities: { [id: string]: ChargeDefinition };
-  selectedChargeId: string | null;
+  selectedId: string | null;
 }
 
 export const initialState: State = {
   ids: [],
   entities: {},
-  selectedChargeId: null,
+  loadedAt: {},
+  selectedId: null,
 };
 
-export function reducer(state = initialState, action: charge.Actions): State {
+export function reducer(state = initialState, action: charge.Actions): ResourceState {
 
   switch (action.type) {
 
@@ -49,63 +51,9 @@ export function reducer(state = initialState, action: charge.Actions): State {
       return {
         ids: [ ...state.ids, ...newChargeIds ],
         entities: Object.assign({}, state.entities, newChargeEntities),
-        selectedChargeId: state.selectedChargeId
+        selectedId: state.selectedId,
+        loadedAt: state.loadedAt
       };
-    }
-
-    case charge.LOAD: {
-      const charge = action.payload;
-
-      if(state.ids.indexOf(charge.identifier) > -1){
-        return state;
-      }
-
-      return {
-        ids: [ ...state.ids, charge.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [charge.identifier]: charge
-        }),
-        selectedChargeId: state.selectedChargeId
-      };
-    }
-
-    case charge.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedChargeId: action.payload
-      };
-    }
-
-    case charge.CREATE_SUCCESS: {
-      const charge = action.payload.charge;
-
-      return {
-        ids: [ ...state.ids, charge.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [charge.identifier]: charge
-        }),
-        selectedChargeId: state.selectedChargeId
-      }
-    }
-
-    case charge.DELETE_SUCCESS: {
-      const charge: ChargeDefinition = action.payload.charge;
-
-      const newIds = state.ids.filter(id => id !== charge.identifier);
-
-      const newEntities = newIds.reduce((entities: { [id: string]: ChargeDefinition }, id: string) => {
-        let entity = state.entities[id];
-        return Object.assign(entities, {
-          [entity.identifier]: entity
-        });
-      }, {});
-
-      return {
-        ids: [ ...newIds ],
-        entities: newEntities,
-        selectedChargeId: state.selectedChargeId
-      }
     }
 
     default: {
@@ -113,17 +61,3 @@ export function reducer(state = initialState, action: charge.Actions): State {
     }
   }
 }
-
-export const getEntities = (state: State) => state.entities;
-
-export const getIds = (state: State) => state.ids;
-
-export const getSelectedId = (state: State) => state.selectedChargeId;
-
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

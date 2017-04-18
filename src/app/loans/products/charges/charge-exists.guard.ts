@@ -22,29 +22,31 @@ import {LoadAction} from '../store/charges/charge.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {ExistsGuardService} from '../../../../components/guards/exists-guard';
 
 @Injectable()
 export class ProductChargeExistsGuard implements CanActivate {
 
   constructor(private store: PortfolioStore,
               private portfolioService: PortfolioService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasChargeInStore(id: string): Observable<boolean> {
-    return this.store.select(fromProducts.getProductEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromProducts.getProductChargesLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasChargeInApi(productId: string, chargeId: string): Observable<boolean> {
-    return this.portfolioService.getChargeDefinition(productId, chargeId)
-      .map(chargeEntity => new LoadAction(chargeEntity))
+    const getChargeDefinition = this.portfolioService.getChargeDefinition(productId, chargeId)
+      .map(chargeEntity => new LoadAction({
+        resource: chargeEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(charge => !!charge)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(charge => !!charge);
+
+    return this.existsGuardService.routeTo404OnError(getChargeDefinition);
   }
 
   hasCharge(productId: string, chargeId: string): Observable<boolean> {

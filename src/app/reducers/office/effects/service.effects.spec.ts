@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {OfficeService} from '../../../../services/office/office.service';
 import {SearchAction, SearchCompleteAction} from '../office.actions';
 import {OfficePage} from '../../../../services/office/domain/office-page.model';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 describe('Office Search Api Effects', () => {
   beforeEach(() => {
@@ -65,7 +66,11 @@ describe('Office Search Api Effects', () => {
 
       const { runner, officeEffects } = setup({ searchOfficesReturnValue: Observable.of(officePage) });
 
-      const expectedResult = new SearchCompleteAction(officePage);
+      const expectedResult = new SearchCompleteAction({
+        elements: officePage.offices,
+        totalPages: officePage.totalPages,
+        totalElements: officePage.totalElements
+      });
 
       runner.queue(new SearchAction({}));
 
@@ -81,11 +86,7 @@ describe('Office Search Api Effects', () => {
     it('should return a new SearchCompleteAction, with an empty array, if office service throws', fakeAsync(() => {
       const {runner, officeEffects} = setup({searchOfficesReturnValue: Observable.throw(new Error())});
 
-      const expectedResult = new SearchCompleteAction({
-        offices: [],
-        totalElements: 0,
-        totalPages: 0
-      });
+      const expectedResult = new SearchCompleteAction(emptySearchResult());
 
       runner.queue(new SearchAction({}));
 

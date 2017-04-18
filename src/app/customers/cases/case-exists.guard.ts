@@ -23,29 +23,31 @@ import {CasesStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
 import {mapToFimsCase} from './store/model/fims-case.mapper';
+import {ExistsGuardService} from '../../../components/guards/exists-guard';
 
 @Injectable()
 export class CaseExistsGuard implements CanActivate {
 
   constructor(private store: CasesStore,
               private portfolioService: PortfolioService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasCaseInStore(id: string): Observable<boolean> {
-    return this.store.select(fromCases.getCaseEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromCases.getCasesLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasCaseInApi(productId: string, caseId: string): Observable<boolean> {
-    return this.portfolioService.getCase(productId, caseId)
-      .map(caseEntity => new LoadAction(mapToFimsCase(caseEntity)))
+    const getCase$ = this.portfolioService.getCase(productId, caseId)
+      .map(caseEntity => new LoadAction({
+        resource: mapToFimsCase(caseEntity)
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(caseEntity => !!caseEntity)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(caseEntity => !!caseEntity);
+
+    return this.existsGuardService.routeTo404OnError(getCase$);
   }
 
   hasCase(productId: string, caseId: string): Observable<boolean> {

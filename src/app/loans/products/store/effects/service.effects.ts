@@ -22,6 +22,7 @@ import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
 import {mapToFimsProduct, mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
+import {emptySearchResult} from '../../../../../components/store/search.reducer';
 
 @Injectable()
 export class ProductApiEffects {
@@ -37,8 +38,12 @@ export class ProductApiEffects {
 
       return this.portfolioService.findAllProducts()
         .takeUntil(nextSearch$)
-        .map(products => new productActions.SearchCompleteAction(mapToFimsProducts(products)))
-        .catch(() => of(new productActions.SearchCompleteAction([])));
+        .map(products => new productActions.SearchCompleteAction({
+          elements: mapToFimsProducts(products),
+          totalElements: products.length,
+          totalPages: 1
+        }))
+        .catch(() => of(new productActions.SearchCompleteAction(emptySearchResult())));
     });
 
   @Effect()
@@ -47,7 +52,10 @@ export class ProductApiEffects {
     .map((action: productActions.CreateProductAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.createProduct(mapToProduct(payload.product))
-        .map(() => new productActions.CreateProductSuccessAction(payload))
+        .map(() => new productActions.CreateProductSuccessAction({
+          resource: payload.product,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new productActions.CreateProductFailAction(error)))
     );
 
@@ -57,7 +65,10 @@ export class ProductApiEffects {
     .map((action: productActions.UpdateProductAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.changeProduct(mapToProduct(payload.product))
-        .map(() => new productActions.UpdateProductSuccessAction(payload))
+        .map(() => new productActions.UpdateProductSuccessAction({
+          resource: payload.product,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new productActions.UpdateProductFailAction(error)))
     );
 
