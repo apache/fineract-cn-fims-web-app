@@ -241,6 +241,13 @@ describe('Security Api Effects', () => {
         authenticationService.refreshAccessToken.and.returnValue(params.refreshAccessTokenReturnValue);
       }
 
+      const store = TestBed.get(Store);
+      store.select.and.returnValue(Observable.of({
+        username: 'test',
+        tenant: 'test',
+        authentication: mockAuthentication()
+      }));
+
       return {
         runner: TestBed.get(EffectsRunner),
         securityEffects: TestBed.get(SecurityApiEffects)

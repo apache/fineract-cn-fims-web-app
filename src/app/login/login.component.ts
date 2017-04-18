@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   error: string;
 
-  constructor(private _loadingService: TdLoadingService, private translate: TranslateService, private formBuilder: FormBuilder, private store: Store<fromRoot.State>, @Inject('tenantId') private tenant: string) {}
+  constructor(private _loadingService: TdLoadingService, private translate: TranslateService, private formBuilder: FormBuilder, private store: Store<fromRoot.State>) {}
 
   ngOnInit(){
     this.currentLanguage = this.translate.currentLang || this.translate.getDefaultLang();
@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._loadingService.create(options);
 
     this.form = this.formBuilder.group({
+      tenant: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -79,13 +80,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    let username = this.form.get('username').value;
-    let password = this.form.get('password').value;
+    const tenant = this.form.get('tenant').value;
+    const username = this.form.get('username').value;
+    const password = this.form.get('password').value;
 
     this.store.dispatch({ type: LOGIN, payload: {
       username,
       password,
-      tenant: this.tenant
+      tenant
     }});
   }
 

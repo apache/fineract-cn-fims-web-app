@@ -45,7 +45,10 @@ describe('Ledgers Reducer', () => {
           'test1': ledgerOne,
           'test2': ledgerTwo
         },
-        loadedAt: {},
+        loadedAt: {
+          'test1': Date.now(),
+          'test2': Date.now()
+        },
         selectedLedgerId: null,
       };
 
