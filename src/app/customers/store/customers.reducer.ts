@@ -14,65 +14,22 @@
  * limitations under the License.
  */
 
-import {Customer} from '../../../services/customer/domain/customer.model';
 import * as customer from './customer.actions';
 import * as customerTasks from './tasks/task.actions';
-import { createSelector } from 'reselect';
 import {Command} from '../../../services/customer/domain/command.model';
 import {CustomerState} from '../../../services/customer/domain/customer-state.model';
+import {ResourceState} from '../../../components/store/resource.reducer';
 
-export interface State {
-  ids: string[];
-  entities: { [id: string]: Customer };
-  selectedCustomerId: string | null;
-}
-
-export const initialState: State = {
+export const initialState: ResourceState = {
   ids: [],
   entities: {},
-  selectedCustomerId: null,
+  loadedAt: {},
+  selectedId: null,
 };
 
-export function reducer(state = initialState, action: customer.Actions | customerTasks.Actions): State {
+export function reducer(state = initialState, action: customer.Actions | customerTasks.Actions): ResourceState {
 
   switch (action.type) {
-
-    case customer.LOAD: {
-      const customer = action.payload;
-
-      if (state.ids.indexOf(customer.identifier) > -1) {
-        return state;
-      }
-
-      return {
-        ids: [ ...state.ids, customer.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [customer.identifier]: customer
-        }),
-        selectedCustomerId: state.selectedCustomerId
-      };
-    }
-
-    case customer.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedCustomerId: action.payload
-      };
-    }
-
-    case customer.CREATE_SUCCESS:
-    case customer.UPDATE_SUCCESS: {
-      const customer = action.payload.customer;
-
-      return {
-        ids: [ ...state.ids, customer.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [customer.identifier]: customer
-        }),
-        selectedCustomerId: state.selectedCustomerId
-      }
-    }
 
     case customerTasks.EXECUTE_COMMAND_SUCCESS: {
       let payload = action.payload;
@@ -85,15 +42,15 @@ export function reducer(state = initialState, action: customer.Actions | custome
       let customerState: CustomerState = null;
 
       // TODO add mapping
-      if(command.action === 'ACTIVATE'){
+      if(command.action === 'ACTIVATE') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'LOCK'){
+      }else if(command.action === 'LOCK') {
         customerState = 'LOCKED';
-      }else if(command.action === 'UNLOCK'){
+      }else if(command.action === 'UNLOCK') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'CLOSE'){
+      }else if(command.action === 'CLOSE') {
         customerState = 'CLOSED';
-      }else if(command.action === 'REOPEN'){
+      }else if(command.action === 'REOPEN') {
         customerState = 'ACTIVE';
       }
 
@@ -104,7 +61,8 @@ export function reducer(state = initialState, action: customer.Actions | custome
         entities: Object.assign({}, state.entities, {
           [customer.identifier]: customer
         }),
-        selectedCustomerId: state.selectedCustomerId
+        loadedAt: state.loadedAt,
+        selectedId: state.selectedId
       }
     }
 
@@ -113,17 +71,3 @@ export function reducer(state = initialState, action: customer.Actions | custome
     }
   }
 }
-
-export const getEntities = (state: State) => state.entities;
-
-export const getIds = (state: State) => state.ids;
-
-export const getSelectedId = (state: State) => state.selectedCustomerId;
-
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

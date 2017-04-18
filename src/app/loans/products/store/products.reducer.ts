@@ -17,60 +17,17 @@
 import * as product from './product.actions';
 import {createSelector} from 'reselect';
 import {FimsProduct} from './model/fims-product.model';
+import {ResourceState} from '../../../../components/store/resource.reducer';
 
-export interface State {
-  ids: string[];
-  entities: { [id: string]: FimsProduct };
-  selectedProductId: string | null;
-}
-
-export const initialState: State = {
+export const initialState: ResourceState = {
   ids: [],
   entities: {},
-  selectedProductId: null,
+  loadedAt: {},
+  selectedId: null,
 };
 
-export function reducer(state = initialState, action: product.Actions): State {
+export function reducer(state = initialState, action: product.Actions): ResourceState {
   switch (action.type) {
-
-    case product.LOAD: {
-      const product = action.payload;
-
-      if(state.ids.indexOf(product.identifier) > -1){
-        return state;
-      }
-
-      return {
-        ids: [ ...state.ids, product.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [product.identifier]: product
-        }),
-        selectedProductId: state.selectedProductId
-      };
-    }
-
-    case product.SELECT: {
-      return {
-        ids: state.ids,
-        entities: state.entities,
-        selectedProductId: action.payload
-      };
-    }
-
-    case product.CREATE_SUCCESS:
-    case product.UPDATE_SUCCESS: {
-      const product = action.payload.product;
-
-      const newIds = state.ids.filter(id => id !== product.identifier);
-
-      return {
-        ids: [ ...newIds, product.identifier ],
-        entities: Object.assign({}, state.entities, {
-          [product.identifier]: product
-        }),
-        selectedProductId: state.selectedProductId
-      }
-    }
 
     case product.ENABLE_SUCCESS: {
       const product = action.payload.product;
@@ -82,7 +39,8 @@ export function reducer(state = initialState, action: product.Actions): State {
         entities: Object.assign({}, state.entities, {
           [product.identifier]: product
         }),
-        selectedProductId: state.selectedProductId
+        selectedId: state.selectedId,
+        loadedAt: state.loadedAt
       }
     }
 
@@ -91,17 +49,3 @@ export function reducer(state = initialState, action: product.Actions): State {
     }
   }
 }
-
-export const getEntities = (state: State) => state.entities;
-
-export const getIds = (state: State) => state.ids;
-
-export const getSelectedId = (state: State) => state.selectedProductId;
-
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
-
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

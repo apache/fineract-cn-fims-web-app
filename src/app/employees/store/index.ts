@@ -15,19 +15,24 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromEmployees from './employees.reducer';
 import * as fromEmployeeForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer,
+  getResourceLoadedAt,
+  getResourceSelected,
+  ResourceState
+} from '../../../components/store/resource.reducer';
 
 export interface State extends fromRoot.State{
-  employees: fromEmployees.State;
+  employees: ResourceState;
   employeeForm: fromEmployeeForm.State;
 }
 
 const reducers = {
-  employees: fromEmployees.reducer,
+  employees: createResourceReducer('Employee'),
   employeeForm: fromEmployeeForm.reducer
 };
 
@@ -37,10 +42,8 @@ export const getEmployeesState = (state: State) => state.employees;
 
 export const getEmployeeFormState = (state: State) => state.employeeForm;
 
-export const getEmployeeEntities = createSelector(getEmployeesState, fromEmployees.getEntities);
-export const getEmployeeIds = createSelector(getEmployeesState, fromEmployees.getIds);
-export const getSelectedEmployeeId = createSelector(getEmployeesState, fromEmployees.getSelectedId);
-export const getSelectedEmployee = createSelector(getEmployeesState, fromEmployees.getSelected);
+export const getEmployeesLoadedAt = createSelector(getEmployeesState, getResourceLoadedAt);
+export const getSelectedEmployee = createSelector(getEmployeesState, getResourceSelected);
 
 export class EmployeesStore extends Store<State>{}
 

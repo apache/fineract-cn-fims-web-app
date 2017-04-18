@@ -18,33 +18,35 @@ import {Store} from '@ngrx/store';
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../services/office/office.service';
-import {State, getOfficeEntities, OfficesStore} from './store';
+import {State, getOfficeEntities, OfficesStore, getOfficesLoadedAt} from './store';
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/office.actions';
 import {of} from 'rxjs/observable/of';
+import {ExistsGuardService} from '../../components/guards/exists-guard';
 
 @Injectable()
 export class OfficeExistsGuard implements CanActivate {
 
   constructor(private store: OfficesStore,
               private officeService: OfficeService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasOfficeInStore(id: string): Observable<boolean> {
-    return this.store.select(getOfficeEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(getOfficesLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasOfficeInApi(id: string): Observable<boolean> {
-    return this.officeService.getOffice(id)
-      .map(officeEntity => new LoadAction(officeEntity))
+    const getOffice$ = this.officeService.getOffice(id)
+      .map(officeEntity => new LoadAction({
+        resource: officeEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(office => !!office)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(office => !!office);
+
+    return this.existsGuardService.routeTo404OnError(getOffice$);
   }
 
   hasOffice(id: string): Observable<boolean> {

@@ -109,8 +109,8 @@ export class FimsValidators {
 
   static greaterThan(firstValue: string, secondValue: string) {
     return (group: FormGroup): {[key: string]: any} => {
-      let firstNumber: number = group.controls[firstValue].value;
-      let secondNumber: number = group.controls[secondValue].value;
+      let firstNumber: number = Number(group.controls[firstValue].value);
+      let secondNumber: number = Number(group.controls[secondValue].value);
 
       if(firstNumber == null || secondNumber == null) return null;
 

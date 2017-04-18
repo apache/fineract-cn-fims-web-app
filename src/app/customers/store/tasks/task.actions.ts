@@ -20,6 +20,10 @@ import {Error} from '../../../../services/domain/error.model';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {Command} from '../../../../services/customer/domain/command.model';
 import {RoutePayload} from '../../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload
+} from '../../../../components/store/resource.reducer';
 
 export const LOAD_ALL = type('[Customer Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Task] Load All Complete');
@@ -42,6 +46,10 @@ export const EXECUTE_TASK_FAIL = type('[Customer Task] Fail');
 export const EXECUTE_COMMAND = type('[Customer Command] Execute');
 export const EXECUTE_COMMAND_SUCCESS = type('[Customer Command] Success');
 export const EXECUTE_COMMAND_FAIL = type('[Customer Command] Fail');
+
+export interface CreateTaskPayload extends RoutePayload {
+  task: TaskDefinition
+}
 
 export interface ExecuteTaskPayload{
   customerId: string;
@@ -73,25 +81,25 @@ export class LoadAllCompleteAction implements Action {
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: TaskDefinition) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateTaskAction implements Action {
   readonly type = CREATE;
 
-  constructor(public payload: TaskDefinition) { }
+  constructor(public payload: CreateTaskPayload) { }
 }
 
 export class CreateTaskSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: TaskDefinition) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateTaskFailAction implements Action {

@@ -17,6 +17,7 @@
 import {Action} from '@ngrx/store';
 import {type} from '../../util';
 import {Role} from '../../../services/identity/domain/role.model';
+import {SearchResult} from '../../../components/store/search.reducer';
 
 export const SEARCH = type('[Role] Search');
 export const SEARCH_COMPLETE = type('[Role] Search Complete');
@@ -30,7 +31,7 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: Role[]) { }
+  constructor(public payload: SearchResult) { }
 }
 
 export type Actions

@@ -45,9 +45,12 @@ export class CustomerTasksApiEffects {
   createTask$: Observable<Action> = this.actions$
     .ofType(taskActions.CREATE)
     .map((action: taskActions.CreateTaskAction) => action.payload)
-    .mergeMap(task =>
-      this.customerService.createTask(task)
-        .map(() => new taskActions.CreateTaskSuccessAction(task))
+    .mergeMap(payload =>
+      this.customerService.createTask(payload.task)
+        .map(() => new taskActions.CreateTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new taskActions.CreateTaskFailAction(error)))
     );
 

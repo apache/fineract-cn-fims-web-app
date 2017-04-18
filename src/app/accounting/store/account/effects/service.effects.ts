@@ -33,7 +33,10 @@ export class AccountApiEffects {
     .map((action: accountActions.CreateAccountAction) => action.payload)
     .mergeMap(payload =>
       this.accountingService.createAccount(payload.account)
-        .map(() => new accountActions.CreateAccountSuccessAction(payload))
+        .map(() => new accountActions.CreateAccountSuccessAction({
+          resource: payload.account,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch(error => of(new accountActions.CreateAccountFailAction(error)))
     );
 
@@ -43,7 +46,10 @@ export class AccountApiEffects {
     .map((action: accountActions.UpdateAccountAction) => action.payload)
     .mergeMap(payload =>
         this.accountingService.modifyAccount(payload.account)
-          .map(() => new accountActions.UpdateAccountSuccessAction(payload))
+          .map(() => new accountActions.UpdateAccountSuccessAction({
+            resource: payload.account,
+            activatedRoute: payload.activatedRoute
+          }))
           .catch(error => of(new accountActions.UpdateAccountFailAction(error)))
     );
 

@@ -21,6 +21,8 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {emptySearchResult, SearchResult} from '../../../../components/store/search.reducer';
+import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
 
 @Injectable()
 export class AccountSearchApiEffects {
@@ -37,12 +39,9 @@ export class AccountSearchApiEffects {
 
       return this.accountingService.fetchAccounts(fetchRequest)
         .takeUntil(nextSearch$)
-        .map(accountPage => new accountActions.SearchCompleteAction(accountPage))
-        .catch(() => of(new accountActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          accounts: []
-        })));
+        .map(this.mapToSearchResult)
+        .map(searchResult => new accountActions.SearchCompleteAction(searchResult))
+        .catch(() => of(new accountActions.SearchCompleteAction(emptySearchResult())));
     });
 
   @Effect()
@@ -55,12 +54,17 @@ export class AccountSearchApiEffects {
 
       return this.accountingService.fetchAccountsOfLedger(payload.ledgerId, payload.fetchRequest)
         .takeUntil(nextSearch$)
-        .map(accountPage => new accountActions.SearchCompleteAction(accountPage))
-        .catch(() => of(new accountActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          accounts: []
-        })));
+        .map(this.mapToSearchResult)
+        .map(searchResult => new accountActions.SearchCompleteAction(searchResult))
+        .catch(() => of(new accountActions.SearchCompleteAction(emptySearchResult())));
     });
+
+  private mapToSearchResult(accountPage: AccountPage): SearchResult {
+    return {
+      elements: accountPage.accounts,
+      totalElements: accountPage.totalElements,
+      totalPages: accountPage.totalPages
+    }
+  }
 
 }

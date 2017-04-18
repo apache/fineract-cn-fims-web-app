@@ -47,7 +47,10 @@ export class ProductTasksApiEffects {
     .map((action: taskActions.CreateTaskAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.createTaskDefinition(payload.productId, payload.task)
-        .map(() => new taskActions.CreateTaskSuccessAction(payload))
+        .map(() => new taskActions.CreateTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new taskActions.CreateTaskFailAction(error)))
     );
 
@@ -57,7 +60,10 @@ export class ProductTasksApiEffects {
     .map((action: taskActions.UpdateTaskAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.changeTaskDefinition(payload.productId, payload.task)
-        .map(() => new taskActions.UpdateTaskSuccessAction(payload))
+        .map(() => new taskActions.UpdateTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new taskActions.UpdateTaskFailAction(error)))
     );
 }

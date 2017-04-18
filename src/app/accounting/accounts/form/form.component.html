@@ -27,29 +27,14 @@
       <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <div layout="row">
         <md-input-container layout-margin flex>
-          <input mdInput type="number" formControlName="balance" placeholder="{{'Balance' | translate}}"/>
+          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-error *ngIf="!form.get('name').pristine && form.get('name').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
-        <fims-customer-select flex [preSelection]="account.holders" (onSelectionChange)="onHoldersSelectionChange($event)" title="{{'Holders' | translate}}"></fims-customer-select>
-      </div>
-      <div layout="row">
-        <fims-customer-select flex [preSelection]="account.signatureAuthorities" (onSelectionChange)="onAuthoritySelectionChange($event)" title="{{'Signature Authorities' | translate}}"></fims-customer-select>
-      </div>
-      <div layout="row">
-        <fims-select-list flex
-                            [data]="accounts"
-                            id="identifier"
-                            displayName="identifier"
-                            listIcon="view_module"
-                            [preSelection]="account.referenceAccount ? [account.referenceAccount] : []"
-                            [multiple]="false"
-                            (onSearch)="onAccountSearch($event)"
-                            (onSelectionChange)="accountSelectionChange($event)"
-                            title="Reference account"
-                            noResultsMessage="No account was found."
-                            noSelectionMessage="No account selected"
-        ></fims-select-list>
+        <md-input-container layout-margin flex>
+          <input mdInput type="number" formControlName="balance" placeholder="{{'Balance' | translate}}"/>
+        </md-input-container>
       </div>
     </form>
     <ng-template td-step-actions>

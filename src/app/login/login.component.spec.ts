@@ -83,6 +83,7 @@ describe('Test Login Component', () => {
     expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
 
     loginComponent.form.setValue({
+      tenant: 'tenantId',
       username: 'test',
       password: 'test'
     });
@@ -98,6 +99,7 @@ describe('Test Login Component', () => {
     fixture.detectChanges();
 
     loginComponent.form.setValue({
+      tenant: 'tenantId',
       username: 'test',
       password: 'test'
     });
@@ -137,6 +139,7 @@ describe('Test Login Component', () => {
     fixture.detectChanges();
 
     loginComponent.form.setValue({
+      tenant: 'tenantId',
       username: 'test',
       password: 'test'
     });

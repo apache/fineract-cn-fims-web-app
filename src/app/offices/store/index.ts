@@ -20,14 +20,19 @@ import * as fromOfficeForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
+import {
+  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  getResourceSelectedId,
+  ResourceState
+} from '../../../components/store/resource.reducer';
 
 export interface State extends fromRoot.State{
-  offices: fromOffices.State;
+  offices: ResourceState;
   officeForm: fromOfficeForm.State;
 }
 
 const reducers = {
-  offices: fromOffices.reducer,
+  offices: createResourceReducer('Office'),
   officeForm: fromOfficeForm.reducer
 };
 
@@ -37,10 +42,9 @@ export const getOfficesState = (state: State) => state.offices;
 
 export const getOfficeFormState = (state: State) => state.officeForm;
 
-export const getOfficeEntities = createSelector(getOfficesState, fromOffices.getEntities);
-export const getOfficeIds = createSelector(getOfficesState, fromOffices.getIds);
-export const getSelectedOfficeId = createSelector(getOfficesState, fromOffices.getSelectedId);
-export const getSelectedOffice = createSelector(getOfficesState, fromOffices.getSelected);
+export const getOfficeEntities = createSelector(getOfficesState, getResourceEntities);
+export const getOfficesLoadedAt = createSelector(getOfficesState, getResourceLoadedAt);
+export const getSelectedOffice = createSelector(getOfficesState, getResourceSelected);
 
 export class OfficesStore extends Store<State>{}
 

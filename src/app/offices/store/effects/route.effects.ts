@@ -20,6 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
 import {Router} from '@angular/router';
+import {CreateOfficeSuccessAction} from '../office.actions';
 
 @Injectable()
 export class OfficeRouteEffects {
@@ -30,10 +31,10 @@ export class OfficeRouteEffects {
     .ofType(officeActions.CREATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => {
-      if(payload.office.parentIdentifier){
-        this.router.navigate(['../detail', payload.office.parentIdentifier], { relativeTo: payload.activatedRoute });
+      if(payload.resource.parentIdentifier){
+        this.router.navigate(['../detail', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute });
       }else{
-        this.router.navigate(['../detail', payload.office.identifier], { relativeTo: payload.activatedRoute });
+        this.router.navigate(['../detail', payload.resource.identifier], { relativeTo: payload.activatedRoute });
       }
     });
 
@@ -41,15 +42,15 @@ export class OfficeRouteEffects {
   updateOfficeSuccess$: Observable<Action> = this.actions$
     .ofType(officeActions.UPDATE_SUCCESS)
     .map(action => action.payload)
-    .do(payload => this.router.navigate(['../../', payload.office.identifier], { relativeTo: payload.activatedRoute }));
+    .do(payload => this.router.navigate(['../../', payload.resource.identifier], { relativeTo: payload.activatedRoute }));
 
   @Effect({ dispatch: false })
   deleteOfficeSuccess$: Observable<Action> = this.actions$
     .ofType(officeActions.DELETE_SUCCESS)
     .map((action) => action.payload)
     .do(payload => {
-      if(payload.office.parentIdentifier){
-        this.router.navigate(['../', payload.office.parentIdentifier], { relativeTo: payload.activatedRoute})
+      if(payload.resource.parentIdentifier){
+        this.router.navigate(['../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute})
       }else{
         this.router.navigate(['../../'], { relativeTo: payload.activatedRoute})
       }

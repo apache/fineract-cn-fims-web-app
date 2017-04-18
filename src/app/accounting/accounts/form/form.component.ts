@@ -35,12 +35,6 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
 
   @ViewChild('detailsStep') step: TdStepComponent;
 
-  holders: string[];
-
-  signatureAuthorities: string[];
-
-  referenceAccount: string;
-
   accounts: Observable<Account[]>;
 
   @Input() account: Account;
@@ -53,7 +47,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
 
   accountTypeOptions: AccountTypeOption[] = accountTypes;
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
+  constructor(private formBuilder: FormBuilder) {
     super();
   }
 
@@ -61,15 +55,11 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     this.openDetailStep();
     this.form = this.formBuilder.group({
       'identifier': [ this.account.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32)] ],
+      'name': [ this.account.name, [Validators.required] ],
       'type': [ this.account.type, [Validators.required] ],
       'ledger': [ this.account.ledger, [Validators.required] ],
       'balance': [ { value: this.account.balance, disabled: this.editMode }, [Validators.required] ],
     });
-
-    this.holders = this.account.holders;
-    this.signatureAuthorities = this.account.signatureAuthorities;
-    this.referenceAccount = this.account.referenceAccount;
-    this.onAccountSearch();
   }
 
   openDetailStep(): void{
@@ -86,38 +76,13 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     return;
   }
 
-  onHoldersSelectionChange(selection: string[]): void{
-    this.holders = selection;
-  }
-
-  onAuthoritySelectionChange(selection: string[]): void{
-    this.signatureAuthorities = selection;
-  }
-
-  onAccountSearch(searchTerm?: string): void{
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 5
-      },
-      searchTerm: searchTerm
-    };
-    this.accounts = this.accountingService.fetchAccounts(fetchRequest).map((accountPage: AccountPage) => accountPage.accounts);
-  }
-
-  accountSelectionChange(selection: string[]): void{
-    this.referenceAccount = selection && selection.length > 0 ? selection[0] : undefined;
-  }
-
   save(): void{
     let account: Account = {
       identifier: this.form.get('identifier').value,
+      name: this.form.get('name').value,
       type: this.form.get('type').value,
       ledger: this.form.get('ledger').value,
-      balance: this.form.get('balance').value,
-      holders: this.holders,
-      signatureAuthorities: this.signatureAuthorities,
-      referenceAccount: this.referenceAccount
+      balance: this.form.get('balance').value
     };
 
     this.onSave.emit(account);

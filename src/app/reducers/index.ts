@@ -17,38 +17,36 @@
 import {createSelector} from 'reselect';
 import {ActionReducer, combineReducers} from '@ngrx/store';
 
-
-import * as fromOfficeSearch from './office/search.reducer';
-import * as fromEmployeeSearch from './employee/search.reducer';
-import * as fromRoleSearch from './role/search.reducer';
-import * as fromCustomerSearch from './customer/search.reducer';
-import * as fromAccountSearch from './account/search.reducer';
-import * as fromLedgerSearch from './ledger/search.reducer';
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
 import {compose} from '@ngrx/core/compose';
 import {localStorageSync} from 'ngrx-store-localstorage';
+import {
+  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  SearchState
+} from '../../components/store/search.reducer';
 
 export interface State {
   authentication: fromAuthentication.State;
   authorization: fromAuthorization.State;
-  officeSearch: fromOfficeSearch.State;
-  employeeSearch: fromEmployeeSearch.State;
-  roleSearch: fromRoleSearch.State;
-  customerSearch: fromCustomerSearch.State;
-  accountSearch: fromAccountSearch.State;
-  ledgerSearch: fromLedgerSearch.State;
+  officeSearch: SearchState;
+  employeeSearch: SearchState;
+  roleSearch: SearchState;
+  customerSearch: SearchState;
+  accountSearch: SearchState;
+  ledgerSearch: SearchState;
 }
 
 export const reducers = {
   authentication: fromAuthentication.reducer,
   authorization: fromAuthorization.reducer,
-  officeSearch: fromOfficeSearch.reducer,
-  employeeSearch: fromEmployeeSearch.reducer,
-  roleSearch: fromRoleSearch.reducer,
-  customerSearch: fromCustomerSearch.reducer,
-  accountSearch: fromAccountSearch.reducer,
-  ledgerSearch: fromLedgerSearch.reducer,
+
+  officeSearch: createSearchReducer('Office'),
+  employeeSearch: createSearchReducer('Employee'),
+  roleSearch: createSearchReducer('Role'),
+  customerSearch: createSearchReducer('Customer'),
+  accountSearch: createSearchReducer('Account'),
+  ledgerSearch: createSearchReducer('Ledger'),
 };
 
 export function createReducer(asyncReducers = {}): ActionReducer<any>{
@@ -67,9 +65,9 @@ export function reducer(state: any, action: any) {
 
 export const getOfficeSearchState = (state: State) => state.officeSearch;
 
-export const getSearchOffices = createSelector(getOfficeSearchState, fromOfficeSearch.getOffices);
-export const getOfficeSearchTotalElements = createSelector(getOfficeSearchState, fromOfficeSearch.getTotalElements);
-export const getOfficeSearchTotalPages = createSelector(getOfficeSearchState, fromOfficeSearch.getTotalPages);
+export const getSearchOffices = createSelector(getOfficeSearchState, getSearchEntities);
+export const getOfficeSearchTotalElements = createSelector(getOfficeSearchState, getSearchTotalElements);
+export const getOfficeSearchTotalPages = createSelector(getOfficeSearchState, getSearchTotalPages);
 
 export const getOfficeSearchResults = createSelector(getSearchOffices, getOfficeSearchTotalPages, getOfficeSearchTotalElements, (offices, totalPages, totalElements) => {
   return {
@@ -84,9 +82,9 @@ export const getOfficeSearchResults = createSelector(getSearchOffices, getOffice
  */
 export const getEmployeeSearchState = (state: State) => state.employeeSearch;
 
-export const getSearchEmployees = createSelector(getEmployeeSearchState, fromEmployeeSearch.getEmployees);
-export const getEmployeeSearchTotalElements = createSelector(getEmployeeSearchState, fromEmployeeSearch.getTotalElements);
-export const getEmployeeSearchTotalPages = createSelector(getEmployeeSearchState, fromEmployeeSearch.getTotalPages);
+export const getSearchEmployees = createSelector(getEmployeeSearchState, getSearchEntities);
+export const getEmployeeSearchTotalElements = createSelector(getEmployeeSearchState, getSearchTotalElements);
+export const getEmployeeSearchTotalPages = createSelector(getEmployeeSearchState, getSearchTotalPages);
 
 export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEmployeeSearchTotalPages, getEmployeeSearchTotalElements, (employees, totalPages, totalElements) => {
   return {
@@ -101,9 +99,9 @@ export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEm
  */
 export const getRoleSearchState = (state: State) => state.roleSearch;
 
-export const getSearchRoles = createSelector(getRoleSearchState, fromRoleSearch.getRoles);
-export const getRoleSearchTotalElements = createSelector(getRoleSearchState, fromRoleSearch.getTotalElements);
-export const getRoleSearchTotalPages = createSelector(getRoleSearchState, fromRoleSearch.getTotalPages);
+export const getSearchRoles = createSelector(getRoleSearchState, getSearchEntities);
+export const getRoleSearchTotalElements = createSelector(getRoleSearchState, getSearchTotalElements);
+export const getRoleSearchTotalPages = createSelector(getRoleSearchState, getSearchTotalPages);
 
 export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearchTotalPages, getRoleSearchTotalElements, (roles, totalPages, totalElements) => {
   return {
@@ -118,9 +116,9 @@ export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearch
  */
 export const getCustomerSearchState = (state: State) => state.customerSearch;
 
-export const getSearchCustomers = createSelector(getCustomerSearchState, fromCustomerSearch.getCustomers);
-export const getCustomerSearchTotalElements = createSelector(getCustomerSearchState, fromCustomerSearch.getTotalElements);
-export const getCustomerSearchTotalPages = createSelector(getCustomerSearchState, fromCustomerSearch.getTotalPages);
+export const getSearchCustomers = createSelector(getCustomerSearchState, getSearchEntities);
+export const getCustomerSearchTotalElements = createSelector(getCustomerSearchState, getSearchTotalElements);
+export const getCustomerSearchTotalPages = createSelector(getCustomerSearchState, getSearchTotalPages);
 
 export const getCustomerSearchResults = createSelector(getSearchCustomers, getCustomerSearchTotalPages, getCustomerSearchTotalElements, (customers, totalPages, totalElements) => {
   return {
@@ -135,9 +133,9 @@ export const getCustomerSearchResults = createSelector(getSearchCustomers, getCu
  */
 export const getAccountSearchState = (state: State) => state.accountSearch;
 
-export const getSearchAccounts = createSelector(getAccountSearchState, fromAccountSearch.getAccounts);
-export const getAccountSearchTotalElements = createSelector(getAccountSearchState, fromAccountSearch.getTotalElements);
-export const getAccountSearchTotalPages = createSelector(getAccountSearchState, fromAccountSearch.getTotalPages);
+export const getSearchAccounts = createSelector(getAccountSearchState, getSearchEntities);
+export const getAccountSearchTotalElements = createSelector(getAccountSearchState, getSearchTotalElements);
+export const getAccountSearchTotalPages = createSelector(getAccountSearchState, getSearchTotalPages);
 
 export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements, (accounts, totalPages, totalElements) => {
   return {
@@ -152,9 +150,9 @@ export const getAccountSearchResults = createSelector(getSearchAccounts, getAcco
  */
 export const getLedgerSearchState = (state: State) => state.ledgerSearch;
 
-export const getSearchLedgers = createSelector(getLedgerSearchState, fromLedgerSearch.getLedgers);
-export const getLedgerSearchTotalElements = createSelector(getLedgerSearchState, fromLedgerSearch.getTotalElements);
-export const getLedgerSearchTotalPages = createSelector(getLedgerSearchState, fromLedgerSearch.getTotalPages);
+export const getSearchLedgers = createSelector(getLedgerSearchState, getSearchEntities);
+export const getLedgerSearchTotalElements = createSelector(getLedgerSearchState, getSearchTotalElements);
+export const getLedgerSearchTotalPages = createSelector(getLedgerSearchState, getSearchTotalPages);
 
 export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedgerSearchTotalElements, getLedgerSearchTotalPages, (ledgers, totalPages, totalElements) => {
   return {

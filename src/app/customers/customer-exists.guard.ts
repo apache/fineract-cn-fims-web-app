@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromCustomers from './store';
 import {Observable} from 'rxjs';
@@ -22,29 +22,32 @@ import {LoadAction} from './store/customer.actions';
 import {of} from 'rxjs/observable/of';
 import {CustomerService} from '../../services/customer/customer.service';
 import {CustomersStore} from './store/index';
+import {ExistsGuardService} from '../../components/guards/exists-guard';
 
 @Injectable()
 export class CustomerExistsGuard implements CanActivate {
 
   constructor(private store: CustomersStore,
               private customerService: CustomerService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {
+  }
 
   hasCustomerInStore(id: string): Observable<boolean> {
-    return this.store.select(fromCustomers.getCustomerEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$: Observable<number> = this.store.select(fromCustomers.getCustomerLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasCustomerInApi(id: string): Observable<boolean> {
-    return this.customerService.getCustomer(id)
-      .map(customerEntity => new LoadAction(customerEntity))
+    const getCustomer$: Observable<any> = this.customerService.getCustomer(id)
+      .map(customerEntity => new LoadAction({
+        resource: customerEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(customer => !!customer)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(customer => !!customer);
+
+    return this.existsGuardService.routeTo404OnError(getCustomer$);
   }
 
   hasCustomer(id: string): Observable<boolean> {
@@ -53,7 +56,6 @@ export class CustomerExistsGuard implements CanActivate {
         if (inStore) {
           return of(inStore);
         }
-
         return this.hasCustomerInApi(id);
       });
   }

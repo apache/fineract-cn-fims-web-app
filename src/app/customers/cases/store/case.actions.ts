@@ -24,6 +24,11 @@ import {FetchRequest} from '../../../../services/domain/paging/fetch-request.mod
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {FimsCase} from './model/fims-case.model';
 import {FimsCasePage} from './model/fims-case-page.model';
+import {SearchResult} from '../../../../components/store/search.reducer';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../components/store/resource.reducer';
 
 export const SEARCH = type('[Case] Search');
 export const SEARCH_COMPLETE = type('[Case] Search Complete');
@@ -64,19 +69,19 @@ export class SearchAction implements Action {
 export class SearchCompleteAction implements Action {
   readonly type = SEARCH_COMPLETE;
 
-  constructor(public payload: FimsCasePage) { }
+  constructor(public payload: SearchResult) { }
 }
 
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: FimsCase) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateCaseAction implements Action {
@@ -88,7 +93,7 @@ export class CreateCaseAction implements Action {
 export class CreateCaseSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: CaseRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateCaseFailAction implements Action {
@@ -106,7 +111,7 @@ export class UpdateCaseAction implements Action {
 export class UpdateCaseSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: CaseRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateCaseFailAction implements Action {

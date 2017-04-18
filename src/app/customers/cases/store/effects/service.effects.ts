@@ -56,7 +56,10 @@ export class CaseApiEffects {
     .map((action: caseActions.CreateCaseAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.createCase(payload.productId, mapToCase(payload.caseInstance))
-        .map(() => new caseActions.CreateCaseSuccessAction(payload))
+        .map(() => new caseActions.CreateCaseSuccessAction({
+          resource: payload.caseInstance,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new caseActions.CreateCaseFailAction(error)))
     );
 
@@ -66,7 +69,10 @@ export class CaseApiEffects {
     .map((action: caseActions.UpdateCaseAction) => action.payload)
     .mergeMap(payload =>
         this.portfolioService.changeCase(payload.productId, mapToCase(payload.caseInstance))
-          .map(() => new caseActions.UpdateCaseSuccessAction(payload))
+          .map(() => new caseActions.UpdateCaseSuccessAction({
+            resource: payload.caseInstance,
+            activatedRoute: payload.activatedRoute
+          }))
           .catch((error) => of(new caseActions.UpdateCaseFailAction(error)))
 
     );

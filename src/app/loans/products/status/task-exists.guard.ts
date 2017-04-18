@@ -22,29 +22,31 @@ import {LoadAction} from '../store/tasks/task.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {ExistsGuardService} from '../../../../components/guards/exists-guard';
 
 @Injectable()
 export class ProductTaskExistsGuard implements CanActivate {
 
   constructor(private store: PortfolioStore,
               private portfolioService: PortfolioService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasTaskInStore(id: string): Observable<boolean> {
-    return this.store.select(fromProducts.getProductEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromProducts.getProductTasksLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasTaskInApi(productId: string, taskId: string): Observable<boolean> {
-    return this.portfolioService.getTaskDefinition(productId, taskId)
-      .map(taskEntity => new LoadAction(taskEntity))
+    const getTaskDefintion$ = this.portfolioService.getTaskDefinition(productId, taskId)
+      .map(taskEntity => new LoadAction({
+        resource: taskEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(task => !!task)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(task => !!task);
+
+    return this.existsGuardService.routeTo404OnError(getTaskDefintion$);
   }
 
   hasTask(productId: string, taskId: string): Observable<boolean> {

@@ -42,7 +42,7 @@ export class SecurityApiEffects {
     .ofType(securityActions.LOGIN)
     .map((action: securityActions.LoginAction) => action.payload)
     .mergeMap(payload =>
-      this.authenticationService.login(payload.username, payload.password)
+      this.authenticationService.login(payload.tenant, payload.username, payload.password)
         .map(authentication => Object.assign({}, {
           username: payload.username,
           tenant: payload.tenant,
@@ -57,7 +57,7 @@ export class SecurityApiEffects {
     .ofType(securityActions.LOGIN_SUCCESS)
     .map((action: securityActions.LoginSuccessAction) => action.payload)
     .mergeMap(payload =>
-      this.fetchPermissions(payload.username, payload.authentication.accessToken)
+      this.fetchPermissions(payload.tenant, payload.username, payload.authentication.accessToken)
         .map(permissions => new securityActions.PermissionUpdateSuccessAction(permissions))
         .catch(error => of(new securityActions.PermissionUpdateFailAction(error)))
     );
@@ -70,8 +70,8 @@ export class SecurityApiEffects {
     .map(refreshTokenExpirationMillies => new Date(refreshTokenExpirationMillies - this.tokenExpiryBuffer))
     .map(delay => new securityActions.RefreshTokenStartTimerAction(delay));
 
-  private fetchPermissions(username: string, accessToken: string): Observable<FimsPermission[]>{
-    return this.authenticationService.getUserPermissions(username, accessToken)
+  private fetchPermissions(tenantId: string, username: string, accessToken: string): Observable<FimsPermission[]>{
+    return this.authenticationService.getUserPermissions(tenantId, username, accessToken)
       .flatMap((permissions: Permission[]) => Observable.from(permissions))
       .map((permission: Permission) => this.mapPermissions(permission))
       .reduce((acc: FimsPermission[], permissions: FimsPermission[]) => acc.concat(permissions), []);
@@ -100,7 +100,7 @@ export class SecurityApiEffects {
     .ofType(securityActions.LOGOUT)
     .mergeMap(() => this.store.select(fromRoot.getAuthenticationState).take(1))
     .mergeMap(state =>
-      this.authenticationService.logout(state.username, state.authentication.accessToken)
+      this.authenticationService.logout(state.tenant, state.username, state.authentication.accessToken)
         .map(() => new securityActions.LogoutSuccessAction())
         .catch((error) => of(new securityActions.LogoutSuccessAction()))
     );
@@ -108,8 +108,9 @@ export class SecurityApiEffects {
   @Effect()
   refreshToken$: Observable<Action> = this.actions$
     .ofType(securityActions.REFRESH_ACCESS_TOKEN)
-    .mergeMap(() =>
-      this.authenticationService.refreshAccessToken()
+    .mergeMap(() => this.store.select(fromRoot.getAuthenticationState).take(1))
+    .mergeMap(state =>
+      this.authenticationService.refreshAccessToken(state.tenant)
         .map(authentication => new securityActions.RefreshAccessTokenSuccessAction(authentication))
         .catch((error) => of(new securityActions.RefreshAccessTokenFailAction(error)))
     );

@@ -19,6 +19,10 @@ import {Error} from '../../../../../services/domain/error.model';
 import {type} from '../../../../util';
 import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {RoutePayload} from '../../../../../components/store/route-payload';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../../components/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Task] Load All Complete');
@@ -54,13 +58,13 @@ export class LoadAllCompleteAction implements Action {
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: TaskDefinition) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateTaskAction implements Action {
@@ -72,7 +76,7 @@ export class CreateTaskAction implements Action {
 export class CreateTaskSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: TaskRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateTaskFailAction implements Action {
@@ -90,7 +94,7 @@ export class UpdateTaskAction implements Action {
 export class UpdateTaskSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: TaskRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateTaskFailAction implements Action {

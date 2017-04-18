@@ -45,6 +45,10 @@ describe('Ledgers Reducer', () => {
           'test1': ledgerOne,
           'test2': ledgerTwo
         },
+        loadedAt: {
+          'test1': Date.now(),
+          'test2': Date.now()
+        },
         selectedLedgerId: null,
       };
 
@@ -69,6 +73,7 @@ describe('Ledgers Reducer', () => {
         entities: {
           'test1': ledgerOne
         },
+        loadedAt: {},
         selectedLedgerId: null,
       };
 
@@ -89,6 +94,7 @@ describe('Ledgers Reducer', () => {
         entities: {
           'parent': parentLedger
         },
+        loadedAt: {},
         selectedLedgerId: null,
       };
 
@@ -107,6 +113,7 @@ describe('Ledgers Reducer', () => {
             subLedgers: [ledgerOne]
           })
         },
+        loadedAt: {},
         selectedLedgerId: null,
       };
 
@@ -135,6 +142,7 @@ describe('Ledgers Reducer', () => {
         entities: {
           'test1': ledgerOne
         },
+        loadedAt: {},
         selectedLedgerId: null,
       };
 
@@ -144,6 +152,7 @@ describe('Ledgers Reducer', () => {
         entities: {
           'test1': updatedLedger
         },
+        loadedAt: {},
         selectedLedgerId: null,
       };
 

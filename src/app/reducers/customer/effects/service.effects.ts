@@ -21,6 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as customerActions from '../customer.actions';
 import {CustomerService} from '../../../../services/customer/customer.service';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 @Injectable()
 export class CustomerSearchApiEffects {
@@ -37,12 +38,12 @@ export class CustomerSearchApiEffects {
 
       return this.customerService.fetchCustomers(fetchRequest)
         .takeUntil(nextSearch$)
-        .map(customerPage => new customerActions.SearchCompleteAction(customerPage))
-        .catch(() => of(new customerActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          customers: []
-        })));
+        .map(customerPage => new customerActions.SearchCompleteAction({
+          elements: customerPage.customers,
+          totalElements: customerPage.totalElements,
+          totalPages: customerPage.totalPages
+        }))
+        .catch(() => of(new customerActions.SearchCompleteAction(emptySearchResult())));
     });
 
 }

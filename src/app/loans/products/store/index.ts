@@ -25,32 +25,42 @@ import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductTaskForm from './tasks/form.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
 import * as fromProductChargeForm from './charges/form.reducer';
+import {
+  createResourceReducer, getResourceAll, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  getResourceSelectedId,
+  ResourceState
+} from '../../../../components/store/resource.reducer';
+import {
+  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  SearchState
+} from '../../../../components/store/search.reducer';
 
-export interface State extends fromRoot.State{
-  products: fromProducts.State;
-  productSearch: fromProductSearch.State;
+export interface State extends fromRoot.State {
+  products: ResourceState;
+  productSearch: SearchState;
   productForm: fromProductForm.State;
-  productTasks: fromProductTasks.State;
+  productTasks: ResourceState;
   productTaskForm: fromProductTaskForm.State;
-  productCharges: fromProductCharges.State;
+  productCharges: ResourceState;
   productChargeForm: fromProductChargeForm.State;
 }
 
 const reducers = {
-  products: fromProducts.reducer,
-  productSearch: fromProductSearch.reducer,
+  products: createResourceReducer('Product', fromProducts.reducer),
+  productSearch: createSearchReducer('Product'),
   productForm: fromProductForm.reducer,
-  productTasks: fromProductTasks.reducer,
+  productTasks: createResourceReducer('Product Task', fromProductTasks.reducer),
   productTaskForm: fromProductTaskForm.reducer,
-  productCharges: fromProductCharges.reducer,
+  productCharges: createResourceReducer('Product Charge', fromProductCharges.reducer),
   productChargeForm: fromProductChargeForm.reducer
 };
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class PortfolioStore extends Store<State>{}
+export class PortfolioStore extends Store<State> {
+}
 
-export function portfolioStoreFactory(appStore: Store<fromRoot.State>){
+export function portfolioStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(portfolioModuleReducer);
   return appStore;
 }
@@ -62,19 +72,20 @@ export const getProductsState = (state: State) => state.products;
 
 export const getProductFormState = (state: State) => state.productForm;
 
-export const getProductEntities = createSelector(getProductsState, fromProducts.getEntities);
-export const getProductIds = createSelector(getProductsState, fromProducts.getIds);
-export const getSelectedProductId = createSelector(getProductsState, fromProducts.getSelectedId);
-export const getSelectedProduct = createSelector(getProductsState, fromProducts.getSelected);
+export const getProductEntities = createSelector(getProductsState, getResourceEntities);
+export const getProductsLoadedAt = createSelector(getProductsState, getResourceLoadedAt);
+export const getProductIds = createSelector(getProductsState, getResourceIds);
+export const getSelectedProductId = createSelector(getProductsState, getResourceSelectedId);
+export const getSelectedProduct = createSelector(getProductsState, getResourceSelected);
 
 /**
  * Product search selector
  */
 export const getProductSearchState = (state: State) => state.productSearch;
 
-export const getSearchProducts = createSelector(getProductSearchState, fromProductSearch.getProducts);
-export const getProductSearchTotalElements = createSelector(getProductSearchState, fromProductSearch.getTotalElements);
-export const getProductSearchTotalPages = createSelector(getProductSearchState, fromProductSearch.getTotalPages);
+export const getSearchProducts = createSelector(getProductSearchState, getSearchEntities);
+export const getProductSearchTotalElements = createSelector(getProductSearchState, getSearchTotalElements);
+export const getProductSearchTotalPages = createSelector(getProductSearchState, getSearchTotalPages);
 
 export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements, (products, totalPages, totalElements) => {
   return {
@@ -91,12 +102,13 @@ export const getProductTasksState = (state: State) => state.productTasks;
 
 export const getProductTaskFormState = (state: State) => state.productTaskForm;
 
-export const getProductTaskEntities = createSelector(getProductTasksState, fromProductTasks.getEntities);
-export const getProductTaskIds = createSelector(getProductTasksState, fromProductTasks.getIds);
-export const getSelectedProductTaskId = createSelector(getProductTasksState, fromProductTasks.getSelectedId);
-export const getSelectedProductTask = createSelector(getProductTasksState, fromProductTasks.getSelected);
+export const getProductTaskEntities = createSelector(getProductTasksState, getResourceEntities);
+export const getProductTasksLoadedAt = createSelector(getProductTasksState, getResourceLoadedAt);
+export const getProductTaskIds = createSelector(getProductTasksState, getResourceIds);
+export const getSelectedProductTaskId = createSelector(getProductTasksState, getResourceSelectedId);
+export const getSelectedProductTask = createSelector(getProductTasksState, getResourceSelected);
 
-export const getAllProductTaskEntities = createSelector(getProductTasksState, fromProductTasks.getAll);
+export const getAllProductTaskEntities = createSelector(getProductTasksState, getResourceAll);
 
 /**
  * Product Charge Selectors
@@ -105,9 +117,10 @@ export const getProductChargesState = (state: State) => state.productCharges;
 
 export const getProductChargeFormState = (state: State) => state.productChargeForm;
 
-export const getProductChargeEntities = createSelector(getProductChargesState, fromProductCharges.getEntities);
-export const getProductChargeIds = createSelector(getProductChargesState, fromProductCharges.getIds);
-export const getSelectedProductChargeId = createSelector(getProductChargesState, fromProductCharges.getSelectedId);
-export const getSelectedProductCharge = createSelector(getProductChargesState, fromProductCharges.getSelected);
+export const getProductChargeEntities = createSelector(getProductChargesState, getResourceEntities);
+export const getProductChargesLoadedAt = createSelector(getProductChargesState, getResourceLoadedAt);
+export const getProductChargeIds = createSelector(getProductChargesState, getResourceIds);
+export const getSelectedProductChargeId = createSelector(getProductChargesState, getResourceSelectedId);
+export const getSelectedProductCharge = createSelector(getProductChargesState, getResourceSelected);
 
-export const getAllProductChargeEntities = createSelector(getProductChargesState, fromProductCharges.getAll);
+export const getAllProductChargeEntities = createSelector(getProductChargesState, getResourceAll);

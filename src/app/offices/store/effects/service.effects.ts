@@ -33,7 +33,10 @@ export class OfficeApiEffects {
     .map((action: officeActions.CreateOfficeAction) => action.payload)
     .mergeMap(payload =>
       this.officeService.createOffice(payload.office)
-        .map(() => new officeActions.CreateOfficeSuccessAction(payload))
+        .map(() => new officeActions.CreateOfficeSuccessAction({
+          resource: payload.office,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new officeActions.CreateOfficeFailAction(error)))
     );
 
@@ -43,7 +46,10 @@ export class OfficeApiEffects {
     .map((action: officeActions.CreateBranchOfficeAction) => action.payload)
     .mergeMap(payload =>
       this.officeService.addBranch(payload.office.parentIdentifier, payload.office)
-        .map(() => new officeActions.CreateOfficeSuccessAction(payload))
+        .map(() => new officeActions.CreateOfficeSuccessAction({
+          resource: payload.office,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new officeActions.CreateOfficeFailAction(error)))
     );
 
@@ -53,7 +59,10 @@ export class OfficeApiEffects {
     .map((action: officeActions.UpdateOfficeAction) => action.payload)
     .mergeMap(payload =>
       this.officeService.updateOffice(payload.office)
-        .map(() => new officeActions.UpdateOfficeSuccessAction(payload))
+        .map(() => new officeActions.UpdateOfficeSuccessAction({
+          resource: payload.office,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new officeActions.UpdateOfficeFailAction(error)))
     );
 
@@ -63,7 +72,10 @@ export class OfficeApiEffects {
     .map((action: officeActions.DeleteOfficeAction) => action.payload)
     .mergeMap(payload =>
       this.officeService.deleteOffice(payload.office.identifier)
-        .map(() => new officeActions.DeleteOfficeSuccessAction(payload))
+        .map(() => new officeActions.DeleteOfficeSuccessAction({
+          resource: payload.office,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new officeActions.DeleteOfficeFailAction(error)))
     );
 

@@ -22,29 +22,31 @@ import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 import {IdentityService} from '../../services/identity/identity.service';
 import {LoadAction} from './store/role.actions';
+import {ExistsGuardService} from '../../components/guards/exists-guard';
 
 @Injectable()
 export class RoleExistsGuard implements CanActivate {
 
   constructor(private store: Store<fromRoles.State>,
               private identityService: IdentityService,
-              private router: Router) {}
+              private existsGuardService: ExistsGuardService) {}
 
   hasRoleInStore(id: string): Observable<boolean> {
-    return this.store.select(fromRoles.getRoleEntities)
-      .map(entities => !!entities[id])
-      .take(1);
+    const timestamp$ = this.store.select(fromRoles.getRolesLoadedAt)
+      .map(loadedAt => loadedAt[id]);
+
+    return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasRoleInApi(id: string): Observable<boolean> {
-    return this.identityService.getRole(id)
-      .map(roleEntity => new LoadAction(roleEntity))
+    const getRole$ = this.identityService.getRole(id)
+      .map(roleEntity => new LoadAction({
+        resource: roleEntity
+      }))
       .do((action: LoadAction) => this.store.dispatch(action))
-      .map(office => !!office)
-      .catch(() => {
-        this.router.navigate(['/404']);
-        return of(false);
-      });
+      .map(office => !!office);
+
+    return this.existsGuardService.routeTo404OnError(getRole$);
   }
 
   hasRole(id: string): Observable<boolean> {

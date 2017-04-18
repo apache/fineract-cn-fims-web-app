@@ -29,8 +29,14 @@
               </md-select>
             </md-card-title>
             <md-card-subtitle translate>sign in via your current account</md-card-subtitle>
-            <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+            <form [formGroup]="form" (ngSubmit)="login()">
               <md-card-content>
+                <div layout="row">
+                  <md-input-container layout-margin flex>
+                    <input mdInput placeholder="{{'Tenant' | translate}}" type="text" formControlName="tenant" name="tenant"/>
+                    <md-icon md-prefix>business</md-icon>
+                  </md-input-container>
+                </div>
                 <div layout="row">
                   <md-input-container layout-margin flex>
                     <input mdInput placeholder="{{'Username' | translate}}" type="text" formControlName="username" name="username"/>
@@ -44,7 +50,7 @@
                   </md-input-container>
                 </div>
                 <div layout="row" *ngIf="error">
-                  <p class="md-caption tc-red-700">{{error}}</p>
+                  <p class="md-caption tc-red-700">{{error | translate}}</p>
                 </div>
               </md-card-content>
               <md-card-actions>

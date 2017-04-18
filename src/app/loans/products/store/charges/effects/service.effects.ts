@@ -47,7 +47,10 @@ export class ProductChargesApiEffects {
     .map((action: chargeActions.CreateChargeAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.createChargeDefinition(payload.productId, payload.charge)
-        .map(() => new chargeActions.CreateChargeSuccessAction(payload))
+        .map(() => new chargeActions.CreateChargeSuccessAction({
+          resource: payload.charge,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new chargeActions.CreateChargeFailAction(error)))
     );
 
@@ -57,7 +60,10 @@ export class ProductChargesApiEffects {
     .map((action: chargeActions.UpdateChargeAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.changeChargeDefinition(payload.productId, payload.charge)
-        .map(() => new chargeActions.UpdateChargeSuccessAction(payload))
+        .map(() => new chargeActions.UpdateChargeSuccessAction({
+          resource: payload.charge,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new chargeActions.UpdateChargeFailAction(error)))
     );
 
@@ -67,7 +73,10 @@ export class ProductChargesApiEffects {
     .map((action: chargeActions.DeleteChargeAction) => action.payload)
     .mergeMap(payload =>
       this.portfolioService.deleteChargeDefinition(payload.productId, payload.charge.identifier)
-        .map(() => new chargeActions.DeleteChargeSuccessAction(payload))
+        .map(() => new chargeActions.DeleteChargeSuccessAction({
+          resource: payload.charge,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new chargeActions.DeleteChargeFailAction(error)))
     );
 }

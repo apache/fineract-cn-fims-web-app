@@ -42,11 +42,11 @@ describe('Test Authentication Service', () => {
     let requestOptions: BaseRequestOptions = new BaseRequestOptions();
     let http: Http = new Http(mockBackend, requestOptions);
 
-    authService = new AuthenticationService('/identity', tenant, http);
+    authService = new AuthenticationService('/identity', http);
   });
 
   it('should login and return authentication', (done: DoneFn) => {
-    authService.login('moss', 'test').subscribe((authentication: Authentication) => {
+    authService.login(tenant, 'moss', 'test').subscribe((authentication: Authentication) => {
       expect(authentication.tokenType).toBe(mockAuthentication.tokenType);
       expect(authentication.accessToken).toBe(mockAuthentication.accessToken);
       expect(authentication.accessTokenExpiration).toBe(mockAuthentication.accessTokenExpiration);

@@ -37,7 +37,10 @@ export class EmployeeApiEffects {
     .mergeMap(payload =>
       this.identityService.createUser(payload.user)
         .mergeMap(() => this.officeService.createEmployee(payload.employee) )
-        .map(() => new employeeActions.CreateEmployeeSuccessAction(payload))
+        .map(() => new employeeActions.CreateEmployeeSuccessAction({
+          resource: payload.employee,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new employeeActions.CreateEmployeeFailAction(error)))
     );
 
@@ -64,7 +67,10 @@ export class EmployeeApiEffects {
         }
 
         return Observable.forkJoin(httpCalls)
-          .map(() => new employeeActions.UpdateEmployeeSuccessAction(payload))
+          .map(() => new employeeActions.UpdateEmployeeSuccessAction({
+            resource: payload.employee,
+            activatedRoute: payload.activatedRoute
+          }))
           .catch((error) => of(new employeeActions.UpdateEmployeeFailAction(error)))
     });
 
@@ -77,7 +83,10 @@ export class EmployeeApiEffects {
         this.officeService.deleteEmployee(payload.employee.identifier),
         this.identityService.changeUserRole(payload.employee.identifier, new RoleIdentifier('deactivated'))
       )
-        .map(() => new employeeActions.DeleteEmployeeSuccessAction(payload))
+        .map(() => new employeeActions.DeleteEmployeeSuccessAction({
+          resource: payload.employee,
+          activatedRoute: payload.activatedRoute
+        }))
         .catch((error) => of(new employeeActions.DeleteEmployeeFailAction(error)))
       }
     );

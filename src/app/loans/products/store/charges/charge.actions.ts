@@ -19,6 +19,10 @@ import {Error} from '../../../../../services/domain/error.model';
 import {type} from '../../../../util';
 import {RoutePayload} from '../../../../../components/store/route-payload';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../../components/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Charge] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Charge] Load All Complete');
@@ -59,13 +63,13 @@ export class LoadAllCompleteAction implements Action {
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: ChargeDefinition) { }
+  constructor(public payload: LoadResourcePayload) { }
 }
 
 export class SelectAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) { }
+  constructor(public payload: SelectResourcePayload) { }
 }
 
 export class CreateChargeAction implements Action {
@@ -77,7 +81,7 @@ export class CreateChargeAction implements Action {
 export class CreateChargeSuccessAction implements Action {
   readonly type = CREATE_SUCCESS;
 
-  constructor(public payload: ChargeRoutePayload) { }
+  constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
 export class CreateChargeFailAction implements Action {
@@ -95,7 +99,7 @@ export class UpdateChargeAction implements Action {
 export class UpdateChargeSuccessAction implements Action {
   readonly type = UPDATE_SUCCESS;
 
-  constructor(public payload: ChargeRoutePayload) { }
+  constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
 export class UpdateChargeFailAction implements Action {
@@ -113,7 +117,7 @@ export class DeleteChargeAction implements Action {
 export class DeleteChargeSuccessAction implements Action {
   readonly type = DELETE_SUCCESS;
 
-  constructor(public payload: ChargeRoutePayload) { }
+  constructor(public payload: DeleteResourceSuccessPayload) { }
 }
 
 export class DeleteChargeFailAction implements Action {

@@ -21,6 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {emptySearchResult} from '../../../../components/store/search.reducer';
 
 @Injectable()
 export class LedgerSearchApiEffects {
@@ -37,12 +38,12 @@ export class LedgerSearchApiEffects {
 
       return this.accountingService.fetchLedgers(true, fetchRequest)
         .takeUntil(nextSearch$)
-        .map(ledgerPage => new ledgerActions.SearchCompleteAction(ledgerPage))
-        .catch(() => of(new ledgerActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          ledgers: []
-        })));
+        .map(ledgerPage => new ledgerActions.SearchCompleteAction({
+          elements: ledgerPage.ledgers,
+          totalPages: ledgerPage.totalPages,
+          totalElements: ledgerPage.totalElements
+        }))
+        .catch(() => of(new ledgerActions.SearchCompleteAction(emptySearchResult())));
     });
 
 }
