@@ -57,33 +57,6 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
 
     switch (action.type) {
 
-      case `[${resource}] Search Complete`: {
-        const elements = action.payload.elements;
-
-        const newElements = elements.filter(element => !state.entities[element.identifier]);
-
-        const newElementIds = newElements.map(element => element.identifier);
-
-        const newEntities = newElements.reduce((entities: { [id: string]: any }, entity: any) => {
-          return Object.assign(entities, {
-            [entity.identifier]: entity
-          });
-        }, {});
-
-        const newLoadedAt = newElements.reduce((entities: { [id: string]: any }, entity: any) => {
-          return Object.assign(entities, {
-            [entity.identifier]: Date.now()
-          });
-        }, {});
-
-        return {
-          ids: [ ...state.ids, ...newElementIds ],
-          entities: Object.assign({}, state.entities, newEntities),
-          selectedId: state.selectedId,
-          loadedAt: Object.assign({}, state.loadedAt, newLoadedAt),
-        };
-      }
-
       case `[${resource}] Load`: {
         const resource = action.payload.resource;
 

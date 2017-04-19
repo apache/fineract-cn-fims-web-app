@@ -91,18 +91,20 @@ export class HttpClient {
 
         let request: Observable<any> = this.http.request(new Request(requestOptions))
           .catch((err: any) => {
-            if(silent) return Observable.throw(err);
+            const error = err.json();
+            if(silent) return Observable.throw(error);
 
-            switch (err.status) {
+            switch (error.status) {
               case 409:
-                return Observable.throw(err);
+                return Observable.throw(error);
               case 401:
               case 403:
                 this.store.dispatch({ type: LOGOUT });
                 return Observable.throw('User is not authenticated');
               default:
-                this.error.next(err);
-                return Observable.throw(err);
+                console.debug('Error', error);
+                this.error.next(error);
+                return Observable.throw(error);
             }
           }).finally(() => this.process.next(Action.QueryStop));
 
