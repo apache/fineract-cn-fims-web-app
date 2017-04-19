@@ -42,6 +42,8 @@ export class AccountListComponent implements OnInit, OnDestroy{
 
   accountData$: Observable<TableData>;
 
+  loading$: Observable<boolean>;
+
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
@@ -63,7 +65,9 @@ export class AccountListComponent implements OnInit, OnDestroy{
         data: accountPage.accounts,
         totalElements: accountPage.totalElements,
         totalPages: accountPage.totalPages
-      }))
+      }));
+
+    this.loading$ = this.store.select(fromRoot.getAccountSearchLoading);
   }
 
   ngOnDestroy(): void {

@@ -34,6 +34,8 @@ export class OfficeComponent implements OnInit {
 
   officeData$: Observable<TableData>;
 
+  loading$: Observable<boolean>;
+
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
@@ -55,7 +57,9 @@ export class OfficeComponent implements OnInit {
         data: officePage.offices,
         totalElements: officePage.totalElements,
         totalPages: officePage.totalPages
-      }))
+      }));
+
+    this.loading$ = this.store.select(fromRoot.getOfficeSearchLoading);
   }
 
   rowSelect(office: Office): void{

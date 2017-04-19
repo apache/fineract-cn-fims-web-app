@@ -69,6 +69,7 @@ export const getOfficeSearchState = (state: State) => state.officeSearch;
 export const getSearchOffices = createSelector(getOfficeSearchState, getSearchEntities);
 export const getOfficeSearchTotalElements = createSelector(getOfficeSearchState, getSearchTotalElements);
 export const getOfficeSearchTotalPages = createSelector(getOfficeSearchState, getSearchTotalPages);
+export const getOfficeSearchLoading = createSelector(getOfficeSearchState, getSearchLoading);
 
 export const getOfficeSearchResults = createSelector(getSearchOffices, getOfficeSearchTotalPages, getOfficeSearchTotalElements, (offices, totalPages, totalElements) => {
   return {
@@ -86,6 +87,7 @@ export const getEmployeeSearchState = (state: State) => state.employeeSearch;
 export const getSearchEmployees = createSelector(getEmployeeSearchState, getSearchEntities);
 export const getEmployeeSearchTotalElements = createSelector(getEmployeeSearchState, getSearchTotalElements);
 export const getEmployeeSearchTotalPages = createSelector(getEmployeeSearchState, getSearchTotalPages);
+export const getEmployeeSearchLoading = createSelector(getEmployeeSearchState, getSearchLoading);
 
 export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEmployeeSearchTotalPages, getEmployeeSearchTotalElements, (employees, totalPages, totalElements) => {
   return {
@@ -103,6 +105,7 @@ export const getRoleSearchState = (state: State) => state.roleSearch;
 export const getSearchRoles = createSelector(getRoleSearchState, getSearchEntities);
 export const getRoleSearchTotalElements = createSelector(getRoleSearchState, getSearchTotalElements);
 export const getRoleSearchTotalPages = createSelector(getRoleSearchState, getSearchTotalPages);
+export const getRoleSearchLoading = createSelector(getRoleSearchState, getSearchLoading);
 
 export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearchTotalPages, getRoleSearchTotalElements, (roles, totalPages, totalElements) => {
   return {
@@ -120,6 +123,7 @@ export const getCustomerSearchState = (state: State) => state.customerSearch;
 export const getSearchCustomers = createSelector(getCustomerSearchState, getSearchEntities);
 export const getCustomerSearchTotalElements = createSelector(getCustomerSearchState, getSearchTotalElements);
 export const getCustomerSearchTotalPages = createSelector(getCustomerSearchState, getSearchTotalPages);
+export const getCustomerSearchLoading = createSelector(getCustomerSearchState, getSearchLoading);
 
 export const getCustomerSearchResults = createSelector(getSearchCustomers, getCustomerSearchTotalPages, getCustomerSearchTotalElements, (customers, totalPages, totalElements) => {
   return {

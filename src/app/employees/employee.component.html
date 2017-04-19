@@ -21,7 +21,7 @@
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <fims-data-table flex (onFetch)="fetchEmployees($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="employeeData$ | async" sortBy="identifier"></fims-data-table>
+  <fims-data-table flex (onFetch)="fetchEmployees($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="employeeData$ | async" [loading]="loading$ | async" sortBy="identifier"></fims-data-table>
 </fims-layout-card-over>
 
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new employee' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'office_employees', accessLevel: 'CHANGE' }">
