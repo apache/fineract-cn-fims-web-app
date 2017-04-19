@@ -24,7 +24,7 @@ export const SEARCH = type('[Account] Search');
 export const SEARCH_BY_LEDGER = type('[Account] Search by Ledger');
 export const SEARCH_COMPLETE = type('[Account] Search Complete');
 
-export interface SearchByLedgerPayload{
+export interface SearchByLedgerPayload {
   ledgerId: string;
   fetchRequest: FetchRequest
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Action} from '@ngrx/store';
+import {Action, ActionReducer} from '@ngrx/store';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {createSelector} from 'reselect';
 
@@ -52,7 +52,7 @@ const initialState: SearchState = {
   fetchRequest: null
 };
 
-export const createSearchReducer = (entityName: string) => {
+export const createSearchReducer = (entityName: string, reducer?: ActionReducer<SearchState>) => {
   return function(state: SearchState = initialState, action: Action): SearchState {
 
     switch (action.type) {
@@ -62,23 +62,27 @@ export const createSearchReducer = (entityName: string) => {
 
         return Object.assign({}, state, {
           fetchRequest,
-          loading: true
+          loading: true,
+          entities: []
         });
       }
 
       case `[${entityName}] Search Complete`: {
         const searchResult: SearchResult = action.payload;
 
-        return {
+        return Object.assign({}, state, {
           entities: searchResult.elements,
-          loading: false,
-          fetchRequest: state.fetchRequest,
           totalElements: searchResult.totalElements,
-          totalPages: searchResult.totalPages
-        };
+          totalPages: searchResult.totalPages,
+          loading: false
+        });
       }
 
       default: {
+        // delegate to wrapped reducer
+        if(reducer) {
+          return reducer(state, action);
+        }
         return state;
       }
     }
@@ -88,6 +92,7 @@ export const createSearchReducer = (entityName: string) => {
 export const getSearchEntities = (state: SearchState) => state.entities;
 export const getSearchTotalElements = (state: SearchState) => state.totalElements;
 export const getSearchTotalPages = (state: SearchState) => state.totalPages;
+export const getSearchLoading = (state: SearchState) => state.loading;
 
 export const getSearchResult = createSelector(getSearchEntities, getSearchTotalElements, getSearchTotalPages, (elements, totalElements, totalPages) => {
   return {

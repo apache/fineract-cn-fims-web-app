@@ -19,10 +19,11 @@ import {ActionReducer, combineReducers} from '@ngrx/store';
 
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
+import * as fromAccounts from './account/accounts.reducer';
 import {compose} from '@ngrx/core/compose';
 import {localStorageSync} from 'ngrx-store-localstorage';
 import {
-  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
   SearchState
 } from '../../components/store/search.reducer';
 
@@ -45,7 +46,7 @@ export const reducers = {
   employeeSearch: createSearchReducer('Employee'),
   roleSearch: createSearchReducer('Role'),
   customerSearch: createSearchReducer('Customer'),
-  accountSearch: createSearchReducer('Account'),
+  accountSearch: createSearchReducer('Account', fromAccounts.reducer),
   ledgerSearch: createSearchReducer('Ledger'),
 };
 
@@ -136,6 +137,7 @@ export const getAccountSearchState = (state: State) => state.accountSearch;
 export const getSearchAccounts = createSelector(getAccountSearchState, getSearchEntities);
 export const getAccountSearchTotalElements = createSelector(getAccountSearchState, getSearchTotalElements);
 export const getAccountSearchTotalPages = createSelector(getAccountSearchState, getSearchTotalPages);
+export const getAccountSearchLoading = createSelector(getAccountSearchState, getSearchLoading);
 
 export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements, (accounts, totalPages, totalElements) => {
   return {
