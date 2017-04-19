@@ -31,6 +31,8 @@ export class EmployeeComponent implements OnInit{
 
   employeeData$: Observable<TableData>;
 
+  loading$: Observable<boolean>;
+
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'givenName', label: 'First Name' },
@@ -51,6 +53,8 @@ export class EmployeeComponent implements OnInit{
         totalElements: employeePage.totalElements,
         totalPages: employeePage.totalPages
       }));
+
+    this.loading$ = this.store.select(fromRoot.getEmployeeSearchLoading);
 
     this.route.queryParams.subscribe((params: Params) => {
       this.search(params['term']);

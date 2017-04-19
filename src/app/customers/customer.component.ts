@@ -30,6 +30,8 @@ export class CustomerComponent implements OnInit{
 
   customerData$: Observable<TableData>;
 
+  loading$: Observable<boolean>;
+
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'givenName', label: 'First Name' },
@@ -49,6 +51,8 @@ export class CustomerComponent implements OnInit{
         totalElements: customerPage.totalElements,
         totalPages: customerPage.totalPages
       }));
+
+    this.loading$ = this.store.select(fromRoot.getCustomerSearchLoading);
 
     this.route.queryParams.subscribe((params: Params) => {
       this.search(params['term'])

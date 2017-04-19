@@ -30,6 +30,8 @@ export class RoleComponent implements OnInit{
 
   rolesData$: Observable<TableData>;
 
+  loading$: Observable<boolean>;
+
   columns: any[] = [
     { name: 'identifier', label: 'Id' }
   ];
@@ -44,6 +46,9 @@ export class RoleComponent implements OnInit{
           totalPages: rolePage.totalPages
         })
       );
+
+    this.loading$ = this.store.select(fromRoot.getRoleSearchLoading);
+
     this.store.dispatch({ type: SEARCH });
   }
 

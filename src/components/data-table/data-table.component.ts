@@ -39,7 +39,7 @@ export class DataTableComponent{
 
   _columns: any[];
 
-  @Input() data: TableData;
+  @Input('data') tableData: TableData;
   @Input() set columns(columns: any[]){
     columns.forEach((column) => {
       this.translate.get(column.label).subscribe((value) => {
@@ -53,6 +53,7 @@ export class DataTableComponent{
   @Input() sortable: boolean = true;
   @Input() selectable: boolean = true;
   @Input() actionColumn: boolean = true;
+  @Input() loading: boolean = false;
 
   @Output() onFetch: EventEmitter<TableFetchRequest> = new EventEmitter<TableFetchRequest>();
   @Output() onActionCellClick: EventEmitter<any> = new EventEmitter<any>();
@@ -98,4 +99,9 @@ export class DataTableComponent{
   actionCellClick(row): void{
     this.onActionCellClick.emit(row);
   }
+
+  get hasData(): boolean {
+    return this.tableData && this.tableData.data && this.tableData.data.length > 0;
+  }
+
 }
