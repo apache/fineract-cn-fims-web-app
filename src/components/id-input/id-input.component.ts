@@ -29,6 +29,8 @@ export class IdInputComponent implements OnInit {
 
   @Input() readonly: boolean;
 
+  @Input() placeholder: string = 'Identifier';
+
   constructor() { }
 
   ngOnInit() { }

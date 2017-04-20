@@ -35,7 +35,8 @@ export class CustomerComponent implements OnInit{
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'givenName', label: 'First Name' },
-    { name: 'surname', label: 'Last Name' }
+    { name: 'surname', label: 'Last Name' },
+    { name: 'currentState', label: 'Current status' }
   ];
 
   private searchTerm: string;

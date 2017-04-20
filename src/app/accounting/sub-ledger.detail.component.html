@@ -15,6 +15,18 @@
 -->
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
+  <ng-container *ngIf="ledger.parentLedgerIdentifier">
+    <a md-icon-button title="{{'Go to parent ledger' | translate}}" [routerLink]="['../../', ledger.parentLedgerIdentifier]">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </a>
+    {{'Parent Ledger' | translate}}
+  </ng-container>
+  <ng-container *ngIf="!ledger.parentLedgerIdentifier">
+    <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../../../../']">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </a>
+    {{'General Ledger' | translate}}
+  </ng-container>
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Ledger with name' | translate:{value: ledger.name} }}" [subTitle]="ledger.description">

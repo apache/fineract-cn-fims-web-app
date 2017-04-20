@@ -18,7 +18,7 @@
   <td-step #detailsStep label="{{'Ledger details' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form">
-      <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-id-input flex [form]="form" placeholder="Ledger Number" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <div layout="row">
         <md-radio-group formControlName="type" [disabled]="parentLedger || editMode">
           <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>

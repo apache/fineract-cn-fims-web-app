@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-import {AccountType} from './account-type.model';
+import {Resource} from './resource.reducer';
 
-export interface Ledger {
-  parentLedgerIdentifier?: string;
-  type: AccountType;
-  identifier: string;
-  name: string;
-  description?: string;
-  subLedgers: Ledger[];
-  createdOn?: string;
-  createdBy?: string;
-  lastModifiedOn?: string;
-  lastModifiedBy?: string;
+export function resourcesToHash(resources: Resource[]) {
+  let hash = {};
+
+  resources.forEach(resource => hash[resource.identifier] = resource);
+
+  return hash;
 }

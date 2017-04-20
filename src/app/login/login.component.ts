@@ -22,6 +22,7 @@ import * as fromRoot from '../reducers';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../reducers/security/security.actions';
 import {Subscription} from 'rxjs';
+import {MdSelectChange} from '@angular/material';
 
 @Component({
   selector: 'fims-login',
@@ -91,7 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }});
   }
 
-  selectLanguage(lang: string): void{
-    this.translate.use(lang);
+  selectLanguage(mdSelectChange: MdSelectChange): void{
+    this.translate.use(mdSelectChange.value);
   }
 }

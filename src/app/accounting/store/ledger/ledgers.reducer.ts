@@ -18,6 +18,7 @@ import * as ledger from './ledger.actions';
 import { createSelector } from 'reselect';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 import {ResourceState} from '../../../../components/store/resource.reducer';
+import {resourcesToHash} from '../../../../components/store/reducer.helper';
 
 export interface State {
   ids: string[];
@@ -45,11 +46,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
 
       const newLedgerIds: string[] = newLedgers.map(ledger => ledger.identifier);
 
-      const newLedgerEntities = newLedgers.reduce((entities: { [id: string]: Ledger }, ledger: Ledger) => {
-        return Object.assign(entities, {
-          [ledger.identifier]: ledger
-        });
-      }, {});
+      const newLedgerEntities = resourcesToHash(newLedgers);
 
       const newLoadedAt = newLedgers.reduce((entities: { [id: string]: any }, ledger: Ledger) => {
         return Object.assign(entities, {
@@ -87,13 +84,9 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     }
 
     case ledger.SELECT: {
-      return {
-        ids: state.ids,
-        topLevelIds: state.topLevelIds,
-        entities: state.entities,
-        selectedLedgerId: action.payload,
-        loadedAt: state.loadedAt
-      };
+      return Object.assign({}, state, {
+        selectedLedgerId: action.payload
+      });
     }
 
     case ledger.CREATE_SUCCESS: {
@@ -104,25 +97,6 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         topLevelIds: [ ...state.topLevelIds, ledger.identifier ],
         entities: Object.assign({}, state.entities, {
           [ledger.identifier]: ledger
-        }),
-        selectedLedgerId: state.selectedLedgerId,
-        loadedAt: state.loadedAt
-      }
-    }
-
-    case ledger.CREATE_SUB_LEDGER_SUCCESS: {
-      const subLedger: Ledger = action.payload.ledger;
-
-      const parentLedger: Ledger = Object.assign({}, state.entities[action.payload.parentLedgerId]);
-
-      parentLedger.subLedgers.push(subLedger);
-
-      return {
-        ids: [ ...state.ids, subLedger.identifier ],
-        topLevelIds: [ ...state.topLevelIds ],
-        entities: Object.assign({}, state.entities, {
-          [subLedger.identifier]: subLedger,
-          [parentLedger.identifier]: parentLedger
         }),
         selectedLedgerId: state.selectedLedgerId,
         loadedAt: state.loadedAt
@@ -143,22 +117,48 @@ export function reducer(state = initialState, action: ledger.Actions): State {
       }
     }
 
+    case ledger.CREATE_SUB_LEDGER_SUCCESS: {
+      const subLedger: Ledger = action.payload.ledger;
+      const parentLedgerId = action.payload.parentLedgerId;
+      const parentLedger: Ledger = Object.assign({}, state.entities[parentLedgerId]);
+      subLedger.parentLedgerIdentifier = parentLedgerId;
+      parentLedger.subLedgers.push(subLedger);
+
+      return {
+        ids: [ ...state.ids, subLedger.identifier ],
+        topLevelIds: [ ...state.topLevelIds ],
+        entities: Object.assign({}, state.entities, {
+          [subLedger.identifier]: subLedger,
+          [parentLedger.identifier]: parentLedger
+        }),
+        selectedLedgerId: state.selectedLedgerId,
+        loadedAt: state.loadedAt
+      }
+    }
+
     case ledger.DELETE_SUCCESS: {
-      const ledger: Ledger = action.payload.ledger;
+      const deletedLedger: Ledger = action.payload.ledger;
 
-      const newIds: string[] = state.ids.filter(id => id !== ledger.identifier);
-
-      const newTopLevelIds: string[] = state.topLevelIds.filter(id => id !== ledger.identifier);
+      const newIds: string[] = state.ids.filter(id => id !== deletedLedger.identifier);
+      const newTopLevelIds: string[] = state.topLevelIds.filter(id => id !== deletedLedger.identifier);
 
       const newEntities = newIds.reduce((entities: { [id: string]: Ledger }, id: string) => {
         let ledger = state.entities[id];
+
+        // Remove sub ledger from parent ledger
+        if(ledger.identifier === deletedLedger.parentLedgerIdentifier) {
+          ledger = Object.assign({}, ledger, {
+            subLedgers: ledger.subLedgers.filter(ledger => ledger.identifier !== deletedLedger.identifier)
+          })
+        }
+
         return Object.assign(entities, {
           [ledger.identifier]: ledger
         });
       }, {});
 
       const newLoadedAt = newIds.reduce((entities: { [id: string]: any }, id: string) => {
-        let loadedAt = state.loadedAt[id];
+        const loadedAt = state.loadedAt[id];
         return Object.assign(entities, {
           [id]: loadedAt
         });

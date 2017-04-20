@@ -48,7 +48,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
   @Input() editMode: boolean;
 
   private formatDate(year: number, month: number, day: number): string{
-    return year + '-' + this.addZero(month) + '-' + this.addZero(day);
+    return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
   }
 
   private addZero(value: number): string{

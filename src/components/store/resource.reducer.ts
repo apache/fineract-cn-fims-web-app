@@ -18,6 +18,10 @@ import {Action, ActionReducer} from '@ngrx/store';
 import {createSelector} from 'reselect';
 import {RoutePayload} from './route-payload';
 
+export interface Resource {
+  identifier: string;
+}
+
 export interface LoadResourcePayload {
   resource: any
 }
@@ -75,20 +79,29 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
       }
 
       case `[${resource}] Select`: {
-        return {
-          ids: state.ids,
-          entities: state.entities,
-          selectedId: action.payload,
-          loadedAt: state.loadedAt
-        };
+        return Object.assign({}, state, {
+          selectedId: action.payload
+        });
       }
 
-      case `[${resource}] Create Success`:
-      case `[${resource}] Update Success`: {
+      case `[${resource}] Create Success`: {
         const resource = action.payload.resource;
 
         return {
           ids: [ ...state.ids, resource.identifier ],
+          entities: Object.assign({}, state.entities, {
+            [resource.identifier]: resource
+          }),
+          selectedId: state.selectedId,
+          loadedAt: state.loadedAt
+        }
+      }
+
+      case `[${resource}] Update Success`: {
+        const resource = action.payload.resource;
+
+        return {
+          ids: state.ids,
           entities: Object.assign({}, state.entities, {
             [resource.identifier]: resource
           }),
