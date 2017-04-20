@@ -26,8 +26,9 @@ import {ExpirationDate} from '../../../../services/customer/domain/expiration-da
 })
 export class CustomerIdentityCardFormComponent extends FormComponent<IdentificationCard>{
 
-  @Input() set formData(identificationCard: IdentificationCard){
+  @Input() set formData(identificationCard: IdentificationCard) {
     identificationCard = identificationCard || { type: 'id', number: '', expirationDate: undefined };
+
     this.form = this.formBuilder.group({
       type: [identificationCard.type, [Validators.required]],
       number: [identificationCard.number, Validators.required],
@@ -42,7 +43,7 @@ export class CustomerIdentityCardFormComponent extends FormComponent<Identificat
 
   private formatDate(expirationDate: ExpirationDate): string{
     if(!expirationDate) return '';
-    return expirationDate.year + '-' + this.addZero(expirationDate.month) + '-' + this.addZero(expirationDate.day);
+    return `${expirationDate.year}-${this.addZero(expirationDate.month)}-${this.addZero(expirationDate.day)}`;
   }
 
   private addZero(value: number): string{

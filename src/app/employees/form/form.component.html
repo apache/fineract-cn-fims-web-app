@@ -18,7 +18,7 @@
   <td-step #detailsStep label="{{'Employee details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
     <form [formGroup]="detailForm">
       <div layout="row">
-        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+        <fims-id-input [form]="detailForm" placeholder="Username" controlName="identifier" [readonly]="editMode"></fims-id-input>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>

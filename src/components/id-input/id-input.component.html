@@ -15,7 +15,7 @@
 -->
 
 <md-input-container [formGroup]="form" flex layout-margin>
-  <input mdInput placeholder="{{'Identifier' | translate}}" [formControlName]="controlName"
+  <input mdInput placeholder="{{placeholder | translate}}" [formControlName]="controlName"
           [readonly]="readonly"
           tdAutoTrim/>
   <md-hint

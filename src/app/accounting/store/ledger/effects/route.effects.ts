@@ -35,5 +35,11 @@ export class LedgerRouteEffects {
   deleteLedgerSuccess$: Observable<Action> = this.actions$
     .ofType(ledgerActions.DELETE_SUCCESS)
     .map(action => action.payload)
-    .do(payload => this.router.navigate(['../../../../'], { relativeTo: payload.activatedRoute }));
+    .do(payload => {
+      if(payload.ledger.parentLedgerIdentifier) {
+        this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier], { relativeTo: payload.activatedRoute })
+      } else {
+        this.router.navigate(['../../../../'], { relativeTo: payload.activatedRoute })
+      }
+    });
 }
