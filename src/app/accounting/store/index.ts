@@ -20,6 +20,7 @@ import * as fromLedgerForm from './ledger/form.reducer';
 import * as fromTrialBalance from './ledger/trial-balance.reducer';
 import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
 import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer';
+import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountForm from './account/form.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
 import * as fromAccountCommands from './account/task/tasks.reducer';
@@ -37,7 +38,6 @@ export interface State extends fromRoot.State{
   accounts: ResourceState;
   accountForm: fromAccountForm.State;
   accountEntrySearch: fromAccountEntrySearch.State;
-  accountCommands: fromAccountCommands.State;
 
   ledgers: fromLedgers.State;
   ledgerForm: fromLedgerForm.State;
@@ -54,10 +54,9 @@ const reducers = {
   journalEntrySearch: fromJournalEntrySearch.reducer,
   journalEntryForm: fromJournalEntryForm.reducer,
 
-  accounts: createResourceReducer('Account'),
+  accounts: createResourceReducer('Account', fromAccounts.reducer),
   accountForm: fromAccountForm.reducer,
   accountEntrySearch: fromAccountEntrySearch.reducer,
-  accountCommands: fromAccountCommands.reducer,
 };
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);
