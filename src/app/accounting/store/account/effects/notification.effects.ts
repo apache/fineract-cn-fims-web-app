@@ -34,5 +34,21 @@ export class AccountNotificationEffects {
       message: 'Account is going to be saved'
     }));
 
+  @Effect({ dispatch: false })
+  deleteAccountSuccess$: Observable<Action> = this.actions$
+    .ofType(accountActions.DELETE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Account is going to be deleted'
+    }));
+
+  @Effect({ dispatch: false })
+  deleteAccountFail$: Observable<Action> = this.actions$
+    .ofType(accountActions.DELETE_FAIL)
+    .do(() => this.notificationService.send({
+      type: NotificationType.ALERT,
+      title: 'Account can\'t be deleted',
+      message: 'Account has account entries'
+    }));
 }
 

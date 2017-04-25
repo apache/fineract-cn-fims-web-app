@@ -32,4 +32,9 @@ export class AccountRouteEffects {
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
+  @Effect({ dispatch: false })
+  deleteAccountSuccess$: Observable<Action> = this.actions$
+    .ofType(accountActions.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../../../ledgers/detail', payload.resource.ledger, 'accounts'], { relativeTo: payload.activatedRoute }));
 }

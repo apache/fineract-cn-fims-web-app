@@ -97,6 +97,10 @@ export class AccountingService{
     return this.http.put(`${this.baseUrl}/accounts/${account.identifier}`, account);
   }
 
+  public deleteAccount(account: Account): Observable<void>{
+    return this.http.delete(`${this.baseUrl}/accounts/${account.identifier}`)
+  }
+
   public fetchAccountEntries(identifier: string, startDate: string, endDate: string, fetchRequest?: FetchRequest): Observable<AccountEntryPage>{
     let params: URLSearchParams = buildSearchParams(fetchRequest);
     let dateRange = buildDateRangeParam(startDate, endDate);

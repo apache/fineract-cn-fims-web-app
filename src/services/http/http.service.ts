@@ -109,7 +109,7 @@ export class HttpClient {
           }).finally(() => this.process.next(Action.QueryStop));
 
         return request.map((res: Response) => {
-          if(res.text()){
+          if(res.text()) {
             return res.json()
           }
         });

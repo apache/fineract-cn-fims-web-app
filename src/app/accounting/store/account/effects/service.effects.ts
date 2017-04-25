@@ -53,4 +53,17 @@ export class AccountApiEffects {
           .catch(error => of(new accountActions.UpdateAccountFailAction(error)))
     );
 
+  @Effect()
+  deleteAccount$: Observable<Action> = this.actions$
+    .ofType(accountActions.DELETE)
+    .map((action: accountActions.DeleteAccountAction) => action.payload)
+    .mergeMap(payload =>
+      this.accountingService.deleteAccount(payload.account)
+        .map(() => new accountActions.DeleteAccountSuccessAction({
+          resource: payload.account,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch(error => of(new accountActions.DeleteAccountFailAction(error)))
+    );
+
 }

@@ -15,13 +15,16 @@
 -->
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['/accounting/ledgers/detail', account.ledger, 'accounts']">
+  <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['../../../ledgers/detail', account.ledger, 'accounts']">
     <md-icon>keyboard_arrow_left</md-icon>
   </a>
   {{'Accounts' | translate}}
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Account' | translate:{ value: account.identifier } }}">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <button md-icon-button (click)="deleteAccount()" title="{{'Delete this account' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
   <div class="md-content" class="inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
