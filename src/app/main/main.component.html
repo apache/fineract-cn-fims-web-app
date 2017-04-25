@@ -21,7 +21,7 @@
         <span layout="row" layout-align="start center">
           <md-icon *ngIf="icon">{{icon}}</md-icon>
           <md-icon *ngIf="logo" class="md-icon-logo"></md-icon>
-          <span class="md-subhead">fims</span>
+          <span class="md-subhead">{{tenant$ | async}}</span>
         </span>
       </div>
       <md-menu #menu="mdMenu" x-position="before">
@@ -34,7 +34,6 @@
       </button>
     </md-toolbar>
     <md-nav-list>
-      <a md-list-item></a>
       <ng-container>
         <a md-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <md-icon md-list-avatar>dashboard</md-icon>
@@ -87,7 +86,7 @@
     </md-nav-list>
   </md-sidenav>
   <div layout="column" layout-fill class="md-content content">
-    <md-progress-bar *ngIf="isLoading" mode="indeterminate"></md-progress-bar>
+    <md-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></md-progress-bar>
     <router-outlet></router-outlet>
   </div>
 </md-sidenav-container>

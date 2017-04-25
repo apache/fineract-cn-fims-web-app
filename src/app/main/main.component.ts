@@ -20,6 +20,7 @@ import {HttpClient, Action} from '../../services/http/http.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import {LOGOUT} from '../reducers/security/security.actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'fims-main',
@@ -31,9 +32,11 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   logo: string;
 
-  isLoading: boolean;
+  isLoading$: Observable<boolean>;
 
   title: string;
+
+  tenant$: Observable<string>;
 
   constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private store: Store<fromRoot.State>) {}
 
@@ -45,18 +48,14 @@ export class MainComponent implements OnInit, AfterViewInit {
         this.title = title;
       }
     });
+
+    this.tenant$ = this.store.select(fromRoot.getTenant);
   }
 
   ngAfterViewInit(): void {
-    this.httpClient.process.subscribe((action: Action) => {
-      if(action === Action.QueryStart){
-        this.isLoading = true;
-      }else if(action === Action.QueryStop){
-        this.isLoading = false;
-      }
-    });
-
-
+    this.isLoading$ = this.httpClient.process
+      .debounceTime(1000)
+      .map((action: Action) => action === Action.QueryStart);
   }
 
   getTitle(state: RouterState, parent: ActivatedRoute){
