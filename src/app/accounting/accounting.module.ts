@@ -55,6 +55,7 @@ import {JournalEntryApiEffects} from './store/ledger/journal-entry/effects/servi
 import {LedgerNotificationEffects} from './store/ledger/effects/notification.effects';
 import {LedgerRouteEffects} from './store/ledger/effects/route.effects';
 import {LedgerApiEffects} from './store/ledger/effects/service.effects';
+import {AccountCommandRouteEffects} from './store/account/task/effects/route.effects';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import {LedgerApiEffects} from './store/ledger/effects/service.effects';
     EffectsModule.run(AccountNotificationEffects),
     EffectsModule.run(AccountEntryApiEffects),
     EffectsModule.run(AccountCommandApiEffects),
+    EffectsModule.run(AccountCommandRouteEffects),
     EffectsModule.run(AccountCommandNotificationEffects),
   ],
   declarations: [

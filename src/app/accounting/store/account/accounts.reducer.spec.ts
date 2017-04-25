@@ -28,7 +28,8 @@ describe('Accounts Reducer', () => {
       command: {
         action: action,
         comment: 'test'
-      }
+      },
+      activatedRoute: null
     }
   }
 

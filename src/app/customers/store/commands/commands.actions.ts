@@ -1,6 +1,3 @@
-import {type} from '../../../util';
-import {Action} from '@ngrx/store';
-import {Command} from '../../../../services/customer/domain/command.model';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -16,6 +13,10 @@ import {Command} from '../../../../services/customer/domain/command.model';
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import {type} from '../../../util';
+import {Action} from '@ngrx/store';
+import {Command} from '../../../../services/customer/domain/command.model';
 
 export const LOAD_ALL = type('[Customer Command] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Command] Load All Complete');

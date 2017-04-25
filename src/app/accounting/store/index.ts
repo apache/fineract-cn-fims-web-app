@@ -23,7 +23,6 @@ import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer';
 import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountForm from './account/form.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
-import * as fromAccountCommands from './account/task/tasks.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';

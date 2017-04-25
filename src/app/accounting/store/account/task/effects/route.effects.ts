@@ -15,27 +15,20 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
-import {Router} from '@angular/router';
 
 @Injectable()
-export class CustomerTasksRouteEffects {
+export class AccountCommandRouteEffects {
 
   constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
-  createCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
-
-  @Effect({ dispatch: false })
-  executeCustomerTaskSuccess$: Observable<Action> = this.actions$
+  executeCommandSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
-
 }
