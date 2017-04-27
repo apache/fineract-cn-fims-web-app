@@ -42,6 +42,7 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
     identifier: '',
     type: 'ASSET',
     name: '',
+    showAccountsInChart: true,
     subLedgers: [],
   };
 

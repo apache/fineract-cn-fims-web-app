@@ -34,6 +34,7 @@ import {CreateLedgerFormComponent} from './form/create/create.form.component';
 import {EditLedgerFormComponent} from './form/edit/edit.form.component';
 import {LedgerExistsGuard} from './ledger-exists.guard';
 import {AccountExistsGuard} from './accounts/account-exists.guard';
+import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -82,6 +83,7 @@ export const AccountingRoutes: Routes = [
   {path: 'accounts/detail/:id/entries', component: AccountEntryListComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
 
   {path: 'trialBalance', component: TrailBalanceComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
+  {path: 'chartOfAccounts', component: ChartOfAccountComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
   {path: 'journalEntries', component: JournalEntryListComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'READ' }}},
   {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}}
 ];

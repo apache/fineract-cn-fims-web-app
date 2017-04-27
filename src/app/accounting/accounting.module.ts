@@ -56,6 +56,8 @@ import {LedgerNotificationEffects} from './store/ledger/effects/notification.eff
 import {LedgerRouteEffects} from './store/ledger/effects/route.effects';
 import {LedgerApiEffects} from './store/ledger/effects/service.effects';
 import {AccountCommandRouteEffects} from './store/account/task/effects/route.effects';
+import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
+import {ChartOfAccountTableComponent} from './chartOfAccounts/chart-of-account-table.component';
 
 @NgModule({
   imports: [
@@ -85,6 +87,8 @@ import {AccountCommandRouteEffects} from './store/account/task/effects/route.eff
     CreateLedgerFormComponent,
     EditLedgerFormComponent,
     TrailBalanceComponent,
+    ChartOfAccountComponent,
+    ChartOfAccountTableComponent,
     AccountComponent,
     AccountListComponent,
     AccountEntryListComponent,

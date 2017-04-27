@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 
-import {AccountType} from './account-type.model';
-
-export interface Ledger {
-  parentLedgerIdentifier?: string;
-  type: AccountType;
-  identifier: string;
+export interface ChartOfAccountEntry {
+  code: string;
   name: string;
-  description?: string;
-  subLedgers: Ledger[];
-  showAccountsInChart: boolean;
-  createdOn?: string;
-  createdBy?: string;
-  lastModifiedOn?: string;
-  lastModifiedBy?: string;
+  level: number;
+  description: string;
+  type: string;
+  chartOfAccountEntries: ChartOfAccountEntry[];
 }

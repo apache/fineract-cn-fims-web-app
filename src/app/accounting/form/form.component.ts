@@ -56,6 +56,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
       'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe() ] ],
       'type': [ this.parentLedger ? this.parentLedger.type : this.ledger.type, [Validators.required] ],
       'name': [ this.ledger.name, [Validators.required] ],
+      'showAccountsInChart': [ this.ledger.showAccountsInChart, [Validators.required]],
       'description': [ this.ledger.description ],
     });
   }
@@ -74,6 +75,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
       identifier: this.form.get('identifier').value,
       type: this.form.get('type').value,
       name: this.form.get('name').value,
+      showAccountsInChart: this.form.get('showAccountsInChart').value,
       description: this.form.get('description').value,
       subLedgers: []
     };

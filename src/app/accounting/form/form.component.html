@@ -37,6 +37,9 @@
           <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
         </md-input-container>
       </div>
+      <div layout="row" layout-margin>
+        <md-checkbox formControlName="showAccountsInChart" translate>Show accounts when displayed in chart?</md-checkbox>
+      </div>
     </form>
     <ng-template td-step-actions>
       <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!form.valid">{{'CREATE LEDGER' | translate}}</button>
