@@ -21,7 +21,7 @@
   <th td-data-table-column translate>Type</th>
 
   <tr td-data-table-row *ngFor="let entry of chartOfAccountEntries">
-    <td td-data-table-cell [ngStyle]="{'padding-left.px': 24+(10*entry.level)}">{{entry.code}}</td>
+    <td td-data-table-cell [ngStyle]="{'padding-left.px': 24+(15*entry.level)}">{{entry.code}}</td>
     <td td-data-table-cell>{{entry.name}}</td>
     <td td-data-table-cell>{{entry.description}}</td>
     <td td-data-table-cell>{{entry.type}}</td>

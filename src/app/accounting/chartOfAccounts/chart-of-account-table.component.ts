@@ -23,14 +23,7 @@ import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-
 })
 export class ChartOfAccountTableComponent {
 
-  @Input() chartOfAccountEntries: ChartOfAccountEntry[] = [
-    { code: 'test1', name: 'test1', description: '', type: '', level: 0, chartOfAccountEntries: [] },
-    { code: 'test2', name: 'test2', description: '', type: '', level: 1, chartOfAccountEntries: [] },
-    { code: 'test3', name: 'test3', description: '', type: '', level: 2, chartOfAccountEntries: [] },
-    { code: 'test3', name: 'test3', description: '', type: '', level: 0, chartOfAccountEntries: [] },
-    { code: 'test3', name: 'test3', description: '', type: '', level: 1, chartOfAccountEntries: [] },
-    { code: 'test3', name: 'test3', description: '', type: '', level: 2, chartOfAccountEntries: [] },
-  ];
+  @Input() chartOfAccountEntries: ChartOfAccountEntry[] = [];
 
   @Input() loading: boolean;
 

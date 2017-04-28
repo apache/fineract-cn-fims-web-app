@@ -22,5 +22,5 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Chart of accounts' | translate}}">
-  <fims-chart-of-account-table [loading]="loading$ | async"></fims-chart-of-account-table>
+  <fims-chart-of-account-table [chartOfAccountEntries]="chartOfAccountEntries$ | async" [loading]="loading$ | async"></fims-chart-of-account-table>
 </fims-layout-card-over>

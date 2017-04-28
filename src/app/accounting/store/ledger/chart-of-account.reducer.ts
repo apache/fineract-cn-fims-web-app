@@ -34,6 +34,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     case ledger.LOAD_CHART_OF_ACCOUNTS: {
 
       return Object.assign({}, state, {
+        chartOfAccountEntries: [],
         loading: true
       });
     }
