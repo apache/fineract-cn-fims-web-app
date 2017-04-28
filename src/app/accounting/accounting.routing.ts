@@ -17,15 +17,13 @@
 import {Routes} from '@angular/router';
 import {GeneralLedgerComponent} from './general-ledger.component';
 import {TrailBalanceComponent} from './trailBalance/trial-balance.component';
-import {SubLedgerDetailComponent} from './sub-ledger.detail.component';
-import {AccountComponent} from './accounts/account.component';
+import {SubLedgerDetailComponent} from './subLedger/sub-ledger.detail.component';
 import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
 import {CommandsResolver} from './activity/commands.resolver';
 import {AccountActivityComponent} from './activity/activity.component';
 import {CreateAccountFormComponent} from './accounts/form/create/create.form.component';
-import {AccountListComponent} from './accounts/account.list.component';
-import {SubLedgerComponent} from './sub-ledger.component';
+import {SubLedgerComponent} from './subLedger/sub-ledger.component';
 import {EditAccountFormComponent} from './accounts/form/edit/edit.form.component';
 import {JournalEntryListComponent} from './journalEntries/journal-entry.list.component';
 import {JournalEntryFormComponent} from './journalEntries/form/form.component';
@@ -35,6 +33,7 @@ import {EditLedgerFormComponent} from './form/edit/edit.form.component';
 import {LedgerExistsGuard} from './ledger-exists.guard';
 import {AccountExistsGuard} from './accounts/account-exists.guard';
 import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
+import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -51,30 +50,29 @@ export const AccountingRoutes: Routes = [
         component: SubLedgerDetailComponent,
       },
       {
-        path: 'accounts',
-        component: AccountComponent,
-        children: [
-          {
-            path: '',
-            component: AccountListComponent,
-            data: {
-              hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }
-            }
-          },
-          {
-            path: 'create',
-            component: CreateAccountFormComponent,
-            data: {
-              hasPermission: { id: 'accounting_accounts', accessLevel: 'CHANGE' }
-            }
-          }
-        ]
+        path: 'edit',
+        component: EditLedgerFormComponent,
+        data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}
+      },
+      {
+        path: 'ledgers',
+        component: SubLedgerListComponent
+      },
+      {
+        path: 'ledgers/create',
+        component: CreateLedgerFormComponent,
+        data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}
+      },
+      {
+        path: 'accounts/create',
+        component: CreateAccountFormComponent,
+        data: {
+          hasPermission: {id: 'accounting_accounts', accessLevel: 'CHANGE'}
+        }
       }
     ]
   },
   {path: 'create', component: CreateLedgerFormComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}},
-  {path: 'ledgers/detail/:id/create', component: CreateLedgerFormComponent, canActivate: [LedgerExistsGuard], data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}},
-  {path: 'ledgers/detail/:id/edit', component: EditLedgerFormComponent, canActivate: [LedgerExistsGuard], data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}},
 
   {path: 'accounts/detail/:id', component: AccountDetailComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
   {path: 'accounts/detail/:id/edit', component: EditAccountFormComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'CHANGE' }}},

@@ -41,10 +41,10 @@
           <div flex-gt-md="30">
             <md-nav-list>
               <h3 md-subheader translate>Details</h3>
-              <a md-list-item [routerLink]="['./accounts']" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'READ' }">
-                <md-icon md-list-avatar>view_module</md-icon>
-                <h3 md-line translate>Accounts</h3>
-                <p md-line translate>View accounts for this ledger</p>
+              <a md-list-item [routerLink]="['./ledgers']">
+                <md-icon md-list-avatar>library_books</md-icon>
+                <h3 md-line translate>Subledgers</h3>
+                <p md-line translate>View subledgers</p>
               </a>
             </md-nav-list>
           </div>
@@ -60,8 +60,8 @@
             </div>
             <div layout="row">
               <div layout="column" flex-gt-md="100">
-                <h3 translate>Subledger</h3>
-                <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
+                <h3 translate>Accounts</h3>
+                <fims-data-table flex (onFetch)="fetchAccounts($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="accountData$ | async" [loading]="loading$ | async" sortBy="identifier"></fims-data-table>
               </div>
             </div>
           </div>
@@ -70,6 +70,6 @@
     </div>
   </div>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create subledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create account' | translate}}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['accounts/create']">
   <md-icon>add</md-icon>
 </a>

@@ -61,16 +61,16 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
     });
   }
 
-  showIdentifierValidationError(): void{
+  showIdentifierValidationError(): void {
     this.setError('identifier', 'unique', true);
     this.openDetailStep();
   }
 
-  openDetailStep(): void{
+  openDetailStep(): void {
     this.step.open();
   }
 
-  private save(): void{
+  save(): void {
     let ledger: Ledger = {
       identifier: this.form.get('identifier').value,
       type: this.form.get('type').value,
@@ -83,7 +83,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
     this.onSave.emit(ledger);
   }
 
-  private cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
   }
 }

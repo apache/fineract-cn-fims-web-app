@@ -36,7 +36,7 @@
       <th td-data-table-column>
         <span translate>Debit</span>
       </th>
-      <tr td-data-table-row *ngFor="let row of (chartOfAccountEntries | async)?.trialBalanceEntries">
+      <tr td-data-table-row *ngFor="let row of (trialBalance$ | async)?.trialBalanceEntries">
         <td td-data-table-cell>
           <a [routerLink]="['../ledgers/detail', row['ledger'].identifier]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">{{row['ledger'].identifier }} - {{row['ledger'].name }}</a>
         </td>
@@ -50,10 +50,10 @@
       <tr td-data-table-row>
         <td td-data-table-cell translate>Total</td>
         <td td-data-table-cell>
-          {{(chartOfAccountEntries | async)?.creditTotal | number}}
+          {{(trialBalance$ | async)?.creditTotal | number}}
         </td>
         <td td-data-table-cell>
-          {{(chartOfAccountEntries | async)?.debitTotal | number}}
+          {{(trialBalance$ | async)?.debitTotal | number}}
         </td>
       </tr>
     </table>

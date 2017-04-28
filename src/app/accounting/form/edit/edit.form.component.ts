@@ -27,8 +27,6 @@ import {AccountingStore} from '../../store/index';
 })
 export class EditLedgerFormComponent implements OnInit, OnDestroy {
 
-  private actionsSubscription: Subscription;
-
   private ledgerSubscription: Subscription;
 
   ledger: Ledger;
@@ -38,16 +36,11 @@ export class EditLedgerFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
       .subscribe(ledger => this.ledger = ledger);
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.ledgerSubscription.unsubscribe();
   }
 

@@ -66,12 +66,10 @@ export function reducer(state = initialState, action: ledger.Actions): State {
     case ledger.LOAD: {
       const ledger: Ledger = action.payload;
 
-      if (state.ids.indexOf(ledger.identifier) > -1) {
-        return state;
-      }
+      const newIds = state.ids.filter(id => id !== ledger.identifier);
 
       return {
-        ids: [ ...state.ids, ledger.identifier ],
+        ids: [ ...newIds, ledger.identifier ],
         topLevelIds: state.topLevelIds,
         entities: Object.assign({}, state.entities, {
           [ledger.identifier]: ledger

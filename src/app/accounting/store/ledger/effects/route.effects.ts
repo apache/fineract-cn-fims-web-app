@@ -37,7 +37,7 @@ export class LedgerRouteEffects {
     .map(action => action.payload)
     .do(payload => {
       if(payload.ledger.parentLedgerIdentifier) {
-        this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier], { relativeTo: payload.activatedRoute })
+        this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier, 'ledgers'], { relativeTo: payload.activatedRoute })
       } else {
         this.router.navigate(['../../../../'], { relativeTo: payload.activatedRoute })
       }
