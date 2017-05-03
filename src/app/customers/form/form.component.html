@@ -20,9 +20,7 @@
     <fims-customer-detail-form #detailForm [formData]="detailFormData" [editMode]="editMode"></fims-customer-detail-form>
 
     <ng-template td-step-actions>
-      <button (click)="addressStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="addressStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -31,9 +29,7 @@
     <fims-customer-address-form #addressForm [formData]="addressFormData"></fims-customer-address-form>
 
     <ng-template td-step-actions>
-      <button (click)="contactStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="contactStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -42,9 +38,7 @@
     <fims-customer-contact-form #contactForm [formData]="contactFormData"></fims-customer-contact-form>
 
     <ng-template td-step-actions>
-      <button (click)="identityCardStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="identityCardStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -53,9 +47,7 @@
     <fims-customer-identity-card-form #identityCardForm [formData]="identityCardFormData"></fims-customer-identity-card-form>
 
     <ng-template td-step-actions>
-      <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="officeStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -65,9 +57,7 @@
     <fims-customer-offices-form [preSelection]="selectedOffices" (onSelectionChange)="selectOffice($event)"></fims-customer-offices-form>
 
     <ng-template td-step-actions>
-      <button (click)="employeeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="employeeStep.open()"></fims-form-continue-action>
     </ng-template>
     <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Customer is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
     </ng-template>
@@ -79,22 +69,23 @@
     <fims-customer-employees-form [preSelection]="selectedEmployees" (onSelectionChange)="selectEmployee($event)"></fims-customer-employees-form>
 
     <ng-template td-step-actions>
-      <button (click)="customFieldsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="customFieldsStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
   <td-step #customFieldsStep label="{{'Custom fields(optional)' | translate}}" [state]="customFieldsForm.pristine ? 'none' : customFieldsForm.valid ? 'completed' : 'required'">
-
     <fims-custom-fields-component #customFieldsForm [formData]="customFieldsFormData"></fims-custom-fields-component>
-
-    <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'CREATE CUSTOMER' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'UPDATE CUSTOMER' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
-    </ng-template>
   </td-step>
 
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <fims-form-final-action
+        [resourceName]="'CUSTOMER'"
+        [editMode]="editMode"
+        [disabled]="!isValid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
 </td-steps>

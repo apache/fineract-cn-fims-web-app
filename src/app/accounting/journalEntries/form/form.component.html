@@ -44,9 +44,7 @@
           <fims-employee-select flex [preSelection]="selectedClerk" [multiple]="false" (onSelectionChange)="onClerkSelectionChange($event)" title="{{'Clerk' | translate}}"></fims-employee-select>
         </div>
       <ng-template td-step-actions>
-        <button (click)="accountsStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-        <span flex></span>
-        <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
+        <fims-form-continue-action (onContinue)="accountsStep.open()"></fims-form-continue-action>
       </ng-template>
     </td-step>
     <td-step #accountsStep label="{{'Affected Accounts' | translate}}">
@@ -121,10 +119,16 @@
           Sum of Debtors and sum of Creditors must match.
         </p>
       </div>
-      <ng-template td-step-actions>
-        <button (click)="save()" md-raised-button color="primary" [disabled]="!valid">{{'CREATE JOURNAL ENTRY' | translate}}</button>
-        <span flex></span>
-        <button (click)="onCancel()" md-button>{{'CANCEL' | translate}}</button>
+    </td-step>
+    <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+      <ng-template td-step-summary>
+        <fims-form-final-action
+          [resourceName]="'JOURNAL ENTRY'"
+          [editMode]="false"
+          [disabled]="!valid"
+          (onCancel)="onCancel()"
+          (onSave)="save()">
+        </fims-form-final-action>
       </ng-template>
     </td-step>
   </td-steps>

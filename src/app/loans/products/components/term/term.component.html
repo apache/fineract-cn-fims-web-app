@@ -18,7 +18,7 @@
   <div layout-gt-xs="row">
     <md-input-container layout-margin>
       <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
-      <md-hint class="tc-red-600" *ngIf="form.get('term').errors?.minValue">{{ 'Value must be greater than' | translate:{ value: form.get('term').errors?.minValue.value} }}</md-hint>
+      <md-error *ngIf="form.get('term').errors?.minValue">{{ 'Value must be greater than' | translate:{ value: form.get('term').errors?.minValue.value} }}</md-error>
     </md-input-container>
     <md-radio-group formControlName="temporalUnit">
       <md-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>

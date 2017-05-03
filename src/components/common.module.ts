@@ -32,6 +32,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {MinMaxComponent} from './min-max/min-max.component';
 import {ValidateOnBlurDirective} from './validate-on-blur.directive';
 import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
+import {FormContinueActionComponent} from './forms/form-continue-action.component';
+import {FormFinalActionComponent} from './forms/form-final-action.component';
 
 @NgModule({
   imports: [
@@ -54,7 +56,9 @@ import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
     StateDisplayComponent,
     CommandDisplayComponent,
     MinMaxComponent,
-    ValidateOnBlurDirective
+    ValidateOnBlurDirective,
+    FormFinalActionComponent,
+    FormContinueActionComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -74,7 +78,9 @@ import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
     CovalentCoreModule,
     ReactiveFormsModule,
     TranslateModule,
-    ValidateOnBlurDirective
+    ValidateOnBlurDirective,
+    FormFinalActionComponent,
+    FormContinueActionComponent
   ]
 })
 export class CommonModule{}

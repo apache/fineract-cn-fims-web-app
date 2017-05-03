@@ -24,19 +24,19 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Number' | translate}}" formControlName="number" tdAutoTrim/>
-      <md-error *ngIf="!form.get('number').pristine && form.get('number').hasError('required')" translate>Required</md-error>
+      <md-error *ngIf="form.get('number').hasError('required')" translate>Required</md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin>
       <input mdInput type="date" placeholder="{{'Expiration date' | translate}}" formControlName="expirationDate"/>
-      <md-error *ngIf="!form.get('expirationDate').pristine && form.get('expirationDate').hasError('required')" translate>Required</md-error>
+      <md-error *ngIf="form.get('expirationDate').hasError('required')" translate>Required</md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Issuer' | translate}}" formControlName="issuer" tdAutoTrim/>
-      <md-error *ngIf="!form.get('issuer').pristine && form.get('issuer').hasError('required')" translate>Required</md-error>
+      <md-error *ngIf="form.get('issuer').hasError('required')" translate>Required</md-error>
     </md-input-container>
   </div>
 </form>

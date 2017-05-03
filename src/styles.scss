@@ -25,3 +25,8 @@ a[md-icon-button] {
 .md-tab-label {
   flex-grow: 1;
 }
+
+// Disable final step in stepper components
+td-steps > div:last-child > td-step-header {
+  pointer-events: none;
+}

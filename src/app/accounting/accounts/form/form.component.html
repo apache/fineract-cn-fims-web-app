@@ -28,7 +28,7 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-          <md-error *ngIf="!form.get('name').pristine && form.get('name').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -38,14 +38,13 @@
       </div>
     </form>
     <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!valid">
-        {{'CREATE ACCOUNT' | translate}}
-      </button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!valid">
-        {{'UPDATE ACCOUNT' | translate}}
-      </button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-final-action
+        [resourceName]="'ACCOUNT'"
+        [editMode]="editMode"
+        [disabled]="!valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
     </ng-template>
   </td-step>
 </td-steps>

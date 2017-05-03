@@ -29,7 +29,7 @@
       </md-input-container>
       <md-input-container layout-margin>
         <input mdInput type="date" placeholder="{{'End date' | translate}}" formControlName="endDate">
-        <md-hint *ngIf="form.hasError('rangeInvalid')" class="tc-red-600" translate>Invalid date range</md-hint>
+        <md-error *ngIf="form.hasError('rangeInvalid')" translate>Invalid date range</md-error>
       </md-input-container>
       <span>
         <button layout-margin md-button md-icon-button (click)="fetchJournalEntries()" [disabled]="!form.valid"><md-icon>search</md-icon></button>

@@ -18,20 +18,16 @@
   <input mdInput placeholder="{{placeholder | translate}}" [formControlName]="controlName"
           [readonly]="readonly"
           tdAutoTrim/>
-  <md-hint
-    *ngIf="!form.controls[controlName].pristine && form.controls[controlName].hasError('required')"
-    class="tc-red-600" translate>Unique, Required.
-  </md-hint>
-  <md-hint
-    *ngIf="!form.controls[controlName].pristine && form.controls[controlName].hasError('maxlength')"
-    class="tc-red-600" translate>Only 32 characters allowed.
-  </md-hint>
-  <md-hint
-    *ngIf="!form.controls[controlName].pristine && form.controls[controlName].hasError('unique')"
-    class="tc-red-600" translate>Please enter a different identifier.
-  </md-hint>
-  <md-hint
-    *ngIf="!form.controls[controlName].pristine && form.controls[controlName].hasError('urlSafe')"
-    class="tc-red-600" translate>Only alphabetic, decimal digits, - _ . ! ~ * ' ( ) characters allowed
-  </md-hint>
+  <md-error *ngIf="form.controls[controlName].hasError('required')" translate>
+    Unique, Required.
+  </md-error>
+  <md-error *ngIf="form.controls[controlName].hasError('maxlength')" translate>
+    Only 32 characters allowed.
+  </md-error>
+  <md-error *ngIf="form.controls[controlName].hasError('unique')" translate>
+    Please enter a different identifier.
+  </md-error>
+  <md-error *ngIf="form.controls[controlName].hasError('urlSafe')" translate>
+    Only alphabetic, decimal digits, - _ . ! ~ * ' ( ) characters allowed
+  </md-error>
 </md-input-container>

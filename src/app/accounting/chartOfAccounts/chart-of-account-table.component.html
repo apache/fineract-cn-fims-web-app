@@ -28,7 +28,7 @@
   </tr>
 </table>
 
-<div class="md-padding" *ngIf="!chartOfAccountEntries.length > 0 && !loading" layout="row" layout-align="center center">
+<div class="md-padding" *ngIf="!(chartOfAccountEntries.length > 0) && !loading" layout="row" layout-align="center center">
   <h3 translate>No data for chart of accounts available.</h3>
 </div>
 
