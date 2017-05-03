@@ -19,10 +19,13 @@ import {Office} from '../../../services/office/domain/office.model';
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {OfficeFormComponent} from './form.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {CovalentCoreModule} from '@covalent/core';
+import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule, FormControl, AbstractControl} from '@angular/forms';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
+import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
+import {MdInputModule} from '@angular/material';
 
 let officeTemplate: Office = {
   identifier: 'test',
@@ -47,12 +50,19 @@ describe('Test office form', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule,
+        MdInputModule,
+        CovalentStepsModule,
         TranslateModule.forRoot(),
         NoopAnimationsModule
       ],
       providers: [],
-      declarations: [IdInputComponent, OfficeFormComponent, TestComponent]
+      declarations: [
+        IdInputComponent,
+        FormContinueActionComponent,
+        FormFinalActionComponent,
+        OfficeFormComponent,
+        TestComponent
+      ]
     });
 
     fixture = TestBed.createComponent(TestComponent);

@@ -17,7 +17,7 @@
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
+import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
 import {EditEmployeeFormComponent} from './edit.form.component';
 import {EmployeeFormComponent} from '../form.component';
 import {SelectListComponent} from '../../../../components/select-list/select-list.component';
@@ -32,6 +32,9 @@ import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormFinalActionComponent} from '../../../../components/forms/form-final-action.component';
+import {FormContinueActionComponent} from '../../../../components/forms/form-continue-action.component';
+import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 
 let userMock: User = {
   identifier: 'test',
@@ -74,6 +77,8 @@ describe('Test employee form component', () => {
       declarations: [
         LayoutCardOverComponent,
         IdInputComponent,
+        FormContinueActionComponent,
+        FormFinalActionComponent,
         SelectListComponent,
         EmployeeFormComponent,
         EditEmployeeFormComponent,
@@ -81,7 +86,11 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule,
+        MdInputModule,
+        MdCardModule,
+        MdSelectModule,
+        MdOptionModule,
+        CovalentStepsModule,
         NoopAnimationsModule
       ],
       providers: [
