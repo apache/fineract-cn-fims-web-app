@@ -38,6 +38,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   tenant$: Observable<string>;
 
+  username$: Observable<string>;
+
   constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private store: Store<fromRoot.State>) {}
 
   ngOnInit(): void {
@@ -50,6 +52,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     });
 
     this.tenant$ = this.store.select(fromRoot.getTenant);
+    this.username$ = this.store.select(fromRoot.getUsername)
   }
 
   ngAfterViewInit(): void {

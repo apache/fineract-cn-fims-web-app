@@ -21,12 +21,23 @@
         <span layout="row" layout-align="start center">
           <md-icon *ngIf="icon">{{icon}}</md-icon>
           <md-icon *ngIf="logo" class="md-icon-logo"></md-icon>
-          <span class="md-subhead">{{tenant$ | async}}</span>
+          <span class="md-subhead" mdTooltip="{{ 'Tenant' | translate }}" mdTooltipPosition="right">{{tenant$ | async}}</span>
         </span>
       </div>
       <md-menu #menu="mdMenu" x-position="before">
-        <button md-menu-item (click)="goToSettings()">{{'Settings' | translate}}</button>
-        <button md-menu-item (click)="logout()">{{'Sign Out' | translate}}</button>
+        <button md-menu-item [disabled]="true">
+          <md-icon>account_circle</md-icon>
+          <span>{{username$ | async}}</span>
+        </button>
+        <hr>
+        <button md-menu-item (click)="goToSettings()">
+          <md-icon>settings</md-icon>
+          <span>{{'Settings' | translate}}</span>
+        </button>
+        <button md-menu-item (click)="logout()">
+          <md-icon>exit_to_app</md-icon>
+          <span>{{'Sign Out' | translate}}</span>
+        </button>
       </md-menu>
       <span flex></span>
       <button md-icon-button [md-menu-trigger-for]="menu">
