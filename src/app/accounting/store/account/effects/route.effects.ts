@@ -28,8 +28,19 @@ export class AccountRouteEffects {
 
   @Effect({ dispatch: false })
   createAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.CREATE_SUCCESS, accountActions.UPDATE_SUCCESS)
+    .ofType(accountActions.CREATE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+
+  @Effect({ dispatch: false })
+  updateAccountSuccess$: Observable<Action> = this.actions$
+    .ofType(accountActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
+  @Effect({ dispatch: false })
+  deleteAccountSuccess$: Observable<Action> = this.actions$
+    .ofType(accountActions.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../../../ledgers/detail', payload.resource.ledger], { relativeTo: payload.activatedRoute }));
 }

@@ -1,4 +1,5 @@
 {
+  "Account with value": "Account {{value}}",
   "BEGINNING_BALANCE": "Flat",
   "CURRENT_BALANCE": "Declining",
   "Issued by": "Issued by {{value}}",
@@ -12,5 +13,6 @@
   "Value must be smaller than": "Value must be smaller than {{value}}",
   "Must have decimal places": "Must have {{value}} decimal places",
   "Customer is assigned to office:": "Customer is assigned to office: {{value}}",
-  "Ledger with name": "Ledger {{value}}"
+  "Ledger with name": "Ledger {{value}}",
+  "Subledgers of": "Subledgers of {{value}}"
 }

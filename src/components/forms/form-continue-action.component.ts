@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
-  selector: 'dashboard',
-  templateUrl: './dashboard.component.html'
+  selector: 'fims-form-continue-action',
+  templateUrl: './form-continue-action.component.html'
 })
-export class DashboardComponent implements AfterViewInit {
+export class FormContinueActionComponent {
 
-  constructor() {}
+  @Output() onContinue = new EventEmitter<any>();
 
-  ngAfterViewInit(): void {}
+  continueClick() {
+    this.onContinue.emit();
+  }
+
 }

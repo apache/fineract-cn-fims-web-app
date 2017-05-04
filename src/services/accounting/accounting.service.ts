@@ -19,7 +19,6 @@ import {HttpClient} from '../http/http.service';
 import {Ledger} from './domain/ledger.model';
 import {Observable} from 'rxjs';
 import {Account} from './domain/account.model';
-import {AccountEntry} from './domain/account-entry.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {AccountCommand} from './domain/account-command.model';
 import {JournalEntry} from './domain/journal-entry.model';
@@ -29,6 +28,7 @@ import {AccountPage} from './domain/account-page.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {buildSearchParams, buildDateRangeParam} from '../domain/paging/search-param.builder';
 import {LedgerPage} from './domain/ledger-page.model';
+import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 
 @Injectable()
 export class AccountingService{
@@ -97,6 +97,10 @@ export class AccountingService{
     return this.http.put(`${this.baseUrl}/accounts/${account.identifier}`, account);
   }
 
+  public deleteAccount(account: Account): Observable<void>{
+    return this.http.delete(`${this.baseUrl}/accounts/${account.identifier}`)
+  }
+
   public fetchAccountEntries(identifier: string, startDate: string, endDate: string, fetchRequest?: FetchRequest): Observable<AccountEntryPage>{
     let params: URLSearchParams = buildSearchParams(fetchRequest);
     let dateRange = buildDateRangeParam(startDate, endDate);
@@ -142,5 +146,9 @@ export class AccountingService{
       search: params
     };
     return this.http.get(`${this.baseUrl}/trialbalance`, requestOptions)
+  }
+
+  public getChartOfAccounts(): Observable<ChartOfAccountEntry[]> {
+    return this.http.get(`${this.baseUrl}/chartofaccounts`);
   }
 }

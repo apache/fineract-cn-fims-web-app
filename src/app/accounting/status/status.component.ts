@@ -52,7 +52,8 @@ export class AccountStatusComponent implements OnInit{
     };
     this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
       accountId: this.accountIdentifier,
-      command: command
+      command: command,
+      activatedRoute: this.route
     } });
   }
 

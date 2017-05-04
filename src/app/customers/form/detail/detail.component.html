@@ -21,9 +21,9 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
-      <md-hint *ngIf="!form.controls.firstName.pristine && form.controls.firstName.errors?.required"
-               class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('firstName').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
@@ -35,17 +35,17 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
-      <md-hint *ngIf="!form.controls.lastName.pristine && form.controls.lastName.errors?.required"
-               class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('lastName').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin>
       <input mdInput type="date" placeholder="{{'Day of birth' | translate}}" formControlName="dayOfBirth"/>
-      <md-hint *ngIf="!form.controls.dayOfBirth.pristine && form.controls.dayOfBirth.errors?.required"
-               class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('dayOfBirth').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
 </form>

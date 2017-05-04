@@ -34,7 +34,7 @@ export class RoleNotificationEffects {
       message: 'Role is going to be saved'
     }));
 
-  @Effect()
+  @Effect({ dispatch: false })
   deleteRoleSuccess$: Observable<Action> = this.actions$
     .ofType(roleActions.DELETE_SUCCESS)
     .do(() => this.notificationService.send({

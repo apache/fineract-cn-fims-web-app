@@ -32,4 +32,10 @@ export class CustomerTasksRouteEffects {
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
+  @Effect({ dispatch: false })
+  executeCustomerTaskSuccess$: Observable<Action> = this.actions$
+    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
 }

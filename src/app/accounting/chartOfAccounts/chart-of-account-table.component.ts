@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-import * as task from './task.actions';
+import {Component, Input} from '@angular/core';
+import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-account-entry.model';
 
-export interface State {}
+@Component({
+  selector: 'fims-chart-of-account-table',
+  templateUrl: './chart-of-account-table.component.html'
+})
+export class ChartOfAccountTableComponent {
 
-export const initialState: State = {};
+  @Input() chartOfAccountEntries: ChartOfAccountEntry[] = [];
 
-export function reducer(state = initialState, action: task.Actions): State {
+  @Input() loading: boolean;
 
-  switch (action.type) {
-
-    case task.EXECUTE_COMMAND: {
-      return state;
-    }
-
-    default: {
-      return state;
-    }
-  }
 }

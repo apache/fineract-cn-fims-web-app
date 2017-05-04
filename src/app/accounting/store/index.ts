@@ -18,11 +18,12 @@ import * as fromRoot from '../../reducers';
 import * as fromLedgers from './ledger/ledgers.reducer';
 import * as fromLedgerForm from './ledger/form.reducer';
 import * as fromTrialBalance from './ledger/trial-balance.reducer';
+import * as fromChartOfAccounts from './ledger/chart-of-account.reducer';
 import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
 import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer';
+import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountForm from './account/form.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
-import * as fromAccountCommands from './account/task/tasks.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
@@ -37,11 +38,11 @@ export interface State extends fromRoot.State{
   accounts: ResourceState;
   accountForm: fromAccountForm.State;
   accountEntrySearch: fromAccountEntrySearch.State;
-  accountCommands: fromAccountCommands.State;
 
   ledgers: fromLedgers.State;
   ledgerForm: fromLedgerForm.State;
   trialBalance: fromTrialBalance.State;
+  chartOfAccounts: fromChartOfAccounts.State;
   journalEntrySearch: fromJournalEntrySearch.State;
   journalEntryForm: fromJournalEntryForm.State;
 }
@@ -50,14 +51,14 @@ const reducers = {
   ledgers: fromLedgers.reducer,
   ledgerForm: fromLedgerForm.reducer,
   trialBalance: fromTrialBalance.reducer,
+  chartOfAccounts: fromChartOfAccounts.reducer,
 
   journalEntrySearch: fromJournalEntrySearch.reducer,
   journalEntryForm: fromJournalEntryForm.reducer,
 
-  accounts: createResourceReducer('Account'),
+  accounts: createResourceReducer('Account', fromAccounts.reducer),
   accountForm: fromAccountForm.reducer,
   accountEntrySearch: fromAccountEntrySearch.reducer,
-  accountCommands: fromAccountCommands.reducer,
 };
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -78,6 +79,8 @@ export const getLedgerFormState = (state: State) => state.ledgerForm;
 
 export const getTrialBalanceState = (state: State) => state.trialBalance;
 
+export const getChartOfAccountsState = (state: State) => state.chartOfAccounts;
+
 export const getLedgerEntities = createSelector(getLedgerState, fromLedgers.getEntities);
 export const getLedgersLoadedAt = createSelector(getLedgerState, fromLedgers.getLoadedAt);
 export const getLedgerTopLevelIds = createSelector(getLedgerState, fromLedgers.getTopLevelIds);
@@ -88,6 +91,10 @@ export const getAllTopLevelLedgerEntities = createSelector(getLedgerTopLevelIds,
 });
 
 export const getTrialBalance = createSelector(getTrialBalanceState, fromTrialBalance.getTrialBalance);
+
+export const getChartOfAccountEntries = createSelector(getChartOfAccountsState, fromChartOfAccounts.getChartOfAccountEntries);
+
+export const getChartOfAccountLoading = createSelector(getChartOfAccountsState, fromChartOfAccounts.getLoading);
 
 /**
  * Journal Entries Selectors

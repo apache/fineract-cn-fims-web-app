@@ -23,7 +23,7 @@ import {FetchRequest} from '../../../../services/domain/paging/fetch-request.mod
 import {ActivatedRoute} from '@angular/router';
 import {RoutePayload} from '../../../../components/store/route-payload';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
 } from '../../../../components/store/resource.reducer';
 
@@ -37,6 +37,10 @@ export const CREATE_FAIL = type('[Account] Create Fail');
 export const UPDATE = type('[Account] Update');
 export const UPDATE_SUCCESS = type('[Account] Update Success');
 export const UPDATE_FAIL = type('[Account] Update Fail');
+
+export const DELETE = type('[Account] Delete');
+export const DELETE_SUCCESS = type('[Account] Delete Success');
+export const DELETE_FAIL = type('[Account] Delete Fail');
 
 export interface AccountRoutePayload extends RoutePayload{
   account: Account;
@@ -90,6 +94,24 @@ export class UpdateAccountFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class DeleteAccountAction implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: AccountRoutePayload) { }
+}
+
+export class DeleteAccountSuccessAction implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: DeleteResourceSuccessPayload) { }
+}
+
+export class DeleteAccountFailAction implements Action {
+  readonly type = DELETE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -98,4 +120,7 @@ export type Actions
   | CreateAccountFailAction
   | UpdateAccountAction
   | UpdateAccountSuccessAction
-  | UpdateAccountFailAction;
+  | UpdateAccountFailAction
+  | DeleteAccountAction
+  | DeleteAccountSuccessAction
+  | DeleteAccountFailAction;

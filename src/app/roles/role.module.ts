@@ -19,7 +19,6 @@ import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RoleComponent} from './role.component';
 import {RoleRoutes} from './role.routing';
-import {CovalentCoreModule} from '@covalent/core';
 import {RoleFormComponent} from './form/form.component';
 import {CreateRoleFormComponent} from './form/create/create.form.component';
 import {EditRoleFormComponent} from './form/edit/edit.form.component';
@@ -31,6 +30,9 @@ import {RoleNotificationEffects} from './store/effects/notification.effects';
 import {EffectsModule} from '@ngrx/effects';
 import {RoleRouteEffects} from './store/effects/route.effects';
 import {RoleApiEffects} from './store/effects/service.effects';
+import {RoleDetailComponent} from './detail/role.detail.component';
+import {FormPermissionService} from './helper/form-permission.service';
+import {PermissionListItemComponent} from './components/permission-list-item.component';
 
 @NgModule({
   imports: [
@@ -45,9 +47,12 @@ import {RoleApiEffects} from './store/effects/service.effects';
     RoleComponent,
     RoleFormComponent,
     CreateRoleFormComponent,
-    EditRoleFormComponent
+    EditRoleFormComponent,
+    RoleDetailComponent,
+    PermissionListItemComponent
   ],
   providers: [
+    FormPermissionService,
     RoleExistsGuard,
     { provide: RolesStore, useFactory: roleStoreFactory, deps: [Store]}
   ],

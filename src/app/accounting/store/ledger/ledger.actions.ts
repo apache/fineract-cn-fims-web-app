@@ -21,6 +21,7 @@ import {Error} from '../../../../services/domain/error.model';
 import {TrialBalance} from '../../../../services/accounting/domain/trial-balance.model';
 import {RoutePayload} from '../../../../components/store/route-payload';
 import {LedgerPage} from '../../../../services/accounting/domain/ledger-page.model';
+import {ChartOfAccountEntry} from '../../../../services/accounting/domain/chart-of-account-entry.model';
 
 export const LOAD_ALL_TOP_LEVEL = type('[Ledger] Load All Top Level');
 export const LOAD_ALL_TOP_LEVEL_COMPLETE = type('[Ledger] Load All Top Level Complete');
@@ -47,6 +48,9 @@ export const DELETE_FAIL = type('[Ledger] Delete Fail');
 
 export const LOAD_TRIAL_BALANCE = type('[Ledger] Load Trial Balance');
 export const LOAD_TRIAL_BALANCE_COMPLETE = type('[Ledger] Load Trial Balance Complete');
+
+export const LOAD_CHART_OF_ACCOUNTS = type('[Ledger] Load Chart Of Accounts');
+export const LOAD_CHART_OF_ACCOUNTS_COMPLETE = type('[Ledger] Load Chart Of Accounts Complete');
 
 export interface CreateSubLedgerPayload extends RoutePayload{
   parentLedgerId: string;
@@ -165,6 +169,18 @@ export class LoadTrialBalanceActionComplete implements Action {
   constructor(public payload: TrialBalance) { }
 }
 
+export class LoadChartOfAccountsAction implements Action {
+  readonly type = LOAD_CHART_OF_ACCOUNTS;
+
+  constructor() { }
+}
+
+export class LoadChartOfAccountsActionComplete implements Action {
+  readonly type = LOAD_CHART_OF_ACCOUNTS_COMPLETE;
+
+  constructor(public payload: ChartOfAccountEntry[]) { }
+}
+
 export type Actions
   = LoadAllTopLevel
   | LoadAllTopLevelComplete
@@ -183,4 +199,6 @@ export type Actions
   | DeleteLedgerSuccessAction
   | DeleteLedgerFailAction
   | LoadTrialBalanceAction
-  | LoadTrialBalanceActionComplete;
+  | LoadTrialBalanceActionComplete
+  | LoadChartOfAccountsAction
+  | LoadChartOfAccountsActionComplete;

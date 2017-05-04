@@ -17,7 +17,7 @@
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
+import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
 import {EmployeeFormComponent, EmployeeSaveEvent} from '../form.component';
 import {SelectListComponent} from '../../../../components/select-list/select-list.component';
 import {IdInputComponent} from '../../../../components/id-input/id-input.component';
@@ -30,6 +30,9 @@ import {EmployeesStore} from '../../store/index';
 import {CREATE} from '../../store/employee.actions';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormContinueActionComponent} from '../../../../components/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../../../components/forms/form-final-action.component';
+import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 
 
 let eventMock: EmployeeSaveEvent = {
@@ -67,6 +70,8 @@ describe('Test employee form component', () => {
       declarations: [
         LayoutCardOverComponent,
         IdInputComponent,
+        FormContinueActionComponent,
+        FormFinalActionComponent,
         SelectListComponent,
         EmployeeFormComponent,
         CreateEmployeeFormComponent,
@@ -74,7 +79,11 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule,
+        MdInputModule,
+        MdCardModule,
+        MdSelectModule,
+        MdOptionModule,
+        CovalentStepsModule,
         NoopAnimationsModule
       ],
       providers: [

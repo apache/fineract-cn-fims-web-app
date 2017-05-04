@@ -33,7 +33,7 @@ export interface State extends fromRoot.State{
 
 const reducers = {
   roles: createResourceReducer('Role'),
-  rolesForm: fromRoleForm.reducer,
+  roleForm: fromRoleForm.reducer,
 };
 
 export const roleModuleReducer: ActionReducer<State> = createReducer(reducers);

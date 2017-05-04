@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, ViewChild, OnDestroy} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, ViewChild, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
 import {Subscription} from 'rxjs';
@@ -25,7 +25,7 @@ import {CREATE} from '../../store/role.actions';
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateRoleFormComponent implements OnDestroy{
+export class CreateRoleFormComponent implements OnInit, OnDestroy{
 
   private formStateSubscription: Subscription;
 
@@ -33,12 +33,13 @@ export class CreateRoleFormComponent implements OnDestroy{
 
   @ViewChild('form') formComponent;
 
-  constructor(private router: Router, private store: RolesStore){
-    this.formStateSubscription = this.store.select(fromRoles.getRoleFormState)
-      .subscribe((payload: { error: Error }) => {
-        if(!payload || !payload.error) return;
+  constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
-        switch(payload.error.status){
+  ngOnInit(): void {
+    this.formStateSubscription = this.store.select(fromRoles.getRoleFormState)
+      .filter(payload => !!payload.error)
+      .subscribe((payload: { error: Error }) => {
+        switch(payload.error.status) {
           case 409:
             let detailForm = this.formComponent.detailForm;
             let errors = detailForm.get('identifier').errors || {};
@@ -54,14 +55,17 @@ export class CreateRoleFormComponent implements OnDestroy{
   }
 
   onSave(role: Role): void {
-    this.store.dispatch({ type: CREATE, payload: role })
+    this.store.dispatch({ type: CREATE, payload: {
+      role,
+      activatedRoute: this.route
+    } })
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
-    this.router.navigate(['/roles']);
+  navigateAway(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

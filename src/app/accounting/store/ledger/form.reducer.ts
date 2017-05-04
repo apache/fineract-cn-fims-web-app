@@ -27,12 +27,14 @@ export function reducer(state = initialState, action: ledger.Actions): State {
   switch (action.type) {
 
     case ledger.CREATE_FAIL:
+    case ledger.CREATE_SUB_LEDGER_FAIL:
     case ledger.UPDATE_FAIL:
       return {
         error: action.payload
       };
 
     case ledger.CREATE_SUCCESS:
+    case ledger.CREATE_SUB_LEDGER_SUCCESS:
     case ledger.UPDATE_SUCCESS:
       return {};
 

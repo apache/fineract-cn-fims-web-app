@@ -21,9 +21,9 @@
   {{'Ledger' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Accounts for ledger' | translate:{ value: ledger.identifier } }}">
-  <fims-data-table flex (onFetch)="fetchAccounts($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="accountData$ | async" [loading]="loading$ | async" sortBy="identifier"></fims-data-table>
+<fims-layout-card-over title="{{'Subledgers of' | translate:{ value: ledger.identifier } }}">
+  <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add account' | translate}}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['create']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add subledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
   <md-icon>add</md-icon>
 </a>

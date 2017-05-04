@@ -21,16 +21,14 @@ import {NgModule} from '@angular/core';
 import {GeneralLedgerComponent} from './general-ledger.component';
 import {TrailBalanceComponent} from './trailBalance/trial-balance.component';
 import {AccountComponent} from './accounts/account.component';
-import {SubLedgerDetailComponent} from './sub-ledger.detail.component';
-import {AccountResolver} from './accounts/account.resolver';
+import {SubLedgerDetailComponent} from './subLedger/sub-ledger.detail.component';
 import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
 import {AccountActivityComponent} from './activity/activity.component';
 import {CommandsResolver} from './activity/commands.resolver';
 import {AccountFormComponent} from './accounts/form/form.component';
 import {CreateAccountFormComponent} from './accounts/form/create/create.form.component';
-import {AccountListComponent} from './accounts/account.list.component';
-import {SubLedgerComponent} from './sub-ledger.component';
+import {SubLedgerComponent} from './subLedger/sub-ledger.component';
 import {EditAccountFormComponent} from './accounts/form/edit/edit.form.component';
 import {JournalEntryListComponent} from './journalEntries/journal-entry.list.component';
 import {JournalEntryFormComponent} from './journalEntries/form/form.component';
@@ -55,6 +53,10 @@ import {JournalEntryApiEffects} from './store/ledger/journal-entry/effects/servi
 import {LedgerNotificationEffects} from './store/ledger/effects/notification.effects';
 import {LedgerRouteEffects} from './store/ledger/effects/route.effects';
 import {LedgerApiEffects} from './store/ledger/effects/service.effects';
+import {AccountCommandRouteEffects} from './store/account/task/effects/route.effects';
+import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
+import {ChartOfAccountTableComponent} from './chartOfAccounts/chart-of-account-table.component';
+import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 
 @NgModule({
   imports: [
@@ -73,18 +75,21 @@ import {LedgerApiEffects} from './store/ledger/effects/service.effects';
     EffectsModule.run(AccountNotificationEffects),
     EffectsModule.run(AccountEntryApiEffects),
     EffectsModule.run(AccountCommandApiEffects),
+    EffectsModule.run(AccountCommandRouteEffects),
     EffectsModule.run(AccountCommandNotificationEffects),
   ],
   declarations: [
     GeneralLedgerComponent,
     SubLedgerComponent,
+    SubLedgerListComponent,
     SubLedgerDetailComponent,
     LedgerFormComponent,
     CreateLedgerFormComponent,
     EditLedgerFormComponent,
     TrailBalanceComponent,
+    ChartOfAccountComponent,
+    ChartOfAccountTableComponent,
     AccountComponent,
-    AccountListComponent,
     AccountEntryListComponent,
     AccountDetailComponent,
     AccountStatusComponent,
@@ -96,7 +101,6 @@ import {LedgerApiEffects} from './store/ledger/effects/service.effects';
     JournalEntryFormComponent
   ],
   providers: [
-    AccountResolver,
     CommandsResolver,
     LedgerExistsGuard,
     AccountExistsGuard,

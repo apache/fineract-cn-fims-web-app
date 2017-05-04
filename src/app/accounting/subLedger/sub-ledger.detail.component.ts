@@ -15,57 +15,67 @@
  */
 import {OnInit, Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Ledger} from '../../services/accounting/domain/ledger.model';
-import {TableData} from '../../components/data-table/data-table.component';
+import {Ledger} from '../../../services/accounting/domain/ledger.model';
+import {TableData, TableFetchRequest} from '../../../components/data-table/data-table.component';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';
-import * as fromAccounting from './store';
-import {SelectAction, DELETE} from './store/ledger/ledger.actions';
-import {AccountingStore} from './store/index';
+import * as fromAccounting from '../store';
+import * as fromRoot from '../../reducers';
+import {SelectAction, DELETE} from '../store/ledger/ledger.actions';
+import {AccountingStore} from '../store/index';
+import {SEARCH_BY_LEDGER} from '../../reducers/account/account.actions';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {Account} from '../../../services/accounting/domain/account.model';
 
 @Component({
   templateUrl: './sub-ledger.detail.component.html'
 })
 export class SubLedgerDetailComponent implements OnInit, OnDestroy{
 
-  private actionsSubscription: Subscription;
-
   private ledgerSubscription: Subscription;
 
-  private _ledger: Ledger;
+  private lastFetchRequest: FetchRequest = {};
 
-  ledgerData: TableData = {
-    totalElements: 0,
-    totalPages: 1,
-    data: []
-  };
+  ledger: Ledger;
+
+  accountData$: Observable<TableData>;
+
+  loading$: Observable<boolean>;
 
   columns: any[] = [
-    { name: 'identifier', label: 'Id', tooltip: 'Id' },
-    { name: 'name', label: 'Name', tooltip: 'Name' },
-    { name: 'description', label: 'Description', tooltip: 'Description' }
+    { name: 'identifier', label: 'Id' },
+    { name: 'name', label: 'Name' },
+    { name: 'state', label: 'State' },
+    { name: 'balance', label: 'Balance' }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private dialogService: TdDialogService, private translate: TranslateService, private store: AccountingStore){}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
       .filter(ledger => !!ledger)
-      .subscribe(ledger => this.ledger = ledger);
+      .subscribe(ledger => {
+        this.ledger = ledger;
+        this.fetchAccounts();
+      });
+
+    this.accountData$ = this.store.select(fromRoot.getAccountSearchResults)
+      .map(accountPage => ({
+        data: accountPage.accounts,
+        totalElements: accountPage.totalElements,
+        totalPages: accountPage.totalPages
+      }));
+
+    this.loading$ = this.store.select(fromRoot.getAccountSearchLoading);
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.ledgerSubscription.unsubscribe();
   }
 
-  rowSelect(ledger: Ledger): void{
-    this.router.navigate(['../../', ledger.identifier], { relativeTo: this.route });
+  rowSelect(account: Account): void{
+    this.router.navigate(['../../../../accounts/detail', account.identifier], { relativeTo: this.route });
   }
 
   confirmDeletion(): Observable<boolean>{
@@ -94,16 +104,16 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy{
       });
   }
 
-  set ledger(ledger: Ledger) {
-    this._ledger = ledger;
-
-    if(this.ledger.subLedgers) {
-      this.ledgerData.data = ledger.subLedgers;
-      this.ledgerData.totalElements = ledger.subLedgers.length;
+  fetchAccounts(fetchRequest?: TableFetchRequest): void{
+    if(fetchRequest){
+      this.lastFetchRequest = fetchRequest;
     }
+
+    this.store.dispatch({ type: SEARCH_BY_LEDGER, payload: {
+      ledgerId: this.ledger.identifier,
+      fetchRequest: this.lastFetchRequest
+    } });
+
   }
 
-  get ledger(): Ledger {
-    return this._ledger;
-  }
 }

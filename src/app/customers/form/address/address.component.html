@@ -18,28 +18,25 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
-      <md-hint
-        *ngIf="!form.get('street').pristine && form.get('street').hasError('required')"
-        class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('street').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput flex placeholder="{{'City' | translate}}" formControlName="city" tdAutoTrim/>
-      <md-hint
-        *ngIf="!form.get('city').pristine && form.get('city').hasError('required')"
-        class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('city').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Postal code(optional)' | translate}}" formControlName="postalCode" tdAutoTrim/>
-      <md-hint
-        *ngIf="!form.get('postalCode').pristine && form.get('postalCode').hasError('maxlength')"
-        class="tc-red-600" translate>Only 5 figures allowed
-      </md-hint>
+      <md-error *ngIf="form.get('postalCode').hasError('maxlength')" translate>
+        Only 5 figures allowed
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
@@ -50,19 +47,17 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Country short name' | translate}}" formControlName="countryShortName" tdAutoTrim/>
-      <md-hint
-        *ngIf="!form.get('countryShortName').pristine && form.get('countryShortName').errors !== null"
-        class="tc-red-600" translate>Required, Only 2 characters allowed
-      </md-hint>
+      <md-error *ngIf="form.get('countryShortName').errors !== null" translate>
+        Required, Only 2 characters allowed
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" tdAutoTrim/>
-      <md-hint
-        *ngIf="!form.get('country').pristine && form.get('country').hasError('required')"
-        class="tc-red-600" translate>Required
-      </md-hint>
+      <md-error *ngIf="form.get('country').hasError('required')" translate>
+        Required
+      </md-error>
     </md-input-container>
   </div>
 </form>

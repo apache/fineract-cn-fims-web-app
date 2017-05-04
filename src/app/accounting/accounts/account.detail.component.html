@@ -15,13 +15,16 @@
 -->
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['/accounting/ledgers/detail', account.ledger, 'accounts']">
+  <a md-icon-button title="{{'Go to ledger' | translate}}" [routerLink]="['../../../ledgers/detail', account.ledger ]">
     <md-icon>keyboard_arrow_left</md-icon>
   </a>
-  {{'Accounts' | translate}}
+  {{'Ledger' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Account' | translate:{ value: account.identifier } }}">
+<fims-layout-card-over title="{{'Account with value' | translate:{ value: account.identifier } }}" [subTitle]="account.name">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <button md-icon-button (click)="deleteAccount()" title="{{'Delete this account' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
   <div class="md-content" class="inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
@@ -43,12 +46,6 @@
                 <md-icon md-list-avatar>event</md-icon>
                 <h3 md-line translate>Activities</h3>
                 <p md-line translate>Recent activities</p>
-              </a>
-              <h3 md-subheader translate>Navigation</h3>
-              <a md-list-item [routerLink]="['/accounting/ledgers/detail', account.ledger]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">
-                <md-icon md-list-avatar>book</md-icon>
-                <h3 md-line translate>Ledger</h3>
-                <p md-line translate>Navigate to ledger of this account</p>
               </a>
               <a *ngIf="account.referenceAccount" md-list-item [routerLink]="['../', account.referenceAccount]">
                 <md-icon md-list-avatar>view_module</md-icon>

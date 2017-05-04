@@ -49,11 +49,14 @@ export class EditRoleFormComponent implements OnInit, OnDestroy{
   }
 
   onSave(role: Role): void {
-    this.store.dispatch({ type: UPDATE, payload: role });
+    this.store.dispatch({ type: UPDATE, payload: {
+      role,
+      activatedRoute: this.route
+    } });
   }
 
-  onCancel(): void{
-    this.router.navigate(['/roles']);
+  onCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

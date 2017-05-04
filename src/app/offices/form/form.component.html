@@ -24,9 +24,7 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Name' | translate}}" formControlName="name" tdAutoTrim/>
-          <md-hint *ngIf="!detailForm.get('name').pristine && detailForm.get('name').hasError('required')"
-                   class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="detailForm.get('name').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -36,9 +34,7 @@
       </div>
     </form>
     <ng-template td-step-actions>
-      <button (click)="addressStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="addressStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
   <td-step #addressStep label="{{'Office Address(optional)' | translate}}"
@@ -47,61 +43,49 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
-          <md-hint
-            *ngIf="!addressForm.get('street').pristine && addressForm.get('street').hasError('required')"
-            class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="addressForm.get('street').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{ 'City' | translate}}" formControlName="city" tdAutoTrim/>
-          <md-hint
-            *ngIf="!addressForm.get('city').pristine && addressForm.get('city').hasError('required')"
-            class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="addressForm.get('city').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{ 'Postal code(optional)' | translate }}" formControlName="postalCode" tdAutoTrim/>
-          <md-hint
-            *ngIf="!addressForm.get('postalCode').pristine && addressForm.get('postalCode').hasError('maxlength')"
-            class="tc-red-600" translate>Only 5 figures allowed
-          </md-hint>
+          <md-error *ngIf="addressForm.get('postalCode').hasError('maxlength')" translate>Only 5 figures allowed</md-error>
         </md-input-container>
       </div>
-
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Region(optional)' | translate}}" formControlName="region" tdAutoTrim/>
         </md-input-container>
       </div>
-
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Country short name' | translate}}" formControlName="countryShortName" tdAutoTrim/>
-          <md-hint
-            *ngIf="!addressForm.get('countryShortName').pristine && addressForm.get('countryShortName').invalid"
-            class="tc-red-600" translate>Required, Only 2 characters allowed
-          </md-hint>
+          <md-error *ngIf="addressForm.get('countryShortName').invalid" translate>Required, Only 2 characters allowed</md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" tdAutoTrim/>
-          <md-hint
-            *ngIf="!addressForm.get('country').pristine && addressForm.get('country').hasError('required')"
-            class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="addressForm.get('country').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>
     </form>
-    <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'CREATE OFFICE' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'UPDATE OFFICE' | translate}}</button>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+  </td-step>
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'" class="disable-pointer">
+    <ng-template td-step-summary>
+      <fims-form-final-action
+        [resourceName]="'OFFICE'"
+        [editMode]="editMode"
+        [disabled]="formsInvalid()"
+        (onCancel)="cancel()"
+        (onSave)="save()" flex>
+      </fims-form-final-action>
     </ng-template>
   </td-step>
-
 </td-steps>

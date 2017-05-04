@@ -22,7 +22,7 @@ import {CustomerIdentityCardFormComponent} from './identityCard/identity-card.co
 import {CustomerAddressFormComponent} from './address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
+import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {TranslateModule} from '@ngx-translate/core';
@@ -34,6 +34,9 @@ import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
+import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
 
 let customerTemplate: Customer = {
   identifier: 'test',
@@ -84,6 +87,8 @@ describe('Test customer form', () => {
       declarations: [
         TestComponent,
         IdInputComponent,
+        FormContinueActionComponent,
+        FormFinalActionComponent,
         SelectListComponent,
         CustomerFormComponent,
         CustomerDetailFormComponent,
@@ -97,7 +102,10 @@ describe('Test customer form', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule,
+        MdInputModule,
+        MdIconModule,
+        MdRadioModule,
+        CovalentStepsModule,
         NoopAnimationsModule
       ],
       providers: [

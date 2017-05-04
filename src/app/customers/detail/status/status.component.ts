@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';
-import {CommandAction, Command} from '../../../../services/customer/domain/command.model';
+import {Command, CommandAction} from '../../../../services/customer/domain/command.model';
 import {CustomerState} from '../../../../services/customer/domain/customer-state.model';
 import {ActivatedRoute} from '@angular/router';
-import {Store} from '@ngrx/store';
 import * as fromCustomers from '../../store';
 import {Subscription} from 'rxjs';
-import {SelectAction} from '../../store/customer.actions';
-import {LOAD_ALL, EXECUTE_TASK, EXECUTE_COMMAND} from '../../store/tasks/task.actions';
+import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/tasks/task.actions';
 import {CustomersStore} from '../../store/index';
 
 interface StatusCommand{
@@ -76,14 +74,14 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
     }
   }
 
-  private executeTask(taskId: string): void{
+  executeTask(taskId: string): void{
     this.store.dispatch({ type: EXECUTE_TASK, payload: {
       customerId: this.customer.identifier,
       taskId: taskId
     } });
   }
 
-  private executeCommand(statusCommand: StatusCommand): void{
+  executeCommand(statusCommand: StatusCommand): void {
     let command: Command = {
       comment: statusCommand.comment,
       action: statusCommand.action
@@ -91,7 +89,8 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
 
     this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
       customerId: this.customer.identifier,
-      command: command
+      command: command,
+      activatedRoute: this.route
     } });
   }
 

@@ -31,11 +31,11 @@ export class RoleApiEffects {
   createRole$: Observable<Action> = this.actions$
     .ofType(roleActions.CREATE)
     .map((action: roleActions.CreateRoleAction) => action.payload)
-    .mergeMap(role =>
-      this.identityService.createRole(role)
+    .mergeMap(payload =>
+      this.identityService.createRole(payload.role)
         .map(() => new roleActions.CreateRoleSuccessAction({
-          resource: role,
-          activatedRoute: null
+          resource: payload.role,
+          activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new roleActions.CreateRoleFailAction(error)))
     );
@@ -44,11 +44,11 @@ export class RoleApiEffects {
   updateRole$: Observable<Action> = this.actions$
     .ofType(roleActions.UPDATE)
     .map((action: roleActions.UpdateRoleAction) => action.payload)
-    .mergeMap(role =>
-      this.identityService.changeRole(role)
+    .mergeMap(payload =>
+      this.identityService.changeRole(payload.role)
         .map(() => new roleActions.UpdateRoleSuccessAction({
-          resource: role,
-          activatedRoute: null
+          resource: payload.role,
+          activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new roleActions.UpdateRoleFailAction(error)))
     );
@@ -57,11 +57,11 @@ export class RoleApiEffects {
   deleteRole$: Observable<Action> = this.actions$
     .ofType(roleActions.DELETE)
     .map((action: roleActions.DeleteRoleAction) => action.payload)
-    .mergeMap(role =>
-      this.identityService.deleteRole(role.identifier)
+    .mergeMap(payload =>
+      this.identityService.deleteRole(payload.role.identifier)
         .map(() => new roleActions.DeleteRoleSuccessAction({
-          resource: role,
-          activatedRoute: null
+          resource: payload.role,
+          activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new roleActions.DeleteRoleFailAction(error)))
     );

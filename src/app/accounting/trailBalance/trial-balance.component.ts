@@ -28,12 +28,12 @@ export class TrailBalanceComponent implements OnInit{
 
   includeEmptyEntries: boolean = true;
 
-  trialBalance: Observable<TrialBalance>;
+  trialBalance$: Observable<TrialBalance>;
 
   constructor(private store: AccountingStore){}
 
   ngOnInit(): void {
-    this.trialBalance = this.store.select(fromAccounting.getTrialBalance);
+    this.trialBalance$ = this.store.select(fromAccounting.getTrialBalance);
     this.fetchTrialBalance();
   }
 

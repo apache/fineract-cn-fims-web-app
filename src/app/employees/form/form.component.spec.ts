@@ -21,12 +21,15 @@ import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from './form
 import {User} from '../../../services/identity/domain/user.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
+import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
+import {MdIconModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 
 let employeeTemplate: Employee = {
   identifier: 'test',
@@ -57,6 +60,8 @@ describe('Test employee form component', () => {
     TestBed.configureTestingModule({
       declarations: [
         IdInputComponent,
+        FormContinueActionComponent,
+        FormFinalActionComponent,
         SelectListComponent,
         TestComponent,
         EmployeeFormComponent
@@ -64,7 +69,11 @@ describe('Test employee form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        CovalentCoreModule,
+        MdSelectModule,
+        MdOptionModule,
+        MdIconModule,
+        MdInputModule,
+        CovalentStepsModule,
         NoopAnimationsModule
       ],
       providers: [

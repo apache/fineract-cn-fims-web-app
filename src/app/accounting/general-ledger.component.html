@@ -25,22 +25,27 @@
           <div flex-gt-md="30">
             <md-nav-list>
               <h3 md-subheader translate>Details</h3>
-              <a md-list-item [routerLink]="['./trialBalance']">
-                <md-icon md-list-avatar>account_balance</md-icon>
-                <h3 md-line translate>Trial balance</h3>
-                <p md-line translate>View trial balance</p>
+              <a md-list-item [routerLink]="['./chartOfAccounts']">
+                <md-icon md-list-avatar>list</md-icon>
+                <h3 md-line translate>Chart of accounts</h3>
+                <p md-line translate>View chart of accounts</p>
               </a>
               <a md-list-item [routerLink]="['./journalEntries']" *hasPermission="{ id: 'accounting_journals', accessLevel: 'READ' }">
                 <md-icon md-list-avatar>assignment</md-icon>
                 <h3 md-line translate>Journal entries</h3>
                 <p md-line translate>View journal entries</p>
               </a>
+              <a md-list-item [routerLink]="['./trialBalance']">
+                <md-icon md-list-avatar>account_balance</md-icon>
+                <h3 md-line translate>Trial balance</h3>
+                <p md-line translate>View trial balance</p>
+              </a>
             </md-nav-list>
           </div>
           <div flex-gt-md="70">
             <div layout="row">
               <div layout="column" flex-gt-md="100">
-                <h3 translate>Subledger</h3>
+                <h3 translate>Ledger</h3>
                 <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData | async" sortBy="identifier"></fims-data-table>
               </div>
             </div>

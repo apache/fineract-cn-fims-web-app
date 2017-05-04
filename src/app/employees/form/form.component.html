@@ -23,9 +23,9 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
-          <md-hint *ngIf="!detailForm.controls.firstName.pristine && detailForm.controls.firstName.errors?.required"
-                   class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="detailForm.get('firstName').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -37,9 +37,9 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
-          <md-hint *ngIf="!detailForm.controls.lastName.pristine && detailForm.controls.lastName.errors?.required"
-                   class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="detailForm.get('lastName').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -47,25 +47,22 @@
           <md-option *ngFor="let role of roles | async" [value]="role.identifier">
             {{ role.identifier }}
           </md-option>
-          <md-hint *ngIf="!detailForm.controls.role.pristine && detailForm.controls.role.errors?.required"
-                   class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="detailForm.get('role').hasError('required')" translate>
+            Required
+          </md-error>
         </md-select>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" tdAutoTrim/>
-          <md-hint *ngIf="!detailForm.controls.password.pristine && detailForm.controls.password.errors?.required"
-                   class="tc-red-600" translate>Required
-          </md-hint>
+          <md-error *ngIf="detailForm.get('password').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
     </form>
-
     <ng-template td-step-actions>
-      <button (click)="officeStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="officeStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -84,9 +81,7 @@
                         noSelectionMessage="{{'No office assigned to employee, yet.' | translate}}"
     ></fims-select-list>
     <ng-template td-step-actions>
-      <button (click)="contactStep.open()" md-raised-button color="primary">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-continue-action (onContinue)="contactStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
@@ -108,11 +103,17 @@
         </md-input-container>
       </div>
     </form>
-    <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'CREATE EMPLOYEE' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="formsInvalid()">{{'UPDATE EMPLOYEE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+  </td-step>
+
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <fims-form-final-action
+        [resourceName]="'EMPLOYEE'"
+        [editMode]="editMode"
+        [disabled]="formsInvalid()"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
     </ng-template>
   </td-step>
 

@@ -23,15 +23,16 @@
 </div>
 <div layout="row" layout-margin>
   <md-list>
-    <md-list-item *ngFor="let permission of formPermissions">
-      <md-icon md-list-avatar>lock</md-icon>
-      <h3 md-line>{{permission.label}}</h3>
+    <md-list-item>
+      <h3 md-line></h3>
       <h4 md-line></h4>
       <p md-line></p>
-      <md-checkbox [(ngModel)]="permission.read" class="list-checkbox" [disabled]="permission.readOnly" translate>Read</md-checkbox>
-      <md-checkbox [(ngModel)]="permission.change" class="list-checkbox" [disabled]="permission.readOnly" translate>Change</md-checkbox>
-      <md-checkbox [(ngModel)]="permission.remove" class="list-checkbox" [disabled]="permission.readOnly" translate>Delete</md-checkbox>
+      <md-checkbox [(ngModel)]="allRead" class="list-checkbox" translate>Read</md-checkbox>
+      <md-checkbox [(ngModel)]="allChange" class="list-checkbox" translate>Change</md-checkbox>
+      <md-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</md-checkbox>
     </md-list-item>
+    <md-divider></md-divider>
+    <fims-permission-list-item *ngFor="let permission of formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
   </md-list>
 </div>
 <div layout="row" layout-margin>

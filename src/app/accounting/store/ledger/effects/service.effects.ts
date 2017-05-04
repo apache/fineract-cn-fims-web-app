@@ -21,6 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
+import {ChartOfAccountEntry} from '../../../../../services/accounting/domain/chart-of-account-entry.model';
 
 @Injectable()
 export class LedgerApiEffects {
@@ -89,6 +90,15 @@ export class LedgerApiEffects {
       this.accountingService.getTrialBalance(includeEmpty)
         .map(trialBalance => new ledgerActions.LoadTrialBalanceActionComplete(trialBalance))
         .catch(() => of(new ledgerActions.LoadTrialBalanceActionComplete(null)))
+    );
+
+  @Effect()
+  loadChartOfAccounts$: Observable<Action> = this.actions$
+    .ofType(ledgerActions.LOAD_CHART_OF_ACCOUNTS)
+    .mergeMap(() =>
+      this.accountingService.getChartOfAccounts()
+        .map(chartOfAccountEntries => new ledgerActions.LoadChartOfAccountsActionComplete(chartOfAccountEntries))
+        .catch(() => of(new ledgerActions.LoadChartOfAccountsActionComplete([])))
     );
 
 }

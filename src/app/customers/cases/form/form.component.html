@@ -18,19 +18,22 @@
   <td-step #productSelection label="{{'Select loan product' | translate}}" [state]="productForm.valid ? 'complete' : productForm.pristine ? 'none' : 'required'">
     <fims-product-select title="{{'Product' | translate}}" [preSelection]="productForm.get('identifier').value" (onSelectionChange)="onProductSelection($event)"></fims-product-select>
     <ng-template td-step-actions>
-      <button (click)="detailsStep.open()" md-raised-button color="primary" [disabled]="!productForm.valid">{{'CONTINUE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <button (click)="detailsStep.open()" md-raised-button color="accent" [disabled]="!productForm.valid">{{'CONTINUE' | translate}}</button>
     </ng-template>
   </td-step>
   <td-step #detailsStep label="{{'Loan details' | translate}}" [disabled]="!productForm.valid" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
     <fims-case-detail-form #detailForm [formData]="detailFormData" [product]="selectedProduct | async"></fims-case-detail-form>
+  </td-step>
 
-    <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'CREATE CUSTOMER LOAN' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary" [disabled]="!isValid">{{'UPDATE CUSTOMER LOAN' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <fims-form-final-action
+        [resourceName]="'CUSTOMER LOAN'"
+        [editMode]="editMode"
+        [disabled]="!isValid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
     </ng-template>
   </td-step>
 </td-steps>

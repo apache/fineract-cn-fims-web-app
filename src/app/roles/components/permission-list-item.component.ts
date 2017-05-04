@@ -14,9 +14,25 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {FormPermission} from '../model/form-permission.model';
 
 @Component({
-  templateUrl: './sub-ledger.component.html'
+  selector: 'fims-permission-list-item',
+  templateUrl: './permission-list-item.component.html',
+  styleUrls: ['./permission-list-item.component.scss']
 })
-export class SubLedgerComponent{}
+export class PermissionListItemComponent {
+
+  private _readOnly: boolean;
+
+  @Input() formPermission: FormPermission;
+
+  @Input() set readOnly(readOnly: boolean) {
+    this._readOnly = readOnly;
+  };
+
+  get readOnly(): boolean {
+    return this._readOnly || this.formPermission.readOnly;
+  }
+}

@@ -25,7 +25,7 @@ import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 describe('Ledgers Reducer', () => {
 
   function createLedger(value: string): Ledger{
-    return { identifier: value, name: value, type: 'ASSET', subLedgers: []};
+    return { identifier: value, name: value, type: 'ASSET', showAccountsInChart: true, subLedgers: []};
   }
 
   describe('LOAD_ALL_TOP_LEVEL_COMPLETE', () => {

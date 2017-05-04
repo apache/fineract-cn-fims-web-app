@@ -1,0 +1,37 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<table td-data-table>
+  <th td-data-table-column translate>Code</th>
+  <th td-data-table-column translate>Name</th>
+  <th td-data-table-column translate>Description</th>
+  <th td-data-table-column translate>Type</th>
+
+  <tr td-data-table-row *ngFor="let entry of chartOfAccountEntries">
+    <td td-data-table-cell [ngStyle]="{'padding-left.px': 24+(15*entry.level)}">{{entry.code}}</td>
+    <td td-data-table-cell>{{entry.name}}</td>
+    <td td-data-table-cell>{{entry.description}}</td>
+    <td td-data-table-cell>{{entry.type}}</td>
+  </tr>
+</table>
+
+<div class="md-padding" *ngIf="!(chartOfAccountEntries.length > 0) && !loading" layout="row" layout-align="center center">
+  <h3 translate>No data for chart of accounts available.</h3>
+</div>
+
+<div class="md-padding" *ngIf="loading" layout="row" layout-align="center center">
+  <h3 translate>Fetching data for chart of accounts...</h3>
+</div>

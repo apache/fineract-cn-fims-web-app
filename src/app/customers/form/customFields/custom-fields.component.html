@@ -21,40 +21,40 @@
       <md-input-container layout-margin flex>
         <input mdInput *ngSwitchCase="'TEXT'" type="text" placeholder="{{field.label}}"
                   [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim title="{{field.hint}}"/>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
-                 class="tc-red-600" translate>Required
-        </md-hint>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
-                 class="tc-red-600" [translate]="'Only characters allowed.'" [translateParams]="{value: field.length}">
-        </md-hint>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 translate>Required
+        </md-error>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
+                 [translate]="'Only characters allowed.'" [translateParams]="{value: field.length}">
+        </md-error>
       </md-input-container>
 
       <md-input-container layout-margin flex>
         <input mdInput *ngSwitchCase="'NUMBER'" type="number" placeholder="{{field.label}}"
                   [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim title="{{field.hint}}"/>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
-                 class="tc-red-600" translate>Required
-        </md-hint>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxPrecision"
-                 class="tc-red-600" [translate]="'Value precision must be smaller or equals'" [translateParams]="{value: field.precision}">
-        </md-hint>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
-                 class="tc-red-600" [translate]="'Only numbers allowed.'" [translateParams]="{value: field.length}">
-        </md-hint>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.minValue"
-                 class="tc-red-600" [translate]="'Value must be greater than or equals'" [translateParams]="{value: field.minValue}">
-        </md-hint>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.maxValue"
-                 class="tc-red-600" [translate]="'Value must be smaller than or equals'" [translateParams]="{value: field.maxValue}">
-        </md-hint>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 translate>Required
+        </md-error>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxPrecision"
+                 [translate]="'Value precision must be smaller or equals'" [translateParams]="{value: field.precision}">
+        </md-error>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
+                 [translate]="'Only numbers allowed.'" [translateParams]="{value: field.length}">
+        </md-error>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.minValue"
+                 [translate]="'Value must be greater than or equals'" [translateParams]="{value: field.minValue}">
+        </md-error>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxValue"
+                 [translate]="'Value must be smaller than or equals'" [translateParams]="{value: field.maxValue}">
+        </md-error>
       </md-input-container>
 
       <md-input-container layout-margin flex>
         <input mdInput *ngSwitchCase="'DATE'" type="date" placeholder="{{field.label}}"
                   [formControl]="getControlForCatalog(catalog.identifier, field.identifier)" tdAutoTrim  title="{{field.hint}}"/>
-        <md-hint *ngIf="!getControlForCatalog(catalog.identifier, field.identifier).pristine && getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
-                 class="tc-red-600" translate>Required
-        </md-hint>
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
+                 translate>Required
+        </md-error>
       </md-input-container>
 
       <ng-container *ngSwitchCase="'SINGLE_SELECTION'">

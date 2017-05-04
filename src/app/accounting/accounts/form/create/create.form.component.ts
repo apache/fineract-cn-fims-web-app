@@ -87,6 +87,6 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   }
 
   navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 }

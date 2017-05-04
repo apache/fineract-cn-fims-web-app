@@ -14,7 +14,30 @@
  * limitations under the License.
  */
 
-import {Role} from '../../../services/identity/domain/role.model';
-import * as role from './role.actions';
-import { createSelector } from 'reselect';
-import {ResourceState} from '../../../components/store/resource.reducer';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+
+@Component({
+  selector: 'fims-form-final-action',
+  templateUrl: './form-final-action.component.html'
+})
+export class FormFinalActionComponent {
+
+  @Input() resourceName: string;
+
+  @Input() editMode: boolean;
+
+  @Input() disabled: boolean;
+
+  @Output() onSave = new EventEmitter<any>();
+
+  @Output() onCancel = new EventEmitter<any>();
+
+  save() {
+    this.onSave.emit();
+  }
+
+  cancel() {
+    this.onCancel.emit();
+  }
+
+}

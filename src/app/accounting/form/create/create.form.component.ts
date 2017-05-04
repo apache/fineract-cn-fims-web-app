@@ -30,8 +30,6 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
 
-  private actionsSubscription: Subscription;
-
   private ledgerSubscription: Subscription;
 
   @ViewChild('form') formComponent: LedgerFormComponent;
@@ -42,6 +40,7 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
     identifier: '',
     type: 'ASSET',
     name: '',
+    showAccountsInChart: true,
     subLedgers: [],
   };
 
@@ -63,17 +62,12 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
       .subscribe(ledger => this.parentLedger = ledger);
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
-    this.actionsSubscription.unsubscribe();
     this.ledgerSubscription.unsubscribe();
   }
 
@@ -81,7 +75,7 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
     if(this.parentLedger){
       this.store.dispatch({ type: CREATE_SUB_LEDGER, payload: {
         parentLedgerId: this.parentLedger.identifier,
-        ledger: ledger,
+        ledger,
         activatedRoute: this.route
       }});
     }else{

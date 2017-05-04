@@ -51,7 +51,7 @@ export interface CreateTaskPayload extends RoutePayload {
   task: TaskDefinition
 }
 
-export interface ExecuteTaskPayload{
+export interface ExecuteTaskPayload extends RoutePayload {
   customerId: string;
   taskId: string;
 }

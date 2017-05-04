@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-import {Resolve, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {TrialBalance} from '../../../services/accounting/domain/trial-balance.model';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {AccountingService} from '../../../services/accounting/accounting.service';
+import {Router} from '@angular/router';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
+import * as taskActions from '../task.actions';
 
 @Injectable()
-export class TrialBalanceResolver implements Resolve<TrialBalance>{
+export class AccountCommandRouteEffects {
 
-  constructor(private accountingService: AccountingService) {
-  }
+  constructor(private actions$: Actions, private router: Router) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TrialBalance> {
-    return this.accountingService.getTrialBalance(true);
-  }
+  @Effect({ dispatch: false })
+  executeCommandSuccess$: Observable<Action> = this.actions$
+    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 }
