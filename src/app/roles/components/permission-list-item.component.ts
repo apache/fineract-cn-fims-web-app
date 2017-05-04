@@ -14,7 +14,25 @@
  * limitations under the License.
  */
 
-import {Role} from '../../../services/identity/domain/role.model';
-import * as role from './role.actions';
-import { createSelector } from 'reselect';
-import {ResourceState} from '../../../components/store/resource.reducer';
+import {Component, Input} from '@angular/core';
+import {FormPermission} from '../model/form-permission.model';
+
+@Component({
+  selector: 'fims-permission-list-item',
+  templateUrl: './permission-list-item.component.html',
+  styleUrls: ['./permission-list-item.component.scss']
+})
+export class PermissionListItemComponent {
+
+  private _readOnly: boolean;
+
+  @Input() formPermission: FormPermission;
+
+  @Input() set readOnly(readOnly: boolean) {
+    this._readOnly = readOnly;
+  };
+
+  get readOnly(): boolean {
+    return this._readOnly || this.formPermission.readOnly;
+  }
+}

@@ -26,7 +26,7 @@ import {RolesStore} from './store/index';
 @Component({
   templateUrl: './role.component.html'
 })
-export class RoleComponent implements OnInit{
+export class RoleComponent implements OnInit {
 
   rolesData$: Observable<TableData>;
 
@@ -36,7 +36,7 @@ export class RoleComponent implements OnInit{
     { name: 'identifier', label: 'Id' }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
   ngOnInit(): void {
     this.rolesData$ = this.store.select(fromRoot.getRoleSearchResults)
@@ -52,8 +52,8 @@ export class RoleComponent implements OnInit{
     this.store.dispatch({ type: SEARCH });
   }
 
-  rowSelect(role: Role): void{
-    this.router.navigate([role.identifier, 'edit'], { relativeTo: this.route });
+  rowSelect(role: Role): void {
+    this.router.navigate(['detail', role.identifier], { relativeTo: this.route });
   }
 
 }

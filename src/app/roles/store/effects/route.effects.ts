@@ -29,10 +29,12 @@ export class RoleRouteEffects {
   @Effect({ dispatch: false })
   createRoleSuccess$: Observable<Action> = this.actions$
     .ofType(roleActions.CREATE_SUCCESS, roleActions.UPDATE_SUCCESS)
-    .do(payload => this.router.navigate(['/roles']));
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
   @Effect({ dispatch: false })
   deleteRoleSuccess$: Observable<Action> = this.actions$
     .ofType(roleActions.DELETE_SUCCESS)
-    .do((payload) => this.router.navigate(['/roles']));
+    .map(action => action.payload)
+    .do((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
 }

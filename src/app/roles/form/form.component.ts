@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-import {Component, Input, EventEmitter, Output, OnInit} from '@angular/core';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '../../../services/identity/domain/role.model';
 import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
 import {IdentityService} from '../../../services/identity/identity.service';
-import {Permission, AllowedOperation} from '../../../services/identity/domain/permission.model';
-import {FormPermission} from './model/form-permission.model';
+import {FormPermission} from '../model/form-permission.model';
 import {FimsValidators} from '../../../components/validator/validators';
-import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
-import {FimsPermissionDescriptor} from '../../../services/security/authz/fims-permission-descriptor';
+import {FormPermissionService} from '../helper/form-permission.service';
 
 @Component({
   selector: 'fims-role-form-component',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class RoleFormComponent implements OnInit{
+export class RoleFormComponent implements OnInit {
 
   private _role: Role;
 
@@ -49,46 +47,13 @@ export class RoleFormComponent implements OnInit{
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private identityService: IdentityService, private idMapper: PermittableGroupIdMapper) {}
+  constructor(private formBuilder: FormBuilder, private identityService: IdentityService, private formPermissionService: FormPermissionService) {}
 
   ngOnInit(): void {
     this.identityService.getPermittableGroups()
       .subscribe((groups: PermittableGroup[]) => {
-        this.formPermissions = this.buildFormPermissions(groups, this._role.permissions);
+        this.formPermissions = this.formPermissionService.mapToFormPermissions(groups, this._role.permissions);
       });
-  }
-
-  private buildFormPermissions(groups: PermittableGroup[], permissions: Permission[]): FormPermission[] {
-    let result: FormPermission[] = [];
-
-    for(let permittableGroup of groups) {
-      let foundPermission: Permission = this.findPermission(permittableGroup.identifier, permissions);
-
-      let descriptor: FimsPermissionDescriptor = this.idMapper.map(permittableGroup.identifier);
-
-      if(!descriptor) continue;
-
-      let formPermission = new FormPermission(permittableGroup.identifier);
-
-      formPermission.label = descriptor.label;
-      formPermission.readOnly = descriptor.readOnly;
-
-      if(foundPermission) {
-        formPermission.read = this.hasOperation(foundPermission.allowedOperations, 'READ');
-        formPermission.change = this.hasOperation(foundPermission.allowedOperations, 'CHANGE');
-        formPermission.remove = this.hasOperation(foundPermission.allowedOperations, 'DELETE');
-      }
-      result.push(formPermission)
-    }
-    return result;
-  }
-
-  private hasOperation(allowedOperations: AllowedOperation[], operation: AllowedOperation): boolean {
-    return allowedOperations.indexOf(operation) > -1;
-  }
-
-  private findPermission(identifier: string, permissions: Permission[]): Permission {
-    return permissions.find((permission: Permission) => permission.permittableEndpointGroupIdentifier === identifier);
   }
 
   private prepareForm(role: Role): void {
@@ -99,40 +64,44 @@ export class RoleFormComponent implements OnInit{
 
   save(): void {
     let identifier = this.detailForm.get('identifier').value;
-    this.onSave.emit(this.mapRole(identifier, this.formPermissions));
+    this.onSave.emit(this.formPermissionService.mapToRole(identifier, this.formPermissions));
   }
 
   cancel(): void {
     this.onCancel.emit();
   }
 
-  private mapRole(identifier: string, formPermissions: FormPermission[]): Role{
-    let permissions: Permission[] = [];
-
-    for(let formPermission of formPermissions) {
-      let allowedOperations: AllowedOperation[] = [];
-
-      if(formPermission.read) {
-        allowedOperations.push('READ')
-      }
-
-      if(formPermission.change) {
-        allowedOperations.push('CHANGE')
-      }
-
-      if(formPermission.remove) {
-        allowedOperations.push('DELETE')
-      }
-
-      permissions.push({
-        permittableEndpointGroupIdentifier: formPermission.groupIdentifier,
-        allowedOperations: allowedOperations
-      });
+  set allRead(checked: boolean) {
+    for(let formPermission of this.formPermissions) {
+      formPermission.read = checked;
     }
-
-    return {
-      identifier: identifier,
-      permissions: permissions
-    };
   }
+
+  set allChange(checked: boolean) {
+    for(let formPermission of this.formPermissions) {
+      formPermission.change = checked;
+    }
+  }
+
+  set allRemove(checked: boolean) {
+    for(let formPermission of this.formPermissions) {
+      formPermission.remove = checked;
+    }
+  }
+
+  get allRead(): boolean {
+    const found: FormPermission = this.formPermissions.find(formPermission => !formPermission.read);
+    return !found;
+  }
+
+  get allChange(): boolean {
+    const found: FormPermission = this.formPermissions.find(formPermission => !formPermission.change);
+    return !found;
+  }
+
+  get allRemove(): boolean {
+    const found: FormPermission = this.formPermissions.find(formPermission => !formPermission.remove);
+    return !found;
+  }
+
 }

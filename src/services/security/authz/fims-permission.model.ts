@@ -16,7 +16,7 @@
 
 import {PermissionId} from './permission-id.type';
 
-export interface FimsPermission{
+export interface FimsPermission {
   id: PermissionId,
   accessLevel: AccessLevel
 }

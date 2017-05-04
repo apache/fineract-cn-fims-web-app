@@ -20,12 +20,15 @@ import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
 import {Observable} from 'rxjs';
 import {IdentityService} from '../../../services/identity/identity.service';
-import {MaterialModule} from '@angular/material';
+import {MaterialModule, MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
 import {Role} from '../../../services/identity/domain/role.model';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormPermissionService} from '../helper/form-permission.service';
+import {CovalentStepsModule} from '@covalent/core';
+import {PermissionListItemComponent} from '../components/permission-list-item.component';
 
 class FakeLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -56,16 +59,23 @@ describe('Test roles form', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RoleFormComponent, IdInputComponent],
+      declarations: [
+        RoleFormComponent,
+        IdInputComponent,
+        PermissionListItemComponent
+      ],
       imports: [
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        MaterialModule,
+        MdInputModule,
+        MdIconModule,
+        MdCheckboxModule,
         FormsModule,
         ReactiveFormsModule
       ],
       providers: [
         {provide: IdentityService, useValue: identityService},
+        FormPermissionService,
         PermittableGroupIdMapper
       ]
     });
@@ -113,17 +123,15 @@ describe('Test roles form', () => {
 
     //Wait for async service call
     fixture.whenStable().then(() => {
-      let formPermissions = component.formPermissions[0];
-      formPermissions.read = false;
-      formPermissions.change = true;
-      formPermissions.remove = false;
+      let formPermission = component.formPermissions[0];
+      formPermission.change = false;
 
       component.onSave.subscribe((role: Role) => {
         let expected: Role = {
           identifier: 'test',
           permissions: [{
             permittableEndpointGroupIdentifier: officePermittable.identifier,
-            allowedOperations: ['CHANGE']
+            allowedOperations: ['READ']
           }]
         };
         expect(JSON.stringify(role)).toBe(JSON.stringify(expected));

@@ -22,6 +22,7 @@ import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload, SelectResourcePayload,
   UpdateResourceSuccessPayload
 } from '../../../components/store/resource.reducer';
+import {RoutePayload} from '../../../components/store/route-payload';
 
 export const LOAD = type('[Role] Load');
 export const SELECT = type('[Role] Select');
@@ -38,6 +39,10 @@ export const DELETE = type('[Role] Delete');
 export const DELETE_SUCCESS = type('[Role] Delete Success');
 export const DELETE_FAIL = type('[Role] Delete Fail');
 
+export interface RoleRoutePayload extends RoutePayload {
+  role: Role;
+}
+
 export class LoadAction implements Action {
   readonly type = LOAD;
 
@@ -53,7 +58,7 @@ export class SelectAction implements Action {
 export class CreateRoleAction implements Action {
   readonly type = CREATE;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: RoleRoutePayload) { }
 }
 
 export class CreateRoleSuccessAction implements Action {
@@ -71,7 +76,7 @@ export class CreateRoleFailAction implements Action {
 export class UpdateRoleAction implements Action {
   readonly type = UPDATE;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: RoleRoutePayload) { }
 }
 
 export class UpdateRoleSuccessAction implements Action {
@@ -89,7 +94,7 @@ export class UpdateRoleFailAction implements Action {
 export class DeleteRoleAction implements Action {
   readonly type = DELETE;
 
-  constructor(public payload: Role) { }
+  constructor(public payload: RoleRoutePayload) { }
 }
 
 export class DeleteRoleSuccessAction implements Action {

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-export class FormPermission{
+export class FormPermission {
+
   private _groupIdentifier: string;
   private _read: boolean = false;
   private _change: boolean = false;
@@ -53,6 +54,11 @@ export class FormPermission{
 
   set read(value: boolean) {
     this._read = value;
+
+    if(!value) {
+      this.change = false;
+      this.remove = false;
+    }
   }
 
   get change(): boolean {
@@ -61,6 +67,12 @@ export class FormPermission{
 
   set change(value: boolean) {
     this._change = value;
+
+    if(!value) {
+      this.remove = false;
+    } else {
+      this.read = true;
+    }
   }
 
   get remove(): boolean {
@@ -69,5 +81,10 @@ export class FormPermission{
 
   set remove(value: boolean) {
     this._remove = value;
+
+    if(value) {
+      this.read = true;
+      this.change = true;
+    }
   }
 }
