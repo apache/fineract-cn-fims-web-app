@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './quick-access.component.html'
 })
-export class DashboardComponent implements AfterViewInit {
-
-  constructor() {}
-
-  ngAfterViewInit(): void {}
-}
+export class QuickAccessComponent {}

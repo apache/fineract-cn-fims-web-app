@@ -46,11 +46,12 @@
     </md-toolbar>
     <md-nav-list>
       <ng-container>
-        <a md-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
+        <a md-list-item [routerLink]="['/quickAccess']" routerLinkActive="active">
           <md-icon md-list-avatar>dashboard</md-icon>
           <h3 md-line translate>Quick access</h3>
         </a>
       </ng-container>
+      <md-divider></md-divider>
       <ng-container *hasPermission="{ id: 'office_offices', accessLevel: 'READ'}">
         <a md-list-item [routerLink]="['/offices']" routerLinkActive="active">
           <md-icon md-list-avatar>store</md-icon>

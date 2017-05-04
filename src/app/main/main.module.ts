@@ -18,11 +18,10 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {MainComponent} from './main.component';
 import {MainRoutes, mainRoutingProviders} from './main.routing';
-import {DashboardComponent} from '../dashboard/dashboard.component';
-import {NotificationService} from '../../services/notification/notification.service';
 import {AccessDeniedComponent} from './access.denied.component';
 import {CommonModule} from '../../components/common.module';
 import {NotificationComponent} from './notification.component';
+import {QuickAccessComponent} from '../quickAccess/quick-access.component';
 
 @NgModule({
   imports: [
@@ -31,7 +30,7 @@ import {NotificationComponent} from './notification.component';
   ],
   declarations: [
     MainComponent,
-    DashboardComponent,
+    QuickAccessComponent,
     AccessDeniedComponent,
     NotificationComponent
   ],
