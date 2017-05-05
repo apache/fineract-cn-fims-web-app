@@ -35,14 +35,6 @@ import {AccountExistsGuard} from './accounts/account-exists.guard';
 import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
 import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 
-/**
- * / -> general ledger
- * /ledgers/detail/:id -> detail sub ledger with accounts
- *
- * /ledgers/detail/:id/ledgers
- *
- */
-
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
   {
