@@ -15,14 +15,42 @@
 -->
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to ledger' | translate}}" [routerLink]="['/accounting/ledgers/detail', ledger.identifier]">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Ledger' | translate}}
+  <ng-container *ngIf="ledger.parentLedgerIdentifier">
+    <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['../']">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </a>
+    {{'Accounts' | translate}}
+  </ng-container>
+  <ng-container *ngIf="!ledger.parentLedgerIdentifier">
+    <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../../../../']">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </a>
+    {{'General Ledger' | translate}}
+  </ng-container>
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Subledgers of' | translate:{ value: ledger.identifier } }}">
-  <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
+<fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <md-list>
+        <md-list-item>
+          <md-icon md-list-avatar>account_balance</md-icon>
+          <h3 md-line translate>Type</h3>
+          <p md-line>{{ledger.type}}</p>
+        </md-list-item>
+      </md-list>
+    </div>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <h3 translate>Subledgers</h3>
+        <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
+      </div>
+    </div>
+  </div>
 </fims-layout-card-over>
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add subledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
   <md-icon>add</md-icon>

@@ -51,7 +51,7 @@ export class GeneralLedgerComponent implements OnInit{
   }
 
   rowSelect(ledger: Ledger): void{
-    this.router.navigate(['ledgers/detail', ledger.identifier], { relativeTo: this.route });
+    this.router.navigate(['ledgers/detail', ledger.identifier, 'ledgers'], { relativeTo: this.route });
   }
 
 }
