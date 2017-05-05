@@ -56,7 +56,12 @@ export const AccountingRoutes: Routes = [
       },
       {
         path: 'ledgers',
-        component: SubLedgerListComponent
+        component: SubLedgerListComponent,
+      },
+      {
+        path: 'ledgers/edit',
+        component: EditLedgerFormComponent,
+        data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}
       },
       {
         path: 'ledgers/create',

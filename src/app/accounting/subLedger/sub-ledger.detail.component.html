@@ -16,7 +16,7 @@
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
   <ng-container *ngIf="ledger.parentLedgerIdentifier">
-    <a md-icon-button title="{{'Go to parent ledger' | translate}}" [routerLink]="['../../', ledger.parentLedgerIdentifier]">
+    <a md-icon-button title="{{'Go to parent ledger' | translate}}" [routerLink]="['../../', ledger.parentLedgerIdentifier, 'ledgers']">
       <md-icon>keyboard_arrow_left</md-icon>
     </a>
     {{'Parent Ledger' | translate}}
@@ -29,7 +29,7 @@
   </ng-container>
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Ledger with name' | translate:{value: ledger.name} }}" [subTitle]="ledger.description">
+<fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
     <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>

@@ -19,8 +19,12 @@ import {Subscription} from 'rxjs/Subscription';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {TableData} from '../../../components/data-table/data-table.component';
 import {AccountingStore} from '../store/index';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as fromAccounting from '../store';
+import {Observable} from 'rxjs/Observable';
+import {DELETE} from '../store/ledger/ledger.actions';
+import {TranslateService} from '@ngx-translate/core';
+import {TdDialogService} from '@covalent/core';
 
 @Component({
   templateUrl: './sub-ledger.list.component.html'
@@ -43,7 +47,7 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
     { name: 'description', label: 'Description' }
   ];
 
-  constructor(private router: Router, private store: AccountingStore) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: AccountingStore, private translate: TranslateService, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.selectionSubscription = this.store.select(fromAccounting.getSelectedLedger)
@@ -69,6 +73,32 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
 
   get ledger(): Ledger {
     return this._ledger;
+  }
+
+  confirmDeletion(): Observable<boolean>{
+    let message = 'Do you want to delete this ledger?';
+    let title = 'Confirm deletion';
+    let button = 'DELETE LEDGER';
+
+    return this.translate.get([title, message, button])
+      .flatMap(result =>
+        this.dialogService.openConfirm({
+          message: result[message],
+          title: result[title],
+          acceptButton: result[button]
+        }).afterClosed()
+      );
+  }
+
+  deleteLedger(): void {
+    this.confirmDeletion()
+      .filter(accept => accept)
+      .subscribe(() => {
+        this.store.dispatch({ type: DELETE, payload: {
+          ledger: this.ledger,
+          activatedRoute: this.route
+        }})
+      });
   }
 
 }

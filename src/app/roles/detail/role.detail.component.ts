@@ -61,7 +61,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
 
   confirmDeletion(): Observable<boolean>{
     return this.dialogService.openConfirm({
-      message: 'Do you want to this role?',
+      message: 'Do you want to delete this role?',
       title: 'Confirm deletion',
       acceptButton: 'DELETE ROLE',
     }).afterClosed();
