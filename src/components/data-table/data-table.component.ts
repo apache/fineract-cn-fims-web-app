@@ -17,16 +17,19 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Sort} from '../../services/domain/paging/sort.model';
 import {Page} from '../../services/domain/paging/page.model';
-import {IPageChangeEvent, ITdDataTableSortChangeEvent, TdDataTableSortingOrder} from '@covalent/core';
+import {
+  IPageChangeEvent, ITdDataTableColumn, ITdDataTableSortChangeEvent,
+  TdDataTableSortingOrder
+} from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';
 
-export interface TableData{
+export interface TableData {
   data: any[];
   totalElements: number;
   totalPages: number;
 }
 
-export interface TableFetchRequest{
+export interface TableFetchRequest {
   page: Page,
   sort: Sort
 }
@@ -35,24 +38,31 @@ export interface TableFetchRequest{
   selector: 'fims-data-table',
   templateUrl: './data-table.component.html'
 })
-export class DataTableComponent{
+export class DataTableComponent {
 
   _columns: any[];
 
   @Input('data') tableData: TableData;
-  @Input() set columns(columns: any[]){
+
+  @Input() set columns(columns: ITdDataTableColumn[]) {
     columns.forEach((column) => {
-      this.translate.get(column.label).subscribe((value) => {
-        column.label = value;
-        column.tooltip = value;
-      });
+      this.translate.get(column.label)
+        .subscribe((value) => {
+          column.label = value;
+          column.tooltip = value;
+        });
     });
     this._columns = columns;
   };
-  @Input() sortBy: string;
-  @Input() sortable: boolean = true;
+
+  @Input() sortable: boolean = false;
+
+  @Input() pageable: boolean = false;
+
   @Input() selectable: boolean = true;
+
   @Input() actionColumn: boolean = true;
+
   @Input() loading: boolean = false;
 
   @Output() onFetch: EventEmitter<TableFetchRequest> = new EventEmitter<TableFetchRequest>();
@@ -72,7 +82,7 @@ export class DataTableComponent{
     sortDirection: 'ASC'
   };
 
-  page(pagingEvent: IPageChangeEvent): void{
+  page(pagingEvent: IPageChangeEvent): void {
     this.currentPage = {
       pageIndex: pagingEvent.page -1,
       size: pagingEvent.pageSize
@@ -82,13 +92,13 @@ export class DataTableComponent{
 
   sortChanged(event: ITdDataTableSortChangeEvent): void {
     this.currentSort = {
-      sortDirection: event.order === TdDataTableSortingOrder.Ascending ? 'ASC' : 'DESC',
+      sortDirection: event.order === TdDataTableSortingOrder.Ascending ? 'DESC' : 'ASC',
       sortColumn: event.name
     };
     this.fetch();
   }
 
-  private fetch(){
+  private fetch() {
     let fetchRequest: TableFetchRequest = {
       page: this.currentPage,
       sort: this.currentSort
@@ -96,7 +106,7 @@ export class DataTableComponent{
     this.onFetch.emit(fetchRequest);
   }
 
-  actionCellClick(row): void{
+  actionCellClick(row): void {
     this.onActionCellClick.emit(row);
   }
 

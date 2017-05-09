@@ -61,7 +61,15 @@
             <div layout="row">
               <div layout="column" flex-gt-md="100">
                 <h3 translate>Accounts</h3>
-                <fims-data-table flex (onFetch)="fetchAccounts($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="accountData$ | async" [loading]="loading$ | async" sortBy="identifier"></fims-data-table>
+                <fims-data-table flex
+                                 (onFetch)="fetchAccounts($event)"
+                                 (onActionCellClick)="rowSelect($event)"
+                                 [columns]="columns"
+                                 [data]="accountData$ | async"
+                                 [loading]="loading$ | async"
+                                 [sortable]="true"
+                                 [pageable]="true">
+                </fims-data-table>
               </div>
             </div>
           </div>

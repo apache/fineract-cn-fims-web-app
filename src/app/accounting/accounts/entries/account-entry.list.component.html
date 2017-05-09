@@ -36,5 +36,12 @@
       </span>
     </div>
   </form>
-  <fims-data-table flex (onFetch)="fetchAccountsEntries($event)" [columns]="columns" [data]="accountEntryData$ | async" [selectable]="false" [sortable]="false"></fims-data-table>
+  <fims-data-table flex
+                   (onFetch)="fetchAccountsEntries($event)"
+                   [columns]="columns"
+                   [data]="accountEntryData$ | async"
+                   [selectable]="false"
+                   [sortable]="true"
+                   [pageable]="true">
+  </fims-data-table>
 </fims-layout-card-over>

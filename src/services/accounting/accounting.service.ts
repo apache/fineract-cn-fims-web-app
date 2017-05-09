@@ -44,7 +44,7 @@ export class AccountingService{
     params.append('includeSubLedgers', String(includeSubLedgers));
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
 
     return this.http.get(`${this.baseUrl}/ledgers`, requestOptions);
@@ -70,7 +70,7 @@ export class AccountingService{
     let params: URLSearchParams = buildSearchParams(fetchRequest);
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
     return this.http.get(`${this.baseUrl}/ledgers/${identifier}/accounts`, requestOptions);
   }
@@ -83,7 +83,7 @@ export class AccountingService{
     let params: URLSearchParams = buildSearchParams(fetchRequest);
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
     return this.http.get(`${this.baseUrl}/accounts`, requestOptions)
       .share();
@@ -107,7 +107,7 @@ export class AccountingService{
     params.append('dateRange', dateRange);
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
     return this.http.get(`${this.baseUrl}/accounts/${identifier}/entries`, requestOptions);
   }
@@ -129,7 +129,7 @@ export class AccountingService{
     params.append('dateRange', buildDateRangeParam(startDate, endDate));
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
     return this.http.get(`${this.baseUrl}/journal`, requestOptions)
   }
@@ -143,7 +143,7 @@ export class AccountingService{
     params.append('includeEmptyEntries', includeEmptyEntries ? 'true' : 'false');
 
     let requestOptions: RequestOptionsArgs = {
-      search: params
+      params
     };
     return this.http.get(`${this.baseUrl}/trialbalance`, requestOptions)
   }

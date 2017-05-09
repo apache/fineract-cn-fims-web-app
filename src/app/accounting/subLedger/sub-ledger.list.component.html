@@ -47,7 +47,11 @@
     <div layout="row">
       <div layout="column" flex-gt-md="100">
         <h3 translate>Subledgers</h3>
-        <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData" sortBy="identifier"></fims-data-table>
+        <fims-data-table flex
+                         (onActionCellClick)="rowSelect($event)"
+                         [columns]="columns"
+                         [data]="ledgerData">
+        </fims-data-table>
       </div>
     </div>
   </div>
