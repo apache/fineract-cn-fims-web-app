@@ -19,11 +19,13 @@
       *ngFor="let column of _columns"
       [numeric]="column.numeric"
       [sortable]="sortable"
+      [name]="column.name"
+      [active]="currentSort.sortColumn === column.name"
+      [sortOrder]="currentSort.sortColumn === column.name ? currentSort.sortDirection : ''"
       (sortChange)="sortChanged($event)">
     {{column.label}}
   </th>
-  <th td-data-table-column *ngIf="actionColumn">
-  </th>
+  <th td-data-table-column *ngIf="actionColumn"></th>
   <tr td-data-table-row *ngFor="let row of tableData.data">
     <td td-data-table-cell *ngFor="let column of _columns" [numeric]="column.numeric">
       {{column.format ? column.format(row[column.name]) : row[column.name]}}
@@ -42,4 +44,4 @@
   <h3 translate>Fetching results...</h3>
 </div>
 
-<td-paging-bar [pageSizes]="pageSizes" [total]="tableData.totalElements" (change)="page($event)"></td-paging-bar>
+<td-paging-bar *ngIf="pageable" [pageSizes]="pageSizes" [total]="tableData.totalElements" (change)="page($event)"></td-paging-bar>

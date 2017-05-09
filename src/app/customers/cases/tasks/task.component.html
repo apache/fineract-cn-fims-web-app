@@ -22,5 +22,5 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{'Manage tasks' | translate}}">
-  <fims-data-table (onFetch)="fetchTasks($event)" [columns]="columns" [data]="tasksData$ | async" sortBy="identifier"></fims-data-table>
+  <fims-data-table (onFetch)="fetchTasks($event)" [columns]="columns" [data]="tasksData$ | async"></fims-data-table>
 </fims-layout-card-over>
