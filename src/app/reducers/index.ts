@@ -31,6 +31,7 @@ export interface State {
   authentication: fromAuthentication.State;
   authorization: fromAuthorization.State;
   officeSearch: SearchState;
+  countrySearch: SearchState;
   employeeSearch: SearchState;
   roleSearch: SearchState;
   customerSearch: SearchState;
@@ -43,6 +44,7 @@ export const reducers = {
   authorization: fromAuthorization.reducer,
 
   officeSearch: createSearchReducer('Office'),
+  countrySearch: createSearchReducer('Country'),
   employeeSearch: createSearchReducer('Employee'),
   roleSearch: createSearchReducer('Role'),
   customerSearch: createSearchReducer('Customer'),
@@ -81,6 +83,14 @@ export const getOfficeSearchResults = createSelector(getSearchOffices, getOffice
     totalElements: totalElements
   };
 });
+
+/**
+ * Country Search Selectors
+ */
+
+export const getCountrySearchState = (state: State) => state.countrySearch;
+
+export const getSearchCountry = createSelector(getCountrySearchState, getSearchEntities);
 
 /**
  * Employee Search Selectors

@@ -23,7 +23,6 @@ import {CreateCustomerFormComponent} from './form/create/create.form.component';
 import {CommonModule} from '../../components/common.module';
 import {CustomerDetailComponent} from './detail/customer.detail.component';
 import {CustomerDetailFormComponent} from './form/detail/detail.component';
-import {CustomerAddressFormComponent} from './form/address/address.component';
 import {CustomerIdentityCardFormComponent} from './form/identityCard/identity-card.component';
 import {CustomerOfficesComponent} from './form/offices/offices.component';
 import {CustomerEmployeesComponent} from './form/employees/employees.component';
@@ -61,7 +60,6 @@ import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
   declarations: [
     CustomerComponent,
     CustomerDetailFormComponent,
-    CustomerAddressFormComponent,
     CustomerContactFormComponent,
     CustomerIdentityCardFormComponent,
     CustomerCustomFieldsComponent,

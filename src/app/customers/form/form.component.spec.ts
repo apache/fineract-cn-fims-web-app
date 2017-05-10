@@ -19,7 +19,7 @@ import {CustomerDetailFormComponent} from './detail/detail.component';
 import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
 import {CustomerIdentityCardFormComponent} from './identityCard/identity-card.component';
-import {CustomerAddressFormComponent} from './address/address.component';
+import {AddressFormComponent} from '../../../components/address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
@@ -34,11 +34,12 @@ import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
+import {MdAutocompleteModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
 import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
 import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
+import {CountryService} from '../../../services/country/country.service';
 
-let customerTemplate: Customer = {
+const customerTemplate: Customer = {
   identifier: 'test',
   type: 'PERSON',
   givenName: 'test',
@@ -94,7 +95,7 @@ describe('Test customer form', () => {
         CustomerDetailFormComponent,
         CustomerContactFormComponent,
         CustomerIdentityCardFormComponent,
-        CustomerAddressFormComponent,
+        AddressFormComponent,
         CustomerCustomFieldsComponent,
         CustomerEmployeesComponent,
         CustomerOfficesComponent
@@ -105,10 +106,21 @@ describe('Test customer form', () => {
         MdInputModule,
         MdIconModule,
         MdRadioModule,
+        MdAutocompleteModule,
         CovalentStepsModule,
         NoopAnimationsModule
       ],
       providers: [
+        {
+          // Used by address component
+          provide: CountryService, useClass: class {
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
+              displayName: '',
+              name: customerTemplate.address.country,
+              alpha2Code: customerTemplate.address.countryCode
+            })
+          }
+        },
         {
           provide: CustomersStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
@@ -117,16 +129,15 @@ describe('Test customer form', () => {
         },
         {
           provide: Store, useClass: class {
-          dispatch = jasmine.createSpy('dispatch');
-          select = jasmine.createSpy('select').and.returnValue(Observable.empty())
-        }
+            dispatch = jasmine.createSpy('dispatch');
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+          }
         }
       ]
     });
 
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
-
   });
 
   it('should test if the form save the original values', () => {
@@ -176,13 +187,13 @@ class TestComponent{
 
   customer: Customer = customerTemplate;
 
-  triggerSave(): void{
+  triggerSave(): void {
     this.formComponent.save();
   }
 
-  onSave(customer: Customer): void{
+  onSave(customer: Customer): void {
     this.saveEmitter.emit(customer);
   }
 
-  onCancel(): void{}
+  onCancel(): void {}
 }

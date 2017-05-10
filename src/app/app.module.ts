@@ -46,6 +46,8 @@ import {SecurityNotificationEffects} from './reducers/security/effects/notificat
 import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExistsGuardService} from '../components/guards/exists-guard';
+import {CountryService} from '../services/country/country.service';
+import {CountrySearchApiEffects} from './reducers/country/service.effects';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,6 +84,7 @@ export function HttpLoaderFactory(http: Http){
     EffectsModule.run(SecurityNotificationEffects),
 
     EffectsModule.run(OfficeSearchApiEffects),
+    EffectsModule.run(CountrySearchApiEffects),
     EffectsModule.run(EmployeeSearchApiEffects),
     EffectsModule.run(CustomerSearchApiEffects),
     EffectsModule.run(AccountSearchApiEffects),
@@ -98,6 +101,7 @@ export function HttpLoaderFactory(http: Http){
     CatalogService,
     AccountingService,
     PortfolioService,
+    CountryService,
     NotificationService,
     ExistsGuardService,
     ...appRoutingProviders

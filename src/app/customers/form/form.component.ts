@@ -18,7 +18,7 @@ import {Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angula
 import {TdStepComponent} from '@covalent/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomerDetailFormData, CustomerDetailFormComponent} from './detail/detail.component';
-import {CustomerAddressFormComponent} from './address/address.component';
+import {AddressFormComponent} from '../../../components/address/address.component';
 import {CustomerIdentityCardFormComponent} from './identityCard/identity-card.component';
 import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Address} from '../../../services/domain/address/address.model';
@@ -74,7 +74,7 @@ export class CustomerFormComponent implements OnInit {
   @ViewChild('identityCardForm') identityCardForm: CustomerIdentityCardFormComponent;
   identityCardFormData: IdentificationCard;
 
-  @ViewChild('addressForm') addressForm: CustomerAddressFormComponent;
+  @ViewChild('addressForm') addressForm: AddressFormComponent;
   addressFormData: Address;
 
   selectedOffices: string[] = [];

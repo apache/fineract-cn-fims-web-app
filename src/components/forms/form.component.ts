@@ -16,7 +16,7 @@
 
 import {FormGroup} from "@angular/forms";
 
-export abstract class FormComponent<T>{
+export abstract class FormComponent<T> {
 
   form: FormGroup;
 
@@ -24,17 +24,17 @@ export abstract class FormComponent<T>{
 
   abstract set formData(data: T)
 
-  get pristine(): boolean{
+  get pristine(): boolean {
     if(!this.form) return true;
     return this.form.pristine;
   }
 
-  get valid(): boolean{
+  get valid(): boolean {
     if(!this.form) return true;
     return this.form.valid;
   }
 
-  get dirty(): boolean{
+  get dirty(): boolean {
     if(!this.form) return true;
     return this.form.dirty;
   }
@@ -43,7 +43,7 @@ export abstract class FormComponent<T>{
    * Checks if form is pristine before doing valid check
    * @returns {boolean}
    */
-  get validWhenOptional(): boolean{
+  get validWhenOptional(): boolean {
     if(!this.pristine && this.valid){
       return true;
     }else if(!this.pristine && !this.valid){
@@ -52,7 +52,7 @@ export abstract class FormComponent<T>{
     return true;
   }
 
-  setError(field: string, error: string, value: any): void{
+  setError(field: string, error: string, value: any): void {
     let errors = this.form.get(field).errors || {};
     errors[error] = value;
     this.form.get(field).setErrors(errors);
