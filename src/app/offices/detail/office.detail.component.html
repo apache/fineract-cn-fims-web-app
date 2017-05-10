@@ -36,7 +36,7 @@
       <md-list-item *ngIf="office.address">
         <md-icon md-list-avatar>location_on</md-icon>
         <h3 md-line>{{office.address.street}}, {{office.address.postalCode}}, {{office.address.city}}<span *ngIf="office.address.region">({{office.address.region}})</span></h3>
-        <p md-line>{{office.address.country}}<span *ngIf="office.address.countryCode">({{office.address.countryCode}})</span></p>
+        <p md-line>{{office.address.country}}</p>
       </md-list-item>
       <md-list-item *ngIf="!office.address">
         <md-icon md-list-avatar>location_on</md-icon>

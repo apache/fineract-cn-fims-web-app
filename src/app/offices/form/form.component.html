@@ -39,43 +39,7 @@
   </td-step>
   <td-step #addressStep label="{{'Office Address(optional)' | translate}}"
            [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="addressForm">
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
-          <md-error *ngIf="addressForm.get('street').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{ 'City' | translate}}" formControlName="city" tdAutoTrim/>
-          <md-error *ngIf="addressForm.get('city').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{ 'Postal code(optional)' | translate }}" formControlName="postalCode" tdAutoTrim/>
-          <md-error *ngIf="addressForm.get('postalCode').hasError('maxlength')" translate>Only 5 figures allowed</md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Region(optional)' | translate}}" formControlName="region" tdAutoTrim/>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Country short name' | translate}}" formControlName="countryShortName" tdAutoTrim/>
-          <md-error *ngIf="addressForm.get('countryShortName').invalid" translate>Required, Only 2 characters allowed</md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" tdAutoTrim/>
-          <md-error *ngIf="addressForm.get('country').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-      </div>
-    </form>
+    <fims-address-form #addressForm [formData]="addressFormData"></fims-address-form>
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'" class="disable-pointer">
     <ng-template td-step-summary>

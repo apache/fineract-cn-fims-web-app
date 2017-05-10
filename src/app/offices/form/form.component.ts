@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-import {Component, Input, Output, ViewChild, EventEmitter, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../../services/office/domain/office.model';
 import {FimsValidators} from '../../../components/validator/validators';
 import {Address} from '../../../services/domain/address/address.model';
+import {AddressFormComponent} from '../../../components/address/address.component';
+
 
 @Component({
   selector: 'fims-office-form-component',
@@ -31,9 +33,10 @@ export class OfficeFormComponent implements OnInit {
 
   detailForm: FormGroup;
 
-  addressForm: FormGroup;
-
   @ViewChild('detailsStep') step: TdStepComponent;
+
+  @ViewChild('addressForm') addressForm: AddressFormComponent;
+  addressFormData: Address;
 
   @Input('editMode') editMode: boolean;
 
@@ -46,8 +49,7 @@ export class OfficeFormComponent implements OnInit {
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder) {
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   prepareForm(office: Office): void {
     this.detailForm = this.formBuilder.group({
@@ -56,16 +58,7 @@ export class OfficeFormComponent implements OnInit {
       description: [office.description]
     });
 
-    const address = office.address;
-
-    this.addressForm = this.formBuilder.group({
-      street: [address ? address.street : undefined, Validators.required],
-      city: [address ? address.city : undefined, Validators.required],
-      postalCode: [address ? address.postalCode : undefined, Validators.maxLength(5)],
-      region: [address ? address.region : undefined],
-      countryShortName: [address ? address.countryCode : undefined, [Validators.required, Validators.maxLength(2)]],
-      country: [address ? address.country : undefined, Validators.required]
-    })
+    this.addressFormData = office.address;
   }
 
   ngOnInit(): void {
@@ -73,7 +66,7 @@ export class OfficeFormComponent implements OnInit {
   }
 
   formsInvalid(): boolean {
-    return (!this.addressForm.pristine && this.addressForm.invalid) || this.detailForm.invalid;
+    return ((this.editMode || !this.addressForm.pristine) && !this.addressForm.valid) || this.detailForm.invalid;
   }
 
   save(): void {
@@ -86,21 +79,10 @@ export class OfficeFormComponent implements OnInit {
     if(this.addressForm.pristine) {
       office.address = this.office.address;
     } else {
-      office.address = this.getAddress();
+      office.address = this.addressForm.formData;
     }
 
     this.onSave.emit(office);
-  }
-
-  private getAddress(): Address {
-    return {
-      street: this.addressForm.get('street').value,
-      city: this.addressForm.get('city').value,
-      region: this.addressForm.get('region').value,
-      postalCode: this.addressForm.get('postalCode').value,
-      countryCode: this.addressForm.get('countryShortName').value,
-      country: this.addressForm.get('country').value
-    }
   }
 
   cancel(): void {
@@ -110,4 +92,5 @@ export class OfficeFormComponent implements OnInit {
   get office(): Office {
     return this._office;
   }
+
 }

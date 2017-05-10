@@ -26,7 +26,7 @@
 
   <td-step #addressStep label="{{'Customer Address' | translate}}" [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
 
-    <fims-customer-address-form #addressForm [formData]="addressFormData"></fims-customer-address-form>
+    <fims-address-form #addressForm [formData]="addressFormData"></fims-address-form>
 
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="contactStep.open()"></fims-form-continue-action>

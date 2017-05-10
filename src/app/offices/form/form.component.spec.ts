@@ -25,9 +25,13 @@ import {IdInputComponent} from '../../../components/id-input/id-input.component'
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
 import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
-import {MdInputModule} from '@angular/material';
+import {MdAutocompleteModule, MdInputModule} from '@angular/material';
+import {AddressFormComponent} from '../../../components/address/address.component';
+import {CountryService} from '../../../services/country/country.service';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
 
-let officeTemplate: Office = {
+const officeTemplate: Office = {
   identifier: 'test',
   name: 'test',
   description: 'test',
@@ -51,16 +55,35 @@ describe('Test office form', () => {
       imports: [
         ReactiveFormsModule,
         MdInputModule,
+        MdAutocompleteModule,
         CovalentStepsModule,
         TranslateModule.forRoot(),
         NoopAnimationsModule
       ],
-      providers: [],
+      providers: [
+        {
+          // Used by address component
+          provide: CountryService, useClass: class {
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
+              displayName: '',
+              name: officeTemplate.address.country,
+              alpha2Code: officeTemplate.address.countryCode
+            })
+          }
+        },
+        {
+          provide: Store, useClass: class {
+            dispatch = jasmine.createSpy('dispatch');
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+          }
+        }
+      ],
       declarations: [
         IdInputComponent,
         FormContinueActionComponent,
         FormFinalActionComponent,
         OfficeFormComponent,
+        AddressFormComponent,
         TestComponent
       ]
     });
@@ -71,7 +94,6 @@ describe('Test office form', () => {
 
   it('should save address when pristine', (done: DoneFn) => {
     fixture.detectChanges();
-
     testComponent.saveEmitter.subscribe((office) => {
       expect(office.identifier).toBe(officeTemplate.identifier);
       expect(office.name).toBe(officeTemplate.name);
@@ -89,8 +111,6 @@ describe('Test office form', () => {
       done();
     });
 
-    fixture.detectChanges();
-
     testComponent.triggerSave();
   });
 
@@ -107,15 +127,13 @@ class TestComponent{
 
   office: Office = officeTemplate;
 
-  triggerSave(): void{
+  triggerSave(): void {
     this.formComponent.save();
   }
 
-  onSave(office: Office): void{
+  onSave(office: Office): void {
     this.saveEmitter.emit(office);
   }
 
-  onCancel(): void{
-
-  }
+  onCancel(): void {}
 }

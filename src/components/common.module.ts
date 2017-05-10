@@ -34,6 +34,7 @@ import {ValidateOnBlurDirective} from './validate-on-blur.directive';
 import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
 import {FormContinueActionComponent} from './forms/form-continue-action.component';
 import {FormFinalActionComponent} from './forms/form-final-action.component';
+import {AddressFormComponent} from './address/address.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import {FormFinalActionComponent} from './forms/form-final-action.component';
     MinMaxComponent,
     ValidateOnBlurDirective,
     FormFinalActionComponent,
-    FormContinueActionComponent
+    FormContinueActionComponent,
+    AddressFormComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -80,7 +82,8 @@ import {FormFinalActionComponent} from './forms/form-final-action.component';
     TranslateModule,
     ValidateOnBlurDirective,
     FormFinalActionComponent,
-    FormContinueActionComponent
+    FormContinueActionComponent,
+    AddressFormComponent
   ]
 })
 export class CommonModule{}
