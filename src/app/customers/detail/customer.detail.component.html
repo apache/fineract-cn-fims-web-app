@@ -33,6 +33,7 @@
       <div layout="column" flex-gt-md="100">
         <div layout-gt-md="row">
           <div flex-gt-md="30">
+            <fims-portrait (onClick)="changePortrait()" [tooltip]="'Change portrait'" [blob]="portrait"></fims-portrait>
             <md-nav-list>
               <h3 md-subheader translate>Financial products</h3>
               <a md-list-item [routerLink]="['loans']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'READ'}">

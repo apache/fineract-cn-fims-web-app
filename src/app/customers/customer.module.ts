@@ -44,6 +44,7 @@ import {CustomerCommandApiEffects} from './store/commands/effects/service.effect
 import {CustomerTasksNotificationEffects} from './store/tasks/effects/notification.effects';
 import {CustomerTasksApiEffects} from './store/tasks/effects/service.effects';
 import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
+import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
     CustomerIndexComponent,
     CustomerDetailComponent,
     CustomerStatusComponent,
-    CustomerActivityComponent
+    CustomerActivityComponent,
+    CustomerPortraitComponent
   ],
   providers: [
     CustomerExistsGuard,

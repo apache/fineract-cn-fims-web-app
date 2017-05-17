@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Customer} from './domain/customer.model';
 import {HttpClient} from '../http/http.service';
 import {CustomerPage} from './domain/customer-page.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {buildSearchParams} from '../domain/paging/search-param.builder';
-import {URLSearchParams, RequestOptionsArgs} from '@angular/http';
+import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Command} from './domain/command.model';
 import {TaskDefinition} from './domain/task-definition.model';
+import {ImageService} from '../image/image.service';
 
 @Injectable()
 export class CustomerService {
 
-  constructor(@Inject('customerBaseUrl') private baseUrl: string, private http: HttpClient) {}
+  constructor(@Inject('customerBaseUrl') private baseUrl: string, private http: HttpClient, private imageService: ImageService) {}
 
   fetchCustomers(fetchRequest: FetchRequest): Observable<CustomerPage> {
     let params: URLSearchParams = buildSearchParams(fetchRequest);
@@ -72,11 +73,27 @@ export class CustomerService {
     return this.http.get(`${this.baseUrl}/customers/${customerId}/tasks`)
   }
 
-  fetchTasks(): Observable<TaskDefinition[]>{
+  fetchTasks(): Observable<TaskDefinition[]> {
     return this.http.get(`${this.baseUrl}/tasks`)
   }
 
-  createTask(task: TaskDefinition): Observable<void>{
+  createTask(task: TaskDefinition): Observable<void> {
     return this.http.post(`${this.baseUrl}/tasks`, task);
+  }
+
+  getPortrait(customerId: string): Observable<Blob> {
+    return this.imageService.getImage(`${this.baseUrl}/customers/${customerId}/portrait`);
+  }
+
+  uploadPortrait(customerId: string, file: File): Observable<void> {
+    const formData = new FormData();
+
+    formData.append('portrait', file, file.name);
+
+    return this.http.put(`${this.baseUrl}/customers/${customerId}/portrait`, formData);
+  }
+
+  deletePortrait(customerId: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/customers/${customerId}/portrait`)
   }
 }

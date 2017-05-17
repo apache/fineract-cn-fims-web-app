@@ -15,16 +15,18 @@
  */
 
 import {Router, ActivatedRoute} from '@angular/router';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {Field} from '../../../services/catalog/domain/field.model';
 import {Option} from '../../../services/catalog/domain/option.model';
-import * as fromEmployees from '../store';
+import * as fromCustomers from '../store';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../store/index';
 import {SelectAction} from '../store/customer.actions';
 import {LOAD_ALL} from '../store/catalogs/catalog.actions';
+import {CustomerService} from '../../../services/customer/customer.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 interface CatalogFieldPair{
   catalog: Catalog;
@@ -47,6 +49,7 @@ interface CustomDetailField{
 })
 export class CustomerDetailComponent implements OnInit, OnDestroy{
 
+  portrait: Blob;
 
   private catalogsSubscription: Subscription;
 
@@ -60,13 +63,15 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
 
   customCatalogs: CustomCatalog[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.customerSubscription = this.store.select(fromEmployees.getSelectedCustomer)
-      .subscribe(customer => this.customer = customer);
+    this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
+      .do(customer => this.customer = customer)
+      .flatMap(customer => this.customerService.getPortrait(customer.identifier))
+      .subscribe(portrait => this.portrait = portrait);
 
-    this.catalogsSubscription = this.store.select(fromEmployees.getAllCustomerCatalogEntities)
+    this.catalogsSubscription = this.store.select(fromCustomers.getAllCustomerCatalogEntities)
       .subscribe(catalogs => this.catalogs = catalogs);
 
     this.store.dispatch({ type: LOAD_ALL });
@@ -77,7 +82,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     this.catalogsSubscription.unsubscribe();
   }
 
-  searchCustomer(term): void{
+  searchCustomer(term): void {
     if(term){
       this.router.navigate(['../../../'], { queryParams: { term: term }, relativeTo: this.route });
     }
@@ -127,12 +132,16 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
     }
   };
 
-  get customer(): Customer{
+  get customer(): Customer {
     return this._customer;
   }
 
-  set catalogs(catalogs: Catalog[]){
+  set catalogs(catalogs: Catalog[]) {
     this._catalogs = catalogs;
+  }
+
+  changePortrait(): void {
+    this.router.navigate(['portrait'], { relativeTo: this.route })
   }
 
 }

@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 import {MockBackend, MockConnection} from '@angular/http/testing';
-import {HttpClient, TENANT_HEADER, AUTHORIZATION_HEADER, USER_HEADER} from './http.service';
-import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions} from '@angular/http';
-import {Authentication} from '../identity/domain/authentication.model';
+import {AUTHORIZATION_HEADER, HttpClient, TENANT_HEADER, USER_HEADER} from './http.service';
+import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {ReflectiveInjector} from '@angular/core';
@@ -40,9 +39,8 @@ describe('Test http client', () => {
     }
   };
 
-  let doPostRequest = function (httpClient: HttpClient): void {
-    httpClient.post('/test', {}).subscribe(() => {
-    });
+  let doPostRequest = function (httpClient: HttpClient, options?: RequestOptionsArgs): void {
+    httpClient.post('/test', {}, options).subscribe(() => {});
   };
 
   describe('Test http header', () => {
@@ -79,6 +77,18 @@ describe('Test http client', () => {
       });
       doPostRequest(this.httpClient);
     });
+
+    it('should send custom headers', (done: DoneFn) => {
+      this.backend.connections.subscribe((connection: MockConnection) => {
+        expect(connection.request.headers.get("Content-Type")).toBe("multipart/form-data");
+        done();
+      });
+      doPostRequest(this.httpClient, {
+        headers: new Headers({
+          "Content-Type": "multipart/form-data"
+        })
+      });
+    })
 
   });
 

@@ -24,6 +24,7 @@ import {CustomerStatusComponent} from './detail/status/status.component';
 import {CustomerIndexComponent} from './detail/customer.index.component';
 import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form.component';
 import {CustomerExistsGuard} from './customer-exists.guard';
+import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
 
 export const CustomerRoutes: Routes = [
   {
@@ -66,6 +67,14 @@ export const CustomerRoutes: Routes = [
         path: 'activities',
         component: CustomerActivityComponent,
         data: {title: 'Manage Customer Tasks'}
+      },
+      {
+        path: 'portrait',
+        component: CustomerPortraitComponent,
+        data: {
+          title: 'Upload portrait',
+          hasPermission: { id: 'customer_customers', accessLevel: 'CHANGE' }
+        }
       },
       { path: 'loans', loadChildren: './cases/case.module#CaseModule' },
     ]
