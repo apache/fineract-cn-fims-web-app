@@ -32,7 +32,7 @@
               <md-card-content>
                 <div layout="row">
                   <md-input-container layout-margin flex>
-                    <input mdInput placeholder="{{'Tenant' | translate}}" type="text" formControlName="tenant" name="tenant"/>
+                    <input mdInput placeholder="{{'Tenant' | translate}}" type="text" formControlName="tenant"/>
                     <md-icon md-prefix>business</md-icon>
                     <md-error *ngIf="form.get('tenant').hasError('required')" translate>
                       Required
@@ -41,7 +41,7 @@
                 </div>
                 <div layout="row">
                   <md-input-container layout-margin flex>
-                    <input mdInput placeholder="{{'Username' | translate}}" type="text" formControlName="username" name="username"/>
+                    <input mdInput placeholder="{{'Username' | translate}}" type="text" formControlName="username"/>
                     <md-icon md-prefix>person</md-icon>
                     <md-error *ngIf="form.get('username').hasError('required')" translate>
                       Required
@@ -50,7 +50,7 @@
                 </div>
                 <div layout="row">
                   <md-input-container layout-margin flex>
-                    <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" name="password"/>
+                    <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password"/>
                     <md-icon md-prefix>lock</md-icon>
                     <md-error *ngIf="form.get('password').hasError('required')" translate>
                       Required

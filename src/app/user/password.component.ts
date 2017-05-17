@@ -44,7 +44,7 @@ export class PasswordComponent implements OnInit, OnDestroy{
 
   ngOnInit(){
     this.route.queryParams.subscribe((queryParams) => {
-      this.forced = queryParams['forced'] === 'true' ? true: false;
+      this.forced = queryParams['forced'] === 'true';
     });
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)

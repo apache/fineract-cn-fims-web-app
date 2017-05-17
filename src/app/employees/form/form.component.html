@@ -54,7 +54,7 @@
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" tdAutoTrim/>
+          <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password" tdAutoTrim/>
           <md-error *ngIf="detailForm.get('password').hasError('required')" translate>
             Required
           </md-error>

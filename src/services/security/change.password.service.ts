@@ -37,9 +37,9 @@ export class ChangePasswordGuard implements CanActivateChild {
 
   }
 
-  private isPasswordChangeNeeded(): Observable<boolean>{
+  private isPasswordChangeNeeded(): Observable<boolean> {
     return this.store.select(fromRoot.getAuthenticationState)
-      .map(state => new Date(state.authentication.passwordExpiration))
-      .map(expiryDate => expiryDate.getTime() < new Date().getTime());
+      .map(state => state.authentication.passwordExpiration ? new Date(state.authentication.passwordExpiration) : undefined)
+      .map(expiryDate => expiryDate ? expiryDate.getTime() < new Date().getTime() : false);
   }
 }
