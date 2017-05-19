@@ -24,6 +24,13 @@ import {CustomerStatusComponent} from './detail/status/status.component';
 import {CustomerIndexComponent} from './detail/customer.index.component';
 import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form.component';
 import {CustomerExistsGuard} from './customer-exists.guard';
+import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
+import {CustomerIdentityCardListComponent} from './detail/identityCard/identity-card.list.component';
+import {CreateCustomerIdentificationCardFormComponent} from './detail/identityCard/form/create.form.component';
+import {CustomerIdentityCardDetailComponent} from './detail/identityCard/identity-card.detail.component';
+import {EditCustomerIdentificationCardFormComponent} from './detail/identityCard/form/edit.form.component';
+import {CustomerIdentityCardIndexComponent} from './detail/identityCard/identity-card.index.component';
+import {IdentityCardExistsGuard} from './detail/identityCard/identity-card-exists.guard';
 
 export const CustomerRoutes: Routes = [
   {
@@ -67,7 +74,52 @@ export const CustomerRoutes: Routes = [
         component: CustomerActivityComponent,
         data: {title: 'Manage Customer Tasks'}
       },
-      { path: 'loans', loadChildren: './cases/case.module#CaseModule' },
+      {
+        path: 'portrait',
+        component: CustomerPortraitComponent,
+        data: {
+          title: 'Upload portrait',
+          hasPermission: { id: 'customer_customers', accessLevel: 'CHANGE' }
+        }
+      },
+      {
+        path: 'identifications',
+        component: CustomerIdentityCardListComponent,
+        data: {
+          title: 'Manage Identification Cards',
+        }
+      },
+      {
+        path: 'identifications/create',
+        component: CreateCustomerIdentificationCardFormComponent,
+        data: {
+          title: 'Create Identification Card',
+          hasPermission: { id: 'customer_customers', accessLevel: 'CHANGE' }
+        },
+      },
+      {
+        path: 'identifications/detail/:number',
+        component: CustomerIdentityCardIndexComponent,
+        canActivate: [ IdentityCardExistsGuard ],
+        children: [
+          {
+            path: '',
+            component: CustomerIdentityCardDetailComponent,
+            data: {
+              title: 'Identification Card',
+            }
+          },
+          {
+            path: 'edit',
+            component: EditCustomerIdentificationCardFormComponent,
+            data: {
+              title: 'Edit Identification Card',
+              hasPermission: {id: 'customer_customers', accessLevel: 'CHANGE'}
+            },
+          }
+        ]
+      },
+      {path: 'loans', loadChildren: './cases/case.module#CaseModule'},
     ]
   }
 ];

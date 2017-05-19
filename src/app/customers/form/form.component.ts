@@ -19,8 +19,6 @@ import {TdStepComponent} from '@covalent/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomerDetailFormData, CustomerDetailFormComponent} from './detail/detail.component';
 import {AddressFormComponent} from '../../../components/address/address.component';
-import {CustomerIdentityCardFormComponent} from './identityCard/identity-card.component';
-import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Address} from '../../../services/domain/address/address.model';
 import {CustomerContactFormComponent} from './contact/contact.component';
 import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';
@@ -43,8 +41,6 @@ export class CustomerFormComponent implements OnInit {
       birthMonth: customer.dateOfBirth.month,
       birthYear: customer.dateOfBirth.year
     };
-
-    this.identityCardFormData = customer.identificationCard;
 
     this.addressFormData = customer.address;
 
@@ -70,9 +66,6 @@ export class CustomerFormComponent implements OnInit {
 
   @ViewChild('contactForm') contactForm: CustomerContactFormComponent;
   contactFormData: ContactDetail[];
-
-  @ViewChild('identityCardForm') identityCardForm: CustomerIdentityCardFormComponent;
-  identityCardFormData: IdentificationCard;
 
   @ViewChild('addressForm') addressForm: AddressFormComponent;
   addressFormData: Address;
@@ -106,7 +99,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return (this.detailForm.valid && this.addressForm.valid) && this.contactForm.validWhenOptional && this.identityCardForm.validWhenOptional && this.customFieldsForm.validWhenOptional
+    return (this.detailForm.valid && this.addressForm.valid) && this.contactForm.validWhenOptional && this.customFieldsForm.validWhenOptional
   }
 
   save() {
@@ -125,7 +118,6 @@ export class CustomerFormComponent implements OnInit {
         month: detailFormData.birthMonth,
         year: detailFormData.birthYear
       },
-      identificationCard: this.identityCardForm.formData,
       assignedOffice: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
       customValues: this.customFieldsForm.formData

@@ -44,7 +44,7 @@
           <div flex-gt-md="70">
             <div layout="row">
               <md-list>
-                <md-list-item>
+                <md-list-item *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
                   <md-slide-toggle [formControl]="enabledControl">
                     <span *ngIf="enabledControl.value" translate>Enabled</span>
                     <span *ngIf="!enabledControl.value" translate>Disabled</span>
@@ -72,6 +72,6 @@
   </div>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
   <md-icon>edit_mode</md-icon>
 </a>

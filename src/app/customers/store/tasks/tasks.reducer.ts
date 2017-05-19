@@ -15,7 +15,6 @@
  */
 
 import * as task from './task.actions';
-import { createSelector } from 'reselect';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {ResourceState} from '../../../../components/store/resource.reducer';
 

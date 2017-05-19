@@ -16,11 +16,13 @@
 
 import {ExpirationDate} from './expiration-date.model';
 
-export type IdentificationCardType = 'id' | 'passport'
-
 export interface IdentificationCard{
-  type: IdentificationCardType;
+  type: string;
   number: string;
   expirationDate: ExpirationDate;
   issuer?: string;
+  createdBy?: string;
+  createdOn?: string;
+  lastModifiedBy?: string;
+  lastModifiedOn?: string;
 }

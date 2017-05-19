@@ -18,7 +18,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CustomerDetailFormComponent} from './detail/detail.component';
 import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
-import {CustomerIdentityCardFormComponent} from './identityCard/identity-card.component';
 import {AddressFormComponent} from '../../../components/address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -94,7 +93,6 @@ describe('Test customer form', () => {
         CustomerFormComponent,
         CustomerDetailFormComponent,
         CustomerContactFormComponent,
-        CustomerIdentityCardFormComponent,
         AddressFormComponent,
         CustomerCustomFieldsComponent,
         CustomerEmployeesComponent,
@@ -166,8 +164,6 @@ describe('Test customer form', () => {
       expect(customerTemplate.dateOfBirth.month).toEqual(customer.dateOfBirth.month);
       expect(customerTemplate.dateOfBirth.year).toEqual(customer.dateOfBirth.year);
 
-      expect(customer.identificationCard).toBeUndefined('Identity card is only saved when form was changed');
-
       expect(customer.contactDetails.length).toEqual(0);
     });
 
@@ -179,7 +175,7 @@ describe('Test customer form', () => {
 @Component({
   template: '<fims-customer-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [customer]="customer"></fims-customer-form-component>'
 })
-class TestComponent{
+class TestComponent {
 
   saveEmitter = new EventEmitter<Customer>();
 

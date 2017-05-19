@@ -32,29 +32,61 @@ import {ProductTaskExistsGuard} from './status/task-exists.guard';
 import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
 
 export const ProductRoutes: Routes = [
-  {path: '', component: ProductListComponent /* List */},
-  {path: 'create', component: ProductCreateComponent /* Create */},
+  {path: '', component: ProductListComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'READ' } } /* List */},
+  {path: 'create', component: ProductCreateComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Create */},
   {
     path: 'detail/:productId', /* Parent view to resolve product */
     canActivate: [ProductExistsGuard],
     children: [
-      {path: '', component: ProductDetailComponent /* Detail */},
+      {
+        path: '',
+        component: ProductDetailComponent /* Detail */
+      },
 
-      {path: 'charges', component: ProductChargeListComponent /* Charges list view */},
-      {path: 'charges/create', component: ProductChargeCreateFormComponent /* Charges create view */},
+      {
+        path: 'charges',
+        component: ProductChargeListComponent /* Charges list view */
+      },
+      {
+        path: 'charges/create',
+        component: ProductChargeCreateFormComponent,
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Charges create view */},
       {
         path: 'charges/detail/:chargeId',
         component: ProductChargeDetailComponent,
-        canActivate: [ProductChargeExistsGuard] /* Charges detail view */
+        canActivate: [ProductChargeExistsGuard]/* Charges detail view */
       },
-      {path: 'charges/detail/:chargeId/edit', component: ProductChargeEditFormComponent, canActivate: [ProductChargeExistsGuard] /* Charges detail view */},
+      {
+        path: 'charges/detail/:chargeId/edit',
+        component: ProductChargeEditFormComponent,
+        canActivate: [ProductChargeExistsGuard],
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }/* Charges detail view */},
 
-      {path: 'tasks', component: ProductStatusComponent },
-      {path: 'tasks/create', component: ProductStatusCreateFormComponent },
-      {path: 'tasks/detail/:taskId', component: ProductStatusDetailComponent, canActivate: [ProductTaskExistsGuard] },
-      {path: 'tasks/detail/:taskId/edit', component: ProductStatusEditFormComponent, canActivate: [ProductTaskExistsGuard] }
+      {
+        path: 'tasks',
+        component: ProductStatusComponent
+      },
+      {
+        path: 'tasks/create', component: ProductStatusCreateFormComponent,
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+      },
+      {
+        path: 'tasks/detail/:taskId',
+        component: ProductStatusDetailComponent,
+        canActivate: [ProductTaskExistsGuard]
+      },
+      {
+        path: 'tasks/detail/:taskId/edit',
+        component: ProductStatusEditFormComponent,
+        canActivate: [ProductTaskExistsGuard],
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+      }
     ]
   },
-  {path: 'detail/:productId/edit', component: ProductEditComponent, canActivate: [ProductExistsGuard]}
-
+  {
+    path: 'detail/:productId/edit',
+    component: ProductEditComponent,
+    canActivate: [ProductExistsGuard],
+    data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+  }
 ];

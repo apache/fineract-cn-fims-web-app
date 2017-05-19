@@ -23,7 +23,7 @@
 
 <fims-layout-card-over [title]="charge.name" [subTitle]="charge.description">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
-    <button md-icon-button (click)="deleteCharge()" title="{{'Delete this charge' | translate}}"><md-icon>delete</md-icon></button>
+    <button md-icon-button (click)="deleteCharge()" title="{{'Delete this charge' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <div class="md-content" class="inset" flex>
     <div layout="row">
@@ -52,7 +52,3 @@
     </div>
   </div>
 </fims-layout-card-over>
-
-<!--<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit charge' | translate}}" [routerLink]="['edit']">
-  <md-icon>edit_mode</md-icon>
-</a>-->
