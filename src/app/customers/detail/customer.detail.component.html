@@ -43,6 +43,11 @@
               </a>
               <md-divider></md-divider>
               <h3 md-subheader translate>Management</h3>
+              <a md-list-item [routerLink]="['identifications']">
+                <md-icon md-list-avatar>perm_identity</md-icon>
+                <h3 md-line translate>Identification cards</h3>
+                <p md-line translate>View identification cards</p>
+              </a>
               <a md-list-item [routerLink]="['tasks']">
                 <md-icon md-list-avatar>playlist_add_check</md-icon>
                 <h3 md-line translate>Tasks</h3>
@@ -80,26 +85,6 @@
                 <md-icon md-list-avatar>cake</md-icon>
                 <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
               </md-list-item>
-              <h3 md-subheader translate>Identification</h3>
-              <ng-container *ngIf="customer.identificationCard">
-                <md-list-item>
-                  <md-slide-toggle [(ngModel)]="showId">Show</md-slide-toggle>
-                  <md-icon md-list-avatar>perm_identity</md-icon>
-                  <h3 md-line translate>Identification card available</h3>
-                </md-list-item>
-                <md-list-item *ngIf="showId">
-                  <h3 md-line># {{customer.identificationCard?.number}}</h3>
-                  <p md-line>{{customer.identificationCard?.type}}</p>
-                  <p md-line *ngIf="customer.identificationCard?.issuedBy" [translate]="'Issued by'" [translateParams]="{value: customer.identificationCard?.issuedBy}">
-                  </p>
-                </md-list-item>
-              </ng-container>
-              <ng-container *ngIf="!customer.identificationCard">
-                <md-list-item>
-                  <md-icon md-list-avatar>perm_identity</md-icon>
-                  <h3 md-line translate>No identification card available</h3>
-                </md-list-item>
-              </ng-container>
             </md-list>
           </div>
         </div>

@@ -19,6 +19,8 @@ import * as fromCustomers from './customers.reducer';
 import * as fromCustomerForm from './form.reducer';
 import * as fromCustomerTasks from './tasks/tasks.reducer';
 import * as fromCustomerTaskForm from './tasks/form.reducer';
+import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
+import * as fromCustomerIdentificationCardForm from './identityCards/form.reducer';
 import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
@@ -39,6 +41,8 @@ export interface State extends fromRoot.State{
   customerTaskForm: fromCustomerTaskForm.State;
   customerCatalogs: fromCatalogs.State;
   customerCommands: fromCommands.State;
+  customerIdentificationCards: ResourceState;
+  customerIdentificationCardForm: fromCustomerIdentificationCardForm.State;
 }
 
 const reducers = {
@@ -47,7 +51,9 @@ const reducers = {
   customerTasks: createResourceReducer('Customer Task', fromCustomerTasks.reducer),
   customerTaskForm: fromCustomerTaskForm.reducer,
   customerCatalogs: fromCatalogs.reducer,
-  customerCommands: fromCommands.reducer
+  customerCommands: fromCommands.reducer,
+  customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
+  customerIdentificationCardForm: fromCustomerIdentificationCardForm.reducer
 };
 
 export class CustomersStore extends Store<State>{}
@@ -88,3 +94,15 @@ export const getAllCustomerCatalogEntities = createSelector(getCustomerCatalogsS
 export const getCustomerCommandsState = (state: State) => state.customerCommands;
 
 export const getAllCustomerCommands = createSelector(getCustomerCommandsState, fromCommands.getCommands);
+
+/**
+ * Customer Identification Card Selectors
+ */
+export const getCustomerIdentificationCardsState = (state: State) => state.customerIdentificationCards;
+
+export const getAllCustomerIdentificationCardEntities = createSelector(getCustomerIdentificationCardsState, getResourceAll);
+
+export const getCustomerIdentificationCardFormState = (state: State) => state.customerIdentificationCardForm;
+
+export const getIdentificationCardLoadedAt = createSelector(getCustomerIdentificationCardsState, getResourceLoadedAt);
+export const getSelectedIdentificationCard = createSelector(getCustomerIdentificationCardsState, getResourceSelected);

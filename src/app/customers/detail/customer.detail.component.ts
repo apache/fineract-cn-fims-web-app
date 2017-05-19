@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {Router, ActivatedRoute} from '@angular/router';
-import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {Field} from '../../../services/catalog/domain/field.model';
@@ -23,10 +23,8 @@ import {Option} from '../../../services/catalog/domain/option.model';
 import * as fromCustomers from '../store';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../store/index';
-import {SelectAction} from '../store/customer.actions';
 import {LOAD_ALL} from '../store/catalogs/catalog.actions';
 import {CustomerService} from '../../../services/customer/customer.service';
-import {DomSanitizer} from '@angular/platform-browser';
 
 interface CatalogFieldPair{
   catalog: Catalog;
@@ -47,7 +45,7 @@ interface CustomDetailField{
   templateUrl: './customer.detail.component.html',
   styleUrls: ['./customer.detail.component.scss']
 })
-export class CustomerDetailComponent implements OnInit, OnDestroy{
+export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   portrait: Blob;
 
@@ -55,15 +53,13 @@ export class CustomerDetailComponent implements OnInit, OnDestroy{
 
   private customerSubscription: Subscription;
 
-  private identityCard: boolean = true;
-
   private _customer: Customer;
 
   private _catalogs: Catalog[];
 
   customCatalogs: CustomCatalog[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)

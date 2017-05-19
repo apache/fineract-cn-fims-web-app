@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import * as task from './task.actions';
-import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
+import * as identityCards from './identity-cards.actions';
 import {ResourceState} from '../../../../components/store/resource.reducer';
+import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 
 export const initialState: ResourceState = {
   ids: [],
@@ -25,25 +25,25 @@ export const initialState: ResourceState = {
   selectedId: null,
 };
 
-export function reducer(state = initialState, action: task.Actions): ResourceState {
+export function reducer(state = initialState, action: identityCards.Actions): ResourceState {
 
   switch (action.type) {
 
-    case task.LOAD_ALL_COMPLETE: {
-      const taskDefinitions = action.payload;
-      const newTasks = taskDefinitions.filter(taskDefinition => !state.entities[taskDefinition.identifier]);
+    case identityCards.LOAD_ALL_COMPLETE: {
+      const identificationCards = action.payload;
+      const newIdentificationCards = identificationCards.filter(identificationCard => !state.entities[identificationCard.number]);
 
-      const newTaskIds = newTasks.map(task => task.identifier);
+      const newIdentificationCardIds = newIdentificationCards.map(identificationCard => identificationCard.number);
 
-      const newTaskEntities = newTasks.reduce((entities: { [id: string]: TaskDefinition }, taskDefintion: TaskDefinition) => {
+      const newIdentificationCardEntities = newIdentificationCards.reduce((entities: { [id: string]: IdentificationCard }, identificationCard: IdentificationCard) => {
         return Object.assign(entities, {
-          [taskDefintion.identifier]: taskDefintion
+          [identificationCard.number]: identificationCard
         });
       }, {});
 
       return {
-        ids: [ ...state.ids, ...newTaskIds ],
-        entities: Object.assign({}, state.entities, newTaskEntities),
+        ids: [ ...state.ids, ...newIdentificationCardIds ],
+        entities: Object.assign({}, state.entities, newIdentificationCardEntities),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
       };

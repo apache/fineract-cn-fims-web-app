@@ -25,6 +25,7 @@ import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Command} from './domain/command.model';
 import {TaskDefinition} from './domain/task-definition.model';
 import {ImageService} from '../image/image.service';
+import {IdentificationCard} from './domain/identification-card.model';
 
 @Injectable()
 export class CustomerService {
@@ -95,5 +96,25 @@ export class CustomerService {
 
   deletePortrait(customerId: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}/customers/${customerId}/portrait`)
+  }
+
+  fetchIdentificationCards(customerId: string): Observable<IdentificationCard[]> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/identifications`)
+  }
+
+  getIdentificationCard(customerId: string, number: string): Observable<IdentificationCard> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/identifications/${number}`)
+  }
+
+  createIdentificationCard(customerId: string, identificationCard: IdentificationCard): Observable<void> {
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/identifications`, identificationCard)
+  }
+
+  updateIdentificationCard(customerId: string, identificationCard: IdentificationCard): Observable<void> {
+    return this.http.put(`${this.baseUrl}/customers/${customerId}/identifications/${identificationCard.number}`, identificationCard)
+  }
+
+  deleteIdentificationCard(customerId: string, number: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/customers/${customerId}/identifications/${number}`)
   }
 }
