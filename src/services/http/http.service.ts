@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions, RequestOptionsArgs, RequestMethod, Request, Response, Headers} from '@angular/http';
+import {Headers, Http, Request, RequestMethod, RequestOptions, RequestOptionsArgs, Response} from '@angular/http';
 import {Observable} from 'rxjs';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/finally';
@@ -22,7 +22,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../app/reducers';
-import {Authentication} from '../identity/domain/authentication.model';
 import {LOGOUT} from '../../app/reducers/security/security.actions';
 
 export enum Action { QueryStart, QueryStop }
@@ -33,11 +32,6 @@ export const AUTHORIZATION_HEADER: string = 'Authorization';
 
 @Injectable()
 export class HttpClient {
-
-  private headers: Headers = new Headers({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  });
 
   process: Subject<Action> = new Subject<Action>();
 
@@ -64,19 +58,19 @@ export class HttpClient {
   private _buildRequestOptions(method: RequestMethod, url: string, body: any, tenant: string, username: string, accessToken: string, options?: RequestOptionsArgs): RequestOptions{
     options = options || {};
 
-    this.headers.set(TENANT_HEADER, tenant);
+    const headers = new Headers();
 
-    this.headers.delete(USER_HEADER);
-    this.headers.delete(AUTHORIZATION_HEADER);
+    headers.set('Accept', 'application/json');
 
-    this.headers.set(USER_HEADER, username);
-    this.headers.set(AUTHORIZATION_HEADER, accessToken);
+    headers.set(TENANT_HEADER, tenant);
+    headers.set(USER_HEADER, username);
+    headers.set(AUTHORIZATION_HEADER, accessToken);
 
-    let requestOptions: RequestOptions = new RequestOptions({
+    const requestOptions: RequestOptions = new RequestOptions({
       method: method,
       url: url,
-      body: JSON.stringify(body),
-      headers: this.headers
+      body: body,
+      headers: headers
     });
 
     return requestOptions.merge(options);
@@ -114,7 +108,6 @@ export class HttpClient {
           }
         });
       });
-
   }
 
 }

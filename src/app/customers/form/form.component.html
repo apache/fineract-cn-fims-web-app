@@ -38,15 +38,6 @@
     <fims-customer-contact-form #contactForm [formData]="contactFormData"></fims-customer-contact-form>
 
     <ng-template td-step-actions>
-      <fims-form-continue-action (onContinue)="identityCardStep.open()"></fims-form-continue-action>
-    </ng-template>
-  </td-step>
-
-  <td-step #identityCardStep label="{{'Identity card(optional)' | translate}}" translate-sublabel [state]="identityCardForm.pristine ? 'none' : identityCardForm.valid ? 'completed' : 'required'">
-
-    <fims-customer-identity-card-form #identityCardForm [formData]="identityCardFormData"></fims-customer-identity-card-form>
-
-    <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="officeStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>

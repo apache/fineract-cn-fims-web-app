@@ -35,6 +35,7 @@ import {LedgerSelectComponent} from './ledger-select/ledger-select.component';
 import {FormContinueActionComponent} from './forms/form-continue-action.component';
 import {FormFinalActionComponent} from './forms/form-final-action.component';
 import {AddressFormComponent} from './address/address.component';
+import {PortraitComponent} from './portrait/portrait.component';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import {AddressFormComponent} from './address/address.component';
     ValidateOnBlurDirective,
     FormFinalActionComponent,
     FormContinueActionComponent,
-    AddressFormComponent
+    AddressFormComponent,
+    PortraitComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -83,7 +85,8 @@ import {AddressFormComponent} from './address/address.component';
     ValidateOnBlurDirective,
     FormFinalActionComponent,
     FormContinueActionComponent,
-    AddressFormComponent
+    AddressFormComponent,
+    PortraitComponent
   ]
 })
 export class CommonModule{}

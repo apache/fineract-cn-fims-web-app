@@ -56,7 +56,10 @@ const initialState: ResourceState = {
   selectedId: null
 };
 
-export const createResourceReducer = (resource: string, reducer?: ActionReducer<ResourceState>) => {
+export const createResourceReducer = (resource: string, reducer?: ActionReducer<ResourceState>, identifierName: string = 'identifier') => {
+
+  const identifier = (resource: any) => resource[identifierName];
+
   return function(state: ResourceState = initialState, action: Action): ResourceState {
 
     switch (action.type) {
@@ -64,16 +67,16 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
       case `[${resource}] Load`: {
         const resource = action.payload.resource;
 
-        const newIds = state.ids.filter(id => id !== resource.identifier);
+        const newIds = state.ids.filter(id => id !== identifier(resource));
 
         return {
-          ids: [ ...newIds, resource.identifier ],
+          ids: [ ...newIds, identifier(resource) ],
           entities: Object.assign({}, state.entities, {
-            [resource.identifier]: resource
+            [identifier(resource)]: resource
           }),
           selectedId: state.selectedId,
           loadedAt: Object.assign({}, state.entities, {
-            [resource.identifier]: Date.now()
+            [identifier(resource)]: Date.now()
           })
         };
       }
@@ -88,9 +91,9 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
         const resource = action.payload.resource;
 
         return {
-          ids: [ ...state.ids, resource.identifier ],
+          ids: [ ...state.ids, identifier(resource) ],
           entities: Object.assign({}, state.entities, {
-            [resource.identifier]: resource
+            [identifier(resource)]: resource
           }),
           selectedId: state.selectedId,
           loadedAt: state.loadedAt
@@ -103,7 +106,7 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
         return {
           ids: state.ids,
           entities: Object.assign({}, state.entities, {
-            [resource.identifier]: resource
+            [identifier(resource)]: resource
           }),
           selectedId: state.selectedId,
           loadedAt: state.loadedAt
@@ -113,12 +116,12 @@ export const createResourceReducer = (resource: string, reducer?: ActionReducer<
       case `[${resource}] Delete Success`: {
         const resource = action.payload.resource;
 
-        const newIds = state.ids.filter(id => id !== resource.identifier);
+        const newIds = state.ids.filter(id => id !== identifier(resource));
 
         const newEntities = newIds.reduce((entities: { [id: string]: any }, id: string) => {
           let entity = state.entities[id];
           return Object.assign(entities, {
-            [entity.identifier]: entity
+            [identifier(entity)]: entity
           });
         }, {});
 

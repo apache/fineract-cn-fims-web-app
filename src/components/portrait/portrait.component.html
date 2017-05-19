@@ -1,0 +1,3 @@
+<a href="#" (click)="clickPortrait($event)" [mdTooltip]="tooltip">
+  <img [ngClass]="{'small': size === 'small', 'medium': size === 'medium', 'large': size === 'large'}" [src]="safeUrl" alt>
+</a>

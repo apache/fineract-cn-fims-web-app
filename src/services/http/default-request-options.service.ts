@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-import {ExpirationDate} from './expiration-date.model';
+import {BaseRequestOptions, RequestOptions} from '@angular/http';
+import {Injectable} from '@angular/core';
 
-export interface IdentificationCard{
-  type: string;
-  number: string;
-  expirationDate: ExpirationDate;
-  issuer?: string;
-  createdBy?: string;
-  createdOn?: string;
-  lastModifiedBy?: string;
-  lastModifiedOn?: string;
+@Injectable()
+export class DefaultRequestOptions extends BaseRequestOptions {
+
+  constructor() {
+    super();
+
+    //this.headers.set('Accept', 'application/json');
+    //this.headers.set('Content-Type', 'application/json');
+  }
 }
+
+export const requestOptionsProvider = { provide: RequestOptions, useClass: DefaultRequestOptions };

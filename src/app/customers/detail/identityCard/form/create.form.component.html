@@ -15,16 +15,12 @@
 -->
 
 <md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Tasks' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Manage Task Definitions' | translate}}">
-  <fims-data-table flex (onFetch)="fetchTasks($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="tasksData$ | async" [sortable]="false"></fims-data-table>
+<fims-layout-card-over title="{{'Create new identification card' | translate}}">
+  <fims-identity-card-form #form
+                                (onSave)="onSave($event)"
+                                (onCancel)="onCancel()"
+                                [identificationCard]="identificationCard">
+  </fims-identity-card-form>
 </fims-layout-card-over>
-
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new task' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
-  <md-icon>add</md-icon>
-</a>

@@ -1,0 +1,141 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {type} from '../../../util';
+import {RoutePayload} from '../../../../components/store/route-payload';
+import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {Action} from '@ngrx/store';
+import {
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
+} from '../../../../components/store/resource.reducer';
+import {Error} from '../../../../services/domain/error.model';
+
+export const LOAD_ALL = type('[Customer Identity Card] Load All');
+export const LOAD_ALL_COMPLETE = type('[Customer Identity Card] Load All Complete');
+
+export const LOAD = type('[Customer Identity Card] Load');
+export const SELECT = type('[Customer Identity Card] Select');
+
+export const CREATE = type('[Customer Identity Card] Create');
+export const CREATE_SUCCESS = type('[Customer Identity Card] Create Success');
+export const CREATE_FAIL = type('[Customer Identity Card] Create Fail');
+
+export const UPDATE = type('[Customer Identity Card] Update');
+export const UPDATE_SUCCESS = type('[Customer Identity Card] Update Success');
+export const UPDATE_FAIL = type('[Customer Identity Card] Update Fail');
+
+export const DELETE = type('[Customer Identity Card] Delete');
+export const DELETE_SUCCESS = type('[Customer Identity Card] Delete Success');
+export const DELETE_FAIL = type('[Customer Identity Card] Delete Fail');
+
+export interface IdentityCardPayload extends RoutePayload {
+  customerId: string,
+  identificationCard: IdentificationCard
+}
+
+export class LoadAllAction implements Action {
+  readonly type = LOAD_ALL;
+
+  constructor(public payload: string) { }
+}
+
+export class LoadAllCompleteAction implements Action {
+  readonly type = LOAD_ALL_COMPLETE;
+
+  constructor(public payload: IdentificationCard[]) { }
+}
+
+export class LoadAction implements Action {
+  readonly type = LOAD;
+
+  constructor(public payload: LoadResourcePayload) { }
+}
+
+export class SelectAction implements Action {
+  readonly type = SELECT;
+
+  constructor(public payload: SelectResourcePayload) { }
+}
+
+export class CreateIdentityCardAction implements Action {
+  readonly type = CREATE;
+
+  constructor(public payload: IdentityCardPayload) { }
+}
+
+export class CreateIdentityCardSuccessAction implements Action {
+  readonly type = CREATE_SUCCESS;
+
+  constructor(public payload: CreateResourceSuccessPayload) { }
+}
+
+export class CreateIdentityCardFailAction implements Action {
+  readonly type = CREATE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export class UpdateIdentityCardAction implements Action {
+  readonly type = UPDATE;
+
+  constructor(public payload: IdentityCardPayload) { }
+}
+
+export class UpdateIdentityCardSuccessAction implements Action {
+  readonly type = UPDATE_SUCCESS;
+
+  constructor(public payload: UpdateResourceSuccessPayload) { }
+}
+
+export class UpdateIdentityCardFailAction implements Action {
+  readonly type = UPDATE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export class DeleteIdentityCardAction implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: IdentityCardPayload) { }
+}
+
+export class DeleteIdentityCardSuccessAction implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: DeleteResourceSuccessPayload) { }
+}
+
+export class DeleteIdentityCardFailAction implements Action {
+  readonly type = DELETE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export type Actions
+  = LoadAllAction
+  | LoadAllCompleteAction
+  | LoadAction
+  | SelectAction
+  | CreateIdentityCardAction
+  | CreateIdentityCardSuccessAction
+  | CreateIdentityCardFailAction
+  | UpdateIdentityCardAction
+  | UpdateIdentityCardSuccessAction
+  | UpdateIdentityCardFailAction
+  | DeleteIdentityCardAction
+  | DeleteIdentityCardSuccessAction
+  | DeleteIdentityCardFailAction

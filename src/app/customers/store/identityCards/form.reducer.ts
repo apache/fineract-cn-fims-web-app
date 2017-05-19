@@ -14,15 +14,28 @@
  * limitations under the License.
  */
 
-import {ExpirationDate} from './expiration-date.model';
+import * as identityCards from './identity-cards.actions';
+import {Error} from '../../../../services/domain/error.model';
 
-export interface IdentificationCard{
-  type: string;
-  number: string;
-  expirationDate: ExpirationDate;
-  issuer?: string;
-  createdBy?: string;
-  createdOn?: string;
-  lastModifiedBy?: string;
-  lastModifiedOn?: string;
+export interface State {
+  error?: Error;
+}
+
+export const initialState: State = {};
+
+export function reducer(state = initialState, action: identityCards.Actions): State {
+  switch (action.type) {
+
+    case identityCards.CREATE_FAIL:
+      return {
+        error: action.payload
+      };
+
+    case identityCards.CREATE_SUCCESS:
+      return {};
+
+    default:
+      return state;
+
+  }
 }
