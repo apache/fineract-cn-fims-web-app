@@ -17,7 +17,7 @@
         <td-file-upload #singleFileUpload (select)="selectEvent($event)" (upload)="uploadEvent($event)"
                         accept=".jpg,.png">
           <md-icon>file_upload</md-icon>
-          <span>Click here to upload {{ singleFileUpload.files?.name }}</span>
+          <span translate>Click here to upload</span><span>{{ singleFileUpload.files?.name }}</span>
           <ng-template td-file-input-label>
             <md-icon>attach_file</md-icon>
             <span translate>Choose a file to upload(max size 512 KB)</span>

@@ -38,7 +38,7 @@ export class PortraitComponent implements OnDestroy {
 
   @Output() onClick = new EventEmitter();
 
-  private objectUrl: string = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Placeholder_no_text.svg/1024px-Placeholder_no_text.svg.png';
+  private objectUrl: string = './assets/images/ic_account_circle_black_48dp_2x.png';
 
   constructor(private domSanitizer: DomSanitizer) {}
 
