@@ -17,6 +17,10 @@
 import * as identityCards from './identity-cards.actions';
 import {ResourceState} from '../../../../components/store/resource.reducer';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {
+  idsToHashWithCurrentTimestamp,
+  resourcesToHash
+} from '../../../../components/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],
@@ -29,22 +33,23 @@ export function reducer(state = initialState, action: identityCards.Actions): Re
 
   switch (action.type) {
 
+    case identityCards.LOAD_ALL: {
+      return initialState;
+    }
+
     case identityCards.LOAD_ALL_COMPLETE: {
-      const identificationCards = action.payload;
-      const newIdentificationCards = identificationCards.filter(identificationCard => !state.entities[identificationCard.number]);
+      const identificationCards: IdentificationCard[] = action.payload;
 
-      const newIdentificationCardIds = newIdentificationCards.map(identificationCard => identificationCard.number);
+      const ids = identificationCards.map(identificationCard => identificationCard.number);
 
-      const newIdentificationCardEntities = newIdentificationCards.reduce((entities: { [id: string]: IdentificationCard }, identificationCard: IdentificationCard) => {
-        return Object.assign(entities, {
-          [identificationCard.number]: identificationCard
-        });
-      }, {});
+      const entities = resourcesToHash(identificationCards, 'number');
+
+      const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...state.ids, ...newIdentificationCardIds ],
-        entities: Object.assign({}, state.entities, newIdentificationCardEntities),
-        loadedAt: state.loadedAt,
+        ids: [ ...ids ],
+        entities: entities,
+        loadedAt: loadedAt,
         selectedId: state.selectedId
       };
     }

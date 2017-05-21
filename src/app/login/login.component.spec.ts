@@ -37,7 +37,7 @@ describe('Test Login Component', () => {
   let router: Router;
 
   let setInputField = function (fixture: ComponentFixture<LoginComponent>, name: string, value: string): Observable<any> {
-    let inputElement: HTMLInputElement = fixture.debugElement.query(By.css('input[name="' + name + '"]')).nativeElement;
+    let inputElement: HTMLInputElement = fixture.debugElement.query(By.css('input[formControlName="' + name + '"]')).nativeElement;
     inputElement.value = value;
     inputElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();

@@ -18,6 +18,7 @@ import * as charge from './charge.actions';
 import { createSelector } from 'reselect';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
 import {ResourceState} from '../../../../../components/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../../components/store/reducer.helper';
 
 export interface State extends ResourceState {
   ids: string[];
@@ -36,23 +37,24 @@ export function reducer(state = initialState, action: charge.Actions): ResourceS
 
   switch (action.type) {
 
+    case charge.LOAD_ALL: {
+      return initialState
+    }
+
     case charge.LOAD_ALL_COMPLETE: {
-      const chargeDefinitions = action.payload;
-      const newCharges = chargeDefinitions.filter(chargeDefinition => !state.entities[chargeDefinition.identifier]);
+      const chargeDefinitions: ChargeDefinition[] = action.payload;
 
-      const newChargeIds = newCharges.map(charge => charge.identifier);
+      const ids = chargeDefinitions.map(chargeDefinition => chargeDefinition.identifier);
 
-      const newChargeEntities = newCharges.reduce((entities: { [id: string]: ChargeDefinition }, chargeDefintion: ChargeDefinition) => {
-        return Object.assign(entities, {
-          [chargeDefintion.identifier]: chargeDefintion
-        });
-      }, {});
+      const entities = resourcesToHash(chargeDefinitions);
+
+      const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...state.ids, ...newChargeIds ],
-        entities: Object.assign({}, state.entities, newChargeEntities),
-        selectedId: state.selectedId,
-        loadedAt: state.loadedAt
+        ids: [ ...ids ],
+        entities: entities,
+        loadedAt: loadedAt,
+        selectedId: state.selectedId
       };
     }
 

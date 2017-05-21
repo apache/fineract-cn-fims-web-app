@@ -17,6 +17,7 @@
 import * as catalog from "./catalog.actions";
 import {createSelector} from "reselect";
 import {Catalog} from "../../../../services/catalog/domain/catalog.model";
+import {resourcesToHash} from '../../../../components/store/reducer.helper';
 
 export interface State {
   ids: string[];
@@ -32,22 +33,20 @@ export function reducer(state = initialState, action: catalog.Actions): State {
 
   switch (action.type) {
 
+    case catalog.LOAD_ALL: {
+      return initialState;
+    }
+
     case catalog.LOAD_ALL_COMPLETE: {
       const catalogs: Catalog[] = action.payload;
 
-      const newCatalogs = catalogs.filter(catalog => !state.entities[catalog.identifier]);
+      const ids = catalogs.map(catalog => catalog.identifier);
 
-      const newCatalogIds = newCatalogs.map(catalog => catalog.identifier);
-
-      const newCatalogEntities = newCatalogs.reduce((entities: { [id: string]: Catalog }, catalog: Catalog) => {
-        return Object.assign(entities, {
-          [catalog.identifier]: catalog
-        });
-      }, {});
+      const entities = resourcesToHash(catalogs);
 
       return {
-        ids: [ ...state.ids, ...newCatalogIds ],
-        entities: Object.assign({}, state.entities, newCatalogEntities)
+        ids: [ ...ids ],
+        entities: entities
       };
     }
 

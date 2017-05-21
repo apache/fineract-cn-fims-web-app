@@ -29,6 +29,10 @@ export function reducer(state = initialState, action: command.Actions): State {
 
   switch (action.type) {
 
+    case command.LOAD_ALL: {
+      return initialState
+    }
+
     case command.LOAD_ALL_COMPLETE: {
       const commands = action.payload;
 
