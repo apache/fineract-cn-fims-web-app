@@ -50,14 +50,16 @@ describe('Test Password Change Service', () => {
     function setup(authentication: Authentication): ChangePasswordGuard {
       let store = TestBed.get(Store);
 
-      store.select.and.returnValue(Observable.of(authentication));
+      store.select.and.returnValue(Observable.of({
+        authentication
+      }));
 
       return TestBed.get(ChangePasswordGuard);
     }
 
     it('should test if route is not active when password expiration is in the past', (done: DoneFn) => {
       const changePasswordGuard = setup({
-        passwordExpiration: '',
+        passwordExpiration: '2016-01-01',
         accessToken: '',
         accessTokenExpiration: '',
         tokenType: '',
@@ -80,7 +82,7 @@ describe('Test Password Change Service', () => {
       });
 
       changePasswordGuard.canActivateChild(route, state).subscribe(canActivateChild => {
-        expect(canActivateChild).toBeFalsy();
+        expect(canActivateChild).toBeTruthy();
         done();
       });
     });

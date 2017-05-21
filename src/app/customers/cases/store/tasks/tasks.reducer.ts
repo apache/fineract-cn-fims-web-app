@@ -29,6 +29,10 @@ export function reducer(state = initialState, action: task.Actions): State {
 
   switch (action.type) {
 
+    case task.LOAD_ALL: {
+      return initialState;
+    }
+
     case task.LOAD_ALL_COMPLETE: {
       const taskInstances = action.payload;
 

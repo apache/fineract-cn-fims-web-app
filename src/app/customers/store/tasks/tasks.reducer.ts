@@ -17,6 +17,7 @@
 import * as task from './task.actions';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {ResourceState} from '../../../../components/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../components/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],
@@ -29,22 +30,23 @@ export function reducer(state = initialState, action: task.Actions): ResourceSta
 
   switch (action.type) {
 
+    case task.LOAD_ALL: {
+      return initialState
+    }
+
     case task.LOAD_ALL_COMPLETE: {
-      const taskDefinitions = action.payload;
-      const newTasks = taskDefinitions.filter(taskDefinition => !state.entities[taskDefinition.identifier]);
+      const taskDefinitions: TaskDefinition[] = action.payload;
 
-      const newTaskIds = newTasks.map(task => task.identifier);
+      const ids = taskDefinitions.map(task => task.identifier);
 
-      const newTaskEntities = newTasks.reduce((entities: { [id: string]: TaskDefinition }, taskDefintion: TaskDefinition) => {
-        return Object.assign(entities, {
-          [taskDefintion.identifier]: taskDefintion
-        });
-      }, {});
+      const entities = resourcesToHash(taskDefinitions);
+
+      const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...state.ids, ...newTaskIds ],
-        entities: Object.assign({}, state.entities, newTaskEntities),
-        loadedAt: state.loadedAt,
+        ids: [ ...ids ],
+        entities: entities,
+        loadedAt: loadedAt,
         selectedId: state.selectedId
       };
     }
