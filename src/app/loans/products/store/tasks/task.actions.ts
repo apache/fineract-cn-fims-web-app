@@ -38,6 +38,8 @@ export const UPDATE = type('[Product Task] Update');
 export const UPDATE_SUCCESS = type('[Product Task] Update Success');
 export const UPDATE_FAIL = type('[Product Task] Update Fail');
 
+export const RESET_FORM = type('[Product Task] Reset Form');
+
 export interface TaskRoutePayload extends RoutePayload{
   productId: string;
   task: TaskDefinition;
@@ -103,6 +105,12 @@ export class UpdateTaskFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetTaskFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAllAction
   | LoadAllCompleteAction
@@ -113,4 +121,5 @@ export type Actions
   | CreateTaskFailAction
   | UpdateTaskAction
   | UpdateTaskSuccessAction
-  | UpdateTaskFailAction;
+  | UpdateTaskFailAction
+  | ResetTaskFormAction;

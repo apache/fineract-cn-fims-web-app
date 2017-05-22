@@ -21,7 +21,7 @@ import * as fromCustomers from '../../store';
 import {Error} from '../../../../services/domain/error.model';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../../store/index';
-import {CREATE} from '../../store/customer.actions';
+import {CREATE, RESET_FORM} from '../../store/customer.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -51,24 +51,15 @@ export class CreateCustomerFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit() {
-    this.formStateSubscription = this.store.select(fromCustomers.getCustomerFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if(!payload.error) return;
-
-        switch(payload.error.status){
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            this.formComponent.showIdentifierValidationError();
-            break;
-        }
-      });
+    this.formStateSubscription = this.store.select(fromCustomers.getCustomerFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(customer: Customer) {
@@ -82,7 +73,7 @@ export class CreateCustomerFormComponent implements OnInit, OnDestroy {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

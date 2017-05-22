@@ -17,9 +17,9 @@
 import * as caseActions from './case.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {Product} from '../../../../services/portfolio/domain/product.model';
+import {FormState} from '../../../../components/store/form.reducer';
 
-export interface State {
-  error: Error;
+export interface State extends FormState {
   product: Product;
 }
 
@@ -39,24 +39,10 @@ export function reducer(state = initialState, action: caseActions.Actions): Stat
       };
     }
 
-    case caseActions.CREATE_FAIL:
-    case caseActions.UPDATE_FAIL: {
-      return {
-        error: action.payload,
-        product: state.product
-      };
-    }
-
-    case caseActions.CREATE_SUCCESS:
-    case caseActions.UPDATE_SUCCESS: {
-      return initialState;
-    }
-
     default:
       return state;
 
   }
 }
 
-export const getFormError = (state: State) => state.error;
 export const getFormProduct = (state: State) => state.product;

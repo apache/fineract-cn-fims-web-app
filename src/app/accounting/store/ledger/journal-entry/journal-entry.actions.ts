@@ -27,6 +27,8 @@ export const CREATE = type('[Journal Entry] Create');
 export const CREATE_SUCCESS = type('[Journal Entry] Create Success');
 export const CREATE_FAIL = type('[Journal Entry] Create Fail');
 
+export const RESET_FORM = type('[Journal Entry] Reset Form');
+
 export interface SearchPayload{
   startDate: string;
   endDate: string;
@@ -66,8 +68,15 @@ export class CreateJournalEntryFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetJournalEntryFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions = SearchAction
   | SearchCompleteAction
   | CreateJournalEntryAction
   | CreateJournalEntrySuccessAction
   | CreateJournalEntryFailAction
+  | ResetJournalEntryFormAction

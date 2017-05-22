@@ -15,7 +15,6 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromEmployeeForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
@@ -25,15 +24,16 @@ import {
   getResourceSelected,
   ResourceState
 } from '../../../components/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   employees: ResourceState;
-  employeeForm: fromEmployeeForm.State;
+  employeeForm: FormState;
 }
 
 const reducers = {
   employees: createResourceReducer('Employee'),
-  employeeForm: fromEmployeeForm.reducer
+  employeeForm: createFormReducer('Employee')
 };
 
 export const employeeModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -41,6 +41,7 @@ export const employeeModuleReducer: ActionReducer<State> = createReducer(reducer
 export const getEmployeesState = (state: State) => state.employees;
 
 export const getEmployeeFormState = (state: State) => state.employeeForm;
+export const getEmployeeFormError = createSelector(getEmployeeFormState, getFormError);
 
 export const getEmployeesLoadedAt = createSelector(getEmployeesState, getResourceLoadedAt);
 export const getSelectedEmployee = createSelector(getEmployeesState, getResourceSelected);

@@ -15,13 +15,7 @@ import {idsToHashWithCurrentTimestamp, resourcesToHash} from './reducer.helper';
  * limitations under the License.
  */
 
-describe('Resources Reducer', () => {
-
-  let reducer;
-
-  beforeEach(() => {
-
-  });
+describe('Reducer Helper', () => {
 
   it('should create hash with default identifier', () => {
     const payload = [

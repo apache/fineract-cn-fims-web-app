@@ -18,11 +18,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from '../form.component';
 import {mapEmployee, mapUser} from '../form.mapper';
 import {Employee} from '../../../../services/office/domain/employee.model';
-import {User} from '../../../../services/identity/domain/user.model';
 import {UserWithPassword} from '../../../../services/identity/domain/user-with-password.model';
 import * as fromEmployees from '../../store';
 import {Subscription} from 'rxjs';
-import {CREATE} from '../../store/employee.actions';
+import {CREATE, RESET_FORM} from '../../store/employee.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {EmployeesStore} from '../../store/index';
 
@@ -43,23 +42,21 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private store: EmployeesStore){}
 
   ngOnInit(): void {
-    this.formStateSubscription = this.store.select(fromEmployees.getEmployeeFormState)
-      .filter(payload => !!payload.error)
-      .subscribe((payload: {error: Error}) => {
-        switch(payload.error.status){
-          case 409:
-            let officeDetailForm = this.formComponent.detailForm;
-            let errors = officeDetailForm.get('identifier').errors || {};
-            errors['unique'] = true;
-            officeDetailForm.get('identifier').setErrors(errors);
-            this.formComponent.step.open();
-            break;
-        }
+    this.formStateSubscription = this.store.select(fromEmployees.getEmployeeFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        let detailForm = this.formComponent.detailForm;
+        let errors = detailForm.get('identifier').errors || {};
+        errors['unique'] = true;
+        detailForm.get('identifier').setErrors(errors);
+        this.formComponent.step.open();
       });
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(event: EmployeeSaveEvent): void {

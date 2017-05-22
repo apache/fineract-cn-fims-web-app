@@ -20,7 +20,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Error} from '../../../../services/domain/error.model';
 import * as fromAccounting from '../../store';
 import {Subscription} from 'rxjs';
-import {CREATE, CREATE_SUB_LEDGER, SelectAction} from '../../store/ledger/ledger.actions';
+import {CREATE, CREATE_SUB_LEDGER, RESET_FORM, SelectAction} from '../../store/ledger/ledger.actions';
 import {AccountingStore} from '../../store/index';
 
 @Component({
@@ -47,20 +47,9 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit() {
-    this.formStateSubscription = this.store.select(fromAccounting.getLedgerFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if(!payload.error) return;
-
-        switch (payload.error.status) {
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            this.formComponent.showIdentifierValidationError();
-            break;
-        }
-      });
+    this.formStateSubscription = this.store.select(fromAccounting.getLedgerFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
       .subscribe(ledger => this.parentLedger = ledger);
@@ -69,6 +58,8 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
     this.ledgerSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(ledger: Ledger) {

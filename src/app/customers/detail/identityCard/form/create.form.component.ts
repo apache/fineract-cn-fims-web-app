@@ -20,7 +20,7 @@ import {IdentificationCard} from '../../../../../services/customer/domain/identi
 import {IdentityCardFormComponent} from './identity-card-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CustomersStore} from '../../../store/index';
-import {CREATE} from '../../../store/identityCards/identity-cards.actions';
+import {CREATE, RESET_FORM} from '../../../store/identityCards/identity-cards.actions';
 import * as fromCustomers from '../../../store/index'
 import {Error} from '../../../../../services/domain/error.model';
 import {Customer} from '../../../../../services/customer/domain/customer.model';
@@ -50,14 +50,18 @@ export class CreateCustomerIdentificationCardFormComponent implements OnInit, On
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .subscribe(customer => this.customer = customer);
 
-    this.formStateSubscription = this.store.select(fromCustomers.getCustomerIdentificationCardFormState)
-      .filter(payload => !!payload.error)
-      .subscribe((payload: {error: Error}) => this.formComponent.showNumberValidationError());
+    this.formStateSubscription = this.store.select(fromCustomers.getCustomerIdentificationCardFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        this.formComponent.showNumberValidationError();
+      });
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(identificationCard: IdentificationCard) {

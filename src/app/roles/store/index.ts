@@ -15,7 +15,6 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromRoleForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
@@ -25,15 +24,16 @@ import {
   getResourceSelected,
   ResourceState
 } from '../../../components/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
 
 export interface State extends fromRoot.State{
   roles: ResourceState;
-  roleForm: fromRoleForm.State;
+  roleForm: FormState;
 }
 
 const reducers = {
   roles: createResourceReducer('Role'),
-  roleForm: fromRoleForm.reducer,
+  roleForm: createFormReducer('Role'),
 };
 
 export const roleModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -48,6 +48,7 @@ export function roleStoreFactory(appStore: Store<fromRoot.State>){
 export const getRolesState = (state: State) => state.roles;
 
 export const getRoleFormState = (state: State) => state.roleForm;
+export const getRoleFormError = createSelector(getRoleFormState, getFormError);
 
 export const getRolesLoadedAt = createSelector(getRolesState, getResourceLoadedAt);
 export const getSelectedRole = createSelector(getRolesState, getResourceSelected);

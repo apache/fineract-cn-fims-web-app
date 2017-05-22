@@ -19,40 +19,45 @@ import {ActionReducer, Store} from '@ngrx/store';
 import {createSelector} from 'reselect';
 import {createReducer} from '../../../reducers/index';
 import * as fromProducts from './products.reducer';
-import * as fromProductSearch from './search.reducer';
-import * as fromProductForm from './form.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
-import * as fromProductTaskForm from './tasks/form.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
-import * as fromProductChargeForm from './charges/form.reducer';
 import {
-  createResourceReducer, getResourceAll, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  createResourceReducer,
+  getResourceAll,
+  getResourceEntities,
+  getResourceIds,
+  getResourceLoadedAt,
+  getResourceSelected,
   getResourceSelectedId,
   ResourceState
 } from '../../../../components/store/resource.reducer';
 import {
-  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../../../../components/store/search.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../../components/store/form.reducer';
 
 export interface State extends fromRoot.State {
   products: ResourceState;
   productSearch: SearchState;
-  productForm: fromProductForm.State;
+  productForm: FormState;
   productTasks: ResourceState;
-  productTaskForm: fromProductTaskForm.State;
+  productTaskForm: FormState;
   productCharges: ResourceState;
-  productChargeForm: fromProductChargeForm.State;
+  productChargeForm: FormState;
 }
 
 const reducers = {
   products: createResourceReducer('Product', fromProducts.reducer),
   productSearch: createSearchReducer('Product'),
-  productForm: fromProductForm.reducer,
+  productForm: createFormReducer('Product'),
   productTasks: createResourceReducer('Product Task', fromProductTasks.reducer),
-  productTaskForm: fromProductTaskForm.reducer,
+  productTaskForm: createFormReducer('Product Task'),
   productCharges: createResourceReducer('Product Charge', fromProductCharges.reducer),
-  productChargeForm: fromProductChargeForm.reducer
+  productChargeForm: createFormReducer('Product Charge')
 };
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -71,6 +76,7 @@ export function portfolioStoreFactory(appStore: Store<fromRoot.State>) {
 export const getProductsState = (state: State) => state.products;
 
 export const getProductFormState = (state: State) => state.productForm;
+export const getProductFormError = createSelector(getProductFormState, getFormError);
 
 export const getProductEntities = createSelector(getProductsState, getResourceEntities);
 export const getProductsLoadedAt = createSelector(getProductsState, getResourceLoadedAt);
@@ -101,6 +107,7 @@ export const getProductSearchResults = createSelector(getSearchProducts, getProd
 export const getProductTasksState = (state: State) => state.productTasks;
 
 export const getProductTaskFormState = (state: State) => state.productTaskForm;
+export const getProductTaskFormError = createSelector(getProductTaskFormState, getFormError);
 
 export const getProductTaskEntities = createSelector(getProductTasksState, getResourceEntities);
 export const getProductTasksLoadedAt = createSelector(getProductTasksState, getResourceLoadedAt);
@@ -116,6 +123,7 @@ export const getAllProductTaskEntities = createSelector(getProductTasksState, ge
 export const getProductChargesState = (state: State) => state.productCharges;
 
 export const getProductChargeFormState = (state: State) => state.productChargeForm;
+export const getProductChargeFormError = createSelector(getProductChargeFormState, getFormError);
 
 export const getProductChargeEntities = createSelector(getProductChargesState, getResourceEntities);
 export const getProductChargesLoadedAt = createSelector(getProductChargesState, getResourceLoadedAt);

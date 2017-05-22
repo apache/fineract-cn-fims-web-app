@@ -41,6 +41,8 @@ export const DELETE = type('[Employee] Delete');
 export const DELETE_SUCCESS = type('[Employee] Delete Success');
 export const DELETE_FAIL = type('[Employee] Delete Fail');
 
+export const RESET_FORM = type('[Employee] Reset Form');
+
 export interface EmployeeRoutePayload extends RoutePayload{
   employee: Employee
 }
@@ -121,6 +123,12 @@ export class DeleteEmployeeFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetEmployeeFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() { }
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -132,4 +140,5 @@ export type Actions
   | UpdateEmployeeFailAction
   | DeleteEmployeeAction
   | DeleteEmployeeSuccessAction
-  | DeleteEmployeeFailAction;
+  | DeleteEmployeeFailAction
+  | ResetEmployeeFormAction;
