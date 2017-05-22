@@ -28,7 +28,7 @@ import {toLongISOString} from '../../../../services/domain/date.converter';
 import {FimsValidators} from '../../../../components/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../reducers';
-import {CREATE} from '../../store/ledger/journal-entry/journal-entry.actions';
+import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {SEARCH} from '../../../reducers/account/account.actions';
 import {AccountingStore} from '../../store/index';
@@ -61,20 +61,9 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
   }
 
   ngOnInit(): void {
-    this.formStateSubscription = this.store.select(fromAccounting.getJournalEntryFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if(!payload.error) return;
-
-        switch (payload.error.status) {
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            this.setError('transactionIdentifier', 'unique', true);
-            break;
-        }
-      });
+    this.formStateSubscription = this.store.select(fromAccounting.getJournalEntryFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => this.setError('transactionIdentifier', 'unique', true));
 
     this.accounts = this.store.select(fromRoot.getAccountSearchResults)
       .map(accountPage => accountPage.accounts);
@@ -102,6 +91,8 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
     this.userNameSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onClerkSelectionChange(selections: string[]): void {

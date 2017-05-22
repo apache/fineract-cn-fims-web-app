@@ -35,6 +35,8 @@ export const UPDATE = type('[Customer] Update');
 export const UPDATE_SUCCESS = type('[Customer] Update Success');
 export const UPDATE_FAIL = type('[Customer] Update Fail');
 
+export const RESET_FORM = type('[Customer] Reset Form');
+
 export interface CustomerRoutePayload extends RoutePayload{
   customer: Customer
 }
@@ -87,6 +89,12 @@ export class UpdateCustomerFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetCustomerFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -95,4 +103,5 @@ export type Actions
   | CreateCustomerFailAction
   | UpdateCustomerAction
   | UpdateCustomerSuccessAction
-  | UpdateCustomerFailAction;
+  | UpdateCustomerFailAction
+  | ResetCustomerFormAction;

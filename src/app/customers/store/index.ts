@@ -16,11 +16,8 @@
 
 import * as fromRoot from '../../reducers';
 import * as fromCustomers from './customers.reducer';
-import * as fromCustomerForm from './form.reducer';
 import * as fromCustomerTasks from './tasks/tasks.reducer';
-import * as fromCustomerTaskForm from './tasks/form.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
-import * as fromCustomerIdentificationCardForm from './identityCards/form.reducer';
 import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
@@ -33,27 +30,26 @@ import {
   getResourceSelected,
   ResourceState
 } from '../../../components/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
 
 export interface State extends fromRoot.State{
   customers: ResourceState;
-  customerForm: fromCustomerForm.State;
+  customerForm: FormState;
   customerTasks: ResourceState;
-  customerTaskForm: fromCustomerTaskForm.State;
   customerCatalogs: fromCatalogs.State;
   customerCommands: fromCommands.State;
   customerIdentificationCards: ResourceState;
-  customerIdentificationCardForm: fromCustomerIdentificationCardForm.State;
+  customerIdentificationCardForm: FormState;
 }
 
 const reducers = {
   customers: createResourceReducer('Customer', fromCustomers.reducer),
-  customerForm: fromCustomerForm.reducer,
+  customerForm: createFormReducer('Customer'),
   customerTasks: createResourceReducer('Customer Task', fromCustomerTasks.reducer),
-  customerTaskForm: fromCustomerTaskForm.reducer,
   customerCatalogs: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer,
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
-  customerIdentificationCardForm: fromCustomerIdentificationCardForm.reducer
+  customerIdentificationCardForm: createFormReducer('Customer Identity Card')
 };
 
 export class CustomersStore extends Store<State>{}
@@ -68,6 +64,7 @@ export const customerModuleReducer: ActionReducer<State> = createReducer(reducer
 export const getCustomersState = (state: State) => state.customers;
 
 export const getCustomerFormState = (state: State) => state.customerForm;
+export const getCustomerFormError = createSelector(getCustomerFormState, getFormError);
 
 export const getCustomerLoadedAt = createSelector(getCustomersState, getResourceLoadedAt);
 export const getSelectedCustomer = createSelector(getCustomersState, getResourceSelected);
@@ -103,6 +100,7 @@ export const getCustomerIdentificationCardsState = (state: State) => state.custo
 export const getAllCustomerIdentificationCardEntities = createSelector(getCustomerIdentificationCardsState, getResourceAll);
 
 export const getCustomerIdentificationCardFormState = (state: State) => state.customerIdentificationCardForm;
+export const getCustomerIdentificationCardFormError = createSelector(getCustomerIdentificationCardFormState, getFormError);
 
 export const getIdentificationCardLoadedAt = createSelector(getCustomerIdentificationCardsState, getResourceLoadedAt);
 export const getSelectedIdentificationCard = createSelector(getCustomerIdentificationCardsState, getResourceSelected);

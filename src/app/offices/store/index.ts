@@ -15,25 +15,26 @@
  */
 
 import * as fromRoot from '../../reducers';
-import * as fromOffices from './offices.reducer';
-import * as fromOfficeForm from './form.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
-  getResourceSelectedId,
+  createResourceReducer,
+  getResourceEntities,
+  getResourceLoadedAt,
+  getResourceSelected,
   ResourceState
 } from '../../../components/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
 
 export interface State extends fromRoot.State{
   offices: ResourceState;
-  officeForm: fromOfficeForm.State;
+  officeForm: FormState;
 }
 
 const reducers = {
   offices: createResourceReducer('Office'),
-  officeForm: fromOfficeForm.reducer
+  officeForm: createFormReducer('Office')
 };
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -41,6 +42,7 @@ export const officeModuleReducer: ActionReducer<State> = createReducer(reducers)
 export const getOfficesState = (state: State) => state.offices;
 
 export const getOfficeFormState = (state: State) => state.officeForm;
+export const getOfficeFormError = createSelector(getOfficeFormState, getFormError);
 
 export const getOfficeEntities = createSelector(getOfficesState, getResourceEntities);
 export const getOfficesLoadedAt = createSelector(getOfficesState, getResourceLoadedAt);

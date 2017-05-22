@@ -42,6 +42,8 @@ export const DELETE = type('[Customer Identity Card] Delete');
 export const DELETE_SUCCESS = type('[Customer Identity Card] Delete Success');
 export const DELETE_FAIL = type('[Customer Identity Card] Delete Fail');
 
+export const RESET_FORM = type('[Customer Identity Card] Reset Form');
+
 export interface IdentityCardPayload extends RoutePayload {
   customerId: string,
   identificationCard: IdentificationCard
@@ -125,6 +127,12 @@ export class DeleteIdentityCardFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetIdentityCardForm implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAllAction
   | LoadAllCompleteAction
@@ -139,3 +147,4 @@ export type Actions
   | DeleteIdentityCardAction
   | DeleteIdentityCardSuccessAction
   | DeleteIdentityCardFailAction
+  | ResetIdentityCardForm

@@ -20,31 +20,31 @@ import {
 } from './resource.reducer';
 import {Action} from '@ngrx/store';
 
-export class LoadAction implements Action {
+class LoadAction implements Action {
   readonly type = '[Test] Load';
 
   constructor(public payload: LoadResourcePayload) { }
 }
 
-export class SelectAction implements Action {
+class SelectAction implements Action {
   readonly type = '[Test] Select';
 
   constructor(public payload: string) { }
 }
 
-export class CreateSuccessAction implements Action {
+class CreateSuccessAction implements Action {
   readonly type = '[Test] Create Success';
 
   constructor(public payload: CreateResourceSuccessPayload) { }
 }
 
-export class UpdateSuccessAction implements Action {
+class UpdateSuccessAction implements Action {
   readonly type = '[Test] Update Success';
 
   constructor(public payload: UpdateResourceSuccessPayload) { }
 }
 
-export class DeleteSuccessAction implements Action {
+class DeleteSuccessAction implements Action {
   readonly type = '[Test] Delete Success';
 
   constructor(public payload: DeleteResourceSuccessPayload) { }

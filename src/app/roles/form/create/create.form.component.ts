@@ -20,7 +20,7 @@ import * as fromRoles from '../../store';
 import {Subscription} from 'rxjs';
 import {Error} from '../../../../services/domain/error.model';
 import {RolesStore} from '../../store/index';
-import {CREATE} from '../../store/role.actions';
+import {CREATE, RESET_FORM} from '../../store/role.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -36,22 +36,20 @@ export class CreateRoleFormComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
   ngOnInit(): void {
-    this.formStateSubscription = this.store.select(fromRoles.getRoleFormState)
-      .filter(payload => !!payload.error)
-      .subscribe((payload: { error: Error }) => {
-        switch(payload.error.status) {
-          case 409:
-            let detailForm = this.formComponent.detailForm;
-            let errors = detailForm.get('identifier').errors || {};
-            errors['unique'] = true;
-            detailForm.get('identifier').setErrors(errors);
-            break;
-        }
+    this.formStateSubscription = this.store.select(fromRoles.getRoleFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        let detailForm = this.formComponent.detailForm;
+        let errors = detailForm.get('identifier').errors || {};
+        errors['unique'] = true;
+        detailForm.get('identifier').setErrors(errors);
       });
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(role: Role): void {

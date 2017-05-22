@@ -47,6 +47,8 @@ export const EXECUTE_COMMAND = type('[Customer Command] Execute');
 export const EXECUTE_COMMAND_SUCCESS = type('[Customer Command] Success');
 export const EXECUTE_COMMAND_FAIL = type('[Customer Command] Fail');
 
+export const RESET_FORM = type('[Customer Task] Reset Form');
+
 export interface CreateTaskPayload extends RoutePayload {
   task: TaskDefinition
 }
@@ -162,6 +164,12 @@ export class ExecuteCommandFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetTaskFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAllAction
   | LoadAllCompleteAction
@@ -176,3 +184,4 @@ export type Actions
   | ExecuteCommandAction
   | ExecuteCommandSuccessAction
   | ExecuteCommandFailAction
+  | ResetTaskFormAction

@@ -51,11 +51,8 @@ export class PasswordComponent implements OnInit, OnDestroy{
       .subscribe(username => this.currentUser = username);
 
     this.passwordErrorSubscription = this.store.select(fromRoot.getPasswordError)
-      .subscribe(error => {
-        if(!error) return;
-
-        this.error = 'There was an error changing your password';
-      });
+      .filter(error => !!error)
+      .subscribe(error => this.error = 'There was an error changing your password');
 
     this.passwordForm = this.createFormGroup();
   }

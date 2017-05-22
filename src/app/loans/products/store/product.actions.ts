@@ -43,6 +43,8 @@ export const ENABLE = type('[Product] Enable');
 export const ENABLE_SUCCESS = type('[Product] Enable Success');
 export const ENABLE_FAIL = type('[Product] Enable Fail');
 
+export const RESET_FORM = type('[Product] Reset Form');
+
 export interface ProductRoutePayload extends RoutePayload{
   product: FimsProduct
 }
@@ -128,6 +130,12 @@ export class EnableProductFailAction implements Action {
   readonly type = ENABLE_FAIL;
 
   constructor(public payload: Error) { }
+}
+
+export class ResetProductFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
 }
 
 export type Actions

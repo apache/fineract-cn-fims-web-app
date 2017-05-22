@@ -40,6 +40,8 @@ export const DELETE = type('[Office] Delete');
 export const DELETE_SUCCESS = type('[Office] Delete Success');
 export const DELETE_FAIL = type('[Office] Delete Fail');
 
+export const RESET_FORM = type('[Office] Reset Form');
+
 export interface OfficeRoutePayload extends RoutePayload{
   office: Office
 }
@@ -116,6 +118,12 @@ export class DeleteOfficeFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetOfficeFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -128,4 +136,5 @@ export type Actions
   | UpdateOfficeFailAction
   | DeleteOfficeAction
   | DeleteOfficeSuccessAction
-  | DeleteOfficeFailAction;
+  | DeleteOfficeFailAction
+  | ResetOfficeFormAction;

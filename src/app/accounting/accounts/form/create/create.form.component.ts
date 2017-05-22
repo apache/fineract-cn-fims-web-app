@@ -22,7 +22,7 @@ import * as fromAccounting from '../../../store';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 import {Error} from '../../../../../services/domain/error.model';
-import {CREATE} from '../../../store/account/account.actions';
+import {CREATE, RESET_FORM} from '../../../store/account/account.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -46,21 +46,9 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromAccounting.State>) {}
 
   ngOnInit() {
-    this.formStateSubscription = this.store.select(fromAccounting.getJournalEntryFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if(!payload.error) return;
-
-        switch (payload.error.status) {
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            this.formComponent.showIdentifierValidationError();
-            break;
-        }
-
-      });
+    this.formStateSubscription = this.store.select(fromAccounting.getAccountFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.selectedLedgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
       .subscribe(ledger => {
@@ -73,6 +61,8 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
     this.selectedLedgerSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(account: Account) {

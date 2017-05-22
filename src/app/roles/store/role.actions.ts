@@ -39,6 +39,8 @@ export const DELETE = type('[Role] Delete');
 export const DELETE_SUCCESS = type('[Role] Delete Success');
 export const DELETE_FAIL = type('[Role] Delete Fail');
 
+export const RESET_FORM = type('[Role] Reset Form');
+
 export interface RoleRoutePayload extends RoutePayload {
   role: Role;
 }
@@ -109,6 +111,12 @@ export class DeleteRoleFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetRoleFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -120,4 +128,5 @@ export type Actions
   | UpdateRoleFailAction
   | DeleteRoleAction
   | DeleteRoleSuccessAction
-  | DeleteRoleFailAction;
+  | DeleteRoleFailAction
+  | ResetRoleFormAction;

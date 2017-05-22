@@ -21,10 +21,9 @@ import {ProductTaskFormComponent} from './form.component';
 import {Subscription} from 'rxjs';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
-import {CREATE} from '../../store/tasks/task.actions';
+import {CREATE, RESET_FORM} from '../../store/tasks/task.actions';
 import {Error} from '../../../../../services/domain/error.model';
 import {FimsProduct} from '../../store/model/fims-product.model';
-
 
 @Component({
   templateUrl: './create.component.html'
@@ -54,29 +53,22 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .subscribe(product => this.product = product);
 
-    this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductTaskFormState)
-      .subscribe((payload: {error: Error}) => {
-
-        if (!payload.error) return;
-
-        switch(payload.error.status){
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            let detailForm = this.formComponent.detailForm;
-            let errors = detailForm.get('identifier').errors || {};
-            errors['unique'] = true;
-            detailForm.get('identifier').setErrors(errors);
-            this.formComponent.openDetailsStep();
-            break;
-        }
+    this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductTaskFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        let detailForm = this.formComponent.detailForm;
+        let errors = detailForm.get('identifier').errors || {};
+        errors['unique'] = true;
+        detailForm.get('identifier').setErrors(errors);
+        this.formComponent.openDetailsStep();
       });
   }
 
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
     this.formStateSubscription.unsubscribe();
+
+    this.portfolioStore.dispatch({ type: RESET_FORM })
   }
 
   onSave(task: TaskDefinition): void {

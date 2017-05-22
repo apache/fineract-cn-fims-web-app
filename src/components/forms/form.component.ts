@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-import {FormGroup} from "@angular/forms";
+import {AbstractControl, FormGroup} from '@angular/forms';
 
 export abstract class FormComponent<T> {
 
   form: FormGroup;
+
+  constructor() {
+    this.form = new FormGroup({});
+  }
 
   abstract get formData(): T
 
@@ -53,7 +57,8 @@ export abstract class FormComponent<T> {
   }
 
   setError(field: string, error: string, value: any): void {
-    let errors = this.form.get(field).errors || {};
+    const control: AbstractControl = this.form.get(field);
+    let errors = control.errors || {};
     errors[error] = value;
     this.form.get(field).setErrors(errors);
   }

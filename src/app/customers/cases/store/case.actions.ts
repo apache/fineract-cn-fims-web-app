@@ -18,16 +18,15 @@ import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
 import {type} from '../../../util';
 import {RoutePayload} from '../../../../components/store/route-payload';
-import {Case} from '../../../../services/portfolio/domain/case.model';
-import {CasePage} from '../../../../services/portfolio/domain/case-page.model';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {FimsCase} from './model/fims-case.model';
-import {FimsCasePage} from './model/fims-case-page.model';
 import {SearchResult} from '../../../../components/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../../components/store/resource.reducer';
 
 export const SEARCH = type('[Case] Search');
@@ -49,6 +48,7 @@ export const LOAD_PRODUCT_SUCCESS = type('[Case] Form Load Product Success');
 export const LOAD_PRODUCT_FAIL = type('[Case] Form Load Product Fail');
 
 export const UNLOAD_PRODUCT = type('[Case] Form Unload Product');
+export const RESET_FORM = type('[Case] Reset Form');
 
 export interface SearchCasePayload{
   customerId: string;
@@ -144,6 +144,12 @@ export class UnloadProductAction implements Action {
   constructor() { }
 }
 
+export class ResetCaseFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 
 export type Actions
   = SearchAction
@@ -159,4 +165,5 @@ export type Actions
   | LoadProductAction
   | LoadProductSuccessAction
   | LoadProductFailAction
-  | UnloadProductAction;
+  | UnloadProductAction
+  | ResetCaseFormAction;

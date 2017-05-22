@@ -20,9 +20,7 @@ import * as fromLedgerForm from './ledger/form.reducer';
 import * as fromTrialBalance from './ledger/trial-balance.reducer';
 import * as fromChartOfAccounts from './ledger/chart-of-account.reducer';
 import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
-import * as fromJournalEntryForm from './ledger/journal-entry/form.reducer';
 import * as fromAccounts from './account/accounts.reducer';
-import * as fromAccountForm from './account/form.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
@@ -33,31 +31,32 @@ import {
   getResourceSelected,
   ResourceState
 } from '../../../components/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
 
 export interface State extends fromRoot.State{
   accounts: ResourceState;
-  accountForm: fromAccountForm.State;
+  accountForm: FormState;
   accountEntrySearch: fromAccountEntrySearch.State;
 
   ledgers: fromLedgers.State;
-  ledgerForm: fromLedgerForm.State;
+  ledgerForm: FormState;
   trialBalance: fromTrialBalance.State;
   chartOfAccounts: fromChartOfAccounts.State;
   journalEntrySearch: fromJournalEntrySearch.State;
-  journalEntryForm: fromJournalEntryForm.State;
+  journalEntryForm: FormState;
 }
 
 const reducers = {
   ledgers: fromLedgers.reducer,
-  ledgerForm: fromLedgerForm.reducer,
+  ledgerForm: createFormReducer('Ledger', fromLedgerForm.reducer),
   trialBalance: fromTrialBalance.reducer,
   chartOfAccounts: fromChartOfAccounts.reducer,
 
   journalEntrySearch: fromJournalEntrySearch.reducer,
-  journalEntryForm: fromJournalEntryForm.reducer,
+  journalEntryForm: createFormReducer('Journal Entry'),
 
   accounts: createResourceReducer('Account', fromAccounts.reducer),
-  accountForm: fromAccountForm.reducer,
+  accountForm: createFormReducer('Account'),
   accountEntrySearch: fromAccountEntrySearch.reducer,
 };
 
@@ -76,6 +75,7 @@ export function accountingStoreFactory(appStore: Store<fromRoot.State>){
 export const getLedgerState = (state: State) => state.ledgers;
 
 export const getLedgerFormState = (state: State) => state.ledgerForm;
+export const getLedgerFormError = createSelector(getLedgerFormState, getFormError);
 
 export const getTrialBalanceState = (state: State) => state.trialBalance;
 
@@ -102,6 +102,7 @@ export const getChartOfAccountLoading = createSelector(getChartOfAccountsState, 
 export const getJournalEntrySearchState = (state: State) => state.journalEntrySearch;
 
 export const getJournalEntryFormState = (state: State) => state.journalEntryForm;
+export const getJournalEntryFormError = createSelector(getJournalEntryFormState, getFormError);
 
 export const getJournalEntryEntities = createSelector(getJournalEntrySearchState, fromJournalEntrySearch.getEntities);
 
@@ -116,9 +117,11 @@ export const getJournalEntriesSearchResult = createSelector(getJournalEntryEntit
  */
 export const getAccountsState = (state: State) => state.accounts;
 
+export const getAccountFormState = (state: State) => state.accountForm;
+export const getAccountFormError = createSelector(getAccountFormState, getFormError);
+
 export const getAccountsLoadedAt = createSelector(getAccountsState, getResourceLoadedAt);
 export const getSelectedAccount = createSelector(getAccountsState, getResourceSelected);
-
 
 export const getAccountEntrySearchState = (state: State) => state.accountEntrySearch;
 export const getAccountEntrySearchEntities = createSelector(getAccountEntrySearchState, fromAccountEntrySearch.getEntries);

@@ -20,7 +20,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
 import {ProductFormComponent} from './form.component';
 import {PortfolioStore} from '../store/index';
-import {CREATE} from '../store/product.actions';
+import {CREATE, RESET_FORM} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Error} from '../../../../services/domain/error.model';
@@ -67,26 +67,21 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductFormState)
-      .filter(payload => !!payload.error)
-      .subscribe((payload: {error: Error}) => {
-        switch(payload.error.status){
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            let detailForm = this.formComponent.detailForm;
-            let errors = detailForm.get('identifier').errors || {};
-            errors['unique'] = true;
-            detailForm.get('identifier').setErrors(errors);
-            this.formComponent.step.open();
-            break;
-        }
+    this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        let detailForm = this.formComponent.detailForm;
+        let errors = detailForm.get('identifier').errors || {};
+        errors['unique'] = true;
+        detailForm.get('identifier').setErrors(errors);
+        this.formComponent.step.open();
       });
   }
 
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
+
+    this.portfolioStore.dispatch({ type: RESET_FORM })
   }
 
   onSave(product: FimsProduct): void {

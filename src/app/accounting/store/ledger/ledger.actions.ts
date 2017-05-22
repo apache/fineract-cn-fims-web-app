@@ -52,6 +52,8 @@ export const LOAD_TRIAL_BALANCE_COMPLETE = type('[Ledger] Load Trial Balance Com
 export const LOAD_CHART_OF_ACCOUNTS = type('[Ledger] Load Chart Of Accounts');
 export const LOAD_CHART_OF_ACCOUNTS_COMPLETE = type('[Ledger] Load Chart Of Accounts Complete');
 
+export const RESET_FORM = type('[Ledger] Reset Form');
+
 export interface CreateSubLedgerPayload extends RoutePayload{
   parentLedgerId: string;
   ledger: Ledger;
@@ -181,6 +183,12 @@ export class LoadChartOfAccountsActionComplete implements Action {
   constructor(public payload: ChartOfAccountEntry[]) { }
 }
 
+export class ResetLedgerFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAllTopLevel
   | LoadAllTopLevelComplete
@@ -201,4 +209,5 @@ export type Actions
   | LoadTrialBalanceAction
   | LoadTrialBalanceActionComplete
   | LoadChartOfAccountsAction
-  | LoadChartOfAccountsActionComplete;
+  | LoadChartOfAccountsActionComplete
+  | ResetLedgerFormAction;

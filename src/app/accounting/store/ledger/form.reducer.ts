@@ -16,27 +16,20 @@
 
 import * as ledger from './ledger.actions';
 import {Error} from '../../../../services/domain/error.model';
+import {FormState} from '../../../../components/store/form.reducer';
 
-export interface State {
-  error?: Error;
-}
+export const initialState: FormState = {};
 
-export const initialState: State = {};
-
-export function reducer(state = initialState, action: ledger.Actions): State {
+export function reducer(state = initialState, action: ledger.Actions): FormState {
   switch (action.type) {
 
-    case ledger.CREATE_FAIL:
     case ledger.CREATE_SUB_LEDGER_FAIL:
-    case ledger.UPDATE_FAIL:
       return {
         error: action.payload
       };
 
-    case ledger.CREATE_SUCCESS:
     case ledger.CREATE_SUB_LEDGER_SUCCESS:
-    case ledger.UPDATE_SUCCESS:
-      return {};
+      return initialState;
 
     default:
       return state;

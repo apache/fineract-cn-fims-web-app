@@ -42,6 +42,7 @@ export const DELETE = type('[Product Charge] Delete');
 export const DELETE_SUCCESS = type('[Product Charge] Delete Success');
 export const DELETE_FAIL = type('[Product Charge] Delete Fail');
 
+export const RESET_FORM = type('[Product Charge] Reset Form');
 
 export interface ChargeRoutePayload extends RoutePayload{
   productId: string;
@@ -126,6 +127,12 @@ export class DeleteChargeFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetChargeFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAllAction
   | LoadAllCompleteAction
@@ -139,4 +146,5 @@ export type Actions
   | UpdateChargeFailAction
   | DeleteChargeAction
   | DeleteChargeSuccessAction
-  | DeleteChargeFailAction;
+  | DeleteChargeFailAction
+  | ResetChargeFormAction;

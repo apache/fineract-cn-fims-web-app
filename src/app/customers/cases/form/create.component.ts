@@ -23,7 +23,7 @@ import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
 import {Subscription} from 'rxjs';
-import {CREATE} from '../store/case.actions';
+import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {FimsCase} from '../store/model/fims-case.model';
 
@@ -73,28 +73,21 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
       .subscribe(customer => this.customer = customer);
 
     this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
+      .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-
-        if(!error) return;
-
-        switch(error.status){
-          case 400:
-            //This should not happen
-            break;
-          case 409:
-            let detailForm = this.formComponent.detailForm;
-            let errors = detailForm.form.get('identifier').errors || {};
-            errors['unique'] = true;
-            detailForm.form.get('identifier').setErrors(errors);
-            this.formComponent.detailsStep.open();
-            break;
-        }
+        let detailForm = this.formComponent.detailForm;
+        let errors = detailForm.form.get('identifier').errors || {};
+        errors['unique'] = true;
+        detailForm.form.get('identifier').setErrors(errors);
+        this.formComponent.detailsStep.open();
       });
   }
 
   ngOnDestroy(): void {
     this.customerSubscription.unsubscribe();
     this.formStateSubscription.unsubscribe();
+
+    this.casesStore.dispatch({ type: RESET_FORM })
   }
 
   onSave(caseToSave: Case): void {

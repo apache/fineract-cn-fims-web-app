@@ -20,7 +20,7 @@ import {OfficeFormComponent} from '../form.component';
 import {Office} from '../../../../services/office/domain/office.model';
 import {Store} from '@ngrx/store';
 import * as fromOffice from '../../store';
-import {CREATE, CREATE_BRANCH} from '../../store/office.actions';
+import {CREATE, CREATE_BRANCH, RESET_FORM} from '../../store/office.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {Subscription} from 'rxjs';
 import {OfficesStore} from '../../store/index';
@@ -40,20 +40,14 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
 
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {
 
-    this.formStateSubscription = store.select(fromOffice.getOfficeFormState)
-      .subscribe((payload: {error: Error}) => {
-
-      if(!payload.error) return;
-
-      switch(payload.error.status) {
-        case 409:
-          let officeDetailForm = this.formComponent.detailForm;
-          let errors = officeDetailForm.get('identifier').errors || {};
-          errors['unique'] = true;
-          officeDetailForm.get('identifier').setErrors(errors);
-          this.formComponent.step.open();
-          break;
-      }
+    this.formStateSubscription = store.select(fromOffice.getOfficeFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => {
+        let officeDetailForm = this.formComponent.detailForm;
+        let errors = officeDetailForm.get('identifier').errors || {};
+        errors['unique'] = true;
+        officeDetailForm.get('identifier').setErrors(errors);
+        this.formComponent.step.open();
     });
   }
 
@@ -61,6 +55,12 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
     this.route.queryParams.subscribe((queryParams) => {
       this.parentIdentifier = queryParams['parentId'];
     });
+  }
+
+  ngOnDestroy(): void {
+    this.formStateSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM })
   }
 
   onSave(office: Office): void{
@@ -90,7 +90,4 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-  }
 }

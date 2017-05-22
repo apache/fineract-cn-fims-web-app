@@ -15,8 +15,6 @@
  */
 
 import * as fromCustomer from '../../store';
-import * as fromCaseSearch from './search.reducer';
-import * as fromCases from './cases.reducer';
 import * as fromCaseForm from './form.reducer';
 import * as fromCaseTasks from './tasks/tasks.reducer';
 import * as fromCasePayments from './payments/search.reducer';
@@ -25,14 +23,22 @@ import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../reducers/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  createResourceReducer,
+  getResourceEntities,
+  getResourceIds,
+  getResourceLoadedAt,
+  getResourceSelected,
   getResourceSelectedId,
   ResourceState
 } from '../../../../components/store/resource.reducer';
 import {
-  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../../../../components/store/search.reducer';
+import {createFormReducer, getFormError} from '../../../../components/store/form.reducer';
 
 export interface State extends fromCustomer.State{
   cases: ResourceState;
@@ -44,7 +50,7 @@ export interface State extends fromCustomer.State{
 
 const reducers = {
   cases: createResourceReducer('Case'),
-  caseForm: fromCaseForm.reducer,
+  caseForm: createFormReducer('Case', fromCaseForm.reducer),
   caseSearch: createSearchReducer('Case'),
   caseTasks: fromCaseTasks.reducer,
   casePayments: fromCasePayments.reducer
@@ -91,7 +97,6 @@ export const getCasePaymentsSearchState = (state: State) => state.casePayments;
 export const getSearchCasePaymentPage = createSelector(getCasePaymentsSearchState, fromCasePayments.getPaymentPage);
 
 export const getCaseFormState = (state: State) => state.caseForm;
+export const getCaseFormError = createSelector(getCaseFormState, getFormError);
 
 export const getCaseFormProduct = createSelector(getCaseFormState, fromCaseForm.getFormProduct);
-
-export const getCaseFormError = createSelector(getCaseFormState, fromCaseForm.getFormError);

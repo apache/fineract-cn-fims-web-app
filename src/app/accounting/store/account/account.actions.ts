@@ -42,6 +42,8 @@ export const DELETE = type('[Account] Delete');
 export const DELETE_SUCCESS = type('[Account] Delete Success');
 export const DELETE_FAIL = type('[Account] Delete Fail');
 
+export const RESET_FORM = type('[Account] Reset Form');
+
 export interface AccountRoutePayload extends RoutePayload{
   account: Account;
 }
@@ -112,6 +114,12 @@ export class DeleteAccountFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ResetAccountFormAction implements Action {
+  readonly type = RESET_FORM;
+
+  constructor() {}
+}
+
 export type Actions
   = LoadAction
   | SelectAction
@@ -123,4 +131,5 @@ export type Actions
   | UpdateAccountFailAction
   | DeleteAccountAction
   | DeleteAccountSuccessAction
-  | DeleteAccountFailAction;
+  | DeleteAccountFailAction
+  | ResetAccountFormAction;
