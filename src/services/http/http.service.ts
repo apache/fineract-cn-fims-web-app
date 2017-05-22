@@ -60,7 +60,10 @@ export class HttpClient {
 
     const headers = new Headers();
 
-    headers.set('Accept', 'application/json');
+    if(!(body instanceof FormData)) {
+      headers.set('Accept', 'application/json');
+      headers.set('Content-Type', 'application/json');
+    }
 
     headers.set(TENANT_HEADER, tenant);
     headers.set(USER_HEADER, username);
