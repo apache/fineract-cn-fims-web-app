@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as fromRoot from './reducers';
 import {Store} from '@ngrx/store';
 import {LoginSuccessAction} from './reducers/security/security.actions';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'fims-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy {
+
+  private authSubscription: Subscription;
 
   constructor(private translate: TranslateService, private store: Store<fromRoot.State>) {}
 
@@ -43,6 +46,10 @@ export class AppComponent implements OnInit{
         authentication: state.authentication
       }))
       .map(payload => new LoginSuccessAction(payload))
-      .do((action: LoginSuccessAction) => this.store.dispatch(action))
+      .subscribe((action: LoginSuccessAction) => this.store.dispatch(action))
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
   }
 }

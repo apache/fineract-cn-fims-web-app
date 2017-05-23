@@ -15,8 +15,11 @@
  */
 
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  CovalentCommonModule, CovalentDataTableModule, CovalentDialogsModule,
+  CovalentPagingModule
+} from '@covalent/core';
 import {LayoutCardOverComponent, LayoutCardOverComponentTags} from './layout-card-over/layout-card-over.component';
 import {IdInputComponent} from './id-input/id-input.component';
 import {PermissionDirective} from '../services/security/authz/permission.directive';
@@ -36,10 +39,36 @@ import {FormContinueActionComponent} from './forms/form-continue-action.componen
 import {FormFinalActionComponent} from './forms/form-final-action.component';
 import {AddressFormComponent} from './address/address.component';
 import {PortraitComponent} from './portrait/portrait.component';
+import {CommonModule} from '@angular/common';
+import {
+  MdAutocompleteModule,
+  MdButtonModule,
+  MdCardModule, MdIconModule,
+  MdInputModule, MdListModule,
+  MdOptionModule,
+  MdSnackBarModule,
+  MdToolbarModule,
+  MdTooltipModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
-    CovalentCoreModule,
+    CommonModule,
+    CovalentCommonModule,
+    CovalentDataTableModule,
+    CovalentDialogsModule,
+    CovalentPagingModule,
+    FormsModule,
+    MdAutocompleteModule,
+    MdButtonModule,
+    MdCardModule,
+    MdIconModule,
+    MdInputModule,
+    MdListModule,
+    MdOptionModule,
+    MdSnackBarModule,
+    MdToolbarModule,
+    MdTooltipModule,
     ReactiveFormsModule,
     TranslateModule
   ],
@@ -79,9 +108,6 @@ import {PortraitComponent} from './portrait/portrait.component';
     StateDisplayComponent,
     CommandDisplayComponent,
     MinMaxComponent,
-    CovalentCoreModule,
-    ReactiveFormsModule,
-    TranslateModule,
     ValidateOnBlurDirective,
     FormFinalActionComponent,
     FormContinueActionComponent,
@@ -89,4 +115,4 @@ import {PortraitComponent} from './portrait/portrait.component';
     PortraitComponent
   ]
 })
-export class CommonModule{}
+export class FimsSharedModule{}

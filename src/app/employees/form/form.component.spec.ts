@@ -21,7 +21,7 @@ import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from './form
 import {User} from '../../../services/identity/domain/user.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentStepsModule} from '@covalent/core';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {SelectListComponent} from '../../../components/select-list/select-list.component';
 import {Observable} from 'rxjs';

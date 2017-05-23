@@ -18,12 +18,31 @@ import {NgModule} from '@angular/core';
 import {LoginComponent} from './login.component';
 import {LoginRoutes} from './login.routing';
 import {RouterModule} from '@angular/router';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdSelectModule,
+  MdTooltipModule
+} from '@angular/material';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {CovalentLoadingModule} from '@covalent/core';
 
 @NgModule({
   imports: [
-    CommonModule,
+    FimsSharedModule,
     RouterModule.forChild(LoginRoutes),
+    TranslateModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdIconModule,
+    MdCardModule,
+    MdInputModule,
+    MdButtonModule,
+    MdSelectModule,
+    MdTooltipModule,
+    CovalentLoadingModule
   ],
   declarations: [
     LoginComponent

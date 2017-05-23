@@ -15,7 +15,7 @@
  */
 
 import {NgModule} from '@angular/core';
-import {CommonModule} from '../../../components/common.module';
+import {FimsSharedModule} from '../../../components/common.module';
 import {ProductRoutes} from './product.routes';
 import {RouterModule} from '@angular/router';
 import {ProductListComponent} from './product.list.component';
@@ -53,11 +53,38 @@ import {ProductTasksApiEffects} from './store/tasks/effects/service.effects';
 import {ProductNotificationEffects} from './store/effects/notification.effects';
 import {ProductRouteEffects} from './store/effects/route.effects';
 import {ProductApiEffects} from './store/effects/service.effects';
+import {TranslateModule} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {
+  MdButtonModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdOptionModule,
+  MdRadioModule, MdSelectModule,
+  MdSlideToggleModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CovalentStepsModule} from '@covalent/core';
 
 @NgModule({
   imports: [
     RouterModule.forChild(ProductRoutes),
+    FimsSharedModule,
+    TranslateModule,
     CommonModule,
+    ReactiveFormsModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+    MdSlideToggleModule,
+    MdRadioModule,
+    MdOptionModule,
+    MdSelectModule,
+    CovalentStepsModule,
 
     EffectsModule.run(ProductApiEffects),
     EffectsModule.run(ProductRouteEffects),

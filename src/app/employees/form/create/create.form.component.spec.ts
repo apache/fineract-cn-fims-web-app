@@ -17,7 +17,7 @@
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentStepsModule} from '@covalent/core';
 import {EmployeeFormComponent, EmployeeSaveEvent} from '../form.component';
 import {SelectListComponent} from '../../../../components/select-list/select-list.component';
 import {IdInputComponent} from '../../../../components/id-input/id-input.component';

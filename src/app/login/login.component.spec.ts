@@ -14,19 +14,26 @@
  * limitations under the License.
  */
 
-import {TestBed, ComponentFixture, async, inject} from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
 import {Observable} from 'rxjs';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
-import {CovalentCoreModule} from '@covalent/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {Authentication} from '../../services/identity/domain/authentication.model';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../reducers/security/security.actions';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {
+  MdCardModule,
+  MdIconModule,
+  MdInputModule,
+  MdOptionModule,
+  MdSelectModule,
+  MdTooltipModule
+} from '@angular/material';
+import {CovalentLoadingModule} from '@covalent/core';
 
 describe('Test Login Component', () => {
 
@@ -51,9 +58,16 @@ describe('Test Login Component', () => {
       declarations: [LoginComponent],
       imports: [
         ReactiveFormsModule,
-        CovalentCoreModule,
+        FormsModule,
         TranslateModule.forRoot(),
-        NoopAnimationsModule
+        MdIconModule,
+        MdCardModule,
+        MdInputModule,
+        MdSelectModule,
+        MdOptionModule,
+        MdTooltipModule,
+        NoopAnimationsModule,
+        CovalentLoadingModule
       ],
       providers: [
         {provide: 'tenantId', useValue: 'tenantId'},

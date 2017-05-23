@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {Component, ViewChild, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Office} from '../../../services/office/domain/office.model';
-import {TestBed, ComponentFixture} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {OfficeFormComponent} from './form.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
-import {ReactiveFormsModule, FormControl, AbstractControl} from '@angular/forms';
+import {CovalentStepsModule} from '@covalent/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {IdInputComponent} from '../../../components/id-input/id-input.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';

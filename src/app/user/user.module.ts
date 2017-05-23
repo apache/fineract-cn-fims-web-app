@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PasswordComponent} from './password.component';
 import {UserRoutes} from './user.routing';
-import {CommonModule} from '../../components/common.module';
+import {MdButtonModule, MdCardModule, MdInputModule} from '@angular/material';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     RouterModule.forChild(UserRoutes),
+    TranslateModule,
+    CommonModule,
     ReactiveFormsModule,
-    CommonModule
+    MdCardModule,
+    MdInputModule,
+    MdButtonModule
   ],
   declarations: [
     PasswordComponent
   ]
 })
-export class UserModule{}
+export class UserModule {}
