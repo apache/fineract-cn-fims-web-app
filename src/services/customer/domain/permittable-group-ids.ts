@@ -18,6 +18,8 @@ export class CustomerPermittableGroupIds {
   public static readonly CUSTOMER_MANAGEMENT: string = 'customer__v1__customer';
   public static readonly TASK_MANAGEMENT: string = 'customer__v1__task';
   public static readonly CATALOG_MANAGEMENT: string = 'catalog__v1__catalog';
+  public static readonly IDENTITY_CARD_MANAGEMENT: string = 'customer__v1__identifications';
+  public static readonly PORTRAIT_MANAGEMENT: string = 'customer__v1__portrait';
 }
 
 

@@ -30,6 +30,6 @@
     [pageable]="false">
   </fims-data-table>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new identication card' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE' }">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new identication card' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
   <md-icon>add</md-icon>
 </a>

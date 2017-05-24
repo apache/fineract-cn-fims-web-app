@@ -43,7 +43,7 @@
               </a>
               <md-divider></md-divider>
               <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['identifications']">
+              <a md-list-item [routerLink]="['identifications']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'READ'}">
                 <md-icon md-list-avatar>perm_identity</md-icon>
                 <h3 md-line translate>Identification cards</h3>
                 <p md-line translate>View identification cards</p>

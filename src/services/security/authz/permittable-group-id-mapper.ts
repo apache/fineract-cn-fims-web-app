@@ -47,6 +47,8 @@ export class PermittableGroupIdMapper {
     this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = { id: 'customer_customers', label: 'Customers' };
     this._permittableGroupMap[CustomerPermittableGroupIds.TASK_MANAGEMENT] = { id: 'customer_tasks', label: 'Tasks' };
     this._permittableGroupMap[CustomerPermittableGroupIds.CATALOG_MANAGEMENT] = { id: 'catalog_catalogs', label: 'Custom fields' };
+    this._permittableGroupMap[CustomerPermittableGroupIds.IDENTITY_CARD_MANAGEMENT] = { id: 'customer_identifications', label: 'Customer identification cards' };
+    this._permittableGroupMap[CustomerPermittableGroupIds.PORTRAIT_MANAGEMENT] = { id: 'customer_portrait', label: 'Customer portrait' };
 
     this._permittableGroupMap[AccountingPermittableGroupIds.ACCOUNT_MANAGEMENT] = { id: 'accounting_accounts', label: 'Accounts' };
     this._permittableGroupMap[AccountingPermittableGroupIds.JOURNAL_MANAGEMENT] = { id: 'accounting_journals', label: 'Journal' };
@@ -57,7 +59,7 @@ export class PermittableGroupIdMapper {
     this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = { id: 'portfolio_cases', label: 'Customer loans' };
   }
 
-  public map(permittableGroupId: string): FimsPermissionDescriptor{
+  public map(permittableGroupId: string): FimsPermissionDescriptor {
     let descriptor: FimsPermissionDescriptor = this._permittableGroupMap[permittableGroupId];
     if(!descriptor){
       console.warn(`Could not find permission descriptor for permittable group id '${permittableGroupId}'`)
@@ -65,7 +67,7 @@ export class PermittableGroupIdMapper {
     return descriptor;
   }
 
-  public isValid(id: PermissionId): boolean{
+  public isValid(id: PermissionId): boolean {
     for(let key in this._permittableGroupMap){
       let descriptor: FimsPermissionDescriptor = this._permittableGroupMap[key];
       if(descriptor.id === id) return true;

@@ -79,7 +79,7 @@ export const CustomerRoutes: Routes = [
         component: CustomerPortraitComponent,
         data: {
           title: 'Upload portrait',
-          hasPermission: { id: 'customer_customers', accessLevel: 'CHANGE' }
+          hasPermission: { id: 'customer_portrait', accessLevel: 'READ' }
         }
       },
       {
@@ -87,6 +87,7 @@ export const CustomerRoutes: Routes = [
         component: CustomerIdentityCardListComponent,
         data: {
           title: 'Manage Identification Cards',
+          hasPermission: { id: 'customer_identifications', accessLevel: 'READ' }
         }
       },
       {
@@ -94,7 +95,7 @@ export const CustomerRoutes: Routes = [
         component: CreateCustomerIdentificationCardFormComponent,
         data: {
           title: 'Create Identification Card',
-          hasPermission: { id: 'customer_customers', accessLevel: 'CHANGE' }
+          hasPermission: { id: 'customer_identifications', accessLevel: 'CHANGE' }
         },
       },
       {
@@ -107,6 +108,7 @@ export const CustomerRoutes: Routes = [
             component: CustomerIdentityCardDetailComponent,
             data: {
               title: 'Identification Card',
+              hasPermission: { id: 'customer_identifications', accessLevel: 'READ' }
             }
           },
           {
@@ -114,7 +116,7 @@ export const CustomerRoutes: Routes = [
             component: EditCustomerIdentificationCardFormComponent,
             data: {
               title: 'Edit Identification Card',
-              hasPermission: {id: 'customer_customers', accessLevel: 'CHANGE'}
+              hasPermission: {id: 'customer_identifications', accessLevel: 'CHANGE'}
             },
           }
         ]

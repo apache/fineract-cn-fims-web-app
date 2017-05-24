@@ -91,7 +91,7 @@ export class CustomerService {
 
     formData.append('portrait', file, file.name);
 
-    return this.http.put(`${this.baseUrl}/customers/${customerId}/portrait`, formData);
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/portrait`, formData);
   }
 
   deletePortrait(customerId: string): Observable<void> {

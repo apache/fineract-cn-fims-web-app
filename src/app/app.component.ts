@@ -36,7 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
+  }
 
+  relogin(): void {
     this.store.select(fromRoot.getAuthenticationState)
       .filter(state => !!state.authentication)
       .take(1)

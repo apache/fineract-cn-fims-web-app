@@ -9,6 +9,8 @@
   <md-card-content>
     <div layout="column" layout-align="center center">
       <fims-portrait [blob]="portrait" [size]="'large'"></fims-portrait>
+    </div>
+    <div layout="column" layout-align="center center" *hasPermission="{ id: 'customer_portrait', accessLevel: 'CHANGE' }">
       <span translate>Selected file:</span> {{ fileSelectMsg | translate }}
       <span *ngIf="fileSelectMsg" translate>
         Press the upload button below to upload the portrait.
@@ -27,7 +29,7 @@
       <span layout-margin *ngIf="invalidSize" class="tc-red-500" translate>
         Portrait can't exceed size of 512KB.
       </span>
-      <div layout="row" layout-margin>
+      <div layout="row" layout-margin *hasPermission="{ id: 'customer_portrait', accessLevel: 'DELETE' }">
         <button md-raised-button color="warn" (click)="deletePortrait()">{{'DELETE PORTRAIT' | translate}}
         </button>
       </div>

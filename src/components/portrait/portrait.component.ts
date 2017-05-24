@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 export type PORTRAIT_SIZE = 'small' | 'medium' | 'large';
@@ -26,9 +26,15 @@ export type PORTRAIT_SIZE = 'small' | 'medium' | 'large';
 })
 export class PortraitComponent implements OnDestroy {
 
+  private defaultUrl = './assets/images/ic_account_circle_black_48dp_2x.png';
+
+  private objectUrl: string;
+
   @Input() set blob(blob: Blob) {
     if(blob) {
       this.objectUrl = URL.createObjectURL(blob);
+    } else {
+      this.objectUrl = this.defaultUrl;
     }
   };
 
@@ -37,8 +43,6 @@ export class PortraitComponent implements OnDestroy {
   @Input() tooltip: string;
 
   @Output() onClick = new EventEmitter();
-
-  private objectUrl: string = './assets/images/ic_account_circle_black_48dp_2x.png';
 
   constructor(private domSanitizer: DomSanitizer) {}
 
