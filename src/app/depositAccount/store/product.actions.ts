@@ -1,0 +1,92 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {type} from '../../util';
+import {RoutePayload} from '../../../components/store/route-payload';
+import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
+import {Action} from '@ngrx/store';
+import {SearchResult} from '../../../components/store/search.reducer';
+import {
+  CreateResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload
+} from '../../../components/store/resource.reducer';
+
+export const SEARCH = type('[Deposit Product Definition] Search');
+export const SEARCH_COMPLETE = type('[Deposit Product Definition] Search Complete');
+
+export const LOAD = type('[Deposit Product Definition] Load');
+export const SELECT = type('[Deposit Product Definition] Select');
+
+export const CREATE = type('[Deposit Product Definition] Create');
+export const CREATE_SUCCESS = type('[Deposit Product Definition] Create Success');
+export const CREATE_FAIL = type('[Deposit Product Definition] Create Fail');
+
+export const RESET_FORM = type('[Deposit Product Definition] Reset Form');
+
+export interface ProductDefinitionRoutePayload extends RoutePayload {
+  productDefinition: ProductDefinition
+}
+
+export class SearchAction implements Action {
+  readonly type = SEARCH;
+
+  constructor() { }
+}
+
+export class SearchCompleteAction implements Action {
+  readonly type = SEARCH_COMPLETE;
+
+  constructor(public payload: SearchResult) { }
+}
+
+export class LoadAction implements Action {
+  readonly type = LOAD;
+
+  constructor(public payload: LoadResourcePayload) { }
+}
+
+export class SelectAction implements Action {
+  readonly type = SELECT;
+
+  constructor(public payload: SelectResourcePayload) { }
+}
+
+export class CreateProductDefinitionAction implements Action {
+  readonly type = CREATE;
+
+  constructor(public payload: ProductDefinitionRoutePayload) { }
+}
+
+export class CreateProductDefinitionSuccessAction implements Action {
+  readonly type = CREATE_SUCCESS;
+
+  constructor(public payload: CreateResourceSuccessPayload) { }
+}
+
+export class CreateProductDefinitionFailAction implements Action {
+  readonly type = CREATE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export type Actions
+  = SearchAction
+  | SearchCompleteAction
+  | LoadAction
+  | SelectAction
+  | CreateProductDefinitionAction
+  | CreateProductDefinitionSuccessAction
+  | CreateProductDefinitionFailAction;

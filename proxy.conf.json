@@ -33,5 +33,12 @@
     "pathRewrite": {
       "^/api/portfolio": "/portfolio"
     }
+  },
+  "/api/deposit": {
+    "target": "http://localhost:2025",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/portfolio": "/deposit"
+    }
   }
 }
