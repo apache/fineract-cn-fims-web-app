@@ -27,6 +27,10 @@
     <md-icon md-list-avatar color="primary">check_circle</md-icon>
     <h3 md-line translate>ACTIVE</h3>
   </md-list-item>
+  <md-list-item *ngSwitchCase="'APPROVED'">
+    <md-icon md-list-avatar color="primary">done_all</md-icon>
+    <h3 md-line translate>APPROVED</h3>
+  </md-list-item>
   <md-list-item *ngSwitchCase="'LOCKED'">
     <md-icon md-list-avatar color="warn">lock</md-icon>
     <h3 md-line translate>LOCKED</h3>

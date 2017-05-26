@@ -22,6 +22,9 @@
 </md-toolbar>
 
 <fims-layout-card-over [title]="caseInstance.identifier">
+  <td-message *ngIf="caseInstance.currentState === 'APPROVED'" label="{{'Customer loan approved' | translate }}" sublabel="{{'To activate this loan you need to disburse' | translate }}" color="accent" icon="error">
+    <button td-message-actions md-button (click)="disburse()" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}" translate>DISBURSE LOAN</button>
+  </td-message>
   <div class="md-content" class="inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
@@ -34,65 +37,14 @@
                 <h3 md-line translate>Planned Payments</h3>
                 <p md-line translate>View payments</p>
               </a>
+              <a md-list-item [routerLink]="['./tasks']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
+                <md-icon md-list-avatar>playlist_add_check</md-icon>
+                <h3 md-line translate>Tasks</h3>
+                <p md-line translate>Change the status of the customer loan</p>
+              </a>
             </md-nav-list>
           </div>
           <div flex-gt-md="70">
-            <div layout="row">
-              <div flex="33" layout="column">
-                <md-card class="md-card-colored" flex>
-                  <md-card-content class="text-center">
-                    <div class="md-headline tc-yellow-700">250</div>
-                    <md-icon class="icon">schedule</md-icon>
-                    <div layout="column">
-                      <div class="md-subhead" translate>Next repayment</div>
-                      <div class="md-caption tc-grey-600">Due on the {{ '2016-07-11 09:59:59' | date }}</div>
-                    </div>
-                    <br/>
-                    <button md-raised-button color="primary" translate (click)="repay()" translate>REPAY LOAN NOW</button>
-                  </md-card-content>
-                </md-card>
-              </div>
-              <div flex="33" layout="column">
-                <md-card class="md-card-colored" flex>
-                  <md-card-content class="text-center">
-                    <div class="md-headline tc-red-500">4.750</div>
-                    <md-icon class="icon">get_app</md-icon>
-                    <div layout="column">
-                      <div class="md-subhead" translate>Amount to pay</div>
-                    </div>
-                    <br/>
-                  </md-card-content>
-                </md-card>
-              </div>
-              <div flex="33" layout="column">
-                <md-card class="md-card-colored" flex>
-                  <md-card-content class="text-center">
-                    <div class="md-headline tc-green-500">5.250</div>
-                    <md-icon class="icon">check</md-icon>
-                    <div layout="column">
-                      <div class="md-subhead" translate>Amount paid</div>
-                      <div class="md-caption tc-grey-600">last repayment {{ '2016-07-13 09:59:59' | timeAgo }}</div>
-                    </div>
-                  </md-card-content>
-                </md-card>
-              </div>
-              <div flex="33" layout="column">
-                <md-card class="md-card-colored" flex>
-                  <md-card-content class="text-center">
-                    <div class="md-headline">10.000/10.000</div>
-                    <div layout="column">
-                      <div class="md-subhead" translate>Amount disbursed/Total</div>
-                      <div class="md-caption tc-grey-600">disbursed on {{ '2016-07-13 09:59:59' | timeAgo }}</div>
-                    </div>
-                    <br/>
-                    <button md-raised-button translate (click)="disburse()" translate>DISBURSE LOAN</button>
-                  </md-card-content>
-                  <md-card-actions>
-
-                  </md-card-actions>
-                </md-card>
-              </div>
-            </div>
             <div layout="row">
               <md-list>
                 <h3 md-subheader translate>Current status</h3>
@@ -101,14 +53,9 @@
                 <md-list-item>
                   <md-icon md-list-avatar>account_balance</md-icon>
                   <h3 md-line translate>Principal amount</h3>
-                  <p md-line>{{caseInstance.parameters.initialBalance | number}}</p>
+                  <p md-line>{{caseInstance.parameters.maximumBalance | number}}</p>
                 </md-list-item>
                 <fims-case-detail-payment-cycle [paymentCycle]="caseInstance.parameters.paymentCycle"></fims-case-detail-payment-cycle>
-                <md-list-item>
-                  <md-icon md-list-avatar>person</md-icon>
-                  <h3 md-line translate>Balance range</h3>
-                  <p md-line>{{caseInstance.parameters.balanceRange.minimum | number}} - {{caseInstance.parameters.balanceRange.maximum | number}}</p>
-                </md-list-item>
                 <md-list-item>
                   <md-icon md-list-avatar>date_range</md-icon>
                   <h3 md-line translate>Term</h3>
@@ -123,6 +70,6 @@
   </div>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit customer loan' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit customer loan' | translate}}" [routerLink]="['edit']" *ngIf="canEdit$ | async">
   <md-icon>edit_mode</md-icon>
 </a>

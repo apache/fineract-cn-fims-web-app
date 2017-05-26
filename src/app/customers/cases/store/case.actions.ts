@@ -28,6 +28,7 @@ import {
   SelectResourcePayload,
   UpdateResourceSuccessPayload
 } from '../../../../components/store/resource.reducer';
+import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
 
 export const SEARCH = type('[Case] Search');
 export const SEARCH_COMPLETE = type('[Case] Search Complete');
@@ -50,6 +51,10 @@ export const LOAD_PRODUCT_FAIL = type('[Case] Form Load Product Fail');
 export const UNLOAD_PRODUCT = type('[Case] Form Unload Product');
 export const RESET_FORM = type('[Case] Reset Form');
 
+export const EXECUTE_COMMAND = type('[Case] Execute Command');
+export const EXECUTE_COMMAND_SUCCESS = type('[Case] Execute Command Success');
+export const EXECUTE_COMMAND_FAIL = type('[Case] Execute Command Fail');
+
 export interface SearchCasePayload{
   customerId: string;
   fetchRequest: FetchRequest;
@@ -58,6 +63,12 @@ export interface SearchCasePayload{
 export interface CaseRoutePayload extends RoutePayload{
   productId: string;
   caseInstance: FimsCase;
+}
+
+export interface ExecuteCommandPayload extends RoutePayload {
+  productId: string;
+  caseId: string;
+  command: CaseCommand;
 }
 
 export class SearchAction implements Action {
@@ -150,6 +161,24 @@ export class ResetCaseFormAction implements Action {
   constructor() {}
 }
 
+export class ExecuteCommandAction implements Action {
+  readonly type = EXECUTE_COMMAND;
+
+  constructor(public payload: ExecuteCommandPayload) { }
+}
+
+export class ExecuteCommandSuccessAction implements Action {
+  readonly type = EXECUTE_COMMAND_SUCCESS;
+
+  constructor(public payload: ExecuteCommandPayload) { }
+}
+
+export class ExecuteCommandFailAction implements Action {
+  readonly type = EXECUTE_COMMAND_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 
 export type Actions
   = SearchAction
@@ -166,4 +195,7 @@ export type Actions
   | LoadProductSuccessAction
   | LoadProductFailAction
   | UnloadProductAction
-  | ResetCaseFormAction;
+  | ResetCaseFormAction
+  | ExecuteCommandAction
+  | ExecuteCommandSuccessAction
+  | ExecuteCommandFailAction;

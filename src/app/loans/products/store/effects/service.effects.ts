@@ -79,6 +79,8 @@ export class ProductApiEffects {
     .mergeMap(payload =>
       this.portfolioService.enableProduct(payload.product.identifier, payload.enable)
         .map(() => new productActions.EnableProductSuccessAction(payload))
-        .catch((error) => of(new productActions.EnableProductFailAction(error)))
+        .catch((error) =>
+          this.portfolioService.incompleteaccountassignments(payload.product.identifier)
+            .map(accountAssignments => new productActions.EnableProductFailAction(accountAssignments)))
     );
 }

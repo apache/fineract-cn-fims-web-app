@@ -15,8 +15,8 @@
  */
 
 export const alignmentOptions: any[] = [
-  { type: 0, label: 'First'},
-  { type: 1, label: 'Second'},
-  { type: 2, label: 'Third'},
-  { type: 3, label: 'Last'}
+  { type: 0, label: 'first'},
+  { type: 1, label: 'second'},
+  { type: 2, label: 'third'},
+  { type: 3, label: 'last'}
 ];

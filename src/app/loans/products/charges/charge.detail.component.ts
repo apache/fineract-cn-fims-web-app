@@ -15,11 +15,10 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
-import {Product} from '../../../../services/portfolio/domain/product.model';
 import {DELETE, SelectAction} from '../store/charges/charge.actions';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
@@ -40,7 +39,7 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
 
   charge: ChargeDefinition;
 
-  constructor(private router: Router, private route: ActivatedRoute, private dialogService: TdDialogService, private portfolioStore: PortfolioStore){}
+  constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private portfolioStore: PortfolioStore){}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -80,7 +79,4 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
       });
   }
 
-  goToParent(): void{
-    this.router.navigate(['../../'], { relativeTo: this.route });
-  }
 }

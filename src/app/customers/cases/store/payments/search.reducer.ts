@@ -44,6 +44,7 @@ export function reducer(state = initialState, action: paymentActions.Actions): S
       const payload: SearchPaymentsPayload = action.payload;
 
       return Object.assign({}, state, {
+        paymentPage: initialState.paymentPage,
         initialDisbursalDate: payload.initialDisbursalDate,
         loading: true
       });

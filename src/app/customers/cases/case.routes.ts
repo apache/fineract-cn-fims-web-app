@@ -22,24 +22,51 @@ import {CaseCreateComponent} from './form/create.component';
 import {CaseListComponent} from './case.list.component';
 import {CaseEditComponent} from './form/edit.component';
 import {CaseExistsGuard} from './case-exists.guard';
+import {CaseStatusComponent} from './status/status.component';
 
 export const CaseRoutes: Routes = [
-  {path: '', component: CaseListComponent, data: {hasPermission: {id: 'portfolio_cases', accessLevel: 'READ'}}},
-  {path: 'create', component: CaseCreateComponent, data: {hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}}},
+  {
+    path: '',
+    component: CaseListComponent,
+    data: {
+      hasPermission: {id: 'portfolio_cases', accessLevel: 'READ'}
+    }
+  },
+  {
+    path: 'create',
+    component: CaseCreateComponent,
+    data: {
+      hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
+    }
+  },
   {
     path: 'products/:productId/detail/:caseId',
     canActivate: [CaseExistsGuard],
-    data: {hasPermission: {id: 'portfolio_cases', accessLevel: 'READ'}},
+    data: {
+      hasPermission: {id: 'portfolio_cases', accessLevel: 'READ'}
+    },
     children: [
-      {path: '', component: CaseDetailComponent},
-      {path: 'payments', component: CasePaymentsComponent},
-      {path: 'tasks', component: CaseTasksComponent}
+      {
+        path: '', component: CaseDetailComponent
+      },
+      {
+        path: 'payments', component: CasePaymentsComponent
+      },
+      {
+        path: 'tasks',
+        component: CaseStatusComponent,
+        data: {
+          hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
+        }
+      }
     ]
   },
   {
     path: 'products/:productId/detail/:caseId/edit',
     component: CaseEditComponent,
     canActivate: [CaseExistsGuard],
-    data: {hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}}
+    data: {
+      hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
+    }
   }
 ];

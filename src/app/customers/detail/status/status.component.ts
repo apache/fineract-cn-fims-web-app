@@ -24,7 +24,7 @@ import {Subscription} from 'rxjs';
 import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/tasks/task.actions';
 import {CustomersStore} from '../../store/index';
 
-interface StatusCommand{
+interface StatusCommand {
   action: CommandAction;
   comment?: string;
   tasks: TaskDefinition[];
@@ -34,7 +34,7 @@ interface StatusCommand{
 @Component({
   templateUrl: './status.component.html'
 })
-export class CustomerStatusComponent implements OnInit, OnDestroy{
+export class CustomerStatusComponent implements OnInit, OnDestroy {
 
   private tasksSubscription: Subscription;
 
@@ -66,7 +66,7 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
     this.customerSubscription.unsubscribe();
   }
 
-  private mergeTasks(tasks: TaskDefinition[]): void{
+  private mergeTasks(tasks: TaskDefinition[]): void {
     for(let statusCommand of this.statusCommands){
       statusCommand.tasks = [];
       let foundTasks = tasks.filter((task: TaskDefinition) => task.commands.indexOf(statusCommand.action) > -1);
@@ -74,7 +74,7 @@ export class CustomerStatusComponent implements OnInit, OnDestroy{
     }
   }
 
-  executeTask(taskId: string): void{
+  executeTask(taskId: string): void {
     this.store.dispatch({ type: EXECUTE_TASK, payload: {
       customerId: this.customer.identifier,
       taskId: taskId

@@ -87,13 +87,13 @@ export class ProductFormComponent implements OnInit{
   }
 
   save(): void{
-    let parameters: ProductParameters = {
-      maximumDispersalAmount: this.detailForm.get('dispersalAmount').value,
-      maximumDispersalCount: this.detailForm.get('dispersalCount').value,
+    const parameters: ProductParameters = {
+      maximumDispersalAmount: 0,
+      maximumDispersalCount: 0,
       moratoriums: []
     };
 
-    let product: FimsProduct = {
+    const product: FimsProduct = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value,
@@ -119,11 +119,14 @@ export class ProductFormComponent implements OnInit{
     this.onSave.emit(product);
   }
 
-  private collectAccountAssignments(): AccountAssignment[]{
-    let assignments: AccountAssignment[] = [];
+  private collectAccountAssignments(): AccountAssignment[] {
+    const assignments: AccountAssignment[] = [];
 
+    assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.ENTRY));
     assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
+
     assignments.push(this.createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
+    assignments.push(this.createAccountAssignment(this.settingsForm.formData.consumerLoanLedger, AccountDesignators.CONSUMER_LOAN_LEDGER));
 
     assignments.push(this.createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
     assignments.push(this.createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
@@ -169,9 +172,6 @@ export class ProductFormComponent implements OnInit{
       minorCurrencyUnitDigits: [product.minorCurrencyUnitDigits, [Validators.required]],
       minimumBalance: [balanceRange ? balanceRange.minimum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange ? balanceRange.maximum : undefined, [Validators.required, FimsValidators.minValue(0)]],
-      multipleDispersals: [''],
-      dispersalAmount: [product.parameters.maximumDispersalAmount],
-      dispersalCount: [product.parameters.maximumDispersalCount],
       term: [termRange ? termRange.maximum : undefined, [ Validators.required, FimsValidators.minValue(0) ]],
       temporalUnit: [termRange ? termRange.temporalUnit : undefined, Validators.required]
     }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
@@ -180,10 +180,12 @@ export class ProductFormComponent implements OnInit{
   prepareSettingsForm(product: FimsProduct) {
     const loanFoundAccount = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
     const customerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
+    const consumerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CONSUMER_LOAN_LEDGER);
 
     this.settingsFormData = {
       loanFundAccount: this.accountIdentifier(loanFoundAccount),
-      customerLoanLedger: this.ledgerIdentifier(customerLoanLedger)
+      customerLoanLedger: this.ledgerIdentifier(customerLoanLedger),
+      consumerLoanLedger: this.ledgerIdentifier(consumerLoanLedger)
     }
   }
 

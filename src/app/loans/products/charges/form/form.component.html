@@ -41,11 +41,6 @@
         <md-input-container>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
         </md-input-container>
-        <md-select placeholder="{{'Applied when' | translate}}" formControlName="chargeAction" layout-margin>
-          <md-option *ngFor="let actionOption of chargeActionOptions" [value]="actionOption.type">
-            {{actionOption.label}}
-          </md-option>
-        </md-select>
       </div>
 
     </form>

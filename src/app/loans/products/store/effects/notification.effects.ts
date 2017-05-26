@@ -42,4 +42,13 @@ export class ProductNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Product is going to be ' + payload.enabled ? 'enabled' : 'disabled'
     }));
+
+  @Effect({ dispatch: false })
+  enableProductFail$: Observable<Action> = this.actions$
+    .ofType(productActions.ENABLE_FAIL)
+    .map(toPayload)
+    .do(payload => this.notificationService.send({
+      type: NotificationType.ALERT,
+      message: 'Product could not be enabled'
+    }));
 }

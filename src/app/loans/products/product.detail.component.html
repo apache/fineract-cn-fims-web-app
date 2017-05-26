@@ -22,6 +22,12 @@
 </md-toolbar>
 
 <fims-layout-card-over [title]="product.name" [subTitle]="product.description">
+  <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}" color="warn" icon="error">
+    <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
+  </td-message>
+  <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
+    <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
+  </td-message>
   <div class="md-content" class="inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
@@ -44,12 +50,6 @@
           <div flex-gt-md="70">
             <div layout="row">
               <md-list>
-                <md-list-item *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
-                  <md-slide-toggle [formControl]="enabledControl">
-                    <span *ngIf="enabledControl.value" translate>Enabled</span>
-                    <span *ngIf="!enabledControl.value" translate>Disabled</span>
-                  </md-slide-toggle>
-                </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Balance range</h3>
                   <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
@@ -72,6 +72,6 @@
   </div>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *ngIf="canEdit$ | async">
   <md-icon>edit_mode</md-icon>
 </a>

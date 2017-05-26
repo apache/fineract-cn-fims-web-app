@@ -57,7 +57,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule,
+  MdButtonModule, MdCheckboxModule,
   MdIconModule,
   MdInputModule,
   MdListModule,
@@ -66,7 +66,7 @@ import {
   MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentStepsModule} from '@covalent/core';
+import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 
 @NgModule({
   imports: [
@@ -84,7 +84,9 @@ import {CovalentStepsModule} from '@covalent/core';
     MdRadioModule,
     MdOptionModule,
     MdSelectModule,
+    MdCheckboxModule,
     CovalentStepsModule,
+    CovalentMessageModule,
 
     EffectsModule.run(ProductApiEffects),
     EffectsModule.run(ProductRouteEffects),

@@ -32,9 +32,9 @@ interface ChargeMethodOption{
   selector: 'fims-product-charge-form-component',
   templateUrl: './form.component.html'
 })
-export class ProductChargeFormComponent implements OnInit{
+export class ProductChargeFormComponent implements OnInit {
 
-  chargeActionOptions: ActionOption[] = ActionOptions;
+  private _charge: ChargeDefinition;
 
   chargeMethodOptions: ChargeMethodOption[] = [
     { type: 'FIXED', label: 'Fixed'},
@@ -50,6 +50,7 @@ export class ProductChargeFormComponent implements OnInit{
   @Input() editMode: boolean;
 
   @Input() set charge(charge: ChargeDefinition){
+    this._charge = charge;
     this.prepareDetailForm(charge);
   };
 
@@ -68,46 +69,32 @@ export class ProductChargeFormComponent implements OnInit{
       identifier: [charge.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       name: [charge.name, [Validators.required]],
       description: [charge.description, [Validators.required]],
-      chargeAction: [charge.chargeAction, [Validators.required]],
       chargeMethod: [charge.chargeMethod, [Validators.required]],
-      amount: [charge.amount, [Validators.required]],
-      toAccountDesignator: [charge.toAccountDesignator, [Validators.required]],
-      fromAccountDesignator: [charge.fromAccountDesignator, [Validators.required]],
-      forCycleSizeUnit: [charge.forCycleSizeUnit, [Validators.required]],
+      amount: [charge.amount, [Validators.required]]
     });
   }
 
-  onDebtorAccountSelection(selections: string[]): void{
-    this.setValue('fromAccountDesignator', selections);
-  }
-
-  onCreditorAccountSelection(selections: string[]): void{
-    this.setValue('toAccountDesignator', selections);
-  }
-
-  private setValue(key: string, selections: string[]): void{
-    let control: AbstractControl = this.detailForm.get(key);
-    control.setValue(selections && selections.length > 0 ? selections[0] : undefined);
-    control.markAsDirty();
-  }
-
-  private save(): void{
-    let charge: ChargeDefinition = {
+  save(): void{
+    const charge: ChargeDefinition = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value,
-      chargeAction: this.detailForm.get('chargeAction').value,
+      chargeAction: this.charge.chargeAction,
       chargeMethod: this.detailForm.get('chargeMethod').value,
       amount: this.detailForm.get('amount').value,
-      toAccountDesignator: this.detailForm.get('toAccountDesignator').value,
-      fromAccountDesignator: this.detailForm.get('fromAccountDesignator').value,
-      forCycleSizeUnit: this.detailForm.get('forCycleSizeUnit').value,
-
+      toAccountDesignator: this.charge.toAccountDesignator,
+      fromAccountDesignator: this.charge.fromAccountDesignator,
+      forCycleSizeUnit: this.charge.forCycleSizeUnit,
     };
+
     this.onSave.emit(charge);
   }
 
-  private cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
+  }
+
+  get charge(): ChargeDefinition {
+    return this._charge;
   }
 }

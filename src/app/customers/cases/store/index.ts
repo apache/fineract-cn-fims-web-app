@@ -15,6 +15,7 @@
  */
 
 import * as fromCustomer from '../../store';
+import * as fromCases from './cases.reducer';
 import * as fromCaseForm from './form.reducer';
 import * as fromCaseTasks from './tasks/tasks.reducer';
 import * as fromCasePayments from './payments/search.reducer';
@@ -49,7 +50,7 @@ export interface State extends fromCustomer.State{
 }
 
 const reducers = {
-  cases: createResourceReducer('Case'),
+  cases: createResourceReducer('Case', fromCases.reducer),
   caseForm: createFormReducer('Case', fromCaseForm.reducer),
   caseSearch: createSearchReducer('Case'),
   caseTasks: fromCaseTasks.reducer,
