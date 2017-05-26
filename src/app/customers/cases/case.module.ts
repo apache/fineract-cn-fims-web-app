@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {CommonModule} from '../../../components/common.module';
+import {FimsSharedModule} from '../../../components/common.module';
 import {CaseRoutes} from './case.routes';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -36,11 +36,40 @@ import {CaseTasksApiEffects} from './store/tasks/effects/service.effects';
 import {CaseNotificationEffects} from './store/effects/notification.effects';
 import {CaseRouteEffects} from './store/effects/route.effects';
 import {CaseApiEffects} from './store/effects/service.effects';
+import {TranslateModule} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {
+  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
+  MdSelectModule,
+  MdToolbarModule
+} from '@angular/material';
+import {
+  CovalentCommonModule, CovalentDataTableModule, CovalentMessageModule,
+  CovalentStepsModule
+} from '@covalent/core';
+import {CaseStatusComponent} from './status/status.component';
 
 @NgModule({
   imports: [
     RouterModule.forChild(CaseRoutes),
+    FimsSharedModule,
+    TranslateModule,
     CommonModule,
+    ReactiveFormsModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+    MdOptionModule,
+    MdSelectModule,
+    MdRadioModule,
+    MdCardModule,
+    CovalentCommonModule,
+    CovalentStepsModule,
+    CovalentDataTableModule,
+    CovalentMessageModule,
 
     EffectsModule.run(CaseApiEffects),
     EffectsModule.run(CaseRouteEffects),
@@ -58,7 +87,8 @@ import {CaseApiEffects} from './store/effects/service.effects';
     CaseDetailComponent,
     CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
-    CaseTasksComponent
+    CaseTasksComponent,
+    CaseStatusComponent
   ],
   providers: [
     CaseExistsGuard,

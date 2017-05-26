@@ -23,7 +23,7 @@ import {OfficeFormComponent} from './form/form.component';
 import {OfficeDetailComponent} from './detail/office.detail.component';
 import {CreateOfficeFormComponent} from './form/create/create.form.component';
 import {EditOfficeFormComponent} from './form/edit/edit.form.component';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {HeadquarterGuard} from './headquarter/headquarter.guard';
 import {HeadquarterNotFoundComponent} from './headquarter/headquarter-not-found.component';
 import {OfficeExistsGuard} from './office-exists.guard';
@@ -33,13 +33,29 @@ import {OfficeNotificationEffects} from './store/effects/notification.effects';
 import {EffectsModule} from '@ngrx/effects';
 import {OfficeRouteEffects} from './store/effects/route.effects';
 import {OfficeApiEffects} from './store/effects/service.effects';
+import {TranslateModule} from '@ngx-translate/core';
+import {
+  MdButton, MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
     RouterModule.forChild(OfficeRoutes),
-    CommonModule,
+    FimsSharedModule,
     ReactiveFormsModule,
-
+    TranslateModule,
+    CommonModule,
+    MdCardModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+    CovalentSearchModule,
+    CovalentStepsModule,
     EffectsModule.run(OfficeApiEffects),
     EffectsModule.run(OfficeRouteEffects),
     EffectsModule.run(OfficeNotificationEffects),

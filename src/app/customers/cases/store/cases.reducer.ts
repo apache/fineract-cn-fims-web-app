@@ -1,3 +1,4 @@
+import {ResourceState} from '../../../../components/store/resource.reducer';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -15,7 +16,54 @@
  */
 
 import * as caseActions from './case.actions';
-import { createSelector } from 'reselect';
-import {Case} from '../../../../services/portfolio/domain/case.model';
-import {FimsCase} from './model/fims-case.model';
-import {ResourceState} from '../../../../components/store/resource.reducer';
+import {CaseState} from '../../../../services/portfolio/domain/case-state.model';
+import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
+
+export const initialState: ResourceState = {
+  ids: [],
+  entities: {},
+  loadedAt: {},
+  selectedId: null,
+};
+
+export function reducer(state = initialState, action: caseActions.Actions): ResourceState {
+
+  switch (action.type) {
+
+    case caseActions.EXECUTE_COMMAND_SUCCESS: {
+      const payload = action.payload;
+
+      const caseId = payload.caseId;
+      const command: CaseCommand = payload.command;
+
+      const caseInstance = state.entities[caseId];
+
+      let caseState: CaseState = null;
+
+      if(command.action === 'OPEN') {
+        caseState = 'PENDING';
+      }else if(command.action === 'APPROVE') {
+        caseState = 'APPROVED';
+      }else if(command.action === 'DENY') {
+        caseState = 'CLOSED';
+      }else if(command.action === 'CLOSE') {
+        caseState = 'CLOSED';
+      }
+
+      caseInstance.currentState = caseState;
+
+      return {
+        ids: [ ...state.ids ],
+        entities: Object.assign({}, state.entities, {
+          [caseInstance.identifier]: caseInstance
+        }),
+        loadedAt: state.loadedAt,
+        selectedId: state.selectedId
+      }
+    }
+
+    default: {
+      return state;
+    }
+  }
+}

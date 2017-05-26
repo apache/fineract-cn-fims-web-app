@@ -19,7 +19,6 @@ import {Observable} from 'rxjs';
 import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {AccountSelectComponent} from './account-select.component';
 import {ReactiveFormsModule, FormControl, Validators} from '@angular/forms';
-import {CovalentCoreModule} from '@covalent/core';
 import {HttpClient} from '../../services/http/http.service';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {Component, ViewChild} from '@angular/core';
@@ -55,8 +54,7 @@ describe('Test account selection', () => {
         AccountSelectComponent
       ],
       imports: [
-        ReactiveFormsModule,
-        CovalentCoreModule
+        ReactiveFormsModule
       ],
       providers: [
         HttpClient,

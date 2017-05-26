@@ -19,14 +19,38 @@ import {RouterModule} from '@angular/router';
 import {MainComponent} from './main.component';
 import {MainRoutes, mainRoutingProviders} from './main.routing';
 import {AccessDeniedComponent} from './access.denied.component';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {NotificationComponent} from './notification.component';
 import {QuickAccessComponent} from '../quickAccess/quick-access.component';
+import {
+  MdButtonModule,
+  MdCardModule,
+  MdIconModule,
+  MdListModule,
+  MdMenuModule,
+  MdProgressBarModule,
+  MdSidenavModule,
+  MdToolbarModule,
+  MdTooltipModule
+} from '@angular/material';
+import {TranslateModule} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
-    CommonModule,
     RouterModule.forChild(MainRoutes),
+    FimsSharedModule,
+    TranslateModule,
+    CommonModule,
+    MdButtonModule,
+    MdToolbarModule,
+    MdSidenavModule,
+    MdListModule,
+    MdProgressBarModule,
+    MdIconModule,
+    MdMenuModule,
+    MdTooltipModule,
+    MdCardModule
   ],
   declarations: [
     MainComponent,

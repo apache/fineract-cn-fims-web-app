@@ -20,7 +20,7 @@ import {NgModule} from '@angular/core';
 import {CustomerComponent} from './customer.component';
 import {CustomerFormComponent} from './form/form.component';
 import {CreateCustomerFormComponent} from './form/create/create.form.component';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {CustomerDetailComponent} from './detail/customer.detail.component';
 import {CustomerDetailFormComponent} from './form/detail/detail.component';
 import {CustomerOfficesComponent} from './form/offices/offices.component';
@@ -54,11 +54,33 @@ import {CreateCustomerIdentificationCardFormComponent} from './detail/identityCa
 import {EditCustomerIdentificationCardFormComponent} from './detail/identityCard/form/edit.form.component';
 import {CustomerIdentityCardIndexComponent} from './detail/identityCard/identity-card.index.component';
 import {IdentityCardExistsGuard} from './detail/identityCard/identity-card-exists.guard';
+import {TranslateModule} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 
 @NgModule({
   imports: [
     RouterModule.forChild(CustomerRoutes),
+    FimsSharedModule,
+    TranslateModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+    MdRadioModule,
+    CovalentSearchModule,
+    CovalentStepsModule,
+    CovalentFileModule,
+
     EffectsModule.run(CustomerApiEffects),
     EffectsModule.run(CustomerRouteEffects),
     EffectsModule.run(CustomerNotificationEffects),

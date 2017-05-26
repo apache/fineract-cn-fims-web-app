@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {CREATE, SelectAction} from '../../store/charges/charge.actions';
+import {CREATE, SelectAction, UPDATE} from '../../store/charges/charge.actions';
 import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
 import {FimsProduct} from '../../store/model/fims-product.model';
@@ -59,7 +59,7 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy{
   }
 
   onSave(charge: ChargeDefinition): void {
-    this.portfolioStore.dispatch({ type: CREATE, payload: {
+    this.portfolioStore.dispatch({ type: UPDATE, payload: {
       productId: this.product.identifier,
       charge: charge,
       activatedRoute: this.route

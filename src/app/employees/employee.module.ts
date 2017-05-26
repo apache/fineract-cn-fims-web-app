@@ -23,7 +23,7 @@ import {CreateEmployeeFormComponent} from './form/create/create.form.component';
 import {EmployeeDetailComponent} from './detail/employee.detail.component';
 import {EditEmployeeFormComponent} from './form/edit/edit.form.component';
 import {UserResolver} from './user.resolver';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {EmployeeExistsGuard} from './employee-exists.guard';
 import {Store} from '@ngrx/store';
 import {EmployeesStore, employeeStoreFactory} from './store/index';
@@ -31,11 +31,32 @@ import {EmployeeNotificationEffects} from './store/effects/notification.effects'
 import {EffectsModule} from '@ngrx/effects';
 import {EmployeeApiEffects} from './store/effects/service.effects';
 import {EmployeeRouteEffects} from './store/effects/route.effects';
+import {
+  MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdSelectModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {TranslateModule} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     RouterModule.forChild(EmployeeRoutes),
+    FimsSharedModule,
+    ReactiveFormsModule,
     CommonModule,
+    TranslateModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdOptionModule,
+    MdInputModule,
+    MdButtonModule,
+    MdSelectModule,
+    CovalentSearchModule,
+    CovalentStepsModule,
+
     EffectsModule.run(EmployeeApiEffects),
     EffectsModule.run(EmployeeRouteEffects),
     EffectsModule.run(EmployeeNotificationEffects)

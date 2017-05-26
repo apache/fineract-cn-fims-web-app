@@ -43,8 +43,6 @@ export class CaseFormComponent implements OnInit{
 
   productForm: FormGroup;
 
-  savingsForm: FormGroup;
-
   @ViewChild('productSelection') productStep: TdStepComponent;
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
@@ -87,7 +85,7 @@ export class CaseFormComponent implements OnInit{
   private prepareDetailForm(caseInstance: FimsCase): void {
     this.detailFormData = {
       identifier: caseInstance.identifier,
-      principalAmount: caseInstance.parameters.initialBalance,
+      principalAmount: caseInstance.parameters.maximumBalance,
       term: caseInstance.parameters.termRange.maximum,
       termTemporalUnit: caseInstance.parameters.termRange.temporalUnit,
       paymentTemporalUnit: caseInstance.parameters.paymentCycle.temporalUnit,
@@ -114,7 +112,7 @@ export class CaseFormComponent implements OnInit{
   }
 
   private collectAccountAssignments(): AccountAssignment[]{
-    let assignments: AccountAssignment[] = [];
+    const assignments: AccountAssignment[] = [];
 
     assignments.push({
       accountIdentifier: 'placeholder',
@@ -125,13 +123,9 @@ export class CaseFormComponent implements OnInit{
   }
 
   save(): void{
-    let caseParameters: CaseParameters = {
+    const caseParameters: CaseParameters = {
       customerIdentifier: this.customerId,
-      balanceRange: {
-        minimum: 0,
-        maximum: this.detailForm.formData.principalAmount
-      },
-      initialBalance: this.detailForm.formData.principalAmount,
+      maximumBalance: this.detailForm.formData.principalAmount,
       paymentCycle: {
         alignmentDay: this.detailForm.formData.paymentAlignmentDay,
         alignmentMonth: this.detailForm.formData.paymentAlignmentMonth,
@@ -145,13 +139,14 @@ export class CaseFormComponent implements OnInit{
       }
     };
 
-    let caseToSave: FimsCase = {
+    const caseToSave: FimsCase = {
       currentState: this.caseInstance.currentState,
       identifier: this.detailForm.formData.identifier,
       productIdentifier: this.productForm.get('identifier').value,
       parameters: caseParameters,
       accountAssignments: this.collectAccountAssignments()
     };
+
     this.onSave.emit(caseToSave);
   }
 

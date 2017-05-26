@@ -50,6 +50,9 @@ export class FormPermissionService {
     }
     result.push(formPermission)
   }
+
+  result.sort((a: FormPermission, b: FormPermission) => a.label.localeCompare(b.label));
+
   return result;
 }
 

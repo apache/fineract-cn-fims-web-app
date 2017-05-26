@@ -28,6 +28,8 @@ import {CaseCommand} from './domain/case-command.model';
 import {TaskInstance} from './domain/task-instance.model';
 import {PlannedPaymentPage} from './domain/individuallending/planned-payment-page.model';
 import {CasePage} from './domain/case-page.model';
+import {AccountAssignment} from './domain/account-assignment.model';
+import {WorkflowAction} from './domain/individuallending/workflow-action.model';
 
 @Injectable()
 export class PortfolioService {
@@ -66,6 +68,10 @@ export class PortfolioService {
 
   getProductEnabled(identifier: string): Observable<boolean>{
     return this.http.get(`${this.baseUrl}/products/${identifier}/enabled`)
+  }
+
+  incompleteaccountassignments(identifier: string): Observable<AccountAssignment[]> {
+    return this.http.get(`${this.baseUrl}/products/${identifier}/incompleteaccountassignments`)
   }
 
   findAllTaskDefinitionsForProduct(identifier: string): Observable<TaskDefinition[]>{
@@ -131,8 +137,8 @@ export class PortfolioService {
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseInstance.identifier}`, caseInstance)
   }
 
-  getAllCommandsForCase(productIdentifier: string, caseIdentifier: string): Observable<CaseCommand[]>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/`)
+  getAllActionsForCase(productIdentifier: string, caseIdentifier: string): Observable<WorkflowAction[]>{
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`)
   }
 
   executeCaseCommand(productIdentifier: string, caseIdentifier: string, command: CaseCommand): Observable<void>{
@@ -151,7 +157,7 @@ export class PortfolioService {
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`, {})
   }
 
-  findAllCases(fetchRequest?: FetchRequest): Observable<Case[]>{
+  findAllCases(fetchRequest?: FetchRequest): Observable<Case[]> {
     let params: URLSearchParams = buildSearchParams(fetchRequest);
 
     let requestOptions: RequestOptionsArgs = {

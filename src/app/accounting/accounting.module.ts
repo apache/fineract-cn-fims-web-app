@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {AccountingRoutes} from './accounting.routing';
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -57,11 +57,33 @@ import {AccountCommandRouteEffects} from './store/account/task/effects/route.eff
 import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
 import {ChartOfAccountTableComponent} from './chartOfAccounts/chart-of-account-table.component';
 import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {
+  MdButtonModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CommonModule} from '@angular/common';
+import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     RouterModule.forChild(AccountingRoutes),
+    FimsSharedModule,
+    TranslateModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+    MdRadioModule,
+    MdCheckboxModule,
+    CovalentDataTableModule,
+    CovalentStepsModule,
+
     EffectsModule.run(LedgerApiEffects),
     EffectsModule.run(LedgerRouteEffects),
     EffectsModule.run(LedgerNotificationEffects),

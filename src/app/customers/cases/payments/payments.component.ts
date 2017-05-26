@@ -26,6 +26,7 @@ import {ITdDataTableColumn} from '@covalent/core';
 import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 import {ChargeName} from '../../../../services/portfolio/domain/individuallending/charge-name.model';
 import {FimsCase} from '../store/model/fims-case.model';
+import {todayAsISOString} from '../../../../services/domain/date.converter';
 
 interface CostComponents {
   [id: string]: CostComponent
@@ -45,7 +46,7 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
 
   private caseSubscription: Subscription;
 
-  startDate: string;
+  startDate: string = todayAsISOString();
 
   caseInstance: FimsCase;
 

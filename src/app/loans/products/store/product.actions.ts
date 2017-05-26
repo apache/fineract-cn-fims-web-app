@@ -24,6 +24,7 @@ import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
 } from '../../../../components/store/resource.reducer';
+import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 
 export const SEARCH = type('[Product] Search');
 export const SEARCH_COMPLETE = type('[Product] Search Complete');
@@ -129,7 +130,7 @@ export class EnableProductSuccessAction implements Action {
 export class EnableProductFailAction implements Action {
   readonly type = ENABLE_FAIL;
 
-  constructor(public payload: Error) { }
+  constructor(public payload: AccountAssignment[]) { }
 }
 
 export class ResetProductFormAction implements Action {

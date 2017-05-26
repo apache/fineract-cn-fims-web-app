@@ -5,13 +5,13 @@
   <p md-line *ngIf="paymentCycle.temporalUnit === 'WEEKS'">
     on {{getWeekDayOption(paymentCycle.alignmentDay).label}}
   </p>
-  <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting !== 'fixed'">
-    on the {{paymentCycle.alignmentDay +1}}. Day
+  <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting === 'fixed'">
+    on the {{paymentCycle.alignmentDay +1}}. day
   </p>
-  <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting !== 'relative'">
+  <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting === 'relative'">
     on the {{getAlignment(paymentCycle.alignmentWeek).label + ' ' + getWeekDayOption(paymentCycle.alignmentDay).label}}
   </p>
-  <p *ngIf="paymentCycle.temporalUnit === 'YEARS'">
+  <p md-line *ngIf="paymentCycle.temporalUnit === 'YEARS'">
     in {{getMonthOption(paymentCycle.alignmentMonth).label}}
   </p>
 </md-list-item>

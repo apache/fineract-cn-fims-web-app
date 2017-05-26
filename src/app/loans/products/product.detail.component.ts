@@ -16,12 +16,14 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormControl} from '@angular/forms';
 import {PortfolioStore} from './store/index';
 import {ENABLE, SelectAction} from './store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from './store';
+import * as fromRoot from '../../reducers';
 import {FimsProduct} from './store/model/fims-product.model';
+import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: './product.detail.component.html'
@@ -34,7 +36,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
 
   product: FimsProduct;
 
-  enabledControl: FormControl;
+  canEdit$: Observable<boolean>;
 
   constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore){}
 
@@ -43,25 +45,39 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
       .map(params => new SelectAction(params['productId']))
       .subscribe(this.portfolioStore);
 
-    this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
-      .subscribe(product => {
-        this.product = product;
+    const product$: Observable<FimsProduct> = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .filter(product => !!product);
 
-        this.enabledControl = new FormControl(product.enabled);
+    this.productSubscription = product$
+      .subscribe(product => this.product = product);
 
-        this.enabledControl.valueChanges
-          .debounceTime(500)
-          .subscribe(event => this.portfolioStore.dispatch({ type: ENABLE, payload: {
-            product: this.product,
-            enable: event
-          } }));
-      });
+    this.canEdit$ = Observable.combineLatest(
+      this.portfolioStore.select(fromRoot.getPermissions),
+      product$,
+      (permissions, product: FimsProduct) => ({
+        hasPermission: this.hasChangePermission(permissions),
+        isEnabled: product.enabled
+      }))
+      .map(result => result.hasPermission && !result.isEnabled);
   }
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
     this.productSubscription.unsubscribe();
+  }
+
+  enableProduct(): void {
+    this.portfolioStore.dispatch({ type: ENABLE, payload: {
+      product: this.product,
+      enable: true
+    } })
+  }
+
+  disableProduct(): void {
+    this.portfolioStore.dispatch({ type: ENABLE, payload: {
+      product: this.product,
+      enable: false
+    } })
   }
 
   get numberFormat(): string {
@@ -70,6 +86,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy{
       digits = this.product.minorCurrencyUnitDigits;
     }
     return `1.${digits}-${digits}`;
+  }
+
+  private hasChangePermission(permissions: FimsPermission[]): boolean {
+    return permissions.filter(permission =>
+        permission.id === 'portfolio_products' &&
+        permission.accessLevel === 'CHANGE'
+      ).length > 0
   }
 
 }

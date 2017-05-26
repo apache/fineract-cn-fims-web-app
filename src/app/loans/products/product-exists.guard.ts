@@ -49,7 +49,7 @@ export class ProductExistsGuard implements CanActivate {
 
   hasProductInApi(id: string): Observable<boolean> {
     const getProduct = this.portfolioService.getProduct(id)
-      //.mergeMap(product => this.mapProductEnabled(product))
+      .mergeMap(product => this.mapProductEnabled(product))
       .map(productEntity => new LoadAction({
         resource: mapToFimsProduct(productEntity)
       }))

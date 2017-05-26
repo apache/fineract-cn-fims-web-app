@@ -28,7 +28,6 @@ import {AccountingService} from '../services/accounting/accounting.service';
 import {PortfolioService} from '../services/portfolio/portfolio.service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {CovalentCoreModule} from '@covalent/core';
 import {PermittableGroupIdMapper} from '../services/security/authz/permittable-group-id-mapper';
 import {reducer} from './reducers';
 import {StoreModule} from '@ngrx/store';
@@ -48,7 +47,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExistsGuardService} from '../components/guards/exists-guard';
 import {CountryService} from '../services/country/country.service';
 import {CountrySearchApiEffects} from './reducers/country/service.effects';
-import {requestOptionsProvider} from '../services/http/default-request-options.service';
 import {ImageService} from '../services/image/image.service';
 
 export function HttpLoaderFactory(http: Http){
@@ -70,7 +68,6 @@ export function HttpLoaderFactory(http: Http){
         deps: [Http]
       }
     }),
-    CovalentCoreModule,
     appRoutes,
     StoreModule.provideStore(reducer),
 

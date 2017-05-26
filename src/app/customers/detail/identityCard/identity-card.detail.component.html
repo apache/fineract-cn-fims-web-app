@@ -23,7 +23,7 @@
 
 <fims-layout-card-over title="{{ 'Identification card' | translate }}">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
-    <button md-icon-button (click)="deleteIdentificationCard()" title="{{'Delete this identification card' | translate}}" *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE' }"><md-icon>delete</md-icon></button>
+    <button md-icon-button (click)="deleteIdentificationCard()" title="{{'Delete this identification card' | translate}}" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <div class="md-content" class="inset" flex>
     <md-list>
@@ -46,6 +46,6 @@
     </md-list>
   </div>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE' }">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
   <md-icon>mode_edit</md-icon>
 </a>

@@ -67,7 +67,7 @@
       <div layout="row">
         <md-radio-button layout-margin value="fixed"></md-radio-button>
         <md-select formControlName="alignmentDay" placeholder="{{'on the' | translate}}" layout-margin
-                   [disabled]="form.get('alignmentDaySetting').value !== 'fixed'">
+                   [disabled]="form.get('alignmentDaySetting').value === 'relative'">
           <md-option *ngFor="let alignment of monthDays" [value]="alignment.type">
             {{alignment.label}}
           </md-option>
@@ -78,13 +78,13 @@
         <ng-container>
           <md-radio-button layout-margin value="relative"></md-radio-button>
           <md-select formControlName="alignmentWeek" placeholder="{{'on the' | translate}}" layout-margin
-                     [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
+                     [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
             <md-option *ngFor="let alignment of alignments" [value]="alignment.type">
               {{alignment.label | translate}}
             </md-option>
           </md-select>
         </ng-container>
-        <md-select formControlName="alignmentDay" layout-margin [disabled]="form.get('alignmentDaySetting').value !== 'relative'">
+        <md-select formControlName="alignmentDay" layout-margin [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
           <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
             {{alignment.label | translate}}
           </md-option>

@@ -21,7 +21,7 @@ import {CustomerContactFormComponent} from './contact/contact.component';
 import {AddressFormComponent} from '../../../components/address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentCoreModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentStepsModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {TranslateModule} from '@ngx-translate/core';

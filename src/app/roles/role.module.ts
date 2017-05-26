@@ -16,13 +16,13 @@
 
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleComponent} from './role.component';
 import {RoleRoutes} from './role.routing';
 import {RoleFormComponent} from './form/form.component';
 import {CreateRoleFormComponent} from './form/create/create.form.component';
 import {EditRoleFormComponent} from './form/edit/edit.form.component';
-import {CommonModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../components/common.module';
 import {RoleExistsGuard} from './role-exists.guard';
 import {RolesStore, roleStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
@@ -33,12 +33,32 @@ import {RoleApiEffects} from './store/effects/service.effects';
 import {RoleDetailComponent} from './detail/role.detail.component';
 import {FormPermissionService} from './helper/form-permission.service';
 import {PermissionListItemComponent} from './components/permission-list-item.component';
+import {
+  MdButtonModule,
+  MdCheckboxModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdToolbarModule
+} from '@angular/material';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     RouterModule.forChild(RoleRoutes),
+    FimsSharedModule,
+    TranslateModule,
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
+    MdCheckboxModule,
+    MdIconModule,
+    MdListModule,
+    MdToolbarModule,
+    MdInputModule,
+    MdButtonModule,
+
     EffectsModule.run(RoleApiEffects),
     EffectsModule.run(RoleRouteEffects),
     EffectsModule.run(RoleNotificationEffects)

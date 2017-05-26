@@ -16,13 +16,13 @@
 
 import {ChronoUnit} from '../../services/portfolio/domain/chrono-unit.model';
 
-export interface TemporalOption{
+export interface TemporalOption {
   label: string;
   type: ChronoUnit
 }
 
 export const temporalOptionList: TemporalOption[] = [
-  { type: 'WEEKS', label: 'Weeks'},
-  { type: 'MONTHS', label: 'Months'},
-  { type: 'YEARS', label: 'Years'}
+  { type: 'WEEKS', label: 'weeks'},
+  { type: 'MONTHS', label: 'months'},
+  { type: 'YEARS', label: 'years'}
 ];

@@ -46,11 +46,7 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     productIdentifier: '',
     parameters: {
       customerIdentifier: '',
-      balanceRange: {
-        minimum: 0,
-        maximum: 0
-      },
-      initialBalance: 0,
+      maximumBalance: 0,
       paymentCycle: {
         alignmentDay: null,
         alignmentMonth: null,
