@@ -62,21 +62,6 @@
           </md-radio-button>
         </md-radio-group>
       </div>
-      <div layout="column">
-        <md-slide-toggle formControlName="multipleDispersals" translate>
-          {{'Multiple disbursals?' | translate}}
-        </md-slide-toggle>
-        <div layout="row">
-          <md-input-container layout-margin flex>
-            <input mdInput type="number" placeholder="{{'Maximum dispersal count' | translate}}" formControlName="dispersalCount" step="any" [disabled]="!detailForm.get('multipleDispersals').value"/>
-          </md-input-container>
-        </div>
-        <div layout="row">
-          <md-input-container layout-margin flex>
-            <input mdInput type="number" placeholder="{{'Maximum dispersal amount' | translate}}" formControlName="dispersalAmount" step="any" [disabled]="!detailForm.get('multipleDispersals').value"/>
-          </md-input-container>
-        </div>
-      </div>
     </form>
 
     <ng-template td-step-actions>

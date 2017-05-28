@@ -26,8 +26,14 @@ export class CaseRouteEffects {
   constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
-  createEmployeeSuccess$: Observable<Action> = this.actions$
+  createCaseSuccess$: Observable<Action> = this.actions$
     .ofType(caseActions.CREATE_SUCCESS, caseActions.UPDATE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} ));
+
+  @Effect({ dispatch: false })
+  executeCommandSuccess$: Observable<Action> = this.actions$
+    .ofType(caseActions.EXECUTE_COMMAND_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} ));
 

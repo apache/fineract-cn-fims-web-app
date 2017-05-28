@@ -20,8 +20,7 @@ import {PaymentCycle} from '../payment-cycle.model';
 
 export interface CaseParameters{
   customerIdentifier: string;
-  initialBalance: number;
   termRange: TermRange;
-  balanceRange: BalanceRange;
+  maximumBalance: number;
   paymentCycle: PaymentCycle;
 }

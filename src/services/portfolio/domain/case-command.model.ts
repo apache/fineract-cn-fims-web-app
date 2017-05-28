@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface CaseCommand{
+export interface CaseCommand {
   action: string;
   parameters?: string;
   comment?: string;

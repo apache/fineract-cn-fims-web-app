@@ -87,4 +87,14 @@ export class CaseApiEffects {
         .catch((error) => of(new caseActions.LoadProductFailAction(error)))
     );
 
+  @Effect()
+  executeCommand$: Observable<Action> = this.actions$
+    .ofType(caseActions.EXECUTE_COMMAND)
+    .map((action: caseActions.ExecuteCommandAction) => action.payload)
+    .mergeMap(payload =>
+      this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.command)
+        .map(() => new caseActions.ExecuteCommandSuccessAction(payload))
+        .catch((error) => of(new caseActions.ExecuteCommandFailAction(error)))
+    );
+
 }

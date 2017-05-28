@@ -68,7 +68,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       alignmentDay: [formData.paymentAlignmentDay],
       alignmentWeek: [formData.paymentAlignmentWeek],
       alignmentMonth: [formData.paymentAlignmentMonth],
-      alignmentDaySetting: [formData.paymentAlignmentWeek !== null ? 'relative' : 'fixed'],
+      alignmentDaySetting: [formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
     });
   }
 
@@ -117,7 +117,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   }
 
   get formData(): DetailFormData {
-    let formData: DetailFormData = {
+    const isRelative: boolean = this.form.get('alignmentDaySetting').value === 'relative';
+
+    const formData: DetailFormData = {
       identifier: this.form.get('identifier').value,
       principalAmount: this.form.get('principalAmount').value,
       term: this.form.get('term').value,
@@ -125,8 +127,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       paymentTemporalUnit: this.form.get('paymentTemporalUnit').value,
       paymentPeriod: this.form.get('paymentPeriod').value,
       paymentAlignmentDay: this.form.get('alignmentDay').value,
-      paymentAlignmentWeek: this.form.get('alignmentWeek').value,
-      paymentAlignmentMonth: this.form.get('alignmentMonth').value
+      paymentAlignmentWeek: isRelative ? this.form.get('alignmentWeek').value : undefined,
+      paymentAlignmentMonth: isRelative ? this.form.get('alignmentMonth').value : undefined
     };
     return formData;
   }

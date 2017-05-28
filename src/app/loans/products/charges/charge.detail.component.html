@@ -52,3 +52,7 @@
     </div>
   </div>
 </fims-layout-card-over>
+
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit charge' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
+  <md-icon>edit_mode</md-icon>
+</a>

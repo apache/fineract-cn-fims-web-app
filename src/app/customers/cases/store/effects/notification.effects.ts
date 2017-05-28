@@ -33,4 +33,11 @@ export class CaseNotificationEffects {
       message: 'Case is going to be saved'
     }));
 
+  @Effect({ dispatch: false })
+  executeCommandSuccess$: Observable<Action> = this.actions$
+    .ofType(caseActions.EXECUTE_COMMAND_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Case is going to be updated'
+    }));
 }

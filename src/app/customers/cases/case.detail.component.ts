@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Case} from '../../../services/portfolio/domain/case.model';
-import {CasesStore} from './store/index';
 import * as fromCases from './store/index';
+import * as fromRoot from '../../reducers';
+import {CasesStore} from './store/index';
 import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';
 import {FimsCase} from './store/model/fims-case.model';
-import {monthOptions} from '../../../components/domain/months.model';
-import {weekDayOptions} from '../../../components/domain/week-days.model';
-import {alignmentOptions} from '../../../components/domain/alignment.model';
-import {temporalOptionList} from '../../../components/domain/temporal.domain';
-import {ChronoUnit} from '../../../services/portfolio/domain/chrono-unit.model';
+import {Observable} from 'rxjs/Observable';
+import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './case.detail.component.html'
@@ -39,6 +36,8 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
 
   caseInstance: FimsCase;
 
+  canEdit$: Observable<boolean>;
+
   constructor(private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
@@ -46,8 +45,26 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
       .map(params => new SelectAction(params['caseId']))
       .subscribe(this.casesStore);
 
-    this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
+    const case$: Observable<FimsCase> = this.casesStore.select(fromCases.getSelectedCase);
+
+    this.caseSubscription = case$
       .subscribe(caseInstance => this.caseInstance = caseInstance);
+
+    this.canEdit$ = Observable.combineLatest(
+      this.casesStore.select(fromRoot.getPermissions),
+      case$,
+      (permissions, caseInstance: FimsCase) => ({
+        hasPermission: this.hasChangePermission(permissions),
+        isCreatedOrPending: caseInstance.currentState === 'PENDING' || caseInstance.currentState === 'CREATED'
+      }))
+      .map(result => result.hasPermission && result.isCreatedOrPending);
+  }
+
+  private hasChangePermission(permissions: FimsPermission[]): boolean {
+    return permissions.filter(permission =>
+        permission.id === 'portfolio_cases' &&
+        permission.accessLevel === 'CHANGE'
+      ).length > 0
   }
 
   ngOnDestroy(): void {
@@ -56,10 +73,6 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
   }
 
   disburse(): void{
-    // TODO: Implement when API available
-  }
-
-  repay(): void{
     // TODO: Implement when API available
   }
 

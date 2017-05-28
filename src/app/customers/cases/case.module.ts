@@ -40,10 +40,15 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule, MdSelectModule,
+  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
+  MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentCommonModule, CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
+import {
+  CovalentCommonModule, CovalentDataTableModule, CovalentMessageModule,
+  CovalentStepsModule
+} from '@covalent/core';
+import {CaseStatusComponent} from './status/status.component';
 
 @NgModule({
   imports: [
@@ -60,9 +65,11 @@ import {CovalentCommonModule, CovalentDataTableModule, CovalentStepsModule} from
     MdOptionModule,
     MdSelectModule,
     MdRadioModule,
+    MdCardModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentDataTableModule,
+    CovalentMessageModule,
 
     EffectsModule.run(CaseApiEffects),
     EffectsModule.run(CaseRouteEffects),
@@ -80,7 +87,8 @@ import {CovalentCommonModule, CovalentDataTableModule, CovalentStepsModule} from
     CaseDetailComponent,
     CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
-    CaseTasksComponent
+    CaseTasksComponent,
+    CaseStatusComponent
   ],
   providers: [
     CaseExistsGuard,
