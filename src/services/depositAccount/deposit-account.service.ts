@@ -20,8 +20,8 @@ import {Observable} from 'rxjs/Observable';
 import {ProductDefinition} from './domain/definition/product-definition.model';
 import {ProductDefinitionCommand} from './domain/definition/product-definition-command.model';
 import {ProductInstance} from './domain/instance/product-instance.model';
-import {RequestOptionsArgs} from '@angular/http';
-import {StateChange} from './domain/instance/state-change.model';
+import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
+import {Action} from './domain/definition/action.model';
 
 @Injectable()
 export class DepositAccountService {
@@ -49,23 +49,19 @@ export class DepositAccountService {
   }
 
   fetchProductInstances(customerIdentifier: string, productIdentifier?: string): Observable<ProductInstance[]> {
-    const params = new URLSearchParams();
+    let params = new URLSearchParams();
 
     params.append('customer', customerIdentifier);
     params.append('product', productIdentifier);
 
-    const requestOptions: RequestOptionsArgs = {
-      params
+    let requestOptions: RequestOptionsArgs = {
+      search: params
     };
 
     return this.http.get(`${this.baseUrl}/instances`, requestOptions);
   }
 
-  findProductInstance(identifier: string): Observable<ProductInstance> {
-    return this.http.get(`${this.baseUrl}/instances/${identifier}`);
-  }
-
-  changeState(identifier: string, stateChange: StateChange): Observable<void> {
-    return this.http.post(`${this.baseUrl}/instances/${identifier}/states`, stateChange);
+  fetchActions(): Observable<Action[]> {
+    return this.http.get(`${this.baseUrl}/actions`);
   }
 }

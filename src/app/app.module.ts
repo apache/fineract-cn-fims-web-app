@@ -49,6 +49,7 @@ import {CountryService} from '../services/country/country.service';
 import {CountrySearchApiEffects} from './reducers/country/service.effects';
 import {ImageService} from '../services/image/image.service';
 import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
+import {CurrencyService} from '../services/currency/currency.service';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -103,6 +104,7 @@ export function HttpLoaderFactory(http: Http){
     PortfolioService,
     DepositAccountService,
     CountryService,
+    CurrencyService,
     NotificationService,
     ExistsGuardService,
     ...appRoutingProviders,

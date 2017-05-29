@@ -16,7 +16,38 @@
 
 import {Routes} from '@angular/router';
 import {DepositProductComponent} from './deposit-account.component';
+import {DepositProductCreateComponent} from './form/create.component';
+import {DepositProductDetailComponent} from './detail/deposit-product.detail.component';
+import {ProductDefinitionExistsGuard} from './product-definition-exists.guard';
+import {DepositProductStatusComponent} from './detail/status/status.component';
+import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
 
 export const DepositAccountRoutes: Routes = [
-  { path: '', component: DepositProductComponent },
+  {
+    path: '',
+    component: DepositProductComponent,
+    data: { hasPermission: { id: 'deposit_definitions', accessLevel: 'READ' } },
+  },
+  {
+    path: 'create',
+    component: DepositProductCreateComponent,
+    data: { hasPermission: { id: 'deposit_definitions', accessLevel: 'CHANGE' } },
+  },
+  {
+    path: 'detail/:id',
+    component: DepositProductIndexComponent,
+    canActivate: [ProductDefinitionExistsGuard],
+    data: { hasPermission: { id: 'deposit_definitions', accessLevel: 'READ' } },
+    children: [
+      {
+        path: '',
+        component: DepositProductDetailComponent
+      },
+      {
+        path: 'tasks',
+        component: DepositProductStatusComponent,
+        data: { hasPermission: { id: 'deposit_definitions', accessLevel: 'CHANGE' } },
+      }
+    ]
+  }
 ];

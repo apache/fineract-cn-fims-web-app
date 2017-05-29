@@ -38,7 +38,7 @@
     "target": "http://localhost:2025",
     "secure": false,
     "pathRewrite": {
-      "^/api/portfolio": "/deposit"
+      "^/api/deposit": "/deposit"
     }
   }
 }

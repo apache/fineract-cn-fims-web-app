@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+export type Action = 'ACTIVATE' | 'DEACTIVATE';
+
 export interface ProductDefinitionCommand {
-  action: string;
+  action: Action;
   note?: string;
   createdBy?: string;
   createdOn?: string;

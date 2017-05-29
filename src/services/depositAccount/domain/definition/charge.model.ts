@@ -15,10 +15,10 @@
  */
 
 export interface Charge {
-  identifier: string;
   actionIdentifier: string;
+  incomeAccountIdentifier: string;
   name: string;
-  description: string;
-  proportional: boolean;
-  amount: number;
+  description?: string;
+  proportional?: boolean;
+  amount?: number;
 }

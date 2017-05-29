@@ -32,4 +32,10 @@ export class DepositProductDefinitionRouteEffects {
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
+  @Effect({ dispatch: false })
+  executeCommandSuccess$: Observable<Action> = this.actions$
+    .ofType(definitionActions.EXECUTE_COMMAND_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
 }

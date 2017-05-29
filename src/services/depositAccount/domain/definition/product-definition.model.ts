@@ -27,10 +27,11 @@ export interface ProductDefinition {
   description?: string;
   currency: Currency;
   minimumBalance: number;
+  equityLedgerIdentifier?: string;
+  expenseAccountIdentifier: string;
   interest?: number;
   term: Term;
   charges: Charge[];
-  actions: Action[];
   flexible: boolean;
-  active: boolean;
+  active?: boolean;
 }

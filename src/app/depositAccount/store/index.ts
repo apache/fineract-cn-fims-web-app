@@ -1,11 +1,3 @@
-import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
-import {
-  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
-  getResourceSelectedId,
-  ResourceState
-} from '../../../components/store/resource.reducer';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -22,7 +14,17 @@ import {
  * limitations under the License.
  */
 
+import {ActionReducer, Store} from '@ngrx/store';
+import {createReducer} from '../../reducers/index';
+import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+import {
+  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
+  getResourceSelectedId,
+  ResourceState
+} from '../../../components/store/resource.reducer';
+
 import * as fromRoot from '../../reducers';
+import * as fromProducts from './products.reducer';
 import {createSelector} from 'reselect';
 import {
   createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
@@ -30,15 +32,15 @@ import {
 } from '../../../components/store/search.reducer';
 
 export interface State extends fromRoot.State{
-  products: ResourceState;
-  productForm: FormState;
-  productSearch: SearchState;
+  depositProducts: ResourceState;
+  depositProductForm: FormState;
+  depositProductSearch: SearchState;
 }
 
 const reducers = {
-  products: createResourceReducer('Deposit Product Definition'),
-  productForm: createFormReducer('Deposit Product Definition'),
-  productSearch: createSearchReducer('Deposit Product Definition'),
+  depositProducts: createResourceReducer('Deposit Product Definition', fromProducts.reducer),
+  depositProductForm: createFormReducer('Deposit Product Definition'),
+  depositProductSearch: createSearchReducer('Deposit Product Definition'),
 };
 
 export const depositAccountModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -50,21 +52,18 @@ export function depositAccountStoreFactory(appStore: Store<fromRoot.State>){
   return appStore;
 }
 
-export const getProductsState = (state: State) => state.products;
+export const getProductsState = (state: State) => state.depositProducts;
 
-export const getProductFormState = (state: State) => state.productForm;
+export const getProductFormState = (state: State) => state.depositProductForm;
 export const getProductFormError = createSelector(getProductFormState, getFormError);
 
-export const getProductEntities = createSelector(getProductsState, getResourceEntities);
 export const getProductsLoadedAt = createSelector(getProductsState, getResourceLoadedAt);
-export const getProductIds = createSelector(getProductsState, getResourceIds);
-export const getSelectedProductId = createSelector(getProductsState, getResourceSelectedId);
 export const getSelectedProduct = createSelector(getProductsState, getResourceSelected);
 
 /**
  * Product search selector
  */
-export const getProductSearchState = (state: State) => state.productSearch;
+export const getProductSearchState = (state: State) => state.depositProductSearch;
 
 export const getSearchProducts = createSelector(getProductSearchState, getSearchEntities);
 export const getProductSearchTotalElements = createSelector(getProductSearchState, getSearchTotalElements);

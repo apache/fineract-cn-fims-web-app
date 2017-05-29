@@ -20,17 +20,27 @@ import {DepositProductDefinitionNotificationEffects} from './store/effects/notif
 import {DepositProductDefinitionRouteEffects} from './store/effects/route.effects';
 import {DepositProductDefinitionApiEffects} from './store/effects/service.effects';
 import {EffectsModule} from '@ngrx/effects';
-import {CovalentStepsModule} from '@covalent/core';
-import {MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdToolbarModule} from '@angular/material';
+import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
+import {
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
+  MdSelectModule,
+  MdToolbarModule
+} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {FimsSharedModule} from '../../components/common.module';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DepositAccountRoutes} from './deposit-account.routes';
 import {ProductDefinitionExistsGuard} from './product-definition-exists.guard';
 import {DepositProductComponent} from './deposit-account.component';
+import {DepositProductCreateComponent} from './form/create.component';
+import {DepositProductFormComponent} from './form/form.component';
+import {DepositProductChargesFormComponent} from './form/charges/charges.component';
+import {DepositProductDetailComponent} from './detail/deposit-product.detail.component';
+import {DepositProductStatusComponent} from './detail/status/status.component';
+import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
 
 @NgModule({
   imports: [
@@ -38,21 +48,33 @@ import {DepositProductComponent} from './deposit-account.component';
     FimsSharedModule,
     TranslateModule,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
+    MdCardModule,
     MdIconModule,
     MdListModule,
     MdToolbarModule,
     MdInputModule,
     MdButtonModule,
+    MdSelectModule,
+    MdRadioModule,
+    MdCheckboxModule,
 
     CovalentStepsModule,
+    CovalentMessageModule,
 
     EffectsModule.run(DepositProductDefinitionApiEffects),
     EffectsModule.run(DepositProductDefinitionRouteEffects),
     EffectsModule.run(DepositProductDefinitionNotificationEffects)
   ],
   declarations: [
-    DepositProductComponent
+    DepositProductComponent,
+    DepositProductCreateComponent,
+    DepositProductFormComponent,
+    DepositProductChargesFormComponent,
+    DepositProductIndexComponent,
+    DepositProductDetailComponent,
+    DepositProductStatusComponent
   ],
   providers: [
     ProductDefinitionExistsGuard,

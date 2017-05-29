@@ -31,7 +31,14 @@ export class DepositProductDefinitionNotificationEffects {
     .ofType(definitionActions.CREATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Product definition is going to be saved'
+      message: 'Product is going to be saved'
     }));
 
+  @Effect({dispatch: false})
+  executeCommandSuccess$: Observable<Action> = this.actions$
+    .ofType(definitionActions.EXECUTE_COMMAND_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Product is going to be updated'
+    }));
 }

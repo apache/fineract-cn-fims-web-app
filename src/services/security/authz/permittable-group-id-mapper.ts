@@ -22,6 +22,7 @@ import {AccountingPermittableGroupIds} from '../../accounting/domain/permittable
 import {PortfolioPermittableGroupIds} from '../../portfolio/domain/permittable-group-ids';
 import {PermissionId} from './permission-id.type';
 import {Injectable} from '@angular/core';
+import {DepositAccountPermittableGroupIds} from '../../depositAccount/domain/permittable-group-ids';
 
 interface PermittableGroupMap {
   [s: string]: FimsPermissionDescriptor;
@@ -57,6 +58,10 @@ export class PermittableGroupIdMapper {
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_OPERATIONS_MANAGEMENT] = { id: 'portfolio_product_operations', label: 'Loan product operations' };
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_MANAGEMENT] = { id: 'portfolio_products', label: 'Loan products' };
     this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = { id: 'portfolio_cases', label: 'Customer loans' };
+
+    this._permittableGroupMap[DepositAccountPermittableGroupIds.DEFINITION_MANAGEMENT] = { id: 'deposit_definitions', label: 'Deposit account management' };
+    this._permittableGroupMap[DepositAccountPermittableGroupIds.INSTANCE_MANAGEMENT] = { id: 'deposit_instances', label: 'Deposit account for customers' };
+
   }
 
   public map(permittableGroupId: string): FimsPermissionDescriptor {

@@ -1,0 +1,139 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="formGroup.valid ? 'complete' : formGroup.pristine ? 'none' : 'required'">
+    <form [formGroup]="formGroup" layout="column">
+      <div layout="row">
+        <md-radio-group formControlName="type">
+          <md-radio-button *ngFor="let basis of typeOptions" [value]="basis.type" layout-margin>
+            {{basis.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <div layout="row">
+        <fims-id-input placeholder="Product code" [form]="formGroup" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-error *ngIf="formGroup.get('name').hasError('required')" translate>
+            Required
+          </md-error>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <textarea mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description"></textarea>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
+          <md-option *ngFor="let currency of currencies" [value]="currency.code">
+            {{currency.code}}
+          </md-option>
+        </md-select>
+        <md-select formControlName="currencyScale" layout-margin placeholder="{{ 'Currency digits' | translate }}">
+          <md-option *ngFor="let digit of [0,1,2,3,4,5]" [value]="digit">
+            {{digit}}
+          </md-option>
+        </md-select>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="number" placeholder="{{'Minimum balance' | translate}}" formControlName="minimumBalance"/>
+          <md-error *ngIf="formGroup.get('minimumBalance').hasError('required')" translate>
+            Required
+          </md-error>
+          <md-error *ngIf="formGroup.get('minimumBalance').getError('minValue')">
+            {{ 'Value must be greater than' | translate:{ value: formGroup.get('minimumBalance').getError('minValue').value} }}
+          </md-error>
+        </md-input-container>
+      </div>
+      <div layout="column">
+        Interest payable:
+        <md-radio-group formControlName="termInterestPayable">
+          <md-radio-button *ngFor="let basis of interestPayableOptions" [value]="basis.type" layout-margin>
+            {{basis.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin>
+          <input mdInput type="number" placeholder="{{'Interest' | translate}}" formControlName="interest" step="any"/>
+          <md-error *ngIf="formGroup.get('interest').hasError('required')" translate>
+            Required
+          </md-error>
+          <md-error *ngIf="formGroup.get('interest').getError('minValue')">
+            {{ 'Value must be greater than' | translate:{ value: formGroup.get('interest').getError('minValue').value} }}
+          </md-error>
+        </md-input-container>
+      </div>
+      <div layout="row" layout-margin>
+        <md-checkbox formControlName="flexible" translate>Flexible interest during the term?</md-checkbox>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin>
+          <input mdInput type="number" placeholder="{{'Term period' | translate}}" formControlName="termPeriod" step="any"/>
+          <md-error *ngIf="formGroup.get('termPeriod').getError('minValue')">
+            {{ 'Value must be greater than' | translate:{ value: formGroup.get('termPeriod').getError('minValue').value} }}
+          </md-error>
+        </md-input-container>
+        <md-radio-group formControlName="termTimeUnit">
+          <md-radio-button *ngFor="let basis of timeUnitOptions" [value]="basis.type" layout-margin>
+            {{basis.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <fims-account-select title="{{'Expense account' | translate}}" formControlName="expenseAccountIdentifier">
+        <ng-container *ngIf="!formGroup.get('expenseAccountIdentifier').pristine && formGroup.get('expenseAccountIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="formGroup.get('expenseAccountIdentifier').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+      <fims-ledger-select title="{{'Equity ledger' | translate}}" formControlName="equityLedgerIdentifier">
+        <ng-container *ngIf="!formGroup.get('equityLedgerIdentifier').pristine && formGroup.get('equityLedgerIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="formGroup.get('equityLedgerIdentifier').hasError('invalidLedger')" translate>
+          Invalid ledger
+        </ng-container>
+      </fims-ledger-select>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-continue-action (onContinue)="chargesStep.open()"></fims-form-continue-action>
+    </ng-template>
+  </td-step>
+
+  <td-step #chargesStep label="{{'Charges' | translate}}" [state]="chargesForm.valid ? 'complete' : chargesForm.pristine ? 'none' : 'required'">
+    <fims-deposit-product-charges-form #chargesForm [actions]="actions" [formData]="charges"></fims-deposit-product-charges-form>
+  </td-step>
+
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <fims-form-final-action
+        [resourceName]="'PRODUCT'"
+        [editMode]="editMode"
+        [disabled]="!isValid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

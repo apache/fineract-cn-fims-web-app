@@ -19,5 +19,6 @@ import {State} from './state.model';
 export interface ProductInstance {
   customerIdentifier: string;
   productIdentifier: string;
-  state: State;
+  accountIdentifier?: string;
+  state?: State;
 }

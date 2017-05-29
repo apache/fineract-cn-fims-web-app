@@ -61,6 +61,6 @@ export class ProductDefinitionExistsGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.hasProduct(route.params['identifier']);
+    return this.hasProduct(route.params['id']);
   }
 }

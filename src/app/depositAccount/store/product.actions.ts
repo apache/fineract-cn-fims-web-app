@@ -23,6 +23,7 @@ import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload
 } from '../../../components/store/resource.reducer';
+import {ProductDefinitionCommand} from '../../../services/depositAccount/domain/definition/product-definition-command.model';
 
 export const SEARCH = type('[Deposit Product Definition] Search');
 export const SEARCH_COMPLETE = type('[Deposit Product Definition] Search Complete');
@@ -36,8 +37,17 @@ export const CREATE_FAIL = type('[Deposit Product Definition] Create Fail');
 
 export const RESET_FORM = type('[Deposit Product Definition] Reset Form');
 
+export const EXECUTE_COMMAND = type('[Deposit Product Definition] Execute Command');
+export const EXECUTE_COMMAND_SUCCESS = type('[Deposit Product Definition] Execute Command Success');
+export const EXECUTE_COMMAND_FAIL = type('[Deposit Product Definition] Execute Command Fail');
+
 export interface ProductDefinitionRoutePayload extends RoutePayload {
   productDefinition: ProductDefinition
+}
+
+export interface ExecuteCommandPayload extends RoutePayload {
+  definitionId: string;
+  command: ProductDefinitionCommand;
 }
 
 export class SearchAction implements Action {
@@ -82,6 +92,24 @@ export class CreateProductDefinitionFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class ExecuteCommandAction implements Action {
+  readonly type = EXECUTE_COMMAND;
+
+  constructor(public payload: ExecuteCommandPayload) { }
+}
+
+export class ExecuteCommandSuccessAction implements Action {
+  readonly type = EXECUTE_COMMAND_SUCCESS;
+
+  constructor(public payload: ExecuteCommandPayload) { }
+}
+
+export class ExecuteCommandFailAction implements Action {
+  readonly type = EXECUTE_COMMAND_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export type Actions
   = SearchAction
   | SearchCompleteAction
@@ -89,4 +117,7 @@ export type Actions
   | SelectAction
   | CreateProductDefinitionAction
   | CreateProductDefinitionSuccessAction
-  | CreateProductDefinitionFailAction;
+  | CreateProductDefinitionFailAction
+  | ExecuteCommandAction
+  | ExecuteCommandSuccessAction
+  | ExecuteCommandFailAction;

@@ -58,4 +58,13 @@ export class DepositProductDefinitionApiEffects {
         .catch((error) => of(new definitionActions.CreateProductDefinitionFailAction(error)))
     );
 
+  @Effect()
+  executeCommand$: Observable<Action> = this.actions$
+    .ofType(definitionActions.EXECUTE_COMMAND)
+    .map((action: definitionActions.ExecuteCommandAction) => action.payload)
+    .mergeMap(payload =>
+      this.depositService.processCommand(payload.definitionId, payload.command)
+        .map(() => new definitionActions.ExecuteCommandSuccessAction(payload))
+        .catch((error) => of(new definitionActions.ExecuteCommandFailAction(error)))
+    );
 }

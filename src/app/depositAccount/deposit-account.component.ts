@@ -33,7 +33,10 @@ export class DepositProductComponent implements OnInit{
 
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
-    { name: 'name', label: 'Name' }
+    { name: 'name', label: 'Name' },
+    { name: 'type', label: 'Type' },
+    { name: 'active', label: 'Active'},
+    { name: 'interest', label: 'Interest'}
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore) {}
