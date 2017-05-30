@@ -33,6 +33,7 @@ export const MainRoutes: Routes = [
       { path: 'customers', loadChildren: './../customers/customer.module#CustomerModule' },
       { path: 'accounting', loadChildren: './../accounting/accounting.module#AccountingModule' },
       { path: 'loans', loadChildren: './../loans/products/product.module#ProductModule' },
+      { path: 'deposits', loadChildren: './../depositAccount/deposit-account.module#DepositAccountModule' },
       { path: 'denied', component: AccessDeniedComponent, data: { title: "Not allowed" } }
     ]
   },

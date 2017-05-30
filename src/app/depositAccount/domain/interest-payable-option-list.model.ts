@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-/**
- * List of supported permission ids for fims
- */
-export type PermissionId = 'identity_self' | 'identity_identities' | 'identity_roles' |
-  'office_self' | 'office_offices' | 'office_employees' |
-  'customer_customers' | 'customer_tasks' | 'catalog_catalogs' | 'customer_identifications' | 'customer_portrait' |
-  'accounting_accounts' | 'accounting_ledgers' | 'accounting_journals' |
-  'portfolio_product_operations' | 'portfolio_products' | 'portfolio_cases' |
-  'deposit_definitions' | 'deposit_instances';
+import {InterestPayable} from '../../../services/depositAccount/domain/interest-payable.model';
+
+export interface InterestPayableOption {
+  label: string;
+  type: InterestPayable
+}
+
+export const interestPayableOptionList: InterestPayableOption[] = [
+  { type: 'MATURITY', label: 'Maturity'},
+  { type: 'ANNUALLY', label: 'Annually'},
+  { type: 'MONTHLY', label: 'Monthly'}
+];

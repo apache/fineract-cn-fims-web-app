@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-/**
- * List of supported permission ids for fims
- */
-export type PermissionId = 'identity_self' | 'identity_identities' | 'identity_roles' |
-  'office_self' | 'office_offices' | 'office_employees' |
-  'customer_customers' | 'customer_tasks' | 'catalog_catalogs' | 'customer_identifications' | 'customer_portrait' |
-  'accounting_accounts' | 'accounting_ledgers' | 'accounting_journals' |
-  'portfolio_product_operations' | 'portfolio_products' | 'portfolio_cases' |
-  'deposit_definitions' | 'deposit_instances';
+import {Type} from '../type.model';
+import {Currency} from './currency.model';
+import {Charge} from './charge.model';
+import {Action} from './action.model';
+import {Term} from './term.model';
+
+export interface ProductDefinition {
+  type: Type;
+  identifier: string;
+  name: string;
+  description?: string;
+  currency: Currency;
+  minimumBalance: number;
+  equityLedgerIdentifier?: string;
+  expenseAccountIdentifier: string;
+  interest?: number;
+  term: Term;
+  charges: Charge[];
+  flexible: boolean;
+  active?: boolean;
+}

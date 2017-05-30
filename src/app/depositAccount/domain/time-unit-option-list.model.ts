@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * List of supported permission ids for fims
- */
-export type PermissionId = 'identity_self' | 'identity_identities' | 'identity_roles' |
-  'office_self' | 'office_offices' | 'office_employees' |
-  'customer_customers' | 'customer_tasks' | 'catalog_catalogs' | 'customer_identifications' | 'customer_portrait' |
-  'accounting_accounts' | 'accounting_ledgers' | 'accounting_journals' |
-  'portfolio_product_operations' | 'portfolio_products' | 'portfolio_cases' |
-  'deposit_definitions' | 'deposit_instances';
+import {TimeUnit} from '../../../services/depositAccount/domain/time-unit.model';
+
+export interface TimeUnitOption {
+  label: string;
+  type: TimeUnit
+}
+
+export const timeUnitOptionList: TimeUnitOption[] = [
+  { type: 'MONTH', label: 'Month'},
+  { type: 'YEAR', label: 'Year'},
+];

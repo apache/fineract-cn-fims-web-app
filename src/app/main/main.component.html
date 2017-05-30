@@ -94,6 +94,13 @@
           <p md-line translate>Manage loan products</p>
         </a>
       </ng-container>
+      <ng-container *hasPermission="{ id: 'deposit_definitions', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/deposits']" routerLinkActive="active">
+          <md-icon md-list-avatar>attach_money</md-icon>
+          <h3 md-line translate>Deposit</h3>
+          <p md-line translate>Account management</p>
+        </a>
+      </ng-container>
     </md-nav-list>
   </md-sidenav>
   <div layout="column" layout-fill class="md-content content">

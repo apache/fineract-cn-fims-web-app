@@ -1,0 +1,33 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go back to deposit product' | translate}}" [routerLink]="['../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Deposit product' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over title="{{'Tasks' | translate}}">
+  <div layout="column" flex="100">
+    <div layout="row" layout-align="start center" *ngFor="let command of statusCommands" layout-margin>
+      <md-input-container flex>
+        <textarea mdInput placeholder="{{'Enter your comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
+      </md-input-container>
+      <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
+    </div>
+  </div>
+</fims-layout-card-over>

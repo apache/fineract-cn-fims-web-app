@@ -122,6 +122,7 @@ export const CustomerRoutes: Routes = [
         ]
       },
       {path: 'loans', loadChildren: './cases/case.module#CaseModule'},
+      {path: 'deposits', loadChildren: './deposits/deposits.module#DepositsModule'},
     ]
   }
 ];

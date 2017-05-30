@@ -1,0 +1,22 @@
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Assign product' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+    <form [formGroup]="detailForm" layout="column">
+      <div layout="row">
+        <md-select formControlName="productIdentifier" layout-margin placeholder="{{ 'Select product' | translate }}">
+          <md-option *ngFor="let definition of productDefinitions" [value]="definition.identifier">
+            {{definition.name}}
+          </md-option>
+        </md-select>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'DEPOSIT ACCOUNT'"
+        [editMode]="editMode"
+        [disabled]="!isValid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

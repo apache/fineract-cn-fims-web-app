@@ -1,0 +1,88 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Deposit products' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over [title]="definition.name" [subTitle]="definition.description">
+  <td-message *ngIf="!definition.active" label="{{'Product not enabled' | translate }}"
+              sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}"
+              color="warn" icon="error">
+    <button td-message-actions md-button (click)="goToTasks()"
+            *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>GO TO TASKS
+    </button>
+  </td-message>
+  <td-message *ngIf="definition.active" label="{{'Product enabled' | translate }}"
+              sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
+  </td-message>
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <div layout-gt-md="row">
+          <div flex-gt-md="30">
+            <md-nav-list>
+              <h3 md-subheader translate>Management</h3>
+              <a md-list-item [routerLink]="['./tasks']"
+                 *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
+                <md-icon md-list-avatar>playlist_add_check</md-icon>
+                <h3 md-line translate>Tasks</h3>
+                <p md-line translate>Change the status of this deposit product</p>
+              </a>
+            </md-nav-list>
+          </div>
+          <div flex-gt-md="70">
+            <div layout="row">
+              <md-list dense>
+                <md-list-item>
+                  <h3 md-line translate>Type</h3>
+                  <p md-line>{{definition.type}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Term</h3>
+                  <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Interest payable</h3>
+                  <p md-line>{{definition.term?.interestPayable}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Minimum balance</h3>
+                  <p md-line>{{definition.minimumBalance}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Interest</h3>
+                  <p md-line>{{definition.interest}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Currency</h3>
+                  <p md-line>{{definition.currency.code}}</p>
+                </md-list-item>
+              </md-list>
+            </div>
+            <div layout="column">
+              <h4>Charges</h4>
+              <fims-data-table flex [data]="charges" [columns]="columns" [selectable]="false" [actionColumn]="false"></fims-data-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fims-layout-card-over>
