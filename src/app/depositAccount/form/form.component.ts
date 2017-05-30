@@ -26,6 +26,9 @@ import {Charge} from '../../../services/depositAccount/domain/definition/charge.
 import {Currency} from '../../../services/currency/domain/currency.model';
 import {Action} from '../../../services/depositAccount/domain/definition/action.model';
 import {typeOptionList} from '../domain/type-option-list.model';
+import {accountExists} from '../../../components/validator/account-exists.validator';
+import {AccountingService} from '../../../services/accounting/accounting.service';
+import {ledgerExists} from '../../../components/validator/ledger-exists.validator';
 
 @Component({
   selector: 'fims-deposit-product-form',
@@ -60,7 +63,7 @@ export class DepositProductFormComponent implements OnInit {
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
 
   ngOnInit(): void {
     this.step.open();
@@ -75,14 +78,14 @@ export class DepositProductFormComponent implements OnInit {
       description: [definition.description],
       currencyCode: [definition.currency.code, [Validators.required]],
       currencyScale: [definition.currency.scale, [Validators.required, FimsValidators.minValue(0)]],
-      minimumBalance: [definition.minimumBalance, [Validators.required, FimsValidators.minValue(0)]],
+      minimumBalance: [definition.minimumBalance, [Validators.required]],
       interest: [definition.interest, [Validators.required, FimsValidators.minValue(0)]],
       flexible: [definition.flexible, [Validators.required]],
       termPeriod: [definition.term.period, [Validators.required, FimsValidators.minValue(1)]],
       termTimeUnit: [definition.term.timeUnit, [Validators.required]],
       termInterestPayable: [definition.term.interestPayable, [Validators.required]],
-      expenseAccountIdentifier: [definition.expenseAccountIdentifier, [Validators.required]],
-      equityLedgerIdentifier: [definition.equityLedgerIdentifier]
+      expenseAccountIdentifier: [definition.expenseAccountIdentifier, [Validators.required], accountExists(this.accountingService)],
+      equityLedgerIdentifier: [definition.equityLedgerIdentifier, [Validators.required], ledgerExists(this.accountingService)]
     });
   }
 

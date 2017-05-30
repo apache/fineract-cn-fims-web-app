@@ -49,11 +49,26 @@
           </div>
           <div flex-gt-md="70">
             <div layout="row">
-              <md-list>
-                <h3 md-subheader translate>Details</h3>
+              <md-list dense>
                 <md-list-item>
                   <h3 md-line translate>Type</h3>
                   <p md-line>{{definition.type}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Term</h3>
+                  <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Interest payable</h3>
+                  <p md-line>{{definition.term?.interestPayable}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Minimum balance</h3>
+                  <p md-line>{{definition.minimumBalance}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Interest</h3>
+                  <p md-line>{{definition.interest}}</p>
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Currency</h3>

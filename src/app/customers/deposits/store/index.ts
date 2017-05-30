@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-import {
-  createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
-  getResourceSelectedId,
-  ResourceState
-} from '../../../../components/store/resource.reducer';
+import {createResourceReducer, getResourceLoadedAt, ResourceState} from '../../../../components/store/resource.reducer';
 import * as fromCustomer from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../reducers/index';
 import {
-  createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../../../../components/store/search.reducer';
 import {createSelector} from 'reselect';

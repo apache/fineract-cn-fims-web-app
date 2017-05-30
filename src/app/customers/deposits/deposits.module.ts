@@ -32,7 +32,6 @@ import {
   MdToolbarModule
 } from '@angular/material';
 import {CovalentCommonModule, CovalentStepsModule} from '@covalent/core';
-import {DepositExistsGuard} from './deposits-exists.guard';
 import {DepositCreateComponent} from './form/create.component';
 import {DepositFormComponent} from './form/form.component';
 import {DepositsListComponent} from './deposits.list.component';
@@ -73,7 +72,6 @@ import {DepositProductInstanceNotificationEffects} from './store/effects/notific
     DepositCreateComponent
   ],
   providers: [
-    DepositExistsGuard,
     { provide: DepositsStore, useFactory: depositsStoreFactory, deps: [Store] }
   ]
 })

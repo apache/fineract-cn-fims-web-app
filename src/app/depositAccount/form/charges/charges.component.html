@@ -34,7 +34,7 @@
       <div layout="row">
         <md-input-container layout-margin>
           <span md-suffix *ngIf="charge.get('proportional').value === true">%</span>
-          <input mdInput type="text" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
+          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
           <md-error *ngIf="charge.get('amount').hasError('required')" translate>
             Required
           </md-error>
