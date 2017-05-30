@@ -44,7 +44,7 @@
         </md-input-container>
         <md-select formControlName="actionIdentifier" layout-margin placeholder="{{'Applied on' | translate}}" flex="15">
           <md-option *ngFor="let basis of actions" [value]="basis.identifier">
-            {{basis.name}}
+            {{basis.name | translate}}
           </md-option>
         </md-select>
         <md-checkbox layout-margin formControlName="proportional" translate>Proportional?</md-checkbox>

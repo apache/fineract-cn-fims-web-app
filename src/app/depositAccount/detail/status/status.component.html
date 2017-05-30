@@ -25,7 +25,7 @@
   <div layout="column" flex="100">
     <div layout="row" layout-align="start center" *ngFor="let command of statusCommands" layout-margin>
       <md-input-container flex>
-        <textarea mdInput placeholder="{{'Enter comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
+        <textarea mdInput placeholder="{{'Enter your comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
       </md-input-container>
       <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
     </div>

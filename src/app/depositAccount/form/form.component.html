@@ -20,7 +20,7 @@
       <div layout="row">
         <md-radio-group formControlName="type">
           <md-radio-button *ngFor="let basis of typeOptions" [value]="basis.type" layout-margin>
-            {{basis.label}}
+            {{ basis.label | translate }}
           </md-radio-button>
         </md-radio-group>
       </div>
@@ -65,10 +65,10 @@
         </md-input-container>
       </div>
       <div layout="column">
-        Interest payable:
+        <span translate>Interest payable:</span>
         <md-radio-group formControlName="termInterestPayable">
           <md-radio-button *ngFor="let basis of interestPayableOptions" [value]="basis.type" layout-margin>
-            {{basis.label}}
+            {{ basis.label | translate }}
           </md-radio-button>
         </md-radio-group>
       </div>
@@ -95,7 +95,7 @@
         </md-input-container>
         <md-radio-group formControlName="termTimeUnit">
           <md-radio-button *ngFor="let basis of timeUnitOptions" [value]="basis.type" layout-margin>
-            {{basis.label}}
+            {{ basis.label | translate }}
           </md-radio-button>
         </md-radio-group>
       </div>
