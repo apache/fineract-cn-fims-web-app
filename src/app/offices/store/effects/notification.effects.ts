@@ -41,5 +41,14 @@ export class OfficeNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Office is going to be deleted'
     }));
+
+  @Effect({ dispatch: false })
+  deleteOfficeFail$: Observable<Action> = this.actions$
+    .ofType(officeActions.DELETE_FAIL)
+    .do(() => this.notificationService.send({
+      type: NotificationType.ALERT,
+      title: 'Office can\'t be deleted',
+      message: 'Office has either branch offices or employees assigned to it.'
+    }));
 }
 
