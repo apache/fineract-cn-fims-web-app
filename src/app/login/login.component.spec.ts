@@ -34,6 +34,7 @@ import {
   MdTooltipModule
 } from '@angular/material';
 import {CovalentLoadingModule} from '@covalent/core';
+import {setValueByFormControlName} from '../../components/testing/input-fields';
 
 describe('Test Login Component', () => {
 
@@ -42,14 +43,6 @@ describe('Test Login Component', () => {
   let loginComponent: LoginComponent;
 
   let router: Router;
-
-  let setInputField = function (fixture: ComponentFixture<LoginComponent>, name: string, value: string): Observable<any> {
-    let inputElement: HTMLInputElement = fixture.debugElement.query(By.css('input[formControlName="' + name + '"]')).nativeElement;
-    inputElement.value = value;
-    inputElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    return Observable.fromPromise(fixture.whenStable());
-  };
 
   beforeEach(async(() => {
     router = jasmine.createSpyObj('Router', ['navigate']);
@@ -135,7 +128,7 @@ describe('Test Login Component', () => {
 
   it('should set the username', (done: DoneFn) => {
     fixture.detectChanges();
-    setInputField(fixture, 'username', 'test').subscribe(() => {
+    setValueByFormControlName(fixture, 'username', 'test').subscribe(() => {
       expect(loginComponent.form.get('username').value).toBe('test');
       done();
     });
@@ -143,7 +136,7 @@ describe('Test Login Component', () => {
 
   it('should set the password', (done: DoneFn) => {
     fixture.detectChanges();
-    setInputField(fixture, 'password', 'test').subscribe(() => {
+    setValueByFormControlName(fixture, 'password', 'test').subscribe(() => {
       expect(loginComponent.form.get('password').value).toBe('test');
       done();
     });
