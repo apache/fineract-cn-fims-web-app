@@ -23,7 +23,7 @@ import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {mapToFimsProduct} from './store/model/fims-product.mapper';
-import {ExistsGuardService} from '../../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {Product} from '../../../services/portfolio/domain/product.model';
 
 @Injectable()

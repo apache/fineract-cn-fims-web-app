@@ -16,7 +16,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {TableData} from '../../components/data-table/data-table.component';
+import {TableData} from '../../common/data-table/data-table.component';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import * as fromDepositAccounts from './store';
 import {Observable} from 'rxjs';

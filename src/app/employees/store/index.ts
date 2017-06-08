@@ -23,8 +23,8 @@ import {
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../components/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+} from '../../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 
 export interface State extends fromRoot.State {
   employees: ResourceState;

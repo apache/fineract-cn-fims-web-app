@@ -18,7 +18,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CustomerDetailFormComponent} from './detail/detail.component';
 import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
-import {AddressFormComponent} from '../../../components/address/address.component';
+import {AddressFormComponent} from '../../../common/address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
@@ -27,15 +27,15 @@ import {Customer} from '../../../services/customer/domain/customer.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
-import {IdInputComponent} from '../../../components/id-input/id-input.component';
-import {SelectListComponent} from '../../../components/select-list/select-list.component';
+import {IdInputComponent} from '../../../common/id-input/id-input.component';
+import {SelectListComponent} from '../../../common/select-list/select-list.component';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MdAutocompleteModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
-import {FormContinueActionComponent} from '../../../components/forms/form-continue-action.component';
-import {FormFinalActionComponent} from '../../../components/forms/form-final-action.component';
+import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
 import {CountryService} from '../../../services/country/country.service';
 
 const customerTemplate: Customer = {

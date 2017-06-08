@@ -15,7 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../components/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {FormBuilder, FormControl, AbstractControl} from '@angular/forms';
 import {
   ContactDetail, ContactDetailType, EMAIL, MOBILE,

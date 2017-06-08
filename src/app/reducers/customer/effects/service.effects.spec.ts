@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {CustomerService} from '../../../../services/customer/customer.service';
 import {SearchAction, SearchCompleteAction} from '../customer.actions';
 import {CustomerPage} from '../../../../services/customer/domain/customer-page.model';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 describe('Customer Search Api Effects', () => {
   beforeEach(() => {

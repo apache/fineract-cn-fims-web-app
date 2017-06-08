@@ -20,7 +20,7 @@ import {CountryService} from '../../../services/country/country.service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as countryActions from './country.actions';
-import {emptySearchResult} from '../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../common/store/search.reducer';
 import {of} from 'rxjs/observable/of';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 

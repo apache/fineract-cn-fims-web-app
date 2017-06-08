@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
-import {FormComponent} from '../../../../components/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -23,7 +23,7 @@ import {FetchRequest} from '../../../../services/domain/paging/fetch-request.mod
 import {Account} from '../../../../services/accounting/domain/account.model';
 import {Observable, Subscription} from 'rxjs';
 import {toLongISOString} from '../../../../services/domain/date.converter';
-import {FimsValidators} from '../../../../components/validator/validators';
+import {FimsValidators} from '../../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../reducers';
 import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';

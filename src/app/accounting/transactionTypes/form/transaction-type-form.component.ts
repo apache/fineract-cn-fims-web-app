@@ -15,11 +15,11 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../components/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../components/validator/validators';
+import {FimsValidators} from '../../../../common/validator/validators';
 
 @Component({
   selector: 'fims-transaction-type-form',

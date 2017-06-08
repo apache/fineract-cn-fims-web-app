@@ -18,7 +18,7 @@ import * as customer from './customer.actions';
 import * as customerTasks from './tasks/task.actions';
 import {Command} from '../../../services/customer/domain/command.model';
 import {CustomerState} from '../../../services/customer/domain/customer-state.model';
-import {ResourceState} from '../../../components/store/resource.reducer';
+import {ResourceState} from '../../../common/store/resource.reducer';
 
 export const initialState: ResourceState = {
   ids: [],

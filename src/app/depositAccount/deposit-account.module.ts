@@ -28,7 +28,7 @@ import {
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
-import {FimsSharedModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

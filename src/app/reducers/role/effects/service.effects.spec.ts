@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {IdentityService} from '../../../../services/identity/identity.service';
 import {Role} from '../../../../services/identity/domain/role.model';
 import {SearchAction, SearchCompleteAction} from '../role.actions';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 describe('Role Search Api Effects', () => {
   beforeEach(() => {

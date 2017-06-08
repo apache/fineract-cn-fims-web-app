@@ -17,12 +17,12 @@
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../../services/domain/error.model';
 import {type} from '../../../../util';
-import {RoutePayload} from '../../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../../common/store/route-payload';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../../components/store/resource.reducer';
+} from '../../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Charge] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Charge] Load All Complete');

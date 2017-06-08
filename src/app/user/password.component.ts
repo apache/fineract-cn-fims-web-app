@@ -16,7 +16,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../components/validator/validators';
+import {FimsValidators} from '../../common/validator/validators';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';

@@ -17,7 +17,7 @@
 import {type} from '../../util';
 import {Action} from '@ngrx/store';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {SearchResult} from '../../../components/store/search.reducer';
+import {SearchResult} from '../../../common/store/search.reducer';
 
 export const SEARCH = type('[Country] Search');
 export const SEARCH_COMPLETE = type('[Country] Search Complete');

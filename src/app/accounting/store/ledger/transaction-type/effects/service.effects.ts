@@ -21,7 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as transactionTypeActions from '../transaction-type.actions';
 import {AccountingService} from '../../../../../../services/accounting/accounting.service';
-import {emptySearchResult} from '../../../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../../../common/store/search.reducer';
 
 @Injectable()
 export class TransactionTypeApiEffects {

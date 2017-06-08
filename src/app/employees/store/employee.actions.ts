@@ -20,11 +20,11 @@ import {Employee} from '../../../services/office/domain/employee.model';
 import {Error} from '../../../services/domain/error.model';
 import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';
 import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
-import {RoutePayload} from '../../../components/store/route-payload';
+import {RoutePayload} from '../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../components/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 
 export const LOAD = type('[Employee] Load');
 export const SELECT = type('[Employee] Select');

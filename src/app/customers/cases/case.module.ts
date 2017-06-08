@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {FimsSharedModule} from '../../../components/common.module';
+import {FimsSharedModule} from '../../../common/common.module';
 import {CaseRoutes} from './case.routes';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';

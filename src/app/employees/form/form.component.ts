@@ -23,7 +23,7 @@ import {ContactDetail, BUSINESS, PHONE, EMAIL, MOBILE} from '../../../services/d
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Role} from '../../../services/identity/domain/role.model';
 import {User} from '../../../services/identity/domain/user.model';
-import {FimsValidators} from '../../../components/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {SEARCH as SEARCH_OFFICE} from '../../reducers/office/office.actions';

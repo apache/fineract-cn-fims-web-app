@@ -18,10 +18,10 @@ import {OnInit, Component, Input, EventEmitter, Output, ViewChild} from '@angula
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
 import {Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
 import {ChargeMethod} from '../../../../../services/portfolio/domain/charge-method.model';
-import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
+import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
 import {TdStepComponent} from '@covalent/core';
-import {ActionOption, ActionOptions} from '../../../../../components/domain/action-option.model';
-import {FimsValidators} from '../../../../../components/validator/validators';
+import {ActionOption, ActionOptions} from '../../../../../common/domain/action-option.model';
+import {FimsValidators} from '../../../../../common/validator/validators';
 
 interface ChargeMethodOption{
   type: ChargeMethod,

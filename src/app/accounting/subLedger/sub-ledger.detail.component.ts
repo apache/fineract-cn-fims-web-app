@@ -16,7 +16,7 @@
 import {OnInit, Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
-import {TableData, TableFetchRequest} from '../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';

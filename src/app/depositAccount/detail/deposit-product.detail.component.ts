@@ -20,7 +20,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import * as fromDepositAccounts from './../store';
-import {TableData} from '../../../components/data-table/data-table.component';
+import {TableData} from '../../../common/data-table/data-table.component';
 
 @Component({
   templateUrl: './deposit-product.detail.component.html'

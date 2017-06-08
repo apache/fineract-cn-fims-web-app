@@ -21,8 +21,8 @@ import {Error} from '../../../services/domain/error.model';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload, SelectResourcePayload,
   UpdateResourceSuccessPayload
-} from '../../../components/store/resource.reducer';
-import {RoutePayload} from '../../../components/store/route-payload';
+} from '../../../common/store/resource.reducer';
+import {RoutePayload} from '../../../common/store/route-payload';
 
 export const LOAD = type('[Role] Load');
 export const SELECT = type('[Role] Select');

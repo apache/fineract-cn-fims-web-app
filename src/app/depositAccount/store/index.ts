@@ -16,12 +16,12 @@
 
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 import {
   createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../components/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 
 import * as fromRoot from '../../reducers';
 import * as fromProducts from './products.reducer';
@@ -29,7 +29,7 @@ import {createSelector} from 'reselect';
 import {
   createSearchReducer, getSearchEntities, getSearchTotalElements, getSearchTotalPages,
   SearchState
-} from '../../../components/store/search.reducer';
+} from '../../../common/store/search.reducer';
 
 export interface State extends fromRoot.State{
   depositProducts: ResourceState;

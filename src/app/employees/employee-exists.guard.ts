@@ -22,7 +22,7 @@ import {Observable} from 'rxjs';
 import {LoadAction} from './store/employee.actions';
 import {of} from 'rxjs/observable/of';
 import {EmployeesStore} from './store/index';
-import {ExistsGuardService} from '../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
 export class EmployeeExistsGuard implements CanActivate {

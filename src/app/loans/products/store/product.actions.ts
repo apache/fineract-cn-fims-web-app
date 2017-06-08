@@ -17,13 +17,13 @@
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
 import {type} from '../../../util';
-import {RoutePayload} from '../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
-import {SearchResult} from '../../../../components/store/search.reducer';
+import {SearchResult} from '../../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../components/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
 
 export const SEARCH = type('[Product] Search');

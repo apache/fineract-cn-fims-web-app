@@ -15,11 +15,11 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../../components/forms/form.component';
-import {accountExists} from '../../../../../components/validator/account-exists.validator';
+import {FormComponent} from '../../../../../common/forms/form.component';
+import {accountExists} from '../../../../../common/validator/account-exists.validator';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {ledgerExists} from '../../../../../components/validator/ledger-exists.validator';
+import {ledgerExists} from '../../../../../common/validator/ledger-exists.validator';
 
 export interface SettingsFormData {
   loanFundAccount: string;

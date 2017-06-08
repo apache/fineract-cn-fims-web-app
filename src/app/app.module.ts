@@ -44,7 +44,7 @@ import {SecurityApiEffects} from './reducers/security/effects/service.effects';
 import {SecurityNotificationEffects} from './reducers/security/effects/notification.effects';
 import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ExistsGuardService} from '../components/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 import {CountryService} from '../services/country/country.service';
 import {CountrySearchApiEffects} from './reducers/country/service.effects';
 import {ImageService} from '../services/image/image.service';

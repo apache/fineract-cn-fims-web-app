@@ -15,11 +15,11 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {temporalOptionList} from '../../../../components/domain/temporal.domain';
-import {weekDayOptions} from '../../../../components/domain/week-days.model';
-import {alignmentOptions} from '../../../../components/domain/alignment.model';
+import {temporalOptionList} from '../../../../common/domain/temporal.domain';
+import {weekDayOptions} from '../../../../common/domain/week-days.model';
+import {alignmentOptions} from '../../../../common/domain/alignment.model';
 import {PaymentCycle} from '../../../../services/portfolio/domain/payment-cycle.model';
-import {monthOptions} from '../../../../components/domain/months.model';
+import {monthOptions} from '../../../../common/domain/months.model';
 
 @Component({
   selector: 'fims-case-detail-payment-cycle',

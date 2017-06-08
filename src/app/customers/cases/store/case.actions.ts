@@ -17,17 +17,17 @@
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
 import {type} from '../../../util';
-import {RoutePayload} from '../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {FimsCase} from './model/fims-case.model';
-import {SearchResult} from '../../../../components/store/search.reducer';
+import {SearchResult} from '../../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload,
   LoadResourcePayload,
   SelectResourcePayload,
   UpdateResourceSuccessPayload
-} from '../../../../components/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
 
 export const SEARCH = type('[Case] Search');

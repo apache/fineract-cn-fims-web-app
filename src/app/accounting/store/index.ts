@@ -30,12 +30,12 @@ import {
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../components/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+} from '../../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 import {
   createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
   SearchState
-} from '../../../components/store/search.reducer';
+} from '../../../common/store/search.reducer';
 
 export interface State extends fromRoot.State{
   accounts: ResourceState;

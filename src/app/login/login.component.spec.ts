@@ -34,7 +34,7 @@ import {
   MdTooltipModule
 } from '@angular/material';
 import {CovalentLoadingModule} from '@covalent/core';
-import {setValueByFormControlName} from '../../components/testing/input-fields';
+import {setValueByFormControlName} from '../../common/testing/input-fields';
 
 describe('Test Login Component', () => {
 
