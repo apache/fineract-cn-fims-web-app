@@ -29,6 +29,8 @@ import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {buildSearchParams, buildDateRangeParam} from '../domain/paging/search-param.builder';
 import {LedgerPage} from './domain/ledger-page.model';
 import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
+import {TransactionType} from './domain/transaction-type.model';
+import {TransactionTypePage} from './domain/transaction-type-page.model';
 
 @Injectable()
 export class AccountingService{
@@ -150,5 +152,27 @@ export class AccountingService{
 
   public getChartOfAccounts(): Observable<ChartOfAccountEntry[]> {
     return this.http.get(`${this.baseUrl}/chartofaccounts`);
+  }
+
+  public findTransactionType(code: string): Observable<Account>{
+    return this.http.get(`${this.baseUrl}/transactiontypes/${code}`);
+  }
+
+  public createTransactionType(transactionType: TransactionType): Observable<void> {
+    return this.http.post(`${this.baseUrl}/transactiontypes`, transactionType);
+  }
+
+  public fetchTransactionTypes(fetchRequest?: FetchRequest): Observable<TransactionTypePage> {
+    let params: URLSearchParams = buildSearchParams(fetchRequest);
+
+    let requestOptions: RequestOptionsArgs = {
+      params
+    };
+
+    return this.http.get(`${this.baseUrl}/transactiontypes`, requestOptions);
+  }
+
+  public changeTransactionType(transactionType: TransactionType): Observable<void> {
+    return this.http.put(`${this.baseUrl}/transactiontypes/${transactionType.code}`, transactionType);
   }
 }

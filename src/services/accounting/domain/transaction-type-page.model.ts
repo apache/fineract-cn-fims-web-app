@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-export class AccountingPermittableGroupIds{
-  public static readonly ACCOUNT_MANAGEMENT: string = 'accounting__v1__account';
-  public static readonly JOURNAL_MANAGEMENT: string = 'accounting__v1__journal';
-  public static readonly LEDGER_MANAGEMENT: string = 'accounting__v1__ledger';
-  public static readonly TRANSACTION_TYPES: string = 'accounting__v1__tx_types';
+import {TransactionType} from './transaction-type.model';
+
+export interface TransactionTypePage {
+  transactionTypes: TransactionType[];
+  totalPages: number;
+  totalElements: number;
 }

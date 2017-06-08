@@ -63,6 +63,8 @@ export class DataTableComponent {
 
   @Input() actionColumn: boolean = true;
 
+  @Input() actionColumnLabel: string = 'SHOW';
+
   @Input() loading: boolean = false;
 
   @Output() onFetch: EventEmitter<TableFetchRequest> = new EventEmitter<TableFetchRequest>();

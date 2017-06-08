@@ -39,13 +39,14 @@ export class JournalEntryListComponent implements OnInit{
 
   columns: ITdDataTableColumn[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
+  constructor(private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.columns = [
       { name: 'transactionIdentifier', label: 'Id', tooltip: 'Id' },
       { name: 'clerk', label: 'Clerk', tooltip: 'Clerk' },
       { name: 'state', label: 'State', tooltip: 'State' },
+      { name: 'transactionType', label: 'Transaction type', tooltip: 'Transaction type' },
       { name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format:  (v: any) => {
         return this.datePipe.transform(v, 'shortDate')
       }}
@@ -65,10 +66,6 @@ export class JournalEntryListComponent implements OnInit{
       'endDate': [ today, [Validators.required] ],
     }, { validator: FimsValidators.matchRange('startDate', 'endDate') });
     this.fetchJournalEntries()
-  }
-
-  rowSelect(account: Account): void{
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   fetchJournalEntries(): void{

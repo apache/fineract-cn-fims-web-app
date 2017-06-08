@@ -34,6 +34,10 @@ import {LedgerExistsGuard} from './ledger-exists.guard';
 import {AccountExistsGuard} from './accounts/account-exists.guard';
 import {ChartOfAccountComponent} from './chartOfAccounts/chart-of-accounts.component';
 import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
+import {TransactionTypeListComponent} from './transactionTypes/transaction-types.list.component';
+import {EditTransactionTypeFormComponent} from './transactionTypes/form/edit/edit.form.component';
+import {CreateTransactionTypeFormComponent} from './transactionTypes/form/create/create.form.component';
+import {TransactionTypeExistsGuard} from './transactionTypes/transaction-type-exists.guard';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -86,6 +90,9 @@ export const AccountingRoutes: Routes = [
   {path: 'accounts/detail/:id/entries', component: AccountEntryListComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
 
   {path: 'trialBalance', component: TrailBalanceComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
+  {path: 'transactiontypes', component: TransactionTypeListComponent, data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'READ' }}},
+  {path: 'transactiontypes/create', component: CreateTransactionTypeFormComponent, data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'CHANGE' }}},
+  {path: 'transactiontypes/edit/:code', component: EditTransactionTypeFormComponent, canActivate: [TransactionTypeExistsGuard], data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'CHANGE' }}},
   {path: 'chartOfAccounts', component: ChartOfAccountComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
   {path: 'journalEntries', component: JournalEntryListComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'READ' }}},
   {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}}

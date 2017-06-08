@@ -31,7 +31,7 @@
       {{column.format ? column.format(row[column.name]) : row[column.name]}}
     </td>
     <td td-data-table-cell (click)="actionCellClick(row)" *ngIf="actionColumn">
-      <button md-button class="md-accent">{{ 'SHOW' | translate}}</button>
+      <button md-button class="md-accent">{{ actionColumnLabel | translate}}</button>
     </td>
   </tr>
 </table>
@@ -44,4 +44,7 @@
   <h3 translate>Fetching results...</h3>
 </div>
 
-<td-paging-bar *ngIf="pageable" [pageSizes]="pageSizes" [total]="tableData.totalElements" (change)="page($event)"></td-paging-bar>
+<td-paging-bar #pagingBar *ngIf="pageable" [pageSizes]="pageSizes" [total]="tableData.totalElements" (change)="page($event)">
+  <span td-paging-bar-label hide-xs translate>Rows per page</span>
+  {{pagingBar.range}} <span hide-xs translate>of</span><span> {{pagingBar.total}}</span>
+</td-paging-bar>
