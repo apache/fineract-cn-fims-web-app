@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+import {Action} from '@ngrx/store';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export class ActionCreator {
+  static create?<T>(type: string, payload?: T): Action {
+    return {
+      type: type,
+      payload: payload
+    }
+  }
 }

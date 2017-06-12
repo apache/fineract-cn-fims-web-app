@@ -60,6 +60,6 @@ export abstract class FormComponent<T> {
     const control: AbstractControl = this.form.get(field);
     let errors = control.errors || {};
     errors[error] = value;
-    this.form.get(field).setErrors(errors);
+    control.setErrors(errors);
   }
 }

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+export type State = 'PENDING' | 'CANCELED' | 'CONFIRMED';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export interface TellerTransaction {
+  identifier?: string;
+  transactionType: string;
+  transactionDate: string;
+  productIdentifier: string;
+  customerAccountIdentifier: string;
+  clerk: string;
+  amount: number;
+  state?: State;
 }

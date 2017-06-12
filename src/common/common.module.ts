@@ -50,6 +50,7 @@ import {
   MdToolbarModule,
   MdTooltipModule
 } from '@angular/material';
+import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-auto-complete.component';
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import {
     AccountSelectComponent,
     LedgerSelectComponent,
     ProductSelectComponent,
+    EmployeeAutoCompleteComponent,
     IdInputComponent,
     PermissionDirective,
     DataTableComponent,
@@ -102,6 +104,7 @@ import {
     AccountSelectComponent,
     LedgerSelectComponent,
     ProductSelectComponent,
+    EmployeeAutoCompleteComponent,
     IdInputComponent,
     PermissionDirective,
     DataTableComponent,

@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
-
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export class TellerPermittableGroupIds {
+  public static readonly TELLER_MANAGEMENT: string = 'teller__v1__management';
+  public static readonly TELLER_OPERATION: string = 'teller__v1__operation';
 }

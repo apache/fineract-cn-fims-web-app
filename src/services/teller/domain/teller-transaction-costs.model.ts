@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+import {Charge} from './charge.model';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export interface TellerTransactionCosts {
+  tellerTransactionIdentifier?: string;
+  totalAmount?: string;
+  charges?: Charge[];
 }

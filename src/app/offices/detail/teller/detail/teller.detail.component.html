@@ -1,0 +1,71 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-toolbar color="primary" class="md-whiteframe-z1">
+  <a md-icon-button title="{{'Go back to tellers' | translate}}" [routerLink]="['../../../../../']">
+    <md-icon>keyboard_arrow_left</md-icon>
+  </a>
+  {{'Tellers' | translate}}
+</md-toolbar>
+
+<fims-layout-card-over title="{{ 'Teller' | translate }}">
+  <td-message *ngIf="(teller$ | async).state === 'CLOSED'" label="{{'Teller is closed' | translate }}"
+              sublabel="{{'This teller can be opened' | translate }}"
+              color="warn" icon="error">
+    <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'OPEN'}"
+            *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>OPEN TELLER
+    </a>
+  </td-message>
+  <td-message *ngIf="(teller$ | async).state === 'OPEN'" label="{{'Teller is open' | translate }}"
+              sublabel="{{'This teller can be closed' | translate }}" color="accent" icon="check">
+    <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'CLOSE'}"
+            *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>CLOSE TELLER
+    </a>
+  </td-message>
+  <div class="md-content" class="inset" flex>
+    <div layout="row">
+      <div layout="column" flex-gt-md="100">
+        <div layout-gt-md="row">
+          <div flex-gt-md="30">
+            <md-nav-list>
+              <h3 md-subheader translate>Management</h3>
+              <a md-list-item [routerLink]="['balance']">
+                <md-icon md-list-avatar>account_balance</md-icon>
+                <h3 md-line translate>Teller balance</h3>
+                <p md-line translate>View current teller balance</p>
+              </a>
+            </md-nav-list>
+          </div>
+          <div flex-gt-md="70">
+            <md-list>
+              <md-list-item>
+                <h3 md-line translate>Code</h3>
+                <p md-line>{{(teller$ | async).code}}</p>
+              </md-list-item>
+              <md-list-item>
+                <h3 md-line translate>Cash draw limit</h3>
+                <p md-line>{{(teller$ | async).cashdrawLimit}}</p>
+              </md-list-item>
+            </md-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</fims-layout-card-over>
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit teller' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE' }">
+  <md-icon>mode_edit</md-icon>
+</a>

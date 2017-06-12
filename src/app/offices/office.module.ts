@@ -35,11 +35,33 @@ import {OfficeRouteEffects} from './store/effects/route.effects';
 import {OfficeApiEffects} from './store/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {
-  MdButton, MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule,
+  MdButtonModule,
+  MdCardModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule, MdRadioModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {
+  CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule,
+  CovalentStepsModule
+} from '@covalent/core';
 import {CommonModule} from '@angular/common';
+import {TellerApiEffects} from './store/teller/effects/service.effects';
+import {OfficeTellerListComponent} from './detail/teller/teller.list.component';
+import {OfficeIndexComponent} from './detail/office.index.component';
+import {OfficeTellerFormComponent} from './detail/teller/form/form.component';
+import {CreateOfficeTellerFormComponent} from './detail/teller/form/create.form.component';
+import {EditOfficeTellerFormComponent} from './detail/teller/form/edit.form.component';
+import {TellerExistsGuard} from './detail/teller/teller-exists.guard';
+import {TellerRouteEffects} from './store/teller/effects/route.effects';
+import {TellerNotificationEffects} from './store/teller/effects/notification.effects';
+import {OfficeTellerIndexComponent} from './detail/teller/teller.index.component';
+import {TellerBalanceComponent} from './detail/teller/detail/balance/balance.component';
+import {OfficeTellerDetailComponent} from './detail/teller/detail/teller.detail.component';
+import {OpenOfficeTellerFormComponent} from './detail/teller/detail/command/open.component';
+import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/close.component';
+import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
 
 @NgModule({
   imports: [
@@ -54,23 +76,42 @@ import {CommonModule} from '@angular/common';
     MdToolbarModule,
     MdInputModule,
     MdButtonModule,
+    MdRadioModule,
     CovalentSearchModule,
     CovalentStepsModule,
+    CovalentDataTableModule,
+    CovalentMessageModule,
     EffectsModule.run(OfficeApiEffects),
     EffectsModule.run(OfficeRouteEffects),
     EffectsModule.run(OfficeNotificationEffects),
+
+    EffectsModule.run(TellerApiEffects),
+    EffectsModule.run(TellerRouteEffects),
+    EffectsModule.run(TellerNotificationEffects),
   ],
   declarations: [
     OfficeComponent,
+    OfficeIndexComponent,
     OfficeFormComponent,
     CreateOfficeFormComponent,
     EditOfficeFormComponent,
     OfficeDetailComponent,
-    HeadquarterNotFoundComponent
+    HeadquarterNotFoundComponent,
+    OfficeTellerListComponent,
+    OfficeTellerFormComponent,
+    OfficeTellerIndexComponent,
+    OfficeTellerDetailComponent,
+    CreateOfficeTellerFormComponent,
+    EditOfficeTellerFormComponent,
+    OfficeTellerCommandComponent,
+    OpenOfficeTellerFormComponent,
+    CloseOfficeTellerFormComponent,
+    TellerBalanceComponent,
   ],
   providers: [
     HeadquarterGuard,
     OfficeExistsGuard,
+    TellerExistsGuard,
     { provide: OfficesStore, useFactory: officeStoreFactory, deps: [Store]}
   ],
   entryComponents: []

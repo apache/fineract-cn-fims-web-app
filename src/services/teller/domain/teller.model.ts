@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+export type Status = 'ACTIVE' | 'CLOSED' | 'OPEN' | 'PAUSED';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export interface Teller {
+  code: string;
+  password: string;
+  cashdrawLimit: number;
+  tellerAccountIdentifier: string;
+  vaultAccountIdentifier: string;
+  state?: Status;
+
+  createdBy?: string;
+  createdOn?: string;
+  lastModifiedBy?: string;
+  lastModifiedOn?: string;
 }

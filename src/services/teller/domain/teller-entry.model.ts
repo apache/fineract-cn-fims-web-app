@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+export type Type = 'DEBIT' | 'CREDIT';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
+export interface TellerEntry {
+  type?: Type;
+  transactionDate: string;
+  message: string;
+  amount: number;
+  balance: number;
 }

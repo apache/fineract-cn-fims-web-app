@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-import {Address} from '../../domain/address/address.model';
+import {Routes} from '@angular/router';
+import {TellerComponent} from './teller.component';
 
-export interface Office{
-  identifier: string;
-  parentIdentifier?: string;
-  name: string;
-  description?: string;
-  address?: Address;
-  branches?: Office[];
-  tellerIds?: string[];
-}
+export const TellerRoutes: Routes = [
+  { path: '', component: TellerComponent, data: { title: 'Teller management', hasPermission: { id: 'identity_roles', accessLevel: 'READ' }}}
+];
