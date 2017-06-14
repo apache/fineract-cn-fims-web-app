@@ -35,6 +35,6 @@ export class CustomerIdentificationCardRouteEffects {
   deleteIdentificationCardSuccess$: Observable<Action> = this.actions$
     .ofType(identificationCardActions.DELETE_SUCCESS)
     .map(action => action.payload)
-    .do(payload => this.router.navigate(['../../../../../'], { relativeTo: payload.activatedRoute }));
+    .do(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute }));
 
 }

@@ -19,7 +19,7 @@
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form">
       <div layout="row">
-        <fims-id-input [form]="form" controlName="code" [readonly]="editMode"></fims-id-input>
+        <fims-id-input [form]="form" [placeholder]="'Number'" controlName="code" [readonly]="editMode"></fims-id-input>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
@@ -29,7 +29,7 @@
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
-          <input mdInput type="number" placeholder="{{'Cash draw limit' | translate}}" formControlName="cashdrawLimit" tdAutoTrim/>
+          <input mdInput type="number" placeholder="{{'Cash withdrawal limit' | translate}}" formControlName="cashdrawLimit" tdAutoTrim/>
           <md-error *ngIf="form.get('cashdrawLimit').hasError('required')" translate>Required</md-error>
         </md-input-container>
       </div>

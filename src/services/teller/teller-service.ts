@@ -21,7 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {TellerManagementCommand} from './domain/teller-management-command.model';
 import {TellerBalanceSheet} from './domain/teller-balance-sheet.model';
 import {TellerAuthentication} from './domain/teller-authentication.model';
-import {RequestOptionsArgs} from '@angular/http';
+import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TellerTransactionCosts} from './domain/teller-transaction-costs.model';
 import {TellerTransaction} from './domain/teller-transaction.model';
 
@@ -54,8 +54,8 @@ export class TellerService {
     return this.http.get(`${this.baseUrl}/offices/${officeIdentifier}/teller/${tellerCode}/balance`);
   }
 
-  auth(tellerCode: string, tellerAuthentication: TellerAuthentication): Observable<void> {
-    return this.http.post(`${this.baseUrl}/teller/${tellerCode}/auth`, tellerAuthentication);
+  unlockDrawer(tellerCode: string, tellerAuthentication: TellerAuthentication): Observable<void> {
+    return this.http.post(`${this.baseUrl}/teller/${tellerCode}/drawer`, tellerAuthentication);
   }
 
   executeCommand(tellerCode: string, command: string): Observable<void> {

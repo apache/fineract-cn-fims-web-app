@@ -55,7 +55,7 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
     this.identificationCardSubscription.unsubscribe();
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     let message = 'Do you want to delete this identification card?';
     let title = 'Confirm deletion';
     let button = 'DELETE IDENTIFICATION CARD';

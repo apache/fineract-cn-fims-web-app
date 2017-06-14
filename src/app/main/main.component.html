@@ -101,6 +101,13 @@
           <p md-line translate>Account management</p>
         </a>
       </ng-container>
+      <ng-container *hasPermission="{ id: 'teller_operations', accessLevel: 'READ'}">
+        <a md-list-item [routerLink]="['/teller']" routerLinkActive="active">
+          <md-icon md-list-avatar>person</md-icon>
+          <h3 md-line translate>Teller</h3>
+          <p md-line translate>Teller management</p>
+        </a>
+      </ng-container>
     </md-nav-list>
   </md-sidenav>
   <div layout="column" layout-fill class="md-content content">

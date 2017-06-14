@@ -82,45 +82,7 @@ export const CustomerRoutes: Routes = [
           hasPermission: { id: 'customer_portrait', accessLevel: 'READ' }
         }
       },
-      {
-        path: 'identifications',
-        component: CustomerIdentityCardListComponent,
-        data: {
-          title: 'Manage Identification Cards',
-          hasPermission: { id: 'customer_identifications', accessLevel: 'READ' }
-        }
-      },
-      {
-        path: 'identifications/create',
-        component: CreateCustomerIdentificationCardFormComponent,
-        data: {
-          title: 'Create Identification Card',
-          hasPermission: { id: 'customer_identifications', accessLevel: 'CHANGE' }
-        },
-      },
-      {
-        path: 'identifications/detail/:number',
-        component: CustomerIdentityCardIndexComponent,
-        canActivate: [ IdentityCardExistsGuard ],
-        children: [
-          {
-            path: '',
-            component: CustomerIdentityCardDetailComponent,
-            data: {
-              title: 'Identification Card',
-              hasPermission: { id: 'customer_identifications', accessLevel: 'READ' }
-            }
-          },
-          {
-            path: 'edit',
-            component: EditCustomerIdentificationCardFormComponent,
-            data: {
-              title: 'Edit Identification Card',
-              hasPermission: {id: 'customer_identifications', accessLevel: 'CHANGE'}
-            },
-          }
-        ]
-      },
+      {path: 'identifications', loadChildren: './detail/identityCard/identity-card.module#IdentityCardModule'},
       {path: 'loans', loadChildren: './cases/case.module#CaseModule'},
       {path: 'deposits', loadChildren: './deposits/deposits.module#DepositsModule'},
     ]

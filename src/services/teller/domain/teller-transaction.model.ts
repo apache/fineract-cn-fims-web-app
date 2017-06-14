@@ -20,8 +20,11 @@ export interface TellerTransaction {
   identifier?: string;
   transactionType: string;
   transactionDate: string;
+  customerIdentifier: string;
   productIdentifier: string;
+  productCaseIdentifier?: string;
   customerAccountIdentifier: string;
+  targetAccountIdentifier?: string;
   clerk: string;
   amount: number;
   state?: State;

@@ -87,10 +87,7 @@ import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@co
     EffectsModule.run(CustomerTasksApiEffects),
     EffectsModule.run(CustomerTasksRouteEffects),
     EffectsModule.run(CustomerTasksNotificationEffects),
-    EffectsModule.run(CustomerCommandApiEffects),
-    EffectsModule.run(CustomerIdentificationCardApiEffects),
-    EffectsModule.run(CustomerIdentificationCardRouteEffects),
-    EffectsModule.run(CustomerIdentificationCardNotificationEffects),
+    EffectsModule.run(CustomerCommandApiEffects)
   ],
   declarations: [
     CustomerComponent,
@@ -108,16 +105,9 @@ import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@co
     CustomerStatusComponent,
     CustomerActivityComponent,
     CustomerPortraitComponent,
-    CustomerIdentityCardListComponent,
-    CustomerIdentityCardIndexComponent,
-    CustomerIdentityCardDetailComponent,
-    CreateCustomerIdentificationCardFormComponent,
-    EditCustomerIdentificationCardFormComponent,
-    IdentityCardFormComponent
   ],
   providers: [
     CustomerExistsGuard,
-    IdentityCardExistsGuard,
     { provide: CustomersStore, useFactory: customerStoreFactory, deps: [Store]}
   ]
 })

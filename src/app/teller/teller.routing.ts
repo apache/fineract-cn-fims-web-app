@@ -15,8 +15,46 @@
  */
 
 import {Routes} from '@angular/router';
-import {TellerComponent} from './teller.component';
+import {TellerLoginGuard} from './teller-login.guard';
+import {TellerAuthComponent} from './auth/teller-auth.component';
+import {TellerIndexComponent} from './teller.index.component';
+import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
+import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard';
+import {TellerCustomerIndexComponent} from './customer/customer-index.component';
+import {CreateTellerTransactionForm} from './customer/transaction/create.form.component';
 
 export const TellerRoutes: Routes = [
-  { path: '', component: TellerComponent, data: { title: 'Teller management', hasPermission: { id: 'identity_roles', accessLevel: 'READ' }}}
+  {
+    path: '',
+    canActivate: [TellerLoginGuard],
+    data: { title: 'Teller management', hasPermission: { id: 'teller_operations', accessLevel: 'READ' } },
+    children: [
+      {
+        path: '',
+        component: TellerIndexComponent
+      },
+      {
+        path: 'customers/detail/:id',
+        component: TellerCustomerIndexComponent,
+        data: {
+          hasPermission: { id: 'customer_customers', accessLevel: 'READ' }
+        },
+        canActivate: [ TellerCustomerExistsGuard ],
+        children: [
+          {
+            path: '',
+            component: TellerCustomerDetailComponent,
+            data: {title: 'View Customer'}
+          },
+          {path: 'transaction', component: CreateTellerTransactionForm, data: { title: 'Create transaction' } },
+          {path: 'identifications', loadChildren: '../customers/detail/identityCard/identity-card.module#IdentityCardModule'},
+        ]
+      }
+    ]
+  },
+  {
+    path: 'auth',
+    component: TellerAuthComponent,
+    data: { title: 'Teller login' }
+  }
 ];

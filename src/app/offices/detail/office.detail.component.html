@@ -73,7 +73,7 @@
   </div>
 </fims-layout-card-over>
 
-<a md-fab color="accent" title="{{'Create branch office' | translate}}" class="md-fab-position-bottom-right" [routerLink]="['../../create']"
+<a md-fab color="accent" title="{{'Create branch office' | translate}}" class="md-fab-position-bottom-right" [routerLink]="['../../../create']"
    [queryParams]="{ parentId: office.identifier }" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }">
   <md-icon>add</md-icon>
 </a>

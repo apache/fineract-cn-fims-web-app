@@ -33,8 +33,8 @@ export class OfficeTellerListComponent implements OnInit {
   tellerData$: Observable<TableData>;
 
   columns: any[] = [
-    {name: 'code', label: 'Code'},
-    {name: 'cashdrawLimit', label: 'Cash draw limit'},
+    {name: 'code', label: 'Number'},
+    {name: 'cashdrawLimit', label: 'Cash withdrawal limit'},
     {name: 'state', label: 'Status'}
   ];
 
