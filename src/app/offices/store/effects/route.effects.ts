@@ -50,7 +50,7 @@ export class OfficeRouteEffects {
     .map((action) => action.payload)
     .do(payload => {
       if(payload.resource.parentIdentifier){
-        this.router.navigate(['../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute})
+        this.router.navigate(['../../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute})
       }else{
         this.router.navigate(['../../'], { relativeTo: payload.activatedRoute})
       }
