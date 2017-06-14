@@ -14,7 +14,7 @@
     "devTest": "ng test",
     "dev": "ng serve --proxy-config proxy.conf.json",
     "runProd": "ng serve --proxy-config proxy.conf.json --prod --aot",
-    "build": "ng build --prod --aot --stats-json",
+    "build": "ng build --prod --aot",
     "checkLicenses": "license-to-fail ./license.config.js",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
