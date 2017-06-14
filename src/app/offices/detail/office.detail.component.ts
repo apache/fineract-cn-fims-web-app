@@ -74,16 +74,16 @@ export class OfficeDetailComponent implements OnInit, OnDestroy {
   }
 
   rowSelect(office: Office): void {
-    this.router.navigate(['../', office.identifier], {relativeTo: this.route});
+    this.router.navigate(['../../', office.identifier], {relativeTo: this.route});
   }
 
   searchOffice(searchTerm: string): void {
-    this.router.navigate(['../../'], {queryParams: {term: searchTerm}, relativeTo: this.route});
+    this.router.navigate(['../../../'], {queryParams: {term: searchTerm}, relativeTo: this.route});
   }
 
   goToParent(): void {
     if (this.office.parentIdentifier) {
-      this.router.navigate(['../', this.office.parentIdentifier], {relativeTo: this.route});
+      this.router.navigate(['../../', this.office.parentIdentifier], {relativeTo: this.route});
     } else {
       this.router.navigate(['../../'], {relativeTo: this.route});
     }
