@@ -68,4 +68,6 @@ export class TellerIndexComponent implements OnDestroy {
       }
     })
   }
+
+  clearSearch(): void {}
 }
