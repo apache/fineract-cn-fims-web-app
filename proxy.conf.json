@@ -40,5 +40,12 @@
     "pathRewrite": {
       "^/api/deposit": "/deposit"
     }
+  },
+  "/api/teller": {
+    "target": "http://localhost:2026",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/teller": "/teller"
+    }
   }
 }

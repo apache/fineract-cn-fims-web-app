@@ -25,7 +25,7 @@ import {localStorageSync} from 'ngrx-store-localstorage';
 import {
   createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
   SearchState
-} from '../../components/store/search.reducer';
+} from '../../common/store/search.reducer';
 
 export interface State {
   authentication: fromAuthentication.State;

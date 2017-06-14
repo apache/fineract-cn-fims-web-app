@@ -18,7 +18,7 @@ import {Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angula
 import {TdStepComponent} from '@covalent/core';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomerDetailFormData, CustomerDetailFormComponent} from './detail/detail.component';
-import {AddressFormComponent} from '../../../components/address/address.component';
+import {AddressFormComponent} from '../../../common/address/address.component';
 import {Address} from '../../../services/domain/address/address.model';
 import {CustomerContactFormComponent} from './contact/contact.component';
 import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';

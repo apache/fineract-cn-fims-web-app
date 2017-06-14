@@ -19,11 +19,11 @@ import {type} from '../../../util';
 import {Error} from '../../../../services/domain/error.model';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {Command} from '../../../../services/customer/domain/command.model';
-import {RoutePayload} from '../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload
-} from '../../../../components/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Customer Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Task] Load All Complete');

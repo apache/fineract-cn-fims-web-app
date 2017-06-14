@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Router, ActivatedRoute} from '@angular/router';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
 import {Office} from '../../../services/office/domain/office.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {OfficePage} from '../../../services/office/domain/office-page.model';
 import {Observable, Subscription} from 'rxjs';
-import {NotificationService} from '../../../services/notification/notification.service';
 import {TdDialogService} from '@covalent/core';
-import {TableData} from '../../../components/data-table/data-table.component';
-import {SelectAction, DELETE} from '../store/office.actions';
-import {Store} from '@ngrx/store';
-import {State, getSelectedOffice, OfficesStore} from '../store/index';
+import {TableData} from '../../../common/data-table/data-table.component';
+import {DELETE, SelectAction} from '../store/office.actions';
+import {getSelectedOffice, OfficesStore} from '../store/index';
 
 @Component({
-  selector: 'fims-office-detail',
   templateUrl: './office.detail.component.html',
   styleUrls: ['./office.detail.component.scss'],
 })
-export class OfficeDetailComponent implements OnInit, OnDestroy{
-
-  private actionsSubscription: Subscription;
+export class OfficeDetailComponent implements OnInit, OnDestroy {
 
   private officeSubscription: Subscription;
 
@@ -47,24 +42,25 @@ export class OfficeDetailComponent implements OnInit, OnDestroy{
   };
 
   columns: any[] = [
-    { name: 'identifier', label: 'Id' },
-    { name: 'name', label: 'Name' },
-    { name: 'description', label: 'Description' }
+    {name: 'identifier', label: 'Id'},
+    {name: 'name', label: 'Name'},
+    {name: 'description', label: 'Description'}
   ];
 
-  constructor(private store: OfficesStore, private route: ActivatedRoute, private router: Router, private officeService: OfficeService, private dialogService: TdDialogService, private notificationService: NotificationService) {}
+  constructor(private store: OfficesStore, private route: ActivatedRoute, private router: Router, private officeService: OfficeService, private dialogService: TdDialogService) {
+  }
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
-      .subscribe(this.store);
-
     this.officeSubscription = this.store.select(getSelectedOffice)
       .filter(office => !!office)
       .subscribe((office: Office) => {
         this.office = office;
         this.fetchBranches();
       });
+  }
+
+  ngOnDestroy(): void {
+    this.officeSubscription.unsubscribe();
   }
 
   fetchBranches(fetchRequest?: FetchRequest): void {
@@ -74,26 +70,26 @@ export class OfficeDetailComponent implements OnInit, OnDestroy{
         totalElements: officePage.totalElements,
         totalPages: officePage.totalPages
       };
-    })
+    });
   }
 
-  rowSelect(office: Office): void{
-    this.router.navigate(['../', office.identifier], { relativeTo: this.route });
+  rowSelect(office: Office): void {
+    this.router.navigate(['../', office.identifier], {relativeTo: this.route});
   }
 
-  searchOffice(searchTerm: string): void{
-    this.router.navigate(['../../'], { queryParams: { term: searchTerm }, relativeTo: this.route });
+  searchOffice(searchTerm: string): void {
+    this.router.navigate(['../../'], {queryParams: {term: searchTerm}, relativeTo: this.route});
   }
 
-  goToParent(): void{
-    if(this.office.parentIdentifier){
-      this.router.navigate(['../', this.office.parentIdentifier], { relativeTo: this.route });
-    }else{
-      this.router.navigate(['../../'], { relativeTo: this.route });
+  goToParent(): void {
+    if (this.office.parentIdentifier) {
+      this.router.navigate(['../', this.office.parentIdentifier], {relativeTo: this.route});
+    } else {
+      this.router.navigate(['../../'], {relativeTo: this.route});
     }
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete this office?',
       title: 'Confirm deletion',
@@ -104,14 +100,12 @@ export class OfficeDetailComponent implements OnInit, OnDestroy{
   deleteOffice(): void {
     this.confirmDeletion()
       .filter(accept => accept)
-      .subscribe(() => this.store.dispatch({ type: DELETE, payload: {
-        office: this.office,
-        activatedRoute: this.route
-      } }));
+      .subscribe(() => this.store.dispatch({
+        type: DELETE, payload: {
+          office: this.office,
+          activatedRoute: this.route
+        }
+      }));
   }
 
-  ngOnDestroy(): void{
-    this.actionsSubscription.unsubscribe();
-    this.officeSubscription.unsubscribe();
-  }
 }

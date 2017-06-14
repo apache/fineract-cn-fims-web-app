@@ -15,7 +15,7 @@
  */
 
 import {reducer} from './accounts.reducer';
-import {ResourceState} from '../../../../components/store/resource.reducer';
+import {ResourceState} from '../../../../common/store/resource.reducer';
 import {ExecuteCommandPayload, ExecuteCommandSuccessAction} from './task/task.actions';
 import {AccountCommandAction} from '../../../../services/accounting/domain/account-command-action.model';
 import {AccountState} from '../../../../services/accounting/domain/account-state.model';

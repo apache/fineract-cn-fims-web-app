@@ -22,14 +22,14 @@ import {AccountAssignment} from '../../../../services/portfolio/domain/account-a
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {setSelections} from '../../../../components/forms/form-helper';
+import {setSelections} from '../../../../common/forms/form-helper';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import {LOAD_PRODUCT, UNLOAD_PRODUCT} from '../store/case.actions';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {Observable} from 'rxjs';
 import {FimsCase} from '../store/model/fims-case.model';
-import {accountExists} from '../../../../components/validator/account-exists.validator';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
 
 @Component({
   selector: 'fims-case-form-component',

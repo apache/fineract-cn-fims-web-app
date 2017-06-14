@@ -23,4 +23,5 @@ export interface Office{
   description?: string;
   address?: Address;
   branches?: Office[];
+  tellerIds?: string[];
 }

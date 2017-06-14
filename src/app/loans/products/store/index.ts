@@ -30,15 +30,15 @@ import {
   getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../../components/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../components/store/search.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../../components/store/form.reducer';
+} from '../../../../common/store/search.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../../common/store/form.reducer';
 
 export interface State extends fromRoot.State {
   products: ResourceState;

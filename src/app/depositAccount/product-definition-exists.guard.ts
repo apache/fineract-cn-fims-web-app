@@ -21,7 +21,7 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import {DepositAccountStore} from './store/index';
 import {DepositAccountService} from '../../services/depositAccount/deposit-account.service';
-import {ExistsGuardService} from '../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 import * as fromProducts from './store/index';
 
 @Injectable()

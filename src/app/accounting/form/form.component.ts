@@ -16,11 +16,11 @@
 
 import {accountTypes, AccountTypeOption} from '../account-types.model';
 import {OnInit, Component, ViewChild, Input, EventEmitter, Output} from '@angular/core';
-import {FormComponent} from '../../../components/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../components/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 
 @Component({
   selector: 'fims-ledger-form-component',

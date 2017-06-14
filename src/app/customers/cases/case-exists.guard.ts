@@ -23,7 +23,7 @@ import {CasesStore} from './store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
 import {mapToFimsCase} from './store/model/fims-case.mapper';
-import {ExistsGuardService} from '../../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 
 @Injectable()
 export class CaseExistsGuard implements CanActivate {

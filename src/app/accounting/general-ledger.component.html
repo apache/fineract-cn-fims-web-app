@@ -35,6 +35,11 @@
                 <h3 md-line translate>Journal entries</h3>
                 <p md-line translate>View journal entries</p>
               </a>
+              <a md-list-item [routerLink]="['./transactiontypes']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'READ' }">
+                <md-icon md-list-avatar>swap_horiz</md-icon>
+                <h3 md-line translate>Transaction types</h3>
+                <p md-line translate>View transaction types</p>
+              </a>
               <a md-list-item [routerLink]="['./trialBalance']">
                 <md-icon md-list-avatar>account_balance</md-icon>
                 <h3 md-line translate>Trial balance</h3>

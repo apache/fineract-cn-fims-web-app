@@ -16,10 +16,10 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ITdDataTableColumn} from '@covalent/core';
-import {ActionOption, ActionOptions} from '../../../../components/domain/action-option.model';
+import {ActionOption, ActionOptions} from '../../../../common/domain/action-option.model';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
 import {Observable, Subscription} from 'rxjs';

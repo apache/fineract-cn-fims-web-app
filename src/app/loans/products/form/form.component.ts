@@ -22,12 +22,12 @@ import {AccountAssignment} from '../../../../services/portfolio/domain/account-a
 import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
 import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
 import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {FimsValidators} from '../../../../components/validator/validators';
+import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {FimsProduct} from '../store/model/fims-product.model';
-import {accountExists} from '../../../../components/validator/account-exists.validator';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
 import {ProductSettingsFormComponent, SettingsFormData} from './settings/settings.component';
-import {temporalOptionList} from '../../../../components/domain/temporal.domain';
+import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 
 @Component({
   selector: 'fims-product-form-component',

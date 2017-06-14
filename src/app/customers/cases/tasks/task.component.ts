@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TableData, TableFetchRequest} from '../../../../components/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
 import {Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {Case} from '../../../../services/portfolio/domain/case.model';

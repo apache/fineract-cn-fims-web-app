@@ -15,14 +15,14 @@
  */
 
 import {Component, Input, OnInit} from '@angular/core';
-import {FormComponent} from '../../../../../components/forms/form.component';
+import {FormComponent} from '../../../../../common/forms/form.component';
 import {Validators, FormBuilder, FormControl} from '@angular/forms';
-import {FimsValidators} from '../../../../../components/validator/validators';
+import {FimsValidators} from '../../../../../common/validator/validators';
 import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
-import {alignmentOptions} from '../../../../../components/domain/alignment.model';
-import {weekDayOptions} from '../../../../../components/domain/week-days.model';
-import {monthOptions} from '../../../../../components/domain/months.model';
-import {temporalOptionList} from '../../../../../components/domain/temporal.domain';
+import {alignmentOptions} from '../../../../../common/domain/alignment.model';
+import {weekDayOptions} from '../../../../../common/domain/week-days.model';
+import {monthOptions} from '../../../../../common/domain/months.model';
+import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
 import {Product} from '../../../../../services/portfolio/domain/product.model';
 
 export interface DetailFormData{

@@ -20,7 +20,7 @@ import {NgModule} from '@angular/core';
 import {CustomerComponent} from './customer.component';
 import {CustomerFormComponent} from './form/form.component';
 import {CreateCustomerFormComponent} from './form/create/create.form.component';
-import {FimsSharedModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {CustomerDetailComponent} from './detail/customer.detail.component';
 import {CustomerDetailFormComponent} from './form/detail/detail.component';
 import {CustomerOfficesComponent} from './form/offices/offices.component';
@@ -87,10 +87,7 @@ import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@co
     EffectsModule.run(CustomerTasksApiEffects),
     EffectsModule.run(CustomerTasksRouteEffects),
     EffectsModule.run(CustomerTasksNotificationEffects),
-    EffectsModule.run(CustomerCommandApiEffects),
-    EffectsModule.run(CustomerIdentificationCardApiEffects),
-    EffectsModule.run(CustomerIdentificationCardRouteEffects),
-    EffectsModule.run(CustomerIdentificationCardNotificationEffects),
+    EffectsModule.run(CustomerCommandApiEffects)
   ],
   declarations: [
     CustomerComponent,
@@ -108,16 +105,9 @@ import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@co
     CustomerStatusComponent,
     CustomerActivityComponent,
     CustomerPortraitComponent,
-    CustomerIdentityCardListComponent,
-    CustomerIdentityCardIndexComponent,
-    CustomerIdentityCardDetailComponent,
-    CreateCustomerIdentificationCardFormComponent,
-    EditCustomerIdentificationCardFormComponent,
-    IdentityCardFormComponent
   ],
   providers: [
     CustomerExistsGuard,
-    IdentityCardExistsGuard,
     { provide: CustomersStore, useFactory: customerStoreFactory, deps: [Store]}
   ]
 })

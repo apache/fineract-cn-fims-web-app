@@ -21,6 +21,7 @@ import {JournalEntryState} from './journal-entry-state.model';
 export interface JournalEntry{
   transactionIdentifier: string;
   transactionDate: string;
+  transactionType: string;
   clerk: string;
   note?: string;
   debtors: Debtor[];

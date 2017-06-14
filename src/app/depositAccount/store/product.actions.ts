@@ -15,14 +15,14 @@
  */
 
 import {type} from '../../util';
-import {RoutePayload} from '../../../components/store/route-payload';
+import {RoutePayload} from '../../../common/store/route-payload';
 import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 import {Action} from '@ngrx/store';
-import {SearchResult} from '../../../components/store/search.reducer';
+import {SearchResult} from '../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload
-} from '../../../components/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import {ProductDefinitionCommand} from '../../../services/depositAccount/domain/definition/product-definition-command.model';
 
 export const SEARCH = type('[Deposit Product Definition] Search');

@@ -22,7 +22,7 @@ import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
 import {mapToFimsProduct, mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
-import {emptySearchResult} from '../../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../../common/store/search.reducer';
 
 @Injectable()
 export class ProductApiEffects {

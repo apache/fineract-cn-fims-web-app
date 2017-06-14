@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {OfficeFormComponent} from '../form.component';
 import {Office} from '../../../../services/office/domain/office.model';
-import {Store} from '@ngrx/store';
 import * as fromOffice from '../../store';
 import {CREATE, CREATE_BRANCH, RESET_FORM} from '../../store/office.actions';
 import {Error} from '../../../../services/domain/error.model';

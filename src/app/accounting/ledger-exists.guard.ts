@@ -22,7 +22,7 @@ import {Observable} from 'rxjs';
 import {LoadAction} from './store/ledger/ledger.actions';
 import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../services/accounting/accounting.service';
-import {ExistsGuardService} from '../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
 export class LedgerExistsGuard implements CanActivate {

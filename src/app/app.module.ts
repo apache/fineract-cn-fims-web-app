@@ -44,12 +44,13 @@ import {SecurityApiEffects} from './reducers/security/effects/service.effects';
 import {SecurityNotificationEffects} from './reducers/security/effects/notification.effects';
 import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ExistsGuardService} from '../components/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 import {CountryService} from '../services/country/country.service';
 import {CountrySearchApiEffects} from './reducers/country/service.effects';
 import {ImageService} from '../services/image/image.service';
 import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
 import {CurrencyService} from '../services/currency/currency.service';
+import {TellerService} from '../services/teller/teller-service';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -103,6 +104,7 @@ export function HttpLoaderFactory(http: Http){
     AccountingService,
     PortfolioService,
     DepositAccountService,
+    TellerService,
     CountryService,
     CurrencyService,
     NotificationService,

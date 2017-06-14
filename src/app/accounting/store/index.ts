@@ -26,12 +26,16 @@ import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer,
+  createResourceReducer, getResourceEntities,
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../components/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+} from '../../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
+import {
+  createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
+  SearchState
+} from '../../../common/store/search.reducer';
 
 export interface State extends fromRoot.State{
   accounts: ResourceState;
@@ -44,6 +48,10 @@ export interface State extends fromRoot.State{
   chartOfAccounts: fromChartOfAccounts.State;
   journalEntrySearch: fromJournalEntrySearch.State;
   journalEntryForm: FormState;
+
+  transactionTypes: ResourceState;
+  transactionTypeSearch: SearchState;
+  transactionForm: FormState;
 }
 
 const reducers = {
@@ -54,6 +62,10 @@ const reducers = {
 
   journalEntrySearch: fromJournalEntrySearch.reducer,
   journalEntryForm: createFormReducer('Journal Entry'),
+
+  transactionTypes: createResourceReducer('Transaction Type', undefined, 'code'),
+  transactionTypeSearch: createSearchReducer('Transaction Type'),
+  transactionForm: createFormReducer('Transaction Type'),
 
   accounts: createResourceReducer('Account', fromAccounts.reducer),
   accountForm: createFormReducer('Account'),
@@ -134,4 +146,32 @@ export const getAccountEntrySearchResults = createSelector(getAccountEntrySearch
     totalPages: totalPages,
     totalElements: totalElements
   }
+});
+
+/**
+ * Transaction Types
+ */
+
+export const getTransactionTypesState = (state: State) => state.transactionTypes;
+
+export const getTransactionTypeLoadedAt = createSelector(getTransactionTypesState, getResourceLoadedAt);
+export const getSelectedTransactionType = createSelector(getTransactionTypesState, getResourceSelected);
+
+export const getTransactionTypeSearchState = (state: State) => state.transactionTypeSearch;
+
+export const getTransactionTypeFormState = (state: State) => state.transactionForm;
+export const getTransactionTypeFormError = createSelector(getTransactionTypeFormState, getFormError);
+
+
+export const getSearchTransactionTypes = createSelector(getTransactionTypeSearchState, getSearchEntities);
+export const getTransactionTypeSearchTotalElements = createSelector(getTransactionTypeSearchState, getSearchTotalElements);
+export const getTransactionTypeSearchTotalPages = createSelector(getTransactionTypeSearchState, getSearchTotalPages);
+export const getTransactionTypeSearchLoading = createSelector(getTransactionTypeSearchState, getSearchLoading);
+
+export const getTransactionTypeSearchResults = createSelector(getSearchTransactionTypes, getTransactionTypeSearchTotalPages, getTransactionTypeSearchTotalElements, (transactionTypes, totalPages, totalElements) => {
+  return {
+    transactionTypes,
+    totalPages,
+    totalElements
+  };
 });

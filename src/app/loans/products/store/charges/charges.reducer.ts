@@ -17,8 +17,8 @@
 import * as charge from './charge.actions';
 import { createSelector } from 'reselect';
 import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
-import {ResourceState} from '../../../../../components/store/resource.reducer';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../../components/store/reducer.helper';
+import {ResourceState} from '../../../../../common/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../../common/store/reducer.helper';
 
 export interface State extends ResourceState {
   ids: string[];

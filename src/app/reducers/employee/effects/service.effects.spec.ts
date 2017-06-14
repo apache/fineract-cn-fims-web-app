@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {OfficeService} from '../../../../services/office/office.service';
 import {SearchAction, SearchCompleteAction} from '../employee.actions';
 import {EmployeePage} from '../../../../services/office/domain/employee-page.model';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 describe('Employee Search Api Effects', () => {
   beforeEach(() => {

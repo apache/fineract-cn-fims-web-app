@@ -39,25 +39,26 @@ describe('Test permission directive', () => {
 
   describe('Test permission directive with object parameter', () => {
     it('should add item to dom', () => {
-      let store = TestBed.get(Store);
+      const store = TestBed.get(Store);
 
       spyOn(store, 'select').and.returnValue(Observable.of<FimsPermission[]>([
         { id: 'office_offices', accessLevel: 'READ'}
       ]));
 
-      let fixture = TestBed.createComponent(TestComponentWithObject);
+      const fixture = TestBed.createComponent(TestComponentWithObject);
       fixture.detectChanges();
 
-      let element = fixture.debugElement.query(By.css('button'));
+      const element = fixture.debugElement.query(By.css('button'));
       expect(element).not.toBeNull('Button should be existent within the dom');
     });
 
     it('should remove item from dom', () => {
-      let store = TestBed.get(Store);
+      const store = TestBed.get(Store);
       spyOn(store, 'select').and.returnValue(Observable.of([]));
 
-      let fixture = TestBed.createComponent(TestComponentWithObject);
-      let element = fixture.debugElement.query(By.css('button'));
+      const fixture = TestBed.createComponent(TestComponentWithObject);
+      fixture.detectChanges();
+      const element = fixture.debugElement.query(By.css('button'));
       expect(element).toBeNull('Button should be not existent within the dom');
     })
   });

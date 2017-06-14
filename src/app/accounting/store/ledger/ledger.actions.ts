@@ -19,7 +19,7 @@ import {type} from '../../../util';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 import {Error} from '../../../../services/domain/error.model';
 import {TrialBalance} from '../../../../services/accounting/domain/trial-balance.model';
-import {RoutePayload} from '../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {LedgerPage} from '../../../../services/accounting/domain/ledger-page.model';
 import {ChartOfAccountEntry} from '../../../../services/accounting/domain/chart-of-account-entry.model';
 

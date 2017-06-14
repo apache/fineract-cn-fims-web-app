@@ -16,7 +16,7 @@
 
 import * as ledger from './ledger.actions';
 import {Error} from '../../../../services/domain/error.model';
-import {FormState} from '../../../../components/store/form.reducer';
+import {FormState} from '../../../../common/store/form.reducer';
 
 export const initialState: FormState = {};
 

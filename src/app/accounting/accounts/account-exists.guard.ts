@@ -22,7 +22,7 @@ import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {LoadAction} from '../store/account/account.actions';
 import {AccountingStore} from '../store/index';
-import {ExistsGuardService} from '../../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 
 @Injectable()
 export class AccountExistsGuard implements CanActivate {

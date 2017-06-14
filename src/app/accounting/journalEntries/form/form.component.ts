@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
-import {FormComponent} from '../../../../components/forms/form.component';
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {FormBuilder, Validators, FormControl, FormGroup, FormArray, AbstractControl} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
+import {FormComponent} from '../../../../common/forms/form.component';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TdStepComponent} from '@covalent/core';
-import {Creditor} from '../../../../services/accounting/domain/creditor.model';
-import {Debtor} from '../../../../services/accounting/domain/debtor.model';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {Account} from '../../../../services/accounting/domain/account.model';
 import {Observable, Subscription} from 'rxjs';
 import {toLongISOString} from '../../../../services/domain/date.converter';
-import {FimsValidators} from '../../../../components/validator/validators';
+import {FimsValidators} from '../../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../reducers';
 import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';
@@ -33,6 +31,8 @@ import {Error} from '../../../../services/domain/error.model';
 import {SEARCH} from '../../../reducers/account/account.actions';
 import {AccountingStore} from '../../store/index';
 import {JournalEntryValidators} from './journal-entry.validator';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {transactionTypeExists} from './transaction-type-select/validator/transaction-type-exists.validator';
 
 @Component({
   selector: 'fims-journal-entry-form-component',
@@ -52,7 +52,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
   accounts: Observable<Account[]>;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private store: AccountingStore) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private store: AccountingStore, private accountingService: AccountingService) {
     super();
   }
 
@@ -74,6 +74,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
     this.form = this.formBuilder.group({
       transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      transactionType: ['', [Validators.required], transactionTypeExists(this.accountingService)],
       transactionDate: [new Date().toISOString().slice(0, 10), Validators.required],
       note: [''],
       message: [''],
@@ -104,6 +105,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
     let journalEntry: JournalEntry = {
       transactionIdentifier: this.form.get('transactionIdentifier').value,
+      transactionType: this.form.get('transactionType').value,
       transactionDate: transactionDateString,
       clerk: this.selectedClerk,
       note: this.form.get('note').value,
@@ -156,7 +158,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     return creditors.controls;
   }
 
-  private onAccountSearch(searchTerm?: string): void{
+  private onAccountSearch(searchTerm?: string): void {
     let fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,

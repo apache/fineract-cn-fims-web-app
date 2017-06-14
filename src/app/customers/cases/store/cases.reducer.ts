@@ -1,4 +1,4 @@
-import {ResourceState} from '../../../../components/store/resource.reducer';
+import {ResourceState} from '../../../../common/store/resource.reducer';
 /**
  * Copyright 2017 The Mifos Initiative.
  *

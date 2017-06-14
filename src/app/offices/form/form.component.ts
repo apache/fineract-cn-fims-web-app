@@ -18,9 +18,9 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../../services/office/domain/office.model';
-import {FimsValidators} from '../../../components/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 import {Address} from '../../../services/domain/address/address.model';
-import {AddressFormComponent} from '../../../components/address/address.component';
+import {AddressFormComponent} from '../../../common/address/address.component';
 
 
 @Component({

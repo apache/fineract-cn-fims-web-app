@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 import {OnInit, Component} from '@angular/core';
-import {TableData} from '../../../components/data-table/data-table.component';
+import {TableData} from '../../../common/data-table/data-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {todayAsISOString} from '../../../services/domain/date.converter';
-import {FimsValidators} from '../../../components/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
 import {Observable} from 'rxjs';
@@ -39,13 +39,14 @@ export class JournalEntryListComponent implements OnInit{
 
   columns: ITdDataTableColumn[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
+  constructor(private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.columns = [
       { name: 'transactionIdentifier', label: 'Id', tooltip: 'Id' },
       { name: 'clerk', label: 'Clerk', tooltip: 'Clerk' },
       { name: 'state', label: 'State', tooltip: 'State' },
+      { name: 'transactionType', label: 'Transaction type', tooltip: 'Transaction type' },
       { name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format:  (v: any) => {
         return this.datePipe.transform(v, 'shortDate')
       }}
@@ -65,10 +66,6 @@ export class JournalEntryListComponent implements OnInit{
       'endDate': [ today, [Validators.required] ],
     }, { validator: FimsValidators.matchRange('startDate', 'endDate') });
     this.fetchJournalEntries()
-  }
-
-  rowSelect(account: Account): void{
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   fetchJournalEntries(): void{

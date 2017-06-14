@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 @Injectable()
 export class OfficeSearchApiEffects {

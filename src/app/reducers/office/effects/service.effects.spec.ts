@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {OfficeService} from '../../../../services/office/office.service';
 import {SearchAction, SearchCompleteAction} from '../office.actions';
 import {OfficePage} from '../../../../services/office/domain/office-page.model';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 describe('Office Search Api Effects', () => {
   beforeEach(() => {

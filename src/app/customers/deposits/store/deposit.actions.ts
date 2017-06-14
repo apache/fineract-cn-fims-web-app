@@ -16,14 +16,14 @@
 
 import {type} from '../../../util';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
-import {RoutePayload} from '../../../../components/store/route-payload';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload
-} from '../../../../components/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 import {Action} from '@ngrx/store';
-import {SearchResult} from '../../../../components/store/search.reducer';
+import {SearchResult} from '../../../../common/store/search.reducer';
 
 export const SEARCH = type('[Deposit] Search');
 export const SEARCH_COMPLETE = type('[Deposit] Search Complete');

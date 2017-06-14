@@ -1,0 +1,63 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Teller details' | translate}}"
+           [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+    <form [formGroup]="form">
+      <div layout="row">
+        <fims-id-input [form]="form" [placeholder]="'Number'" controlName="code" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" tdAutoTrim autocomplete="new-password"/>
+          <md-error *ngIf="form.get('password').hasError('required')" translate>Required</md-error>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="number" placeholder="{{'Cash withdrawal limit' | translate}}" formControlName="cashdrawLimit" tdAutoTrim/>
+          <md-error *ngIf="form.get('cashdrawLimit').hasError('required')" translate>Required</md-error>
+        </md-input-container>
+      </div>
+      <fims-account-select title="{{'Teller account' | translate}}" formControlName="tellerAccountIdentifier">
+        <ng-container *ngIf="!form.get('tellerAccountIdentifier').pristine && form.get('tellerAccountIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="form.get('tellerAccountIdentifier').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+      <fims-account-select title="{{'Vault account' | translate}}" formControlName="vaultAccountIdentifier">
+        <ng-container *ngIf="!form.get('vaultAccountIdentifier').pristine && form.get('vaultAccountIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="form.get('vaultAccountIdentifier').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'TELLER'"
+        [editMode]="editMode"
+        [disabled]="form.invalid"
+        (onCancel)="cancel()"
+        (onSave)="save()" flex>
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

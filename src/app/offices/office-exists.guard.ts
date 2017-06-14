@@ -22,7 +22,7 @@ import {State, getOfficeEntities, OfficesStore, getOfficesLoadedAt} from './stor
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/office.actions';
 import {of} from 'rxjs/observable/of';
-import {ExistsGuardService} from '../../components/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
 export class OfficeExistsGuard implements CanActivate {

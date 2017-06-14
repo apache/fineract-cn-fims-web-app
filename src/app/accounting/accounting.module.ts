@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {FimsSharedModule} from '../../components/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {AccountingRoutes} from './accounting.routing';
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -59,12 +59,27 @@ import {ChartOfAccountTableComponent} from './chartOfAccounts/chart-of-account-t
 import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {
-  MdButtonModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
+  MdAutocompleteModule,
+  MdButtonModule,
+  MdCheckboxModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule, MdOptionModule,
+  MdRadioModule,
   MdToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TransactionTypeListComponent} from './transactionTypes/transaction-types.list.component';
+import {TransactionTypeApiEffects} from './store/ledger/transaction-type/effects/service.effects';
+import {TransactionTypeRouteEffects} from './store/ledger/transaction-type/effects/route.effects';
+import {TransactionTypeNotificationEffects} from './store/ledger/transaction-type/effects/notification.effects';
+import {TransactionTypeFormComponent} from './transactionTypes/form/transaction-type-form.component';
+import {CreateTransactionTypeFormComponent} from './transactionTypes/form/create/create.form.component';
+import {EditTransactionTypeFormComponent} from './transactionTypes/form/edit/edit.form.component';
+import {TransactionTypeExistsGuard} from './transactionTypes/transaction-type-exists.guard';
+import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-type-select/transaction-type-select.component';
 
 @NgModule({
   imports: [
@@ -81,6 +96,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MdButtonModule,
     MdRadioModule,
     MdCheckboxModule,
+    MdAutocompleteModule,
+    MdOptionModule,
     CovalentDataTableModule,
     CovalentStepsModule,
 
@@ -91,6 +108,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     EffectsModule.run(JournalEntryApiEffects),
     EffectsModule.run(JournalEntryRouteEffects),
     EffectsModule.run(JournalEntryNotificationEffects),
+
+    EffectsModule.run(TransactionTypeApiEffects),
+    EffectsModule.run(TransactionTypeRouteEffects),
+    EffectsModule.run(TransactionTypeNotificationEffects),
 
     EffectsModule.run(AccountApiEffects),
     EffectsModule.run(AccountRouteEffects),
@@ -120,12 +141,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CreateAccountFormComponent,
     EditAccountFormComponent,
     JournalEntryListComponent,
-    JournalEntryFormComponent
+    JournalEntryFormComponent,
+    TransactionTypeListComponent,
+    TransactionTypeFormComponent,
+    CreateTransactionTypeFormComponent,
+    EditTransactionTypeFormComponent,
+    TransactionTypeSelectComponent
   ],
   providers: [
     CommandsResolver,
     LedgerExistsGuard,
     AccountExistsGuard,
+    TransactionTypeExistsGuard,
     { provide: AccountingStore, useFactory: accountingStoreFactory, deps: [Store]}
   ]
 })

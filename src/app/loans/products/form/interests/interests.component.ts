@@ -15,12 +15,12 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../../components/forms/form.component';
+import {FormComponent} from '../../../../../common/forms/form.component';
 import {InterestBasis} from '../../../../../services/portfolio/domain/interest-basis.model';
 import {FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../../components/validator/validators';
+import {FimsValidators} from '../../../../../common/validator/validators';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {accountExists} from '../../../../../components/validator/account-exists.validator';
+import {accountExists} from '../../../../../common/validator/account-exists.validator';
 
 interface InterestBasisOption{
   type: InterestBasis;

@@ -21,7 +21,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {emptySearchResult, SearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult, SearchResult} from '../../../../common/store/search.reducer';
 import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
 
 @Injectable()

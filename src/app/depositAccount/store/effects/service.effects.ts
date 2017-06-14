@@ -21,7 +21,7 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {of} from 'rxjs/observable/of';
-import {emptySearchResult} from '../../../../components/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 @Injectable()
 export class DepositProductDefinitionApiEffects {

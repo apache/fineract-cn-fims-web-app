@@ -15,29 +15,43 @@
  */
 
 import * as fromRoot from '../../reducers';
+import * as fromTellers from '../store/teller/tellers.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../reducers/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer,
+  createResourceReducer, getResourceAll,
   getResourceEntities,
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../components/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../components/store/form.reducer';
+} from '../../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 
 export interface State extends fromRoot.State{
   offices: ResourceState;
   officeForm: FormState;
+  tellers: ResourceState;
+  tellerForm: FormState;
+  tellerCommandForm: FormState;
 }
 
 const reducers = {
   offices: createResourceReducer('Office'),
-  officeForm: createFormReducer('Office')
+  officeForm: createFormReducer('Office'),
+  tellers: createResourceReducer('Office Teller', fromTellers.reducer, 'code'),
+  tellerForm: createFormReducer('Office Teller'),
+  tellerCommandForm: createFormReducer('Office Teller Command')
 };
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
+
+export class OfficesStore extends Store<State>{}
+
+export function officeStoreFactory(appStore: Store<fromRoot.State>){
+  appStore.replaceReducer(officeModuleReducer);
+  return appStore;
+}
 
 export const getOfficesState = (state: State) => state.offices;
 
@@ -48,9 +62,16 @@ export const getOfficeEntities = createSelector(getOfficesState, getResourceEnti
 export const getOfficesLoadedAt = createSelector(getOfficesState, getResourceLoadedAt);
 export const getSelectedOffice = createSelector(getOfficesState, getResourceSelected);
 
-export class OfficesStore extends Store<State>{}
 
-export function officeStoreFactory(appStore: Store<fromRoot.State>){
-  appStore.replaceReducer(officeModuleReducer);
-  return appStore;
-}
+export const getTellerState = (state: State) => state.tellers;
+
+export const getTellerFormState = (state: State) => state.tellerForm;
+export const getTellerFormError = createSelector(getTellerFormState, getFormError);
+
+export const getAllTellerEntities = createSelector(getTellerState, getResourceAll);
+
+export const getTellersLoadedAt = createSelector(getTellerState, getResourceLoadedAt);
+export const getSelectedTeller = createSelector(getTellerState, getResourceSelected);
+
+export const getTellerCommandFormState = (state: State) => state.tellerCommandForm;
+export const getTellerCommandFormError = createSelector(getTellerFormState, getFormError);

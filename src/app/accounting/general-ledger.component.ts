@@ -16,7 +16,7 @@
 import {OnInit, Component} from '@angular/core';
 import {Params, ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
-import {TableData} from '../../components/data-table/data-table.component';
+import {TableData} from '../../common/data-table/data-table.component';
 import * as fromAccounting from './store';
 import {LOAD_ALL_TOP_LEVEL} from './store/ledger/ledger.actions';
 import {Observable} from 'rxjs';

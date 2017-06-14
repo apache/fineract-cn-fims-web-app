@@ -17,7 +17,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {Router, ActivatedRoute} from '@angular/router';
-import {TableData} from '../../../components/data-table/data-table.component';
+import {TableData} from '../../../common/data-table/data-table.component';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {PortfolioStore} from './store/index';
 import * as fromPortfolio from './store';
