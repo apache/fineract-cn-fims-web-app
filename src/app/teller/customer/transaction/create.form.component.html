@@ -25,8 +25,8 @@
     [enableTargetAccount]="enableTargetAccount"
     [error]="error"
     (onCreateTransaction)="createTransaction($event)"
-    (onConfirmTransaction)="confirmTransaction($event)"
-    (onCancelTransaction)="cancelTransaction($event)"
-    (onCancel)="cancel($event)">
+    (onConfirmTransaction)="confirmTransaction()"
+    (onCancelTransaction)="cancelTransaction()"
+    (onCancel)="cancel()">
   </fims-teller-transaction-form>
 </fims-layout-card-over>
