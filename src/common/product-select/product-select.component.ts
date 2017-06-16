@@ -40,8 +40,13 @@ export class ProductSelectComponent implements OnInit{
     this.onSearch()
   }
 
-  onSearch(searchTerm?: string): void{
-    this.products = this.portfolioService.findAllProducts();
+  onSearch(searchTerm?: string): void {
+    const fetchRequest: FetchRequest = {
+      searchTerm
+    };
+
+    this.products = this.portfolioService.findAllProducts(false, fetchRequest)
+      .map(productPage => productPage.elements);
   }
 
   selectionChange(selections: string[]): void{

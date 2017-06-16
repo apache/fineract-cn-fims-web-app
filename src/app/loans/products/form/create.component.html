@@ -20,6 +20,7 @@
   <fims-product-form-component #form
                                   (onSave)="onSave($event)"
                                   (onCancel)="onCancel()"
+                                  [currencies]="currencies$ | async"
                                   [product]="product">
   </fims-product-form-component>
 </fims-layout-card-over>

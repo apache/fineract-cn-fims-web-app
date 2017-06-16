@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-export interface Currency {
-  code: string;
-  name: string;
-  sign: string;
-  digits: number;
+import {Product} from './product.model';
+
+export interface ProductPage {
+  elements: Product[];
+  totalPages: number;
+  totalElements: number;
 }

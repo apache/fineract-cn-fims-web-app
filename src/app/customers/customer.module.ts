@@ -44,21 +44,15 @@ import {CustomerTasksNotificationEffects} from './store/tasks/effects/notificati
 import {CustomerTasksApiEffects} from './store/tasks/effects/service.effects';
 import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
 import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
-import {CustomerIdentificationCardApiEffects} from './store/identityCards/effects/service.effects';
-import {CustomerIdentificationCardRouteEffects} from './store/identityCards/effects/route.effects';
-import {CustomerIdentificationCardNotificationEffects} from './store/identityCards/effects/notification.effects';
-import {CustomerIdentityCardListComponent} from './detail/identityCard/identity-card.list.component';
-import {CustomerIdentityCardDetailComponent} from './detail/identityCard/identity-card.detail.component';
-import {IdentityCardFormComponent} from './detail/identityCard/form/identity-card-form.component';
-import {CreateCustomerIdentificationCardFormComponent} from './detail/identityCard/form/create.form.component';
-import {EditCustomerIdentificationCardFormComponent} from './detail/identityCard/form/edit.form.component';
-import {CustomerIdentityCardIndexComponent} from './detail/identityCard/identity-card.index.component';
-import {IdentityCardExistsGuard} from './detail/identityCard/identity-card-exists.guard';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
+  MdButtonModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdRadioModule,
   MdToolbarModule
 } from '@angular/material';
 import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';

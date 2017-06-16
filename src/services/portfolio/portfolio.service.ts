@@ -30,6 +30,7 @@ import {PlannedPaymentPage} from './domain/individuallending/planned-payment-pag
 import {CasePage} from './domain/case-page.model';
 import {AccountAssignment} from './domain/account-assignment.model';
 import {WorkflowAction} from './domain/individuallending/workflow-action.model';
+import {ProductPage} from './domain/product-page.model';
 
 @Injectable()
 export class PortfolioService {
@@ -40,11 +41,11 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/patterns/`)
   }
 
-  findAllProducts(includeDisabled?: boolean): Observable<Product[]>{
-    let params: URLSearchParams = new URLSearchParams();
+  findAllProducts(includeDisabled?: boolean, fetchRequest?: FetchRequest): Observable<ProductPage> {
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
     params.append('includeDisabled', includeDisabled ? 'true' : 'false');
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       search: params
     };
     return this.http.get(`${this.baseUrl}/products/`, requestOptions)

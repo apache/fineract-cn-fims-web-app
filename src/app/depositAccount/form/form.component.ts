@@ -77,7 +77,6 @@ export class DepositProductFormComponent implements OnInit {
       name: [definition.name, [Validators.required]],
       description: [definition.description],
       currencyCode: [definition.currency.code, [Validators.required]],
-      currencyScale: [definition.currency.scale, [Validators.required, FimsValidators.minValue(0)]],
       minimumBalance: [definition.minimumBalance, [Validators.required]],
       interest: [definition.interest, [Validators.required, FimsValidators.minValue(0)]],
       flexible: [definition.flexible, [Validators.required]],
@@ -109,7 +108,7 @@ export class DepositProductFormComponent implements OnInit {
         code: currency.code,
         name: currency.name,
         sign: currency.sign,
-        scale: this.formGroup.get('currencyScale').value
+        scale: currency.digits
       },
       charges: this.chargesForm.formData,
       expenseAccountIdentifier: this.formGroup.get('expenseAccountIdentifier').value,

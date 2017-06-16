@@ -25,6 +25,9 @@ import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Error} from '../../../../services/domain/error.model';
 import {FimsProduct} from '../store/model/fims-product.model';
+import {Currency} from '../../../../services/currency/domain/currency.model';
+import {CurrencyService} from '../../../../services/currency/currency.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: './create.component.html'
@@ -34,6 +37,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
   private formStateSubscription: Subscription;
 
   @ViewChild('form') formComponent: ProductFormComponent;
+
+  currencies$: Observable<Currency[]>;
 
   product: FimsProduct = {
     identifier: '',
@@ -64,7 +69,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     }
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore, private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
     this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductFormError)
@@ -76,6 +81,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
         detailForm.get('identifier').setErrors(errors);
         this.formComponent.step.open();
       });
+
+    this.currencies$ = this.currencyService.fetchCurrencies();
   }
 
   ngOnDestroy(): void {

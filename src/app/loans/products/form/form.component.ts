@@ -28,6 +28,7 @@ import {FimsProduct} from '../store/model/fims-product.model';
 import {accountExists} from '../../../../common/validator/account-exists.validator';
 import {ProductSettingsFormComponent, SettingsFormData} from './settings/settings.component';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
+import {Currency} from '../../../../services/currency/domain/currency.model';
 
 @Component({
   selector: 'fims-product-form-component',
@@ -36,14 +37,6 @@ import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 export class ProductFormComponent implements OnInit{
 
   temporalOptions = temporalOptionList;
-
-  currencyUnitDigits: any = [
-    { digits: 0, label: '0' },
-    { digits: 1, label: '1' },
-    { digits: 2, label: '2' },
-    { digits: 3, label: '3' },
-    { digits: 4, label: '4' }
-  ];
 
   detailForm: FormGroup;
 
@@ -60,6 +53,8 @@ export class ProductFormComponent implements OnInit{
     this.prepareFeeForm(product);
     this.prepareAllowanceForm(product);
   };
+
+  @Input('currencies') currencies: Currency[];
 
   @Output('onSave') onSave = new EventEmitter<FimsProduct>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
@@ -93,12 +88,16 @@ export class ProductFormComponent implements OnInit{
       moratoriums: []
     };
 
+    const currencyCode: string = this.detailForm.get('currencyCode').value;
+
+    const currency = this.currencies.find(currency => currency.code === currencyCode);
+
     const product: FimsProduct = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value,
-      minorCurrencyUnitDigits: this.detailForm.get('minorCurrencyUnitDigits').value,
-      currencyCode: this.detailForm.get('currencyCode').value,
+      minorCurrencyUnitDigits: currency.digits,
+      currencyCode: currency.code,
       interestBasis: this.interestForm.formData.interestBasis,
       interestRange: {
         minimum: this.interestForm.formData.minimum,
@@ -116,6 +115,7 @@ export class ProductFormComponent implements OnInit{
       patternPackage: 'io.mifos.individuallending.api.v1',
       accountAssignments: this.collectAccountAssignments()
     };
+
     this.onSave.emit(product);
   }
 
@@ -169,7 +169,6 @@ export class ProductFormComponent implements OnInit{
       name: [product.name, [Validators.required]],
       description: [product.description, [Validators.required]],
       currencyCode: [product.currencyCode, [Validators.required]],
-      minorCurrencyUnitDigits: [product.minorCurrencyUnitDigits, [Validators.required]],
       minimumBalance: [balanceRange ? balanceRange.minimum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange ? balanceRange.maximum : undefined, [Validators.required, FimsValidators.minValue(0)]],
       term: [termRange ? termRange.maximum : undefined, [ Validators.required, FimsValidators.minValue(0) ]],

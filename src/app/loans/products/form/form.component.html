@@ -37,14 +37,9 @@
         </md-input-container>
       </div>
       <div layout="row">
-        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency code' | translate }}">
-          <md-option *ngFor="let code of ['USD', 'EUR', 'XCD', 'BZD']" [value]="code">
-            {{code}}
-          </md-option>
-        </md-select>
-        <md-select formControlName="minorCurrencyUnitDigits" layout-margin placeholder="{{ 'Currency digits' | translate }}">
-          <md-option *ngFor="let digit of [0,1,2,3,4,5]" [value]="digit">
-            {{digit}}
+        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
+          <md-option *ngFor="let currency of currencies" [value]="currency.code">
+            {{currency.code}}
           </md-option>
         </md-select>
       </div>

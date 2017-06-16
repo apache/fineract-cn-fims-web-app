@@ -36,12 +36,12 @@ export class ProductApiEffects {
     .switchMap(() => {
       const nextSearch$ = this.actions$.ofType(productActions.SEARCH).skip(1);
 
-      return this.portfolioService.findAllProducts()
+      return this.portfolioService.findAllProducts(true)
         .takeUntil(nextSearch$)
-        .map(products => new productActions.SearchCompleteAction({
-          elements: mapToFimsProducts(products),
-          totalElements: products.length,
-          totalPages: 1
+        .map(productPage => new productActions.SearchCompleteAction({
+          elements: mapToFimsProducts(productPage.elements),
+          totalElements: productPage.totalElements,
+          totalPages: productPage.totalPages
         }))
         .catch(() => of(new productActions.SearchCompleteAction(emptySearchResult())));
     });

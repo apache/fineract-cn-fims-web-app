@@ -22,10 +22,10 @@ import {Currency} from './domain/currency.model';
 export class CurrencyService {
 
   private currencies: Currency[] = [
-    { code: 'BZD', name: 'Belize Dollar', sign: '$' },
-    { code: 'EUR', name: 'Euro', sign: '€' },
-    { code: 'USD', name: 'US Dollar', sign: '$' },
-    { code: 'XCD', name: 'East Caribbean Dollar', sign: '$' }
+    { code: 'BZD', name: 'Belize Dollar', sign: '$', digits: 2 },
+    { code: 'EUR', name: 'Euro', sign: '€', digits: 2 },
+    { code: 'USD', name: 'US Dollar', sign: '$', digits: 2 },
+    { code: 'XCD', name: 'East Caribbean Dollar', sign: '$', digits: 2 }
   ];
 
   fetchCurrencies(): Observable<Currency[]> {

@@ -47,11 +47,6 @@
             {{currency.code}}
           </md-option>
         </md-select>
-        <md-select formControlName="currencyScale" layout-margin placeholder="{{ 'Currency digits' | translate }}">
-          <md-option *ngFor="let digit of [0,1,2,3,4,5]" [value]="digit">
-            {{digit}}
-          </md-option>
-        </md-select>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
