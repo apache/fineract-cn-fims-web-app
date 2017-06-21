@@ -43,11 +43,17 @@ export class OfficeTellerDetailComponent implements OnInit {
 
   teller$: Observable<Teller>;
 
+  isClosed$: Observable<boolean>;
+
   constructor(private store: OfficesStore) {}
 
   ngOnInit(): void {
     this.teller$ = this.store.select(fromOffices.getSelectedTeller)
       .filter(teller => !!teller);
+
+    this.isClosed$ = this.teller$
+      .map(teller => teller.state === 'CLOSED');
+
   }
 
 }
