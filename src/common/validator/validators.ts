@@ -18,7 +18,7 @@ import {FormGroup, ValidatorFn, AbstractControl} from '@angular/forms';
 
 export class FimsValidators {
 
-  static urlSafe(): ValidatorFn{
+  static urlSafe(): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value && encodeURIComponent(c.value) !== c.value) {
           return {
@@ -29,7 +29,7 @@ export class FimsValidators {
     }
   }
 
-  static isNumber(): ValidatorFn{
+  static isNumber(): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value && isNaN(c.value)) {
         return {

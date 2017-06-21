@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {FormComponent} from '../../../../../common/forms/form.component';
-import {Validators, FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../../common/validator/validators';
 import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
 import {alignmentOptions} from '../../../../../common/domain/alignment.model';
@@ -24,9 +24,11 @@ import {weekDayOptions} from '../../../../../common/domain/week-days.model';
 import {monthOptions} from '../../../../../common/domain/months.model';
 import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
 import {Product} from '../../../../../services/portfolio/domain/product.model';
+import {Subscription} from 'rxjs/Subscription';
 
-export interface DetailFormData{
+export interface DetailFormData {
   identifier: string,
+  productIdentifier: string,
   principalAmount: number,
   term: number,
   termTemporalUnit: ChronoUnit,
@@ -41,11 +43,21 @@ export interface DetailFormData{
   selector: 'fims-case-detail-form',
   templateUrl: './detail.component.html'
 })
-export class CaseDetailFormComponent extends FormComponent<DetailFormData> implements OnInit{
+export class CaseDetailFormComponent extends FormComponent<DetailFormData> implements OnInit, OnDestroy, OnChanges {
 
-  private _product: Product;
+  private productIdentifierChangeSubscription: Subscription;
+
+  private _formData: DetailFormData;
 
   @Input() editMode: boolean;
+
+  @Input() products: Product[];
+
+  @Input() set formData(formData: DetailFormData) {
+    this._formData = formData;
+  };
+
+  product: Product;
 
   alignments: any[] = alignmentOptions;
 
@@ -57,27 +69,50 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
   temporalOptions = temporalOptionList;
 
-  @Input() set formData(formData: DetailFormData) {
-    this.form = this.formBuilder.group({
-      identifier: [formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
-      principalAmount: [formData.principalAmount],
-      term: [formData.term],
-      termTemporalUnit: [formData.termTemporalUnit, Validators.required],
-      paymentTemporalUnit: [formData.paymentTemporalUnit, [ Validators.required, FimsValidators.minValue(1) ]],
-      paymentPeriod: [formData.paymentPeriod, [ Validators.required, FimsValidators.minValue(1)]],
-      alignmentDay: [formData.paymentAlignmentDay],
-      alignmentWeek: [formData.paymentAlignmentWeek],
-      alignmentMonth: [formData.paymentAlignmentMonth],
-      alignmentDaySetting: [formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
-    });
+  constructor(private formBuilder: FormBuilder) {
+    super();
   }
 
-  @Input() set product(product: Product) {
-    this._product = product;
+  ngOnInit(): void {
+    for(let i = 0; i < 30; i++) {
+      this.monthDays.push({
+        type: i, label: `${i+1}.`
+      })
+    }
 
-    if(!product) return;
+    this.form = this.formBuilder.group({
+      identifier: [this._formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
+      productIdentifier: [this._formData.productIdentifier, [Validators.required]],
+      principalAmount: [this._formData.principalAmount],
+      term: [this._formData.term],
+      termTemporalUnit: [this._formData.termTemporalUnit, Validators.required],
+      paymentTemporalUnit: [this._formData.paymentTemporalUnit, [ Validators.required, FimsValidators.minValue(1) ]],
+      paymentPeriod: [this._formData.paymentPeriod, [ Validators.required, FimsValidators.minValue(1)]],
+      alignmentDay: [this._formData.paymentAlignmentDay],
+      alignmentWeek: [this._formData.paymentAlignmentWeek],
+      alignmentMonth: [this._formData.paymentAlignmentMonth],
+      alignmentDaySetting: [this._formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
+    });
 
-    // Override validator with product constaints
+    this.productIdentifierChangeSubscription = this.form.get('productIdentifier').valueChanges
+      .map(identifier => this.products.find(product => product.identifier === identifier))
+      .subscribe(product => this.toggleProduct(product));
+  }
+
+  ngOnDestroy(): void {
+    this.productIdentifierChangeSubscription.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.products && changes.products.currentValue && this._formData.productIdentifier) {
+      const product = this.products.find(product => product.identifier === this._formData.productIdentifier);
+      this.toggleProduct(product);
+    }
+  }
+
+  toggleProduct(product: Product) {
+    this.product = product;
+    // Override validator with product constraints
     const principalAmount = this.form.get('principalAmount') as FormControl;
     principalAmount.setValidators([
       Validators.required,
@@ -100,27 +135,12 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     term.updateValueAndValidity();
   }
 
-  get product(): Product {
-    return this._product;
-  }
-
-  constructor(private formBuilder: FormBuilder) {
-    super();
-  }
-
-  ngOnInit(): void {
-    for(let i = 0; i < 30; i++) {
-      this.monthDays.push({
-        type: i, label: `${i+1}.`
-      })
-    }
-  }
-
   get formData(): DetailFormData {
     const isRelative: boolean = this.form.get('alignmentDaySetting').value === 'relative';
 
     const formData: DetailFormData = {
       identifier: this.form.get('identifier').value,
+      productIdentifier: this.form.get('productIdentifier').value,
       principalAmount: this.form.get('principalAmount').value,
       term: this.form.get('term').value,
       termTemporalUnit: this.form.get('termTemporalUnit').value,

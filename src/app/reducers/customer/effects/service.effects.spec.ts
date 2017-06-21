@@ -58,7 +58,7 @@ describe('Customer Search Api Effects', () => {
     it('should return a new SearchCompleteAction with CustomerPage', fakeAsync(() => {
       const customerPage: CustomerPage = {
         customers: [
-          { identifier: 'test', type: 'PERSON', givenName: '', surname: '', dateOfBirth: {}, address: {
+          { identifier: 'test', type: 'PERSON', givenName: '', surname: '', dateOfBirth: {}, member: true, address: {
             street: '', city: '', countryCode: '', country: ''
           }, customValues: [] }
         ],

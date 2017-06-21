@@ -1,7 +1,9 @@
 {
   "Account with value": "Account {{value}}",
   "BEGINNING_BALANCE": "Flat",
+  "Create new loan for customer": "Create new loan for customer {{value}}",
   "CURRENT_BALANCE": "Declining",
+  "Edit loan for customer": "Edit loan for customer {{value}}",
   "Issued by": "Issued by {{value}}",
   "Please verify the following tasks before you can action this customer": "Please verify the following tasks before you can {{value}} this customer",
   "Only characters allowed.": "Only {{value}} characters allowed.",

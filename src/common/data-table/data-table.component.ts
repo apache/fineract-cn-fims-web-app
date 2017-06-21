@@ -101,7 +101,7 @@ export class DataTableComponent {
   }
 
   private fetch() {
-    let fetchRequest: TableFetchRequest = {
+    const fetchRequest: TableFetchRequest = {
       page: this.currentPage,
       sort: this.currentSort
     };

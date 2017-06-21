@@ -39,6 +39,7 @@ import {
   SearchState
 } from '../../../../common/store/search.reducer';
 import {createFormReducer, FormState, getFormError} from '../../../../common/store/form.reducer';
+import {FimsProduct} from './model/fims-product.model';
 
 export interface State extends fromRoot.State {
   products: ResourceState;
@@ -62,8 +63,7 @@ const reducers = {
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class PortfolioStore extends Store<State> {
-}
+export class PortfolioStore extends Store<State> {}
 
 export function portfolioStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(portfolioModuleReducer);
@@ -78,10 +78,7 @@ export const getProductsState = (state: State) => state.products;
 export const getProductFormState = (state: State) => state.productForm;
 export const getProductFormError = createSelector(getProductFormState, getFormError);
 
-export const getProductEntities = createSelector(getProductsState, getResourceEntities);
 export const getProductsLoadedAt = createSelector(getProductsState, getResourceLoadedAt);
-export const getProductIds = createSelector(getProductsState, getResourceIds);
-export const getSelectedProductId = createSelector(getProductsState, getResourceSelectedId);
 export const getSelectedProduct = createSelector(getProductsState, getResourceSelected);
 
 /**
@@ -109,10 +106,7 @@ export const getProductTasksState = (state: State) => state.productTasks;
 export const getProductTaskFormState = (state: State) => state.productTaskForm;
 export const getProductTaskFormError = createSelector(getProductTaskFormState, getFormError);
 
-export const getProductTaskEntities = createSelector(getProductTasksState, getResourceEntities);
 export const getProductTasksLoadedAt = createSelector(getProductTasksState, getResourceLoadedAt);
-export const getProductTaskIds = createSelector(getProductTasksState, getResourceIds);
-export const getSelectedProductTaskId = createSelector(getProductTasksState, getResourceSelectedId);
 export const getSelectedProductTask = createSelector(getProductTasksState, getResourceSelected);
 
 export const getAllProductTaskEntities = createSelector(getProductTasksState, getResourceAll);
@@ -122,13 +116,7 @@ export const getAllProductTaskEntities = createSelector(getProductTasksState, ge
  */
 export const getProductChargesState = (state: State) => state.productCharges;
 
-export const getProductChargeFormState = (state: State) => state.productChargeForm;
-export const getProductChargeFormError = createSelector(getProductChargeFormState, getFormError);
-
-export const getProductChargeEntities = createSelector(getProductChargesState, getResourceEntities);
 export const getProductChargesLoadedAt = createSelector(getProductChargesState, getResourceLoadedAt);
-export const getProductChargeIds = createSelector(getProductChargesState, getResourceIds);
-export const getSelectedProductChargeId = createSelector(getProductChargesState, getResourceSelectedId);
 export const getSelectedProductCharge = createSelector(getProductChargesState, getResourceSelected);
 
 export const getAllProductChargeEntities = createSelector(getProductChargesState, getResourceAll);

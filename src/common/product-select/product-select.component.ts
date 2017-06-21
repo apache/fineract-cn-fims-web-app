@@ -14,43 +14,90 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {Observable} from 'rxjs';
-import {Product} from '../../services/portfolio/domain/product.model';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
+import {ProductPage} from '../../services/portfolio/domain/product-page.model';
+import {Product} from '../../services/portfolio/domain/product.model';
+
+const noop: () => void = () => {
+  // empty method
+};
 
 @Component({
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ProductSelectComponent), multi: true }
+  ],
   selector: 'fims-product-select',
   templateUrl: './product-select.component.html'
 })
-export class ProductSelectComponent implements OnInit{
+export class ProductSelectComponent implements ControlValueAccessor, OnInit {
+
+  formControl: FormControl;
 
   @Input() title: string;
 
-  @Input() preSelection: string[];
+  @Input() required: boolean;
 
-  @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
+  @Output() onProductSelected: EventEmitter<Product> = new EventEmitter<Product>();
 
   products: Observable<Product[]>;
 
   constructor(private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
-    this.onSearch()
+    this.formControl = new FormControl('');
+
+    this.products = this.formControl.valueChanges
+      .distinctUntilChanged()
+      .debounceTime(500)
+      .do(product => {
+        if(this.isObject(product)) {
+          this.onProductSelected.emit(product)
+        }
+      })
+      .map(product => this.isObject(product) ? product.name : product)
+      .do(product => this.changeValue(product))
+      .switchMap(name => this.onSearch(name));
   }
 
-  onSearch(searchTerm?: string): void {
-    const fetchRequest: FetchRequest = {
-      searchTerm
+  private isObject(product: Product): boolean {
+    return product && typeof product === 'object';
+  }
+
+  changeValue(value: string): void {
+    this._onChangeCallback(value);
+  }
+
+  writeValue(value: any): void {
+    this.formControl.setValue(value);
+  }
+
+  registerOnChange(fn: any): void {
+    this._onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this._onTouchedCallback = fn;
+  }
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
+
+  onSearch(searchTerm?: string): Observable<Product[]> {
+    let fetchRequest: FetchRequest = {
+      page: {
+        pageIndex: 0,
+        size: 5
+      },
+      searchTerm: searchTerm
     };
 
-    this.products = this.portfolioService.findAllProducts(false, fetchRequest)
-      .map(productPage => productPage.elements);
-  }
-
-  selectionChange(selections: string[]): void{
-    this.onSelectionChange.emit(selections);
+    return this.portfolioService.findAllProducts(false, fetchRequest)
+      .map((productPage: ProductPage) => productPage.elements);
   }
 
 }

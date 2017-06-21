@@ -57,6 +57,7 @@ const customerTemplate: Customer = {
     month: 6,
     day: 24
   },
+  member: true,
   identificationCard: {
     issuer: 'test',
     expirationDate: {

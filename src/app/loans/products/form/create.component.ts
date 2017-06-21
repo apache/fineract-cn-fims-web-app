@@ -53,7 +53,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     },
     interestRange: {
       minimum: 1.000,
-      maximum: 2.000
+      maximum: 1.000
     },
     interestBasis: 'CURRENT_BALANCE',
     patternPackage: 'io.mifos.portfolio.individuallending.v1',

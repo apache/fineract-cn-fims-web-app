@@ -88,8 +88,8 @@ export class OfficeService{
       .catch(Error.handleError);
   }
 
-  getEmployee(id: string): Observable<Employee>{
-    return this.http.get(this.baseUrl + '/employees/' + id)
+  getEmployee(id: string, silent?: true): Observable<Employee>{
+    return this.http.get(this.baseUrl + '/employees/' + id, {}, silent)
       .catch(Error.handleError);
   }
 

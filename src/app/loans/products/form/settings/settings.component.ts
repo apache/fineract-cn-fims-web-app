@@ -24,7 +24,7 @@ import {ledgerExists} from '../../../../../common/validator/ledger-exists.valida
 export interface SettingsFormData {
   loanFundAccount: string;
   customerLoanLedger: string;
-  consumerLoanLedger: string;
+  pendingDisbursal: string;
 }
 
 @Component({
@@ -37,7 +37,7 @@ export class ProductSettingsFormComponent extends FormComponent<SettingsFormData
     this.form = this.formBuilder.group({
       loanFundAccount: [settingsFormData.loanFundAccount, [Validators.required], accountExists(this.accountingService)],
       customerLoanLedger: [settingsFormData.customerLoanLedger, [Validators.required], ledgerExists(this.accountingService)],
-      consumerLoanLedger: [settingsFormData.consumerLoanLedger, [Validators.required], ledgerExists(this.accountingService)],
+      pendingDisbursal: [settingsFormData.pendingDisbursal, [Validators.required], accountExists(this.accountingService)],
     });
   }
 

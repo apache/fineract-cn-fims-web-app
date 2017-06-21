@@ -30,19 +30,25 @@ import {ProductChargeEditFormComponent} from './charges/form/edit.component';
 import {ProductExistsGuard} from './product-exists.guard';
 import {ProductTaskExistsGuard} from './status/task-exists.guard';
 import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
+import {ProductIndexComponent} from './product.index.component';
 
 export const ProductRoutes: Routes = [
   {path: '', component: ProductListComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'READ' } } /* List */},
   {path: 'create', component: ProductCreateComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Create */},
   {
     path: 'detail/:productId', /* Parent view to resolve product */
+    component: ProductIndexComponent,
     canActivate: [ProductExistsGuard],
     children: [
       {
         path: '',
         component: ProductDetailComponent /* Detail */
       },
-
+      {
+        path: 'edit',
+        component: ProductEditComponent,
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+      },
       {
         path: 'charges',
         component: ProductChargeListComponent /* Charges list view */
@@ -82,11 +88,5 @@ export const ProductRoutes: Routes = [
         data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
       }
     ]
-  },
-  {
-    path: 'detail/:productId/edit',
-    component: ProductEditComponent,
-    canActivate: [ProductExistsGuard],
-    data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
   }
 ];

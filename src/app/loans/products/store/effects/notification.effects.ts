@@ -35,13 +35,33 @@ export class ProductNotificationEffects {
     }));
 
   @Effect({ dispatch: false })
+  deleteProductSuccess$: Observable<Action> = this.actions$
+    .ofType(productActions.DELETE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Product is going to be deleted'
+    }));
+
+  @Effect({ dispatch: false })
+  deleteProductFail$: Observable<Action> = this.actions$
+    .ofType(productActions.DELETE_FAIL)
+    .do(() => this.notificationService.send({
+      type: NotificationType.ALERT,
+      title: 'Product can\'t be deleted',
+      message: 'Product is already assigned to a customer.'
+    }));
+
+  @Effect({ dispatch: false })
   enableProductSuccess$: Observable<Action> = this.actions$
     .ofType(productActions.ENABLE_SUCCESS)
     .map(toPayload)
-    .do(payload => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Product is going to be ' + payload.enabled ? 'enabled' : 'disabled'
-    }));
+    .do(payload => {
+      const action: string = payload.enable ? 'enabled' : 'disabled';
+      this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: `Product is going to be ${action}`
+      })
+    });
 
   @Effect({ dispatch: false })
   enableProductFail$: Observable<Action> = this.actions$

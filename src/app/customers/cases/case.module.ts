@@ -40,6 +40,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
+  MdAutocompleteModule,
   MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
   MdSelectModule,
   MdToolbarModule
@@ -49,6 +50,9 @@ import {
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';
+import {CaseDeptToIncomeFormComponent} from './form/dept-to-income/dept-to-income.component';
+import {CaseCreditFactorFormComponent} from './form/components/credit-factor.component';
+import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
 
 @NgModule({
   imports: [
@@ -66,6 +70,7 @@ import {CaseStatusComponent} from './status/status.component';
     MdSelectModule,
     MdRadioModule,
     MdCardModule,
+    MdAutocompleteModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentDataTableModule,
@@ -88,7 +93,10 @@ import {CaseStatusComponent} from './status/status.component';
     CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
     CaseTasksComponent,
-    CaseStatusComponent
+    CaseStatusComponent,
+    CaseDeptToIncomeFormComponent,
+    CaseCreditFactorFormComponent,
+    CaseCoSignerFormComponent
   ],
   providers: [
     CaseExistsGuard,

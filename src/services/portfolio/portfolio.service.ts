@@ -63,6 +63,10 @@ export class PortfolioService {
     return this.http.put(`${this.baseUrl}/products/${product.identifier}`, product)
   }
 
+  deleteProduct(identifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/products/${identifier}`)
+  }
+
   enableProduct(identifier: string, enabled: boolean): Observable<void>{
     return this.http.put(`${this.baseUrl}/products/${identifier}/enabled`, enabled)
   }
@@ -142,8 +146,8 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`)
   }
 
-  executeCaseCommand(productIdentifier: string, caseIdentifier: string, command: CaseCommand): Observable<void>{
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/`, command)
+  executeCaseCommand(productIdentifier: string, caseIdentifier: string, action: string, command: CaseCommand): Observable<void>{
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/${action}`, command)
   }
 
   findAllTasksForCase(productIdentifier: string, caseIdentifier: string, includeExcluded?: boolean): Observable<TaskInstance[]>{

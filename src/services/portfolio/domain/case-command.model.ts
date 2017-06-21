@@ -1,3 +1,4 @@
+import {AccountAssignment} from './account-assignment.model';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -15,8 +16,7 @@
  */
 
 export interface CaseCommand {
-  action: string;
-  parameters?: string;
+  oneTimeAccountAssignments?: AccountAssignment[];
   comment?: string;
   createdOn?: string;
   createdBy?: string;

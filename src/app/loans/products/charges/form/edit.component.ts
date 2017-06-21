@@ -22,6 +22,7 @@ import {CREATE, SelectAction, UPDATE} from '../../store/charges/charge.actions';
 import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
 import {FimsProduct} from '../../store/model/fims-product.model';
+import {RESET_FORM} from '../../store/product.actions';
 
 @Component({
   templateUrl: './edit.component.html'

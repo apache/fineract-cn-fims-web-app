@@ -43,8 +43,8 @@ export class HttpClient {
     return this.createRequest(RequestMethod.Get, url, undefined, options, silent);
   }
 
-  public post(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {
-    return this.createRequest(RequestMethod.Post, url, body, options);
+  public post(url: string, body: any, options?: RequestOptionsArgs, silent?: boolean): Observable<any> {
+    return this.createRequest(RequestMethod.Post, url, body, options, silent);
   }
 
   public put(url: string, body: any, options?: RequestOptionsArgs): Observable<any> {

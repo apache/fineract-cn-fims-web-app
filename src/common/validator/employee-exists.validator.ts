@@ -23,24 +23,10 @@ export function employeeExists(officeService: OfficeService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 1
-      },
-      searchTerm: control.value
-    };
-
-    return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => officeService.listEmployees(fetchRequest))
-      .map(employeePage => employeePage.employees)
-      .map(employees => {
-        if(employees.length === 1 && employees[0].identifier === control.value){
-          return null;
-        }
-        return {
-          invalidEmployee: true
-        }
-      });
+    return officeService.getEmployee(control.value, true)
+      .map(employee => null)
+      .catch(() => Observable.of({
+        invalidEmployee: true
+      }));
   }
 }

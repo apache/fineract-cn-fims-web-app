@@ -126,7 +126,7 @@ export class ProductFormComponent implements OnInit{
     assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
 
     assignments.push(this.createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
-    assignments.push(this.createAccountAssignment(this.settingsForm.formData.consumerLoanLedger, AccountDesignators.CONSUMER_LOAN_LEDGER));
+    assignments.push(this.createAccountAssignment(this.settingsForm.formData.pendingDisbursal, AccountDesignators.PENDING_DISBURSAL));
 
     assignments.push(this.createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
     assignments.push(this.createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
@@ -160,7 +160,7 @@ export class ProductFormComponent implements OnInit{
     this.onCancel.emit();
   }
 
-  prepareDetailForm(product: FimsProduct): void{
+  prepareDetailForm(product: FimsProduct): void {
     const balanceRange = product.balanceRange;
     const termRange = product.termRange;
 
@@ -179,12 +179,12 @@ export class ProductFormComponent implements OnInit{
   prepareSettingsForm(product: FimsProduct) {
     const loanFoundAccount = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
     const customerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
-    const consumerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CONSUMER_LOAN_LEDGER);
+    const pendingDisbursal = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PENDING_DISBURSAL);
 
     this.settingsFormData = {
       loanFundAccount: this.accountIdentifier(loanFoundAccount),
       customerLoanLedger: this.ledgerIdentifier(customerLoanLedger),
-      consumerLoanLedger: this.ledgerIdentifier(consumerLoanLedger)
+      pendingDisbursal: this.accountIdentifier(pendingDisbursal)
     }
   }
 
@@ -233,10 +233,8 @@ export class ProductFormComponent implements OnInit{
   }
 
   private findAccountDesignator(accountAssignments: AccountAssignment[], designator: string): AccountAssignment{
-    let result = accountAssignments.filter(assignment => assignment.designator === designator);
-    if(result.length){
-      return result[0];
-    }
+    const result = accountAssignments.find(assignment => assignment.designator === designator);
+    return result;
   }
 
 }

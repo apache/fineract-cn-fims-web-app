@@ -31,8 +31,6 @@ import {FimsProduct} from '../store/model/fims-product.model';
 })
 export class ProductStatusComponent implements OnInit, OnDestroy{
 
-  private actionsSubscription: Subscription;
-
   private productSubscription: Subscription;
 
   tasksData$: Observable<TableData>;
@@ -47,10 +45,6 @@ export class ProductStatusComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['productId']))
-      .subscribe(this.portfolioStore);
-
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .subscribe(product => {
         this.product = product;
@@ -67,7 +61,6 @@ export class ProductStatusComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.productSubscription.unsubscribe();
   }
 

@@ -22,7 +22,7 @@ import {CaseParameters} from '../../../../../services/portfolio/domain/individua
  * Model interface with concrete CaseParameters instead of JSON string.
  */
 
-export interface FimsCase{
+export interface FimsCase {
   identifier: string;
   productIdentifier: string;
   parameters: CaseParameters;

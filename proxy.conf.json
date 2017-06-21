@@ -1,48 +1,48 @@
 {
   "/identity": {
-    "target": "http://localhost:2020",
+    "target": "http://localhost:2021",
     "secure": false,
     "pathRewrite": {
       "/identity": "/identity"
     }
   },
   "/api/office": {
-    "target": "http://localhost:2021",
+    "target": "http://localhost:2023",
     "secure": false,
     "pathRewrite": {
       "^/api/office": "/office"
     }
   },
   "/api/customer": {
-    "target": "http://localhost:2022",
+    "target": "http://localhost:2024",
     "secure": false,
     "pathRewrite": {
       "^/api/customer": "/customer"
     }
   },
   "/api/accounting": {
-    "target": "http://localhost:2023",
+    "target": "http://localhost:2025",
     "secure": false,
     "pathRewrite": {
       "^/api/accounting": "/accounting"
     }
   },
   "/api/portfolio": {
-    "target": "http://localhost:2024",
+    "target": "http://localhost:2026",
     "secure": false,
     "pathRewrite": {
       "^/api/portfolio": "/portfolio"
     }
   },
   "/api/deposit": {
-    "target": "http://localhost:2025",
+    "target": "http://localhost:2027",
     "secure": false,
     "pathRewrite": {
       "^/api/deposit": "/deposit"
     }
   },
   "/api/teller": {
-    "target": "http://localhost:2026",
+    "target": "http://localhost:2028",
     "secure": false,
     "pathRewrite": {
       "^/api/teller": "/teller"

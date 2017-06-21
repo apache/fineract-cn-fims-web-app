@@ -39,7 +39,8 @@ export class CustomerFormComponent implements OnInit {
       lastName: customer.surname,
       birthDay: customer.dateOfBirth.day,
       birthMonth: customer.dateOfBirth.month,
-      birthYear: customer.dateOfBirth.year
+      birthYear: customer.dateOfBirth.year,
+      member: customer.member
     };
 
     this.addressFormData = customer.address;
@@ -103,9 +104,9 @@ export class CustomerFormComponent implements OnInit {
   }
 
   save() {
-    let detailFormData = this.detailForm.formData;
+    const detailFormData = this.detailForm.formData;
 
-    let customer: Customer = {
+    const customer: Customer = {
       identifier: detailFormData.identifier,
       givenName: detailFormData.firstName,
       surname: detailFormData.lastName,
@@ -118,6 +119,7 @@ export class CustomerFormComponent implements OnInit {
         month: detailFormData.birthMonth,
         year: detailFormData.birthYear
       },
+      member: detailFormData.member,
       assignedOffice: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
       customValues: this.customFieldsForm.formData

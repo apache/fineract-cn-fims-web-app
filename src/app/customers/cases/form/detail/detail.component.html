@@ -15,8 +15,13 @@
 -->
 
 <form [formGroup]="form">
+  <div layout="row" class="pad-top">
+    <md-select placeholder="{{'Product' | translate}}" formControlName="productIdentifier" layout-margin>
+      <md-option *ngFor="let product of products" [value]="product.identifier">{{ product.name }}</md-option>
+    </md-select>
+  </div>
   <div layout="row">
-    <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+    <fims-id-input placeholder="{{'Short name' | translate}}" [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>

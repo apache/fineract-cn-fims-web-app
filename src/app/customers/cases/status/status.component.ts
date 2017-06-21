@@ -64,13 +64,13 @@ export class CaseStatusComponent implements OnInit, OnDestroy {
 
   executeCommand(statusCommand: StatusCommand): void {
     const command: CaseCommand = {
-      comment: statusCommand.comment,
-      action: statusCommand.action
+      comment: statusCommand.comment
     };
 
     this.casesStore.dispatch({ type: EXECUTE_COMMAND, payload: {
       productId: this.productId,
       caseId: this.caseInstance.identifier,
+      action: statusCommand.action,
       command: command,
       activatedRoute: this.route
     } });

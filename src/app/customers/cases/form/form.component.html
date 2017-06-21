@@ -15,16 +15,15 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #productSelection label="{{'Select loan product' | translate}}" [state]="productForm.valid ? 'complete' : productForm.pristine ? 'none' : 'required'">
-    <fims-product-select title="{{'Product' | translate}}" [preSelection]="productForm.get('identifier').value" (onSelectionChange)="onProductSelection($event)"></fims-product-select>
-    <ng-template td-step-actions>
-      <button (click)="detailsStep.open()" md-raised-button color="accent" [disabled]="!productForm.valid">{{'CONTINUE' | translate}}</button>
-    </ng-template>
+  <td-step #detailsStep label="{{'Loan details' | translate}}" [state]="detailFormState">
+    <fims-case-detail-form #detailForm [formData]="detailFormData" [products]="products"></fims-case-detail-form>
   </td-step>
-  <td-step #detailsStep label="{{'Loan details' | translate}}" [disabled]="!productForm.valid" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <fims-case-detail-form #detailForm [formData]="detailFormData" [product]="selectedProduct | async"></fims-case-detail-form>
+  <td-step #deptToIncomeStep label="{{'Dept to income ratio' | translate}}" [state]="deptToIncomeFormState">
+    <fims-case-dept-to-income-form #deptToIncomeForm [formData]="deptToIncomeFormData"></fims-case-dept-to-income-form>
   </td-step>
-
+  <td-step #coSignerStep label="{{'Co-signer' | translate}}" [state]="coSignerFormState">
+    <fims-case-co-signer-form #coSignerForm [formData]="coSignerFormData"></fims-case-co-signer-form>
+  </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
       <fims-form-final-action

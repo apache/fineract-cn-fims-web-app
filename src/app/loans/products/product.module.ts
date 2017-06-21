@@ -67,6 +67,7 @@ import {
   MdToolbarModule
 } from '@angular/material';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
+import {ProductIndexComponent} from './product.index.component';
 
 @NgModule({
   imports: [
@@ -103,6 +104,7 @@ import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
   declarations: [
     // product
     ProductListComponent,
+    ProductIndexComponent,
     ProductDetailComponent,
     ProductFormComponent,
     ProductCreateComponent,

@@ -21,7 +21,7 @@
   {{'Tasks' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Manage Task Definitions' | translate}}">
+<fims-layout-card-over title="{{'Manage task definitions' | translate}}">
   <fims-data-table flex (onFetch)="fetchTasks($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="tasksData$ | async" [sortable]="false"></fims-data-table>
 </fims-layout-card-over>
 

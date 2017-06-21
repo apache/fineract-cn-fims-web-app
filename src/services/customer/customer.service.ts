@@ -42,8 +42,8 @@ export class CustomerService {
     return this.http.get(`${this.baseUrl}/customers`, requestOptions).share();
   }
 
-  getCustomer(id: string): Observable<Customer>{
-    return this.http.get(`${this.baseUrl}/customers/${id}`);
+  getCustomer(id: string, silent?: boolean): Observable<Customer>{
+    return this.http.get(`${this.baseUrl}/customers/${id}`, {}, silent);
   }
 
   createCustomer(customer: Customer): Observable<Customer>{

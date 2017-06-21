@@ -23,24 +23,10 @@ export function accountExists(accountingService: AccountingService): AsyncValida
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 1
-      },
-      searchTerm: control.value
-    };
-
-    return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => accountingService.fetchAccounts(fetchRequest))
-      .map(accountPage => accountPage.accounts)
-      .map(accounts => {
-        if(accounts.length === 1 && accounts[0].identifier === control.value){
-          return null;
-        }
-        return {
-          invalidAccount: true
-        }
-      });
+    return accountingService.findAccount(control.value, true)
+      .map(account => null)
+      .catch(() => Observable.of({
+        invalidAccount: true
+      }));
   }
 }

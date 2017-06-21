@@ -33,7 +33,7 @@ const noop: () => void = () => {
   selector: 'fims-account-select',
   templateUrl: './account-select.component.html'
 })
-export class AccountSelectComponent implements ControlValueAccessor, OnInit{
+export class AccountSelectComponent implements ControlValueAccessor, OnInit {
 
   formControl: FormControl;
 

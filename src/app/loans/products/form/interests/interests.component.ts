@@ -17,7 +17,7 @@
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../../../common/forms/form.component';
 import {InterestBasis} from '../../../../../services/portfolio/domain/interest-basis.model';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../../common/validator/validators';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../../common/validator/account-exists.validator';
@@ -41,20 +41,27 @@ export interface InterestFormData{
 })
 export class ProductInterestFormComponent extends FormComponent<InterestFormData> {
 
+  private minMaxValidators: ValidatorFn[] = [Validators.required, FimsValidators.isNumber(), FimsValidators.minValue(0), FimsValidators.precision(2)];
+
   interestBasisOptions: InterestBasisOption[] = [
     {type: 'CURRENT_BALANCE', label: 'CURRENT_BALANCE'},
     {type: 'BEGINNING_BALANCE', label: 'BEGINNING_BALANCE'}
   ];
 
   @Input() set formData(interestFormData: InterestFormData) {
+    const interestRangeEnabled: boolean = this.hasInterestRange(interestFormData.minimum, interestFormData.maximum);
+
     this.form = this.formBuilder.group({
-      minimum: [interestFormData.minimum, [Validators.required, FimsValidators.isNumber(), FimsValidators.minValue(0), FimsValidators.precision(2)]],
-      maximum: [interestFormData.maximum, [Validators.required, FimsValidators.isNumber(), FimsValidators.minValue(0), FimsValidators.precision(2)]],
+      interestRangeEnabled: [interestRangeEnabled],
+      minimum: [interestFormData.minimum, this.minMaxValidators],
+      maximum: [interestFormData.maximum],
       interestBasis: [interestFormData.interestBasis, Validators.required],
       incomeAccount: [interestFormData.incomeAccount, [Validators.required], accountExists(this.accountingService)],
       accrualAccount: [interestFormData.accrualAccount, [Validators.required], accountExists(this.accountingService)]
-    }, {validator: FimsValidators.greaterThan('minimum', 'maximum')});
+    });
 
+    this.form.get('interestRangeEnabled').valueChanges
+      .subscribe(enabled => this.toggleInterestRange(enabled));
   };
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
@@ -62,7 +69,38 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
   }
 
   get formData(): InterestFormData {
-    return this.form.getRawValue();
+    return {
+      minimum: this.form.get('minimum').value,
+      maximum: this.form.get('interestRangeEnabled').value ? this.form.get('maximum').value : this.form.get('minimum').value,
+      interestBasis: this.form.get('interestBasis').value,
+      incomeAccount: this.form.get('incomeAccount').value,
+      accrualAccount: this.form.get('accrualAccount').value
+    };
+  }
+
+  private toggleInterestRange(enabled: boolean): void {
+    const maximumControl: FormControl = this.form.get('maximum') as FormControl;
+
+    if(enabled) {
+      maximumControl.setValidators(this.minMaxValidators);
+      this.form.setValidators(FimsValidators.greaterThan('minimum', 'maximum'))
+    } else {
+      maximumControl.clearValidators();
+      this.form.clearValidators();
+    }
+
+    maximumControl.updateValueAndValidity();
+    this.form.updateValueAndValidity();
+  }
+
+  private hasInterestRange(min: number, max: number): boolean {
+    return this.hasValue(min) &&
+        this.hasValue(max) &&
+        min !== max;
+  }
+
+  private hasValue(value: number): boolean {
+    return value !== undefined;
   }
 
 

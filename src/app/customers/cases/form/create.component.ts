@@ -26,6 +26,9 @@ import {Subscription} from 'rxjs';
 import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {FimsCase} from '../store/model/fims-case.model';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: './create.component.html'
@@ -37,6 +40,8 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
   private formStateSubscription: Subscription;
 
   @ViewChild('form') formComponent: CaseFormComponent;
+
+  products$: Observable<Product[]>;
 
   customer: Customer;
 
@@ -57,12 +62,13 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
       termRange: {
         temporalUnit: 'MONTHS',
         maximum: 1
-      }
+      },
+      creditWorthinessSnapshots: []
     },
     accountAssignments: []
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
@@ -77,6 +83,9 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
         detailForm.form.get('identifier').setErrors(errors);
         this.formComponent.detailsStep.open();
       });
+
+    this.products$ = this.portfolioService.findAllProducts(false)
+      .map(productPage => productPage.elements);
   }
 
   ngOnDestroy(): void {

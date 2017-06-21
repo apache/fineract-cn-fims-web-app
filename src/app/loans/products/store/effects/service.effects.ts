@@ -32,11 +32,12 @@ export class ProductApiEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(productActions.SEARCH)
+    .map((action: productActions.SelectAction) => action.payload)
     .debounceTime(300)
-    .switchMap(() => {
+    .switchMap(fetchRequest => {
       const nextSearch$ = this.actions$.ofType(productActions.SEARCH).skip(1);
 
-      return this.portfolioService.findAllProducts(true)
+      return this.portfolioService.findAllProducts(true, fetchRequest)
         .takeUntil(nextSearch$)
         .map(productPage => new productActions.SearchCompleteAction({
           elements: mapToFimsProducts(productPage.elements),
@@ -70,6 +71,19 @@ export class ProductApiEffects {
           activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new productActions.UpdateProductFailAction(error)))
+    );
+
+  @Effect()
+  deleteProduct$: Observable<Action> = this.actions$
+    .ofType(productActions.DELETE)
+    .map((action: productActions.DeleteProductAction) => action.payload)
+    .mergeMap(payload =>
+      this.portfolioService.deleteProduct(payload.product.identifier)
+        .map(() => new productActions.DeleteProductSuccessAction({
+          resource: payload.product,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new productActions.DeleteProductFailAction(error)))
     );
 
   @Effect()
