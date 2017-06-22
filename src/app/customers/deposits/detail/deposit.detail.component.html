@@ -27,6 +27,7 @@
       <md-list *ngIf="(depositInstance$ | async) as instance">
         <h3 md-subheader translate>Current status</h3>
         <fims-state-display [state]="instance.state"></fims-state-display>
+        <h3 md-subheader translate>Details</h3>
         <md-list-item>
           <h3 md-line translate>Account</h3>
           <p md-line>{{instance.accountIdentifier}}</p>

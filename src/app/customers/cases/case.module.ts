@@ -46,13 +46,14 @@ import {
   MdToolbarModule
 } from '@angular/material';
 import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentMessageModule,
+  CovalentCommonModule, CovalentDataTableModule, CovalentFileModule, CovalentMessageModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';
 import {CaseCreditFactorFormComponent} from './form/components/credit-factor.component';
 import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
 import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
+import {CaseDocumentsFormComponent} from './form/documents/documents.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-incom
     CovalentStepsModule,
     CovalentDataTableModule,
     CovalentMessageModule,
+    CovalentFileModule,
 
     EffectsModule.run(CaseApiEffects),
     EffectsModule.run(CaseRouteEffects),
@@ -96,7 +98,8 @@ import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-incom
     CaseStatusComponent,
     CaseDebtToIncomeFormComponent,
     CaseCreditFactorFormComponent,
-    CaseCoSignerFormComponent
+    CaseCoSignerFormComponent,
+    CaseDocumentsFormComponent
   ],
   providers: [
     CaseExistsGuard,

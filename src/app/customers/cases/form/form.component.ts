@@ -23,6 +23,7 @@ import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/in
 import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
 import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
 import {Product} from '../../../../services/portfolio/domain/product.model';
+import {CaseDocumentsFormComponent} from './documents/documents.component';
 
 @Component({
   selector: 'fims-case-form-component',
@@ -42,6 +43,8 @@ export class CaseFormComponent implements OnInit {
 
   @ViewChild('coSignerForm') coSignerForm: CaseCoSignerFormComponent;
   coSignerFormData: CoSignerFormData;
+
+  @ViewChild('documentsForm') documentsForm: CaseDocumentsFormComponent;
 
   @Input('products') products: Product[];
 
@@ -138,6 +141,11 @@ export class CaseFormComponent implements OnInit {
       assets: []
     };
 
+    const creditWorthinessSnapshots = [customerSnapshot];
+    if(cosignerSnapshot.forCustomer) {
+      creditWorthinessSnapshots.push(cosignerSnapshot);
+    }
+
     const caseParameters: CaseParameters = {
       customerIdentifier: this.customerId,
       maximumBalance: this.detailForm.formData.principalAmount,
@@ -152,7 +160,7 @@ export class CaseFormComponent implements OnInit {
         temporalUnit: this.detailForm.formData.termTemporalUnit,
         maximum: this.detailForm.formData.term
       },
-      creditWorthinessSnapshots: [customerSnapshot, cosignerSnapshot]
+      creditWorthinessSnapshots
     };
 
     const caseToSave: FimsCase = {
@@ -180,5 +188,9 @@ export class CaseFormComponent implements OnInit {
 
   get coSignerFormState(): string {
     return this.coSignerForm.valid ? 'complete' : this.coSignerForm.pristine ? 'none' : 'required';
+  }
+
+  get documentsFormState(): string {
+    return this.documentsForm.valid ? 'complete' : this.documentsForm.pristine ? 'none' : 'required';
   }
 }
