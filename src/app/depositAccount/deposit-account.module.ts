@@ -41,6 +41,7 @@ import {DepositProductChargesFormComponent} from './form/charges/charges.compone
 import {DepositProductDetailComponent} from './detail/deposit-product.detail.component';
 import {DepositProductStatusComponent} from './detail/status/status.component';
 import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
+import {DepositProductEditComponent} from './form/edit.component';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import {DepositProductIndexComponent} from './detail/deposit-product.index.compo
   declarations: [
     DepositProductComponent,
     DepositProductCreateComponent,
+    DepositProductEditComponent,
     DepositProductFormComponent,
     DepositProductChargesFormComponent,
     DepositProductIndexComponent,

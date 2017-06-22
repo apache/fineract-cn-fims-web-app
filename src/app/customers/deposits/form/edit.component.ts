@@ -14,47 +14,38 @@
  * limitations under the License.
  */
 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DepositFormComponent} from './form.component';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as fromDeposits from '../store/index';
 import {DepositsStore} from '../store/index';
-import {CREATE} from '../store/deposit.actions';
 import * as fromCustomers from '../../store/index';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {Observable} from 'rxjs/Observable';
-import {ProductDefinition} from '../../../../services/depositAccount/domain/definition/product-definition.model';
+import {UPDATE} from '../store/deposit.actions';
 
 @Component({
-  templateUrl: './create.component.html'
+  templateUrl: './edit.component.html'
 })
-export class DepositCreateComponent implements OnInit {
+export class DepositEditComponent implements OnInit {
 
   @ViewChild('form') formComponent: DepositFormComponent;
 
   customer$: Observable<Customer>;
 
-  productInstance: ProductInstance = {
-    customerIdentifier: '',
-    productIdentifier: ''
-  };
+  productInstance$: Observable<ProductInstance>;
 
-  productDefinitions$: Observable<ProductDefinition[]>;
-
-  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore) {}
 
   ngOnInit(): void {
     this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer);
-
-    this.productDefinitions$ = this.depositService.fetchProductDefinitions()
-      .map(productDefinitions => productDefinitions.filter(productDefinitions => productDefinitions.active));
+    this.productInstance$ = this.depositsStore.select(fromDeposits.getSelectedDepositInstance);
   }
 
   onSave(productInstance: ProductInstance): void {
-    this.depositsStore.dispatch({ type: CREATE, payload: {
-      productInstance: productInstance,
+    this.depositsStore.dispatch({ type: UPDATE, payload: {
+      productInstance,
       activatedRoute: this.route
     }});
   }

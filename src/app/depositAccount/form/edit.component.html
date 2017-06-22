@@ -16,13 +16,13 @@
 
 <md-toolbar color="primary"></md-toolbar>
 
-<fims-layout-card-over title="{{'Create new deposit account for customer' | translate}}">
-  <fims-deposit-form-component #form
-                            (onSave)="onSave($event)"
-                            (onCancel)="onCancel()"
-                            [customerId]="(customer$ | async).identifier"
-                            [productInstance]="productInstance"
-                            [productDefinitions]="productDefinitions$ | async"
-                            [editMode]="false">
-  </fims-deposit-form-component>
+<fims-layout-card-over title="{{'Edit deposit product' | translate}}">
+  <fims-deposit-product-form #form
+                             (onSave)="onSave($event)"
+                             (onCancel)="onCancel()"
+                             [definition]="definition$ | async"
+                             [currencies]="currencies | async"
+                             [actions]="actions | async"
+                             [editMode]="true">
+  </fims-deposit-product-form>
 </fims-layout-card-over>

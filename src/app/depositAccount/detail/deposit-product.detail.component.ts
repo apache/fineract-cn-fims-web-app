@@ -21,6 +21,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import * as fromDepositAccounts from './../store';
 import {TableData} from '../../../common/data-table/data-table.component';
+import {TdDialogService} from '@covalent/core';
+import {Observable} from 'rxjs/Observable';
+import {DELETE} from '../store/product.actions';
 
 @Component({
   templateUrl: './deposit-product.detail.component.html'
@@ -41,7 +44,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     { name: 'amount', label: 'Amount' }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.productSubscription = this.store.select(fromDepositAccounts.getSelectedProduct)
@@ -62,5 +65,24 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   goToTasks(): void {
     this.router.navigate(['tasks'], { relativeTo: this.route })
+  }
+
+  confirmDeletion(): Observable<boolean> {
+    return this.dialogService.openConfirm({
+      message: 'Do you want to delete this product?',
+      title: 'Confirm deletion',
+      acceptButton: 'DELETE PRODUCT',
+    }).afterClosed();
+  }
+
+  deleteProduct(): void {
+    this.confirmDeletion()
+      .filter(accept => accept)
+      .subscribe(() => this.store.dispatch({
+        type: DELETE, payload: {
+          productDefinition: this.definition,
+          activatedRoute: this.route
+        }
+      }));
   }
 }

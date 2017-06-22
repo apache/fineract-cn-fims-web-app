@@ -24,5 +24,6 @@ export interface InterestPayableOption {
 export const interestPayableOptionList: InterestPayableOption[] = [
   { type: 'MATURITY', label: 'Maturity'},
   { type: 'ANNUALLY', label: 'Annually'},
+  { type: 'QUARTERLY', label: 'Quarterly'},
   { type: 'MONTHLY', label: 'Monthly'}
 ];

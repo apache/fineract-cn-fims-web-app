@@ -22,6 +22,9 @@
 </md-toolbar>
 
 <fims-layout-card-over [title]="definition.name" [subTitle]="definition.description">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <button md-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'DELETE'}"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
   <td-message *ngIf="!definition.active" label="{{'Product not enabled' | translate }}"
               sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}"
               color="warn" icon="error">
@@ -32,7 +35,7 @@
   <td-message *ngIf="definition.active" label="{{'Product enabled' | translate }}"
               sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
   </td-message>
-  <div class="md-content" class="inset" flex>
+  <div class="md-content inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
         <div layout-gt-md="row">
@@ -86,3 +89,6 @@
     </div>
   </div>
 </fims-layout-card-over>
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
+  <md-icon>edit_mode</md-icon>
+</a>

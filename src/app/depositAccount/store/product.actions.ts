@@ -20,8 +20,8 @@ import {ProductDefinition} from '../../../services/depositAccount/domain/definit
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
+  SelectResourcePayload, UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {ProductDefinitionCommand} from '../../../services/depositAccount/domain/definition/product-definition-command.model';
 
@@ -34,6 +34,14 @@ export const SELECT = type('[Deposit Product Definition] Select');
 export const CREATE = type('[Deposit Product Definition] Create');
 export const CREATE_SUCCESS = type('[Deposit Product Definition] Create Success');
 export const CREATE_FAIL = type('[Deposit Product Definition] Create Fail');
+
+export const UPDATE = type('[Deposit Product Definition] Update');
+export const UPDATE_SUCCESS = type('[Deposit Product Definition] Update Success');
+export const UPDATE_FAIL = type('[Deposit Product Definition] Update Fail');
+
+export const DELETE = type('[Deposit Product Definition] Delete');
+export const DELETE_SUCCESS = type('[Deposit Product Definition] Delete Success');
+export const DELETE_FAIL = type('[Deposit Product Definition] Delete Fail');
 
 export const RESET_FORM = type('[Deposit Product Definition] Reset Form');
 
@@ -92,6 +100,42 @@ export class CreateProductDefinitionFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class UpdateProductDefinitionAction implements Action {
+  readonly type = UPDATE;
+
+  constructor(public payload: ProductDefinitionRoutePayload) { }
+}
+
+export class UpdateProductDefinitionSuccessAction implements Action {
+  readonly type = UPDATE_SUCCESS;
+
+  constructor(public payload: UpdateResourceSuccessPayload) { }
+}
+
+export class UpdateProductDefinitionFailAction implements Action {
+  readonly type = UPDATE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
+export class DeleteProductDefinitionAction implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: ProductDefinitionRoutePayload) { }
+}
+
+export class DeleteProductDefinitionSuccessAction implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: DeleteResourceSuccessPayload) { }
+}
+
+export class DeleteProductDefinitionFailAction implements Action {
+  readonly type = DELETE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export class ExecuteCommandAction implements Action {
   readonly type = EXECUTE_COMMAND;
 
@@ -118,6 +162,12 @@ export type Actions
   | CreateProductDefinitionAction
   | CreateProductDefinitionSuccessAction
   | CreateProductDefinitionFailAction
+  | UpdateProductDefinitionAction
+  | UpdateProductDefinitionSuccessAction
+  | UpdateProductDefinitionFailAction
+  | DeleteProductDefinitionAction
+  | DeleteProductDefinitionSuccessAction
+  | DeleteProductDefinitionFailAction
   | ExecuteCommandAction
   | ExecuteCommandSuccessAction
   | ExecuteCommandFailAction;

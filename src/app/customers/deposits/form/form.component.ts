@@ -19,12 +19,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {ProductDefinition} from '../../../../services/depositAccount/domain/definition/product-definition.model';
+import {Observable} from 'rxjs/Observable';
+import {CustomerService} from '../../../../services/customer/customer.service';
 
 @Component({
   selector: 'fims-deposit-form-component',
   templateUrl: './form.component.html'
 })
 export class DepositFormComponent implements OnInit {
+
+  filteredCustomers: Observable<string[]>;
 
   detailForm: FormGroup;
 
@@ -36,33 +40,33 @@ export class DepositFormComponent implements OnInit {
 
   @Input('productDefinitions') productDefinitions: ProductDefinition[];
 
-  @Input('productInstance') set productInstance(productInstance: ProductInstance) {
-    this.prepareDetailForm(productInstance);
-  };
+  @Input('productInstance') productInstance: ProductInstance;
 
   @Output('onSave') onSave = new EventEmitter<ProductInstance>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private customerService: CustomerService) {}
 
   ngOnInit(): void {
+    this.detailForm = this.formBuilder.group({
+      productIdentifier: [this.productInstance.productIdentifier, [Validators.required]],
+      beneficiaries: [this.productInstance.beneficiaries ? this.productInstance.beneficiaries : []]
+    });
+
     this.detailsStep.open();
   }
 
-  private prepareDetailForm(productInstance: ProductInstance): void {
-    this.detailForm = this.formBuilder.group({
-      productIdentifier: [productInstance.productIdentifier, [Validators.required]]
-    });
-  }
-
   get isValid(): boolean {
-      return this.detailForm.valid;
+    return this.detailForm.valid;
   }
 
   save(): void {
     const productInstance: ProductInstance = {
+      productIdentifier: this.detailForm.get('productIdentifier').value,
+      beneficiaries: this.detailForm.get('beneficiaries').value,
       customerIdentifier: this.customerId,
-      productIdentifier: this.detailForm.get('productIdentifier').value
+      accountIdentifier: this.productInstance.accountIdentifier,
+      state: this.productInstance.state
     };
 
     this.onSave.emit(productInstance);
@@ -70,5 +74,11 @@ export class DepositFormComponent implements OnInit {
 
   cancel(): void {
     this.onCancel.emit();
+  }
+
+  filterAsync(searchTerm: string): void {
+    this.filteredCustomers = this.customerService.fetchCustomers({
+      searchTerm
+    }).map(customerPage => customerPage.customers.map(customer => customer.identifier))
   }
 }

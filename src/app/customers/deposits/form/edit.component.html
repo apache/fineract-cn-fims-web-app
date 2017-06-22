@@ -13,16 +13,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
 <md-toolbar color="primary"></md-toolbar>
 
-<fims-layout-card-over title="{{'Create new deposit account for customer' | translate}}">
+<fims-layout-card-over title="{{'Edit deposit account for customer' | translate}}">
   <fims-deposit-form-component #form
-                            (onSave)="onSave($event)"
-                            (onCancel)="onCancel()"
-                            [customerId]="(customer$ | async).identifier"
-                            [productInstance]="productInstance"
-                            [productDefinitions]="productDefinitions$ | async"
-                            [editMode]="false">
+                               (onSave)="onSave($event)"
+                               (onCancel)="onCancel()"
+                               [customerId]="(customer$ | async).identifier"
+                               [productInstance]="productInstance$ | async"
+                               [productDefinitions]="[]"
+                               [editMode]="true">
   </fims-deposit-form-component>
 </fims-layout-card-over>

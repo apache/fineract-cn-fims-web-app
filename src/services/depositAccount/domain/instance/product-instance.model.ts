@@ -20,5 +20,6 @@ export interface ProductInstance {
   customerIdentifier: string;
   productIdentifier: string;
   accountIdentifier?: string;
+  beneficiaries?: string[];
   state?: State;
 }

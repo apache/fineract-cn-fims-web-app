@@ -116,4 +116,8 @@ export class DataTableComponent {
     return this.tableData && this.tableData.data && this.tableData.data.length > 0;
   }
 
+  isBoolean(value: any): boolean {
+    return typeof(value) === 'boolean';
+  }
+
 }

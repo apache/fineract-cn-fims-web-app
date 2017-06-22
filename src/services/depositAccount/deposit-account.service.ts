@@ -32,6 +32,14 @@ export class DepositAccountService {
     return this.http.post(`${this.baseUrl}/definitions`, productDefinition)
   }
 
+  updateProductDefinition(productDefinition: ProductDefinition): Observable<void> {
+    return this.http.put(`${this.baseUrl}/definitions/${productDefinition.identifier}`, productDefinition)
+  }
+
+  deleteProductDefinition(identifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/definitions/${identifier}`)
+  }
+
   fetchProductDefinitions(): Observable<ProductDefinition[]> {
     return this.http.get(`${this.baseUrl}/definitions`);
   }
@@ -46,6 +54,14 @@ export class DepositAccountService {
 
   createProductInstance(productInstance: ProductInstance): Observable<void> {
     return this.http.post(`${this.baseUrl}/instances`, productInstance);
+  }
+
+  updateProductInstance(productInstance: ProductInstance): Observable<void> {
+    return this.http.put(`${this.baseUrl}/instances/${productInstance.accountIdentifier}`, productInstance);
+  }
+
+  findProductInstance(identifier: string): Observable<ProductInstance> {
+    return this.http.get(`${this.baseUrl}/instances/${identifier}`);
   }
 
   fetchProductInstances(customerIdentifier: string, productIdentifier?: string): Observable<ProductInstance[]> {

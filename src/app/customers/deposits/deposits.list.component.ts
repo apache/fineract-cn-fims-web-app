@@ -70,6 +70,6 @@ export class DepositsListComponent implements OnInit {
   }
 
   rowSelect(productInstance: ProductInstance): void{
-    this.router.navigate(['detail', productInstance.productIdentifier], { relativeTo: this.route })
+    this.router.navigate(['detail', productInstance.accountIdentifier], { relativeTo: this.route })
   }
 }

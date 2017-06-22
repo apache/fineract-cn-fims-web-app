@@ -64,6 +64,9 @@
           </md-radio-button>
         </md-radio-group>
       </div>
+      <div layout="row" layout-margin>
+        <md-checkbox formControlName="flexible" [disabled]="editMode" translate>Flexible interest during the term?</md-checkbox>
+      </div>
       <div layout="row">
         <md-input-container layout-margin>
           <input mdInput type="number" placeholder="{{'Interest' | translate}}" formControlName="interest" step="any"/>
@@ -74,9 +77,6 @@
             {{ 'Value must be greater than' | translate:{ value: formGroup.get('interest').getError('minValue').value} }}
           </md-error>
         </md-input-container>
-      </div>
-      <div layout="row" layout-margin>
-        <md-checkbox formControlName="flexible" translate>Flexible interest during the term?</md-checkbox>
       </div>
       <div layout="row">
         <md-input-container layout-margin>
