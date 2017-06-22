@@ -20,16 +20,16 @@ import {CreditWorthinessSnapshot} from '../../../../../services/portfolio/domain
 import {CaseCreditFactorFormComponent} from '../components/credit-factor.component';
 import {CreditWorthinessFactor} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 
-export interface DeptToIncomeFormData {
+export interface DebtToIncomeFormData {
   incomeSources: CreditWorthinessFactor[];
   debts: CreditWorthinessFactor[];
 }
 
 @Component({
-  selector: 'fims-case-dept-to-income-form',
-  templateUrl: './dept-to-income.component.html'
+  selector: 'fims-case-debt-to-income-form',
+  templateUrl: './debt-to-income.component.html'
 })
-export class CaseDeptToIncomeFormComponent {
+export class CaseDebtToIncomeFormComponent {
 
   numberFormat: string = '2.2-2';
 
@@ -39,14 +39,14 @@ export class CaseDeptToIncomeFormComponent {
   @ViewChild('debtForm') debtsFactorComponent: CaseCreditFactorFormComponent;
   debts: CreditWorthinessFactor[] = [];
 
-  @Input('formData') set formData(formData: DeptToIncomeFormData) {
+  @Input('formData') set formData(formData: DebtToIncomeFormData) {
     this.incomeSources = formData.incomeSources;
     this.debts = formData.debts;
   }
 
   constructor() {}
 
-  get formData(): DeptToIncomeFormData {
+  get formData(): DebtToIncomeFormData {
     return {
       incomeSources: this.incomeFactorComponent.formData,
       debts: this.debtsFactorComponent.formData

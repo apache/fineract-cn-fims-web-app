@@ -50,9 +50,9 @@ import {
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';
-import {CaseDeptToIncomeFormComponent} from './form/dept-to-income/dept-to-income.component';
 import {CaseCreditFactorFormComponent} from './form/components/credit-factor.component';
 import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
+import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
 
 @NgModule({
   imports: [
@@ -94,7 +94,7 @@ import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
     CasePaymentsComponent,
     CaseTasksComponent,
     CaseStatusComponent,
-    CaseDeptToIncomeFormComponent,
+    CaseDebtToIncomeFormComponent,
     CaseCreditFactorFormComponent,
     CaseCoSignerFormComponent
   ],

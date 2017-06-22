@@ -17,7 +17,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormComponent} from '../../../../../common/forms/form.component';
 import {CreditWorthinessFactor} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
-import {CaseDeptToIncomeFormComponent, DeptToIncomeFormData} from '../dept-to-income/dept-to-income.component';
+import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from '../debt-to-income/debt-to-income.component';
 import {FormBuilder} from '@angular/forms';
 import {customerExists} from '../../../../../common/validator/customer-exists.validator';
 import {CustomerService} from '../../../../../services/customer/customer.service';
@@ -40,8 +40,8 @@ export class CaseCoSignerFormComponent extends FormComponent<CoSignerFormData> i
     this._formData = formData;
   }
 
-  @ViewChild('debtToIncomeForm') debtToIncomeForm: CaseDeptToIncomeFormComponent;
-  deptToIncomeFormData: DeptToIncomeFormData;
+  @ViewChild('debtToIncomeForm') debtToIncomeForm: CaseDebtToIncomeFormComponent;
+  debtToIncomeFormData: DebtToIncomeFormData;
 
   constructor(private formBuilder: FormBuilder, private customerService: CustomerService) {
     super();
@@ -52,7 +52,7 @@ export class CaseCoSignerFormComponent extends FormComponent<CoSignerFormData> i
       customerIdentifier: [this._formData.customerId, [], customerExists(this.customerService)]
     });
 
-    this.deptToIncomeFormData = {
+    this.debtToIncomeFormData = {
       incomeSources: this._formData.incomeSources,
       debts: this._formData.debts
     }

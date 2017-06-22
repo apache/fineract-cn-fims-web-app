@@ -20,7 +20,7 @@ import {CaseParameters} from '../../../../services/portfolio/domain/individualle
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
 import {FimsCase} from '../store/model/fims-case.model';
 import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
-import {CaseDeptToIncomeFormComponent, DeptToIncomeFormData} from './dept-to-income/dept-to-income.component';
+import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
 import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 
@@ -37,8 +37,8 @@ export class CaseFormComponent implements OnInit {
   @ViewChild('detailForm') detailForm: CaseDetailFormComponent;
   detailFormData: DetailFormData;
 
-  @ViewChild('deptToIncomeForm') deptToIncomeForm: CaseDeptToIncomeFormComponent;
-  deptToIncomeFormData: DeptToIncomeFormData;
+  @ViewChild('debtToIncomeForm') debtToIncomeForm: CaseDebtToIncomeFormComponent;
+  debtToIncomeFormData: DebtToIncomeFormData;
 
   @ViewChild('coSignerForm') coSignerForm: CaseCoSignerFormComponent;
   coSignerFormData: CoSignerFormData;
@@ -88,12 +88,12 @@ export class CaseFormComponent implements OnInit {
   private prepareDeptToIncomeForm(snapshots: CreditWorthinessSnapshot[]): void {
     const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
     if(snapshot) {
-      this.deptToIncomeFormData = {
+      this.debtToIncomeFormData = {
         incomeSources: snapshot.incomeSources,
         debts: snapshot.debts
       };
     } else {
-      this.deptToIncomeFormData = {
+      this.debtToIncomeFormData = {
         incomeSources: [],
         debts: []
       }
@@ -119,15 +119,15 @@ export class CaseFormComponent implements OnInit {
 
   get isValid(): boolean {
     return this.detailForm.valid &&
-      this.deptToIncomeForm.valid &&
+      this.debtToIncomeForm.valid &&
       this.coSignerForm.valid;
   }
 
   save(): void {
     const customerSnapshot: CreditWorthinessSnapshot = {
       forCustomer: this.customerId,
-      incomeSources: this.deptToIncomeForm.formData.incomeSources,
-      debts: this.deptToIncomeForm.formData.debts,
+      incomeSources: this.debtToIncomeForm.formData.incomeSources,
+      debts: this.debtToIncomeForm.formData.debts,
       assets: []
     };
 
@@ -174,8 +174,8 @@ export class CaseFormComponent implements OnInit {
     return this.detailForm.valid ? 'complete' : this.detailForm.pristine ? 'none' : 'required';
   }
 
-  get deptToIncomeFormState(): string {
-    return this.deptToIncomeForm.valid ? 'complete' : this.deptToIncomeForm.pristine ? 'none' : 'required';
+  get debtToIncomeFormState(): string {
+    return this.debtToIncomeForm.valid ? 'complete' : this.debtToIncomeForm.pristine ? 'none' : 'required';
   }
 
   get coSignerFormState(): string {
