@@ -23,6 +23,7 @@ import {CaseListComponent} from './case.list.component';
 import {CaseEditComponent} from './form/edit.component';
 import {CaseExistsGuard} from './case-exists.guard';
 import {CaseStatusComponent} from './status/status.component';
+import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 
 export const CaseRoutes: Routes = [
   {
@@ -58,6 +59,10 @@ export const CaseRoutes: Routes = [
         data: {
           hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
         }
+      },
+      {
+        path: 'debtIncome',
+        component: CaseDebtIncomeComponent
       }
     ]
   },

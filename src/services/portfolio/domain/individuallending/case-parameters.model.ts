@@ -19,7 +19,7 @@ import {BalanceRange} from '../balance-range.model';
 import {PaymentCycle} from '../payment-cycle.model';
 import {CreditWorthinessSnapshot} from './credit-worthiness-snapshot.model';
 
-export interface CaseParameters{
+export interface CaseParameters {
   customerIdentifier: string;
   termRange: TermRange;
   maximumBalance: number;

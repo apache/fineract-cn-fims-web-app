@@ -42,7 +42,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {
   MdAutocompleteModule,
   MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
-  MdSelectModule,
+  MdSelectModule, MdTabsModule,
   MdToolbarModule
 } from '@angular/material';
 import {
@@ -54,6 +54,7 @@ import {CaseCreditFactorFormComponent} from './form/components/credit-factor.com
 import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
 import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
 import {CaseDocumentsFormComponent} from './form/documents/documents.component';
+import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import {CaseDocumentsFormComponent} from './form/documents/documents.component';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
+    MdTabsModule,
     MdIconModule,
     MdListModule,
     MdToolbarModule,
@@ -99,7 +101,8 @@ import {CaseDocumentsFormComponent} from './form/documents/documents.component';
     CaseDebtToIncomeFormComponent,
     CaseCreditFactorFormComponent,
     CaseCoSignerFormComponent,
-    CaseDocumentsFormComponent
+    CaseDocumentsFormComponent,
+    CaseDebtIncomeComponent
   ],
   providers: [
     CaseExistsGuard,

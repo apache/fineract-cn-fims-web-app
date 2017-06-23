@@ -42,7 +42,11 @@ export class DataTableComponent {
 
   _columns: any[];
 
-  @Input('data') tableData: TableData;
+  @Input('data') tableData: TableData = {
+    totalElements: 0,
+    totalPages: 0,
+    data: []
+  };
 
   @Input() set columns(columns: ITdDataTableColumn[]) {
     columns.forEach((column) => {
