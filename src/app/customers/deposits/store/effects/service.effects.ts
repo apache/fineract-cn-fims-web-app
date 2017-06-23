@@ -59,4 +59,16 @@ export class DepositProductInstanceApiEffects {
         .catch((error) => of(new instanceActions.CreateProductInstanceFailAction(error)))
     );
 
+  @Effect()
+  updateProduct$: Observable<Action> = this.actions$
+    .ofType(instanceActions.UPDATE)
+    .map((action: instanceActions.UpdateProductInstanceAction) => action.payload)
+    .mergeMap(payload =>
+      this.depositService.updateProductInstance(payload.productInstance)
+        .map(() => new instanceActions.UpdateProductInstanceSuccessAction({
+          resource: payload.productInstance,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new instanceActions.UpdateProductInstanceFailAction(error)))
+    );
 }

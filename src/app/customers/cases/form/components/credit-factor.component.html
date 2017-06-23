@@ -1,0 +1,42 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<form [formGroup]="form">
+  <div layout-gt-xs="column" layout-margin formArrayName="factors">
+    <md-card *ngFor="let factor of factorControls; let i=index" [formGroupName]="i">
+      <md-card-content>
+        <div layout="row">
+          <md-input-container layout-margin flex>
+            <input mdInput type="text" placeholder="{{'Description' | translate}}" formControlName="description"/>
+          </md-input-container>
+          <md-input-container layout-margin>
+            <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
+            <md-error *ngIf="factor.get('amount').hasError('required')" translate>
+              Required
+            </md-error>
+            <md-error *ngIf="factor.get('amount').getError('minValue')">
+              {{ 'Value must be greater than' | translate:{ value: factor.get('amount').getError('minValue').value} }}
+            </md-error>
+          </md-input-container>
+          <button md-button (click)="removeFactor(i)">{{'REMOVE ' + factorName | translate}}</button>
+        </div>
+      </md-card-content>
+    </md-card>
+    <div layout="row">
+      <button flex md-button md-raised-button (click)="addFactor()">{{'ADD ' + factorName | translate}}</button>
+    </div>
+  </div>
+</form>

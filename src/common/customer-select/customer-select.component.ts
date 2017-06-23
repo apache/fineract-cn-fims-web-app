@@ -14,34 +14,72 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
-import {CustomerService} from '../../services/customer/customer.service';
+import {Component, Input, forwardRef, OnInit, OnDestroy} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {CustomerPage} from '../../services/customer/domain/customer-page.model';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {AccountingService} from '../../services/accounting/accounting.service';
+import {Account} from '../../services/accounting/domain/account.model';
+import {AccountPage} from '../../services/accounting/domain/account-page.model';
+import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {Customer} from '../../services/customer/domain/customer.model';
+import {CustomerService} from '../../services/customer/customer.service';
+import {CustomerPage} from '../../services/customer/domain/customer-page.model';
+
+const noop: () => void = () => {
+  // empty method
+};
 
 @Component({
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomerSelectComponent), multi: true }
+  ],
   selector: 'fims-customer-select',
   templateUrl: './customer-select.component.html'
 })
-export class CustomerSelectComponent implements OnInit{
+export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
+
+  formControl: FormControl;
 
   @Input() title: string;
 
-  @Input() preSelection: string[];
-
-  @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
+  @Input() required: boolean;
 
   customers: Observable<Customer[]>;
 
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
-    this.onSearch()
+    this.formControl = new FormControl('');
+
+    this.customers = this.formControl.valueChanges
+      .distinctUntilChanged()
+      .debounceTime(500)
+      .do(name => this.changeValue(name))
+      .filter(name => name)
+      .switchMap(name => this.onSearch(name));
   }
 
-  onSearch(searchTerm?: string): void{
+  changeValue(value: string): void{
+    this._onChangeCallback(value);
+  }
+
+  writeValue(value: any): void {
+    this.formControl.setValue(value);
+  }
+
+  registerOnChange(fn: any): void {
+    this._onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this._onTouchedCallback = fn;
+  }
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
+
+  onSearch(searchTerm?: string): Observable<Customer[]>{
     let fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
@@ -49,11 +87,9 @@ export class CustomerSelectComponent implements OnInit{
       },
       searchTerm: searchTerm
     };
-    this.customers = this.customerService.fetchCustomers(fetchRequest).map((customerPage: CustomerPage) => customerPage.customers);
-  }
 
-  selectionChange(selections: string[]): void{
-    this.onSelectionChange.emit(selections);
+    return this.customerService.fetchCustomers(fetchRequest)
+      .map((customerPage: CustomerPage) => customerPage.customers);
   }
 
 }

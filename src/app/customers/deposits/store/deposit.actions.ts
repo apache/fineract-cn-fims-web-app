@@ -20,7 +20,7 @@ import {RoutePayload} from '../../../../common/store/route-payload';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload
+  SelectResourcePayload, UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../../../common/store/search.reducer';
@@ -35,13 +35,16 @@ export const CREATE = type('[Deposit] Create');
 export const CREATE_SUCCESS = type('[Deposit] Create Success');
 export const CREATE_FAIL = type('[Deposit] Create Fail');
 
+export const UPDATE = type('[Deposit] Update');
+export const UPDATE_SUCCESS = type('[Deposit] Update Success');
+export const UPDATE_FAIL = type('[Deposit] Update Fail');
+
 export interface SearchProductInstancePayload {
   customerId: string;
   fetchRequest: FetchRequest;
 }
 
 export interface DepositRoutePayload extends RoutePayload {
-  customerId: string;
   productInstance: ProductInstance;
 }
 
@@ -87,6 +90,24 @@ export class CreateProductInstanceFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class UpdateProductInstanceAction implements Action {
+  readonly type = UPDATE;
+
+  constructor(public payload: DepositRoutePayload) { }
+}
+
+export class UpdateProductInstanceSuccessAction implements Action {
+  readonly type = UPDATE_SUCCESS;
+
+  constructor(public payload: UpdateResourceSuccessPayload) { }
+}
+
+export class UpdateProductInstanceFailAction implements Action {
+  readonly type = UPDATE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export type Actions
   = SearchAction
   | SearchCompleteAction
@@ -94,4 +115,7 @@ export type Actions
   | SelectAction
   | CreateProductInstanceAction
   | CreateProductInstanceSuccessAction
-  | CreateProductInstanceFailAction;
+  | CreateProductInstanceFailAction
+  | UpdateProductInstanceAction
+  | UpdateProductInstanceSuccessAction
+  | UpdateProductInstanceFailAction;

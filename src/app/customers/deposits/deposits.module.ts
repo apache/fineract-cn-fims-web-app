@@ -31,7 +31,7 @@ import {
   MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentCommonModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentChipsModule, CovalentCommonModule, CovalentStepsModule} from '@covalent/core';
 import {DepositCreateComponent} from './form/create.component';
 import {DepositFormComponent} from './form/form.component';
 import {DepositsListComponent} from './deposits.list.component';
@@ -42,6 +42,10 @@ import {EffectsModule} from '@ngrx/effects';
 import {DepositProductInstanceApiEffects} from './store/effects/service.effects';
 import {DepositProductInstanceRouteEffects} from './store/effects/route.effects';
 import {DepositProductInstanceNotificationEffects} from './store/effects/notification.effects';
+import {DepositIndexComponent} from './detail/deposit.index.component';
+import {DepositDetailComponent} from './detail/deposit.detail.component';
+import {DepositInstanceExistsGuard} from './deposit-instance-exists.guard';
+import {DepositEditComponent} from './form/edit.component';
 
 @NgModule({
   imports: [
@@ -61,6 +65,7 @@ import {DepositProductInstanceNotificationEffects} from './store/effects/notific
     MdCardModule,
     CovalentCommonModule,
     CovalentStepsModule,
+    CovalentChipsModule,
 
     EffectsModule.run(DepositProductInstanceApiEffects),
     EffectsModule.run(DepositProductInstanceRouteEffects),
@@ -69,9 +74,13 @@ import {DepositProductInstanceNotificationEffects} from './store/effects/notific
   declarations: [
     DepositsListComponent,
     DepositFormComponent,
-    DepositCreateComponent
+    DepositIndexComponent,
+    DepositCreateComponent,
+    DepositEditComponent,
+    DepositDetailComponent
   ],
   providers: [
+    DepositInstanceExistsGuard,
     { provide: DepositsStore, useFactory: depositsStoreFactory, deps: [Store] }
   ]
 })

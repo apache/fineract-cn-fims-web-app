@@ -32,12 +32,12 @@ export function reducer(state = initialState, action: product.Actions): Resource
     case product.ENABLE_SUCCESS: {
       const product = action.payload.product;
 
-      product.enabled = action.payload.enable;
-
       return {
         ids: [ ...state.ids ],
         entities: Object.assign({}, state.entities, {
-          [product.identifier]: product
+          [product.identifier]: Object.assign({}, product, {
+            enabled: action.payload.enable
+          })
         }),
         selectedId: state.selectedId,
         loadedAt: state.loadedAt

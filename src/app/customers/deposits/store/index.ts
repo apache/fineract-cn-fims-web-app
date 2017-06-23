@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import {createResourceReducer, getResourceLoadedAt, ResourceState} from '../../../../common/store/resource.reducer';
+import {
+  createResourceReducer, getResourceLoadedAt, getResourceSelected,
+  ResourceState
+} from '../../../../common/store/resource.reducer';
 import * as fromCustomer from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../reducers/index';
@@ -33,7 +36,7 @@ export interface State extends fromCustomer.State {
 }
 
 const reducers = {
-  deposits: createResourceReducer('Deposit'),
+  deposits: createResourceReducer('Deposit', undefined, 'accountIdentifier'),
   depositSearch: createSearchReducer('Deposit')
 };
 
@@ -63,3 +66,4 @@ export const getDepositSearchResults = createSelector(getSearchDeposits, getDepo
 export const getDepositsState = (state: State) => state.deposits;
 
 export const getDepositsLoadedAt = createSelector(getDepositsState, getResourceLoadedAt);
+export const getSelectedDepositInstance = createSelector(getDepositsState, getResourceSelected);

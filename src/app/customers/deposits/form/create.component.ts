@@ -30,13 +30,11 @@ import {ProductDefinition} from '../../../../services/depositAccount/domain/defi
 @Component({
   templateUrl: './create.component.html'
 })
-export class DepositCreateComponent implements OnInit, OnDestroy {
-
-  private customerSubscription: Subscription;
+export class DepositCreateComponent implements OnInit {
 
   @ViewChild('form') formComponent: DepositFormComponent;
 
-  customer: Customer;
+  customer$: Observable<Customer>;
 
   productInstance: ProductInstance = {
     customerIdentifier: '',
@@ -48,20 +46,13 @@ export class DepositCreateComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private depositService: DepositAccountService) {}
 
   ngOnInit(): void {
-    this.customerSubscription = this.depositsStore.select(fromCustomers.getSelectedCustomer)
-      .subscribe(customer => this.customer = customer);
+    this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer);
 
     this.productDefinitions$ = this.depositService.fetchProductDefinitions()
       .map(productDefinitions => productDefinitions.filter(productDefinitions => productDefinitions.active));
   }
 
-  ngOnDestroy(): void {
-    this.customerSubscription.unsubscribe();
-  }
-
   onSave(productInstance: ProductInstance): void {
-    productInstance.customerIdentifier = this.customer.identifier;
-
     this.depositsStore.dispatch({ type: CREATE, payload: {
       productInstance: productInstance,
       activatedRoute: this.route

@@ -21,6 +21,7 @@ import {DepositProductDetailComponent} from './detail/deposit-product.detail.com
 import {ProductDefinitionExistsGuard} from './product-definition-exists.guard';
 import {DepositProductStatusComponent} from './detail/status/status.component';
 import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
+import {DepositProductEditComponent} from './form/edit.component';
 
 export const DepositAccountRoutes: Routes = [
   {
@@ -42,6 +43,11 @@ export const DepositAccountRoutes: Routes = [
       {
         path: '',
         component: DepositProductDetailComponent
+      },
+      {
+        path: 'edit',
+        component: DepositProductEditComponent,
+        data: { hasPermission: { id: 'deposit_definitions', accessLevel: 'CHANGE' } },
       },
       {
         path: 'tasks',

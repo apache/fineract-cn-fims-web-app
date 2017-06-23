@@ -28,10 +28,26 @@ export class DepositProductDefinitionNotificationEffects {
 
   @Effect({dispatch: false})
   createProductDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(definitionActions.CREATE_SUCCESS)
+    .ofType(definitionActions.CREATE_SUCCESS, definitionActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Product is going to be saved'
+    }));
+
+  @Effect({dispatch: false})
+  deleteProductDefinitionSuccess$: Observable<Action> = this.actions$
+    .ofType(definitionActions.DELETE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Product is going to be deleted'
+    }));
+
+  @Effect({dispatch: false})
+  deleteProductDefinitionFail$: Observable<Action> = this.actions$
+    .ofType(definitionActions.DELETE_FAIL)
+    .do(() => this.notificationService.send({
+      type: NotificationType.ALERT,
+      message: 'Product is already assigned to a customer.'
     }));
 
   @Effect({dispatch: false})

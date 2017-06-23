@@ -14,16 +14,17 @@
  limitations under the License.
 -->
 
-<fims-select-list flex
-                    [data]="customers"
-                    id="identifier"
-                    displayName="surname"
-                    listIcon="face"
-                    [preSelection]="preSelection"
-                    [multiple]="true"
-                    (onSearch)="onSearch($event)"
-                    (onSelectionChange)="selectionChange($event)"
-                    [title]="title"
-                    noResultsMessage="{{'No customer was found.' | translate}}"
-                    noSelectionMessage="{{'No selection' | translate}}"
-></fims-select-list>
+<div layout="row">
+  <md-input-container layout-margin flex>
+    <input mdInput [placeholder]="title" [mdAutocomplete]="auto" [formControl]="formControl">
+    <md-hint class="tc-red-600">
+      <ng-content></ng-content>
+    </md-hint>
+  </md-input-container>
+</div>
+
+<md-autocomplete #auto="mdAutocomplete">
+  <md-option *ngFor="let customer of customers | async" [value]="customer.identifier">
+    {{ customer.identifier }}
+  </md-option>
+</md-autocomplete>

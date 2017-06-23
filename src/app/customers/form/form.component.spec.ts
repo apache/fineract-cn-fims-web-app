@@ -33,7 +33,7 @@ import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdAutocompleteModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
+import {MdAutocompleteModule, MdCheckboxModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
 import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
 import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
 import {CountryService} from '../../../services/country/country.service';
@@ -57,6 +57,7 @@ const customerTemplate: Customer = {
     month: 6,
     day: 24
   },
+  member: true,
   identificationCard: {
     issuer: 'test',
     expirationDate: {
@@ -105,6 +106,7 @@ describe('Test customer form', () => {
         MdIconModule,
         MdRadioModule,
         MdAutocompleteModule,
+        MdCheckboxModule,
         CovalentStepsModule,
         NoopAnimationsModule
       ],

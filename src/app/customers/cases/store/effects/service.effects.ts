@@ -92,7 +92,7 @@ export class CaseApiEffects {
     .ofType(caseActions.EXECUTE_COMMAND)
     .map((action: caseActions.ExecuteCommandAction) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.command)
+      this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.action, payload.command)
         .map(() => new caseActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new caseActions.ExecuteCommandFailAction(error)))
     );

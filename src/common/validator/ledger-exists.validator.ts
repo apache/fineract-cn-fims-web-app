@@ -23,24 +23,10 @@ export function ledgerExists(accountingService: AccountingService): AsyncValidat
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 1
-      },
-      searchTerm: control.value
-    };
-
-    return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => accountingService.fetchLedgers(true, fetchRequest))
-      .map(ledgerPage => ledgerPage.ledgers)
-      .map(ledgers => {
-        if(ledgers.length === 1 && ledgers[0].identifier === control.value){
-          return null;
-        }
-        return {
-          invalidLedger: true
-        }
-      });
+    return accountingService.findLedger(control.value, true)
+      .map(ledger => null)
+      .catch(() => Observable.of({
+        invalidLedger: true
+      }));
   }
 }

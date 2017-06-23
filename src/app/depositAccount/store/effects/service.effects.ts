@@ -59,6 +59,32 @@ export class DepositProductDefinitionApiEffects {
     );
 
   @Effect()
+  updateProduct$: Observable<Action> = this.actions$
+    .ofType(definitionActions.UPDATE)
+    .map((action: definitionActions.UpdateProductDefinitionAction) => action.payload)
+    .mergeMap(payload =>
+      this.depositService.updateProductDefinition(payload.productDefinition)
+        .map(() => new definitionActions.UpdateProductDefinitionSuccessAction({
+          resource: payload.productDefinition,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new definitionActions.UpdateProductDefinitionFailAction(error)))
+    );
+
+  @Effect()
+  deleteProduct$: Observable<Action> = this.actions$
+    .ofType(definitionActions.DELETE)
+    .map((action: definitionActions.DeleteProductDefinitionAction) => action.payload)
+    .mergeMap(payload =>
+      this.depositService.deleteProductDefinition(payload.productDefinition.identifier)
+        .map(() => new definitionActions.DeleteProductDefinitionSuccessAction({
+          resource: payload.productDefinition,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new definitionActions.DeleteProductDefinitionFailAction(error)))
+    );
+
+  @Effect()
   executeCommand$: Observable<Action> = this.actions$
     .ofType(definitionActions.EXECUTE_COMMAND)
     .map((action: definitionActions.ExecuteCommandAction) => action.payload)

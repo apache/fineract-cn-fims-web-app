@@ -71,16 +71,18 @@ export class DepositProductFormComponent implements OnInit {
 
   private prepareForm(definition: ProductDefinition): void {
     this.charges = definition.charges;
+
+    const interestDisabled = this.editMode && !definition.flexible;
+
     this.formGroup = this.formBuilder.group({
       identifier: [definition.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
       type: [definition.type, [Validators.required]],
       name: [definition.name, [Validators.required]],
       description: [definition.description],
       currencyCode: [definition.currency.code, [Validators.required]],
-      currencyScale: [definition.currency.scale, [Validators.required, FimsValidators.minValue(0)]],
       minimumBalance: [definition.minimumBalance, [Validators.required]],
-      interest: [definition.interest, [Validators.required, FimsValidators.minValue(0)]],
-      flexible: [definition.flexible, [Validators.required]],
+      interest: [{ value: definition.interest, disabled: interestDisabled }, [Validators.required, FimsValidators.minValue(0)]],
+      flexible: [{ value: definition.flexible, disabled: this.editMode }, [Validators.required]],
       termPeriod: [definition.term.period, [Validators.required, FimsValidators.minValue(1)]],
       termTimeUnit: [definition.term.timeUnit, [Validators.required]],
       termInterestPayable: [definition.term.interestPayable, [Validators.required]],
@@ -109,7 +111,7 @@ export class DepositProductFormComponent implements OnInit {
         code: currency.code,
         name: currency.name,
         sign: currency.sign,
-        scale: this.formGroup.get('currencyScale').value
+        scale: currency.digits
       },
       charges: this.chargesForm.formData,
       expenseAccountIdentifier: this.formGroup.get('expenseAccountIdentifier').value,

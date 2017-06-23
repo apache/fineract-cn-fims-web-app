@@ -34,19 +34,19 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
       const payload = action.payload;
 
       const caseId = payload.caseId;
-      const command: CaseCommand = payload.command;
+      const commandAction: string = payload.action;
 
       const caseInstance = state.entities[caseId];
 
       let caseState: CaseState = null;
 
-      if(command.action === 'OPEN') {
+      if(commandAction === 'OPEN') {
         caseState = 'PENDING';
-      }else if(command.action === 'APPROVE') {
+      }else if(commandAction === 'APPROVE') {
         caseState = 'APPROVED';
-      }else if(command.action === 'DENY') {
+      }else if(commandAction === 'DENY') {
         caseState = 'CLOSED';
-      }else if(command.action === 'CLOSE') {
+      }else if(commandAction === 'CLOSE') {
         caseState = 'CLOSED';
       }
 

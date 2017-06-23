@@ -55,7 +55,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
   ngOnInit() {
     this.openDetailStep();
     this.form = this.formBuilder.group({
-      'identifier': [ this.account.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()] ],
+      'identifier': [ this.account.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(34), FimsValidators.urlSafe()] ],
       'name': [ this.account.name, [Validators.required] ],
       'type': [ this.account.type, [Validators.required] ],
       'ledger': [ this.account.ledger, [Validators.required] ],

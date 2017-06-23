@@ -28,7 +28,7 @@ export class DepositProductInstanceNotificationEffects {
 
   @Effect({dispatch: false})
   createProductInstanceSuccess$: Observable<Action> = this.actions$
-    .ofType(instanceActions.CREATE_SUCCESS)
+    .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Deposit account is going to be saved'

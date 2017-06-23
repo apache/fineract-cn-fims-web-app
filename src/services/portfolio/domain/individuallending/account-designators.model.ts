@@ -25,7 +25,7 @@ export class AccountDesignators{
 
   public static readonly CUSTOMER_LOAN: string = "customer-loan";
 
-  public static readonly CONSUMER_LOAN_LEDGER: string = "consumer-loan-ledger";
+  public static readonly PENDING_DISBURSAL: string = "pending-disbursal";
 
   public static readonly LOAN_FUNDS_SOURCE: string = "loan-funds-source";
 

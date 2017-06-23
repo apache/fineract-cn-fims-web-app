@@ -22,6 +22,9 @@
 </md-toolbar>
 
 <fims-layout-card-over [title]="product.name" [subTitle]="product.description">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <button md-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
   <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}" color="warn" icon="error">
     <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
@@ -62,6 +65,10 @@
                 <md-list-item>
                   <h3 md-line translate>Term</h3>
                   <p md-line>{{product.termRange.maximum | number}} {{product.termRange.temporalUnit | translate}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Currency</h3>
+                  <p md-line>{{product.currencyCode}}</p>
                 </md-list-item>
               </md-list>
             </div>

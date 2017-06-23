@@ -42,7 +42,11 @@ export class DataTableComponent {
 
   _columns: any[];
 
-  @Input('data') tableData: TableData;
+  @Input('data') tableData: TableData = {
+    totalElements: 0,
+    totalPages: 0,
+    data: []
+  };
 
   @Input() set columns(columns: ITdDataTableColumn[]) {
     columns.forEach((column) => {
@@ -101,7 +105,7 @@ export class DataTableComponent {
   }
 
   private fetch() {
-    let fetchRequest: TableFetchRequest = {
+    const fetchRequest: TableFetchRequest = {
       page: this.currentPage,
       sort: this.currentSort
     };
@@ -114,6 +118,10 @@ export class DataTableComponent {
 
   get hasData(): boolean {
     return this.tableData && this.tableData.data && this.tableData.data.length > 0;
+  }
+
+  isBoolean(value: any): boolean {
+    return typeof(value) === 'boolean';
   }
 
 }

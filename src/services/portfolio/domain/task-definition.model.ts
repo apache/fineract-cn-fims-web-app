@@ -16,7 +16,7 @@
 
 import {WorkflowAction} from './individuallending/workflow-action.model';
 
-export interface TaskDefinition{
+export interface TaskDefinition {
   identifier: string;
   name: string;
   description: string;

@@ -18,10 +18,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../store/index';
-import {SelectAction, UPDATE} from '../store/product.actions';
+import {RESET_FORM, SelectAction, UPDATE} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {FimsProduct} from '../store/model/fims-product.model';
+import {Currency} from '../../../../services/currency/domain/currency.model';
+import {CurrencyService} from '../../../../services/currency/currency.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -30,24 +33,23 @@ export class ProductEditComponent implements OnInit, OnDestroy{
 
   private productSubscription: Subscription;
 
-  private actionsSubscription: Subscription;
+  currencies$: Observable<Currency[]>;
 
   product: FimsProduct;
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore, private currencyService: CurrencyService) {}
 
   ngOnInit() {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .subscribe(product => this.product = product);
 
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['productId']))
-      .subscribe(this.portfolioStore);
+    this.currencies$ = this.currencyService.fetchCurrencies();
   }
 
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
-    this.actionsSubscription.unsubscribe();
+
+    this.portfolioStore.dispatch({ type: RESET_FORM })
   }
 
   onSave(product: Product) {

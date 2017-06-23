@@ -18,7 +18,7 @@
   <td-step #transactionStep label="{{'Transaction' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [disabled]="transactionCreated">
     <form [formGroup]="form">
-      <div layout="row">
+      <div layout="row" class="pad-top">
         <md-select formControlName="productInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
           <md-option *ngFor="let instance of productInstances" [value]="instance">
             {{instance.accountIdentifier}}

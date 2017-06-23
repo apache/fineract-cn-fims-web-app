@@ -21,10 +21,11 @@ import {RoutePayload} from '../../../../common/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
 import {SearchResult} from '../../../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
+import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 
 export const SEARCH = type('[Product] Search');
 export const SEARCH_COMPLETE = type('[Product] Search Complete');
@@ -40,17 +41,21 @@ export const UPDATE = type('[Product] Update');
 export const UPDATE_SUCCESS = type('[Product] Update Success');
 export const UPDATE_FAIL = type('[Product] Update Fail');
 
+export const DELETE = type('[Product] Delete');
+export const DELETE_SUCCESS = type('[Product] Delete Success');
+export const DELETE_FAIL = type('[Product] Delete Fail');
+
 export const ENABLE = type('[Product] Enable');
 export const ENABLE_SUCCESS = type('[Product] Enable Success');
 export const ENABLE_FAIL = type('[Product] Enable Fail');
 
 export const RESET_FORM = type('[Product] Reset Form');
 
-export interface ProductRoutePayload extends RoutePayload{
+export interface ProductRoutePayload extends RoutePayload {
   product: FimsProduct
 }
 
-export interface EnableProductPayload{
+export interface EnableProductPayload {
   product: FimsProduct;
   enable: boolean;
 }
@@ -58,7 +63,7 @@ export interface EnableProductPayload{
 export class SearchAction implements Action {
   readonly type = SEARCH;
 
-  constructor() { }
+  constructor(payload: FetchRequest) { }
 }
 
 export class SearchCompleteAction implements Action {
@@ -115,6 +120,24 @@ export class UpdateProductFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class DeleteProductAction implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: ProductRoutePayload) { }
+}
+
+export class DeleteProductSuccessAction implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: DeleteResourceSuccessPayload) { }
+}
+
+export class DeleteProductFailAction implements Action {
+  readonly type = DELETE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export class EnableProductAction implements Action {
   readonly type = ENABLE;
 
@@ -150,6 +173,9 @@ export type Actions
   | UpdateProductAction
   | UpdateProductSuccessAction
   | UpdateProductFailAction
+  | DeleteProductAction
+  | DeleteProductSuccessAction
+  | DeleteProductFailAction
   | EnableProductAction
   | EnableProductSuccessAction
   | EnableProductFailAction;

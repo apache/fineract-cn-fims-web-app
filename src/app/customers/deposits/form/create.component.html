@@ -20,7 +20,7 @@
   <fims-deposit-form-component #form
                             (onSave)="onSave($event)"
                             (onCancel)="onCancel()"
-                            [customerId]="customer.identifier"
+                            [customerId]="(customer$ | async).identifier"
                             [productInstance]="productInstance"
                             [productDefinitions]="productDefinitions$ | async"
                             [editMode]="false">

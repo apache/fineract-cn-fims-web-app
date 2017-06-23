@@ -50,7 +50,7 @@ export class ProductListComponent implements OnInit{
   }
 
   fetchProducts(fetchRequest?: FetchRequest): void{
-    this.store.dispatch({ type: SEARCH });
+    this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
   rowSelect(product: FimsProduct): void{

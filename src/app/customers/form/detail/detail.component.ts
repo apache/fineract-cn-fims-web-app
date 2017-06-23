@@ -19,7 +19,7 @@ import {FormComponent} from '../../../../common/forms/form.component';
 import {Validators, FormBuilder} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 
-export interface CustomerDetailFormData{
+export interface CustomerDetailFormData {
   identifier: string;
   firstName: string;
   middleName: string;
@@ -27,6 +27,7 @@ export interface CustomerDetailFormData{
   birthDay?: number;
   birthMonth?: number;
   birthYear?: number;
+  member: boolean;
 }
 
 @Component({
@@ -42,6 +43,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       middleName: [formData.middleName],
       lastName: [formData.lastName, Validators.required],
       dayOfBirth: [this.formatDate(formData.birthYear, formData.birthMonth, formData.birthDay), Validators.required],
+      member: [formData.member],
     })
   };
 
@@ -60,9 +62,9 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
   }
 
   get formData(): CustomerDetailFormData{
-    let birthDate: string = this.form.get('dayOfBirth').value;
+    const birthDate: string = this.form.get('dayOfBirth').value;
 
-    let chunks: string[] = birthDate ? birthDate.split('-') : [];
+    const chunks: string[] = birthDate ? birthDate.split('-') : [];
 
     return {
       identifier: this.form.get('identifier').value,
@@ -72,6 +74,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       birthYear: chunks.length ? Number(chunks[0]) : undefined,
       birthMonth: chunks.length ? Number(chunks[1]) : undefined,
       birthDay: chunks.length ? Number(chunks[2]) : undefined,
+      member: this.form.get('member').value
     }
   }
 

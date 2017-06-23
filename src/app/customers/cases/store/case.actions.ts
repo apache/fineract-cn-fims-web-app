@@ -68,6 +68,7 @@ export interface CaseRoutePayload extends RoutePayload{
 export interface ExecuteCommandPayload extends RoutePayload {
   productId: string;
   caseId: string;
+  action: string;
   command: CaseCommand;
 }
 

@@ -18,7 +18,7 @@
   <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
     <form [formGroup]="detailForm" layout="column">
       <div layout="row">
-        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+        <fims-id-input [form]="detailForm" [placeholder]="'Short name'" controlName="identifier" [readonly]="editMode"></fims-id-input>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
@@ -37,14 +37,9 @@
         </md-input-container>
       </div>
       <div layout="row">
-        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency code' | translate }}">
-          <md-option *ngFor="let code of ['USD', 'EUR', 'XCD', 'BZD']" [value]="code">
-            {{code}}
-          </md-option>
-        </md-select>
-        <md-select formControlName="minorCurrencyUnitDigits" layout-margin placeholder="{{ 'Currency digits' | translate }}">
-          <md-option *ngFor="let digit of [0,1,2,3,4,5]" [value]="digit">
-            {{digit}}
+        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
+          <md-option *ngFor="let currency of currencies" [value]="currency.code">
+            {{currency.code}}
           </md-option>
         </md-select>
       </div>
@@ -68,7 +63,7 @@
       <fims-form-continue-action (onContinue)="settingsStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
-  <td-step #settingsStep label="{{'Ledger and Account Settings' | translate}}" [state]="settingsForm.valid ? 'complete' : settingsForm.pristine ? 'none' : 'required'">
+  <td-step #settingsStep label="{{'Ledger and account settings' | translate}}" [state]="settingsForm.valid ? 'complete' : settingsForm.pristine ? 'none' : 'required'">
     <fims-product-settings-form #settingsForm [formData]="settingsFormData"></fims-product-settings-form>
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="interestStep.open()"></fims-form-continue-action>

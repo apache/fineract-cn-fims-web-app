@@ -37,5 +37,6 @@ export interface Customer{
   address: Address;
   contactDetails?: ContactDetail[];
   currentState?: CustomerState;
-  customValues: Value[]
+  customValues: Value[];
+  member: boolean;
 }

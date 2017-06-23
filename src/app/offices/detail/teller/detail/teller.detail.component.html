@@ -22,15 +22,12 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{ 'Teller' | translate }}">
-  <td-message *ngIf="(teller$ | async).state === 'CLOSED'" label="{{'Teller is closed' | translate }}"
-              sublabel="{{'This teller can be opened' | translate }}"
-              color="warn" icon="error">
+  <td-message *ngIf="isClosed$ | async" label="{{'Teller can be opened' | translate }}" color="warn" icon="error">
     <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'OPEN'}"
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>OPEN TELLER
     </a>
   </td-message>
-  <td-message *ngIf="(teller$ | async).state === 'OPEN'" label="{{'Teller is open' | translate }}"
-              sublabel="{{'This teller can be closed' | translate }}" color="accent" icon="check">
+  <td-message *ngIf="!(isClosed$ | async)" label="{{'Teller can be closed' | translate }}" color="accent" icon="check">
     <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'CLOSE'}"
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>CLOSE TELLER
     </a>

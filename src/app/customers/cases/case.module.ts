@@ -40,15 +40,21 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
+  MdAutocompleteModule,
   MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
-  MdSelectModule,
+  MdSelectModule, MdTabsModule,
   MdToolbarModule
 } from '@angular/material';
 import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentMessageModule,
+  CovalentCommonModule, CovalentDataTableModule, CovalentFileModule, CovalentMessageModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';
+import {CaseCreditFactorFormComponent} from './form/components/credit-factor.component';
+import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
+import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
+import {CaseDocumentsFormComponent} from './form/documents/documents.component';
+import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 
 @NgModule({
   imports: [
@@ -57,6 +63,7 @@ import {CaseStatusComponent} from './status/status.component';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
+    MdTabsModule,
     MdIconModule,
     MdListModule,
     MdToolbarModule,
@@ -66,10 +73,12 @@ import {CaseStatusComponent} from './status/status.component';
     MdSelectModule,
     MdRadioModule,
     MdCardModule,
+    MdAutocompleteModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentDataTableModule,
     CovalentMessageModule,
+    CovalentFileModule,
 
     EffectsModule.run(CaseApiEffects),
     EffectsModule.run(CaseRouteEffects),
@@ -88,7 +97,12 @@ import {CaseStatusComponent} from './status/status.component';
     CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
     CaseTasksComponent,
-    CaseStatusComponent
+    CaseStatusComponent,
+    CaseDebtToIncomeFormComponent,
+    CaseCreditFactorFormComponent,
+    CaseCoSignerFormComponent,
+    CaseDocumentsFormComponent,
+    CaseDebtIncomeComponent
   ],
   providers: [
     CaseExistsGuard,

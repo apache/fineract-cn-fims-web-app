@@ -25,6 +25,9 @@ import {Subscription} from 'rxjs';
 import * as fromCases from '../store/index';
 import * as fromCustomers from '../../store/index';
 import {FimsCase} from '../store/model/fims-case.model';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Observable} from 'rxjs/Observable';
+import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -39,11 +42,13 @@ export class CaseEditComponent implements OnInit, OnDestroy{
 
   private productId: string;
 
+  products$: Observable<Product[]>;
+
   customer: Customer;
 
   caseInstance: FimsCase;
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -59,6 +64,9 @@ export class CaseEditComponent implements OnInit, OnDestroy{
 
     this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
       .subscribe(customer => this.customer = customer);
+
+    this.products$ = this.portfolioService.findAllProducts(false)
+      .map(productPage => productPage.elements);
   }
 
   ngOnDestroy(): void {

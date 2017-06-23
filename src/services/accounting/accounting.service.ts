@@ -52,8 +52,8 @@ export class AccountingService{
     return this.http.get(`${this.baseUrl}/ledgers`, requestOptions);
   }
 
-  public findLedger(identifier: string): Observable<Ledger>{
-    return this.http.get(`${this.baseUrl}/ledgers/${identifier}`);
+  public findLedger(identifier: string, silent?: boolean): Observable<Ledger>{
+    return this.http.get(`${this.baseUrl}/ledgers/${identifier}`, {}, silent);
   }
 
   public addSubLedger(identifier: string, subLedger: Ledger): Observable<void>{

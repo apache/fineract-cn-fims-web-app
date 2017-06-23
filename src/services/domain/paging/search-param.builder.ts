@@ -20,12 +20,12 @@ import {Page} from './page.model';
 import {Sort} from './sort.model';
 
 export function buildSearchParams(fetchRequest?: FetchRequest): URLSearchParams {
-  let params = new URLSearchParams();
+  const params = new URLSearchParams();
 
   fetchRequest = fetchRequest || {};
 
-  let page: Page = fetchRequest.page || {pageIndex: 0, size: 10};
-  let sort: Sort = fetchRequest.sort || {sortColumn: '', sortDirection: ''};
+  const page: Page = fetchRequest.page || {pageIndex: 0, size: 10};
+  const sort: Sort = fetchRequest.sort || {sortColumn: '', sortDirection: ''};
 
   params.append('term', fetchRequest.searchTerm ? fetchRequest.searchTerm : undefined);
 

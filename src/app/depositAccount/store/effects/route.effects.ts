@@ -28,9 +28,15 @@ export class DepositProductDefinitionRouteEffects {
 
   @Effect({ dispatch: false })
   createProductDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(definitionActions.CREATE_SUCCESS)
+    .ofType(definitionActions.CREATE_SUCCESS, definitionActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  @Effect({ dispatch: false })
+  deleteProductDefinitionSuccess$: Observable<Action> = this.actions$
+    .ofType(definitionActions.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute }));
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$

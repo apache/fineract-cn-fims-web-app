@@ -17,10 +17,15 @@
 <md-toolbar color="primary" class="md-whiteframe-z1">
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Manage Loan products' | translate}}">
-  <fims-data-table flex (onFetch)="fetchProducts($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="productData | async"></fims-data-table>
+<fims-layout-card-over title="{{'Manage loan products' | translate}}">
+  <fims-data-table flex
+                   (onFetch)="fetchProducts($event)"
+                   (onActionCellClick)="rowSelect($event)"
+                   [columns]="columns"
+                   [sortable]="true"
+                   [data]="productData | async">
+  </fims-data-table>
 </fims-layout-card-over>
-
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new product' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
   <md-icon>add</md-icon>
 </a>

@@ -16,49 +16,48 @@
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
-import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
-import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {setSelections} from '../../../../common/forms/form-helper';
-import * as fromCases from '../store/index';
-import {CasesStore} from '../store/index';
-import {LOAD_PRODUCT, UNLOAD_PRODUCT} from '../store/case.actions';
-import {Product} from '../../../../services/portfolio/domain/product.model';
-import {Observable} from 'rxjs';
 import {FimsCase} from '../store/model/fims-case.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
+import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
+import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {CaseDocumentsFormComponent} from './documents/documents.component';
 
 @Component({
   selector: 'fims-case-form-component',
   templateUrl: './form.component.html'
 })
-export class CaseFormComponent implements OnInit{
+export class CaseFormComponent implements OnInit {
 
   private _caseInstance: FimsCase;
-
-  selectedProduct: Observable<Product>;
-
-  productForm: FormGroup;
-
-  @ViewChild('productSelection') productStep: TdStepComponent;
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
   @ViewChild('detailForm') detailForm: CaseDetailFormComponent;
   detailFormData: DetailFormData;
 
+  @ViewChild('debtToIncomeForm') debtToIncomeForm: CaseDebtToIncomeFormComponent;
+  debtToIncomeFormData: DebtToIncomeFormData;
+
+  @ViewChild('coSignerForm') coSignerForm: CaseCoSignerFormComponent;
+  coSignerFormData: CoSignerFormData;
+
+  @ViewChild('documentsForm') documentsForm: CaseDocumentsFormComponent;
+
+  @Input('products') products: Product[];
+
   @Input('editMode') editMode: boolean;
 
   @Input('customerId') customerId: string;
 
-  @Input('case') set caseInstance(caseInstance: FimsCase){
+  @Input('case') set caseInstance(caseInstance: FimsCase) {
     this._caseInstance = caseInstance;
 
-    this.prepareProductForm(caseInstance);
     this.prepareDetailForm(caseInstance);
+    this.prepareDeptToIncomeForm(caseInstance.parameters.creditWorthinessSnapshots);
+    this.prepareCosignerForm(caseInstance.parameters.creditWorthinessSnapshots);
   };
 
   get caseInstance(): FimsCase {
@@ -68,23 +67,16 @@ export class CaseFormComponent implements OnInit{
   @Output('onSave') onSave = new EventEmitter<FimsCase>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private casesStore: CasesStore) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.productStep.open();
-
-    this.selectedProduct = this.casesStore.select(fromCases.getCaseFormProduct);
-  }
-
-  private prepareProductForm(caseInstance: FimsCase): void {
-    this.productForm = this.formBuilder.group({
-      identifier: [caseInstance.productIdentifier, [Validators.required]]
-    });
+    this.detailsStep.open();
   }
 
   private prepareDetailForm(caseInstance: FimsCase): void {
     this.detailFormData = {
       identifier: caseInstance.identifier,
+      productIdentifier: caseInstance.productIdentifier,
       principalAmount: caseInstance.parameters.maximumBalance,
       term: caseInstance.parameters.termRange.maximum,
       termTemporalUnit: caseInstance.parameters.termRange.temporalUnit,
@@ -96,33 +88,64 @@ export class CaseFormComponent implements OnInit{
     };
   }
 
-  onProductSelection(selections: string[]): void {
-    setSelections('identifier', this.productForm, selections);
-
-    if(selections.length === 1) {
-      this.casesStore.dispatch({ type: LOAD_PRODUCT, payload: selections[0] });
-    }else{
-      this.casesStore.dispatch({ type: UNLOAD_PRODUCT });
+  private prepareDeptToIncomeForm(snapshots: CreditWorthinessSnapshot[]): void {
+    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
+    if(snapshot) {
+      this.debtToIncomeFormData = {
+        incomeSources: snapshot.incomeSources,
+        debts: snapshot.debts
+      };
+    } else {
+      this.debtToIncomeFormData = {
+        incomeSources: [],
+        debts: []
+      }
     }
   }
 
-  get isValid(): boolean{
-    return this.productForm.valid
-      && this.detailForm.valid;
+  private prepareCosignerForm(snapshots: CreditWorthinessSnapshot[]): void {
+    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer !== this.customerId);
+    if(snapshot) {
+      this.coSignerFormData = {
+        customerId: snapshot.forCustomer,
+        incomeSources: snapshot.incomeSources,
+        debts: snapshot.debts
+      };
+    } else {
+      this.coSignerFormData = {
+        customerId: null,
+        incomeSources: [],
+        debts: []
+      }
+    }
   }
 
-  private collectAccountAssignments(): AccountAssignment[]{
-    const assignments: AccountAssignment[] = [];
-
-    assignments.push({
-      accountIdentifier: 'placeholder',
-      designator: AccountDesignators.CUSTOMER_LOAN
-    });
-
-    return assignments;
+  get isValid(): boolean {
+    return this.detailForm.valid &&
+      this.debtToIncomeForm.valid &&
+      this.coSignerForm.valid;
   }
 
-  save(): void{
+  save(): void {
+    const customerSnapshot: CreditWorthinessSnapshot = {
+      forCustomer: this.customerId,
+      incomeSources: this.debtToIncomeForm.formData.incomeSources,
+      debts: this.debtToIncomeForm.formData.debts,
+      assets: []
+    };
+
+    const cosignerSnapshot: CreditWorthinessSnapshot = {
+      forCustomer: this.coSignerForm.formData.customerId,
+      incomeSources: this.coSignerForm.formData.incomeSources,
+      debts: this.coSignerForm.formData.debts,
+      assets: []
+    };
+
+    const creditWorthinessSnapshots = [customerSnapshot];
+    if(cosignerSnapshot.forCustomer) {
+      creditWorthinessSnapshots.push(cosignerSnapshot);
+    }
+
     const caseParameters: CaseParameters = {
       customerIdentifier: this.customerId,
       maximumBalance: this.detailForm.formData.principalAmount,
@@ -136,23 +159,38 @@ export class CaseFormComponent implements OnInit{
       termRange: {
         temporalUnit: this.detailForm.formData.termTemporalUnit,
         maximum: this.detailForm.formData.term
-      }
+      },
+      creditWorthinessSnapshots
     };
 
     const caseToSave: FimsCase = {
       currentState: this.caseInstance.currentState,
       identifier: this.detailForm.formData.identifier,
-      productIdentifier: this.productForm.get('identifier').value,
+      productIdentifier: this.detailForm.formData.productIdentifier,
       parameters: caseParameters,
-      accountAssignments: this.collectAccountAssignments()
+      accountAssignments: []
     };
 
     this.onSave.emit(caseToSave);
   }
 
-  cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
   }
 
+  get detailFormState(): string {
+    return this.detailForm.valid ? 'complete' : this.detailForm.pristine ? 'none' : 'required';
+  }
 
+  get debtToIncomeFormState(): string {
+    return this.debtToIncomeForm.valid ? 'complete' : this.debtToIncomeForm.pristine ? 'none' : 'required';
+  }
+
+  get coSignerFormState(): string {
+    return this.coSignerForm.valid ? 'complete' : this.coSignerForm.pristine ? 'none' : 'required';
+  }
+
+  get documentsFormState(): string {
+    return this.documentsForm.valid ? 'complete' : this.documentsForm.pristine ? 'none' : 'required';
+  }
 }

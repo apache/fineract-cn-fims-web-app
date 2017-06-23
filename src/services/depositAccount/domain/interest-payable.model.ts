@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export type InterestPayable = 'MATURITY' | 'ANNUALLY' | 'MONTHLY';
+export type InterestPayable = 'MATURITY' | 'ANNUALLY' | 'QUARTERLY' | 'MONTHLY';

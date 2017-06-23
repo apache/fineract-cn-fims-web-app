@@ -16,7 +16,7 @@
 
 import {TaskDefinition} from './task-definition.model';
 
-export interface TaskInstance{
+export interface TaskInstance {
   taskDefinition: TaskDefinition;
   comment: string;
   executedOn: string;

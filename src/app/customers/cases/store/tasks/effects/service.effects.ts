@@ -25,8 +25,7 @@ import {PortfolioService} from '../../../../../../services/portfolio/portfolio.s
 @Injectable()
 export class CaseTasksApiEffects {
 
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) {
-  }
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
