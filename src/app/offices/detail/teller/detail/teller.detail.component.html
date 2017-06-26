@@ -47,14 +47,14 @@
             </md-nav-list>
           </div>
           <div flex-gt-md="70">
-            <md-list>
+            <md-list *ngIf="teller$ | async as teller">
               <md-list-item>
                 <h3 md-line translate>Number</h3>
-                <p md-line>{{(teller$ | async).code}}</p>
+                <p md-line>{{teller.code}}</p>
               </md-list-item>
               <md-list-item>
                 <h3 md-line translate>Cash withdrawal limit</h3>
-                <p md-line>{{(teller$ | async).cashdrawLimit}}</p>
+                <p md-line>{{teller.cashdrawLimit}}</p>
               </md-list-item>
             </md-list>
           </div>

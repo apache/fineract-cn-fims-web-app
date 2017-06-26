@@ -15,16 +15,17 @@
  */
 
 import * as teller from './teller.actions';
+import {Teller} from '../../../services/teller/domain/teller.model';
 
 export interface State {
-  tellerCode: string;
+  teller: Teller;
   authenticated: boolean;
   loading: boolean;
   error: Error;
 }
 
 const initialState: State = {
-  tellerCode: null,
+  teller: null,
   authenticated: false,
   loading: false,
   error: null
@@ -41,10 +42,10 @@ export function reducer(state = initialState, action: teller.Actions): State {
     }
 
     case teller.UNLOCK_DRAWER_SUCCESS: {
-      const tellerCode: string = action.payload;
+      const teller: Teller = action.payload;
       return Object.assign({}, state, {
         loading: false,
-        tellerCode,
+        teller,
         authenticated: true
       });
     }
@@ -68,7 +69,7 @@ export function reducer(state = initialState, action: teller.Actions): State {
 
 export const getAuthenticated = (state: State) => state.authenticated;
 
-export const getTellerCode = (state: State) => state.tellerCode;
+export const getTeller = (state: State) => state.teller;
 
 export const getError = (state: State) => state.error;
 

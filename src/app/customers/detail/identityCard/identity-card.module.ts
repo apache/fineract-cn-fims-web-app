@@ -32,8 +32,9 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdToolbarModule} from '@angular/material';
-import {CovalentStepsModule} from '@covalent/core';
+import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {IdentityCardFormComponent} from './form/identity-card-form.component';
+import {IdentityCardScansFormComponent} from './form/scans/scans.component';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {IdentityCardFormComponent} from './form/identity-card-form.component';
     MdInputModule,
     MdButtonModule,
     CovalentStepsModule,
+    CovalentFileModule,
 
     EffectsModule.run(CustomerIdentificationCardApiEffects),
     EffectsModule.run(CustomerIdentificationCardRouteEffects),
@@ -59,7 +61,8 @@ import {IdentityCardFormComponent} from './form/identity-card-form.component';
     CustomerIdentityCardIndexComponent,
     CustomerIdentityCardDetailComponent,
     EditCustomerIdentificationCardFormComponent,
-    IdentityCardFormComponent
+    IdentityCardFormComponent,
+    IdentityCardScansFormComponent
   ],
   providers: [
     IdentityCardExistsGuard

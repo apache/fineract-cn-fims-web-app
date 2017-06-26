@@ -23,6 +23,7 @@
                    (onActionCellClick)="rowSelect($event)"
                    [columns]="columns"
                    [sortable]="true"
+                   [pageable]="true"
                    [data]="productData | async">
   </fims-data-table>
 </fims-layout-card-over>

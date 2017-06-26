@@ -20,6 +20,7 @@ import {LoadResourcePayload, SelectResourcePayload} from '../../../common/store/
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {Case} from '../../../services/portfolio/domain/case.model';
 import {RoutePayload} from '../../../common/store/route-payload';
+import {Teller} from '../../../services/teller/domain/teller.model';
 
 export const UNLOCK_DRAWER = type('[Teller] Unlock Drawer');
 export const UNLOCK_DRAWER_SUCCESS = type('[Teller] Unlock Drawer Success');
@@ -64,7 +65,7 @@ export class UnlockDrawerAction implements Action {
 export class UnlockDrawerSuccessAction implements Action {
   readonly type = UNLOCK_DRAWER_SUCCESS;
 
-  constructor(public payload: string) { }
+  constructor(public payload: Teller) { }
 }
 
 export class UnlockDrawerFailAction implements Action {

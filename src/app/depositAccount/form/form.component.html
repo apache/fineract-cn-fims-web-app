@@ -40,7 +40,6 @@
           <textarea mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description"></textarea>
         </md-input-container>
       </div>
-
       <div layout="row">
         <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
           <md-option *ngFor="let currency of currencies" [value]="currency.code">
@@ -79,8 +78,16 @@
         </md-input-container>
       </div>
       <div layout="row">
+        <md-slide-toggle formControlName="fixedTermEnabled" layout-margin translate>
+          Fixed term?
+        </md-slide-toggle>
+      </div>
+      <div layout="row">
         <md-input-container layout-margin>
           <input mdInput type="number" placeholder="{{'Term period' | translate}}" formControlName="termPeriod" step="any"/>
+          <md-error *ngIf="formGroup.get('termPeriod').hasError('required')" translate>
+            Required
+          </md-error>
           <md-error *ngIf="formGroup.get('termPeriod').getError('minValue')">
             {{ 'Value must be greater than' | translate:{ value: formGroup.get('termPeriod').getError('minValue').value} }}
           </md-error>

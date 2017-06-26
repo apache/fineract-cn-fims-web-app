@@ -37,6 +37,13 @@
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
           <md-error *ngIf="form.get('amount').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('amount').hasError('minValue')">
+            {{ 'Value must be greater than or equals' | translate:{ value: form.get('amount').getError('minValue').value} }}
+          </md-error>
+          <md-error *ngIf="form.get('amount').hasError('maxValue')">
+            {{ 'Value must be smaller than or equals' | translate:{ value: form.get('amount').getError('maxValue').value} }}
+          </md-error>
+          <md-hint *ngIf="checkCashdrawLimit" align="end">Cashdraw limit is: {{cashdrawLimit}}</md-hint>
         </md-input-container>
       </div>
     </form>

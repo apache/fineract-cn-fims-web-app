@@ -58,6 +58,10 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   @Input('error') error: string;
 
+  @Input('checkCashdrawLimit') checkCashdrawLimit: boolean;
+
+  @Input('cashdrawLimit') cashdrawLimit: number;
+
   @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TellerTransactionFormData>();
 
   @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<void>();
@@ -72,12 +76,17 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      productInstance: ['', Validators.required],
-      amount: ['', [Validators.required, FimsValidators.minValue(0)]],
+      productInstance: ['', Validators.required]
     });
 
     if(this.enableTargetAccount) {
       this.form.addControl('targetAccountIdentifier', new FormControl('', [Validators.required], accountExists(this.accountingService)));
+    }
+
+    if(this.checkCashdrawLimit) {
+      this.form.addControl('amount', new FormControl('', [Validators.required, FimsValidators.minValue(0), FimsValidators.maxValue(this.cashdrawLimit)]));
+    } else {
+      this.form.addControl('amount', new FormControl('', [Validators.required, FimsValidators.minValue(0)]));
     }
 
     this.transactionStep.open();

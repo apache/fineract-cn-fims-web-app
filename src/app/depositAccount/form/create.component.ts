@@ -32,7 +32,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   templateUrl: './create.component.html'
 })
-export class DepositProductCreateComponent implements OnInit, OnDestroy{
+export class DepositProductCreateComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
 
@@ -53,8 +53,6 @@ export class DepositProductCreateComponent implements OnInit, OnDestroy{
     minimumBalance: 0,
     expenseAccountIdentifier: '',
     term: {
-      period: 1,
-      timeUnit: 'MONTH',
       interestPayable: 'ANNUALLY'
     }
   };

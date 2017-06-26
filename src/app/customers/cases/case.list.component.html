@@ -26,6 +26,7 @@
                    (onFetch)="fetchCases($event)"
                    (onActionCellClick)="rowSelect($event)"
                    [columns]="columns"
+                   [pageable]="true"
                    [data]="casesData$ | async">
   </fims-data-table>
 </fims-layout-card-over>

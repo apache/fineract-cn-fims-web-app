@@ -54,7 +54,7 @@ export class TellerService {
     return this.http.get(`${this.baseUrl}/offices/${officeIdentifier}/teller/${tellerCode}/balance`);
   }
 
-  unlockDrawer(tellerCode: string, tellerAuthentication: TellerAuthentication): Observable<void> {
+  unlockDrawer(tellerCode: string, tellerAuthentication: TellerAuthentication): Observable<Teller> {
     return this.http.post(`${this.baseUrl}/teller/${tellerCode}/drawer`, tellerAuthentication, undefined, true);
   }
 
