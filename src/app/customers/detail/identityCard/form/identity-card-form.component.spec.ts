@@ -16,8 +16,8 @@
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IdentityCardFormComponent} from './identity-card-form.component';
-import {MdInputModule} from '@angular/material';
-import {CovalentStepsModule} from '@covalent/core';
+import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule} from '@angular/material';
+import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormFinalActionComponent} from '../../../../../common/forms/form-final-action.component';
 import {IdInputComponent} from '../../../../../common/id-input/id-input.component';
@@ -27,6 +27,7 @@ import {Component, DebugElement} from '@angular/core';
 import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {IdentityCardScansFormComponent} from './scans/scans.component';
 
 describe('Test identity card form component', () => {
 
@@ -40,19 +41,26 @@ describe('Test identity card form component', () => {
         TestComponent,
         IdInputComponent,
         FormFinalActionComponent,
-        IdentityCardFormComponent
+        IdentityCardFormComponent,
+        IdentityCardScansFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
         MdInputModule,
+        MdIconModule,
+        MdButtonModule,
+        MdCardModule,
         CovalentStepsModule,
+        CovalentFileModule,
         NoopAnimationsModule
       ]
     });
 
     fixture = TestBed.createComponent(TestComponent);
     formComponent = fixture.componentInstance;
+
+    fixture.detectChanges();
   }));
 
   function setValidValues(): void {
@@ -62,10 +70,8 @@ describe('Test identity card form component', () => {
     setValueByFormControlName(fixture, 'issuer', 'test');
   }
 
-  it('should disable/enable login button', () => {
-    fixture.detectChanges();
-
-    let button: DebugElement = fixture.debugElement.query(By.css('button'));
+  it('should disable/enable save button', () => {
+    const button: DebugElement = fixture.debugElement.query(By.css('button[color="primary"]'));
 
     expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
 
@@ -77,8 +83,6 @@ describe('Test identity card form component', () => {
   });
 
   it('should set the correct form values', () => {
-    fixture.detectChanges();
-
     setValidValues();
 
     fixture.detectChanges();
