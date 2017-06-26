@@ -22,6 +22,15 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {LoadAllDepositProductsAction, LoadAllLoanProductsAction} from '../store/teller.actions';
 import {CustomerService} from '../../../services/customer/customer.service';
+import {TransactionType} from '../../../services/teller/domain/teller-transaction.model';
+
+interface Action {
+  transactionType: TransactionType;
+  color: string;
+  icon: string;
+  title: string;
+  description: string;
+}
 
 @Component({
   templateUrl: './customer-detail.component.html'
@@ -42,7 +51,7 @@ export class TellerCustomerDetailComponent implements OnDestroy {
 
   hasLoanProducts$: Observable<boolean>;
 
-  actions: any = [
+  actions: Action[] = [
     { transactionType: 'ACCO', color: 'indigo-A400', icon: 'create', title: 'Open account', description: ''},
     { transactionType: 'ACCC', color: 'indigo-A400', icon: 'close', title: 'Close account', description: ''},
     { transactionType: 'ACCT', color: 'indigo-A400', icon: 'swap_horiz', title: 'Account transfer', description: ''},

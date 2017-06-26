@@ -21,6 +21,7 @@ import {IdentificationCard} from '../../../../../services/customer/domain/identi
 import {ExpirationDate} from '../../../../../services/customer/domain/expiration-date.model';
 import {FimsValidators} from '../../../../../common/validator/validators';
 import {TdStepComponent} from '@covalent/core';
+import {IdentityCardScansFormComponent} from './scans/scans.component';
 
 @Component({
   selector: 'fims-identity-card-form',
@@ -29,6 +30,8 @@ import {TdStepComponent} from '@covalent/core';
 export class IdentityCardFormComponent extends FormComponent<IdentificationCard> implements OnInit {
 
   @ViewChild('detailsStep') step: TdStepComponent;
+
+  @ViewChild('scansForm') scansForm: IdentityCardScansFormComponent;
 
   @Input() identificationCard: IdentificationCard;
 
@@ -69,6 +72,10 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
   get formData(): IdentificationCard {
     // Not needed
     return;
+  }
+
+  get scansFormState(): string {
+    return this.scansForm.valid ? 'complete' : this.scansForm.pristine ? 'none' : 'required';
   }
 
   cancel(): void {

@@ -23,7 +23,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {
   MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
-  MdSelectModule,
+  MdSelectModule, MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
@@ -60,6 +60,7 @@ import {DepositProductEditComponent} from './form/edit.component';
     MdSelectModule,
     MdRadioModule,
     MdCheckboxModule,
+    MdSlideToggleModule,
 
     CovalentStepsModule,
     CovalentMessageModule,

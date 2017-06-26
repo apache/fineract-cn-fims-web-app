@@ -14,20 +14,6 @@
  * limitations under the License.
  */
 
-export type State = 'PENDING' | 'CANCELED' | 'CONFIRMED';
-
-export type TransactionType = 'ACCO' | 'ACCC' | 'ACCT' | 'CDPT' | 'CWDL';
-
-export interface TellerTransaction {
-  identifier?: string;
-  transactionType: TransactionType;
-  transactionDate: string;
-  customerIdentifier: string;
-  productIdentifier: string;
-  productCaseIdentifier?: string;
-  customerAccountIdentifier: string;
-  targetAccountIdentifier?: string;
-  clerk: string;
-  amount: number;
-  state?: State;
+export interface IdentificationCardScan {
+  description: string;
 }

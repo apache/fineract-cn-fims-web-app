@@ -33,6 +33,10 @@
           <p md-line>{{instance.accountIdentifier}}</p>
         </md-list-item>
         <md-list-item>
+          <h3 md-line translate>Balance</h3>
+          <p md-line>{{instance.balance | number:'1.2-2'}}</p>
+        </md-list-item>
+        <md-list-item>
           <h3 md-line translate>Beneficiaries</h3>
           <p md-line>{{instance.beneficiaries?.join(', ')}}</p>
         </md-list-item>

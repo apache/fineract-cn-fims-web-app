@@ -54,7 +54,7 @@ export const getAuthenticationState = (state: State) => state.tellerAuthenticati
 export const isAuthenticated = createSelector(getAuthenticationState, fromAuthentication.getAuthenticated);
 export const getAuthenticationError = createSelector(getAuthenticationState, fromAuthentication.getError);
 export const getAuthenticationLoading = createSelector(getAuthenticationState, fromAuthentication.getLoading);
-export const getAuthenticatedTeller = createSelector(getAuthenticationState, fromAuthentication.getTellerCode);
+export const getAuthenticatedTeller = createSelector(getAuthenticationState, fromAuthentication.getTeller);
 
 export const getTellerCustomersState = (state: State) => state.tellerCustomers;
 

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
 import {interestPayableOptionList} from '../domain/interest-payable-option-list.model';
 import {timeUnitOptionList} from '../domain/time-unit-option-list.model';
@@ -34,7 +34,7 @@ import {ledgerExists} from '../../../common/validator/ledger-exists.validator';
   selector: 'fims-deposit-product-form',
   templateUrl: './form.component.html'
 })
-export class DepositProductFormComponent implements OnInit {
+export class DepositProductFormComponent implements OnInit, OnChanges {
 
   interestPayableOptions = interestPayableOptionList;
 
@@ -51,9 +51,7 @@ export class DepositProductFormComponent implements OnInit {
 
   @Input('editMode') editMode: boolean;
 
-  @Input('definition') set definition(definition: ProductDefinition) {
-    this.prepareForm(definition);
-  }
+  @Input('definition') definition: ProductDefinition;
 
   @Input('currencies') currencies: Currency[];
 
@@ -63,36 +61,87 @@ export class DepositProductFormComponent implements OnInit {
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
+    this.formGroup = this.formBuilder.group({
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      type: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      description: [''],
+      currencyCode: ['', [Validators.required]],
+      minimumBalance: ['', [Validators.required]],
+      fixedTermEnabled: [false],
+      interest: ['', [Validators.required, FimsValidators.minValue(0)]],
+      flexible: ['', [Validators.required]],
+      termPeriod: [''],
+      termTimeUnit: [''],
+      termInterestPayable: ['', [Validators.required]],
+      expenseAccountIdentifier: ['', [Validators.required], accountExists(this.accountingService)],
+      equityLedgerIdentifier: ['', [Validators.required], ledgerExists(this.accountingService)]
+    });
+
+    this.formGroup.get('fixedTermEnabled').valueChanges
+      .startWith(null)
+      .subscribe(enabled => this.toggleFixedTerm(enabled));
+  }
 
   ngOnInit(): void {
     this.step.open();
   }
 
-  private prepareForm(definition: ProductDefinition): void {
-    this.charges = definition.charges;
+  ngOnChanges(changes: SimpleChanges): void {
+    this.charges = this.definition.charges;
 
-    const interestDisabled = this.editMode && !definition.flexible;
+    const interestDisabled = this.editMode && !this.definition.flexible;
 
-    this.formGroup = this.formBuilder.group({
-      identifier: [definition.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
-      type: [definition.type, [Validators.required]],
-      name: [definition.name, [Validators.required]],
-      description: [definition.description],
-      currencyCode: [definition.currency.code, [Validators.required]],
-      minimumBalance: [definition.minimumBalance, [Validators.required]],
-      interest: [{ value: definition.interest, disabled: interestDisabled }, [Validators.required, FimsValidators.minValue(0)]],
-      flexible: [{ value: definition.flexible, disabled: this.editMode }, [Validators.required]],
-      termPeriod: [definition.term.period, [Validators.required, FimsValidators.minValue(1)]],
-      termTimeUnit: [definition.term.timeUnit, [Validators.required]],
-      termInterestPayable: [definition.term.interestPayable, [Validators.required]],
-      expenseAccountIdentifier: [definition.expenseAccountIdentifier, [Validators.required], accountExists(this.accountingService)],
-      equityLedgerIdentifier: [definition.equityLedgerIdentifier, [Validators.required], ledgerExists(this.accountingService)]
+    const fixedTermEnabled: boolean = this.hasPeriodOrTimeUnit(this.definition);
+
+    this.formGroup.reset({
+      identifier: this.definition.identifier,
+      type: this.definition.type,
+      name: this.definition.name,
+      description: this.definition.description,
+      currencyCode: this.definition.currency.code,
+      minimumBalance: this.definition.minimumBalance,
+      fixedTermEnabled: fixedTermEnabled,
+      interest: { value: this.definition.interest, disabled: interestDisabled },
+      flexible: { value: this.definition.flexible, disabled: this.editMode },
+      termPeriod: this.definition.term.period,
+      termTimeUnit: this.definition.term.timeUnit,
+      termInterestPayable: this.definition.term.interestPayable,
+      expenseAccountIdentifier: this.definition.expenseAccountIdentifier,
+      equityLedgerIdentifier: this.definition.equityLedgerIdentifier
     });
+  }
+
+  toggleFixedTerm(enabled: boolean): void {
+    const termPeriodControl: FormControl = this.formGroup.get('termPeriod') as FormControl;
+    const termTimeUnitControl: FormControl = this.formGroup.get('termTimeUnit') as FormControl;
+
+    if(enabled) {
+      termPeriodControl.enable();
+      termTimeUnitControl.enable();
+
+      termPeriodControl.setValidators([Validators.required, FimsValidators.minValue(1)]);
+      termTimeUnitControl.setValidators([Validators.required]);
+    } else {
+      termPeriodControl.disable();
+      termTimeUnitControl.disable();
+
+      termPeriodControl.clearValidators();
+      termTimeUnitControl.clearValidators();
+    }
+    termPeriodControl.updateValueAndValidity();
+    termTimeUnitControl.updateValueAndValidity();
+  }
+
+  hasPeriodOrTimeUnit(product: ProductDefinition): boolean {
+    return !!product.term.timeUnit || !!product.term.period;
   }
 
   save(): void {
     const currency = this.currencies.find(currency => currency.code === this.formGroup.get('currencyCode').value);
+
+    const fixedTerm: boolean = this.formGroup.get('fixedTermEnabled').value === true;
 
     const definition: ProductDefinition = {
       identifier: this.formGroup.get('identifier').value,
@@ -103,8 +152,8 @@ export class DepositProductFormComponent implements OnInit {
       interest: this.formGroup.get('interest').value,
       flexible: this.formGroup.get('flexible').value,
       term: {
-        period: this.formGroup.get('termPeriod').value,
-        timeUnit: this.formGroup.get('termTimeUnit').value,
+        period: fixedTerm ? this.formGroup.get('termPeriod').value : undefined,
+        timeUnit: fixedTerm ? this.formGroup.get('termTimeUnit').value : undefined,
         interestPayable: this.formGroup.get('termInterestPayable').value
       },
       currency: {

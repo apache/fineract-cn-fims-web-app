@@ -23,6 +23,8 @@
     [transactionCosts]="transactionCosts$ | async"
     [transactionCreated]="transactionCreated"
     [enableTargetAccount]="enableTargetAccount"
+    [checkCashdrawLimit]="checkCashdrawLimit"
+    [cashdrawLimit]="teller.cashdrawLimit"
     [error]="error"
     (onCreateTransaction)="createTransaction($event)"
     (onConfirmTransaction)="confirmTransaction()"

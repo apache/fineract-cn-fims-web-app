@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TellerTransaction} from '../../../../services/teller/domain/teller-transaction.model';
+import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
 import {TellerService} from '../../../../services/teller/teller-service';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {CONFIRM_TRANSACTION} from '../../store/teller.actions';
@@ -28,6 +28,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {TellerTransactionFormComponent, TellerTransactionFormData} from './form.component';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {Teller} from '../../../../services/teller/domain/teller.model';
+
+const withdrawalTypes: TransactionType[] = ['ACCC', 'ACCT', 'CWDL'];
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -38,11 +41,9 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
 
   private usernameSubscription: Subscription;
 
-  private tellerCode: string;
-
   private tellerTransactionIdentifier: string;
 
-  private _transactionType: string;
+  private _transactionType: TransactionType;
 
   private clerk: string;
 
@@ -51,6 +52,10 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
   productInstances$: Observable<ProductInstance[]>;
 
   transactionCosts$: Observable<TellerTransactionCosts>;
+
+  teller: Teller;
+
+  checkCashdrawLimit: boolean;
 
   enableTargetAccount: boolean;
 
@@ -67,20 +72,26 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
-      .subscribe(tellerCode => this.tellerCode = tellerCode);
+      .subscribe(teller => { this.teller = teller } );
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
   }
 
-  set transactionType(transactionType: string) {
+  set transactionType(transactionType: TransactionType) {
+    this._transactionType = transactionType;
+
     if(transactionType === 'ACCT') {
       this.enableTargetAccount = true;
     }
-    this._transactionType = transactionType;
+
+    const withdrawalType = withdrawalTypes.find(type => type === transactionType);
+    if(withdrawalType) {
+      this.checkCashdrawLimit = true;
+    }
   }
 
-  get transactionType(): string {
+  get transactionType(): TransactionType {
     return this._transactionType;
   }
 
@@ -101,7 +112,7 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
       transactionType: this.transactionType
     };
 
-    this.transactionCosts$ = this.tellerService.createTransaction(this.tellerCode, transaction)
+    this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)
       .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
       .do(() => this.transactionCreated = true);
   }
@@ -110,7 +121,7 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
     this.store.dispatch({
       type: CONFIRM_TRANSACTION,
       payload: {
-        tellerCode: this.tellerCode,
+        tellerCode: this.teller.code,
         tellerTransactionIdentifier: this.tellerTransactionIdentifier,
         command: 'CONFIRM',
         activatedRoute: this.route
@@ -122,7 +133,7 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
     this.store.dispatch({
       type: CONFIRM_TRANSACTION,
       payload: {
-        tellerCode: this.tellerCode,
+        tellerCode: this.teller.code,
         tellerTransactionIdentifier: this.tellerTransactionIdentifier,
         command: 'CANCEL',
         activatedRoute: this.route

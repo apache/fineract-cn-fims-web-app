@@ -42,6 +42,7 @@ export class DepositsListComponent implements OnInit {
   columns: any[] = [
     { name: 'productIdentifier', label: 'Deposit product' },
     { name: 'accountIdentifier', label: 'Account identifier' },
+    { name: 'balance', label: 'Balance', numeric: true, format: v => v.toFixed(2) },
     { name: 'state', label: 'State' }
   ];
 

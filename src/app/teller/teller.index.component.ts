@@ -24,6 +24,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SEARCH} from '../reducers/customer/customer.actions';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
+import {Teller} from '../../services/teller/domain/teller.model';
 
 @Component({
   templateUrl: './teller.index.component.html'
@@ -32,13 +33,13 @@ export class TellerIndexComponent implements OnDestroy {
 
   private tellerCodeSubscription: Subscription;
 
-  customer$: Observable<Customer[]>;
+  private teller: Teller;
 
-  tellerCode: string;
+  customer$: Observable<Customer[]>;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore) {
     this.tellerCodeSubscription = store.select(fromTeller.getAuthenticatedTeller)
-      .subscribe(tellerCode => this.tellerCode = tellerCode);
+      .subscribe(teller => this.teller = teller);
 
     this.customer$ = store.select(fromRoot.getSearchCustomers);
   }
@@ -51,7 +52,7 @@ export class TellerIndexComponent implements OnDestroy {
     this.store.dispatch({
       type: LOCK_DRAWER,
       payload: {
-        tellerCode: this.tellerCode
+        tellerCode: this.teller.code
       }
     })
   }

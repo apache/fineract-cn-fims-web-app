@@ -33,7 +33,7 @@ export class TellerApiEffects {
     .map((action: tellerActions.UnlockDrawerAction) => action.payload)
     .mergeMap(payload =>
       this.tellerService.unlockDrawer(payload.tellerCode, {employeeIdentifier: payload.employeeId, password: payload.password})
-        .map(() => new tellerActions.UnlockDrawerSuccessAction(payload.tellerCode))
+        .map(teller => new tellerActions.UnlockDrawerSuccessAction(teller))
         .catch((error) => of(new tellerActions.UnlockDrawerFailAction(error)))
     );
 
