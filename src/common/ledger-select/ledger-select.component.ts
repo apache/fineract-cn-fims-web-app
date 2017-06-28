@@ -23,6 +23,7 @@ import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {LedgerPage} from '../../services/accounting/domain/ledger-page.model';
+import {AccountType} from '../../services/accounting/domain/account-type.model';
 
 const noop: () => void = () => {
   // empty method
@@ -42,6 +43,8 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit{
   @Input() title: string;
 
   @Input() required: boolean;
+
+  @Input() type: AccountType;
 
   ledgers: Observable<Ledger[]>;
 
@@ -87,7 +90,7 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit{
       searchTerm: searchTerm
     };
 
-    return this.accountingService.fetchLedgers(true, fetchRequest)
+    return this.accountingService.fetchLedgers(true, fetchRequest, this.type)
       .map((ledgerPage: LedgerPage) => ledgerPage.ledgers);
   }
 

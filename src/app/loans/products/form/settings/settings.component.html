@@ -15,7 +15,7 @@
 -->
 
 <form [formGroup]="form">
-  <fims-account-select title="{{'Cash/fund account' | translate}}" formControlName="loanFundAccount">
+  <fims-account-select title="{{'Cash/fund account' | translate}}" formControlName="loanFundAccount" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('loanFundAccount').pristine && form.get('loanFundAccount').hasError('required')" translate>
       Required
     </ng-container>
@@ -23,7 +23,7 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <fims-ledger-select title="{{'Customer loan ledger' | translate}}" formControlName="customerLoanLedger">
+  <fims-ledger-select title="{{'Customer loan ledger' | translate}}" formControlName="customerLoanLedger" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('customerLoanLedger').pristine && form.get('customerLoanLedger').hasError('required')" translate>
       Required
     </ng-container>
@@ -34,7 +34,7 @@
   <span layout-margin class="text-md">
     Ledger used to create customer loan account.
   </span>
-  <fims-account-select title="{{'Pending disbursal account' | translate}}" formControlName="pendingDisbursal">
+  <fims-account-select title="{{'Pending disbursal account' | translate}}" formControlName="pendingDisbursal" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('pendingDisbursal').pristine && form.get('pendingDisbursal').hasError('required')" translate>
       Required
     </ng-container>

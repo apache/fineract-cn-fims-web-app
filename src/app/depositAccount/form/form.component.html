@@ -98,7 +98,7 @@
           </md-radio-button>
         </md-radio-group>
       </div>
-      <fims-account-select title="{{'Expense account' | translate}}" formControlName="expenseAccountIdentifier">
+      <fims-account-select title="{{'Expense account' | translate}}" formControlName="expenseAccountIdentifier" [type]="'EXPENSE'">
         <ng-container *ngIf="!formGroup.get('expenseAccountIdentifier').pristine && formGroup.get('expenseAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>
@@ -106,7 +106,7 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <fims-ledger-select title="{{'Equity ledger' | translate}}" formControlName="equityLedgerIdentifier">
+      <fims-ledger-select title="{{'Equity ledger' | translate}}" formControlName="equityLedgerIdentifier" [type]="'EQUITY'">
         <ng-container *ngIf="!formGroup.get('equityLedgerIdentifier').pristine && formGroup.get('equityLedgerIdentifier').hasError('required')" translate>
           Required
         </ng-container>

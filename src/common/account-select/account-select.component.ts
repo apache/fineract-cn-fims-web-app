@@ -21,6 +21,7 @@ import {AccountingService} from '../../services/accounting/accounting.service';
 import {Account} from '../../services/accounting/domain/account.model';
 import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {AccountType} from '../../services/accounting/domain/account-type.model';
 
 const noop: () => void = () => {
   // empty method
@@ -40,6 +41,8 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
   @Input() title: string;
 
   @Input() required: boolean;
+
+  @Input() type: AccountType;
 
   accounts: Observable<Account[]>;
 
@@ -77,7 +80,7 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
   private _onChangeCallback: (_: any) => void = noop;
 
   onSearch(searchTerm?: string): Observable<Account[]>{
-    let fetchRequest: FetchRequest = {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
@@ -85,7 +88,7 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm: searchTerm
     };
 
-    return this.accountingService.fetchAccounts(fetchRequest)
+    return this.accountingService.fetchAccounts(fetchRequest, this.type)
       .map((accountPage: AccountPage) => accountPage.accounts);
   }
 

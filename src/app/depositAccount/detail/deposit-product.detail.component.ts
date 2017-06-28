@@ -41,6 +41,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     { name: 'description', label: 'Description' },
     { name: 'actionIdentifier', label: 'Applied on' },
     { name: 'proportional', label: 'Proportional?' },
+    { name: 'incomeAccountIdentifier', label: 'Income account' },
     { name: 'amount', label: 'Amount' }
   ];
 
