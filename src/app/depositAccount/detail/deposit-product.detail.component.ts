@@ -32,7 +32,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
-  numberFormat: string = '2.2-2';
+  numberFormat: string = '1.2-2';
 
   definition: ProductDefinition;
 
