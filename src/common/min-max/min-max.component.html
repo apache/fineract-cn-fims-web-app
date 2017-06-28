@@ -14,29 +14,10 @@
  limitations under the License.
 -->
 
-<div [formGroup]="form">
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput type="text" [placeholder]="minPlaceholder" [formControlName]="minControlName"/>
-      <md-error *ngIf="form.controls[minControlName].hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.controls[minControlName].hasError('minValue')" translate>Must be greater than 0</md-error>
-      <md-error *ngIf="form.controls[minControlName].hasError('precision')">
-          {{ 'Must have decimal places' | translate:{value: form.controls[minControlName].errors.precision.value} }}
-        </md-error>
-      <md-error *ngIf="form.controls[minControlName].hasError('isNumber')" translate>Must be a number</md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput type="text" [placeholder]="maxPlaceholder" [formControlName]="maxControlName"/>
-      <md-error *ngIf="form.controls[maxControlName].hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.controls[maxControlName].hasError('minValue')" translate>Must be greater than 0</md-error>
-      <md-error *ngIf="form.controls[maxControlName].hasError('precision')">
-          {{ 'Must have decimal places' | translate:{value: form.controls[maxControlName].errors.precision.value} }}
-        </md-error>
-      <md-error *ngIf="form.controls[maxControlName].hasError('isNumber')" translate>Must be a number</md-error>
-      <md-error *ngIf="form.hasError('greaterThan')" translate>Must be greater than minimum</md-error>
-    </md-input-container>
-  </div>
-
+<div layout="row">
+  <fims-number-input [form]="form" [controlName]="minControlName" [placeholder]="minPlaceholder" [requireDecimal]="requireDecimal" [decimalLimit]="decimalLimit"></fims-number-input>
+</div>
+<div layout="column">
+  <fims-number-input [form]="form" [controlName]="maxControlName" [placeholder]="maxPlaceholder" [requireDecimal]="requireDecimal" [decimalLimit]="decimalLimit"></fims-number-input>
+  <md-error *ngIf="form.hasError('greaterThan')" translate>Must be greater than minimum</md-error>
 </div>

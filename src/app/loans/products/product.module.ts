@@ -68,6 +68,7 @@ import {
 } from '@angular/material';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
+import {TextMaskModule} from 'angular2-text-mask';
 
 @NgModule({
   imports: [

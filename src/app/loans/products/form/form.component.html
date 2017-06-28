@@ -44,7 +44,15 @@
         </md-select>
       </div>
       <div layout="row">
-        <fims-min-max flex minPlaceholder="{{'Minimum principal amount' | translate}}" maxPlaceholder="{{'Maximum principal amount' | translate}}" [form]="detailForm" minControlName="minimumBalance" maxControlName="maximumBalance"></fims-min-max>
+        <fims-min-max flex
+                      minPlaceholder="{{'Minimum principal amount' | translate}}"
+                      maxPlaceholder="{{'Maximum principal amount' | translate}}"
+                      [form]="detailForm"
+                      minControlName="minimumBalance"
+                      maxControlName="maximumBalance"
+                      [requireDecimal]="false"
+                      [decimalLimit]="2">
+        </fims-min-max>
       </div>
       <div layout="row">
         <md-input-container layout-margin>

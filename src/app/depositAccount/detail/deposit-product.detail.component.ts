@@ -32,6 +32,8 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
+  numberFormat: string = '2.2-2';
+
   definition: ProductDefinition;
 
   charges: TableData;
@@ -42,7 +44,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     { name: 'actionIdentifier', label: 'Applied on' },
     { name: 'proportional', label: 'Proportional?' },
     { name: 'incomeAccountIdentifier', label: 'Income account' },
-    { name: 'amount', label: 'Amount' }
+    { name: 'amount', label: 'Amount', numeric: true, format: value => value ? value.toFixed(2) : undefined }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore, private dialogService: TdDialogService) {}
@@ -85,5 +87,9 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
           activatedRoute: this.route
         }
       }));
+  }
+
+  hasTerm(defininition: ProductDefinition): boolean {
+    return !!defininition.term.timeUnit || !!defininition.term.period;
   }
 }

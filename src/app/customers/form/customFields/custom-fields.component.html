@@ -35,8 +35,8 @@
         <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.required"
                  translate>Required
         </md-error>
-        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxPrecision"
-                 [translate]="'Value precision must be smaller or equals'" [translateParams]="{value: field.precision}">
+        <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxScale"
+                 [translate]="'Value scale must be smaller or equals'" [translateParams]="{value: field.precision}">
         </md-error>
         <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxlength"
                  [translate]="'Only numbers allowed.'" [translateParams]="{value: field.length}">

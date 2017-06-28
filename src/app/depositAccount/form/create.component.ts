@@ -42,6 +42,7 @@ export class DepositProductCreateComponent implements OnInit, OnDestroy {
     type: 'CHECKING',
     identifier: '',
     name: '',
+    interest: 0,
     charges: [],
     currency: {
       code: 'USD',

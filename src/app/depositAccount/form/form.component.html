@@ -48,12 +48,7 @@
         </md-select>
       </div>
       <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="number" placeholder="{{'Minimum balance' | translate}}" formControlName="minimumBalance"/>
-          <md-error *ngIf="formGroup.get('minimumBalance').hasError('required')" translate>
-            Required
-          </md-error>
-        </md-input-container>
+        <fims-number-input [form]="formGroup" controlName="minimumBalance" placeholder="{{'Minimum balance' | translate}}"></fims-number-input>
       </div>
       <div layout="column">
         <span translate>Interest payable:</span>
@@ -67,15 +62,7 @@
         <md-checkbox formControlName="flexible" [disabled]="editMode" translate>Flexible interest during the term?</md-checkbox>
       </div>
       <div layout="row">
-        <md-input-container layout-margin>
-          <input mdInput type="number" placeholder="{{'Interest' | translate}}" formControlName="interest" step="any"/>
-          <md-error *ngIf="formGroup.get('interest').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="formGroup.get('interest').getError('minValue')">
-            {{ 'Value must be greater than' | translate:{ value: formGroup.get('interest').getError('minValue').value} }}
-          </md-error>
-        </md-input-container>
+        <fims-number-input [form]="formGroup" controlName="interest" placeholder="{{'Interest' | translate}}"></fims-number-input>
       </div>
       <div layout="row">
         <md-slide-toggle formControlName="fixedTermEnabled" layout-margin translate>

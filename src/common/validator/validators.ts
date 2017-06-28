@@ -40,21 +40,21 @@ export class FimsValidators {
     }
   }
 
-  static precision(precision: number): ValidatorFn {
+  static scale(scale: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value != null) {
         let stringValue = String(c.value);
 
         let valueChunks = stringValue.split('.');
 
-        if(valueChunks.length == 1 && precision === 0) return null;
+        if(valueChunks.length == 1 && scale === 0) return null;
 
-        if (valueChunks.length == 2 && valueChunks[1].length === precision) return null;
+        if (valueChunks.length == 2 && valueChunks[1].length === scale) return null;
 
         return {
-          precision: {
+          scale: {
             valid: false,
-            value: precision
+            value: scale
           }
         };
 
@@ -63,15 +63,15 @@ export class FimsValidators {
     }
   }
 
-  static maxPrecision(precision: number): ValidatorFn {
+  static maxScale(scale: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value != null) {
         let stringValue = String(c.value);
         let valueChunks = stringValue.split('.');
 
-        if (valueChunks.length == 2 && valueChunks[1].length > precision) {
+        if (valueChunks.length == 2 && valueChunks[1].length > scale) {
           return {
-            maxPrecision: true
+            maxScale: true
           };
         }
       }

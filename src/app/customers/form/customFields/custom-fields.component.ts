@@ -158,7 +158,7 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     }
 
     if(field.precision){
-      validators.push(FimsValidators.maxPrecision(field.precision));
+      validators.push(FimsValidators.maxScale(field.precision));
     }
 
     return validators;

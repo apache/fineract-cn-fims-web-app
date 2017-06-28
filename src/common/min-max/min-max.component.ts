@@ -24,7 +24,7 @@ import {
   selector: 'fims-min-max',
   templateUrl: './min-max.component.html'
 })
-export class MinMaxComponent implements OnInit{
+export class MinMaxComponent {
 
   @Input() minPlaceholder;
 
@@ -36,6 +36,7 @@ export class MinMaxComponent implements OnInit{
 
   @Input() form: FormGroup;
 
-  ngOnInit(): void {
-  }
+  @Input() requireDecimal;
+
+  @Input() decimalLimit;
 }

@@ -100,16 +100,16 @@ export class ProductFormComponent implements OnInit{
       currencyCode: currency.code,
       interestBasis: this.interestForm.formData.interestBasis,
       interestRange: {
-        minimum: this.interestForm.formData.minimum,
-        maximum: this.interestForm.formData.maximum,
+        minimum: parseFloat(this.interestForm.formData.minimum),
+        maximum: parseFloat(this.interestForm.formData.maximum),
       },
       termRange: {
         maximum: this.detailForm.get('term').value,
         temporalUnit: this.detailForm.get('temporalUnit').value
       },
       balanceRange: {
-        minimum: this.detailForm.get('minimumBalance').value,
-        maximum: this.detailForm.get('maximumBalance').value
+        minimum: parseFloat(this.detailForm.get('minimumBalance').value),
+        maximum: parseFloat(this.detailForm.get('maximumBalance').value)
       },
       parameters: parameters,
       patternPackage: 'io.mifos.individuallending.api.v1',
@@ -169,8 +169,8 @@ export class ProductFormComponent implements OnInit{
       name: [product.name, [Validators.required]],
       description: [product.description, [Validators.required]],
       currencyCode: [product.currencyCode, [Validators.required]],
-      minimumBalance: [balanceRange ? balanceRange.minimum : undefined, [Validators.required, FimsValidators.minValue(0)]],
-      maximumBalance: [balanceRange ? balanceRange.maximum : undefined, [Validators.required, FimsValidators.minValue(0)]],
+      minimumBalance: [balanceRange.minimum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
+      maximumBalance: [balanceRange.maximum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
       term: [termRange ? termRange.maximum : undefined, [ Validators.required, FimsValidators.minValue(0) ]],
       temporalUnit: [termRange ? termRange.temporalUnit : undefined, Validators.required]
     }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
@@ -189,12 +189,13 @@ export class ProductFormComponent implements OnInit{
   }
 
   private prepareInterestForm(product: FimsProduct) {
-    let interestIncome = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
-    let interestAccrual = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
-    let interestRange = product.interestRange;
+    const interestIncome = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
+    const interestAccrual = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
+    const interestRange = product.interestRange;
+
     this.interestFormData = {
-      minimum: interestRange ? interestRange.minimum : 0,
-      maximum: interestRange ? interestRange.maximum : 0,
+      minimum: interestRange.minimum.toFixed(2),
+      maximum: interestRange.maximum.toFixed(2),
       interestBasis: product.interestBasis,
       incomeAccount: this.accountIdentifier(interestIncome),
       accrualAccount: this.accountIdentifier(interestAccrual)
@@ -202,11 +203,11 @@ export class ProductFormComponent implements OnInit{
   }
 
   private prepareFeeForm(product: FimsProduct) {
-    let processingFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
-    let disbursementFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
-    let lateFeeIncomeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
-    let lateFeeAccrualDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_ACCRUAL);
-    let loanOriginationFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ORIGINATION_FEE_INCOME);
+    const processingFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
+    const disbursementFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
+    const lateFeeIncomeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
+    const lateFeeAccrualDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_ACCRUAL);
+    const loanOriginationFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ORIGINATION_FEE_INCOME);
 
     this.feeFormData = {
       disbursementFeeAccount: this.accountIdentifier(disbursementFeeDesignator),
@@ -218,7 +219,7 @@ export class ProductFormComponent implements OnInit{
   }
 
   private prepareAllowanceForm(product: FimsProduct) {
-    let allowanceDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
+    const allowanceDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
     this.arrearsAllowanceForm = this.formBuilder.group({
       account: [this.accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });

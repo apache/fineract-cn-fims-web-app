@@ -32,27 +32,27 @@ describe('Validators', () => {
 
   });
 
-  describe('precision', () => {
+  describe('scale', () => {
 
-    it('should not return error when precision matches', () => {
-      let validator = FimsValidators.precision(1);
+    it('should not return error when scale matches', () => {
+      let validator = FimsValidators.scale(1);
       expect(validator(new FormControl(1.1))).toBeNull();
     });
 
-    it('should return error when precision 1', () => {
-      let validator = FimsValidators.precision(1);
+    it('should return error when scale 1', () => {
+      let validator = FimsValidators.scale(1);
       expect(validator(new FormControl(1))).toEqual({
-        precision: {
+        scale: {
           valid: false,
           value: 1
         },
       });
     });
 
-    it('should return error when precision 0', () => {
-      let validator = FimsValidators.precision(0);
+    it('should return error when scale 0', () => {
+      let validator = FimsValidators.scale(0);
       expect(validator(new FormControl(1.2))).toEqual({
-        precision: {
+        scale: {
           valid: false,
           value: 0
         }

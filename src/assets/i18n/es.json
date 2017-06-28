@@ -535,7 +535,7 @@
   "Value must be greater than": "El valor debe ser mayor",
   "Value must be smaller than or equals": "El valor debe ser menor o igual",
   "Value must be smaller than": "El valor debe ser menor",
-  "Value precision must be smaller or equals": "El valor precisado debe ser menor o igual",
+  "Value scale must be smaller or equals": "",
   "View accounts for this ledger": "Ver cuentas para este libro principal",
   "View chart of accounts": "",
   "View customer": "Ver cliente",
