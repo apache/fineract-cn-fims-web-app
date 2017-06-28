@@ -51,6 +51,8 @@ import {
   MdTooltipModule
 } from '@angular/material';
 import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-auto-complete.component';
+import {TextMaskModule} from 'angular2-text-mask';
+import {NumberInputComponent} from './number-input/number-input.component';
 
 @NgModule({
   imports: [
@@ -71,6 +73,7 @@ import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-au
     MdToolbarModule,
     MdTooltipModule,
     ReactiveFormsModule,
+    TextMaskModule,
     TranslateModule
   ],
   declarations: [
@@ -93,7 +96,8 @@ import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-au
     FormFinalActionComponent,
     FormContinueActionComponent,
     AddressFormComponent,
-    PortraitComponent
+    PortraitComponent,
+    NumberInputComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -115,7 +119,8 @@ import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-au
     FormFinalActionComponent,
     FormContinueActionComponent,
     AddressFormComponent,
-    PortraitComponent
+    PortraitComponent,
+    NumberInputComponent
   ]
 })
 export class FimsSharedModule{}

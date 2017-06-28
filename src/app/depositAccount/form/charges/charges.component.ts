@@ -43,7 +43,11 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
   }
 
   get formData(): Charge[] {
-    return this.form.get('charges').value;
+    const charges = this.form.get('charges').value;
+
+    return charges.map(charge => Object.assign({}, charge, {
+      amount: parseFloat(charge.amount)
+    }));
   }
 
   private initCharges(charges: Charge[]): FormArray {
@@ -53,13 +57,15 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
   }
 
   private initCharge(charge?: Charge): FormGroup {
+    const amount = charge ? charge.amount : 0;
+
     return this.formBuilder.group({
       actionIdentifier: [charge ? charge.actionIdentifier : '', Validators.required],
       incomeAccountIdentifier: [charge ? charge.incomeAccountIdentifier : '', [Validators.required], accountExists(this.accountingService)],
       name: [charge ? charge.name : '', Validators.required],
       description: [charge ? charge.description : ''],
       proportional: [charge ? charge.proportional : false ],
-      amount: [charge ? charge.amount : 0, [ FimsValidators.minValue(0)] ]
+      amount: [amount.toFixed(2), [ FimsValidators.minValue(0)] ]
     })
   }
 
@@ -76,5 +82,10 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
   get charges(): AbstractControl[] {
     const charges: FormArray = this.form.get('charges') as FormArray;
     return charges.controls;
+  }
+
+  getFormGroup(index: number): FormGroup {
+    const charges = this.form.get('charges') as FormArray;
+    return charges.at(index) as FormGroup;
   }
 }

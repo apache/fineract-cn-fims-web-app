@@ -31,6 +31,7 @@ import {LedgerPage} from './domain/ledger-page.model';
 import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 import {TransactionType} from './domain/transaction-type.model';
 import {TransactionTypePage} from './domain/transaction-type-page.model';
+import {AccountType} from './domain/account-type.model';
 
 @Injectable()
 export class AccountingService{
@@ -41,11 +42,13 @@ export class AccountingService{
     return this.http.post(`${this.baseUrl}/ledgers`, ledger);
   }
 
-  public fetchLedgers(includeSubLedgers = false, fetchRequest?: FetchRequest): Observable<LedgerPage>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
-    params.append('includeSubLedgers', String(includeSubLedgers));
+  public fetchLedgers(includeSubLedgers = false, fetchRequest?: FetchRequest, type?: AccountType): Observable<LedgerPage>{
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
+    params.append('includeSubLedgers', String(includeSubLedgers));
+    params.append('type', type);
+
+    const requestOptions: RequestOptionsArgs = {
       params
     };
 
@@ -81,10 +84,12 @@ export class AccountingService{
     return this.http.post(`${this.baseUrl}/accounts`, account);
   }
 
-  public fetchAccounts(fetchRequest?: FetchRequest): Observable<AccountPage>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+  public fetchAccounts(fetchRequest?: FetchRequest, type?: AccountType): Observable<AccountPage>{
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
+    params.append('type', type);
+
+    const requestOptions: RequestOptionsArgs = {
       params
     };
     return this.http.get(`${this.baseUrl}/accounts`, requestOptions)

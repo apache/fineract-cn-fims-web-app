@@ -19,9 +19,8 @@ import {InterestRange} from './interest-range.model';
 import {TermRange} from './term-range.model';
 import {InterestBasis} from './interest-basis.model';
 import {AccountAssignment} from './account-assignment.model';
-import {ProductParameters} from './individuallending/product-parameters.model';
 
-export interface Product{
+export interface Product {
   identifier: string;
   name: string;
   termRange: TermRange;

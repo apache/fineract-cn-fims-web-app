@@ -28,15 +28,12 @@
     </md-slide-toggle>
   </div>
   <div layout="row" *ngIf="form.get('interestRangeEnabled').value === false">
-    <md-input-container layout-margin>
-      <input mdInput type="number" placeholder="{{'Interest rate' | translate}}" formControlName="minimum" step="any"/>
-      <md-error *ngIf="form.get('minimum').getError('minValue')">{{ 'Value must be greater than' | translate:{ value: form.get('minimum').getError('minValue').value} }}</md-error>
-    </md-input-container>
+    <fims-number-input [form]="form" controlName="minimum" placeholder="{{'Interest rate' | translate}}"></fims-number-input>
   </div>
   <div layout="row" *ngIf="form.get('interestRangeEnabled').value === true">
     <fims-min-max minPlaceholder="{{'Minimum interest rate' | translate}}" maxPlaceholder="{{'Maximum interest rate' | translate}}" [form]="form" minControlName="minimum" maxControlName="maximum"></fims-min-max>
   </div>
-  <fims-account-select title="{{'Interest income account' | translate}}" formControlName="incomeAccount">
+  <fims-account-select title="{{'Interest income account' | translate}}" formControlName="incomeAccount" [type]="'REVENUE'">
     <ng-container *ngIf="!form.get('incomeAccount').pristine && form.get('incomeAccount').hasError('required')">
       Required
     </ng-container>
@@ -44,7 +41,7 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <fims-account-select title="{{'Interest accrual account' | translate}}" formControlName="accrualAccount">
+  <fims-account-select title="{{'Interest accrual account' | translate}}" formControlName="accrualAccount" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('accrualAccount').pristine && form.get('accrualAccount').hasError('required')">
       Required
     </ng-container>

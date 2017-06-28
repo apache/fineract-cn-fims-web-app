@@ -21,15 +21,16 @@ import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms'
 import {FimsValidators} from '../../../../../common/validator/validators';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../../common/validator/account-exists.validator';
+import {createNumberMask} from 'text-mask-addons/dist/textMaskAddons';
 
-interface InterestBasisOption{
+interface InterestBasisOption {
   type: InterestBasis;
   label: string;
 }
 
-export interface InterestFormData{
-  minimum: number;
-  maximum: number;
+export interface InterestFormData {
+  minimum: string;
+  maximum: string;
   interestBasis: InterestBasis;
   incomeAccount: string;
   accrualAccount: string;
@@ -41,7 +42,7 @@ export interface InterestFormData{
 })
 export class ProductInterestFormComponent extends FormComponent<InterestFormData> {
 
-  private minMaxValidators: ValidatorFn[] = [Validators.required, FimsValidators.isNumber(), FimsValidators.minValue(0), FimsValidators.precision(2)];
+  private minMaxValidators: ValidatorFn[] = [Validators.required, FimsValidators.minValue(0), FimsValidators.scale(2)];
 
   interestBasisOptions: InterestBasisOption[] = [
     {type: 'CURRENT_BALANCE', label: 'CURRENT_BALANCE'},
@@ -93,13 +94,13 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
     this.form.updateValueAndValidity();
   }
 
-  private hasInterestRange(min: number, max: number): boolean {
+  private hasInterestRange(min: string, max: string): boolean {
     return this.hasValue(min) &&
         this.hasValue(max) &&
         min !== max;
   }
 
-  private hasValue(value: number): boolean {
+  private hasValue(value: string): boolean {
     return value !== undefined;
   }
 

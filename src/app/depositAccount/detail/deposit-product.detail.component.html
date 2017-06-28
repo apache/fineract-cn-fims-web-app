@@ -57,7 +57,7 @@
                   <h3 md-line translate>Type</h3>
                   <p md-line>{{definition.type}}</p>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item *ngIf="hasTerm(definition)">
                   <h3 md-line translate>Term</h3>
                   <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
                 </md-list-item>
@@ -67,15 +67,23 @@
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Minimum balance</h3>
-                  <p md-line>{{definition.minimumBalance}}</p>
+                  <p md-line>{{definition.minimumBalance | number:numberFormat}}</p>
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Interest</h3>
-                  <p md-line>{{definition.interest}}</p>
+                  <p md-line>{{definition.interest | number:numberFormat}}</p>
                 </md-list-item>
                 <md-list-item>
                   <h3 md-line translate>Currency</h3>
                   <p md-line>{{definition.currency.code}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Expense account</h3>
+                  <p md-line>{{definition.expenseAccountIdentifier}}</p>
+                </md-list-item>
+                <md-list-item>
+                  <h3 md-line translate>Equity ledger</h3>
+                  <p md-line>{{definition.equityLedgerIdentifier}}</p>
                 </md-list-item>
               </md-list>
             </div>

@@ -18,45 +18,36 @@
   <div layout-gt-xs="column" layout-margin formArrayName="charges">
     <md-card *ngFor="let charge of charges; let i=index" [formGroupName]="i">
       <md-card-content>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Charge name' | translate}}" formControlName="name"/>
-          <md-error *ngIf="charge.get('name').hasError('required')" translate>
+        <div layout="row">
+          <md-input-container layout-margin flex>
+            <input mdInput type="text" placeholder="{{'Charge name' | translate}}" formControlName="name"/>
+            <md-error *ngIf="charge.get('name').hasError('required')" translate>
+              Required
+            </md-error>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container layout-margin flex>
+            <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <fims-number-input [form]="getFormGroup(i)" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-number-input>
+          <md-select formControlName="actionIdentifier" layout-margin placeholder="{{'Applied on' | translate}}" flex="15">
+            <md-option *ngFor="let basis of actions" [value]="basis.identifier">
+              {{basis.name | translate}}
+            </md-option>
+          </md-select>
+          <md-checkbox layout-margin formControlName="proportional" translate>Proportional?</md-checkbox>
+        </div>
+        <fims-account-select title="{{'Income account' | translate}}" formControlName="incomeAccountIdentifier" [type]="'REVENUE'">
+          <ng-container *ngIf="!charge.get('incomeAccountIdentifier').pristine && charge.get('incomeAccountIdentifier').hasError('required')" translate>
             Required
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin>
-          <span md-suffix *ngIf="charge.get('proportional').value === true">%</span>
-          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
-          <md-error *ngIf="charge.get('amount').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="charge.get('amount').getError('minValue')">
-            {{ 'Value must be greater than' | translate:{ value: charge.get('amount').getError('minValue').value} }}
-          </md-error>
-        </md-input-container>
-        <md-select formControlName="actionIdentifier" layout-margin placeholder="{{'Applied on' | translate}}" flex="15">
-          <md-option *ngFor="let basis of actions" [value]="basis.identifier">
-            {{basis.name | translate}}
-          </md-option>
-        </md-select>
-        <md-checkbox layout-margin formControlName="proportional" translate>Proportional?</md-checkbox>
-      </div>
-      <fims-account-select title="{{'Income account' | translate}}" formControlName="incomeAccountIdentifier">
-        <ng-container *ngIf="!charge.get('incomeAccountIdentifier').pristine && charge.get('incomeAccountIdentifier').hasError('required')" translate>
-          Required
-        </ng-container>
-        <ng-container *ngIf="charge.get('incomeAccountIdentifier').hasError('invalidAccount')" translate>
-          Invalid account
-        </ng-container>
-      </fims-account-select>
+          </ng-container>
+          <ng-container *ngIf="charge.get('incomeAccountIdentifier').hasError('invalidAccount')" translate>
+            Invalid account
+          </ng-container>
+        </fims-account-select>
       </md-card-content>
       <md-card-actions>
         <button md-button (click)="removeCharge(i)">{{'REMOVE CHARGE' | translate}}</button>
