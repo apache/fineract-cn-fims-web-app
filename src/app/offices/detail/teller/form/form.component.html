@@ -31,6 +31,9 @@
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Cash withdrawal limit' | translate}}" formControlName="cashdrawLimit" tdAutoTrim/>
           <md-error *ngIf="form.get('cashdrawLimit').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('cashdrawLimit').getError('minValue')">
+            {{ 'Value must be greater than or equals' | translate:{ value: form.get('cashdrawLimit').getError('minValue').value} }}
+          </md-error>
         </md-input-container>
       </div>
       <fims-account-select title="{{'Teller account' | translate}}" formControlName="tellerAccountIdentifier" [type]="'ASSET'">

@@ -41,4 +41,16 @@ export class TellerNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Teller is going to be updated'
     }));
+
+  @Effect({ dispatch: false })
+  openCommandFail$: Observable<Action> = this.actions$
+    .ofType(tellerActions.EXECUTE_COMMAND_FAIL)
+    .map(action => action.payload)
+    .filter(payload => payload.command !== 'OPEN')
+    .do(action => this.notificationService.send({
+        type: NotificationType.ALERT,
+        title: 'Employee already assigned',
+        message: 'Employees can only be assigned to one teller. Please choose a different employee or unassign the employee first.'
+      })
+    );
 }

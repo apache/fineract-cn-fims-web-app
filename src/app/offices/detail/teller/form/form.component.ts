@@ -29,9 +29,12 @@ import {TdStepComponent} from '@covalent/core';
 })
 export class OfficeTellerFormComponent extends FormComponent<Teller> {
 
+  private _teller: Teller;
+
   @ViewChild('detailsStep') step: TdStepComponent;
 
   @Input() set teller(teller: Teller) {
+    this._teller = teller;
     this.prepareForm(teller);
   }
 
@@ -49,7 +52,7 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
     this.form = this.formBuilder.group({
       code: [teller.code, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
       password: [teller.password, Validators.required],
-      cashdrawLimit: [teller.cashdrawLimit],
+      cashdrawLimit: [teller.cashdrawLimit, [FimsValidators.minValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],
       vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)]
     });
@@ -63,7 +66,12 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
       password: this.form.get('password').value,
       cashdrawLimit: this.form.get('cashdrawLimit').value,
       tellerAccountIdentifier: this.form.get('tellerAccountIdentifier').value,
-      vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value
+      vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value,
+      state: this.teller.state,
+      createdBy: this.teller.createdBy,
+      createdOn: this.teller.createdOn,
+      lastModifiedBy: this.teller.lastModifiedBy,
+      lastModifiedOn: this.teller.lastModifiedOn
     };
 
     this.onSave.emit(teller);
@@ -80,5 +88,9 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
 
   showCodeValidationError(): void {
     this.setError('code', 'unique', true);
+  }
+
+  get teller(): Teller {
+    return this._teller;
   }
 }

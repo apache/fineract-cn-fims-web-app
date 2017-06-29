@@ -70,6 +70,9 @@ export class TellerApiEffects {
     .mergeMap(payload =>
       this.tellerService.createCommand(payload.officeId, payload.tellerCode, payload.command)
         .map(() => new tellerActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new tellerActions.ExecuteCommandFailAction(error)))
+        .catch((error) => of(new tellerActions.ExecuteCommandFailAction({
+          command: payload.command,
+          error
+        })))
     );
 }

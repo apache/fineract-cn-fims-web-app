@@ -33,7 +33,6 @@ export interface State extends fromRoot.State{
   officeForm: FormState;
   tellers: ResourceState;
   tellerForm: FormState;
-  tellerCommandForm: FormState;
 }
 
 const reducers = {
@@ -41,7 +40,6 @@ const reducers = {
   officeForm: createFormReducer('Office'),
   tellers: createResourceReducer('Office Teller', fromTellers.reducer, 'code'),
   tellerForm: createFormReducer('Office Teller'),
-  tellerCommandForm: createFormReducer('Office Teller Command')
 };
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -72,6 +70,3 @@ export const getAllTellerEntities = createSelector(getTellerState, getResourceAl
 
 export const getTellersLoadedAt = createSelector(getTellerState, getResourceLoadedAt);
 export const getSelectedTeller = createSelector(getTellerState, getResourceSelected);
-
-export const getTellerCommandFormState = (state: State) => state.tellerCommandForm;
-export const getTellerCommandFormError = createSelector(getTellerFormState, getFormError);
