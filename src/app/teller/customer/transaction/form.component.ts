@@ -1,12 +1,3 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../common/validator/validators';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -22,6 +13,21 @@ import {AccountingService} from '../../../../services/accounting/accounting.serv
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormComponent} from '../../../../common/forms/form.component';
+import {TdStepComponent} from '@covalent/core';
+import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+
+const withdrawalCheckTypes: TransactionType[] = ['ACCC', 'CWDL'];
+
+const balanceCheckTypes: TransactionType[] = ['ACCT', 'ACCC', 'CWDL'];
 
 export interface TellerTransactionFormData {
   customerIdentifier: string;
@@ -39,6 +45,18 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   private _transactionCreated: boolean;
 
+  private _transactionType: TransactionType;
+
+  private enableTargetAccount: boolean;
+
+  numberFormat: string = '1.2-2';
+
+  checkCashdrawLimit: boolean;
+
+  checkBalanceLimit: boolean;
+
+  balanceLimit: number;
+
   @ViewChild('transactionStep') transactionStep: TdStepComponent;
 
   @ViewChild('confirmationStep') confirmationStep: TdStepComponent;
@@ -54,11 +72,18 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
     }
   };
 
-  @Input('enableTargetAccount') enableTargetAccount: boolean;
-
   @Input('error') error: string;
 
-  @Input('checkCashdrawLimit') checkCashdrawLimit: boolean;
+  @Input('transactionType') set transactionType(transactionType: TransactionType) {
+    this._transactionType = transactionType;
+
+    if (transactionType === 'ACCT') {
+      this.enableTargetAccount = true;
+    }
+
+    this.checkCashdrawLimit = this.hasType(withdrawalCheckTypes, transactionType);
+    this.checkBalanceLimit = this.hasType(balanceCheckTypes, transactionType);
+  }
 
   @Input('cashdrawLimit') cashdrawLimit: number;
 
@@ -76,20 +101,50 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      productInstance: ['', Validators.required]
+      productInstance: ['', Validators.required],
+      amount: ['']
     });
 
     if(this.enableTargetAccount) {
       this.form.addControl('targetAccountIdentifier', new FormControl('', [Validators.required], accountExists(this.accountingService)));
     }
 
-    if(this.checkCashdrawLimit) {
-      this.form.addControl('amount', new FormControl('', [Validators.required, FimsValidators.minValue(0), FimsValidators.maxValue(this.cashdrawLimit)]));
-    } else {
-      this.form.addControl('amount', new FormControl('', [Validators.required, FimsValidators.minValue(0)]));
-    }
+    this.form.get('productInstance').valueChanges
+      .subscribe(productInstance => this.toggleProductInstance(productInstance));
 
     this.transactionStep.open();
+  }
+
+  private toggleProductInstance(productInstance: ProductInstance): void {
+    const amountValidators: ValidatorFn[] = [Validators.required, FimsValidators.minValue(0)];
+
+    this.balanceLimit = productInstance.balance;
+
+    const maxValue = this.getAmountMaxValue(productInstance);
+
+    if(maxValue !== undefined) {
+      amountValidators.push(FimsValidators.maxValue(maxValue));
+    }
+
+    const amountControl = this.form.get('amount') as FormControl;
+
+    amountControl.setValidators(amountValidators);
+
+    amountControl.updateValueAndValidity();
+  }
+
+  private getAmountMaxValue(productInstance: ProductInstance): number {
+    if(this.checkBalanceLimit && this.checkCashdrawLimit) {
+      return Math.min(this.cashdrawLimit, productInstance.balance);
+    }
+
+    if(this.checkBalanceLimit && !this.checkCashdrawLimit) {
+      return productInstance.balance;
+    }
+  }
+
+  private hasType(types: TransactionType[], type: TransactionType): boolean {
+    return types.indexOf(type) > -1
   }
 
   cancel(): void {
@@ -126,6 +181,10 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   get transactionCreated(): boolean {
     return this._transactionCreated;
+  }
+
+  get createTransactionDisabled(): boolean {
+    return this.form.invalid || this.transactionCreated
   }
 
 }

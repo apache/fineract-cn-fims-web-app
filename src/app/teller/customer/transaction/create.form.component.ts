@@ -30,8 +30,6 @@ import {TellerTransactionFormComponent, TellerTransactionFormData} from './form.
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 
-const withdrawalTypes: TransactionType[] = ['ACCC', 'ACCT', 'CWDL'];
-
 @Component({
   templateUrl: './create.form.component.html'
 })
@@ -43,7 +41,7 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
 
   private tellerTransactionIdentifier: string;
 
-  private _transactionType: TransactionType;
+  transactionType: TransactionType;
 
   private clerk: string;
 
@@ -54,10 +52,6 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
   transactionCosts$: Observable<TellerTransactionCosts>;
 
   teller: Teller;
-
-  checkCashdrawLimit: boolean;
-
-  enableTargetAccount: boolean;
 
   transactionCreated: boolean;
 
@@ -76,23 +70,6 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
-  }
-
-  set transactionType(transactionType: TransactionType) {
-    this._transactionType = transactionType;
-
-    if(transactionType === 'ACCT') {
-      this.enableTargetAccount = true;
-    }
-
-    const withdrawalType = withdrawalTypes.find(type => type === transactionType);
-    if(withdrawalType) {
-      this.checkCashdrawLimit = true;
-    }
-  }
-
-  get transactionType(): TransactionType {
-    return this._transactionType;
   }
 
   ngOnDestroy(): void {
