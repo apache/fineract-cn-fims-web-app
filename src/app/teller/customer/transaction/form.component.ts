@@ -47,7 +47,7 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   private _transactionType: TransactionType;
 
-  private enableTargetAccount: boolean;
+  enableTargetAccount: boolean;
 
   numberFormat: string = '1.2-2';
 

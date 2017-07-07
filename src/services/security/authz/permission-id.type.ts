@@ -23,4 +23,5 @@ export type PermissionId = 'identity_self' | 'identity_identities' | 'identity_r
   'accounting_accounts' | 'accounting_ledgers' | 'accounting_journals' | 'accounting_tx_types' |
   'portfolio_product_operations' | 'portfolio_products' | 'portfolio_cases' |
   'deposit_definitions' | 'deposit_instances' |
-  'teller_management' | 'teller_operations';
+  'teller_management' | 'teller_operations' |
+  'reporting_management';

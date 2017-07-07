@@ -24,6 +24,7 @@ import {PermissionId} from './permission-id.type';
 import {Injectable} from '@angular/core';
 import {DepositAccountPermittableGroupIds} from '../../depositAccount/domain/permittable-group-ids';
 import {TellerPermittableGroupIds} from '../../teller/domain/permittable-group-ids';
+import {ReportingPermittableGroupIds} from '../../reporting/domain/permittable-group-ids';
 
 interface PermittableGroupMap {
   [s: string]: FimsPermissionDescriptor;
@@ -66,6 +67,8 @@ export class PermittableGroupIdMapper {
 
     this._permittableGroupMap[TellerPermittableGroupIds.TELLER_MANAGEMENT] = { id: 'teller_management', label: 'Teller management' };
     this._permittableGroupMap[TellerPermittableGroupIds.TELLER_OPERATION] = { id: 'teller_operations', label: 'Teller operations' };
+
+    this._permittableGroupMap[ReportingPermittableGroupIds.REPORT_MANAGEMENT] = { id: 'reporting_management', label: 'Report management' };
   }
 
   public map(permittableGroupId: string): FimsPermissionDescriptor {

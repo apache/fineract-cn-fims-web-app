@@ -21,12 +21,34 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import {LOGOUT} from '../reducers/security/security.actions';
 import {Observable} from 'rxjs/Observable';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+
+interface MenuItem {
+  permission?: FimsPermission;
+  icon: string;
+  title: string;
+  description?: string;
+  routerLink: string;
+}
 
 @Component({
   selector: 'fims-main',
   templateUrl: './main.component.html'
 })
 export class MainComponent implements OnInit, AfterViewInit {
+
+  menuItems: MenuItem[] = [
+    { title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess' },
+    { title: 'Offices', description: 'Manage offices', icon: 'store', routerLink: '/offices', permission: { id: 'office_offices', accessLevel: 'READ'} },
+    { title: 'Roles/Permissions', description: 'Manage roles and permissions', icon: 'https', routerLink: '/roles', permission: { id: 'identity_roles', accessLevel: 'READ'} },
+    { title: 'Employees', description: 'Manage employees', icon: 'group', routerLink: '/employees', permission: { id: 'office_employees', accessLevel: 'READ'} },
+    { title: 'Accounting', description: 'Manage ledger accounts', icon: 'receipt', routerLink: '/accounting', permission: { id: 'accounting_ledgers', accessLevel: 'READ'} },
+    { title: 'Customer', description: 'Manage customers', icon: 'face', routerLink: '/customers', permission: { id: 'customer_customers', accessLevel: 'READ'} },
+    { title: 'Loan products', description: 'Manage loan products', icon: 'credit_card', routerLink: '/loans', permission: { id: 'portfolio_products', accessLevel: 'READ'} },
+    { title: 'Deposit', description: 'Account management', icon: 'attach_money', routerLink: '/deposits', permission: { id: 'deposit_definitions', accessLevel: 'READ'} },
+    { title: 'Teller', description: 'Teller management', icon: 'person', routerLink: '/teller', permission: { id: 'teller_operations', accessLevel: 'READ'} },
+    { title: 'Reports', description: 'View reports', icon: 'show_chart', routerLink: '/reports', permission: { id: 'reporting_management', accessLevel: 'READ' } },
+  ];
 
   icon: string;
 
