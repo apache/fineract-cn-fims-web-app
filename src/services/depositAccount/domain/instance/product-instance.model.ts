@@ -22,4 +22,5 @@ export interface ProductInstance {
   accountIdentifier?: string;
   beneficiaries?: string[];
   state?: State;
+  balance?: number;
 }

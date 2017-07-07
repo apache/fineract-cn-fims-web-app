@@ -17,7 +17,7 @@
 <td-steps mode="'vertical'">
   <td-step #transactionStep label="{{'Transaction' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [disabled]="transactionCreated">
-    <form [formGroup]="form">
+    <form [formGroup]="form" layout="column">
       <div layout="row" class="pad-top">
         <md-select formControlName="productInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
           <md-option *ngFor="let instance of productInstances" [value]="instance">
@@ -43,12 +43,13 @@
           <md-error *ngIf="form.get('amount').hasError('maxValue')">
             {{ 'Value must be smaller than or equals' | translate:{ value: form.get('amount').getError('maxValue').value} }}
           </md-error>
-          <md-hint *ngIf="checkCashdrawLimit" align="end">Cashdraw limit is: {{cashdrawLimit}}</md-hint>
         </md-input-container>
       </div>
+      <span *ngIf="checkCashdrawLimit" class="text-md" translate>Cashdraw limit is: {{cashdrawLimit | number:numberFormat}}</span>
+      <span *ngIf="checkBalanceLimit" class="text-md" translate>Balance limit is: {{balanceLimit | number:numberFormat}}</span>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="transactionCreated">{{'CREATE TRANSACTION' | translate}}</button>
+      <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
       <span flex></span>
       <button md-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
     </ng-template>

@@ -100,7 +100,7 @@ describe('Test Login Component', () => {
     expect(button.properties['disabled']).toBeFalsy('Button should be enabled');
   });
 
-  xit('should show error message', async(inject([Store], (store: Store<any>) => {
+  it('should show error message', async(inject([Store], (store: Store<any>) => {
     store.select = jasmine.createSpy('select').and.returnValue(Observable.of({ error: {} }));
 
     fixture.detectChanges();

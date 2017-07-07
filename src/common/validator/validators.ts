@@ -43,9 +43,9 @@ export class FimsValidators {
   static scale(scale: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value != null) {
-        let stringValue = String(c.value);
+        const stringValue = String(c.value);
 
-        let valueChunks = stringValue.split('.');
+        const valueChunks = stringValue.split('.');
 
         if(valueChunks.length == 1 && scale === 0) return null;
 
@@ -66,8 +66,8 @@ export class FimsValidators {
   static maxScale(scale: number): ValidatorFn {
     return (c: AbstractControl): {[key: string]: any} => {
       if (c.value != null) {
-        let stringValue = String(c.value);
-        let valueChunks = stringValue.split('.');
+        const stringValue = String(c.value);
+        const valueChunks = stringValue.split('.');
 
         if (valueChunks.length == 2 && valueChunks[1].length > scale) {
           return {
@@ -109,8 +109,8 @@ export class FimsValidators {
 
   static greaterThan(firstValue: string, secondValue: string) {
     return (group: FormGroup): {[key: string]: any} => {
-      let firstNumber: number = Number(group.controls[firstValue].value);
-      let secondNumber: number = Number(group.controls[secondValue].value);
+      const firstNumber: number = Number(group.controls[firstValue].value);
+      const secondNumber: number = Number(group.controls[secondValue].value);
 
       if(firstNumber == null || secondNumber == null) return null;
 
@@ -119,29 +119,33 @@ export class FimsValidators {
           greaterThan: true
         };
       }
+
+      return null;
     }
   }
 
   static matchValues(firstValue: string, secondValue: string) {
     return (group: FormGroup): {[key: string]: any} => {
-      let val1 = group.controls[firstValue];
-      let val2 = group.controls[secondValue];
+      const val1 = group.controls[firstValue];
+      const val2 = group.controls[secondValue];
 
       if (val1.value !== val2.value) {
         return {
           mismatch: true
         };
       }
+
+      return null;
     }
   }
 
   static matchRange(firstValue: string, secondValue: string) {
     return (group: FormGroup): {[key: string]: any} => {
-      let val1 = group.controls[firstValue];
-      let val2 = group.controls[secondValue];
+      const val1 = group.controls[firstValue];
+      const val2 = group.controls[secondValue];
 
-      let dateStart: number = Date.parse(val1.value);
-      let dateEnd: number = Date.parse(val2.value);
+      const dateStart: number = Date.parse(val1.value);
+      const dateEnd: number = Date.parse(val2.value);
 
       if (dateStart > dateEnd) {
         return {

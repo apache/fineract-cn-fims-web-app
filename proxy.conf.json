@@ -47,5 +47,12 @@
     "pathRewrite": {
       "^/api/teller": "/teller"
     }
+  },
+  "/api/reporting": {
+    "target": "http://localhost:2029",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/reporting": "/reporting"
+    }
   }
 }

@@ -45,68 +45,13 @@
       </button>
     </md-toolbar>
     <md-nav-list>
-      <ng-container>
-        <a md-list-item [routerLink]="['/quickAccess']" routerLinkActive="active">
-          <md-icon md-list-avatar>dashboard</md-icon>
-          <h3 md-line translate>Quick access</h3>
+      <ng-container *ngFor="let menuItem of menuItems; let i = index">
+        <a md-list-item [routerLink]="[menuItem.routerLink]" routerLinkActive="active" *hasPermission="menuItem.permission">
+          <md-icon md-list-avatar>{{menuItem.icon}}</md-icon>
+          <h3 md-line>{{menuItem.title | translate}}</h3>
+          <p md-line>{{menuItem.description | translate}}</p>
         </a>
-      </ng-container>
-      <md-divider></md-divider>
-      <ng-container *hasPermission="{ id: 'office_offices', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/offices']" routerLinkActive="active">
-          <md-icon md-list-avatar>store</md-icon>
-          <h3 md-line translate>Offices</h3>
-          <p md-line translate>Manage offices</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'identity_roles', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/roles']" routerLinkActive="active">
-          <md-icon md-list-avatar>https</md-icon>
-          <h3 md-line translate>Roles/Permissions</h3>
-          <p md-line translate>Manage roles and permissions</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'office_employees', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/employees']" routerLinkActive="active">
-          <md-icon md-list-avatar>group</md-icon>
-          <h3 md-line translate>Employees</h3>
-          <p md-line translate>Manage employees</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/accounting']" routerLinkActive="active">
-          <md-icon md-list-avatar>receipt</md-icon>
-          <h3 md-line translate>Accounting</h3>
-          <p md-line translate>Manage ledger accounts</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'customer_customers', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/customers']" routerLinkActive="active">
-          <md-icon md-list-avatar>face</md-icon>
-          <h3 md-line translate>Customer</h3>
-          <p md-line translate>Manage customers</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'portfolio_products', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/loans']" routerLinkActive="active">
-          <md-icon md-list-avatar>credit_card</md-icon>
-          <h3 md-line translate>Loan products</h3>
-          <p md-line translate>Manage loan products</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'deposit_definitions', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/deposits']" routerLinkActive="active">
-          <md-icon md-list-avatar>attach_money</md-icon>
-          <h3 md-line translate>Deposit</h3>
-          <p md-line translate>Account management</p>
-        </a>
-      </ng-container>
-      <ng-container *hasPermission="{ id: 'teller_operations', accessLevel: 'READ'}">
-        <a md-list-item [routerLink]="['/teller']" routerLinkActive="active">
-          <md-icon md-list-avatar>person</md-icon>
-          <h3 md-line translate>Teller</h3>
-          <p md-line translate>Teller management</p>
-        </a>
+        <md-divider *ngIf="i === 0"></md-divider>
       </ng-container>
     </md-nav-list>
   </md-sidenav>

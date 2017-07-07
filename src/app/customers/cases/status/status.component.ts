@@ -64,6 +64,7 @@ export class CaseStatusComponent implements OnInit, OnDestroy {
 
   executeCommand(statusCommand: StatusCommand): void {
     const command: CaseCommand = {
+      oneTimeAccountAssignments: [],
       comment: statusCommand.comment
     };
 

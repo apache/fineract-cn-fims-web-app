@@ -51,6 +51,7 @@ import {ImageService} from '../services/image/image.service';
 import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
 import {CurrencyService} from '../services/currency/currency.service';
 import {TellerService} from '../services/teller/teller-service';
+import {ReportingService} from '../services/reporting/reporting.service';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -105,6 +106,7 @@ export function HttpLoaderFactory(http: Http){
     PortfolioService,
     DepositAccountService,
     TellerService,
+    ReportingService,
     CountryService,
     CurrencyService,
     NotificationService,

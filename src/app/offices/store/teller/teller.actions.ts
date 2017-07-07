@@ -54,6 +54,11 @@ export interface ExecuteCommandPayload extends RoutePayload {
   command: TellerManagementCommand;
 }
 
+export interface ExecuteCommandFailPayload {
+  command: TellerManagementCommand;
+  error: Error;
+}
+
 export interface TellerPayload extends RoutePayload {
   officeId: string;
   teller: Teller;
@@ -134,7 +139,7 @@ export class ExecuteCommandSuccessAction implements Action {
 export class ExecuteCommandFailAction implements Action {
   readonly type = EXECUTE_COMMAND_FAIL;
 
-  constructor(public payload: Error) {}
+  constructor(public payload: ExecuteCommandFailPayload) {}
 }
 
 export type Actions

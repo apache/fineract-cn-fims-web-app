@@ -1,0 +1,39 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps>
+  <td-step #step1 label="Criteria" sublabel="Filter your report based on criteria." [active]="true" [disabled]="false">
+    <fims-reporting-query-params #mandatoryComponent [queryParams]="mandatoryParams"></fims-reporting-query-params>
+    <ng-template td-step-actions>
+      <button md-raised-button color="primary" (click)="step2.open()" class="text-upper">Next</button>
+    </ng-template>
+  </td-step>
+  <td-step #step2 label="Optional criteria" sublabel="Extend your criteria." [disabled]="false">
+    <fims-reporting-query-params #optionalComponent [queryParams]="optionalParams"></fims-reporting-query-params>
+    <ng-template td-step-actions>
+      <button md-raised-button color="primary" (click)="step3.open()" class="text-upper">Next</button>
+    </ng-template>
+  </td-step>
+  <td-step #step3 label="Field selection" sublabel="Add or remove fields for your report" [disabled]="false">
+    <fims-reporting-displayable-fields #displayableFieldComponent [displayableFields]="displayableFields">
+    </fims-reporting-displayable-fields>
+  </td-step>
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <button md-raised-button color="primary" class="text-upper" [disabled]="!valid" (click)="generateReport()">Generate report</button>
+    </ng-template>
+  </td-step>
+</td-steps>
