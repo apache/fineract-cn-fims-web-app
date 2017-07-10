@@ -21,6 +21,9 @@
   <md-error *ngIf="form.controls[controlName].hasError('required')" translate>
     Unique, Required.
   </md-error>
+  <md-error *ngIf="form.controls[controlName].hasError('minlength')">
+    {{ 'Must have at least characters.' | translate:{ value: form.controls[controlName].getError('minlength')['requiredLength']} }}
+  </md-error>
   <md-error *ngIf="form.controls[controlName].hasError('maxlength')">
     {{ 'Only characters allowed.' | translate:{ value: form.controls[controlName].getError('maxlength')['requiredLength']} }}
   </md-error>

@@ -351,6 +351,7 @@
   "Moratorium": "Mora",
   "Multiple disbursals?": "¿Múltiples desembolsos?",
   "Must be greater than Minimum": "Debe ser mayor al mínimo",
+  "Must have at least characters.": "{{value}}",
   "Must have decimal places": "",
   "Name": "Nombre",
   "Navigate to ledger of this account": "Navegar a través del libro principal de ésta cuenta",
