@@ -40,6 +40,7 @@ import {CountryService} from '../../../services/country/country.service';
 
 const customerTemplate: Customer = {
   identifier: 'test',
+  currentState: 'ACTIVE',
   type: 'PERSON',
   givenName: 'test',
   middleName: 'test',
@@ -145,6 +146,7 @@ describe('Test customer form', () => {
 
     testComponent.saveEmitter.subscribe((customer: Customer) => {
       expect(customerTemplate.identifier).toEqual(customer.identifier);
+      expect(customerTemplate.currentState).toEqual(customer.currentState);
       expect(customerTemplate.type).toEqual(customer.type);
       expect(customerTemplate.givenName).toEqual(customer.givenName);
       expect(customerTemplate.middleName).toEqual(customer.middleName);

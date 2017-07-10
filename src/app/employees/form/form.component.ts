@@ -96,7 +96,7 @@ export class EmployeeFormComponent implements OnInit{
 
   prepareDetailForm(employee: Employee, user: User): void {
     this.detailForm = this.formBuilder.group({
-      identifier: [employee.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [employee.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       firstName: [employee.givenName, Validators.required],
       middleName: [employee.middleName],
       lastName: [employee.surname, Validators.required],

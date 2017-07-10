@@ -31,7 +31,11 @@ import {CustomerCustomFieldsComponent} from './customFields/custom-fields.compon
 })
 export class CustomerFormComponent implements OnInit {
 
+  private _customer: Customer;
+
   @Input('customer') set customer(customer: Customer) {
+    this._customer = customer;
+
     this.detailFormData = {
       identifier: customer.identifier,
       firstName: customer.givenName,
@@ -103,11 +107,16 @@ export class CustomerFormComponent implements OnInit {
     return (this.detailForm.valid && this.addressForm.valid) && this.contactForm.validWhenOptional && this.customFieldsForm.validWhenOptional
   }
 
+  get customer(): Customer {
+    return this._customer;
+  }
+
   save() {
     const detailFormData = this.detailForm.formData;
 
     const customer: Customer = {
       identifier: detailFormData.identifier,
+      currentState: this.customer.currentState,
       givenName: detailFormData.firstName,
       surname: detailFormData.lastName,
       middleName: detailFormData.middleName,

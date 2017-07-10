@@ -73,7 +73,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     this.userNameSubscription = this.store.select(fromRoot.getUsername).subscribe(username => this.selectedClerk = username);
 
     this.form = this.formBuilder.group({
-      transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       transactionType: ['', [Validators.required], transactionTypeExists(this.accountingService)],
       transactionDate: [new Date().toISOString().slice(0, 10), Validators.required],
       note: [''],

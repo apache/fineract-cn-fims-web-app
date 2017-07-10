@@ -81,7 +81,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     }
 
     this.form = this.formBuilder.group({
-      identifier: [this._formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [this._formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
       productIdentifier: [this._formData.productIdentifier, [Validators.required]],
       principalAmount: [this._formData.principalAmount],
       term: [this._formData.term],

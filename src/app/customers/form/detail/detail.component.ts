@@ -38,7 +38,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
 
   @Input() set formData(formData: CustomerDetailFormData){
     this.form = this.formBuilder.group({
-      identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       firstName: [formData.firstName, Validators.required],
       middleName: [formData.middleName],
       lastName: [formData.lastName, Validators.required],

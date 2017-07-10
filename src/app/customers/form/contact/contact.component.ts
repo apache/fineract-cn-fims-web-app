@@ -16,12 +16,13 @@
 
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
-import {FormBuilder, FormControl, AbstractControl} from '@angular/forms';
+import {FormBuilder, FormControl, AbstractControl, Validators} from '@angular/forms';
 import {
   ContactDetail, ContactDetailType, EMAIL, MOBILE,
   PHONE, BUSINESS
 } from '../../../../services/domain/contact/contact-detail.model';
 import {getContactDetailValueByType} from '../../contact.helper';
+import {FimsValidators} from '../../../../common/validator/validators';
 
 @Component({
   selector: 'fims-customer-contact-form',
@@ -45,7 +46,7 @@ export class CustomerContactFormComponent extends FormComponent<ContactDetail[]>
     }
 
     this.form = this.formBuilder.group({
-      email: [email],
+      email: [email, FimsValidators.email],
       phone: [phone],
       mobile: [mobile]
     });

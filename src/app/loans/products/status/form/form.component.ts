@@ -65,7 +65,7 @@ export class ProductTaskFormComponent implements OnInit{
 
   private prepareDetailForm(task: TaskDefinition) {
     this.detailForm = this.formBuilder.group({
-      identifier: [task.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [task.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [task.name, [Validators.required]],
       description: [task.description, [Validators.required]],
       actions: this.initActions(task.actions),

@@ -63,7 +63,7 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
     this.formGroup = this.formBuilder.group({
-      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       type: ['', [Validators.required]],
       name: ['', [Validators.required]],
       description: [''],

@@ -18,6 +18,9 @@
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Email(optional)' | translate}}" type="email" formControlName="email" tdAutoTrim/>
+      <md-error *ngIf="form.get('email').hasError('email')" translate>
+        Invalid email
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">

@@ -53,7 +53,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
   ngOnInit(): void {
     this.openDetailStep();
     this.form = this.formBuilder.group({
-      'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe() ] ],
+      'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe ] ],
       'type': [ this.parentLedger ? this.parentLedger.type : this.ledger.type, [Validators.required] ],
       'name': [ this.ledger.name, [Validators.required] ],
       'showAccountsInChart': [ this.ledger.showAccountsInChart, [Validators.required]],

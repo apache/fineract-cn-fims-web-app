@@ -58,7 +58,7 @@ export class RoleFormComponent implements OnInit {
 
   private prepareForm(role: Role): void {
     this.detailForm = this.formBuilder.group({
-      identifier: [role.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]]
+      identifier: [role.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]]
     });
   }
 
