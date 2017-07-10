@@ -48,6 +48,8 @@
           </div>
           <div flex-gt-md="70">
             <md-list *ngIf="teller$ | async as teller">
+              <h3 md-subheader translate>Current status</h3>
+              <fims-state-display [state]="teller.state"></fims-state-display>
               <md-list-item>
                 <h3 md-line translate>Number</h3>
                 <p md-line>{{teller.code}}</p>
@@ -63,6 +65,10 @@
               <md-list-item>
                 <h3 md-line translate>Vault account</h3>
                 <p md-line>{{teller.vaultAccountIdentifier}}</p>
+              </md-list-item>
+              <md-list-item>
+                <h3 md-line translate>Assigned employee</h3>
+                <p md-line>{{teller.assignedEmployee}}</p>
               </md-list-item>
               <md-list-item>
                 <h3 md-line translate>Created by</h3>
