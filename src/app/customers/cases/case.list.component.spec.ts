@@ -41,7 +41,7 @@ describe('Test case list component', () => {
   beforeEach(() => {
     const activatedRoute = new ActivatedRouteStub();
     const routerStub = new RouterStub();
-    console.log('testbed')
+
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
@@ -60,16 +60,13 @@ describe('Test case list component', () => {
         { provide: CasesStore, useValue: jasmine.createSpyObj('casesStore', ['select', 'dispatch']) }
       ]
     });
-    console.log('createComponent')
-    fixture = TestBed.createComponent(CaseListComponent);
-    console.log('componentInstance')
-    component = fixture.componentInstance;
-    console.log('end')
 
+    fixture = TestBed.createComponent(CaseListComponent);
+
+    component = fixture.componentInstance;
   });
 
   function setup(currentState: CustomerState, hasChangePermission: boolean) {
-    console.log('setup')
     const customer: Customer = {
       identifier: 'test',
       type: 'BUSINESS',
@@ -98,7 +95,6 @@ describe('Test case list component', () => {
       if(selector === fromCustomers.getSelectedCustomer) return Observable.of(customer);
       if(selector === fromRoot.getPermissions) return Observable.of(permissions);
     });
-    console.log('end setup')
   }
 
   function getCreateButton(): DebugElement {
