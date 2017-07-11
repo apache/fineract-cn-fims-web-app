@@ -55,7 +55,7 @@ import {
   MdRadioModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 
 @NgModule({
   imports: [
@@ -75,6 +75,7 @@ import {CovalentFileModule, CovalentSearchModule, CovalentStepsModule} from '@co
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentFileModule,
+    CovalentMessageModule,
 
     EffectsModule.run(CustomerApiEffects),
     EffectsModule.run(CustomerRouteEffects),

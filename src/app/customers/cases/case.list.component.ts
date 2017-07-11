@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
@@ -22,20 +22,24 @@ import {Case} from '../../../services/portfolio/domain/case.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCases from './store/index';
 import * as fromCustomers from '../store';
+import * as fromRoot from '../../reducers';
 import {CasesStore} from './store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from './store/case.actions';
+import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './case.list.component.html'
 })
-export class CaseListComponent implements OnInit{
+export class CaseListComponent implements OnInit, OnDestroy {
 
   private customerSubscription: Subscription;
 
   private customer: Customer;
 
   casesData$: Observable<TableData>;
+
+  canAdd$: Observable<boolean>;
 
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
@@ -52,22 +56,44 @@ export class CaseListComponent implements OnInit{
         data: casePage.cases
       }));
 
-    this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
+    const customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
+
+    this.customerSubscription = customer$
       .subscribe(customer => {
         this.customer = customer;
         this.fetchCases();
       });
+
+    this.canAdd$ = Observable.combineLatest(
+      this.casesStore.select(fromRoot.getPermissions),
+      customer$,
+      (permissions, customer: Customer) => ({
+        hasPermission: this.hasChangePermission(permissions),
+        isCustomerActive: customer.currentState === 'ACTIVE'
+      }))
+      .map(result => result.hasPermission && result.isCustomerActive);
+  }
+
+  ngOnDestroy(): void {
+    this.customerSubscription.unsubscribe();
   }
 
   fetchCases(fetchRequest?: FetchRequest): void{
     this.casesStore.dispatch({ type: SEARCH, payload: {
       customerId: this.customer.identifier,
-      fetchRequest: fetchRequest
+      fetchRequest
     }});
   }
 
-  rowSelect(caseInstance: Case): void{
+  rowSelect(caseInstance: Case): void {
     this.router.navigate(['products', caseInstance.productIdentifier, 'detail', caseInstance.identifier], { relativeTo: this.route })
+  }
+
+  private hasChangePermission(permissions: FimsPermission[]): boolean {
+    return permissions.filter(permission =>
+        permission.id === 'portfolio_cases' &&
+        permission.accessLevel === 'CHANGE'
+      ).length > 0
   }
 
 }

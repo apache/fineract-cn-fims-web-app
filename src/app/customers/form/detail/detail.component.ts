@@ -24,9 +24,11 @@ export interface CustomerDetailFormData {
   firstName: string;
   middleName: string;
   lastName: string;
-  birthDay?: number;
-  birthMonth?: number;
-  birthYear?: number;
+  dateOfBirth: {
+    day?: number;
+    month?: number;
+    year?: number;
+  }
   member: boolean;
 }
 
@@ -36,13 +38,15 @@ export interface CustomerDetailFormData {
 })
 export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFormData> {
 
-  @Input() set formData(formData: CustomerDetailFormData){
+  @Input() set formData(formData: CustomerDetailFormData) {
+    const dateOfBirth = formData.dateOfBirth;
+
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       firstName: [formData.firstName, Validators.required],
       middleName: [formData.middleName],
       lastName: [formData.lastName, Validators.required],
-      dayOfBirth: [this.formatDate(formData.birthYear, formData.birthMonth, formData.birthDay), Validators.required],
+      dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined, Validators.required],
       member: [formData.member],
     })
   };
@@ -71,9 +75,11 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       firstName: this.form.get('firstName').value,
       middleName: this.form.get('middleName').value,
       lastName: this.form.get('lastName').value,
-      birthYear: chunks.length ? Number(chunks[0]) : undefined,
-      birthMonth: chunks.length ? Number(chunks[1]) : undefined,
-      birthDay: chunks.length ? Number(chunks[2]) : undefined,
+      dateOfBirth: {
+        year: chunks.length ? Number(chunks[0]) : undefined,
+        month: chunks.length ? Number(chunks[1]) : undefined,
+        day: chunks.length ? Number(chunks[2]) : undefined,
+      },
       member: this.form.get('member').value
     }
   }

@@ -41,9 +41,7 @@ export class CustomerFormComponent implements OnInit {
       firstName: customer.givenName,
       middleName: customer.middleName,
       lastName: customer.surname,
-      birthDay: customer.dateOfBirth.day,
-      birthMonth: customer.dateOfBirth.month,
-      birthYear: customer.dateOfBirth.year,
+      dateOfBirth: customer.dateOfBirth,
       member: customer.member
     };
 
@@ -123,11 +121,7 @@ export class CustomerFormComponent implements OnInit {
       type: 'PERSON',
       address: this.addressForm.formData,
       contactDetails: this.contactForm.formData,
-      dateOfBirth: {
-        day: detailFormData.birthDay,
-        month: detailFormData.birthMonth,
-        year: detailFormData.birthYear
-      },
+      dateOfBirth: detailFormData.dateOfBirth,
       member: detailFormData.member,
       assignedOffice: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
