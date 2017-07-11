@@ -22,6 +22,7 @@ import * as fromRoot from '../reducers';
 import {LOGOUT} from '../reducers/security/security.actions';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+import {CountryService} from '../../services/country/country.service';
 
 interface MenuItem {
   permission?: FimsPermission;
@@ -62,7 +63,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   username$: Observable<string>;
 
-  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private store: Store<fromRoot.State>) {}
+  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService, private store: Store<fromRoot.State>) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -74,7 +75,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     });
 
     this.tenant$ = this.store.select(fromRoot.getTenant);
-    this.username$ = this.store.select(fromRoot.getUsername)
+    this.username$ = this.store.select(fromRoot.getUsername);
+
+    this.countryService.init();
   }
 
   ngAfterViewInit(): void {

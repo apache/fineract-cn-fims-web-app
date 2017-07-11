@@ -19,24 +19,27 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Country} from './model/country.model';
 import {TranslateService} from '@ngx-translate/core';
+import {escapeRegexPattern} from '../../common/regex/escape';
 
 @Injectable()
 export class CountryService {
 
   private countries: Country[] = [];
 
-  constructor(private http: Http, private translateService: TranslateService) {
+  constructor(private http: Http, private translateService: TranslateService) {}
+
+  init(): void {
     this.getCountries()
       .map(countries => this.translate(countries))
       .subscribe(countries => this.countries = countries);
 
-    translateService.onLangChange
+    this.translateService.onLangChange
       .map(() => this.translate(this.countries))
       .subscribe(countries => this.countries = countries);
   }
 
   fetchCountries(term): Country[] {
-    const regTerm = new RegExp(`^${term}`, 'gi');
+    const regTerm = new RegExp(`^${escapeRegexPattern(term)}`, 'gi');
 
     let result: Country[];
 
