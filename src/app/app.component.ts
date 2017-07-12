@@ -20,6 +20,7 @@ import * as fromRoot from './reducers';
 import {Store} from '@ngrx/store';
 import {LoginSuccessAction} from './reducers/security/security.actions';
 import {Subscription} from 'rxjs/Subscription';
+import {getSelectedLanguage} from '../common/i18n/translate';
 
 @Component({
   selector: 'fims-app',
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('en');
-    this.translate.use('en');
+    this.translate.use(getSelectedLanguage(this.translate));
   }
 
   relogin(): void {

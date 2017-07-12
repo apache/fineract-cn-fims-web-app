@@ -14,34 +14,33 @@
  * limitations under the License.
  */
 
-import {FormGroup, ValidatorFn, AbstractControl} from '@angular/forms';
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+
+const EMAIL_REGEXP =
+  /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 
 export class FimsValidators {
 
-  static urlSafe(): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
-      if (c.value && encodeURIComponent(c.value) !== c.value) {
-          return {
-            urlSafe: true
-          };
-      }
-      return null;
+  static urlSafe(control: AbstractControl): ValidationErrors | null {
+    if (control.value && encodeURIComponent(control.value) !== control.value) {
+      return {
+        urlSafe: true
+      };
     }
+    return null;
   }
 
-  static isNumber(): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
-      if (c.value && isNaN(c.value)) {
-        return {
-          isNumber: true
-        };
-      }
-      return null;
+  static isNumber(control: AbstractControl): ValidationErrors | null {
+    if (control.value && isNaN(control.value)) {
+      return {
+        isNumber: true
+      };
     }
+    return null;
   }
 
   static scale(scale: number): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
+    return (c: AbstractControl): ValidationErrors | null => {
       if (c.value != null) {
         const stringValue = String(c.value);
 
@@ -64,7 +63,7 @@ export class FimsValidators {
   }
 
   static maxScale(scale: number): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
+    return (c: AbstractControl): ValidationErrors | null => {
       if (c.value != null) {
         const stringValue = String(c.value);
         const valueChunks = stringValue.split('.');
@@ -80,7 +79,7 @@ export class FimsValidators {
   }
 
   static minValue(minValue: number): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
+    return (c: AbstractControl): ValidationErrors | null => {
       if (c.value != null && (c.value < minValue)) {
         return {
           minValue: {
@@ -94,7 +93,7 @@ export class FimsValidators {
   }
 
   static maxValue(maxValue: number): ValidatorFn {
-    return (c: AbstractControl): {[key: string]: any} => {
+    return (c: AbstractControl): ValidationErrors | null => {
       if (c.value != null && (c.value > maxValue)) {
         return {
           maxValue: {
@@ -108,7 +107,7 @@ export class FimsValidators {
   }
 
   static greaterThan(firstValue: string, secondValue: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): ValidationErrors | null => {
       const firstNumber: number = Number(group.controls[firstValue].value);
       const secondNumber: number = Number(group.controls[secondValue].value);
 
@@ -125,7 +124,7 @@ export class FimsValidators {
   }
 
   static matchValues(firstValue: string, secondValue: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): ValidationErrors | null => {
       const val1 = group.controls[firstValue];
       const val2 = group.controls[secondValue];
 
@@ -140,7 +139,7 @@ export class FimsValidators {
   }
 
   static matchRange(firstValue: string, secondValue: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): ValidationErrors | null => {
       const val1 = group.controls[firstValue];
       const val2 = group.controls[secondValue];
 
@@ -155,5 +154,13 @@ export class FimsValidators {
 
       return null;
     }
+  }
+
+  static email(control: AbstractControl): ValidationErrors | null {
+    if(control.value == null || control.value.length === 0) {
+      return null;
+    }
+
+    return EMAIL_REGEXP.test(control.value) ? null : {'email': true};
   }
 }

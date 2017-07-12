@@ -66,7 +66,7 @@ export class ProductChargeFormComponent implements OnInit {
 
   private prepareDetailForm(charge: ChargeDefinition) {
     this.detailForm = this.formBuilder.group({
-      identifier: [charge.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [charge.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [charge.name, [Validators.required]],
       description: [charge.description, [Validators.required]],
       chargeMethod: [charge.chargeMethod, [Validators.required]],

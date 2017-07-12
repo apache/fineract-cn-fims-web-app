@@ -59,11 +59,14 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   customCatalogs: CustomCatalog[] = [];
 
+  isCustomerActive: boolean;
+
   constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .do(customer => this.customer = customer)
+      .do(customer => this.isCustomerActive = customer.currentState === 'ACTIVE')
       .flatMap(customer => this.customerService.getPortrait(customer.identifier))
       .subscribe(portrait => this.portrait = portrait);
 
@@ -138,6 +141,10 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   changePortrait(): void {
     this.router.navigate(['portrait'], { relativeTo: this.route })
+  }
+
+  goToTasks(): void {
+    this.router.navigate(['tasks'], { relativeTo: this.route })
   }
 
 }

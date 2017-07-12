@@ -25,7 +25,14 @@
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchCustomer($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
+  <td-message *ngIf="!isCustomerActive" label="{{'Customer not active' | translate }}"
+              sublabel="{{'You can activate the customer under tasks' | translate }}"
+              color="warn" icon="error">
+    <button td-message-actions md-button (click)="goToTasks()"
+            *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE'}" translate>GO TO TASKS
+    </button>
+  </td-message>
+  <div class="md-content inset" flex>
     <div layout="row">
       <div layout="column" flex-gt-md="100">
         <div layout-gt-md="row">

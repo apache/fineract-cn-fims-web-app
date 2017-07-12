@@ -53,27 +53,30 @@ export function reducer(state = initialState, action: tellers.Actions): Resource
     }
 
     case tellers.EXECUTE_COMMAND_SUCCESS: {
-      let payload = action.payload;
-
-      let tellerCode = payload.tellerCode;
-      let command: TellerManagementCommand = payload.command;
-
-      let teller: Teller = state.entities[tellerCode];
+      const payload = action.payload;
+      const tellerCode = payload.tellerCode;
+      const command: TellerManagementCommand = payload.command;
+      const teller: Teller = state.entities[tellerCode];
 
       let tellerState: Status = null;
+      let assignedEmployee = null;
 
       if(command.action === 'OPEN') {
         tellerState = 'OPEN';
-      }else if(command.action === 'CLOSE') {
+        assignedEmployee = command.assignedEmployeeIdentifier;
+      } else if(command.action === 'CLOSE') {
         tellerState = 'CLOSED';
       }
 
-      teller.state = tellerState;
+      const newTeller = Object.assign({}, teller, {
+        state: tellerState,
+        assignedEmployee
+      });
 
       return {
         ids: [ ...state.ids ],
         entities: Object.assign({}, state.entities, {
-          [teller.code]: teller
+          [teller.code]: newTeller
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId

@@ -165,7 +165,7 @@ export class ProductFormComponent implements OnInit{
     const termRange = product.termRange;
 
     this.detailForm = this.formBuilder.group({
-      identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe()]],
+      identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [product.name, [Validators.required]],
       description: [product.description, [Validators.required]],
       currencyCode: [product.currencyCode, [Validators.required]],

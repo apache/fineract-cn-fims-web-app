@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-export type Status = 'ACTIVE' | 'CLOSED' | 'OPEN' | 'PAUSED';
+export function escapeRegexPattern(value?: string): string {
+  if(!value) return '';
 
-export interface Teller {
-  code: string;
-  password: string;
-  cashdrawLimit: number;
-  tellerAccountIdentifier: string;
-  vaultAccountIdentifier: string;
-  assignedEmployee?: string;
-  state?: Status;
-  createdBy?: string;
-  createdOn?: string;
-  lastModifiedBy?: string;
-  lastModifiedOn?: string;
+  return value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }

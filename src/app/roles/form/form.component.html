@@ -14,28 +14,30 @@
  limitations under the License.
 -->
 
-<div layout="row">
-  <form [formGroup]="detailForm">
-    <div layout="row">
-      <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
-    </div>
-  </form>
-</div>
-<div layout="row" layout-margin>
-  <md-list>
-    <md-list-item>
-      <h3 md-line></h3>
-      <h4 md-line></h4>
-      <p md-line></p>
-      <md-checkbox [(ngModel)]="allRead" class="list-checkbox" translate>Read</md-checkbox>
-      <md-checkbox [(ngModel)]="allChange" class="list-checkbox" translate>Change</md-checkbox>
-      <md-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</md-checkbox>
-    </md-list-item>
-    <md-divider></md-divider>
-    <fims-permission-list-item *ngFor="let permission of formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
-  </md-list>
-</div>
-<div layout="row" layout-margin>
-  <button type="submit" md-raised-button color="primary" [disabled]="detailForm.invalid" (click)="save()">{{'SAVE ROLE' | translate}}</button>
-  <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+<div class="inset">
+  <div layout="row">
+    <form [formGroup]="detailForm">
+      <div layout="row">
+        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+    </form>
+  </div>
+  <div layout="row" layout-margin>
+    <md-list>
+      <md-list-item>
+        <h3 md-line></h3>
+        <h4 md-line></h4>
+        <p md-line></p>
+        <md-checkbox [(ngModel)]="allRead" class="list-checkbox" translate>Read</md-checkbox>
+        <md-checkbox [(ngModel)]="allChange" class="list-checkbox" translate>Change</md-checkbox>
+        <md-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</md-checkbox>
+      </md-list-item>
+      <md-divider></md-divider>
+      <fims-permission-list-item *ngFor="let permission of formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
+    </md-list>
+  </div>
+  <div layout="row" layout-margin>
+    <button type="submit" md-raised-button color="primary" [disabled]="detailForm.invalid" (click)="save()">{{'SAVE ROLE' | translate}}</button>
+    <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+  </div>
 </div>

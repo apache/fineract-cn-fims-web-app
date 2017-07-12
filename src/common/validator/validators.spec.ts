@@ -21,13 +21,13 @@ describe('Validators', () => {
   describe('urlSafe', () => {
 
     it('should not return error when url safe', () => {
-      let validator = FimsValidators.urlSafe();
-      expect(validator(new FormControl('test-test'))).toBeNull();
+      const result = FimsValidators.urlSafe(new FormControl('test-test'));
+      expect(result).toBeNull();
     });
 
     it('should return error when not url safe', () => {
-      let validator = FimsValidators.urlSafe();
-      expect(validator(new FormControl(' '))).toEqual({ urlSafe: true });
+      const result = FimsValidators.urlSafe(new FormControl(' '));
+      expect(result).toEqual({ urlSafe: true });
     })
 
   });
@@ -35,12 +35,12 @@ describe('Validators', () => {
   describe('scale', () => {
 
     it('should not return error when scale matches', () => {
-      let validator = FimsValidators.scale(1);
+      const validator = FimsValidators.scale(1);
       expect(validator(new FormControl(1.1))).toBeNull();
     });
 
     it('should return error when scale 1', () => {
-      let validator = FimsValidators.scale(1);
+      const validator = FimsValidators.scale(1);
       expect(validator(new FormControl(1))).toEqual({
         scale: {
           valid: false,
@@ -50,7 +50,7 @@ describe('Validators', () => {
     });
 
     it('should return error when scale 0', () => {
-      let validator = FimsValidators.scale(0);
+      const validator = FimsValidators.scale(0);
       expect(validator(new FormControl(1.2))).toEqual({
         scale: {
           valid: false,
@@ -63,12 +63,12 @@ describe('Validators', () => {
   describe('minValue', () => {
 
     it('should not return error when min value 0', () => {
-      let validator = FimsValidators.minValue(0);
+      const validator = FimsValidators.minValue(0);
       expect(validator(new FormControl(0))).toBeNull();
     });
 
     it('should return error when min value 0', () => {
-      let validator = FimsValidators.minValue(0);
+      const validator = FimsValidators.minValue(0);
       expect(validator(new FormControl(-1))).toEqual({
         minValue: {
           valid: false,
@@ -80,14 +80,13 @@ describe('Validators', () => {
   });
 
   describe('maxValue', () => {
-
     it('should not return error when max value 10', () => {
-      let validator = FimsValidators.maxValue(10);
+      const validator = FimsValidators.maxValue(10);
       expect(validator(new FormControl(10))).toBeNull();
     });
 
     it('should return error when max value 10', () => {
-      let validator = FimsValidators.maxValue(10);
+      const validator = FimsValidators.maxValue(10);
       expect(validator(new FormControl(11))).toEqual({
         maxValue: {
           valid: false,
@@ -99,21 +98,34 @@ describe('Validators', () => {
   });
 
   describe('greaterThan', () => {
-
-    let dateOne = new Date();
-    let dateTwo = new Date(dateOne.getTime() + 1000);
+    const dateOne = new Date();
+    const dateTwo = new Date(dateOne.getTime() + 1000);
 
     it('should not return error when range is correct', () => {
-      let group = new FormGroup({f1: new FormControl(dateOne.toISOString()), f2: new FormControl(dateTwo.toISOString())});
-      let validator = FimsValidators.matchRange('f1', 'f2');
+      const group = new FormGroup({f1: new FormControl(dateOne.toISOString()), f2: new FormControl(dateTwo.toISOString())});
+      const validator = FimsValidators.matchRange('f1', 'f2');
       expect(validator(group)).toBeNull();
     });
 
-    it('should return error when range is incorrect', () => {
-      let group = new FormGroup({f1: new FormControl(dateOne.toISOString()), f2: new FormControl(dateTwo.toISOString())});
-      let validator = FimsValidators.matchRange('f2', 'f1');
+    it('should return error when range not correct', () => {
+      const group = new FormGroup({f1: new FormControl(dateOne.toISOString()), f2: new FormControl(dateTwo.toISOString())});
+      const validator = FimsValidators.matchRange('f2', 'f1');
       expect(validator(group)).toEqual({
         rangeInvalid: true
+      });
+    })
+  });
+
+  describe('email', () => {
+    it('should return null when email is correct', () => {
+      const result = FimsValidators.email(new FormControl('test@test.de'));
+      expect(result).toBeNull();
+    });
+
+    it('should return error when email is "testtest.de"', () => {
+      const result = FimsValidators.email(new FormControl('testtest.de'));
+      expect(result).toEqual({
+        email: true
       });
     })
   })

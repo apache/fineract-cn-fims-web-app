@@ -30,7 +30,6 @@ import {CovalentLoadingModule} from '@covalent/core';
 
 @NgModule({
   imports: [
-    FimsSharedModule,
     RouterModule.forChild(LoginRoutes),
     TranslateModule,
     CommonModule,

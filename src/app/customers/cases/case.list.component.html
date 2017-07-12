@@ -31,6 +31,6 @@
   </fims-data-table>
 </fims-layout-card-over>
 
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new loan for customer' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new loan for customer' | translate}}" [routerLink]="['create']" *ngIf="canAdd$ | async">
   <md-icon>add</md-icon>
 </a>

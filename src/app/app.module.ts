@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {Http, HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
@@ -26,7 +26,7 @@ import {AuthenticationService} from '../services/security/authn/authentication.s
 import {CatalogService} from '../services/catalog/catalog.service';
 import {AccountingService} from '../services/accounting/accounting.service';
 import {PortfolioService} from '../services/portfolio/portfolio.service';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {PermittableGroupIdMapper} from '../services/security/authz/permittable-group-id-mapper';
 import {reducer} from './reducers';
@@ -52,6 +52,7 @@ import {DepositAccountService} from '../services/depositAccount/deposit-account.
 import {CurrencyService} from '../services/currency/currency.service';
 import {TellerService} from '../services/teller/teller-service';
 import {ReportingService} from '../services/reporting/reporting.service';
+import {getSelectedLanguage} from '../common/i18n/translate';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -112,7 +113,10 @@ export function HttpLoaderFactory(http: Http){
     NotificationService,
     ExistsGuardService,
     ...appRoutingProviders,
-    ImageService
+    ImageService,
+    {
+      provide: LOCALE_ID, useFactory: getSelectedLanguage, deps: [TranslateService],
+    }
   ],
   bootstrap: [ AppComponent ]
 })

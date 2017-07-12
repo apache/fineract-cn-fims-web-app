@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-export type Status = 'ACTIVE' | 'CLOSED' | 'OPEN' | 'PAUSED';
+import { TranslateService } from '@ngx-translate/core';
 
-export interface Teller {
-  code: string;
-  password: string;
-  cashdrawLimit: number;
-  tellerAccountIdentifier: string;
-  vaultAccountIdentifier: string;
-  assignedEmployee?: string;
-  state?: Status;
-  createdBy?: string;
-  createdOn?: string;
-  lastModifiedBy?: string;
-  lastModifiedOn?: string;
+export const TRANSLATE_STORAGE_KEY: string = 'fims-translate-lang';
+
+export function getSelectedLanguage(translateService: TranslateService): string {
+  const storedLanguage: string = sessionStorage.getItem(TRANSLATE_STORAGE_KEY);
+
+  if (storedLanguage && translateService.getLangs().indexOf(storedLanguage) > -1) {
+    return storedLanguage;
+  } else if (translateService.getLangs().indexOf(translateService.getBrowserLang()) > -1) {
+    return translateService.getBrowserLang();
+  }
+
+  return translateService.getDefaultLang();
 }

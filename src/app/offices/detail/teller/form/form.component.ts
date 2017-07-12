@@ -50,7 +50,7 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
 
   prepareForm(teller: Teller): void {
     this.form = this.formBuilder.group({
-      code: [teller.code, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe()]],
+      code: [teller.code, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
       password: [teller.password, Validators.required],
       cashdrawLimit: [teller.cashdrawLimit, [FimsValidators.minValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],

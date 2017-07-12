@@ -35,6 +35,7 @@ export class OfficeTellerListComponent implements OnInit {
   columns: any[] = [
     {name: 'code', label: 'Number'},
     {name: 'cashdrawLimit', label: 'Cash withdrawal limit'},
+    {name: 'assignedEmployee', label: 'Assigned employee'},
     {name: 'state', label: 'Status'}
   ];
 
