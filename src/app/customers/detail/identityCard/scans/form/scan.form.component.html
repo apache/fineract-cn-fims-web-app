@@ -41,12 +41,15 @@
                  [value]="form.get('file').value ? form.get('file').value.name : ''"
                  [disabled]="true"
                  readonly/>
+          <md-hint class="tc-red-500" *ngIf="form.get('file').hasError('maxFileSize')">
+            {{ 'Max file size' | translate:{ value: form.get('file').getError('maxFileSize')['value']} }}
+          </md-hint>
         </md-input-container>
         <button md-icon-button *ngIf="form.get('file').value" (click)="fileInput.clear()"
                 (keyup.enter)="fileInput.clear()">
           <md-icon>cancel</md-icon>
         </button>
-        <td-file-input class="push-left-sm push-right-sm" #fileInput formControlName="file">
+        <td-file-input class="push-left-sm push-right-sm" #fileInput formControlName="file" accept=".jpg,.png">
           <md-icon>folder</md-icon>
           <span class="text-upper" translate>Browse...</span>
         </td-file-input>

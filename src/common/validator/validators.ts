@@ -163,4 +163,18 @@ export class FimsValidators {
 
     return EMAIL_REGEXP.test(control.value) ? null : {'email': true};
   }
+
+  static maxFileSize(maxSizeInKB: number) {
+    return (c: AbstractControl): ValidationErrors | null => {
+      const bytes = maxSizeInKB * 1024;
+      if (c.value != null && (c.value.size > bytes)) {
+        return {
+          maxFileSize: {
+            value: maxSizeInKB
+          }
+        }
+      }
+      return null;
+    }
+  }
 }

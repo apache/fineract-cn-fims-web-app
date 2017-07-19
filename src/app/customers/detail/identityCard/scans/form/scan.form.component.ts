@@ -56,7 +56,7 @@ export class IdentificationCardScanComponent implements OnInit {
     this.form = this.formBuilder.group({
       identifier: ['', [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
-      file: ['', Validators.required]
+      file: ['', [Validators.required, FimsValidators.maxFileSize(512)]]
     });
 
     this.detailsStep.open();
