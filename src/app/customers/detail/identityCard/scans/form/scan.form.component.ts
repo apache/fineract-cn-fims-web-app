@@ -36,6 +36,8 @@ export class IdentificationCardScanComponent implements OnInit {
 
   form: FormGroup;
 
+  @Input() editMode: boolean;
+
   @Input() set error(error: Error) {
     if(!error) return;
 
