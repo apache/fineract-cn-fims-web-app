@@ -21,6 +21,8 @@ import {CustomerIdentityCardIndexComponent} from './identity-card.index.componen
 import {IdentityCardExistsGuard} from './identity-card-exists.guard';
 import {CustomerIdentityCardDetailComponent} from './identity-card.detail.component';
 import {EditCustomerIdentificationCardFormComponent} from './form/edit.form.component';
+import {CustomerIdentityCardScanListComponent} from './scans/scan.list.component';
+import {CreateIdentificationCardScanComponent} from './scans/form/create.form.component';
 
 export const IdentityCardRoutes: Routes = [
   {
@@ -59,6 +61,14 @@ export const IdentityCardRoutes: Routes = [
           title: 'Edit identification card',
           hasPermission: {id: 'customer_identifications', accessLevel: 'CHANGE'}
         },
+      },
+      {
+        path: 'addScan',
+        component: CreateIdentificationCardScanComponent,
+        data: {
+          title: 'Add identification card scan',
+          hasPermission: {id: 'customer_identifications', accessLevel: 'CHANGE'}
+        }
       }
     ]
   }

@@ -23,29 +23,38 @@
 
 <fims-layout-card-over title="{{ 'Identification card' | translate }}">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+    <a md-icon-button title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
+      <md-icon>mode_edit</md-icon>
+    </a>
     <button md-icon-button (click)="deleteIdentificationCard()" title="{{'Delete this identification card' | translate}}" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
+  <div class="md-content inset" flex>
     <md-list>
       <md-list-item>
         <h3 md-line translate>Number</h3>
-        <p md-line>{{identificationCard.number}}</p>
+        <p md-line>{{identificationCard?.number}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Type</h3>
-        <p md-line>{{identificationCard.type}}</p>
+        <p md-line>{{identificationCard?.type}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Issuer</h3>
-        <p md-line>{{identificationCard.issuer}}</p>
+        <p md-line>{{identificationCard?.issuer}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Expiration date</h3>
-        <p md-line>{{identificationCard.expirationDate.year}}-{{identificationCard.expirationDate.month}}-{{identificationCard.expirationDate.day}}</p>
+        <p md-line>{{identificationCard?.expirationDate?.year}}-{{identificationCard?.expirationDate?.month}}-{{identificationCard?.expirationDate?.day}}</p>
       </md-list-item>
     </md-list>
+    <fims-identification-card-scan-list
+      [scans]="scans$ | async"
+      (onView)="viewScan($event)"
+      (onUpload)="uploadScan($event)"
+      (onDelete)="deleteScan($event)">
+    </fims-identification-card-scan-list>
   </div>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
-  <md-icon>mode_edit</md-icon>
+<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add identification card scan' | translate}}" [routerLink]="['addScan']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
+  <md-icon>add_a_photo</md-icon>
 </a>

@@ -46,9 +46,6 @@
       </div>
     </form>
   </td-step>
-  <td-step #scansStep label="{{'Scans' | translate}}" [state]="scansFormState">
-    <fims-identity-card-scans-form #scansForm></fims-identity-card-scans-form>
-  </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
       <fims-form-final-action

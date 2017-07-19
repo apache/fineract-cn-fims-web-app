@@ -26,6 +26,7 @@ import {Command} from './domain/command.model';
 import {TaskDefinition} from './domain/task-definition.model';
 import {ImageService} from '../image/image.service';
 import {IdentificationCard} from './domain/identification-card.model';
+import {IdentificationCardScan} from './domain/identification-card-scan.model';
 
 @Injectable()
 export class CustomerService {
@@ -33,9 +34,9 @@ export class CustomerService {
   constructor(@Inject('customerBaseUrl') private baseUrl: string, private http: HttpClient, private imageService: ImageService) {}
 
   fetchCustomers(fetchRequest: FetchRequest): Observable<CustomerPage> {
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       search: params
     };
 
@@ -116,5 +117,32 @@ export class CustomerService {
 
   deleteIdentificationCard(customerId: string, number: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}/customers/${customerId}/identifications/${number}`)
+  }
+
+  fetchIdentificationCardScans(customerId: string, number: string): Observable<IdentificationCardScan[]> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans`)
+  }
+
+  getIdentificationCardScanImage(customerId: string, number: string, scanId: string): Observable<Blob> {
+    return this.imageService.getImage(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans/${scanId}/image`);
+  }
+
+  uploadIdentificationCardScan(customerId: string, number: string, scan: IdentificationCardScan, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+
+    const params = new URLSearchParams();
+    params.append('scanIdentifier', scan.identifier);
+    params.append('description', scan.description);
+
+    const requestOptions: RequestOptionsArgs = {
+      search: params
+    };
+
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans`, formData, requestOptions);
+  }
+
+  deleteIdentificationCardScan(customerId: string, number: string, scanId: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans/${scanId}`);
   }
 }

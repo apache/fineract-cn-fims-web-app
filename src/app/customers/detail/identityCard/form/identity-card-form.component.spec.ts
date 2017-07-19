@@ -27,7 +27,6 @@ import {Component, DebugElement} from '@angular/core';
 import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {IdentityCardScansFormComponent} from './scans/scans.component';
 
 describe('Test identity card form component', () => {
 
@@ -41,8 +40,7 @@ describe('Test identity card form component', () => {
         TestComponent,
         IdInputComponent,
         FormFinalActionComponent,
-        IdentityCardFormComponent,
-        IdentityCardScansFormComponent
+        IdentityCardFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),

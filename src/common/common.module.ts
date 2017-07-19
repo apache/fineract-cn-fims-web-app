@@ -53,6 +53,7 @@ import {
 import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-auto-complete.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import {NumberInputComponent} from './number-input/number-input.component';
+import {ImageComponent} from './image/image.component';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import {NumberInputComponent} from './number-input/number-input.component';
     FormContinueActionComponent,
     AddressFormComponent,
     PortraitComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    ImageComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -120,7 +122,11 @@ import {NumberInputComponent} from './number-input/number-input.component';
     FormContinueActionComponent,
     AddressFormComponent,
     PortraitComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    ImageComponent
+  ],
+  entryComponents: [
+    ImageComponent
   ]
 })
 export class FimsSharedModule{}
