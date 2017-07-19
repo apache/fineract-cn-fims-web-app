@@ -15,7 +15,7 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Upload identification card scan' | translate}}"
+  <td-step #detailsStep label="{{'Upload new identification card scan' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form">
       <div layout="row">
@@ -23,7 +23,7 @@
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
-          <input mdInput placeholder="Description" formControlName="description"/>
+          <input mdInput placeholder="{{'Description' | translate }}" formControlName="description"/>
           <md-error *ngIf="form.get('description').hasError('required')" translate>
             Required
           </md-error>
@@ -37,7 +37,7 @@
                             [disabled]="true"
                             flex layout-margin>
           <input mdInput
-                 placeholder="select file"
+                 placeholder="{{'Selected file' | translate }}"
                  [value]="form.get('file').value ? form.get('file').value.name : ''"
                  [disabled]="true"
                  readonly/>
