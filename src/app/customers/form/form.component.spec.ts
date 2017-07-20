@@ -168,7 +168,7 @@ describe('Test customer form', () => {
       expect(customerTemplate.dateOfBirth.month).toEqual(customer.dateOfBirth.month);
       expect(customerTemplate.dateOfBirth.year).toEqual(customer.dateOfBirth.year);
 
-      expect(customer.contactDetails.length).toEqual(0);
+      expect(customer.contactDetails.length).toEqual(1);
     });
 
     testComponent.triggerSave();
