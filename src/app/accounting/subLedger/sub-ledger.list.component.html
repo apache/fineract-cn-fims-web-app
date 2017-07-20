@@ -34,7 +34,7 @@
     <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
     <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
+  <div class="md-content inset" flex>
     <div layout="row">
       <md-list>
         <md-list-item>

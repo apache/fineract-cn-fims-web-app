@@ -32,74 +32,66 @@
             *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE'}" translate>GO TO TASKS
     </button>
   </td-message>
-  <div class="md-content inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <fims-portrait (onClick)="changePortrait()" [tooltip]="'Change portrait'" [blob]="portrait"></fims-portrait>
-            <md-nav-list>
-              <h3 md-subheader translate>Financial products</h3>
-              <a md-list-item [routerLink]="['loans']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'READ'}">
-                <md-icon md-list-avatar>credit_card</md-icon>
-                <h3 md-line translate>Loan accounts</h3>
-                <p md-line translate>Manage loan accounts</p>
-              </a>
-              <a md-list-item [routerLink]="['deposits']" *hasPermission="{ id: 'deposit_instances', accessLevel: 'READ'}">
-                <md-icon md-list-avatar>attach_money</md-icon>
-                <h3 md-line translate>Deposit accounts</h3>
-                <p md-line translate>Manage deposit accounts</p>
-              </a>
-              <md-divider></md-divider>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['identifications']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'READ'}">
-                <md-icon md-list-avatar>perm_identity</md-icon>
-                <h3 md-line translate>Identification cards</h3>
-                <p md-line translate>View identification cards</p>
-              </a>
-              <a md-list-item [routerLink]="['tasks']">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line translate>Tasks</h3>
-                <p md-line translate>Change the status of the customer</p>
-              </a>
-              <a md-list-item [routerLink]="['activities']">
-                <md-icon md-list-avatar>event</md-icon>
-                <h3 md-line translate>Activities</h3>
-                <p md-line translate>Recent activities</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <md-list>
-              <h3 md-subheader translate>Current status</h3>
-              <fims-state-display [state]="customer.currentState"></fims-state-display>
-              <h3 md-subheader translate>Address</h3>
-              <md-list-item>
-                <md-icon md-list-avatar>location_on</md-icon>
-                <h3 md-line>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
-                  {{customer.address?.country}}</h3>
-              </md-list-item>
-              <h3 md-subheader translate>Contact information</h3>
-              <md-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
-                <md-icon *ngSwitchCase="'EMAIL'" md-list-avatar>email</md-icon>
-                <md-icon *ngSwitchCase="'PHONE'" md-list-avatar>phone</md-icon>
-                <md-icon *ngSwitchCase="'MOBILE'" md-list-avatar>smartphone</md-icon>
-                <h3 md-line>{{detail.value}}</h3>
-              </md-list-item>
-              <md-list-item *ngIf="!customer.contactDetails?.length">
-                <h3 md-line translate>No contact details available</h3>
-              </md-list-item>
-              <h3 md-subheader translate>Birthday</h3>
-              <md-list-item>
-                <md-icon md-list-avatar>cake</md-icon>
-                <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
-              </md-list-item>
-            </md-list>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <fims-two-column-layout>
+    <ng-container left>
+      <fims-portrait (onClick)="changePortrait()" [tooltip]="'Change portrait'" [blob]="portrait"></fims-portrait>
+      <md-nav-list>
+        <h3 md-subheader translate>Financial products</h3>
+        <a md-list-item [routerLink]="['loans']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'READ'}">
+          <md-icon md-list-avatar>credit_card</md-icon>
+          <h3 md-line translate>Loan accounts</h3>
+          <p md-line translate>Manage loan accounts</p>
+        </a>
+        <a md-list-item [routerLink]="['deposits']" *hasPermission="{ id: 'deposit_instances', accessLevel: 'READ'}">
+          <md-icon md-list-avatar>attach_money</md-icon>
+          <h3 md-line translate>Deposit accounts</h3>
+          <p md-line translate>Manage deposit accounts</p>
+        </a>
+        <md-divider></md-divider>
+        <h3 md-subheader translate>Management</h3>
+        <a md-list-item [routerLink]="['identifications']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'READ'}">
+          <md-icon md-list-avatar>perm_identity</md-icon>
+          <h3 md-line translate>Identification cards</h3>
+          <p md-line translate>View identification cards</p>
+        </a>
+        <a md-list-item [routerLink]="['tasks']">
+          <md-icon md-list-avatar>playlist_add_check</md-icon>
+          <h3 md-line translate>Tasks</h3>
+          <p md-line translate>Change the status of the customer</p>
+        </a>
+        <a md-list-item [routerLink]="['activities']">
+          <md-icon md-list-avatar>event</md-icon>
+          <h3 md-line translate>Activities</h3>
+          <p md-line translate>Recent activities</p>
+        </a>
+      </md-nav-list>
+    </ng-container>
+    <md-list right>
+      <h3 md-subheader translate>Current status</h3>
+      <fims-state-display [state]="customer.currentState"></fims-state-display>
+      <h3 md-subheader translate>Address</h3>
+      <md-list-item>
+        <md-icon md-list-avatar>location_on</md-icon>
+        <h3 md-line>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
+          {{customer.address?.country}}</h3>
+      </md-list-item>
+      <h3 md-subheader translate>Contact information</h3>
+      <md-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
+        <md-icon *ngSwitchCase="'EMAIL'" md-list-avatar>email</md-icon>
+        <md-icon *ngSwitchCase="'PHONE'" md-list-avatar>phone</md-icon>
+        <md-icon *ngSwitchCase="'MOBILE'" md-list-avatar>smartphone</md-icon>
+        <h3 md-line>{{detail.value}}</h3>
+      </md-list-item>
+      <md-list-item *ngIf="!customer.contactDetails?.length">
+        <h3 md-line translate>No contact details available</h3>
+      </md-list-item>
+      <h3 md-subheader translate>Birthday</h3>
+      <md-list-item>
+        <md-icon md-list-avatar>cake</md-icon>
+        <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
+      </md-list-item>
+    </md-list>
+  </fims-two-column-layout>
 </fims-layout-card-over>
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit customer' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE' }">
   <md-icon>mode_edit</md-icon>

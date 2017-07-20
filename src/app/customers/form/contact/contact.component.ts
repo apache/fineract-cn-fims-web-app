@@ -57,7 +57,7 @@ export class CustomerContactFormComponent extends FormComponent<ContactDetail[]>
   }
 
   get formData(): ContactDetail[] {
-    let contactDetails: ContactDetail[] = [];
+    const contactDetails: ContactDetail[] = [];
 
     this.pushIfNotPristine(contactDetails, this.form.get('email'), 'EMAIL');
     this.pushIfNotPristine(contactDetails, this.form.get('mobile'), 'MOBILE');
@@ -67,7 +67,7 @@ export class CustomerContactFormComponent extends FormComponent<ContactDetail[]>
   }
 
   private pushIfNotPristine(contactDetails: ContactDetail[], control: AbstractControl, type: ContactDetailType): void {
-    if (!control.pristine) {
+    if (!control.pristine && control.value && control.value.length > 0) {
       contactDetails.push({
         group: 'BUSINESS',
         type: type,

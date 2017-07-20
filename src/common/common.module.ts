@@ -54,6 +54,7 @@ import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-au
 import {TextMaskModule} from 'angular2-text-mask';
 import {NumberInputComponent} from './number-input/number-input.component';
 import {ImageComponent} from './image/image.component';
+import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.component';
 
 @NgModule({
   imports: [
@@ -80,6 +81,7 @@ import {ImageComponent} from './image/image.component';
   declarations: [
     LayoutCardOverComponent,
     LayoutCardOverComponentTags,
+    FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
     EmployeeSelectComponent,
@@ -104,6 +106,7 @@ import {ImageComponent} from './image/image.component';
   exports: [
     LayoutCardOverComponent,
     LayoutCardOverComponentTags,
+    FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
     EmployeeSelectComponent,

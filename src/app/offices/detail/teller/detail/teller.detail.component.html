@@ -32,58 +32,48 @@
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>CLOSE TELLER
     </a>
   </td-message>
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['balance']">
-                <md-icon md-list-avatar>account_balance</md-icon>
-                <h3 md-line translate>Teller balance</h3>
-                <p md-line translate>View current teller balance</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <md-list *ngIf="teller$ | async as teller">
-              <h3 md-subheader translate>Current status</h3>
-              <fims-state-display [state]="teller.state"></fims-state-display>
-              <md-list-item>
-                <h3 md-line translate>Number</h3>
-                <p md-line>{{teller.code}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Cash withdrawal limit</h3>
-                <p md-line>{{teller.cashdrawLimit}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Teller account</h3>
-                <p md-line>{{teller.tellerAccountIdentifier}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Vault account</h3>
-                <p md-line>{{teller.vaultAccountIdentifier}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Assigned employee</h3>
-                <p md-line>{{teller.assignedEmployee}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Created by</h3>
-                <p md-line>{{teller.createdBy}} - {{teller.createdOn | date:'medium'}}</p>
-              </md-list-item>
-              <md-list-item>
-                <h3 md-line translate>Last modified by</h3>
-                <p md-line>{{teller.lastModifiedBy}} - {{teller.lastModifiedOn | date:'medium'}}</p>
-              </md-list-item>
-            </md-list>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['balance']">
+        <md-icon md-list-avatar>account_balance</md-icon>
+        <h3 md-line translate>Teller balance</h3>
+        <p md-line translate>View current teller balance</p>
+      </a>
+    </md-nav-list>
+    <md-list *ngIf="teller$ | async as teller" right>
+      <h3 md-subheader translate>Current status</h3>
+      <fims-state-display [state]="teller.state"></fims-state-display>
+      <md-list-item>
+        <h3 md-line translate>Number</h3>
+        <p md-line>{{teller.code}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Cash withdrawal limit</h3>
+        <p md-line>{{teller.cashdrawLimit}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Teller account</h3>
+        <p md-line>{{teller.tellerAccountIdentifier}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Vault account</h3>
+        <p md-line>{{teller.vaultAccountIdentifier}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Assigned employee</h3>
+        <p md-line>{{teller.assignedEmployee}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Created by</h3>
+        <p md-line>{{teller.createdBy}} - {{teller.createdOn | date:'medium'}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Last modified by</h3>
+        <p md-line>{{teller.lastModifiedBy}} - {{teller.lastModifiedOn | date:'medium'}}</p>
+      </md-list-item>
+    </md-list>
+  </fims-two-column-layout>
 </fims-layout-card-over>
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit teller' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE' }">
   <md-icon>mode_edit</md-icon>
