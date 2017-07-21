@@ -10,6 +10,6 @@ This config assumes that all needed services are started.
 * Run `npm run build` from root folder
 * Copy all contents of /dist into your nginx root folder under /fims
 * Copy/Overwrite nginx.conf into /conf of your nginx root folder
-* Change proxy_pass configuration of each service to point to the right url
+* Change proxy_pass configuration of each service to point to the right url and port
 * Start nginx with `nginx`
 * Navigate with your browser to `http://localhost:8888`
