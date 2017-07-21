@@ -66,4 +66,17 @@ export class ProductTasksApiEffects {
         }))
         .catch((error) => of(new taskActions.UpdateTaskFailAction(error)))
     );
+
+  @Effect()
+  deleteTask$: Observable<Action> = this.actions$
+    .ofType(taskActions.DELETE)
+    .map((action: taskActions.DeleteTaskAction) => action.payload)
+    .mergeMap(payload =>
+      this.portfolioService.deleteTaskDefinition(payload.productId, payload.task.identifier)
+        .map(() => new taskActions.DeleteTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new taskActions.DeleteTaskFailAction(error)))
+    );
 }

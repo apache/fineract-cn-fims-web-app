@@ -21,7 +21,10 @@
   {{'Tasks' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over [title]="task.name" [subTitle]="task.description">
+<fims-layout-card-over [title]="task.name" [subTitle]="task.description" *ngIf="task$ | async as task">
+  <fims-layout-card-over-header-menu layout="row" layout-align="end center" *ngIf="product$ | async as product">
+    <button md-icon-button (click)="deleteTask(product, task)" title="{{'Delete this task' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE' }"><md-icon>delete</md-icon></button>
+  </fims-layout-card-over-header-menu>
   <div class="md-content inset" flex>
     <div layout="row">
       <md-list>
@@ -44,7 +47,6 @@
     </div>
   </div>
 </fims-layout-card-over>
-
 <a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit task' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}">
   <md-icon>edit_mode</md-icon>
 </a>

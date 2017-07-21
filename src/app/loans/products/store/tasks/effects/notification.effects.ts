@@ -28,10 +28,18 @@ export class ProductTasksNotificationEffects {
 
   @Effect({dispatch: false})
   createUpdateCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE)
+    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Task is going to be saved'
+      message: 'Task is going to be created'
+    }));
+
+  @Effect({dispatch: false})
+  deleteCustomerTaskSuccess$: Observable<Action> = this.actions$
+    .ofType(taskActions.DELETE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Task is going to be deleted'
     }));
 }
 

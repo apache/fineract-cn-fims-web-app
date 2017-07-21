@@ -61,6 +61,6 @@ export class ProductTaskExistsGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.hasTask(route.params['productId'], route.params['taskId']);
+    return this.hasTask(route.parent.params['productId'], route.params['taskId']);
   }
 }

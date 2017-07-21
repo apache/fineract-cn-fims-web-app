@@ -95,6 +95,10 @@ export class PortfolioService {
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinition.identifier}`, taskDefinition)
   }
 
+  deleteTaskDefinition(productIdentifier: string, taskDefinitionIdentifier: string): Observable<void>{
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinitionIdentifier}`)
+  }
+
   findAllChargeDefinitionsForProduct(identifier: string): Observable<ChargeDefinition[]>{
     return this.http.get(`${this.baseUrl}/products/${identifier}/charges/`)
   }

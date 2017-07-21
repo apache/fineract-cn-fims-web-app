@@ -17,35 +17,58 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
-import {SelectAction} from '../store/tasks/task.actions';
+import {DELETE, SelectAction} from '../store/tasks/task.actions';
 import {PortfolioStore} from '../store/index';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
+import {Observable} from 'rxjs/Observable';
+import {TdDialogService} from '@covalent/core';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './status.detail.component.html'
 })
-export class ProductStatusDetailComponent implements OnInit, OnDestroy{
+export class ProductStatusDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  private taskSubscription: Subscription;
+  task$: Observable<TaskDefinition>;
 
-  task: TaskDefinition;
+  product$: Observable<FimsProduct>;
 
-  constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore){}
+  constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore, private dialogService: TdDialogService){}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
     .map(params => new SelectAction(params['taskId']))
     .subscribe(this.portfolioStore);
 
-    this.taskSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProductTask)
-      .subscribe(task => this.task = task);
+    this.task$ = this.portfolioStore.select(fromPortfolio.getSelectedProductTask);
+    this.product$ = this.portfolioStore.select(fromPortfolio.getSelectedProduct);
   }
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.taskSubscription.unsubscribe();
+  }
+
+  confirmDeletion(): Observable<boolean>{
+    return this.dialogService.openConfirm({
+      message: 'Do you want to delete this task?',
+      title: 'Confirm deletion',
+      acceptButton: 'DELETE TASK',
+    }).afterClosed();
+  }
+
+  deleteTask(product: Product, task: TaskDefinition): void {
+    this.confirmDeletion()
+      .filter(accept => accept)
+      .subscribe(() => {
+        this.portfolioStore.dispatch({ type: DELETE, payload: {
+          productId: product.identifier,
+          task,
+          activatedRoute: this.route
+        } })
+      });
   }
 }
