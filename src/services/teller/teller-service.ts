@@ -73,9 +73,10 @@ export class TellerService {
     return this.http.post(`${this.baseUrl}/teller/${tellerCode}/transactions`, tellerTransaction);
   }
 
-  confirmTransaction(tellerCode: string, tellerTransactionIdentifier: string, command: string): Observable<void> {
+  confirmTransaction(tellerCode: string, tellerTransactionIdentifier: string, command: string, chargesIncluded?: boolean): Observable<void> {
     const params = new URLSearchParams();
     params.append('command', command);
+    params.append('charges', chargesIncluded ? 'included' : 'excluded');
 
     const requestOptions: RequestOptionsArgs = {
       params

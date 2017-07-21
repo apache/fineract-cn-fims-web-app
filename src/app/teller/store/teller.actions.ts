@@ -53,7 +53,8 @@ export interface LockDrawerPayload {
 export interface ConfirmTransactionPayload extends RoutePayload {
   tellerCode: string;
   tellerTransactionIdentifier: string;
-  command: string
+  command: string,
+  chargesIncluded: boolean;
 }
 
 export class UnlockDrawerAction implements Action {

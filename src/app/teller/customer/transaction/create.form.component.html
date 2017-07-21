@@ -26,7 +26,7 @@
     [cashdrawLimit]="teller.cashdrawLimit"
     [error]="error"
     (onCreateTransaction)="createTransaction($event)"
-    (onConfirmTransaction)="confirmTransaction()"
+    (onConfirmTransaction)="confirmTransaction($event)"
     (onCancelTransaction)="cancelTransaction()"
     (onCancel)="cancel()">
   </fims-teller-transaction-form>

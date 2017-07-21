@@ -28,13 +28,13 @@ import {TellerApiEffects} from './store/effects/service.effects';
 import {
   MdAutocompleteModule,
   MdButtonModule,
-  MdCardModule,
+  MdCardModule, MdCheckboxModule,
   MdIconModule,
   MdInputModule,
   MdListModule, MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {TellerRouteEffects} from './store/effects/route.effects';
 import {CovalentDataTableModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
@@ -53,6 +53,7 @@ import {TellerNotificationEffects} from './store/effects/notification.effects';
     TranslateModule,
     FimsSharedModule,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MdIconModule,
     MdButtonModule,
@@ -62,6 +63,7 @@ import {TellerNotificationEffects} from './store/effects/notification.effects';
     MdToolbarModule,
     MdAutocompleteModule,
     MdSelectModule,
+    MdCheckboxModule,
     CovalentStepsModule,
     CovalentSearchModule,
     CovalentDataTableModule,

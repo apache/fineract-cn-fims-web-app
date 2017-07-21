@@ -47,6 +47,8 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   private _transactionType: TransactionType;
 
+  chargesIncluded: boolean = true;
+
   enableTargetAccount: boolean;
 
   numberFormat: string = '1.2-2';
@@ -89,7 +91,7 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TellerTransactionFormData>();
 
-  @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<void>();
+  @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<boolean>();
 
   @Output('onCancelTransaction') onCancelTransaction = new EventEmitter<void>();
 
@@ -171,8 +173,8 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
     this.onCreateTransaction.emit(formData);
   }
 
-  confirmTransaction(): void {
-    this.onConfirmTransaction.emit();
+  confirmTransaction(chargesIncluded: boolean): void {
+    this.onConfirmTransaction.emit(chargesIncluded);
   }
 
   cancelTransaction(): void {

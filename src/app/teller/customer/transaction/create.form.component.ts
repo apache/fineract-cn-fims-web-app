@@ -94,13 +94,14 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
       .do(() => this.transactionCreated = true);
   }
 
-  confirmTransaction(): void {
+  confirmTransaction(chargesIncluded: boolean): void {
     this.store.dispatch({
       type: CONFIRM_TRANSACTION,
       payload: {
         tellerCode: this.teller.code,
         tellerTransactionIdentifier: this.tellerTransactionIdentifier,
         command: 'CONFIRM',
+        chargesIncluded,
         activatedRoute: this.route
       }
     });

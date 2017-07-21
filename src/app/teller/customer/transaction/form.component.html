@@ -61,15 +61,17 @@
         <div flex-gt-xs="50">
           <h3 translate>Costs</h3>
           <table td-data-table>
-            <th td-data-table-column>
-              <span translate>Name</span>
-            </th>
-            <th td-data-table-column>
-              <span translate>Description</span>
-            </th>
-            <th td-data-table-column>
-              <span translate>Amount</span>
-            </th>
+            <tr>
+              <th td-data-table-column>
+                <span translate>Name</span>
+              </th>
+              <th td-data-table-column>
+                <span translate>Description</span>
+              </th>
+              <th td-data-table-column>
+                <span translate>Amount</span>
+              </th>
+            </tr>
             <tr td-data-table-row>
               <td td-data-table-cell translate>Transaction amount</td>
               <td td-data-table-cell></td>
@@ -92,13 +94,17 @@
               <td td-data-table-cell>{{transactionCosts?.totalAmount}}</td>
             </tr>
           </table>
+          <div layout="row" layout-margin>
+            <md-checkbox [(ngModel)]="chargesIncluded" translate>Charges are payed in cash</md-checkbox>
+          </div>
         </div>
       </div>
     </div>
+
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction()">{{'CONFIRM TRANSACTION' | translate}}</button>
+      <button md-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
       <span flex></span>
       <button md-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
     </ng-template>
