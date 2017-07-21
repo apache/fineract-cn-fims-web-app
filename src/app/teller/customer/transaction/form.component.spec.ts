@@ -17,13 +17,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
-import {MdButtonModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {MdButtonModule, MdCheckboxModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {Component, DebugElement, ViewChild} from '@angular/core';
 import {TellerTransactionFormComponent} from './form.component';
 import {By} from '@angular/platform-browser';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {TranslateModule} from '@ngx-translate/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {setValueByFormControlName} from '../../../../common/testing/input-fields';
@@ -46,11 +46,13 @@ describe('Test transaction form', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         FimsSharedModule,
+        FormsModule,
         ReactiveFormsModule,
         MdInputModule,
         MdButtonModule,
         MdSelectModule,
         MdOptionModule,
+        MdCheckboxModule,
         CovalentStepsModule,
         CovalentDataTableModule
       ],
