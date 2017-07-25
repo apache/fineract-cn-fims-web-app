@@ -48,6 +48,8 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
         caseState = 'CLOSED';
       }else if(commandAction === 'CLOSE') {
         caseState = 'CLOSED';
+      }else if(commandAction === 'DISBURSE') {
+        caseState = 'ACTIVE';
       }
 
       caseInstance.currentState = caseState;

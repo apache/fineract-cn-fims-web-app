@@ -1,5 +1,3 @@
-import {AccountAssignment} from './account-assignment.model';
-import {CostComponent} from './individuallending/cost-component.model';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -15,11 +13,13 @@ import {CostComponent} from './individuallending/cost-component.model';
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {CaseState} from '../../../../../services/portfolio/domain/case-state.model';
+import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {FimsTaskInstance} from './fims-task-instance.model';
 
-export interface CaseCommand {
-  oneTimeAccountAssignments?: AccountAssignment[];
-  costComponents?: CostComponent[];
-  note?: string;
-  createdOn?: string;
-  createdBy?: string;
+export interface StatusCommand {
+  action: WorkflowAction;
+  preStates: CaseState[],
+  tasks: FimsTaskInstance[],
+  note?: string
 }

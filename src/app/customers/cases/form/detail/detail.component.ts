@@ -25,6 +25,7 @@ import {monthOptions} from '../../../../../common/domain/months.model';
 import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
 import {Product} from '../../../../../services/portfolio/domain/product.model';
 import {Subscription} from 'rxjs/Subscription';
+import {ProductInstance} from '../../../../../services/depositAccount/domain/instance/product-instance.model';
 
 export interface DetailFormData {
   identifier: string,
@@ -36,7 +37,8 @@ export interface DetailFormData {
   paymentPeriod: number,
   paymentAlignmentDay: number,
   paymentAlignmentWeek: number,
-  paymentAlignmentMonth: number
+  paymentAlignmentMonth: number,
+  depositAccountIdentifier: string
 }
 
 @Component({
@@ -52,6 +54,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   @Input() editMode: boolean;
 
   @Input() products: Product[];
+
+  @Input() productInstances: ProductInstance[];
 
   @Input() set formData(formData: DetailFormData) {
     this._formData = formData;
@@ -71,6 +75,26 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
   constructor(private formBuilder: FormBuilder) {
     super();
+
+    this.form = this.formBuilder.group({
+      identifier: ['', [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      productIdentifier: ['', [Validators.required]],
+      principalAmount: [''],
+      term: [''],
+      termTemporalUnit: ['', Validators.required],
+      paymentTemporalUnit: ['', [ Validators.required, FimsValidators.minValue(1) ]],
+      paymentPeriod: ['', [ Validators.required, FimsValidators.minValue(1)]],
+      alignmentDay: [''],
+      alignmentWeek: [''],
+      alignmentMonth: [''],
+      alignmentDaySetting: [''],
+      depositAccountIdentifier: ['', Validators.required]
+    });
+
+    this.productIdentifierChangeSubscription = this.form.get('productIdentifier').valueChanges
+      .filter(() => !!this.products)
+      .map(identifier => this.products.find(product => product.identifier === identifier))
+      .subscribe(product => this.toggleProduct(product));
   }
 
   ngOnInit(): void {
@@ -79,24 +103,6 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         type: i, label: `${i+1}.`
       })
     }
-
-    this.form = this.formBuilder.group({
-      identifier: [this._formData.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
-      productIdentifier: [this._formData.productIdentifier, [Validators.required]],
-      principalAmount: [this._formData.principalAmount],
-      term: [this._formData.term],
-      termTemporalUnit: [this._formData.termTemporalUnit, Validators.required],
-      paymentTemporalUnit: [this._formData.paymentTemporalUnit, [ Validators.required, FimsValidators.minValue(1) ]],
-      paymentPeriod: [this._formData.paymentPeriod, [ Validators.required, FimsValidators.minValue(1)]],
-      alignmentDay: [this._formData.paymentAlignmentDay],
-      alignmentWeek: [this._formData.paymentAlignmentWeek],
-      alignmentMonth: [this._formData.paymentAlignmentMonth],
-      alignmentDaySetting: [this._formData.paymentAlignmentWeek ? 'relative' : 'fixed'],
-    });
-
-    this.productIdentifierChangeSubscription = this.form.get('productIdentifier').valueChanges
-      .map(identifier => this.products.find(product => product.identifier === identifier))
-      .subscribe(product => this.toggleProduct(product));
   }
 
   ngOnDestroy(): void {
@@ -104,6 +110,23 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if(changes.formData) {
+      this.form.reset({
+        identifier: this._formData.identifier,
+        productIdentifier: this._formData.productIdentifier,
+        principalAmount: this._formData.principalAmount,
+        term: this._formData.term,
+        termTemporalUnit: this._formData.termTemporalUnit,
+        paymentTemporalUnit: this._formData.paymentTemporalUnit,
+        paymentPeriod: this._formData.paymentPeriod,
+        alignmentDay: this._formData.paymentAlignmentDay,
+        alignmentWeek: this._formData.paymentAlignmentWeek,
+        alignmentMonth: this._formData.paymentAlignmentMonth,
+        alignmentDaySetting: this._formData.paymentAlignmentWeek ? 'relative' : 'fixed',
+        depositAccountIdentifier: this._formData.depositAccountIdentifier
+      });
+    }
+
     if(changes.products && changes.products.currentValue && this._formData.productIdentifier) {
       const product = this.products.find(product => product.identifier === this._formData.productIdentifier);
       this.toggleProduct(product);
@@ -148,7 +171,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       paymentPeriod: this.form.get('paymentPeriod').value,
       paymentAlignmentDay: this.form.get('alignmentDay').value,
       paymentAlignmentWeek: isRelative ? this.form.get('alignmentWeek').value : undefined,
-      paymentAlignmentMonth: isRelative ? this.form.get('alignmentMonth').value : undefined
+      paymentAlignmentMonth: isRelative ? this.form.get('alignmentMonth').value : undefined,
+      depositAccountIdentifier: this.form.get('depositAccountIdentifier').value
     };
     return formData;
   }

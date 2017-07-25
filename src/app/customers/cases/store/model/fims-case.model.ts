@@ -26,7 +26,7 @@ export interface FimsCase {
   identifier: string;
   productIdentifier: string;
   parameters: CaseParameters;
-  accountAssignments: AccountAssignment[];
+  depositAccountIdentifier: string;
   currentState: CaseState;
   createdOn?: string;
   createdBy?: string;

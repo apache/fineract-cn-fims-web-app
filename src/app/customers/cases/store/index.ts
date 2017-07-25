@@ -90,7 +90,7 @@ export const getSelectedCase = createSelector(getCasesState, getResourceSelected
 
 export const getCaseTasksState = (state: State) => state.caseTasks;
 
-export const getCaseTasksEntities = createSelector(getCaseTasksState, fromCaseTasks.getEntities);
+export const getCaseCommands = createSelector(getCaseTasksState, fromCaseTasks.getCommands);
 
 
 export const getCasePaymentsSearchState = (state: State) => state.casePayments;

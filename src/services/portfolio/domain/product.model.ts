@@ -34,4 +34,8 @@ export interface Product {
   currencyCode: string;
   minorCurrencyUnitDigits: number;
   enabled?: boolean;
+  createdOn?: string;
+  createdBy?: string;
+  lastModifiedOn?: string;
+  lastModifiedBy?: string;
 }

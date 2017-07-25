@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export function todayAsISOString(): string{
+export function todayAsISOString(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
@@ -22,8 +22,12 @@ export function todayAsISOString(): string{
  * Converts '2017-01-20' to full ISO string e.g. '2017-01-20T00:00:00.000Z'
  * @param dateString
  */
-export function toLongISOString(dateString: string): string{
-  let millis = Date.parse(dateString);
-  let date: Date = new Date(millis);
+export function toLongISOString(dateString: string): string {
+  const millis = Date.parse(dateString);
+  const date: Date = new Date(millis);
   return date.toISOString();
+}
+
+export function toShortISOString(dateString: string): string {
+  return `${toLongISOString(dateString).slice(0, 10)}Z`;
 }

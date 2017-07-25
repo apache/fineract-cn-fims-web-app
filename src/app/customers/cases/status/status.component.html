@@ -21,30 +21,22 @@
   {{'Customer loan' | translate}}
 </md-toolbar>
 
-<fims-layout-card-over title="{{'Tasks' | translate}}">
+<fims-layout-card-over title="{{'Tasks' | translate}}" *ngIf="caseInstance$ | async as caseInstance">
   <div layout="row" layout-align="start start" layout-margin>
     <div layout="column" flex="100">
-      <div layout="row" layout-align="start start" *ngFor="let command of statusCommands">
-        <ng-container *ngIf="command.preStates.indexOf(caseInstance.currentState) > -1">
-          <div layout="column" flex="100">
-            <md-list *ngIf="command.tasks?.length > 0">
-              <h3 md-subheader translate [translateParams]="{ value: command.action }">Please verify the following tasks before you can action this customer loan</h3>
-              <md-list-item *ngFor="let task of command.tasks">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line>{{task.name}}</h3>
-                <h4 md-line>{{task.description}}</h4>
-                <h4 md-line><span translate>Mandatory:</span>{{task.mandatory}}</h4>
-                <md-checkbox labelPosition="after" title="{{'Execute task' | translate}}" (click)="executeTask(task.identifier)"></md-checkbox>
-              </md-list-item>
-            </md-list>
-            <div layout="row" layout-align="start center">
-              <md-input-container layout-margin flex>
-                <textarea mdInput placeholder="{{'Enter comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
-              </md-input-container>
-              <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
-            </div>
-          </div>
-        </ng-container>
+      <div layout="row" layout-align="start start" *ngFor="let command of statusCommands$ | async">
+        <div layout="column" flex="100" *ngIf="command.preStates.indexOf(caseInstance.currentState) > -1">
+          <fims-case-command
+            [caseCreator]="caseInstance.createdBy"
+            [currentUser]="currentUser$ | async"
+            [productId]="productId$ | async"
+            [caseId]="caseInstance.identifier"
+            [statusCommand]="command"
+            (onExecuteTask)="executeTask($event)"
+            (onExecuteCommand)="executeCommand($event)">
+          </fims-case-command>
+        </div>
+        <md-divider></md-divider>
       </div>
     </div>
   </div>

@@ -29,6 +29,8 @@ import {
   UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
+import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 
 export const SEARCH = type('[Case] Search');
 export const SEARCH_COMPLETE = type('[Case] Search Complete');
@@ -55,6 +57,10 @@ export const EXECUTE_COMMAND = type('[Case] Execute Command');
 export const EXECUTE_COMMAND_SUCCESS = type('[Case] Execute Command Success');
 export const EXECUTE_COMMAND_FAIL = type('[Case] Execute Command Fail');
 
+export const LOAD_ALL_COST_COMPONENTS = type('[Case] Load All Cost Components');
+export const LOAD_ALL_COST_COMPONENTS_SUCCESS = type('[Case] Load All Cost Components Success');
+export const LOAD_ALL_COST_COMPONENTS_FAIL = type('[Case] Load All Cost Components Fail');
+
 export interface SearchCasePayload{
   customerId: string;
   fetchRequest: FetchRequest;
@@ -68,8 +74,14 @@ export interface CaseRoutePayload extends RoutePayload{
 export interface ExecuteCommandPayload extends RoutePayload {
   productId: string;
   caseId: string;
-  action: string;
+  action: WorkflowAction;
   command: CaseCommand;
+}
+
+export interface LoadAllCostComponentsPayload {
+  productId: string;
+  caseId: string;
+  action: WorkflowAction;
 }
 
 export class SearchAction implements Action {
@@ -179,7 +191,6 @@ export class ExecuteCommandFailAction implements Action {
 
   constructor(public payload: Error) { }
 }
-
 
 export type Actions
   = SearchAction

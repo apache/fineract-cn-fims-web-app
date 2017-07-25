@@ -28,6 +28,8 @@ import {FimsCase} from '../store/model/fims-case.model';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {Observable} from 'rxjs/Observable';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -44,11 +46,13 @@ export class CaseEditComponent implements OnInit, OnDestroy{
 
   products$: Observable<Product[]>;
 
+  productsInstances$: Observable<ProductInstance[]>;
+
   customer: Customer;
 
   caseInstance: FimsCase;
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -62,11 +66,16 @@ export class CaseEditComponent implements OnInit, OnDestroy{
     this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
       .subscribe(caseInstance => this.caseInstance = caseInstance);
 
-    this.customerSubscription = this.casesStore.select(fromCustomers.getSelectedCustomer)
+    const selectedCustomer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
+
+    this.customerSubscription = selectedCustomer$
       .subscribe(customer => this.customer = customer);
 
     this.products$ = this.portfolioService.findAllProducts(false)
       .map(productPage => productPage.elements);
+
+    this.productsInstances$ = selectedCustomer$
+      .flatMap(customer => this.depositService.fetchProductInstances(customer.identifier));
   }
 
   ngOnDestroy(): void {

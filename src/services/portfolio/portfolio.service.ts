@@ -31,6 +31,7 @@ import {CasePage} from './domain/case-page.model';
 import {AccountAssignment} from './domain/account-assignment.model';
 import {WorkflowAction} from './domain/individuallending/workflow-action.model';
 import {ProductPage} from './domain/product-page.model';
+import {CostComponent} from './domain/individuallending/cost-component.model';
 
 @Injectable()
 export class PortfolioService {
@@ -150,20 +151,33 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`)
   }
 
+  getCostComponentsForAction(productIdentifier: string, caseIdentifier: string, action: string): Observable<CostComponent[]> {
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/${action}/costcomponents`)
+  }
+
   executeCaseCommand(productIdentifier: string, caseIdentifier: string, action: string, command: CaseCommand): Observable<void>{
     return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/${action}`, command)
   }
 
-  findAllTasksForCase(productIdentifier: string, caseIdentifier: string, includeExcluded?: boolean): Observable<TaskInstance[]>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/`)
+  findAllTasksForCase(productIdentifier: string, caseIdentifier: string, includeExcluded?: boolean): Observable<TaskInstance[]> {
+    const params: URLSearchParams = new URLSearchParams();
+
+    params.append("includeExecuted", String(includeExcluded));
+
+    const requestOptions: RequestOptionsArgs = {
+      search: params
+    };
+
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/`, requestOptions)
   }
 
-  getTaskForCase(productIdentifier: string, caseIdentifier: string, taskIdentifier: string): Observable<TaskInstance>{
+
+  getTaskForCase(productIdentifier: string, caseIdentifier: string, taskIdentifier: string): Observable<TaskInstance> {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`)
   }
 
-  taskForCaseExecuted(productIdentifier: string, caseIdentifier: string, taskIdentifier: string): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`, {})
+  taskForCaseExecuted(productIdentifier: string, caseIdentifier: string, taskIdentifier: string, executed: boolean): Observable<void>{
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}/executed`, executed)
   }
 
   findAllCases(fetchRequest?: FetchRequest): Observable<Case[]> {

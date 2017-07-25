@@ -21,7 +21,7 @@
  * A credit is an accounting entry that either increases a liability or equity account, or decreases an asset or expense account.
  */
 
-export class AccountDesignators{
+export class AccountDesignators {
 
   public static readonly CUSTOMER_LOAN: string = "customer-loan";
 

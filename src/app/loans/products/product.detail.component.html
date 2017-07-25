@@ -63,6 +63,14 @@
         <h3 md-line translate>Currency</h3>
         <p md-line>{{product.currencyCode}}</p>
       </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Created by</h3>
+        <p md-line>{{product.createdBy}} - {{product.createdOn | date:'medium'}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Last modified by</h3>
+        <p md-line>{{product.lastModifiedBy}} - {{product.lastModifiedOn | date:'medium'}}</p>
+      </md-list-item>
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>

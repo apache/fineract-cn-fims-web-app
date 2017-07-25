@@ -15,66 +15,73 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
-import {CaseState} from '../../../../services/portfolio/domain/case-state.model';
 import {Subscription} from 'rxjs/Subscription';
-import {FimsCase} from '../store/model/fims-case.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
-import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
-import {EXECUTE_COMMAND} from '../store/case.actions';
-
-interface StatusCommand {
-  action: WorkflowAction;
-  comment?: string;
-  preStates: CaseState[]
-}
+import * as fromRoot from '../../../reducers';
+import {Observable} from 'rxjs/Observable';
+import {EXECUTE_TASK, LoadAllAction} from '../store/tasks/task.actions';
+import {ExecuteTaskEvent} from './tasks.component';
+import {StatusCommand} from '../store/model/fims-command.model';
+import {FimsCase} from '../store/model/fims-case.model';
+import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 
 @Component({
   templateUrl: './status.component.html'
 })
 export class CaseStatusComponent implements OnInit, OnDestroy {
 
-  private caseSubscription: Subscription;
+  private actionSubscription: Subscription;
 
-  private productId: string;
+  currentUser$: Observable<string>;
 
-  caseInstance: FimsCase;
+  productId$: Observable<string>;
 
-  statusCommands: StatusCommand[] = [
-    { action: 'OPEN', preStates: ['CREATED']},
-    { action: 'APPROVE', preStates: ['PENDING']},
-    { action: 'DENY', preStates: ['PENDING']},
-    { action: 'CLOSE', preStates: ['APPROVED', 'ACTIVE']}
-  ];
+  caseInstance$: Observable<FimsCase>;
 
-  constructor(private route: ActivatedRoute, private casesStore: CasesStore) {}
+  statusCommands$: Observable<StatusCommand[]>;
+
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
-      .subscribe(caseInstance => this.caseInstance = caseInstance);
+    this.productId$ = this.route.params
+      .map(params => params['productId']);
 
-    this.route.params.subscribe(params => this.productId = params['productId']);
+    this.currentUser$ = this.casesStore.select(fromRoot.getUsername);
+
+    this.caseInstance$ = this.casesStore.select(fromCases.getSelectedCase);
+
+    this.statusCommands$ = this.casesStore.select(fromCases.getCaseCommands);
+
+    this.actionSubscription = Observable.combineLatest(
+      this.productId$,
+      this.caseInstance$,
+      (productId, caseInstance) => ({
+        productId,
+        caseId: caseInstance.identifier
+      })
+    ).map(({ productId, caseId }) => new LoadAllAction({
+      productId,
+      caseId
+    })).subscribe(this.casesStore);
   }
 
   ngOnDestroy(): void {
-    this.caseSubscription.unsubscribe();
+    this.actionSubscription.unsubscribe();
   }
 
-  executeCommand(statusCommand: StatusCommand): void {
-    const command: CaseCommand = {
-      oneTimeAccountAssignments: [],
-      comment: statusCommand.comment
-    };
+  executeCommand(action: WorkflowAction): void {
+    this.router.navigate([action, 'confirmation'], {
+      relativeTo: this.route
+    });
+  }
 
-    this.casesStore.dispatch({ type: EXECUTE_COMMAND, payload: {
-      productId: this.productId,
-      caseId: this.caseInstance.identifier,
-      action: statusCommand.action,
-      command: command,
-      activatedRoute: this.route
-    } });
+  executeTask(event: ExecuteTaskEvent): void {
+    this.casesStore.dispatch({
+      type: EXECUTE_TASK,
+      payload: event
+    });
   }
 
 }

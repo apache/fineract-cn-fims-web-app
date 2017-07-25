@@ -103,4 +103,11 @@
       {{alignment.label | translate}}
     </md-option>
   </md-select>
+  <div layout="row" class="pad-top">
+    <md-select formControlName="depositAccountIdentifier" layout-margin placeholder="{{ 'Deposit account used for charges and disbursal' | translate }}">
+      <md-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
+        {{instance.accountIdentifier}}({{instance.productIdentifier}})
+      </md-option>
+    </md-select>
+  </div>
 </form>

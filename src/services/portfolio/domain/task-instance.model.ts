@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import {TaskDefinition} from './task-definition.model';
-
 export interface TaskInstance {
-  taskDefinition: TaskDefinition;
+  // task definition identifier
+  taskIdentifier: string;
   comment: string;
   executedOn: string;
   executedBy: string;

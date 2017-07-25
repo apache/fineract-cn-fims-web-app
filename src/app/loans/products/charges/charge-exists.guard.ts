@@ -61,6 +61,6 @@ export class ProductChargeExistsGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.hasCharge(route.params['productId'], route.params['chargeId']);
+    return this.hasCharge(route.parent.params['productId'], route.params['chargeId']);
   }
 }

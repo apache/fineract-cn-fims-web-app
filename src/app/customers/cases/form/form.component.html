@@ -16,7 +16,7 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Loan details' | translate}}" [state]="detailFormState">
-    <fims-case-detail-form #detailForm [formData]="detailFormData" [products]="products"></fims-case-detail-form>
+    <fims-case-detail-form #detailForm [formData]="detailFormData" [products]="products" [productInstances]="productInstances"></fims-case-detail-form>
   </td-step>
   <td-step #debtToIncomeStep label="{{'Debt to income ratio' | translate}}" [state]="debtToIncomeFormState">
     <fims-case-debt-to-income-form #debtToIncomeForm [formData]="debtToIncomeFormData"></fims-case-debt-to-income-form>

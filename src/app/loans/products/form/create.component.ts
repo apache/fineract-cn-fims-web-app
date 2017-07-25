@@ -48,8 +48,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
       maximum: 1
     },
     balanceRange: {
-      minimum: 1.00,
-      maximum: 2.00
+      minimum: 1000.00,
+      maximum: 2000.00
     },
     interestRange: {
       minimum: 1.00,

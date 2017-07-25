@@ -13,14 +13,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+<md-toolbar color="primary" class="md-whiteframe-z1"></md-toolbar>
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-    {{'Loan' | translate}}
-  </a>
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Manage tasks' | translate}}">
-  <fims-data-table (onFetch)="fetchTasks($event)" [columns]="columns" [data]="tasksData$ | async"></fims-data-table>
+<fims-layout-card-over title="{{ 'Confirm action' | translate }}">
+  <fims-case-command-confirmation-form
+    [fimsCase]="fimsCase$ | async"
+    [costComponents]="costComponents$ | async"
+    [action]="(params$ | async)?.action"
+    (onExecuteCommand)="executeCommand($event)"
+    (onCancel)="cancel()">
+  </fims-case-command-confirmation-form>
 </fims-layout-card-over>
