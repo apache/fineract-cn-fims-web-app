@@ -22,6 +22,9 @@ import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
 import {IdentityService} from '../../../../services/identity/identity.service';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
+import {Role} from '../../../../services/identity/domain/role.model';
+
+const SYSTEM_ROLES: string[] = ['pharaoh', 'scheduler'];
 
 @Injectable()
 export class RoleSearchApiEffects {
@@ -37,6 +40,7 @@ export class RoleSearchApiEffects {
 
       return this.identityService.listRoles()
         .takeUntil(nextSearch$)
+        .map(this.excludeSystemRoles)
         .map(roles => new roleActions.SearchCompleteAction({
           elements: roles,
           totalPages: 1,
@@ -45,4 +49,7 @@ export class RoleSearchApiEffects {
         .catch(() => of(new roleActions.SearchCompleteAction(emptySearchResult())));
     });
 
+  private excludeSystemRoles(roles: Role[]): Role[] {
+    return roles.filter(role => SYSTEM_ROLES.indexOf(role.identifier) === -1)
+  }
 }
