@@ -21,7 +21,7 @@
       <div layout="row" class="pad-top">
         <md-select formControlName="productInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
           <md-option *ngFor="let instance of productInstances" [value]="instance">
-            {{instance.accountIdentifier}}
+            {{instance.accountIdentifier}}({{instance.productIdentifier}})
           </md-option>
         </md-select>
       </div>
