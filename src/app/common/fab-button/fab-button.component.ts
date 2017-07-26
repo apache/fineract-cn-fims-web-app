@@ -19,7 +19,8 @@ import {FimsPermission} from '../../services/security/authz/fims-permission.mode
 
 @Component({
   selector: 'fims-fab-button',
-  templateUrl: './fab-button.component.html'
+  templateUrl: './fab-button.component.html',
+  styleUrls: ['./fab-button.component.scss']
 })
 
 export class FimsFabButtonComponent implements OnInit {
