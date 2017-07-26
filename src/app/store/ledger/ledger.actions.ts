@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from '../../util';
+import {type} from '../util';
 import {Action} from '@ngrx/store';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {LedgerPage} from '../../../services/accounting/domain/ledger-page.model';

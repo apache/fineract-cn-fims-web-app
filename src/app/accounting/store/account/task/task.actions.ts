@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../../util';
+import {type} from '../../../../store/util';
 import {AccountCommand} from '../../../../../services/accounting/domain/account-command.model';
 import {RoutePayload} from '../../../../../common/store/route-payload';
 

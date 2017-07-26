@@ -17,7 +17,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCases from './store/index';
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
 import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';

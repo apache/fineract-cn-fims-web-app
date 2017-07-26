@@ -16,7 +16,7 @@
 
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {Product} from '../../../../services/portfolio/domain/product.model';

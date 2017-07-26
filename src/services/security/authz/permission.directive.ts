@@ -16,7 +16,7 @@
 import {Directive, Input, ViewContainerRef, TemplateRef, OnInit, OnDestroy} from '@angular/core';
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../../app/reducers';
+import * as fromRoot from '../../../app/store';
 import {Subscription} from 'rxjs';
 
 @Directive({

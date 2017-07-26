@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import * as fromLedgers from './ledger/ledgers.reducer';
 import * as fromLedgerForm from './ledger/form.reducer';
 import * as fromTrialBalance from './ledger/trial-balance.reducer';
@@ -23,7 +23,7 @@ import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
 import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer, getResourceEntities,

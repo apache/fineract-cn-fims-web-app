@@ -21,7 +21,7 @@ import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-
 import {CONFIRM_TRANSACTION} from '../../store/teller.actions';
 import * as fromTeller from '../../store/index';
 import {TellerStore} from '../../store/index';
-import * as fromRoot from '../../../reducers/index';
+import * as fromRoot from '../../../store/index';
 import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';

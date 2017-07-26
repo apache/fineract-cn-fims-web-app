@@ -15,30 +15,18 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
-import {AccountPage} from '../../../services/accounting/domain/account-page.model';
+import {type} from '../util';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {CustomerPage} from '../../../services/customer/domain/customer-page.model';
 import {SearchResult} from '../../../common/store/search.reducer';
 
-export const SEARCH = type('[Account] Search');
-export const SEARCH_BY_LEDGER = type('[Account] Search by Ledger');
-export const SEARCH_COMPLETE = type('[Account] Search Complete');
-
-export interface SearchByLedgerPayload {
-  ledgerId: string;
-  fetchRequest: FetchRequest
-}
+export const SEARCH = type('[Customer] Search');
+export const SEARCH_COMPLETE = type('[Customer] Search Complete');
 
 export class SearchAction implements Action {
   readonly type = SEARCH;
 
   constructor(public payload: FetchRequest) { }
-}
-
-export class SearchByLedgerAction implements Action {
-  readonly type = SEARCH_BY_LEDGER;
-
-  constructor(public payload: SearchByLedgerPayload) { }
 }
 
 export class SearchCompleteAction implements Action {
@@ -49,5 +37,4 @@ export class SearchCompleteAction implements Action {
 
 export type Actions
   = SearchAction
-  | SearchCompleteAction
-  | SearchByLedgerAction;
+  | SearchCompleteAction;

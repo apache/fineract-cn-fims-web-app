@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';

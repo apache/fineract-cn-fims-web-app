@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../../util';
+import {type} from '../../../../store/util';
 import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
 import {AccountEntryPage} from '../../../../../services/accounting/domain/account-entry-page.model';
 

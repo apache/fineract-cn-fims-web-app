@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {Error} from '../../../services/domain/error.model';
 import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';

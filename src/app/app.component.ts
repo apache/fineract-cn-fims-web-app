@@ -16,9 +16,9 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import * as fromRoot from './reducers';
+import * as fromRoot from './store';
 import {Store} from '@ngrx/store';
-import {LoginSuccessAction} from './reducers/security/security.actions';
+import {LoginSuccessAction} from './store/security/security.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {getSelectedLanguage} from '../common/i18n/translate';
 

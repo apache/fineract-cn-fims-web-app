@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {Account} from '../../../../services/accounting/domain/account.model';
 import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
 import {Error} from '../../../../services/domain/error.model';

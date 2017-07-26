@@ -22,7 +22,7 @@ import {Case} from '../../../services/portfolio/domain/case.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCases from './store/index';
 import * as fromCustomers from '../store';
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from './store/case.actions';

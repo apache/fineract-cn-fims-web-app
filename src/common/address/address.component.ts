@@ -20,11 +20,11 @@ import {Validators, FormBuilder} from '@angular/forms';
 import {Address} from '../../services/domain/address/address.model';
 import {Country} from '../../services/country/model/country.model';
 import {CountryService} from '../../services/country/country.service';
-import {SEARCH} from '../../app/reducers/country/country.actions';
+import {SEARCH} from '../../app/store/country/country.actions';
 import {countryExists} from '../validator/country-exists.validator';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../app/reducers/index'
+import * as fromRoot from '../../app/store/index'
 
 @Component({
   selector: 'fims-address-form',

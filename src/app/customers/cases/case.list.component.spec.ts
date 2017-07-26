@@ -24,7 +24,7 @@ import {Observable} from 'rxjs/Observable';
 import * as fromCases from './store/index';
 import {CasesStore} from './store/index';
 import * as fromCustomers from '../store';
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 import {FimsSharedModule} from '../../../common/common.module';

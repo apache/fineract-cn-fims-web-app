@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {Office} from '../../../services/office/domain/office.model';
 import {Error} from '../../../services/domain/error.model';
 import {RoutePayload} from '../../../common/store/route-payload';

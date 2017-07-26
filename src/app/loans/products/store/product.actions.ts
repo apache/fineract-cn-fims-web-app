@@ -16,7 +16,7 @@
 
 import {Action} from '@ngrx/store';
 import {Error} from '../../../../services/domain/error.model';
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
 import {SearchResult} from '../../../../common/store/search.reducer';

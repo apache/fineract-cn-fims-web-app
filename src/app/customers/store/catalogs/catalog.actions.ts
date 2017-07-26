@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from "../../../util";
+import {type} from "../../../store/util";
 import {Action} from "@ngrx/store";
 import {Catalog} from "../../../../services/catalog/domain/catalog.model";
 

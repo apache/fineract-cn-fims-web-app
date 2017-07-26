@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {Role} from '../../../services/identity/domain/role.model';
 import {Error} from '../../../services/domain/error.model';
 import {

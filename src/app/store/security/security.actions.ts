@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
+import {type} from '../util';
 import {Authentication} from '../../../services/identity/domain/authentication.model';
 import {Permission} from '../../../services/identity/domain/permission.model';
 import {FimsPermissionDescriptor} from '../../../services/security/authz/fims-permission-descriptor';

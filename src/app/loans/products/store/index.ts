@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../../reducers';
+import * as fromRoot from '../../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createSelector} from 'reselect';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import * as fromProducts from './products.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductCharges from './charges/charges.reducer';

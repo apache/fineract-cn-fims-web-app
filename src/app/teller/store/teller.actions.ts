@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {Action} from '@ngrx/store';
 import {LoadResourcePayload, SelectResourcePayload} from '../../../common/store/resource.reducer';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';

@@ -25,9 +25,9 @@ import {Role} from '../../../services/identity/domain/role.model';
 import {User} from '../../../services/identity/domain/user.model';
 import {FimsValidators} from '../../../common/validator/validators';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import {SEARCH as SEARCH_OFFICE} from '../../reducers/office/office.actions';
-import {SEARCH as SEARCH_ROLE} from '../../reducers/role/role.actions';
+import * as fromRoot from '../../store';
+import {SEARCH as SEARCH_OFFICE} from '../../store/office/office.actions';
+import {SEARCH as SEARCH_ROLE} from '../../store/role/role.actions';
 
 export interface EmployeeFormData {
   user: User;

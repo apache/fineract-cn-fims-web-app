@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {type} from '../../../../util';
+import {type} from '../../../../store/util';
 import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
 import {Action} from '@ngrx/store';
 import {CreateResourceSuccessPayload, DeleteResourceSuccessPayload} from '../../../../../common/store/resource.reducer';

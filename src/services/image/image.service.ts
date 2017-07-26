@@ -18,9 +18,9 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, Response, ResponseContentType} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../app/reducers';
+import * as fromRoot from '../../app/store';
 import {AUTHORIZATION_HEADER, TENANT_HEADER, USER_HEADER} from '../http/http.service';
-import {State} from '../../app/reducers/security/authentication.reducer';
+import {State} from '../../app/store/security/authentication.reducer';
 
 @Injectable()
 export class ImageService {

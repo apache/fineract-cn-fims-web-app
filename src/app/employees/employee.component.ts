@@ -19,9 +19,9 @@ import {Employee} from '../../services/office/domain/employee.model';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {TableData} from '../../common/data-table/data-table.component';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../store';
 import {Observable} from 'rxjs';
-import {SEARCH} from '../reducers/employee/employee.actions';
+import {SEARCH} from '../store/employee/employee.actions';
 
 @Component({
   selector: 'fims-employee',

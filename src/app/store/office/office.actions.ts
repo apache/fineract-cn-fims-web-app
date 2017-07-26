@@ -15,17 +15,18 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
-import {Role} from '../../../services/identity/domain/role.model';
+import {type} from '../util';
+import {OfficePage} from '../../../services/office/domain/office-page.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {SearchResult} from '../../../common/store/search.reducer';
 
-export const SEARCH = type('[Role] Search');
-export const SEARCH_COMPLETE = type('[Role] Search Complete');
+export const SEARCH = type('[Office] Search');
+export const SEARCH_COMPLETE = type('[Office] Search Complete');
 
 export class SearchAction implements Action {
   readonly type = SEARCH;
 
-  constructor() { }
+  constructor(public payload: FetchRequest) { }
 }
 
 export class SearchCompleteAction implements Action {

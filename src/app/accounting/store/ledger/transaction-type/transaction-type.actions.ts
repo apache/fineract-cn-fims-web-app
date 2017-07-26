@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from '../../../../util';
+import {type} from '../../../../store/util';
 import {Action} from '@ngrx/store';
 import {TransactionType} from '../../../../../services/accounting/domain/transaction-type.model';
 import {RoutePayload} from '../../../../../common/store/route-payload';

@@ -20,7 +20,7 @@ import {
 } from '../../../../common/store/resource.reducer';
 import * as fromCustomer from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import {
   createSearchReducer,
   getSearchEntities,

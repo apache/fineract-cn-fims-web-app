@@ -18,8 +18,8 @@ import {Router, NavigationEnd, ActivatedRoute, RouterState} from '@angular/route
 import {Title} from '@angular/platform-browser';
 import {HttpClient, Action} from '../../services/http/http.service';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../reducers';
-import {LOGOUT} from '../reducers/security/security.actions';
+import * as fromRoot from '../store';
+import {LOGOUT} from '../store/security/security.actions';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {CountryService} from '../../services/country/country.service';

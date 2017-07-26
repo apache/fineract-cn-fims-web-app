@@ -15,7 +15,7 @@
  */
 
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 import {
   createResourceReducer, getResourceEntities, getResourceIds, getResourceLoadedAt, getResourceSelected,
@@ -23,7 +23,7 @@ import {
   ResourceState
 } from '../../../common/store/resource.reducer';
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import * as fromProducts from './products.reducer';
 import {createSelector} from 'reselect';
 import {

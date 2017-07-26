@@ -21,7 +21,7 @@ import * as fromCaseTasks from './tasks/tasks.reducer';
 import * as fromCasePayments from './payments/search.reducer';
 
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,

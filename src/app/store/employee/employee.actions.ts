@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
+import {type} from '../util';
 import {EmployeePage} from '../../../services/office/domain/employee-page.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {SearchResult} from '../../../common/store/search.reducer';

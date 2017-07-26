@@ -17,7 +17,7 @@ import {OnInit, Component, OnDestroy} from '@angular/core';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromAccounting from '../store';
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {Subscription} from 'rxjs';
 import {AccountingStore} from '../store/index';
 import {DELETE, SelectAction} from '../store/account/account.actions';

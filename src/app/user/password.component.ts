@@ -19,8 +19,8 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {FimsValidators} from '../../common/validator/validators';
 import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../reducers';
-import {CHANGE_PASSWORD} from '../reducers/security/security.actions';
+import * as fromRoot from '../store';
+import {CHANGE_PASSWORD} from '../store/security/security.actions';
 
 @Component({
   selector: 'fims-user-password',

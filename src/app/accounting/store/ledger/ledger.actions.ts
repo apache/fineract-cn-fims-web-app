@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 import {Error} from '../../../../services/domain/error.model';
 import {TrialBalance} from '../../../../services/accounting/domain/trial-balance.model';

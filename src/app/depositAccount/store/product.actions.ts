@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {RoutePayload} from '../../../common/store/route-payload';
 import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 import {Action} from '@ngrx/store';

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import * as fromCustomers from './customers.reducer';
 import * as fromCustomerTasks from './tasks/tasks.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
@@ -22,7 +22,7 @@ import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import * as fromScans from './identityCards/scans/scans.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,

@@ -15,7 +15,7 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../util';
+import {type} from '../../../store/util';
 import {Error} from '../../../../services/domain/error.model';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {Command} from '../../../../services/customer/domain/command.model';
