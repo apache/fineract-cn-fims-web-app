@@ -18,7 +18,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case.list.component';
 import {ActivatedRouteStub, RouterLinkStubDirective, RouterStub} from '../../common/testing/router-stubs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MdButtonModule, MdFab, MdToolbarModule} from '@angular/material';
+import {MdButtonModule, MdToolbarModule} from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import {Observable} from 'rxjs/Observable';
 import * as fromCases from './store/index';
@@ -26,7 +26,7 @@ import {CasesStore} from './store/index';
 import * as fromCustomers from '../store';
 import * as fromRoot from '../../store';
 import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, DebugElement, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FimsSharedModule} from '../../common/common.module';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {CustomerState} from '../../services/customer/domain/customer-state.model';
@@ -44,11 +44,7 @@ describe('Test case list component', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        TranslateModule.forRoot(),
-        FimsSharedModule,
-        MdToolbarModule,
-        MdButtonModule,
-        NoopAnimationsModule
+        TranslateModule.forRoot()
       ],
       declarations: [
         RouterLinkStubDirective,
@@ -58,7 +54,8 @@ describe('Test case list component', () => {
         { provide: ActivatedRoute, useValue: activatedRoute },
         { provide: Router, useValue: routerStub },
         { provide: CasesStore, useValue: jasmine.createSpyObj('casesStore', ['select', 'dispatch']) }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(CaseListComponent);
@@ -88,9 +85,9 @@ describe('Test case list component', () => {
       })
     }
 
-    const store = TestBed.get(CasesStore);
+    const casesStore = TestBed.get(CasesStore);
 
-    store.select.and.callFake(selector => {
+    casesStore.select.and.callFake(selector => {
       if(selector === fromCases.getCaseSearchResults) return Observable.of({});
       if(selector === fromCustomers.getSelectedCustomer) return Observable.of(customer);
       if(selector === fromRoot.getPermissions) return Observable.of(permissions);
@@ -98,7 +95,7 @@ describe('Test case list component', () => {
   }
 
   function getCreateButton(): DebugElement {
-    return fixture.debugElement.query(By.directive(MdFab));
+    return fixture.debugElement.query(By.css('fims-fab-button'));
   }
 
   it('should not display add button when customer is not active but has change permission', () => {
