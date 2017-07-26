@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
-import {Account} from '../../../../services/accounting/domain/account.model';
+import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
+import {Account} from '../../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {todayAsISOString, toShortISOString} from '../../../../services/domain/date.converter';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {todayAsISOString, toShortISOString} from '../../../services/domain/date.converter';
+import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import {Observable, Subscription} from 'rxjs';
 import {AccountingStore} from '../../store/index';

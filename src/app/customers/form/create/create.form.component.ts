@@ -15,10 +15,10 @@
  */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomerFormComponent} from '../form.component';
 import * as fromCustomers from '../../store';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../../store/index';
 import {CREATE, RESET_FORM} from '../../store/customer.actions';

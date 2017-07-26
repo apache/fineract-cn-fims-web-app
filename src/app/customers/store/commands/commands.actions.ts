@@ -16,7 +16,7 @@
 
 import {type} from '../../../store/util';
 import {Action} from '@ngrx/store';
-import {Command} from '../../../../services/customer/domain/command.model';
+import {Command} from '../../../services/customer/domain/command.model';
 
 export const LOAD_ALL = type('[Customer Command] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Command] Load All Complete');

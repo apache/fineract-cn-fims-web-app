@@ -20,14 +20,14 @@ import {Observable} from 'rxjs';
 import {Action, Store} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as securityActions from '../security.actions';
-import {AuthenticationService} from '../../../../services/security/authn/authentication.service';
-import {PermissionId} from '../../../../services/security/authz/permission-id.type';
-import {FimsPermission} from '../../../../services/security/authz/fims-permission.model';
-import {Permission} from '../../../../services/identity/domain/permission.model';
-import {PermittableGroupIdMapper} from '../../../../services/security/authz/permittable-group-id-mapper';
+import {AuthenticationService} from '../../../services/security/authn/authentication.service';
+import {PermissionId} from '../../../services/security/authz/permission-id.type';
+import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {Permission} from '../../../services/identity/domain/permission.model';
+import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
 import * as fromRoot from '../../index';
-import {IdentityService} from '../../../../services/identity/identity.service';
-import {Password} from '../../../../services/identity/domain/password.model';
+import {IdentityService} from '../../../services/identity/identity.service';
+import {Password} from '../../../services/identity/domain/password.model';
 
 @Injectable()
 export class SecurityApiEffects {

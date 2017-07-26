@@ -15,14 +15,14 @@
  */
 
 import {type} from '../../../store/util';
-import {RoutePayload} from '../../../../common/store/route-payload';
-import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {RoutePayload} from '../../../common/store/route-payload';
+import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Action} from '@ngrx/store';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../common/store/resource.reducer';
-import {Error} from '../../../../services/domain/error.model';
+} from '../../../common/store/resource.reducer';
+import {Error} from '../../../services/domain/error.model';
 
 export const LOAD_ALL = type('[Customer Identity Card] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Identity Card] Load All Complete');

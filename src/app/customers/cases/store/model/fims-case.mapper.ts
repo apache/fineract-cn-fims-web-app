@@ -15,9 +15,9 @@
  */
 
 import {FimsCase} from './fims-case.model';
-import {Case} from '../../../../../services/portfolio/domain/case.model';
-import {AccountDesignators} from '../../../../../services/portfolio/domain/individuallending/account-designators.model';
-import {accountIdentifier, findAccountDesignator} from '../../../../../common/util/account-assignments';
+import {Case} from '../../../../services/portfolio/domain/case.model';
+import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
+import {accountIdentifier, findAccountDesignator} from '../../../../common/util/account-assignments';
 
 export function mapToCase(caseInstance: FimsCase): Case {
   return Object.assign({}, caseInstance, {

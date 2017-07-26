@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {TellerService} from '../../../../services/teller/teller-service';
+import {TellerService} from '../../../services/teller/teller-service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as tellerActions from '../teller.actions';

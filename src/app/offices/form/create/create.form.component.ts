@@ -17,10 +17,10 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OfficeFormComponent} from '../form.component';
-import {Office} from '../../../../services/office/domain/office.model';
+import {Office} from '../../../services/office/domain/office.model';
 import * as fromOffice from '../../store';
 import {CREATE, CREATE_BRANCH, RESET_FORM} from '../../store/office.actions';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import {Subscription} from 'rxjs';
 import {OfficesStore} from '../../store/index';
 

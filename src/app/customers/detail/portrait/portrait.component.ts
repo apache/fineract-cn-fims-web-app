@@ -15,13 +15,13 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import {CustomerService} from '../../../services/customer/customer.service';
 import {Subscription} from 'rxjs/Subscription';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomersStore} from '../../store/index';
 import * as fromCustomers from '../../store';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 import {TdDialogService} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
 import {TranslateService} from '@ngx-translate/core';

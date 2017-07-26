@@ -15,7 +15,7 @@
  */
 
 import * as teller from './teller.actions';
-import {Teller} from '../../../services/teller/domain/teller.model';
+import {Teller} from '../../services/teller/domain/teller.model';
 
 export interface State {
   teller: Teller;

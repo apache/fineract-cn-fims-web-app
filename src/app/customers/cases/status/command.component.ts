@@ -17,7 +17,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {StatusCommand} from '../store/model/fims-command.model';
 import {ExecuteTaskEvent} from './tasks.component';
-import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {WorkflowAction} from '../../../services/portfolio/domain/individuallending/workflow-action.model';
 
 @Component({
   selector: 'fims-case-command',

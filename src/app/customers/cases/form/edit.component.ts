@@ -15,9 +15,9 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Case} from '../../../../services/portfolio/domain/case.model';
+import {Case} from '../../../services/portfolio/domain/case.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {CasesStore} from '../store/index';
 import {SelectAction, UPDATE} from '../store/case.actions';
 import * as customerActions from '../../store/customer.actions';
@@ -25,11 +25,11 @@ import {Subscription} from 'rxjs';
 import * as fromCases from '../store/index';
 import * as fromCustomers from '../../store/index';
 import {FimsCase} from '../store/model/fims-case.model';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Product} from '../../../services/portfolio/domain/product.model';
 import {Observable} from 'rxjs/Observable';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
+import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 
 @Component({
   templateUrl: './edit.component.html'

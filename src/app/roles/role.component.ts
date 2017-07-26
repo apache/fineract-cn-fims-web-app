@@ -16,8 +16,8 @@
 
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Role} from '../../services/identity/domain/role.model';
-import {TableData} from '../../common/data-table/data-table.component';
+import {Role} from '../services/identity/domain/role.model';
+import {TableData} from '../common/data-table/data-table.component';
 import * as fromRoot from '../store'
 import {Observable} from 'rxjs';
 import {SEARCH} from '../store/role/role.actions';

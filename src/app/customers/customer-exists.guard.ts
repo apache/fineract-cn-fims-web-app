@@ -20,9 +20,9 @@ import * as fromCustomers from './store';
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/customer.actions';
 import {of} from 'rxjs/observable/of';
-import {CustomerService} from '../../services/customer/customer.service';
+import {CustomerService} from '../services/customer/customer.service';
 import {CustomersStore} from './store/index';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 
 @Injectable()
 export class CustomerExistsGuard implements CanActivate {

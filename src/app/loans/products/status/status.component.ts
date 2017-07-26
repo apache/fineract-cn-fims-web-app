@@ -15,9 +15,9 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../services/portfolio/domain/task-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
+import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
 import {PortfolioStore} from '../store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SelectAction} from '../store/product.actions';

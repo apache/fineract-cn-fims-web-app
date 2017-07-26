@@ -18,9 +18,9 @@ import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {SecurityApiEffects} from './service.effects';
 import {Observable} from 'rxjs';
-import {IdentityService} from '../../../../services/identity/identity.service';
-import {AuthenticationService} from '../../../../services/security/authn/authentication.service';
-import {Authentication} from '../../../../services/identity/domain/authentication.model';
+import {IdentityService} from '../../../services/identity/identity.service';
+import {AuthenticationService} from '../../../services/security/authn/authentication.service';
+import {Authentication} from '../../../services/identity/domain/authentication.model';
 import {
   ChangePasswordAction, ChangePasswordSuccessAction,
   LoginAction, LoginSuccessAction, LogoutAction, LogoutSuccessAction, PermissionUpdateSuccessAction,
@@ -28,11 +28,11 @@ import {
   RefreshAccessTokenSuccessAction,
   RefreshTokenStartTimerAction
 } from '../security.actions';
-import {PermittableGroupIdMapper} from '../../../../services/security/authz/permittable-group-id-mapper';
+import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
 import {Store} from '@ngrx/store';
-import {FimsPermission} from '../../../../services/security/authz/fims-permission.model';
-import {Permission} from '../../../../services/identity/domain/permission.model';
-import {IdentityPermittableGroupIds} from '../../../../services/identity/domain/permittable-group-ids.model';
+import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {Permission} from '../../../services/identity/domain/permission.model';
+import {IdentityPermittableGroupIds} from '../../../services/identity/domain/permittable-group-ids.model';
 import {mockAuthentication} from '../testing/authentication.mock';
 
 describe('Security Api Effects', () => {

@@ -21,8 +21,8 @@ import * as fromAccounting from './store';
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/ledger/ledger.actions';
 import {of} from 'rxjs/observable/of';
-import {AccountingService} from '../../services/accounting/accounting.service';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {AccountingService} from '../services/accounting/accounting.service';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 
 @Injectable()
 export class LedgerExistsGuard implements CanActivate {

@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {CaseState} from '../../../../../services/portfolio/domain/case-state.model';
-import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {CaseState} from '../../../../services/portfolio/domain/case-state.model';
+import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FimsTaskInstance} from './fims-task-instance.model';
 
 export interface StatusCommand {

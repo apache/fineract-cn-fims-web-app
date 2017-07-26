@@ -18,7 +18,7 @@ import {Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild} f
 import {Observable} from 'rxjs';
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../../app/store';
+import * as fromRoot from '../../../store';
 
 @Injectable()
 export class PermissionGuard implements CanActivateChild {

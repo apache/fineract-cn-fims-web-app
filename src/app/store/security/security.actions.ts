@@ -16,10 +16,10 @@
 
 import {Action} from '@ngrx/store';
 import {type} from '../util';
-import {Authentication} from '../../../services/identity/domain/authentication.model';
-import {Permission} from '../../../services/identity/domain/permission.model';
-import {FimsPermissionDescriptor} from '../../../services/security/authz/fims-permission-descriptor';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {Authentication} from '../../services/identity/domain/authentication.model';
+import {Permission} from '../../services/identity/domain/permission.model';
+import {FimsPermissionDescriptor} from '../../services/security/authz/fims-permission-descriptor';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 export const LOGIN = type('[Security] Login');
 export const LOGIN_SUCCESS = type('[Security] Login Success');

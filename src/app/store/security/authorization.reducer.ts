@@ -15,7 +15,7 @@
  */
 
 import * as security from './security.actions';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 export interface State {
   permissions: FimsPermission[];

@@ -16,13 +16,13 @@
 
 import {type} from '../../../../store/util';
 import {Action} from '@ngrx/store';
-import {TransactionType} from '../../../../../services/accounting/domain/transaction-type.model';
-import {RoutePayload} from '../../../../../common/store/route-payload';
-import {SearchPayload, SearchResult} from '../../../../../common/store/search.reducer';
+import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
+import {RoutePayload} from '../../../../common/store/route-payload';
+import {SearchPayload, SearchResult} from '../../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../../common/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 
 export const SEARCH = type('[Transaction Type] Search');
 export const SEARCH_COMPLETE = type('[Transaction Type] Search Complete');

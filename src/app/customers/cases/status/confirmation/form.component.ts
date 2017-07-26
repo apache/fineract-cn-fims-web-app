@@ -15,8 +15,8 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CostComponent} from '../../../../../services/portfolio/domain/individuallending/cost-component.model';
-import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
+import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FimsCase} from '../../store/model/fims-case.model';
 

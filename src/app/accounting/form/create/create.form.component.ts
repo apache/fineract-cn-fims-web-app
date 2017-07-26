@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import {OnInit, Component, ViewChild, OnDestroy} from '@angular/core';
-import {Ledger} from '../../../../services/accounting/domain/ledger.model';
+import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {LedgerFormComponent} from '../form.component';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import * as fromAccounting from '../../store';
 import {Subscription} from 'rxjs';
 import {CREATE, CREATE_SUB_LEDGER, RESET_FORM, SelectAction} from '../../store/ledger/ledger.actions';

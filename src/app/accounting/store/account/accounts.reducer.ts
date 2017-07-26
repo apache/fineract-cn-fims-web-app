@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ResourceState} from '../../../../common/store/resource.reducer';
+import {ResourceState} from '../../../common/store/resource.reducer';
 import * as accounts from './account.actions';
 import * as accountTasks from './task/task.actions';
-import {AccountCommand} from '../../../../services/accounting/domain/account-command.model';
-import {AccountState} from '../../../../services/accounting/domain/account-state.model';
-import {Account} from '../../../../services/accounting/domain/account.model';
+import {AccountCommand} from '../../../services/accounting/domain/account-command.model';
+import {AccountState} from '../../../services/accounting/domain/account-state.model';
+import {Account} from '../../../services/accounting/domain/account.model';
 
 export const initialState: ResourceState = {
   ids: [],

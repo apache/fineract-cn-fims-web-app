@@ -15,8 +15,8 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {AccountCommandAction} from '../../../services/accounting/domain/account-command-action.model';
-import {AccountCommand} from '../../../services/accounting/domain/account-command.model';
+import {AccountCommandAction} from '../../services/accounting/domain/account-command-action.model';
+import {AccountCommand} from '../../services/accounting/domain/account-command.model';
 import {AccountingStore} from '../store/index';
 import {EXECUTE_COMMAND} from '../store/account/task/task.actions';
 

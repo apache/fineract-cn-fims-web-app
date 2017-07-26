@@ -19,8 +19,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReportingQueryParamsComponent} from './query-params.component';
 import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {QueryParameter} from '../../../../services/reporting/domain/query-parameter.model';
-import {FimsSharedModule} from '../../../../common/common.module';
+import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
+import {FimsSharedModule} from '../../../common/common.module';
 
 describe('Test reporting query params component', () => {
 

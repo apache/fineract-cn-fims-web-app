@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import {type} from '../../../../store/util';
-import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
+import {IdentificationCardScan} from '../../../../services/customer/domain/identification-card-scan.model';
 import {Action} from '@ngrx/store';
-import {CreateResourceSuccessPayload, DeleteResourceSuccessPayload} from '../../../../../common/store/resource.reducer';
-import {RoutePayload} from '../../../../../common/store/route-payload';
+import {CreateResourceSuccessPayload, DeleteResourceSuccessPayload} from '../../../../common/store/resource.reducer';
+import {RoutePayload} from '../../../../common/store/route-payload';
 
 export const LOAD_ALL = type('[Customer Identity Card Scan] Load All');
 export const LOAD_ALL_COMPLETE = type('[Customer Identity Card Scan] Load All Complete');

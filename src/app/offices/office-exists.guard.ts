@@ -17,12 +17,12 @@
 import {Store} from '@ngrx/store';
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {OfficeService} from '../../services/office/office.service';
+import {OfficeService} from '../services/office/office.service';
 import {State, getOfficeEntities, OfficesStore, getOfficesLoadedAt} from './store';
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/office.actions';
 import {of} from 'rxjs/observable/of';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 
 @Injectable()
 export class OfficeExistsGuard implements CanActivate {

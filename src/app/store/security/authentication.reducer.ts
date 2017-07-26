@@ -15,7 +15,7 @@
  */
 
 import * as security from './security.actions';
-import {Authentication} from '../../../services/identity/domain/authentication.model';
+import {Authentication} from '../../services/identity/domain/authentication.model';
 import {LoginSuccessPayload} from './security.actions';
 
 export interface State {

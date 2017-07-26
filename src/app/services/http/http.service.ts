@@ -21,8 +21,8 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../app/store';
-import {LOGOUT} from '../../app/store/security/security.actions';
+import * as fromRoot from '../../store';
+import {LOGOUT} from '../../store/security/security.actions';
 
 export enum Action { QueryStart, QueryStop }
 

@@ -15,7 +15,7 @@
  */
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
-import {NotificationService, NotificationType} from '../../../../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as identificationCardScanActions from '../scans.actions';

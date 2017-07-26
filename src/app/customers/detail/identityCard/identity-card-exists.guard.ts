@@ -20,8 +20,8 @@ import * as fromCustomers from '../../store';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 import {CustomersStore} from '../../store/index';
-import {CustomerService} from '../../../../services/customer/customer.service';
-import {ExistsGuardService} from '../../../../common/guards/exists-guard';
+import {CustomerService} from '../../../services/customer/customer.service';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {LoadAction} from '../../store/identityCards/identity-cards.actions';
 
 @Injectable()

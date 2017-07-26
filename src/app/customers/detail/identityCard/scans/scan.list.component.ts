@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
+import {IdentificationCardScan} from '../../../../services/customer/domain/identification-card-scan.model';
 import {FormGroup} from '@angular/forms';
 
 export interface UploadIdentificationCardScanEvent {

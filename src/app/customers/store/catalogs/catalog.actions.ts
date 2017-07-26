@@ -16,7 +16,7 @@
 
 import {type} from "../../../store/util";
 import {Action} from "@ngrx/store";
-import {Catalog} from "../../../../services/catalog/domain/catalog.model";
+import {Catalog} from "../../../services/catalog/domain/catalog.model";
 
 export const LOAD_ALL = type('[Catalog] Load All');
 export const LOAD_ALL_COMPLETE = type('[Catalog] Load All Complete');

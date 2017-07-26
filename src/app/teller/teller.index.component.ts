@@ -22,9 +22,9 @@ import {LOCK_DRAWER} from './store/teller.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SEARCH} from '../store/customer/customer.actions';
-import {Customer} from '../../services/customer/domain/customer.model';
+import {Customer} from '../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
-import {Teller} from '../../services/teller/domain/teller.model';
+import {Teller} from '../services/teller/domain/teller.model';
 
 @Component({
   templateUrl: './teller.index.component.html'

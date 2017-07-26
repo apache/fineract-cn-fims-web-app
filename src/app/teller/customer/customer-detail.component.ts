@@ -17,12 +17,12 @@
 import {Component, OnDestroy} from '@angular/core';
 import {TellerStore} from '../store/index';
 import * as fromTeller from '../store/index';
-import {Customer} from '../../../services/customer/domain/customer.model';
+import {Customer} from '../../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {LoadAllDepositProductsAction, LoadAllLoanProductsAction} from '../store/teller.actions';
-import {CustomerService} from '../../../services/customer/customer.service';
-import {TransactionType} from '../../../services/teller/domain/teller-transaction.model';
+import {CustomerService} from '../../services/customer/customer.service';
+import {TransactionType} from '../../services/teller/domain/teller-transaction.model';
 
 interface Action {
   transactionType: TransactionType;

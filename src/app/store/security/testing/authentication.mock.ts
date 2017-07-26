@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Authentication} from '../../../../services/identity/domain/authentication.model';
+import {Authentication} from '../../../services/identity/domain/authentication.model';
 
 export function mockAuthentication(): Authentication {
   return {

@@ -16,17 +16,17 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TableData} from '../../../common/data-table/data-table.component';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Case} from '../../../services/portfolio/domain/case.model';
-import {Customer} from '../../../services/customer/domain/customer.model';
+import {TableData} from '../../common/data-table/data-table.component';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
+import {Case} from '../../services/portfolio/domain/case.model';
+import {Customer} from '../../services/customer/domain/customer.model';
 import * as fromCases from './store/index';
 import * as fromCustomers from '../store';
 import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from './store/case.actions';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './case.list.component.html'

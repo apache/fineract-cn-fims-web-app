@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {TimeUnit} from '../../../services/depositAccount/domain/time-unit.model';
+import {TimeUnit} from '../../services/depositAccount/domain/time-unit.model';
 
 export interface TimeUnitOption {
   label: string;

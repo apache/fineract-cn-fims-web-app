@@ -20,10 +20,10 @@ import * as fromCases from './store';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 import {CasesStore} from './store/index';
-import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
 import {mapToFimsCase} from './store/model/fims-case.mapper';
-import {ExistsGuardService} from '../../../common/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
 export class CaseExistsGuard implements CanActivate {

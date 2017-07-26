@@ -15,14 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
 import {mapToFimsProduct, mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
-import {emptySearchResult} from '../../../../../common/store/search.reducer';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 @Injectable()
 export class ProductApiEffects {

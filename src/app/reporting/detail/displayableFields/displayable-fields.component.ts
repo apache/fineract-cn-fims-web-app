@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {DisplayableField} from '../../../../services/reporting/domain/displayable-field.model';
+import {DisplayableField} from '../../../services/reporting/domain/displayable-field.model';
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 

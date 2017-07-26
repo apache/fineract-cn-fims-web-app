@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {FimsSharedModule} from '../../../../common/common.module';
+import {FimsSharedModule} from '../../../common/common.module';
 import {IdentityCardRoutes} from './identity-card.routing';
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';

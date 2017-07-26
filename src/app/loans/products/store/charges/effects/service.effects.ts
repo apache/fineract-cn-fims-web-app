@@ -20,7 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as chargeActions from '../charge.actions';
-import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
 
 @Injectable()
 export class ProductChargesApiEffects {

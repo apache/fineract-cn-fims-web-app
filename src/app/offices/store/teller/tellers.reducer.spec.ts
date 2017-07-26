@@ -15,9 +15,9 @@
  */
 
 import {reducer} from './tellers.reducer';
-import {ResourceState} from '../../../../common/store/resource.reducer';
+import {ResourceState} from '../../../common/store/resource.reducer';
 import {ExecuteCommandPayload, ExecuteCommandSuccessAction} from './teller.actions';
-import {Status} from '../../../../services/teller/domain/teller.model';
+import {Status} from '../../../services/teller/domain/teller.model';
 
 describe('Tellers Reducer', () => {
 

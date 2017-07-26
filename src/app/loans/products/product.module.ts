@@ -15,7 +15,7 @@
  */
 
 import {NgModule} from '@angular/core';
-import {FimsSharedModule} from '../../../common/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {ProductRoutes} from './product.routes';
 import {RouterModule} from '@angular/router';
 import {ProductListComponent} from './product.list.component';

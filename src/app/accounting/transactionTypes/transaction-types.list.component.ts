@@ -17,10 +17,10 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
-import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {SEARCH} from '../store/ledger/transaction-type/transaction-type.actions';
-import {TransactionType} from '../../../services/accounting/domain/transaction-type.model';
+import {TransactionType} from '../../services/accounting/domain/transaction-type.model';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

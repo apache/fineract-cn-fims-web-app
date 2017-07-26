@@ -20,7 +20,7 @@ import {Effect, Actions} from '@ngrx/effects';
 import * as accountEntryActions from '../entries.actions'
 import {Injectable} from '@angular/core';
 import {of} from 'rxjs/observable/of';
-import {AccountingService} from '../../../../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../../../services/accounting/accounting.service';
 
 @Injectable()
 export class AccountEntryApiEffects {

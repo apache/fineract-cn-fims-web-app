@@ -15,12 +15,12 @@
  */
 
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
-import {CreditWorthinessFactor} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
+import {FormComponent} from '../../../../common/forms/form.component';
+import {CreditWorthinessFactor} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from '../debt-to-income/debt-to-income.component';
 import {FormBuilder} from '@angular/forms';
-import {customerExists} from '../../../../../common/validator/customer-exists.validator';
-import {CustomerService} from '../../../../../services/customer/customer.service';
+import {customerExists} from '../../../../common/validator/customer-exists.validator';
+import {CustomerService} from '../../../../services/customer/customer.service';
 
 export interface CoSignerFormData {
   customerId: string;

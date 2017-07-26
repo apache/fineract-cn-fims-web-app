@@ -15,7 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-account-entry.model';
+import {ChartOfAccountEntry} from '../../services/accounting/domain/chart-of-account-entry.model';
 
 @Component({
   selector: 'fims-chart-of-account-table',

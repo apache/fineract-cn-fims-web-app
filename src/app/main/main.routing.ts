@@ -16,9 +16,9 @@
 
 import {Routes} from '@angular/router';
 import {MainComponent} from './main.component';
-import {ChangePasswordGuard} from '../../services/security/change.password.service';
+import {ChangePasswordGuard} from '../services/security/change.password.service';
 import {AccessDeniedComponent} from './access.denied.component';
-import {PermissionGuard} from '../../services/security/authz/permission.guard';
+import {PermissionGuard} from '../services/security/authz/permission.guard';
 import {QuickAccessComponent} from '../quickAccess/quick-access.component';
 
 export const MainRoutes: Routes = [

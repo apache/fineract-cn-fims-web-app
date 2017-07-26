@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../../store/index';
 import {Subscription} from 'rxjs';

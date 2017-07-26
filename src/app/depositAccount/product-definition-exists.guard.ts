@@ -20,8 +20,8 @@ import {LoadAction} from './store/product.actions';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {DepositAccountStore} from './store/index';
-import {DepositAccountService} from '../../services/depositAccount/deposit-account.service';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 import * as fromProducts from './store/index';
 
 @Injectable()

@@ -18,9 +18,9 @@ import {
   Component, ComponentFactoryResolver, ComponentRef, Directive, forwardRef, Input, OnInit,
   ViewChild, ViewContainerRef
 } from '@angular/core';
-import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
+import {Operator} from '../../../services/reporting/domain/query-parameter.model';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Type} from '../../../../services/reporting/domain/type.model';
+import {Type} from '../../../services/reporting/domain/type.model';
 import {AbstractControlValueAccessor} from './abstract-value-accessor';
 import {ReportingInputParamComponent} from './input/input.component';
 import {ReportingInParamComponent} from './in/in.component';

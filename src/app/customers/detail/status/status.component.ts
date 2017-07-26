@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
-import {Customer} from '../../../../services/customer/domain/customer.model';
-import {Command, CommandAction} from '../../../../services/customer/domain/command.model';
-import {CustomerState} from '../../../../services/customer/domain/customer-state.model';
+import {TaskDefinition} from '../../../services/customer/domain/task-definition.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {Command, CommandAction} from '../../../services/customer/domain/command.model';
+import {CustomerState} from '../../../services/customer/domain/customer-state.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCustomers from '../../store';
 import {Subscription} from 'rxjs';

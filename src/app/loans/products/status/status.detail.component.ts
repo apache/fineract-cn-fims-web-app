@@ -16,14 +16,14 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../services/portfolio/domain/task-definition.model';
 import {DELETE, SelectAction} from '../store/tasks/task.actions';
 import {PortfolioStore} from '../store/index';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Observable} from 'rxjs/Observable';
 import {TdDialogService} from '@covalent/core';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Product} from '../../../services/portfolio/domain/product.model';
 import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({

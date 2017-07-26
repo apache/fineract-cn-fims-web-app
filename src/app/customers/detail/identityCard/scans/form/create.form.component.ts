@@ -15,17 +15,17 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {IdentificationCardScan} from '../../../../../../services/customer/domain/identification-card-scan.model';
+import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
 import {CustomersStore} from '../../../../store/index';
 import * as fromCustomers from '../../../../store/index';
 import {IdentificationCardScanComponent, IdentityCardScanFormData} from './scan.form.component';
 import {CREATE, RESET_FORM} from '../../../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {Error} from '../../../../../../services/domain/error.model';
+import {Error} from '../../../../../services/domain/error.model';
 import {Subscription} from 'rxjs/Subscription';
-import {IdentificationCard} from '../../../../../../services/customer/domain/identification-card.model';
-import {Customer} from '../../../../../../services/customer/domain/customer.model';
+import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
+import {Customer} from '../../../../../services/customer/domain/customer.model';
 
 @Component({
   templateUrl: './create.form.component.html'

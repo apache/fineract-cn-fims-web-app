@@ -17,10 +17,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {Office} from '../../../services/office/domain/office.model';
-import {FimsValidators} from '../../../common/validator/validators';
-import {Address} from '../../../services/domain/address/address.model';
-import {AddressFormComponent} from '../../../common/address/address.component';
+import {Office} from '../../services/office/domain/office.model';
+import {FimsValidators} from '../../common/validator/validators';
+import {Address} from '../../services/domain/address/address.model';
+import {AddressFormComponent} from '../../common/address/address.component';
 
 
 @Component({

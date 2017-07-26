@@ -18,10 +18,10 @@ import {AfterViewInit, OnInit, Component, ViewContainerRef, OnDestroy} from '@an
 import {
   NotificationType, NotificationEvent,
   NotificationService
-} from '../../services/notification/notification.service';
+} from '../services/notification/notification.service';
 import {MdSnackBarConfig, MdSnackBarRef, MdSnackBar} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '../../services/http/http.service';
+import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
 import {Subscription} from 'rxjs';
 

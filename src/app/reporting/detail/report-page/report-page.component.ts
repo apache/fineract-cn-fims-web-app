@@ -15,7 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {ReportPage} from '../../../../services/reporting/domain/report-page.model';
+import {ReportPage} from '../../../services/reporting/domain/report-page.model';
 
 @Component({
   selector: 'fims-reporting-report-page',

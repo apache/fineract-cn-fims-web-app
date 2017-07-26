@@ -18,10 +18,10 @@ import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {CustomerSearchApiEffects} from './service.effects';
 import {Observable} from 'rxjs';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import {CustomerService} from '../../../services/customer/customer.service';
 import {SearchAction, SearchCompleteAction} from '../customer.actions';
-import {CustomerPage} from '../../../../services/customer/domain/customer-page.model';
-import {emptySearchResult} from '../../../../common/store/search.reducer';
+import {CustomerPage} from '../../../services/customer/domain/customer-page.model';
+import {emptySearchResult} from '../../../common/store/search.reducer';
 
 describe('Customer Search Api Effects', () => {
   beforeEach(() => {

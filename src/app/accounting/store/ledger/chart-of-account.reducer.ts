@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {ChartOfAccountEntry} from '../../../../services/accounting/domain/chart-of-account-entry.model';
+import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-account-entry.model';
 import * as ledger from './ledger.actions';
 
 export interface State {

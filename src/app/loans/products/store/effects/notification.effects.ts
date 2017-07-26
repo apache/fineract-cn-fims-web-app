@@ -19,7 +19,7 @@ import {Effect, Actions, toPayload} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as productActions from '../product.actions';
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class ProductNotificationEffects {

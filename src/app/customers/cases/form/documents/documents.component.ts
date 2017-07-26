@@ -16,8 +16,8 @@
 
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Document} from '../../../../../services/portfolio/domain/individuallending/document.model';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {Document} from '../../../../services/portfolio/domain/individuallending/document.model';
+import {FormComponent} from '../../../../common/forms/form.component';
 
 @Component({
   selector: 'fims-case-documents-form',

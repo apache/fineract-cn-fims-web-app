@@ -15,14 +15,14 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Error} from '../../../../../services/domain/error.model';
+import {Error} from '../../../../services/domain/error.model';
 import {type} from '../../../../store/util';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
-import {RoutePayload} from '../../../../../common/store/route-payload';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../../common/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Task] Load All Complete');

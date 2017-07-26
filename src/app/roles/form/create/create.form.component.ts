@@ -15,10 +15,10 @@
  */
 import {Component, ViewChild, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Role} from '../../../../services/identity/domain/role.model';
+import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
 import {Subscription} from 'rxjs';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import {RolesStore} from '../../store/index';
 import {CREATE, RESET_FORM} from '../../store/role.actions';
 

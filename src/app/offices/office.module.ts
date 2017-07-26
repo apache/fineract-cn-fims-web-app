@@ -23,7 +23,7 @@ import {OfficeFormComponent} from './form/form.component';
 import {OfficeDetailComponent} from './detail/office.detail.component';
 import {CreateOfficeFormComponent} from './form/create/create.form.component';
 import {EditOfficeFormComponent} from './form/edit/edit.form.component';
-import {FimsSharedModule} from '../../common/common.module';
+import {FimsSharedModule} from '../common/common.module';
 import {HeadquarterGuard} from './headquarter/headquarter.guard';
 import {HeadquarterNotFoundComponent} from './headquarter/headquarter-not-found.component';
 import {OfficeExistsGuard} from './office-exists.guard';

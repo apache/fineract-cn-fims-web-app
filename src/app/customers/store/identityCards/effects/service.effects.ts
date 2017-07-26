@@ -18,7 +18,7 @@ import {of} from 'rxjs/observable/of';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
-import {CustomerService} from '../../../../../services/customer/customer.service';
+import {CustomerService} from '../../../../services/customer/customer.service';
 import {Injectable} from '@angular/core';
 import * as identificationCards from '../identity-cards.actions';
 

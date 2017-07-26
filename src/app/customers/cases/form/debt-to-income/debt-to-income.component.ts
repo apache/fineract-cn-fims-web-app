@@ -15,10 +15,10 @@
  */
 
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
-import {CreditWorthinessSnapshot} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
+import {FormComponent} from '../../../../common/forms/form.component';
+import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
 import {CaseCreditFactorFormComponent} from '../components/credit-factor.component';
-import {CreditWorthinessFactor} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
+import {CreditWorthinessFactor} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 
 export interface DebtToIncomeFormData {
   incomeSources: CreditWorthinessFactor[];

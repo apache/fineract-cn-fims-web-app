@@ -23,7 +23,7 @@ import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';
 import {FimsCase} from './store/model/fims-case.model';
 import {Observable} from 'rxjs/Observable';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './case.detail.component.html'

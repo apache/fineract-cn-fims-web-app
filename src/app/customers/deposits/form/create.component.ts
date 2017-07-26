@@ -17,15 +17,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {DepositFormComponent} from './form.component';
-import {Customer} from '../../../../services/customer/domain/customer.model';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositsStore} from '../store/index';
 import {CREATE} from '../store/deposit.actions';
 import * as fromCustomers from '../../store/index';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
+import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {Observable} from 'rxjs/Observable';
-import {ProductDefinition} from '../../../../services/depositAccount/domain/definition/product-definition.model';
+import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 
 @Component({
   templateUrl: './create.component.html'

@@ -16,7 +16,7 @@
 
 import {OnInit, Component} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {AccountCommand} from '../../../services/accounting/domain/account-command.model';
+import {AccountCommand} from '../../services/accounting/domain/account-command.model';
 
 @Component({
   templateUrl: './activity.component.html'

@@ -15,12 +15,12 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
+import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import * as fromDepositAccounts from './../store';
-import {TableData} from '../../../common/data-table/data-table.component';
+import {TableData} from '../../common/data-table/data-table.component';
 import {TdDialogService} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
 import {DELETE} from '../store/product.actions';

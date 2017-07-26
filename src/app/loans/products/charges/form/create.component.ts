@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromPortfolio from '../../store/index';
 import {PortfolioStore} from '../../store/index';

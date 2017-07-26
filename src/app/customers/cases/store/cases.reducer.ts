@@ -1,4 +1,4 @@
-import {ResourceState} from '../../../../common/store/resource.reducer';
+import {ResourceState} from '../../../common/store/resource.reducer';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -16,8 +16,8 @@ import {ResourceState} from '../../../../common/store/resource.reducer';
  */
 
 import * as caseActions from './case.actions';
-import {CaseState} from '../../../../services/portfolio/domain/case-state.model';
-import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
+import {CaseState} from '../../../services/portfolio/domain/case-state.model';
+import {CaseCommand} from '../../../services/portfolio/domain/case-command.model';
 
 export const initialState: ResourceState = {
   ids: [],

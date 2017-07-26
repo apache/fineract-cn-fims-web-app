@@ -20,7 +20,7 @@ import {
   ChangePasswordSuccessAction, LoginSuccessAction, LoginSuccessPayload,
   RefreshAccessTokenSuccessAction
 } from './security.actions';
-import {Authentication} from '../../../services/identity/domain/authentication.model';
+import {Authentication} from '../../services/identity/domain/authentication.model';
 
 describe('Authentication Reducer', () => {
 

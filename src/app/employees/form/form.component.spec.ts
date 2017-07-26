@@ -16,19 +16,19 @@
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
-import {Employee} from '../../../services/office/domain/employee.model';
+import {Employee} from '../../services/office/domain/employee.model';
 import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from './form.component';
-import {User} from '../../../services/identity/domain/user.model';
+import {User} from '../../services/identity/domain/user.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
-import {IdInputComponent} from '../../../common/id-input/id-input.component';
-import {SelectListComponent} from '../../../common/select-list/select-list.component';
+import {IdInputComponent} from '../../common/id-input/id-input.component';
+import {SelectListComponent} from '../../common/select-list/select-list.component';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
-import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
+import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {MdIconModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 
 let employeeTemplate: Employee = {

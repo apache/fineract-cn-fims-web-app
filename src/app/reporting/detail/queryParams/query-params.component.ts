@@ -15,9 +15,9 @@
  */
 
 import {Component, Input, OnInit, Query} from '@angular/core';
-import {QueryParameter} from '../../../../services/reporting/domain/query-parameter.model';
+import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 
 @Component({
   selector: 'fims-reporting-query-params',

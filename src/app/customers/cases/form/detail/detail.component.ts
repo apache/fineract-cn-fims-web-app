@@ -15,17 +15,17 @@
  */
 
 import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../../common/validator/validators';
-import {ChronoUnit} from '../../../../../services/portfolio/domain/chrono-unit.model';
-import {alignmentOptions} from '../../../../../common/domain/alignment.model';
-import {weekDayOptions} from '../../../../../common/domain/week-days.model';
-import {monthOptions} from '../../../../../common/domain/months.model';
-import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
-import {Product} from '../../../../../services/portfolio/domain/product.model';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {ChronoUnit} from '../../../../services/portfolio/domain/chrono-unit.model';
+import {alignmentOptions} from '../../../../common/domain/alignment.model';
+import {weekDayOptions} from '../../../../common/domain/week-days.model';
+import {monthOptions} from '../../../../common/domain/months.model';
+import {temporalOptionList} from '../../../../common/domain/temporal.domain';
+import {Product} from '../../../../services/portfolio/domain/product.model';
 import {Subscription} from 'rxjs/Subscription';
-import {ProductInstance} from '../../../../../services/depositAccount/domain/instance/product-instance.model';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 
 export interface DetailFormData {
   identifier: string,

@@ -18,22 +18,22 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {InterestFormData, ProductInterestFormComponent} from './interests/interests.component';
-import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
-import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
+import {AccountAssignment} from '../../../services/portfolio/domain/account-assignment.model';
+import {AccountDesignators} from '../../../services/portfolio/domain/individuallending/account-designators.model';
 import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
-import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {FimsValidators} from '../../../../common/validator/validators';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {ProductParameters} from '../../../services/portfolio/domain/individuallending/product-parameters.model';
+import {FimsValidators} from '../../../common/validator/validators';
+import {AccountingService} from '../../../services/accounting/accounting.service';
 import {FimsProduct} from '../store/model/fims-product.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {accountExists} from '../../../common/validator/account-exists.validator';
 import {ProductSettingsFormComponent, SettingsFormData} from './settings/settings.component';
-import {temporalOptionList} from '../../../../common/domain/temporal.domain';
-import {Currency} from '../../../../services/currency/domain/currency.model';
+import {temporalOptionList} from '../../../common/domain/temporal.domain';
+import {Currency} from '../../../services/currency/domain/currency.model';
 import {
   accountIdentifier,
   createAccountAssignment, createLedgerAssignment,
   findAccountDesignator, ledgerIdentifier
-} from '../../../../common/util/account-assignments';
+} from '../../../common/util/account-assignments';
 
 @Component({
   selector: 'fims-product-form-component',

@@ -16,9 +16,9 @@
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Error} from '../../../../../../services/domain/error.model';
+import {Error} from '../../../../../services/domain/error.model';
 import {TdStepComponent} from '@covalent/core';
-import {FimsValidators} from '../../../../../../common/validator/validators';
+import {FimsValidators} from '../../../../../common/validator/validators';
 
 export interface IdentityCardScanFormData {
   identifier: string;

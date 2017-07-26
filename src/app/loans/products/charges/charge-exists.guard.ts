@@ -21,8 +21,8 @@ import {Observable} from 'rxjs';
 import {LoadAction} from '../store/charges/charge.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {ExistsGuardService} from '../../../../common/guards/exists-guard';
+import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 
 @Injectable()
 export class ProductChargeExistsGuard implements CanActivate {

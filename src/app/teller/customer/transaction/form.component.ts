@@ -15,15 +15,15 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../common/validator/validators';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+import {FimsValidators} from '../../../common/validator/validators';
+import {TellerTransactionCosts} from '../../../services/teller/domain/teller-transaction-costs.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {accountExists} from '../../../common/validator/account-exists.validator';
+import {AccountingService} from '../../../services/accounting/accounting.service';
+import {TransactionType} from '../../../services/teller/domain/teller-transaction.model';
 
 const withdrawalCheckTypes: TransactionType[] = ['ACCC', 'CWDL'];
 

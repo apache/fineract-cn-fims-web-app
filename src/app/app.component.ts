@@ -20,7 +20,7 @@ import * as fromRoot from './store';
 import {Store} from '@ngrx/store';
 import {LoginSuccessAction} from './store/security/security.actions';
 import {Subscription} from 'rxjs/Subscription';
-import {getSelectedLanguage} from '../common/i18n/translate';
+import {getSelectedLanguage} from './common/i18n/translate';
 
 @Component({
   selector: 'fims-app',

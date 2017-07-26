@@ -20,9 +20,9 @@ import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import * as taskActions from '../task.actions';
 import {of} from 'rxjs/observable/of';
-import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
-import {TaskInstance} from '../../../../../../services/portfolio/domain/task-instance.model';
-import {TaskDefinition} from '../../../../../../services/portfolio/domain/task-definition.model';
+import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
+import {TaskInstance} from '../../../../../services/portfolio/domain/task-instance.model';
+import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
 import {FimsTaskInstance} from '../../model/fims-task-instance.model';
 
 @Injectable()

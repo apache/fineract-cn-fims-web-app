@@ -16,7 +16,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import * as fromRoot from '../../app/store';
+import * as fromRoot from '../../store';
 import {Store} from '@ngrx/store';
 
 @Injectable()

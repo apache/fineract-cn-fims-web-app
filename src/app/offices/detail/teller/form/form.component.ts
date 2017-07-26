@@ -15,12 +15,12 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
+import {Teller} from '../../../../services/teller/domain/teller.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../../common/validator/validators';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {accountExists} from '../../../../../common/validator/account-exists.validator';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
 
 @Component({

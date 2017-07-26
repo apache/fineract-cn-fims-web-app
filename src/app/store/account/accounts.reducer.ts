@@ -15,7 +15,7 @@
  */
 
 import * as accounts from './account.actions';
-import {SearchState} from '../../../common/store/search.reducer';
+import {SearchState} from '../../common/store/search.reducer';
 
 export function reducer(state, action: accounts.Actions): SearchState {
 

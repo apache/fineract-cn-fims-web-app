@@ -20,7 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
-import {IdentityService} from '../../../../services/identity/identity.service';
+import {IdentityService} from '../../../services/identity/identity.service';
 
 @Injectable()
 export class RoleApiEffects {

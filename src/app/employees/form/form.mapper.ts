@@ -15,9 +15,9 @@
  */
 
 import {EmployeeSaveEvent} from './form.component';
-import {ContactDetailType, ContactDetail} from '../../../services/domain/contact/contact-detail.model';
-import {Employee} from '../../../services/office/domain/employee.model';
-import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
+import {ContactDetailType, ContactDetail} from '../../services/domain/contact/contact-detail.model';
+import {Employee} from '../../services/office/domain/employee.model';
+import {UserWithPassword} from '../../services/identity/domain/user-with-password.model';
 
 function buildContactDetail(type: ContactDetailType, value: string): ContactDetail{
   return {

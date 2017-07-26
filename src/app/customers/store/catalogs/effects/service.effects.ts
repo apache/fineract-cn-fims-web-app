@@ -20,7 +20,7 @@ import {Observable} from "rxjs/Observable";
 import {Action} from "@ngrx/store";
 import {of} from "rxjs/observable/of";
 import * as catalogActions from "../catalog.actions";
-import {CatalogService} from "../../../../../services/catalog/catalog.service";
+import {CatalogService} from "../../../../services/catalog/catalog.service";
 
 @Injectable()
 export class CatalogApiEffects {

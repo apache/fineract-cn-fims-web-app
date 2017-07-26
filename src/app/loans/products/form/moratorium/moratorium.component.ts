@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {Component, Input} from '@angular/core';
-import {Moratorium} from '../../../../../services/portfolio/domain/individuallending/moratorium.model';
+import {Moratorium} from '../../../../services/portfolio/domain/individuallending/moratorium.model';
 import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
-import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
+import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 
 @Component({
   selector: 'fims-product-moratorium-form',

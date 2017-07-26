@@ -15,13 +15,13 @@
  */
 
 import {OnInit, Component, Input, EventEmitter, Output, ViewChild} from '@angular/core';
-import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
-import {ChargeMethod} from '../../../../../services/portfolio/domain/charge-method.model';
-import {temporalOptionList} from '../../../../../common/domain/temporal.domain';
+import {ChargeMethod} from '../../../../services/portfolio/domain/charge-method.model';
+import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {TdStepComponent} from '@covalent/core';
-import {ActionOption, ActionOptions} from '../../../../../common/domain/action-option.model';
-import {FimsValidators} from '../../../../../common/validator/validators';
+import {ActionOption, ActionOptions} from '../../../../common/domain/action-option.model';
+import {FimsValidators} from '../../../../common/validator/validators';
 
 interface ChargeMethodOption{
   type: ChargeMethod,

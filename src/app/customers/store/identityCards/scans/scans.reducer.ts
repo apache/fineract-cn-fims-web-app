@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ResourceState} from '../../../../../common/store/resource.reducer';
-import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../../common/store/reducer.helper';
+import {ResourceState} from '../../../../common/store/resource.reducer';
+import {IdentificationCardScan} from '../../../../services/customer/domain/identification-card-scan.model';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../common/store/reducer.helper';
 import * as identityCardScans from './scans.actions';
 
 export const initialState: ResourceState = {

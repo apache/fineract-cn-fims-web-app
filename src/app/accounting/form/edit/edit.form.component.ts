@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {OnInit, Component, ViewChild, OnDestroy} from '@angular/core';
-import {Ledger} from '../../../../services/accounting/domain/ledger.model';
+import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {LedgerFormComponent} from '../form.component';
 import {Router, ActivatedRoute} from '@angular/router';
 import {SelectAction, UPDATE} from '../../store/ledger/ledger.actions';

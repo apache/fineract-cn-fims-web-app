@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {CREATE, SelectAction, UPDATE} from '../../store/charges/charge.actions';

@@ -16,8 +16,8 @@
 
 import {Action} from '@ngrx/store';
 import {type} from '../../../../store/util';
-import {AccountCommand} from '../../../../../services/accounting/domain/account-command.model';
-import {RoutePayload} from '../../../../../common/store/route-payload';
+import {AccountCommand} from '../../../../services/accounting/domain/account-command.model';
+import {RoutePayload} from '../../../../common/store/route-payload';
 
 export const EXECUTE_COMMAND = type('[Account Command] Execute');
 export const EXECUTE_COMMAND_SUCCESS = type('[Account Command] Success');

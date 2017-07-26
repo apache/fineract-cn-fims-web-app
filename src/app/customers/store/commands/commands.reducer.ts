@@ -15,7 +15,7 @@
  */
 
 import * as command from './commands.actions';
-import {Command} from '../../../../services/customer/domain/command.model';
+import {Command} from '../../../services/customer/domain/command.model';
 
 export interface State {
   commands: Command[];

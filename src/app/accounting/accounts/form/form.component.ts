@@ -15,18 +15,18 @@
  */
 
 import {Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angular/core';
-import {AccountType} from '../../../../services/accounting/domain/account-type.model';
-import {Account} from '../../../../services/accounting/domain/account.model';
+import {AccountType} from '../../../services/accounting/domain/account-type.model';
+import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators} from '@angular/forms';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../services/accounting/accounting.service';
 import {Observable} from 'rxjs';
-import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
-import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {AccountPage} from '../../../services/accounting/domain/account-page.model';
 import {AccountTypeOption} from '../../account-types.model';
 import {accountTypes} from '../../account-types.model'
-import {FimsValidators} from '../../../../common/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 
 @Component({
   selector: 'fims-account-form-component',

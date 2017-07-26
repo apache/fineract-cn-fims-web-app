@@ -15,10 +15,10 @@
  */
 
 import {Component, Input, OnInit} from '@angular/core';
-import {CreditWorthinessFactor} from '../../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
+import {CreditWorthinessFactor} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../../common/validator/validators';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {FormComponent} from '../../../../common/forms/form.component';
 
 
 @Component({

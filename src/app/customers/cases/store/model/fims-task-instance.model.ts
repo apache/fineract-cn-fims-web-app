@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 
 export interface FimsTaskInstance {
   taskDefinition: TaskDefinition;

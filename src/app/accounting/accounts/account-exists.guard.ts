@@ -19,10 +19,10 @@ import {Injectable} from '@angular/core';
 import * as fromAccounting from '../store';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
-import {AccountingService} from '../../../services/accounting/accounting.service';
+import {AccountingService} from '../../services/accounting/accounting.service';
 import {LoadAction} from '../store/account/account.actions';
 import {AccountingStore} from '../store/index';
-import {ExistsGuardService} from '../../../common/guards/exists-guard';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
 export class AccountExistsGuard implements CanActivate {

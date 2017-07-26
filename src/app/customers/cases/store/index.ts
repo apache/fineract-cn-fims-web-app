@@ -31,15 +31,15 @@ import {
   getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../common/store/search.reducer';
-import {createFormReducer, getFormError} from '../../../../common/store/form.reducer';
+} from '../../../common/store/search.reducer';
+import {createFormReducer, getFormError} from '../../../common/store/form.reducer';
 
 export interface State extends fromCustomer.State{
   cases: ResourceState;

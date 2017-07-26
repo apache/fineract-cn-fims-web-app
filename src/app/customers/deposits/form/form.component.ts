@@ -17,10 +17,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {ProductDefinition} from '../../../../services/depositAccount/domain/definition/product-definition.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 import {Observable} from 'rxjs/Observable';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import {CustomerService} from '../../../services/customer/customer.service';
 
 @Component({
   selector: 'fims-deposit-form-component',

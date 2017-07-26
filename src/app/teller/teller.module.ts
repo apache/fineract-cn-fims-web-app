@@ -42,7 +42,7 @@ import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard
 import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
 import {TellerProductsApiEffects} from './store/effects/products.service.effects';
 import {TellerCustomerIndexComponent} from './customer/customer-index.component';
-import {FimsSharedModule} from '../../common/common.module';
+import {FimsSharedModule} from '../common/common.module';
 import {TellerTransactionFormComponent} from './customer/transaction/form.component';
 import {CreateTellerTransactionForm} from './customer/transaction/create.form.component';
 import {TellerNotificationEffects} from './store/effects/notification.effects';

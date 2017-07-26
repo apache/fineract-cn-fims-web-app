@@ -15,9 +15,9 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {Validators, FormBuilder} from '@angular/forms';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 
 export interface CustomerDetailFormData {
   identifier: string;

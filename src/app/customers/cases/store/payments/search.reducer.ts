@@ -15,9 +15,9 @@
  */
 
 import * as paymentActions from './payment.actions';
-import {PlannedPayment} from '../../../../../services/portfolio/domain/individuallending/planned-payment.model';
+import {PlannedPayment} from '../../../../services/portfolio/domain/individuallending/planned-payment.model';
 import {SearchPaymentsPayload} from './payment.actions';
-import {PlannedPaymentPage} from '../../../../../services/portfolio/domain/individuallending/planned-payment-page.model';
+import {PlannedPaymentPage} from '../../../../services/portfolio/domain/individuallending/planned-payment-page.model';
 
 export interface State {
   paymentPage: PlannedPaymentPage;

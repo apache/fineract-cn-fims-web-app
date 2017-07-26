@@ -15,7 +15,7 @@
  */
 import {of} from 'rxjs/observable/of';
 import {Injectable} from '@angular/core';
-import {CustomerService} from '../../../../../../services/customer/customer.service';
+import {CustomerService} from '../../../../../services/customer/customer.service';
 import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';

@@ -30,15 +30,15 @@ import {
   getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../common/store/search.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../../common/store/form.reducer';
+} from '../../../common/store/search.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 import {FimsProduct} from './model/fims-product.model';
 
 export interface State extends fromRoot.State {

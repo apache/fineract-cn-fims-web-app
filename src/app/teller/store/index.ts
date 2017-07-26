@@ -24,7 +24,7 @@ import {createSelector} from 'reselect';
 import {
   createResourceReducer, getResourceAll, getResourceLoadedAt, getResourceSelected,
   ResourceState
-} from '../../../common/store/resource.reducer';
+} from '../../common/store/resource.reducer';
 
 export interface State extends fromRoot.State {
   tellerAuthentication: fromAuthentication.State;

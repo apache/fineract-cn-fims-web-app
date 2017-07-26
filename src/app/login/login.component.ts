@@ -23,7 +23,7 @@ import {Store} from '@ngrx/store';
 import {LOGIN} from '../store/security/security.actions';
 import {Subscription} from 'rxjs';
 import {MdSelectChange} from '@angular/material';
-import {TRANSLATE_STORAGE_KEY} from '../../common/i18n/translate';
+import {TRANSLATE_STORAGE_KEY} from '../common/i18n/translate';
 
 @Component({
   selector: 'fims-login',

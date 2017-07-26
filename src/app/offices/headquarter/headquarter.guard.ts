@@ -17,9 +17,9 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {OfficeService} from '../../../services/office/office.service';
-import {OfficePage} from '../../../services/office/domain/office-page.model';
-import {Office} from '../../../services/office/domain/office.model';
+import {OfficeService} from '../../services/office/office.service';
+import {OfficePage} from '../../services/office/domain/office-page.model';
+import {Office} from '../../services/office/domain/office.model';
 
 @Injectable()
 export class HeadquarterGuard implements CanActivate {

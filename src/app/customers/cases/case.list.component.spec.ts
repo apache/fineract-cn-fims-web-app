@@ -16,7 +16,7 @@
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CaseListComponent} from './case.list.component';
-import {ActivatedRouteStub, RouterLinkStubDirective, RouterStub} from '../../../common/testing/router-stubs';
+import {ActivatedRouteStub, RouterLinkStubDirective, RouterStub} from '../../common/testing/router-stubs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MdButtonModule, MdFab, MdToolbarModule} from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
@@ -27,10 +27,10 @@ import * as fromCustomers from '../store';
 import * as fromRoot from '../../store';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
-import {FimsSharedModule} from '../../../common/common.module';
-import {Customer} from '../../../services/customer/domain/customer.model';
-import {CustomerState} from '../../../services/customer/domain/customer-state.model';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {FimsSharedModule} from '../../common/common.module';
+import {Customer} from '../../services/customer/domain/customer.model';
+import {CustomerState} from '../../services/customer/domain/customer-state.model';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('Test case list component', () => {

@@ -21,11 +21,11 @@ import {MdCardModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
-import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
-import {FimsSharedModule} from '../../common/common.module';
-import {RouterLinkStubDirective, RouterOutletStubComponent} from '../../common/testing/router-stubs';
+import {FimsSharedModule} from '../common/common.module';
+import {RouterLinkStubDirective, RouterOutletStubComponent} from '../common/testing/router-stubs';
 
 describe('Test reporting component', () => {
 

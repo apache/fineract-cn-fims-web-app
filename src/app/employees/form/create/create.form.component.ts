@@ -17,12 +17,12 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from '../form.component';
 import {mapEmployee, mapUser} from '../form.mapper';
-import {Employee} from '../../../../services/office/domain/employee.model';
-import {UserWithPassword} from '../../../../services/identity/domain/user-with-password.model';
+import {Employee} from '../../../services/office/domain/employee.model';
+import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
 import * as fromEmployees from '../../store';
 import {Subscription} from 'rxjs';
 import {CREATE, RESET_FORM} from '../../store/employee.actions';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import {EmployeesStore} from '../../store/index';
 
 @Component({

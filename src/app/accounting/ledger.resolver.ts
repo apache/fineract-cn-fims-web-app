@@ -16,8 +16,8 @@
 
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Ledger} from '../../services/accounting/domain/ledger.model';
-import {AccountingService} from '../../services/accounting/accounting.service';
+import {Ledger} from '../services/accounting/domain/ledger.model';
+import {AccountingService} from '../services/accounting/accounting.service';
 import {Observable} from 'rxjs';
 
 @Injectable()

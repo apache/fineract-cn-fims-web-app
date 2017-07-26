@@ -18,19 +18,19 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore, getSelectedIdentificationCard} from '../../store/index';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {DELETE} from '../../store/identityCards/identity-cards.actions';
 import {DELETE as DELETE_SCAN, LOAD_ALL, LoadAllAction} from '../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute} from '@angular/router';
-import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Observable} from 'rxjs/Observable';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
-import {IdentificationCardScan} from '../../../../services/customer/domain/identification-card-scan.model';
+import {IdentificationCardScan} from '../../../services/customer/domain/identification-card-scan.model';
 import {UploadIdentificationCardScanEvent} from './scans/scan.list.component';
 import {CREATE} from '../../store/identityCards/scans/scans.actions';
-import {ImageComponent} from '../../../../common/image/image.component';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import {ImageComponent} from '../../../common/image/image.component';
+import {CustomerService} from '../../../services/customer/customer.service';
 
 @Component({
   templateUrl: './identity-card.detail.component.html'

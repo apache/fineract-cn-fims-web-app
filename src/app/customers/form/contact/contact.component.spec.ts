@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 import {Component, ViewChild} from '@angular/core';
-import {ContactDetail} from '../../../../services/domain/contact/contact-detail.model';
+import {ContactDetail} from '../../../services/domain/contact/contact-detail.model';
 import {CustomerContactFormComponent} from './contact.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MdInputModule} from '@angular/material';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {setValueByFormControlName} from '../../../../common/testing/input-fields';
+import {setValueByFormControlName} from '../../../common/testing/input-fields';
 import {TranslateModule} from '@ngx-translate/core';
 
 const contactDetails: ContactDetail[] = [

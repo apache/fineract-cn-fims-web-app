@@ -15,11 +15,11 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {FormBuilder, Validators} from '@angular/forms';
-import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
-import {ExpirationDate} from '../../../../../services/customer/domain/expiration-date.model';
-import {FimsValidators} from '../../../../../common/validator/validators';
+import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {ExpirationDate} from '../../../../services/customer/domain/expiration-date.model';
+import {FimsValidators} from '../../../../common/validator/validators';
 import {TdStepComponent} from '@covalent/core';
 
 @Component({
