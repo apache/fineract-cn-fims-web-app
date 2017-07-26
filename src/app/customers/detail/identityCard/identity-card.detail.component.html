@@ -55,6 +55,4 @@
     </fims-identification-card-scan-list>
   </div>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add identification card scan' | translate}}" [routerLink]="['addScan']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
-  <md-icon>add_a_photo</md-icon>
-</a>
+<fims-fab-button title="{{'Add identification card scan' | translate}}" icon="add_a_photo" [link]="['addScan']" [permission]="{ id: 'customer_identifications', accessLevel: 'CHANGE'}"></fims-fab-button>

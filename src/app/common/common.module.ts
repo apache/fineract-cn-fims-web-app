@@ -55,9 +55,12 @@ import {TextMaskModule} from 'angular2-text-mask';
 import {NumberInputComponent} from './number-input/number-input.component';
 import {ImageComponent} from './image/image.component';
 import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.component';
+import {FimsFabButtonComponent} from './fab-button/fab-button.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
+    RouterModule,
     CommonModule,
     CovalentCommonModule,
     CovalentDataTableModule,
@@ -101,7 +104,8 @@ import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.componen
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
-    ImageComponent
+    ImageComponent,
+    FimsFabButtonComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -126,7 +130,8 @@ import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.componen
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
-    ImageComponent
+    ImageComponent,
+    FimsFabButtonComponent
   ],
   entryComponents: [
     ImageComponent

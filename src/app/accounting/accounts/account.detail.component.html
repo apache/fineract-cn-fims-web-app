@@ -65,6 +65,4 @@
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{ 'Edit account' | translate }}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['edit']" >
-  <md-icon>mode_edit</md-icon>
-</a>
+<fims-fab-button title="{{'Edit account' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'accounting_accounts', accessLevel: 'CHANGE'}"></fims-fab-button>

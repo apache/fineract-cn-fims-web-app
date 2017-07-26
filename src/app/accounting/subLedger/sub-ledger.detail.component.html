@@ -70,6 +70,4 @@
     </ng-container>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create account' | translate}}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['accounts/create']">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create account' | translate}}" icon="add" [link]="['accounts/create']" [permission]="{ id: 'accounting_accounts', accessLevel: 'CHANGE'}"></fims-fab-button>

@@ -30,7 +30,4 @@
                    [data]="casesData$ | async">
   </fims-data-table>
 </fims-layout-card-over>
-
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new loan for customer' | translate}}" [routerLink]="['create']" *ngIf="canAdd$ | async">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create new loan for customer' | translate}}" icon="add" [link]="['create']" *ngIf="canAdd$ | async"></fims-fab-button>

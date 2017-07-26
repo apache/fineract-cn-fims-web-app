@@ -75,6 +75,4 @@
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit teller' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE' }">
-  <md-icon>mode_edit</md-icon>
-</a>
+<fims-fab-button title="{{'Edit teller' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'teller_management', accessLevel: 'CHANGE'}"></fims-fab-button>

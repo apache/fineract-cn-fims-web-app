@@ -30,7 +30,4 @@
     <fims-permission-list-item *ngFor="let permission of (formPermissions$ | async)" [formPermission]="permission" [readOnly]="true"></fims-permission-list-item>
   </md-list>
 </fims-layout-card-over>
-
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit role' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'identity_roles', accessLevel: 'CHANGE' }">
-  <md-icon>mode_edit</md-icon>
-</a>
+<fims-fab-button title="{{'Edit role' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'identity_roles', accessLevel: 'CHANGE'}"></fims-fab-button>
