@@ -26,7 +26,7 @@
 <fims-layout-card-over title="{{office.parentIdentifier ? office.name : office.name + ' (Headquarter)'}}" subTitle="{{office.description}}">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchOffice($event)" [alwaysVisible]="false"></td-search-box>
-    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>
     <button md-icon-button (click)="deleteOffice()" title="{{'Delete this office' | translate}}" *hasPermission="{ id: 'office_offices', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <fims-two-column-layout>
