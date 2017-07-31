@@ -51,7 +51,7 @@ export class ProductFormComponent implements OnInit{
 
   @Input('editMode') editMode: boolean;
 
-  @Input('product') set product(product: FimsProduct){
+  @Input('product') set product(product: FimsProduct) {
     this.prepareDetailForm(product);
     this.prepareSettingsForm(product);
     this.prepareInterestForm(product);
@@ -75,7 +75,7 @@ export class ProductFormComponent implements OnInit{
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.step.open();
   }
 
@@ -86,7 +86,7 @@ export class ProductFormComponent implements OnInit{
       this.arrearsAllowanceForm.valid;
   }
 
-  save(): void{
+  save(): void {
     const parameters: ProductParameters = {
       maximumDispersalAmount: 0,
       maximumDispersalCount: 0,
@@ -129,6 +129,7 @@ export class ProductFormComponent implements OnInit{
 
     assignments.push(createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
 
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.loansPayableLedger, AccountDesignators.LOANS_PAYABLE));
     assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
     assignments.push(createAccountAssignment(this.settingsForm.formData.pendingDisbursal, AccountDesignators.PENDING_DISBURSAL));
 
@@ -168,11 +169,13 @@ export class ProductFormComponent implements OnInit{
 
   prepareSettingsForm(product: FimsProduct) {
     const loanFoundAccount = findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
+    const loansPayableLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.LOANS_PAYABLE);
     const customerLoanLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
     const pendingDisbursal = findAccountDesignator(product.accountAssignments, AccountDesignators.PENDING_DISBURSAL);
 
     this.settingsFormData = {
       loanFundAccount: accountIdentifier(loanFoundAccount),
+      loansPayableLedger: ledgerIdentifier(loansPayableLedger),
       customerLoanLedger: ledgerIdentifier(customerLoanLedger),
       pendingDisbursal: accountIdentifier(pendingDisbursal)
     }
@@ -214,7 +217,5 @@ export class ProductFormComponent implements OnInit{
       account: [accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });
   }
-
-
 
 }

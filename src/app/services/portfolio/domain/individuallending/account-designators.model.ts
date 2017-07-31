@@ -29,6 +29,8 @@ export class AccountDesignators {
 
   public static readonly LOAN_FUNDS_SOURCE: string = "loan-funds-source";
 
+  public static readonly LOANS_PAYABLE: string = "loans-payable";
+
   public static readonly PROCESSING_FEE_INCOME = "processing-fee-income";
 
   public static readonly ORIGINATION_FEE_INCOME = "origination-fee-income";
