@@ -63,8 +63,6 @@ export class DataTableComponent {
 
   @Input() pageable: boolean = false;
 
-  @Input() selectable: boolean = true;
-
   @Input() actionColumn: boolean = true;
 
   @Input() actionColumnLabel: string = 'SHOW';
