@@ -43,7 +43,7 @@ export class TransactionTypeFormComponent extends FormComponent<TransactionType>
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      code: [this.transactionType.code, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      code: [this.transactionType.code, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [this.transactionType.name, [Validators.required, Validators.maxLength(256)]],
       description: [this.transactionType.description, [Validators.maxLength(2048)]]
     });

@@ -53,7 +53,7 @@ export class OfficeFormComponent implements OnInit {
 
   prepareForm(office: Office): void {
     this.detailForm = this.formBuilder.group({
-      identifier: [office.identifier, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      identifier: [office.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [office.name, Validators.required],
       description: [office.description]
     });

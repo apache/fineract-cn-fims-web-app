@@ -54,7 +54,7 @@ export class IdentificationCardScanComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      identifier: ['', [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
       file: ['', [Validators.required, FimsValidators.maxFileSize(512)]]
     });
