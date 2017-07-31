@@ -20,6 +20,7 @@ import {ActionReducer, combineReducers} from '@ngrx/store';
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
 import * as fromAccounts from './account/accounts.reducer';
+import * as authenticationActions from './security/security.actions';
 import {compose} from '@ngrx/core/compose';
 import {localStorageSync} from 'ngrx-store-localstorage';
 import {
@@ -52,11 +53,19 @@ export const reducers = {
   ledgerSearch: createSearchReducer('Ledger'),
 };
 
-export function createReducer(asyncReducers = {}): ActionReducer<any>{
-  return compose(localStorageSync({
+export function createReducer(asyncReducers = {}): ActionReducer<any> {
+  const actionReducer = compose(localStorageSync({
     keys: [],
     rehydrate: true
   }), combineReducers)(Object.assign(reducers, asyncReducers));
+
+  return function(state: any, action: any) {
+    // Reset state
+    if(action.type === authenticationActions.LOGOUT_SUCCESS) {
+      return actionReducer(undefined, action);
+    }
+    return actionReducer(state, action);
+  };
 }
 
 export const productionReducer: ActionReducer<State> = createReducer();
