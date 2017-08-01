@@ -15,12 +15,12 @@
  */
 
 import {FormPermission} from '../model/form-permission.model';
-import {AllowedOperation, Permission} from '../../../services/identity/domain/permission.model';
-import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
-import {FimsPermissionDescriptor} from '../../../services/security/authz/fims-permission-descriptor';
+import {AllowedOperation, Permission} from '../../services/identity/domain/permission.model';
+import {PermittableGroup} from '../../services/anubis/permittable-group.model';
+import {FimsPermissionDescriptor} from '../../services/security/authz/fims-permission-descriptor';
 import {Injectable} from '@angular/core';
-import {PermittableGroupIdMapper} from '../../../services/security/authz/permittable-group-id-mapper';
-import {Role} from '../../../services/identity/domain/role.model';
+import {PermittableGroupIdMapper} from '../../services/security/authz/permittable-group-id-mapper';
+import {Role} from '../../services/identity/domain/role.model';
 
 @Injectable()
 export class FormPermissionService {

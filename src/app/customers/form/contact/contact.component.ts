@@ -15,14 +15,14 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, FormControl, AbstractControl, Validators} from '@angular/forms';
 import {
   ContactDetail, ContactDetailType, EMAIL, MOBILE,
   PHONE, BUSINESS
-} from '../../../../services/domain/contact/contact-detail.model';
+} from '../../../services/domain/contact/contact-detail.model';
 import {getContactDetailValueByType} from '../../contact.helper';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 
 @Component({
   selector: 'fims-customer-contact-form',
@@ -57,17 +57,17 @@ export class CustomerContactFormComponent extends FormComponent<ContactDetail[]>
   }
 
   get formData(): ContactDetail[] {
-    let contactDetails: ContactDetail[] = [];
+    const contactDetails: ContactDetail[] = [];
 
-    this.pushIfNotPristine(contactDetails, this.form.get('email'), 'EMAIL');
-    this.pushIfNotPristine(contactDetails, this.form.get('mobile'), 'MOBILE');
-    this.pushIfNotPristine(contactDetails, this.form.get('phone'), 'PHONE');
+    this.pushIfValue(contactDetails, this.form.get('email'), 'EMAIL');
+    this.pushIfValue(contactDetails, this.form.get('mobile'), 'MOBILE');
+    this.pushIfValue(contactDetails, this.form.get('phone'), 'PHONE');
 
     return contactDetails;
   }
 
-  private pushIfNotPristine(contactDetails: ContactDetail[], control: AbstractControl, type: ContactDetailType): void {
-    if (!control.pristine) {
+  private pushIfValue(contactDetails: ContactDetail[], control: AbstractControl, type: ContactDetailType): void {
+    if (control.value && control.value.length > 0) {
       contactDetails.push({
         group: 'BUSINESS',
         type: type,

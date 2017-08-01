@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromAccounting from '../../../store/index';
 import {AccountingStore} from '../../../store/index';
-import {TransactionType} from '../../../../../services/accounting/domain/transaction-type.model';
+import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {SelectAction, UPDATE} from '../../../store/ledger/transaction-type/transaction-type.actions';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';

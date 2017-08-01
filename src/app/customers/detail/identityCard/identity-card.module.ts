@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {FimsSharedModule} from '../../../../common/common.module';
+import {FimsSharedModule} from '../../../common/common.module';
 import {IdentityCardRoutes} from './identity-card.routing';
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -30,11 +30,16 @@ import {CustomerIdentificationCardRouteEffects} from '../../store/identityCards/
 import {CustomerIdentificationCardApiEffects} from '../../store/identityCards/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {IdentityCardFormComponent} from './form/identity-card-form.component';
-import {IdentityCardScansFormComponent} from './form/scans/scans.component';
+import {CustomerIdentityCardScanListComponent} from './scans/scan.list.component';
+import {CustomerIdentificationCardScanApiEffects} from '../../store/identityCards/scans/effects/service.effects';
+import {CustomerIdentificationCardScanNotificationEffects} from '../../store/identityCards/scans/effects/notification.effects';
+import {CreateIdentificationCardScanComponent} from './scans/form/create.form.component';
+import {IdentificationCardScanComponent} from './scans/form/scan.form.component';
+import {CustomerIdentificationCardScanRouteEffects} from '../../store/identityCards/scans/effects/route.effects';
 
 @NgModule({
   imports: [
@@ -42,6 +47,7 @@ import {IdentityCardScansFormComponent} from './form/scans/scans.component';
     FimsSharedModule,
     TranslateModule,
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     MdIconModule,
     MdListModule,
@@ -54,6 +60,10 @@ import {IdentityCardScansFormComponent} from './form/scans/scans.component';
     EffectsModule.run(CustomerIdentificationCardApiEffects),
     EffectsModule.run(CustomerIdentificationCardRouteEffects),
     EffectsModule.run(CustomerIdentificationCardNotificationEffects),
+
+    EffectsModule.run(CustomerIdentificationCardScanApiEffects),
+    EffectsModule.run(CustomerIdentificationCardScanRouteEffects),
+    EffectsModule.run(CustomerIdentificationCardScanNotificationEffects)
   ],
   declarations: [
     CustomerIdentityCardListComponent,
@@ -62,7 +72,9 @@ import {IdentityCardScansFormComponent} from './form/scans/scans.component';
     CustomerIdentityCardDetailComponent,
     EditCustomerIdentificationCardFormComponent,
     IdentityCardFormComponent,
-    IdentityCardScansFormComponent
+    CustomerIdentityCardScanListComponent,
+    CreateIdentificationCardScanComponent,
+    IdentificationCardScanComponent
   ],
   providers: [
     IdentityCardExistsGuard

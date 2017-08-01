@@ -32,4 +32,10 @@ export class ProductTasksRouteEffects {
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
+  @Effect({ dispatch: false })
+  deleteProductTaskSuccess$: Observable<Action> = this.actions$
+    .ofType(taskActions.DELETE)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+
 }

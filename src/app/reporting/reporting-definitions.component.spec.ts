@@ -21,13 +21,13 @@ import {MdCardModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
-import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {ReportingDefinitionsComponent} from './reporting-definitions.component';
-import {ReportDefinition} from '../../services/reporting/domain/report-definition.model';
-import {ActivatedRouteStub} from '../../common/testing/router-stubs';
-import {FimsSharedModule} from '../../common/common.module';
+import {ReportDefinition} from '../services/reporting/domain/report-definition.model';
+import {ActivatedRouteStub} from '../common/testing/router-stubs';
+import {FimsSharedModule} from '../common/common.module';
 
 const definitions: ReportDefinition[] = [
   { identifier: 'reportOne', name: '', description: '', displayableFields: [], queryParameters: [] },

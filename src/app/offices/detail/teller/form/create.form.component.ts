@@ -16,14 +16,14 @@
 
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
+import {Teller} from '../../../../services/teller/domain/teller.model';
 import {OfficeTellerFormComponent} from './form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromTeller from '../../../store/index';
 import {OfficesStore} from '../../../store/index';
 import {CREATE_TELLER, RESET_FORM} from '../../../store/teller/teller.actions';
-import {Error} from '../../../../../services/domain/error.model';
-import {Office} from '../../../../../services/office/domain/office.model';
+import {Error} from '../../../../services/domain/error.model';
+import {Office} from '../../../../services/office/domain/office.model';
 
 @Component({
   templateUrl: './create.form.component.html'

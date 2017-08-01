@@ -16,9 +16,9 @@
 
 import * as ledger from './ledger.actions';
 import { createSelector } from 'reselect';
-import {Ledger} from '../../../../services/accounting/domain/ledger.model';
-import {ResourceState} from '../../../../common/store/resource.reducer';
-import {resourcesToHash} from '../../../../common/store/reducer.helper';
+import {Ledger} from '../../../services/accounting/domain/ledger.model';
+import {ResourceState} from '../../../common/store/resource.reducer';
+import {resourcesToHash} from '../../../common/store/reducer.helper';
 
 export interface State {
   ids: string[];

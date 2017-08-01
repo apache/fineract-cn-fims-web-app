@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Product} from '../../../../../services/portfolio/domain/product.model';
+import {Product} from '../../../../services/portfolio/domain/product.model';
 import {FimsProduct} from './fims-product.model';
 
 export function mapToProduct(product: FimsProduct): Product {

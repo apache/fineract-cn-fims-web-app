@@ -15,17 +15,17 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Error} from '../../../../services/domain/error.model';
-import {type} from '../../../util';
-import {RoutePayload} from '../../../../common/store/route-payload';
+import {Error} from '../../../services/domain/error.model';
+import {type} from '../../../store/util';
+import {RoutePayload} from '../../../common/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
-import {SearchResult} from '../../../../common/store/search.reducer';
+import {SearchResult} from '../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../common/store/resource.reducer';
-import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
-import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+} from '../../../common/store/resource.reducer';
+import {AccountAssignment} from '../../../services/portfolio/domain/account-assignment.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 
 export const SEARCH = type('[Product] Search');
 export const SEARCH_COMPLETE = type('[Product] Search Complete');

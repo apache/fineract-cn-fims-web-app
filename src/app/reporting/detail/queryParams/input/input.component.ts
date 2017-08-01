@@ -15,7 +15,7 @@
  */
 
 import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {Type} from '../../../../../services/reporting/domain/type.model';
+import {Type} from '../../../../services/reporting/domain/type.model';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -28,7 +28,7 @@ import {
 } from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
-import {Operator} from '../../../../../services/reporting/domain/query-parameter.model';
+import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {createPlaceholder} from '../query-params.helper';
 
 const OperatorPrefixMap = {

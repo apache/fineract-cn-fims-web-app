@@ -40,7 +40,7 @@
                    (onFetch)="fetchAccountsEntries($event)"
                    [columns]="columns"
                    [data]="accountEntryData$ | async"
-                   [selectable]="false"
+                   [actionColumn]="false"
                    [sortable]="true"
                    [pageable]="true">
   </fims-data-table>

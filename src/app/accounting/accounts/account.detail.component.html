@@ -25,58 +25,44 @@
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <button md-icon-button (click)="deleteAccount()" title="{{'Delete this account' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['./entries']">
-                <md-icon md-list-avatar>assignment</md-icon>
-                <h3 md-line translate>Account entries</h3>
-                <p md-line translate>Account entries</p>
-              </a>
-              <a md-list-item [routerLink]="['./tasks']">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line translate>Tasks</h3>
-                <p md-line translate>Change the status of this account</p>
-              </a>
-              <a md-list-item [routerLink]="['./activities']">
-                <md-icon md-list-avatar>event</md-icon>
-                <h3 md-line translate>Activities</h3>
-                <p md-line translate>Recent activities</p>
-              </a>
-              <a *ngIf="account.referenceAccount" md-list-item [routerLink]="['../', account.referenceAccount]">
-                <md-icon md-list-avatar>view_module</md-icon>
-                <h3 md-line translate>Reference account</h3>
-                <p md-line translate>Navigate to reference account</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <div layout="row">
-              <md-list>
-                <h3 md-subheader translate>Current status</h3>
-                <fims-state-display [state]="account.state"></fims-state-display>
-                <md-list-item>
-                  <md-icon md-list-avatar>account_balance</md-icon>
-                  <h3 md-line translate>Type</h3>
-                  <p md-line>{{account.type}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <md-icon md-list-avatar>payment</md-icon>
-                  <h3 md-line translate>Balance</h3>
-                  <p md-line>{{account.balance | number}}</p>
-                </md-list-item>
-              </md-list>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['./entries']">
+        <md-icon md-list-avatar>assignment</md-icon>
+        <h3 md-line translate>Account entries</h3>
+        <p md-line translate>Account entries</p>
+      </a>
+      <a md-list-item [routerLink]="['./tasks']">
+        <md-icon md-list-avatar>playlist_add_check</md-icon>
+        <h3 md-line translate>Tasks</h3>
+        <p md-line translate>Change the status of this account</p>
+      </a>
+      <a md-list-item [routerLink]="['./activities']">
+        <md-icon md-list-avatar>event</md-icon>
+        <h3 md-line translate>Activities</h3>
+        <p md-line translate>Recent activities</p>
+      </a>
+      <a *ngIf="account.referenceAccount" md-list-item [routerLink]="['../', account.referenceAccount]">
+        <md-icon md-list-avatar>view_module</md-icon>
+        <h3 md-line translate>Reference account</h3>
+        <p md-line translate>Navigate to reference account</p>
+      </a>
+    </md-nav-list>
+    <md-list right>
+      <h3 md-subheader translate>Current status</h3>
+      <fims-state-display [state]="account.state"></fims-state-display>
+      <md-list-item>
+        <md-icon md-list-avatar>account_balance</md-icon>
+        <h3 md-line translate>Type</h3>
+        <p md-line>{{account.type}}</p>
+      </md-list-item>
+      <md-list-item>
+        <md-icon md-list-avatar>payment</md-icon>
+        <h3 md-line translate>Balance</h3>
+        <p md-line>{{account.balance | number}}</p>
+      </md-list-item>
+    </md-list>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{ 'Edit account' | translate }}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['edit']" >
-  <md-icon>mode_edit</md-icon>
-</a>
+<fims-fab-button title="{{'Edit account' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'accounting_accounts', accessLevel: 'CHANGE'}"></fims-fab-button>

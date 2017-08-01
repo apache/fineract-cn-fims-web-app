@@ -15,15 +15,15 @@
  */
 
 import {Injectable} from '@angular/core';
-import {OfficeService} from '../../../../services/office/office.service';
+import {OfficeService} from '../../../services/office/office.service';
 import {Effect, Actions} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as employeeActions from '../employee.actions';
-import {IdentityService} from '../../../../services/identity/identity.service';
-import {RoleIdentifier} from '../../../../services/identity/domain/role-identifier.model';
-import {Password} from '../../../../services/identity/domain/password.model';
+import {IdentityService} from '../../../services/identity/identity.service';
+import {RoleIdentifier} from '../../../services/identity/domain/role-identifier.model';
+import {Password} from '../../../services/identity/domain/password.model';
 
 @Injectable()
 export class EmployeeApiEffects {

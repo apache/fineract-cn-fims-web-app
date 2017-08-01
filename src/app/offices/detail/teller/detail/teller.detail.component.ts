@@ -33,7 +33,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as fromOffices from '../../../store/index';
 import {OfficesStore} from '../../../store/index';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
+import {Teller} from '../../../../services/teller/domain/teller.model';
 import {Observable} from 'rxjs/Observable';
 
 @Component({

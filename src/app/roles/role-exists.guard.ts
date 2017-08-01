@@ -20,9 +20,9 @@ import {Injectable} from '@angular/core';
 import * as fromRoles from './store';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
-import {IdentityService} from '../../services/identity/identity.service';
+import {IdentityService} from '../services/identity/identity.service';
 import {LoadAction} from './store/role.actions';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 
 @Injectable()
 export class RoleExistsGuard implements CanActivate {

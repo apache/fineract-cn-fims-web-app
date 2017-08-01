@@ -15,17 +15,17 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../util';
-import {Account} from '../../../../services/accounting/domain/account.model';
-import {AccountPage} from '../../../../services/accounting/domain/account-page.model';
-import {Error} from '../../../../services/domain/error.model';
-import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {type} from '../../../store/util';
+import {Account} from '../../../services/accounting/domain/account.model';
+import {AccountPage} from '../../../services/accounting/domain/account-page.model';
+import {Error} from '../../../services/domain/error.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {ActivatedRoute} from '@angular/router';
-import {RoutePayload} from '../../../../common/store/route-payload';
+import {RoutePayload} from '../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 
 export const LOAD = type('[Account] Load');
 export const SELECT = type('[Account] Select');

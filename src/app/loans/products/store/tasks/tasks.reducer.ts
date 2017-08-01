@@ -15,9 +15,9 @@
  */
 
 import * as task from './task.actions';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
-import {ResourceState} from '../../../../../common/store/resource.reducer';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../../common/store/reducer.helper';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
+import {ResourceState} from '../../../../common/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../common/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],

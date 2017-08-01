@@ -15,7 +15,7 @@
  */
 
 import * as ledger from './ledger.actions';
-import {TrialBalance} from '../../../../services/accounting/domain/trial-balance.model';
+import {TrialBalance} from '../../../services/accounting/domain/trial-balance.model';
 
 
 export interface State {

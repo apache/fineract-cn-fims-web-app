@@ -15,20 +15,20 @@
  */
 
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
+import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
+import {FimsValidators} from '../../common/validator/validators';
 import {interestPayableOptionList} from '../domain/interest-payable-option-list.model';
 import {timeUnitOptionList} from '../domain/time-unit-option-list.model';
 import {DepositProductChargesFormComponent} from './charges/charges.component';
-import {Charge} from '../../../services/depositAccount/domain/definition/charge.model';
-import {Currency} from '../../../services/currency/domain/currency.model';
-import {Action} from '../../../services/depositAccount/domain/definition/action.model';
+import {Charge} from '../../services/depositAccount/domain/definition/charge.model';
+import {Currency} from '../../services/currency/domain/currency.model';
+import {Action} from '../../services/depositAccount/domain/definition/action.model';
 import {typeOptionList} from '../domain/type-option-list.model';
-import {accountExists} from '../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../services/accounting/accounting.service';
-import {ledgerExists} from '../../../common/validator/ledger-exists.validator';
+import {accountExists} from '../../common/validator/account-exists.validator';
+import {AccountingService} from '../../services/accounting/accounting.service';
+import {ledgerExists} from '../../common/validator/ledger-exists.validator';
 
 @Component({
   selector: 'fims-deposit-product-form',

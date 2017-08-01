@@ -15,10 +15,10 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Error} from '../../../../../services/domain/error.model';
-import {type} from '../../../../util';
-import {JournalEntry} from '../../../../../services/accounting/domain/journal-entry.model';
-import {RoutePayload} from '../../../../../common/store/route-payload';
+import {Error} from '../../../../services/domain/error.model';
+import {type} from '../../../../store/util';
+import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
+import {RoutePayload} from '../../../../common/store/route-payload';
 
 export const SEARCH = type('[Journal Entry] Search');
 export const SEARCH_COMPLETE = type('[Journal Entry] Search Complete');

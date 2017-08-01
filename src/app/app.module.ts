@@ -18,41 +18,42 @@ import {BrowserModule} from '@angular/platform-browser';
 import {Http, HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {appRoutes, appRoutingProviders} from './app.routes';
-import {HttpClient} from '../services/http/http.service';
-import {IdentityService} from '../services/identity/identity.service';
-import {OfficeService} from '../services/office/office.service';
-import {CustomerService} from '../services/customer/customer.service';
-import {AuthenticationService} from '../services/security/authn/authentication.service';
-import {CatalogService} from '../services/catalog/catalog.service';
-import {AccountingService} from '../services/accounting/accounting.service';
-import {PortfolioService} from '../services/portfolio/portfolio.service';
+import {HttpClient} from './services/http/http.service';
+import {IdentityService} from './services/identity/identity.service';
+import {OfficeService} from './services/office/office.service';
+import {CustomerService} from './services/customer/customer.service';
+import {AuthenticationService} from './services/security/authn/authentication.service';
+import {CatalogService} from './services/catalog/catalog.service';
+import {AccountingService} from './services/accounting/accounting.service';
+import {PortfolioService} from './services/portfolio/portfolio.service';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {PermittableGroupIdMapper} from '../services/security/authz/permittable-group-id-mapper';
-import {reducer} from './reducers';
+import {PermittableGroupIdMapper} from './services/security/authz/permittable-group-id-mapper';
+import {reducer} from './store';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {NotificationService} from '../services/notification/notification.service';
-import {OfficeSearchApiEffects} from './reducers/office/effects/service.effects';
-import {EmployeeSearchApiEffects} from './reducers/employee/effects/service.effects';
-import {RoleSearchApiEffects} from './reducers/role/effects/service.effects';
-import {CustomerSearchApiEffects} from './reducers/customer/effects/service.effects';
-import {AccountSearchApiEffects} from './reducers/account/effects/service.effects';
-import {SecurityRouteEffects} from './reducers/security/effects/route.effects';
-import {SecurityApiEffects} from './reducers/security/effects/service.effects';
-import {SecurityNotificationEffects} from './reducers/security/effects/notification.effects';
-import {LedgerSearchApiEffects} from './reducers/ledger/effects/service.effects';
+import {NotificationService} from './services/notification/notification.service';
+import {OfficeSearchApiEffects} from './store/office/effects/service.effects';
+import {EmployeeSearchApiEffects} from './store/employee/effects/service.effects';
+import {RoleSearchApiEffects} from './store/role/effects/service.effects';
+import {CustomerSearchApiEffects} from './store/customer/effects/service.effects';
+import {AccountSearchApiEffects} from './store/account/effects/service.effects';
+import {SecurityRouteEffects} from './store/security/effects/route.effects';
+import {SecurityApiEffects} from './store/security/effects/service.effects';
+import {SecurityNotificationEffects} from './store/security/effects/notification.effects';
+import {LedgerSearchApiEffects} from './store/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ExistsGuardService} from '../common/guards/exists-guard';
-import {CountryService} from '../services/country/country.service';
-import {CountrySearchApiEffects} from './reducers/country/service.effects';
-import {ImageService} from '../services/image/image.service';
-import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
-import {CurrencyService} from '../services/currency/currency.service';
-import {TellerService} from '../services/teller/teller-service';
-import {ReportingService} from '../services/reporting/reporting.service';
-import {getSelectedLanguage} from '../common/i18n/translate';
+import {ExistsGuardService} from './common/guards/exists-guard';
+import {CountryService} from './services/country/country.service';
+import {CountrySearchApiEffects} from './store/country/service.effects';
+import {ImageService} from './services/image/image.service';
+import {DepositAccountService} from './services/depositAccount/deposit-account.service';
+import {CurrencyService} from './services/currency/currency.service';
+import {TellerService} from './services/teller/teller-service';
+import {ReportingService} from './services/reporting/reporting.service';
+import {getSelectedLanguage} from './common/i18n/translate';
+import {environment} from '../environments/environment';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -76,9 +77,7 @@ export function HttpLoaderFactory(http: Http){
     appRoutes,
     StoreModule.provideStore(reducer),
 
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    }),
+    !environment.production ? StoreDevtoolsModule.instrumentOnlyWithExtension({ maxAge: 5 }) : [],
 
     /**
      * Root effects

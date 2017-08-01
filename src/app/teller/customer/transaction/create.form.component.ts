@@ -15,20 +15,20 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
-import {TellerService} from '../../../../services/teller/teller-service';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {TellerTransaction, TransactionType} from '../../../services/teller/domain/teller-transaction.model';
+import {TellerService} from '../../../services/teller/teller-service';
+import {TellerTransactionCosts} from '../../../services/teller/domain/teller-transaction-costs.model';
 import {CONFIRM_TRANSACTION} from '../../store/teller.actions';
 import * as fromTeller from '../../store/index';
 import {TellerStore} from '../../store/index';
-import * as fromRoot from '../../../reducers/index';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
+import * as fromRoot from '../../../store/index';
+import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {TellerTransactionFormComponent, TellerTransactionFormData} from './form.component';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {Teller} from '../../../../services/teller/domain/teller.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {Teller} from '../../../services/teller/domain/teller.model';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -94,13 +94,14 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
       .do(() => this.transactionCreated = true);
   }
 
-  confirmTransaction(): void {
+  confirmTransaction(chargesIncluded: boolean): void {
     this.store.dispatch({
       type: CONFIRM_TRANSACTION,
       payload: {
         tellerCode: this.teller.code,
         tellerTransactionIdentifier: this.tellerTransactionIdentifier,
         command: 'CONFIRM',
+        chargesIncluded,
         activatedRoute: this.route
       }
     });

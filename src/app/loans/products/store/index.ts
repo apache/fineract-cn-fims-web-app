@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../../reducers';
+import * as fromRoot from '../../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createSelector} from 'reselect';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import * as fromProducts from './products.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
@@ -30,15 +30,15 @@ import {
   getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../common/store/search.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../../common/store/form.reducer';
+} from '../../../common/store/search.reducer';
+import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
 import {FimsProduct} from './model/fims-product.model';
 
 export interface State extends fromRoot.State {

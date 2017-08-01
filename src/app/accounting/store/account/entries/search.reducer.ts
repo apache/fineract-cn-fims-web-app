@@ -15,8 +15,8 @@
  */
 
 import * as entries from './entries.actions';
-import {AccountEntry} from '../../../../../services/accounting/domain/account-entry.model';
-import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
+import {AccountEntry} from '../../../../services/accounting/domain/account-entry.model';
+import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 
 export interface State {
   entries: AccountEntry[];

@@ -20,7 +20,7 @@ import {
   LedgerRoutePayload,
   LoadAllTopLevelComplete, UpdateLedgerSuccessAction
 } from './ledger.actions';
-import {Ledger} from '../../../../services/accounting/domain/ledger.model';
+import {Ledger} from '../../../services/accounting/domain/ledger.model';
 
 describe('Ledgers Reducer', () => {
 

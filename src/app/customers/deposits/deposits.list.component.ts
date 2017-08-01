@@ -16,14 +16,14 @@
 
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Customer} from '../../../services/customer/domain/customer.model';
+import {Customer} from '../../services/customer/domain/customer.model';
 import {Subscription} from 'rxjs/Subscription';
-import {TableData} from '../../../common/data-table/data-table.component';
+import {TableData} from '../../common/data-table/data-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositsStore} from './store/index';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {SEARCH} from './store/deposit.actions';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
 import * as fromDeposits from './store/index';
 import * as fromCustomers from '../store';
 

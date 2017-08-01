@@ -16,7 +16,7 @@
 
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {FimsSharedModule} from '../../../common/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';

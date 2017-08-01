@@ -15,9 +15,9 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../../../util';
-import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
-import {AccountEntryPage} from '../../../../../services/accounting/domain/account-entry-page.model';
+import {type} from '../../../../store/util';
+import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {AccountEntryPage} from '../../../../services/accounting/domain/account-entry-page.model';
 
 export const SEARCH = type('[Account Entry] Search');
 export const SEARCH_COMPLETE = type('[Account Entry] Search Complete');

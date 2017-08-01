@@ -20,7 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as taskActions from '../task.actions';
-import {AccountingService} from '../../../../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../../../services/accounting/accounting.service';
 
 @Injectable()
 export class AccountCommandApiEffects {

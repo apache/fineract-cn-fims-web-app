@@ -15,14 +15,14 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Error} from '../../../../../services/domain/error.model';
-import {type} from '../../../../util';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
-import {RoutePayload} from '../../../../../common/store/route-payload';
+import {Error} from '../../../../services/domain/error.model';
+import {type} from '../../../../store/util';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
+import {RoutePayload} from '../../../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
+  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../../common/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Task] Load All Complete');
@@ -37,6 +37,10 @@ export const CREATE_FAIL = type('[Product Task] Create Fail');
 export const UPDATE = type('[Product Task] Update');
 export const UPDATE_SUCCESS = type('[Product Task] Update Success');
 export const UPDATE_FAIL = type('[Product Task] Update Fail');
+
+export const DELETE = type('[Product Task] Delete');
+export const DELETE_SUCCESS = type('[Product Task] Delete Success');
+export const DELETE_FAIL = type('[Product Task] Delete Fail');
 
 export const RESET_FORM = type('[Product Task] Reset Form');
 
@@ -105,6 +109,24 @@ export class UpdateTaskFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class DeleteTaskAction implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: TaskRoutePayload) { }
+}
+
+export class DeleteTaskSuccessAction implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: DeleteResourceSuccessPayload) { }
+}
+
+export class DeleteTaskFailAction implements Action {
+  readonly type = DELETE_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export class ResetTaskFormAction implements Action {
   readonly type = RESET_FORM;
 
@@ -122,4 +144,7 @@ export type Actions
   | UpdateTaskAction
   | UpdateTaskSuccessAction
   | UpdateTaskFailAction
+  | DeleteTaskAction
+  | DeleteTaskSuccessAction
+  | DeleteTaskFailAction
   | ResetTaskFormAction;

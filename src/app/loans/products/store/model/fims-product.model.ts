@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import {ProductParameters} from '../../../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {AccountAssignment} from '../../../../../services/portfolio/domain/account-assignment.model';
-import {InterestBasis} from '../../../../../services/portfolio/domain/interest-basis.model';
-import {InterestRange} from '../../../../../services/portfolio/domain/interest-range.model';
-import {BalanceRange} from '../../../../../services/portfolio/domain/balance-range.model';
-import {TermRange} from '../../../../../services/portfolio/domain/term-range.model';
+import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
+import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
+import {InterestBasis} from '../../../../services/portfolio/domain/interest-basis.model';
+import {InterestRange} from '../../../../services/portfolio/domain/interest-range.model';
+import {BalanceRange} from '../../../../services/portfolio/domain/balance-range.model';
+import {TermRange} from '../../../../services/portfolio/domain/term-range.model';
 
 /**
  * Model interface with concrete ProductParameters instead of JSON string.
@@ -39,6 +39,10 @@ export interface FimsProduct {
   currencyCode: string;
   minorCurrencyUnitDigits: number;
   enabled?: boolean;
+  createdOn?: string;
+  createdBy?: string;
+  lastModifiedOn?: string;
+  lastModifiedBy?: string;
 }
 
 

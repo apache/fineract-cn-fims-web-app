@@ -16,13 +16,13 @@
 
 import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {OfficeService} from '../../services/office/office.service';
+import {OfficeService} from '../services/office/office.service';
 import * as fromEmployees from './store';
 import {Observable} from 'rxjs';
 import {LoadAction} from './store/employee.actions';
 import {of} from 'rxjs/observable/of';
 import {EmployeesStore} from './store/index';
-import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {ExistsGuardService} from '../common/guards/exists-guard';
 
 @Injectable()
 export class EmployeeExistsGuard implements CanActivate {

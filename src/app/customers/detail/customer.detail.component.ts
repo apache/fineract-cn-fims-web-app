@@ -16,15 +16,15 @@
 
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Customer} from '../../../services/customer/domain/customer.model';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Field} from '../../../services/catalog/domain/field.model';
-import {Option} from '../../../services/catalog/domain/option.model';
+import {Customer} from '../../services/customer/domain/customer.model';
+import {Catalog} from '../../services/catalog/domain/catalog.model';
+import {Field} from '../../services/catalog/domain/field.model';
+import {Option} from '../../services/catalog/domain/option.model';
 import * as fromCustomers from '../store';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../store/index';
 import {LOAD_ALL} from '../store/catalogs/catalog.actions';
-import {CustomerService} from '../../../services/customer/customer.service';
+import {CustomerService} from '../../services/customer/customer.service';
 
 interface CatalogFieldPair{
   catalog: Catalog;

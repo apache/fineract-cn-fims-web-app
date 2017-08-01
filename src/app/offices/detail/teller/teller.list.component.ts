@@ -15,12 +15,12 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {TableData} from '../../../../common/data-table/data-table.component';
+import {TableData} from '../../../common/data-table/data-table.component';
 import {Observable} from 'rxjs/Observable';
 import {getAllTellerEntities, getSelectedOffice, OfficesStore} from '../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {Teller} from '../../../../services/teller/domain/teller.model';
+import {Teller} from '../../../services/teller/domain/teller.model';
 import {LoadTellerAction} from '../../store/teller/teller.actions';
 
 @Component({

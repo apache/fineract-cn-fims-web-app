@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Type} from '../../../services/depositAccount/domain/type.model';
+import {Type} from '../../services/depositAccount/domain/type.model';
 
 export interface TypeOption {
   label: string;

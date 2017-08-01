@@ -15,19 +15,19 @@
  */
 
 import {Component, EventEmitter, ViewChild} from '@angular/core';
-import {Office} from '../../../services/office/domain/office.model';
+import {Office} from '../../services/office/domain/office.model';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {OfficeFormComponent} from './form.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {IdInputComponent} from '../../../common/id-input/id-input.component';
+import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
-import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
+import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
+import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
 import {MdAutocompleteModule, MdInputModule} from '@angular/material';
-import {AddressFormComponent} from '../../../common/address/address.component';
-import {CountryService} from '../../../services/country/country.service';
+import {AddressFormComponent} from '../../common/address/address.component';
+import {CountryService} from '../../services/country/country.service';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 

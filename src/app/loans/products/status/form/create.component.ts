@@ -16,13 +16,13 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ProductTaskFormComponent} from './form.component';
 import {Subscription} from 'rxjs';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
 import {CREATE, RESET_FORM} from '../../store/tasks/task.actions';
-import {Error} from '../../../../../services/domain/error.model';
+import {Error} from '../../../../services/domain/error.model';
 import {FimsProduct} from '../../store/model/fims-product.model';
 
 @Component({

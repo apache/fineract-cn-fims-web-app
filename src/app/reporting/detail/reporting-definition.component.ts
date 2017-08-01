@@ -16,13 +16,13 @@
 
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {ReportDefinition} from '../../../services/reporting/domain/report-definition.model';
+import {ReportDefinition} from '../../services/reporting/domain/report-definition.model';
 import {ActivatedRoute} from '@angular/router';
-import {ReportingService} from '../../../services/reporting/reporting.service';
-import {ReportRequest} from '../../../services/reporting/domain/report-request.model';
-import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
-import {ReportPage} from '../../../services/reporting/domain/report-page.model';
-import {DisplayableField} from '../../../services/reporting/domain/displayable-field.model';
+import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReportRequest} from '../../services/reporting/domain/report-request.model';
+import {QueryParameter} from '../../services/reporting/domain/query-parameter.model';
+import {ReportPage} from '../../services/reporting/domain/report-page.model';
+import {DisplayableField} from '../../services/reporting/domain/displayable-field.model';
 import {GenerateReportEvent, ReportingCriteriaComponent} from './criteria/criteria.component';
 
 @Component({

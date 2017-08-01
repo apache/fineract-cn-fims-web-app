@@ -17,12 +17,12 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {CatalogService} from '../../../services/catalog/catalog.service';
-import {CustomerService} from '../../../services/customer/customer.service';
-import {Command} from '../../../services/customer/domain/command.model';
-import {AccountingService} from '../../../services/accounting/accounting.service';
-import {AccountCommand} from '../../../services/accounting/domain/account-command.model';
+import {Catalog} from '../../services/catalog/domain/catalog.model';
+import {CatalogService} from '../../services/catalog/catalog.service';
+import {CustomerService} from '../../services/customer/customer.service';
+import {Command} from '../../services/customer/domain/command.model';
+import {AccountingService} from '../../services/accounting/accounting.service';
+import {AccountCommand} from '../../services/accounting/domain/account-command.model';
 
 @Injectable()
 export class CommandsResolver implements Resolve<AccountCommand[]>{

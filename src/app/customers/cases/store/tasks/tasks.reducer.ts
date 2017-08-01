@@ -15,14 +15,22 @@
  */
 
 import * as task from './task.actions';
-import {TaskInstance} from '../../../../../services/portfolio/domain/task-instance.model';
+import {TaskInstance} from '../../../../services/portfolio/domain/task-instance.model';
+import {StatusCommand} from '../model/fims-command.model';
+import {FimsTaskInstance} from '../model/fims-task-instance.model';
 
 export interface State {
-  entities: TaskInstance[];
+  commands: StatusCommand[];
 }
 
 export const initialState: State = {
-  entities: [],
+  commands: [
+    { action: 'OPEN', preStates: ['CREATED'], tasks: []},
+    { action: 'APPROVE', preStates: ['PENDING'], tasks: []},
+    { action: 'DENY', preStates: ['PENDING'], tasks: []},
+    { action: 'CLOSE', preStates: ['APPROVED', 'ACTIVE'], tasks: []},
+    { action: 'DISBURSE', preStates: ['APPROVED'], tasks: []}
+  ]
 };
 
 export function reducer(state = initialState, action: task.Actions): State {
@@ -34,11 +42,40 @@ export function reducer(state = initialState, action: task.Actions): State {
     }
 
     case task.LOAD_ALL_COMPLETE: {
-      const taskInstances = action.payload;
+      const entities = action.payload;
+
+      const commands = state.commands.map(command => {
+        return Object.assign({}, command, {
+          tasks: entities.filter(instance => instance.taskDefinition.actions.indexOf(command.action) > -1)
+        })
+      });
 
       return {
-        entities: taskInstances
+        commands
       };
+    }
+
+    case task.EXECUTE_TASK_SUCCESS: {
+      const payload = action.payload;
+
+      const commands = state.commands.map(command => {
+        if(command.action !== payload.action) return command;
+
+        return Object.assign({}, command, {
+          tasks: command.tasks.map(task => {
+            if(task.taskDefinition.identifier !== payload.taskIdentifier) return task;
+
+            return Object.assign({}, task, {
+              executedOn: payload.executed ? new Date().toISOString() : undefined,
+              executedBy: payload.executedBy
+            })
+          })
+        })
+      });
+
+      return {
+        commands
+      }
     }
 
     default: {
@@ -47,4 +84,4 @@ export function reducer(state = initialState, action: task.Actions): State {
   }
 }
 
-export const getEntities = (state: State) => state.entities;
+export const getCommands = (state: State) => state.commands;

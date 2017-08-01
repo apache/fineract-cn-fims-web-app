@@ -19,15 +19,14 @@ import {IdentityCardFormComponent} from './identity-card-form.component';
 import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FormFinalActionComponent} from '../../../../../common/forms/form-final-action.component';
-import {IdInputComponent} from '../../../../../common/id-input/id-input.component';
-import {setValueByCssSelector, setValueByFormControlName} from '../../../../../common/testing/input-fields';
+import {FormFinalActionComponent} from '../../../../common/forms/form-final-action.component';
+import {IdInputComponent} from '../../../../common/id-input/id-input.component';
+import {setValueByCssSelector, setValueByFormControlName} from '../../../../common/testing/input-fields';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
-import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
+import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {IdentityCardScansFormComponent} from './scans/scans.component';
 
 describe('Test identity card form component', () => {
 
@@ -41,8 +40,7 @@ describe('Test identity card form component', () => {
         TestComponent,
         IdInputComponent,
         FormFinalActionComponent,
-        IdentityCardFormComponent,
-        IdentityCardScansFormComponent
+        IdentityCardFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),

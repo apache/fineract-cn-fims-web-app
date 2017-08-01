@@ -15,7 +15,7 @@
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Customer} from '../../../../services/customer/domain/customer.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCustomers from '../../store';
 import {Subscription} from 'rxjs';
 import {CustomersStore} from '../../store/index';

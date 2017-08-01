@@ -23,7 +23,7 @@ import {CreateEmployeeFormComponent} from './form/create/create.form.component';
 import {EmployeeDetailComponent} from './detail/employee.detail.component';
 import {EditEmployeeFormComponent} from './form/edit/edit.form.component';
 import {UserResolver} from './user.resolver';
-import {FimsSharedModule} from '../../common/common.module';
+import {FimsSharedModule} from '../common/common.module';
 import {EmployeeExistsGuard} from './employee-exists.guard';
 import {Store} from '@ngrx/store';
 import {EmployeesStore, employeeStoreFactory} from './store/index';

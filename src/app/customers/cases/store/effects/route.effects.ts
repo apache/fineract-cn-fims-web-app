@@ -35,6 +35,6 @@ export class CaseRouteEffects {
   executeCommandSuccess$: Observable<Action> = this.actions$
     .ofType(caseActions.EXECUTE_COMMAND_SUCCESS)
     .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} ));
+    .do(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute} ));
 
 }

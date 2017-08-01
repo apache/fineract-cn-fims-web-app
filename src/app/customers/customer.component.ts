@@ -15,12 +15,12 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
-import {Customer} from '../../services/customer/domain/customer.model';
+import {FetchRequest} from '../services/domain/paging/fetch-request.model';
+import {TableData, TableFetchRequest} from '../common/data-table/data-table.component';
+import {Customer} from '../services/customer/domain/customer.model';
 import {Observable} from 'rxjs';
-import * as fromRoot from '../reducers';
-import {SEARCH} from '../reducers/customer/customer.actions';
+import * as fromRoot from '../store';
+import {SEARCH} from '../store/customer/customer.actions';
 import {CustomersStore} from './store/index';
 
 @Component({

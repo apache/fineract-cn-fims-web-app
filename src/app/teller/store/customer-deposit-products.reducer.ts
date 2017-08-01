@@ -15,9 +15,9 @@
  */
 
 import * as tellers from './teller.actions';
-import {ResourceState} from '../../../common/store/resource.reducer';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
+import {ResourceState} from '../../common/store/resource.reducer';
+import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../common/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],

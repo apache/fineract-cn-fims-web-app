@@ -15,11 +15,11 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
+import {FormComponent} from '../../../common/forms/form.component';
+import {TransactionType} from '../../../services/accounting/domain/transaction-type.model';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {FimsValidators} from '../../../common/validator/validators';
 
 @Component({
   selector: 'fims-transaction-type-form',
@@ -43,7 +43,7 @@ export class TransactionTypeFormComponent extends FormComponent<TransactionType>
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      code: [this.transactionType.code, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      code: [this.transactionType.code, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [this.transactionType.name, [Validators.required, Validators.maxLength(256)]],
       description: [this.transactionType.description, [Validators.maxLength(2048)]]
     });

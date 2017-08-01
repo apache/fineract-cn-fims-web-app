@@ -15,14 +15,14 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Error} from '../../../../../services/domain/error.model';
-import {type} from '../../../../util';
-import {RoutePayload} from '../../../../../common/store/route-payload';
-import {ChargeDefinition} from '../../../../../services/portfolio/domain/charge-definition.model';
+import {Error} from '../../../../services/domain/error.model';
+import {type} from '../../../../store/util';
+import {RoutePayload} from '../../../../common/store/route-payload';
+import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../../../common/store/resource.reducer';
+} from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Charge] Load All');
 export const LOAD_ALL_COMPLETE = type('[Product Charge] Load All Complete');

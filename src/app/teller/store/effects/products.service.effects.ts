@@ -16,8 +16,8 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
+import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {Observable} from 'rxjs/Observable';
 import * as tellerActions from '../teller.actions';
 import {Action} from '@ngrx/store';

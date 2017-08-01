@@ -21,8 +21,8 @@ import {Observable} from 'rxjs';
 import {LoadAction} from '../store/tasks/task.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {ExistsGuardService} from '../../../../common/guards/exists-guard';
+import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {ExistsGuardService} from '../../../common/guards/exists-guard';
 
 @Injectable()
 export class ProductTaskExistsGuard implements CanActivate {
@@ -61,6 +61,6 @@ export class ProductTaskExistsGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.hasTask(route.params['productId'], route.params['taskId']);
+    return this.hasTask(route.parent.params['productId'], route.params['taskId']);
   }
 }

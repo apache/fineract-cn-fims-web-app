@@ -31,54 +31,47 @@
   <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
     <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
   </td-message>
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['./charges']">
-                <md-icon md-list-avatar>assignment</md-icon>
-                <h3 md-line translate>Charges</h3>
-                <p md-line translate>Charges</p>
-              </a>
-              <a md-list-item [routerLink]="['./tasks']">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line translate>Tasks</h3>
-                <p md-line translate>Manage tasks of this product</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <div layout="row">
-              <md-list>
-                <md-list-item>
-                  <h3 md-line translate>Balance range</h3>
-                  <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Interest range</h3>
-                  <p md-line>{{product.interestBasis | translate}}</p>
-                  <p md-line>{{product.interestRange.minimum | number:numberFormat}} - {{product.interestRange.maximum | number:numberFormat}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Term</h3>
-                  <p md-line>{{product.termRange.maximum | number}} {{product.termRange.temporalUnit | translate}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Currency</h3>
-                  <p md-line>{{product.currencyCode}}</p>
-                </md-list-item>
-              </md-list>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['./charges']">
+        <md-icon md-list-avatar>assignment</md-icon>
+        <h3 md-line translate>Charges</h3>
+        <p md-line translate>Charges</p>
+      </a>
+      <a md-list-item [routerLink]="['./tasks']">
+        <md-icon md-list-avatar>playlist_add_check</md-icon>
+        <h3 md-line translate>Tasks</h3>
+        <p md-line translate>Manage tasks of this product</p>
+      </a>
+    </md-nav-list>
+    <md-list right>
+      <md-list-item>
+        <h3 md-line translate>Balance range</h3>
+        <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Interest range</h3>
+        <p md-line>{{product.interestBasis | translate}}</p>
+        <p md-line>{{product.interestRange.minimum | number:numberFormat}} - {{product.interestRange.maximum | number:numberFormat}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Term</h3>
+        <p md-line>{{product.termRange.maximum | number}} {{product.termRange.temporalUnit | translate}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Currency</h3>
+        <p md-line>{{product.currencyCode}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Created by</h3>
+        <p md-line>{{product.createdBy}} - {{product.createdOn | date:'medium'}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Last modified by</h3>
+        <p md-line>{{product.lastModifiedBy}} - {{product.lastModifiedOn | date:'medium'}}</p>
+      </md-list-item>
+    </md-list>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *ngIf="canEdit$ | async">
-  <md-icon>edit_mode</md-icon>
-</a>
+<fims-fab-button title="{{'Edit product' | translate}}" icon="mode_edit" [link]="['edit']" *ngIf="canEdit$ | async"></fims-fab-button>

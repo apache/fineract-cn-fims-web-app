@@ -18,10 +18,10 @@ import {AfterViewInit, OnInit, Component, ViewContainerRef, OnDestroy} from '@an
 import {
   NotificationType, NotificationEvent,
   NotificationService
-} from '../../services/notification/notification.service';
+} from '../services/notification/notification.service';
 import {MdSnackBarConfig, MdSnackBarRef, MdSnackBar} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '../../services/http/http.service';
+import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
 import {Subscription} from 'rxjs';
 
@@ -32,63 +32,74 @@ import {Subscription} from 'rxjs';
 export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private notificationSubscription: Subscription;
+  private errorSubscription: Subscription;
 
   constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient, private snackBar: MdSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    let config: MdSnackBarConfig = new MdSnackBarConfig();
+    const config: MdSnackBarConfig = new MdSnackBarConfig();
     config.viewContainerRef = this.viewContainerRef;
-
-    this.notificationSubscription = this.notificationService.notifications$.subscribe((notification: NotificationEvent) => {
-      switch (notification.type) {
-        case NotificationType.MESSAGE:
-          this.showMessage(notification.message, config);
-          break;
-        case NotificationType.ALERT:
-          this.showAlert(notification.title, notification.message);
-          break;
-      }
-    });
+    this.notificationSubscription = this.notificationService.notifications$.subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
   }
 
   ngOnDestroy(): void {
     this.notificationSubscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
-    this.httpClient.error.subscribe((error: any) => {
-      switch (error.status) {
-        case 400:
-          this.showAlert('Unexpected error', 'We are very sorry, it seems the request you sent could not be accepted by our servers.');
-          break;
-        case 404:
-          this.showAlert('Resource not available', 'It seems the resource you requested is either not available or you don\'t have the permission to access it.');
-          break;
-        case 504:
-        case 500:
-          this.showAlert('Service not available', 'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.');
-          break;
-        default:
-          break;
-      }
-    });
+    this.errorSubscription = this.httpClient.error.subscribe((error: any) => this.showError(error));
+  }
+
+  private showNotification(notification: NotificationEvent, config: MdSnackBarConfig): void {
+    switch (notification.type) {
+      case NotificationType.MESSAGE:
+        this.showMessage(notification.message, config);
+        break;
+      case NotificationType.ALERT:
+        this.showAlert(notification.title, notification.message);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private showError(error: any): void {
+    switch (error.status) {
+      case 400:
+        this.showAlert('Unexpected error', 'We are very sorry, it seems the request you sent could not be accepted by our servers.');
+        break;
+      case 404:
+        this.showAlert('Resource not available', 'It seems the resource you requested is either not available or you don\'t have the permission to access it.');
+        break;
+      case 504:
+      case 500:
+        this.showAlert('Service not available', 'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.');
+        break;
+      default:
+        break;
+    }
   }
 
   private showMessage(message: string, config: MdSnackBarConfig): void {
-    this.translate.get(message).subscribe((result) => {
-      let snackBarRef: MdSnackBarRef<any> = this.snackBar.open(result, '', config);
-      setTimeout(() => snackBarRef.dismiss(), 3000);
-    });
+    this.translate.get(message)
+      .take(1)
+      .subscribe((result) => {
+        const snackBarRef: MdSnackBarRef<any> = this.snackBar.open(result, '', config);
+        setTimeout(() => snackBarRef.dismiss(), 3000);
+      });
   }
 
   private showAlert(title: string = '', message: string): void {
-    this.translate.get([title, message, 'OK']).subscribe((result) => {
-      this.dialogService.openAlert({
-        message: result[message],
-        viewContainerRef: this.viewContainerRef,
-        title: result[title],
-        closeButton: result['OK']
-      });
+    this.translate.get([title, message, 'OK'])
+      .take(1)
+      .subscribe((result) => {
+        this.dialogService.openAlert({
+          message: result[message],
+          viewContainerRef: this.viewContainerRef,
+          title: result[title],
+          closeButton: result['OK']
+        });
     });
 
   }

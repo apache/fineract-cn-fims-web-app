@@ -18,8 +18,8 @@ import {of} from 'rxjs/observable/of';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
-import {emptySearchResult} from '../../../../../common/store/search.reducer';
-import {DepositAccountService} from '../../../../../services/depositAccount/deposit-account.service';
+import {emptySearchResult} from '../../../../common/store/search.reducer';
+import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {Injectable} from '@angular/core';
 import * as instanceActions from '../deposit.actions';
 

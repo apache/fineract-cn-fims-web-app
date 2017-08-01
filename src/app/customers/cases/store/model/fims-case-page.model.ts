@@ -15,7 +15,7 @@
  */
 
 import {FimsCase} from './fims-case.model';
-import {CasePage} from '../../../../../services/portfolio/domain/case-page.model';
+import {CasePage} from '../../../../services/portfolio/domain/case-page.model';
 import {mapToFimsCase} from './fims-case.mapper';
 
 export interface FimsCasePage{

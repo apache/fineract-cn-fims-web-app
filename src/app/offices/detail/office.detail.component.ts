@@ -15,13 +15,13 @@
  */
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {OfficeService} from '../../../services/office/office.service';
-import {Office} from '../../../services/office/domain/office.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {OfficePage} from '../../../services/office/domain/office-page.model';
+import {OfficeService} from '../../services/office/office.service';
+import {Office} from '../../services/office/domain/office.model';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
+import {OfficePage} from '../../services/office/domain/office-page.model';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
-import {TableData} from '../../../common/data-table/data-table.component';
+import {TableData} from '../../common/data-table/data-table.component';
 import {DELETE, SelectAction} from '../store/office.actions';
 import {getSelectedOffice, OfficesStore} from '../store/index';
 

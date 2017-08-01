@@ -36,8 +36,8 @@ import * as fromDeposits from './store';
 import {Observable} from 'rxjs';
 import {of} from 'rxjs/observable/of';
 import {DepositsStore} from './store/index';
-import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
-import {ExistsGuardService} from '../../../common/guards/exists-guard';
+import {DepositAccountService} from '../../services/depositAccount/deposit-account.service';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
 import {LoadAction} from './store/deposit.actions';
 
 @Injectable()

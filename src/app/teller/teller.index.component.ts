@@ -16,15 +16,15 @@
 
 import {Component, OnDestroy} from '@angular/core';
 import * as fromTeller from './store/index';
-import * as fromRoot from '../reducers/index';
+import * as fromRoot from '../store/index';
 import {TellerStore} from './store/index';
 import {LOCK_DRAWER} from './store/teller.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SEARCH} from '../reducers/customer/customer.actions';
-import {Customer} from '../../services/customer/domain/customer.model';
+import {SEARCH} from '../store/customer/customer.actions';
+import {Customer} from '../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
-import {Teller} from '../../services/teller/domain/teller.model';
+import {Teller} from '../services/teller/domain/teller.model';
 
 @Component({
   templateUrl: './teller.index.component.html'

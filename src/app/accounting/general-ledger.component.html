@@ -18,48 +18,34 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{'General Ledger' | translate}}">
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Details</h3>
-              <a md-list-item [routerLink]="['./chartOfAccounts']">
-                <md-icon md-list-avatar>list</md-icon>
-                <h3 md-line translate>Chart of accounts</h3>
-                <p md-line translate>View chart of accounts</p>
-              </a>
-              <a md-list-item [routerLink]="['./journalEntries']" *hasPermission="{ id: 'accounting_journals', accessLevel: 'READ' }">
-                <md-icon md-list-avatar>assignment</md-icon>
-                <h3 md-line translate>Journal entries</h3>
-                <p md-line translate>View journal entries</p>
-              </a>
-              <a md-list-item [routerLink]="['./transactiontypes']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'READ' }">
-                <md-icon md-list-avatar>swap_horiz</md-icon>
-                <h3 md-line translate>Transaction types</h3>
-                <p md-line translate>View transaction types</p>
-              </a>
-              <a md-list-item [routerLink]="['./trialBalance']">
-                <md-icon md-list-avatar>account_balance</md-icon>
-                <h3 md-line translate>Trial balance</h3>
-                <p md-line translate>View trial balance</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <div layout="row">
-              <div layout="column" flex-gt-md="100">
-                <h3 translate>Ledger</h3>
-                <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData | async"></fims-data-table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Details</h3>
+      <a md-list-item [routerLink]="['./chartOfAccounts']">
+        <md-icon md-list-avatar>list</md-icon>
+        <h3 md-line translate>Chart of accounts</h3>
+        <p md-line translate>View chart of accounts</p>
+      </a>
+      <a md-list-item [routerLink]="['./journalEntries']" *hasPermission="{ id: 'accounting_journals', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>assignment</md-icon>
+        <h3 md-line translate>Journal entries</h3>
+        <p md-line translate>View journal entries</p>
+      </a>
+      <a md-list-item [routerLink]="['./transactiontypes']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>swap_horiz</md-icon>
+        <h3 md-line translate>Transaction types</h3>
+        <p md-line translate>View transaction types</p>
+      </a>
+      <a md-list-item [routerLink]="['./trialBalance']">
+        <md-icon md-list-avatar>account_balance</md-icon>
+        <h3 md-line translate>Trial balance</h3>
+        <p md-line translate>View trial balance</p>
+      </a>
+    </md-nav-list>
+    <div layout="column" flex-gt-md="100" right>
+      <h3 translate>Ledger</h3>
+      <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData | async"></fims-data-table>
     </div>
-  </div>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create ledger' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'accounting_ledgers', accessLevel: 'CHANGE'}"></fims-fab-button>

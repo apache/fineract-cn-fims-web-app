@@ -19,7 +19,7 @@ import {RouterModule} from '@angular/router';
 import {MainComponent} from './main.component';
 import {MainRoutes, mainRoutingProviders} from './main.routing';
 import {AccessDeniedComponent} from './access.denied.component';
-import {FimsSharedModule} from '../../common/common.module';
+import {FimsSharedModule} from '../common/common.module';
 import {NotificationComponent} from './notification.component';
 import {QuickAccessComponent} from '../quickAccess/quick-access.component';
 import {

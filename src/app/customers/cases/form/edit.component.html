@@ -21,6 +21,7 @@
                               (onSave)="onSave($event)"
                               (onCancel)="onCancel()"
                               [products]="products$ | async"
+                              [productInstances]="productsInstances$ | async"
                               [case]="caseInstance"
                               [customerId]="customer.identifier"
                               [editMode]="true">

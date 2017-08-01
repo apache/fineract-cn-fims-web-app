@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Account} from '../../../../../services/accounting/domain/account.model';
+import {Account} from '../../../../services/accounting/domain/account.model';
 import {AccountFormComponent} from '../form.component';
 import {ViewChild, OnInit, Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';

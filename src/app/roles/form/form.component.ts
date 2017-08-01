@@ -16,11 +16,11 @@
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Role} from '../../../services/identity/domain/role.model';
-import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
-import {IdentityService} from '../../../services/identity/identity.service';
+import {Role} from '../../services/identity/domain/role.model';
+import {PermittableGroup} from '../../services/anubis/permittable-group.model';
+import {IdentityService} from '../../services/identity/identity.service';
 import {FormPermission} from '../model/form-permission.model';
-import {FimsValidators} from '../../../common/validator/validators';
+import {FimsValidators} from '../../common/validator/validators';
 import {FormPermissionService} from '../helper/form-permission.service';
 
 @Component({

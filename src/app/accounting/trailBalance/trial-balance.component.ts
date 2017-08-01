@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {TrialBalance} from '../../../services/accounting/domain/trial-balance.model';
+import {TrialBalance} from '../../services/accounting/domain/trial-balance.model';
 import * as fromAccounting from '../store';
 import {LOAD_TRIAL_BALANCE} from '../store/ledger/ledger.actions';
 import {Observable} from 'rxjs';

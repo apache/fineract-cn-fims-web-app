@@ -31,10 +31,10 @@
 
 <fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
-    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>
     <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
+  <div class="md-content inset" flex>
     <div layout="row">
       <md-list>
         <md-list-item>
@@ -56,6 +56,4 @@
     </div>
   </div>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add subledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }" [routerLink]="['create']">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Add subledger' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'accounting_ledgers', accessLevel: 'CHANGE'}"></fims-fab-button>

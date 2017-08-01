@@ -17,12 +17,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RolesStore} from '../store/index';
 import * as fromRoles from '../store';
-import {Role} from '../../../services/identity/domain/role.model';
+import {Role} from '../../services/identity/domain/role.model';
 import {DELETE, SelectAction} from '../store/role.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
-import {IdentityService} from '../../../services/identity/identity.service';
-import {PermittableGroup} from '../../../services/anubis/permittable-group.model';
+import {IdentityService} from '../../services/identity/identity.service';
+import {PermittableGroup} from '../../services/anubis/permittable-group.model';
 import {FormPermission} from '../model/form-permission.model';
 import {Observable} from 'rxjs/Observable';
 import {FormPermissionService} from '../helper/form-permission.service';

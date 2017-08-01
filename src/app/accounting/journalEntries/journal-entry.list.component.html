@@ -40,10 +40,7 @@
                    [columns]="columns"
                    [data]="journalEntryData$ | async"
                    [sortable]="false"
-                   [selectable]="false"
                    [actionColumn]="false">
   </fims-data-table>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Add Journal Entry' | translate}}" *hasPermission="{ id: 'accounting_journals', accessLevel: 'CHANGE' }" [routerLink]="['create']">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Add Journal Entry' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'accounting_journals', accessLevel: 'CHANGE'}"></fims-fab-button>

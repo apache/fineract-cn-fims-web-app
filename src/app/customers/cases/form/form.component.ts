@@ -16,14 +16,18 @@
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {CaseParameters} from '../../../../services/portfolio/domain/individuallending/case-parameters.model';
+import {CaseParameters} from '../../../services/portfolio/domain/individuallending/case-parameters.model';
 import {CaseDetailFormComponent, DetailFormData} from './detail/detail.component';
 import {FimsCase} from '../store/model/fims-case.model';
-import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
+import {CreditWorthinessSnapshot} from '../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
 import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
 import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Product} from '../../../services/portfolio/domain/product.model';
 import {CaseDocumentsFormComponent} from './documents/documents.component';
+import {AccountAssignment} from '../../../services/portfolio/domain/account-assignment.model';
+import {AccountDesignators} from '../../../services/portfolio/domain/individuallending/account-designators.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {accountIdentifier, findAccountDesignator} from '../../../common/util/account-assignments';
 
 @Component({
   selector: 'fims-case-form-component',
@@ -47,6 +51,8 @@ export class CaseFormComponent implements OnInit {
   @ViewChild('documentsForm') documentsForm: CaseDocumentsFormComponent;
 
   @Input('products') products: Product[];
+
+  @Input('productInstances') productInstances: ProductInstance[];
 
   @Input('editMode') editMode: boolean;
 
@@ -84,7 +90,8 @@ export class CaseFormComponent implements OnInit {
       paymentPeriod: caseInstance.parameters.paymentCycle.period,
       paymentAlignmentDay: caseInstance.parameters.paymentCycle.alignmentDay,
       paymentAlignmentWeek: caseInstance.parameters.paymentCycle.alignmentWeek,
-      paymentAlignmentMonth: caseInstance.parameters.paymentCycle.alignmentMonth
+      paymentAlignmentMonth: caseInstance.parameters.paymentCycle.alignmentMonth,
+      depositAccountIdentifier: caseInstance.depositAccountIdentifier
     };
   }
 
@@ -168,7 +175,7 @@ export class CaseFormComponent implements OnInit {
       identifier: this.detailForm.formData.identifier,
       productIdentifier: this.detailForm.formData.productIdentifier,
       parameters: caseParameters,
-      accountAssignments: []
+      depositAccountIdentifier: this.detailForm.formData.depositAccountIdentifier
     };
 
     this.onSave.emit(caseToSave);

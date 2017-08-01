@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {AccountType} from '../../services/accounting/domain/account-type.model';
+import {AccountType} from '../services/accounting/domain/account-type.model';
 
 export interface AccountTypeOption{
   type: AccountType,

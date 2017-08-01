@@ -1,0 +1,24 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-list-item [mdTooltip]="disabled ? 'This is a four eyes task and must be executed by somebody else than you.' : ''" [mdTooltipPosition]="'after'">
+  <md-icon md-list-avatar *ngIf="task.taskDefinition.fourEyes">people</md-icon>
+  <md-icon md-list-avatar *ngIf="!task.taskDefinition.fourEyes">person</md-icon>
+  <h3 md-line>{{task.taskDefinition.name}}</h3>
+  <h4 md-line>{{task.taskDefinition.description}}</h4>
+  <p md-line>{{task.executedBy}}, {{task.executedOn | date:'medium'}}</p>
+  <md-checkbox class="list-checkbox" title="{{'Execute task' | translate}}" [checked]="!!task.executedOn" (change)="selectTask($event)" [disabled]="disabled"></md-checkbox>
+</md-list-item>

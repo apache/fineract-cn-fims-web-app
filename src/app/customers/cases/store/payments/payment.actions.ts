@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {type} from '../../../../util';
-import {PlannedPaymentPage} from '../../../../../services/portfolio/domain/individuallending/planned-payment-page.model';
+import {type} from '../../../../store/util';
+import {PlannedPaymentPage} from '../../../../services/portfolio/domain/individuallending/planned-payment-page.model';
 import {Action} from '@ngrx/store';
 
 export const SEARCH = type('[Case Payments] Search');

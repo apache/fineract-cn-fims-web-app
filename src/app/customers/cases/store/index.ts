@@ -21,7 +21,7 @@ import * as fromCaseTasks from './tasks/tasks.reducer';
 import * as fromCasePayments from './payments/search.reducer';
 
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,
@@ -31,15 +31,15 @@ import {
   getResourceSelected,
   getResourceSelectedId,
   ResourceState
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../common/store/search.reducer';
-import {createFormReducer, getFormError} from '../../../../common/store/form.reducer';
+} from '../../../common/store/search.reducer';
+import {createFormReducer, getFormError} from '../../../common/store/form.reducer';
 
 export interface State extends fromCustomer.State{
   cases: ResourceState;
@@ -90,7 +90,7 @@ export const getSelectedCase = createSelector(getCasesState, getResourceSelected
 
 export const getCaseTasksState = (state: State) => state.caseTasks;
 
-export const getCaseTasksEntities = createSelector(getCaseTasksState, fromCaseTasks.getEntities);
+export const getCaseCommands = createSelector(getCaseTasksState, fromCaseTasks.getCommands);
 
 
 export const getCasePaymentsSearchState = (state: State) => state.casePayments;

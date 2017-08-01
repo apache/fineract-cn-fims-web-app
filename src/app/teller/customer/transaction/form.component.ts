@@ -15,15 +15,15 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
+import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
 import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../common/validator/validators';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+import {FimsValidators} from '../../../common/validator/validators';
+import {TellerTransactionCosts} from '../../../services/teller/domain/teller-transaction-costs.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {accountExists} from '../../../common/validator/account-exists.validator';
+import {AccountingService} from '../../../services/accounting/accounting.service';
+import {TransactionType} from '../../../services/teller/domain/teller-transaction.model';
 
 const withdrawalCheckTypes: TransactionType[] = ['ACCC', 'CWDL'];
 
@@ -46,6 +46,8 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
   private _transactionCreated: boolean;
 
   private _transactionType: TransactionType;
+
+  chargesIncluded: boolean = true;
 
   enableTargetAccount: boolean;
 
@@ -89,7 +91,7 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TellerTransactionFormData>();
 
-  @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<void>();
+  @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<boolean>();
 
   @Output('onCancelTransaction') onCancelTransaction = new EventEmitter<void>();
 
@@ -171,8 +173,8 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
     this.onCreateTransaction.emit(formData);
   }
 
-  confirmTransaction(): void {
-    this.onConfirmTransaction.emit();
+  confirmTransaction(chargesIncluded: boolean): void {
+    this.onConfirmTransaction.emit(chargesIncluded);
   }
 
   cancelTransaction(): void {

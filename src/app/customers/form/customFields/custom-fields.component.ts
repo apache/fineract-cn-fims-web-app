@@ -15,12 +15,12 @@
  */
 
 import {Component, Input, OnInit} from '@angular/core';
-import {Catalog} from '../../../../services/catalog/domain/catalog.model';
+import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {Field} from '../../../../services/catalog/domain/field.model';
-import {Value} from '../../../../services/catalog/domain/value.model';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {Field} from '../../../services/catalog/domain/field.model';
+import {Value} from '../../../services/catalog/domain/value.model';
+import {FormComponent} from '../../../common/forms/form.component';
+import {FimsValidators} from '../../../common/validator/validators';
 import * as fromCustomers from '../../store';
 import {CustomersStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/catalogs/catalog.actions';

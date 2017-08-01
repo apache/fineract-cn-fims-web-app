@@ -16,7 +16,7 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
+import {ChargeDefinition} from '../../../services/portfolio/domain/charge-definition.model';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {DELETE, SelectAction} from '../store/charges/charge.actions';

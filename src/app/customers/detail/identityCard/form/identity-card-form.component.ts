@@ -15,13 +15,12 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
+import {FormComponent} from '../../../../common/forms/form.component';
 import {FormBuilder, Validators} from '@angular/forms';
-import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
-import {ExpirationDate} from '../../../../../services/customer/domain/expiration-date.model';
-import {FimsValidators} from '../../../../../common/validator/validators';
+import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {ExpirationDate} from '../../../../services/customer/domain/expiration-date.model';
+import {FimsValidators} from '../../../../common/validator/validators';
 import {TdStepComponent} from '@covalent/core';
-import {IdentityCardScansFormComponent} from './scans/scans.component';
 
 @Component({
   selector: 'fims-identity-card-form',
@@ -30,8 +29,6 @@ import {IdentityCardScansFormComponent} from './scans/scans.component';
 export class IdentityCardFormComponent extends FormComponent<IdentificationCard> implements OnInit {
 
   @ViewChild('detailsStep') step: TdStepComponent;
-
-  @ViewChild('scansForm') scansForm: IdentityCardScansFormComponent;
 
   @Input() identificationCard: IdentificationCard;
 
@@ -47,7 +44,7 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      number: [this.identificationCard.number, [Validators.required, Validators.maxLength(32), FimsValidators.urlSafe]],
+      number: [this.identificationCard.number, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       type: [this.identificationCard.type, [Validators.required, Validators.maxLength(128)]],
       expirationDate: [this.formatDate(this.identificationCard.expirationDate), Validators.required],
       issuer: [this.identificationCard.issuer, [Validators.required, Validators.maxLength(256)]]
@@ -72,10 +69,6 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
   get formData(): IdentificationCard {
     // Not needed
     return;
-  }
-
-  get scansFormState(): string {
-    return this.scansForm.valid ? 'complete' : this.scansForm.pristine ? 'none' : 'required';
   }
 
   cancel(): void {

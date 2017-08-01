@@ -15,7 +15,7 @@
  */
 
 import {NoPreloading, RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../services/security/authn/auth-guard.service';
+import {AuthGuard} from './services/security/authn/auth-guard.service';
 
 const routes: Routes = [
   {path: 'login', loadChildren: './login/login.module#LoginModule'},

@@ -23,7 +23,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {LOGIN} from '../reducers/security/security.actions';
+import {LOGIN} from '../store/security/security.actions';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdCardModule,
@@ -34,7 +34,7 @@ import {
   MdTooltipModule
 } from '@angular/material';
 import {CovalentLoadingModule} from '@covalent/core';
-import {setValueByFormControlName} from '../../common/testing/input-fields';
+import {setValueByFormControlName} from '../common/testing/input-fields';
 
 describe('Test Login Component', () => {
 

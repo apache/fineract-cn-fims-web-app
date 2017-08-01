@@ -26,53 +26,44 @@
 <fims-layout-card-over title="{{office.parentIdentifier ? office.name : office.name + ' (Headquarter)'}}" subTitle="{{office.description}}">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchOffice($event)" [alwaysVisible]="false"></td-search-box>
-    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>
     <button md-icon-button (click)="deleteOffice()" title="{{'Delete this office' | translate}}" *hasPermission="{ id: 'office_offices', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['tellers']" *hasPermission="{ id: 'teller_management', accessLevel: 'READ'}">
-                <md-icon md-list-avatar>person</md-icon>
-                <h3 md-line translate>Tellers</h3>
-                <p md-line translate>Manage tellers</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-              <md-list>
-                <h3 md-subheader translate>Address</h3>
-                <md-list-item *ngIf="office.address">
-                  <md-icon md-list-avatar>location_on</md-icon>
-                  <h3 md-line>{{office.address.street}}, {{office.address.postalCode}}, {{office.address.city}}<span *ngIf="office.address.region">({{office.address.region}})</span></h3>
-                  <p md-line>{{office.address.country}}</p>
-                </md-list-item>
-                <md-list-item *ngIf="!office.address">
-                  <md-icon md-list-avatar>location_on</md-icon>
-                  <h3 md-line translate>No address available</h3>
-                </md-list-item>
-                <h3 md-subheader translate>Branch offices</h3>
-              </md-list>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['tellers']" *hasPermission="{ id: 'teller_management', accessLevel: 'READ'}">
+        <md-icon md-list-avatar>person</md-icon>
+        <h3 md-line translate>Tellers</h3>
+        <p md-line translate>Manage tellers</p>
+      </a>
+    </md-nav-list>
+    <ng-container right>
+      <md-list>
+        <h3 md-subheader translate>Address</h3>
+        <md-list-item *ngIf="office.address">
+          <md-icon md-list-avatar>location_on</md-icon>
+          <h3 md-line>{{office.address.street}}, {{office.address.postalCode}}, {{office.address.city}}<span *ngIf="office.address.region">({{office.address.region}})</span></h3>
+          <p md-line>{{office.address.country}}</p>
+        </md-list-item>
+        <md-list-item *ngIf="!office.address">
+          <md-icon md-list-avatar>location_on</md-icon>
+          <h3 md-line translate>No address available</h3>
+        </md-list-item>
+        <h3 md-subheader translate>Branch offices</h3>
+      </md-list>
 
-            <fims-data-table flex
-                             (onFetch)="fetchBranches($event)"
-                             (onActionCellClick)="rowSelect($event)"
-                             [columns]="columns"
-                             [data]="branchData"
-                             [sortable]="true"
-                             [pageable]="true">
-            </fims-data-table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+      <fims-data-table flex
+                       (onFetch)="fetchBranches($event)"
+                       (onActionCellClick)="rowSelect($event)"
+                       [columns]="columns"
+                       [data]="branchData"
+                       [sortable]="true"
+                       [pageable]="true">
+      </fims-data-table>
+    </ng-container>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-
 <a md-fab color="accent" title="{{'Create branch office' | translate}}" class="md-fab-position-bottom-right" [routerLink]="['../../../create']"
    [queryParams]="{ parentId: office.identifier }" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }">
   <md-icon>add</md-icon>

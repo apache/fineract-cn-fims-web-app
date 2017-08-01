@@ -20,7 +20,7 @@ import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import * as paymentActions from '../payment.actions';
 import {of} from 'rxjs/observable/of';
-import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
 
 @Injectable()
 export class CasePaymentsApiEffects {

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import * as fromCustomers from './customers.reducer';
 import * as fromCustomerTasks from './tasks/tasks.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
 import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
+import * as fromScans from './identityCards/scans/scans.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,
@@ -29,8 +30,8 @@ import {
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../common/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
+} from '../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
 export interface State extends fromRoot.State{
   customers: ResourceState;
@@ -40,6 +41,8 @@ export interface State extends fromRoot.State{
   customerCommands: fromCommands.State;
   customerIdentificationCards: ResourceState;
   customerIdentificationCardForm: FormState;
+  customerIdentificationCardScans: ResourceState;
+  customerIdentificationCardScanForm: FormState;
 }
 
 const reducers = {
@@ -49,7 +52,9 @@ const reducers = {
   customerCatalogs: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer,
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
-  customerIdentificationCardForm: createFormReducer('Customer Identity Card')
+  customerIdentificationCardForm: createFormReducer('Customer Identity Card'),
+  customerIdentificationCardScans: createResourceReducer('Customer Identity Card Scan', fromScans.reducer),
+  customerIdentificationCardScanForm: createFormReducer('Customer Identity Card Scan')
 };
 
 export class CustomersStore extends Store<State>{}
@@ -104,3 +109,14 @@ export const getCustomerIdentificationCardFormError = createSelector(getCustomer
 
 export const getIdentificationCardLoadedAt = createSelector(getCustomerIdentificationCardsState, getResourceLoadedAt);
 export const getSelectedIdentificationCard = createSelector(getCustomerIdentificationCardsState, getResourceSelected);
+
+/**
+ * Customer Identification Card Scan Selectors
+ */
+
+export const getIdentificationCardScansState = (state: State) => state.customerIdentificationCardScans;
+
+export const getAllIdentificationCardScanEntities = createSelector(getIdentificationCardScansState, getResourceAll);
+
+export const getCustomerIdentificationCardScanFormState = (state: State) => state.customerIdentificationCardScanForm;
+export const getCustomerIdentificationCardScanFormError = createSelector(getCustomerIdentificationCardScanFormState, getFormError);

@@ -21,10 +21,10 @@ import {Observable} from 'rxjs';
 import {LoadAction} from './store/product.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from './store/index';
-import {PortfolioService} from '../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {mapToFimsProduct} from './store/model/fims-product.mapper';
-import {ExistsGuardService} from '../../../common/guards/exists-guard';
-import {Product} from '../../../services/portfolio/domain/product.model';
+import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {Product} from '../../services/portfolio/domain/product.model';
 
 @Injectable()
 export class ProductExistsGuard implements CanActivate {

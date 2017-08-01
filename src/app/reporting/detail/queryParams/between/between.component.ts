@@ -15,7 +15,7 @@
  */
 
 import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {Type} from '../../../../../services/reporting/domain/type.model';
+import {Type} from '../../../../services/reporting/domain/type.model';
 import {
   AbstractControl,
   ControlValueAccessor, FormBuilder, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator,
@@ -23,9 +23,9 @@ import {
 } from '@angular/forms';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
 import {Observable} from 'rxjs/Observable';
-import {FimsValidators} from '../../../../../common/validator/validators';
+import {FimsValidators} from '../../../../common/validator/validators';
 import {Subscription} from 'rxjs/Subscription';
-import {Operator} from '../../../../../services/reporting/domain/query-parameter.model';
+import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {createPlaceholder} from '../query-params.helper';
 
 export const REPORTING_BETWEEN_PARAM_CONTROL_VALUE_ACCESSOR: any = {

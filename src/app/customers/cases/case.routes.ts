@@ -15,7 +15,6 @@
  */
 
 import {Routes} from '@angular/router';
-import {CaseTasksComponent} from './tasks/task.component';
 import {CasePaymentsComponent} from './payments/payments.component';
 import {CaseDetailComponent} from './case.detail.component';
 import {CaseCreateComponent} from './form/create.component';
@@ -24,6 +23,7 @@ import {CaseEditComponent} from './form/edit.component';
 import {CaseExistsGuard} from './case-exists.guard';
 import {CaseStatusComponent} from './status/status.component';
 import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
+import {CaseCommandConfirmationComponent} from './status/confirmation/confirmation.component';
 
 export const CaseRoutes: Routes = [
   {
@@ -56,6 +56,13 @@ export const CaseRoutes: Routes = [
       {
         path: 'tasks',
         component: CaseStatusComponent,
+        data: {
+          hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
+        }
+      },
+      {
+        path: 'tasks/:action/confirmation',
+        component: CaseCommandConfirmationComponent,
         data: {
           hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
         }

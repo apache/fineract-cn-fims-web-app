@@ -15,18 +15,18 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import {Product} from '../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
+import {ProductParameters} from '../../../services/portfolio/domain/individuallending/product-parameters.model';
 import {ProductFormComponent} from './form.component';
 import {PortfolioStore} from '../store/index';
 import {CREATE, RESET_FORM} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
-import {Error} from '../../../../services/domain/error.model';
+import {Error} from '../../../services/domain/error.model';
 import {FimsProduct} from '../store/model/fims-product.model';
-import {Currency} from '../../../../services/currency/domain/currency.model';
-import {CurrencyService} from '../../../../services/currency/currency.service';
+import {Currency} from '../../../services/currency/domain/currency.model';
+import {CurrencyService} from '../../../services/currency/currency.service';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -48,8 +48,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
       maximum: 1
     },
     balanceRange: {
-      minimum: 1.00,
-      maximum: 2.00
+      minimum: 1000.00,
+      maximum: 2000.00
     },
     interestRange: {
       minimum: 1.00,

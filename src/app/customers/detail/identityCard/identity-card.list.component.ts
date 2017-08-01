@@ -19,9 +19,9 @@ import {Subscription} from 'rxjs/Subscription';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
 import {Observable} from 'rxjs/Observable';
-import {TableData} from '../../../../common/data-table/data-table.component';
+import {TableData} from '../../../common/data-table/data-table.component';
 import {LOAD_ALL} from '../../store/identityCards/identity-cards.actions';
-import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

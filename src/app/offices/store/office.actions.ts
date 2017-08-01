@@ -15,17 +15,17 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
-import {Office} from '../../../services/office/domain/office.model';
-import {Error} from '../../../services/domain/error.model';
-import {RoutePayload} from '../../../common/store/route-payload';
+import {type} from '../../store/util';
+import {Office} from '../../services/office/domain/office.model';
+import {Error} from '../../services/domain/error.model';
+import {RoutePayload} from '../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload,
   DeleteResourceSuccessPayload,
   LoadResourcePayload,
   SelectResourcePayload,
   UpdateResourceSuccessPayload
-} from '../../../common/store/resource.reducer';
+} from '../../common/store/resource.reducer';
 
 export const LOAD = type('[Office] Load');
 export const SELECT = type('[Office] Select');

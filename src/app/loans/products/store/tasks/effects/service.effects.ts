@@ -20,7 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as taskActions from '../task.actions';
-import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
 
 @Injectable()
 export class ProductTasksApiEffects {
@@ -65,5 +65,18 @@ export class ProductTasksApiEffects {
           activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new taskActions.UpdateTaskFailAction(error)))
+    );
+
+  @Effect()
+  deleteTask$: Observable<Action> = this.actions$
+    .ofType(taskActions.DELETE)
+    .map((action: taskActions.DeleteTaskAction) => action.payload)
+    .mergeMap(payload =>
+      this.portfolioService.deleteTaskDefinition(payload.productId, payload.task.identifier)
+        .map(() => new taskActions.DeleteTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new taskActions.DeleteTaskFailAction(error)))
     );
 }

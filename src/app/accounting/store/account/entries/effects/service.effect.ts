@@ -17,24 +17,24 @@
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {Effect, Actions} from '@ngrx/effects';
-import * as journalEntryActions from '../entries.actions'
+import * as accountEntryActions from '../entries.actions'
 import {Injectable} from '@angular/core';
 import {of} from 'rxjs/observable/of';
-import {AccountingService} from '../../../../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../../../services/accounting/accounting.service';
 
 @Injectable()
-export class AccountEntryApiEffects{
+export class AccountEntryApiEffects {
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
-  loadJournalEntries$: Observable<Action> = this.actions$
-    .ofType(journalEntryActions.SEARCH)
-    .map((action: journalEntryActions.SearchAction) => action.payload)
+  loadAccountEntries$: Observable<Action> = this.actions$
+    .ofType(accountEntryActions.SEARCH)
+    .map((action: accountEntryActions.SearchAction) => action.payload)
     .mergeMap(payload =>
       this.accountingService.fetchAccountEntries(payload.accountId, payload.startDate, payload.endDate, payload.fetchRequest)
-        .map(accountEntryPage => new journalEntryActions.SearchCompleteAction(accountEntryPage))
-        .catch(() => of(new journalEntryActions.SearchCompleteAction({
+        .map(accountEntryPage => new accountEntryActions.SearchCompleteAction(accountEntryPage))
+        .catch(() => of(new accountEntryActions.SearchCompleteAction({
           accountEntries: [],
           totalPages: 0,
           totalElements: 0

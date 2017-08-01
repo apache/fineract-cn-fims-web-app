@@ -33,6 +33,4 @@
     [actionColumnLabel]="'EDIT'">
   </fims-data-table>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new transaction type' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'CHANGE' }">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create new transaction type' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'accounting_tx_types', accessLevel: 'CHANGE'}"></fims-fab-button>

@@ -15,10 +15,10 @@
  */
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Employee} from '../../../../services/office/domain/employee.model';
-import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
-import * as fromRoot from '../../../reducers';
-import {SEARCH} from '../../../reducers/employee/employee.actions';
+import {Employee} from '../../../services/office/domain/employee.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import * as fromRoot from '../../../store';
+import {SEARCH} from '../../../store/employee/employee.actions';
 import {Store} from '@ngrx/store';
 
 @Component({

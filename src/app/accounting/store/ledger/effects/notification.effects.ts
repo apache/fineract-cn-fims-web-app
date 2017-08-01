@@ -19,7 +19,7 @@ import {Effect, Actions} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class LedgerNotificationEffects {

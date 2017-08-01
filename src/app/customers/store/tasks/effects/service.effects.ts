@@ -20,7 +20,7 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as taskActions from '../task.actions';
-import {CustomerService} from '../../../../../services/customer/customer.service';
+import {CustomerService} from '../../../../services/customer/customer.service';
 
 @Injectable()
 export class CustomerTasksApiEffects {

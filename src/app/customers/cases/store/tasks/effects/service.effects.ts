@@ -20,7 +20,10 @@ import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import * as taskActions from '../task.actions';
 import {of} from 'rxjs/observable/of';
-import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
+import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
+import {TaskInstance} from '../../../../../services/portfolio/domain/task-instance.model';
+import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {FimsTaskInstance} from '../../model/fims-task-instance.model';
 
 @Injectable()
 export class CaseTasksApiEffects {
@@ -30,14 +33,34 @@ export class CaseTasksApiEffects {
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(taskActions.LOAD_ALL)
-    .debounceTime(300)
     .map((action: taskActions.LoadAllAction) => action.payload)
     .switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).skip(1);
-
-      return this.portfolioService.findAllTasksForCase(payload.productId, payload.caseId)
-        .takeUntil(nextSearch$)
-        .map(taskInstances => new taskActions.LoadAllCompleteAction(taskInstances))
-        .catch(() => of(new taskActions.LoadAllCompleteAction([])));
+      return Observable.combineLatest(
+        this.portfolioService.findAllTaskDefinitionsForProduct(payload.productId),
+        this.portfolioService.findAllTasksForCase(payload.productId, payload.caseId, true),
+        (definitions, tasks) => ({
+          definitions,
+          tasks
+        })
+      ).map(result => this.mapTaskInstances(result.tasks, result.definitions))
+       .map(taskInstances => new taskActions.LoadAllCompleteAction(taskInstances))
+       .catch(() => of(new taskActions.LoadAllCompleteAction([])));
     });
+
+  @Effect()
+  executeTask$: Observable<Action> = this.actions$
+    .ofType(taskActions.EXECUTE_TASK)
+    .map((action: taskActions.ExecuteTaskAction) => action.payload)
+    .mergeMap(payload => this.portfolioService.taskForCaseExecuted(payload.productIdentifier, payload.caseIdentifier, payload.taskIdentifier, payload.executed)
+      .map(() => new taskActions.ExecuteTaskActionSuccess(payload))
+      .catch(error => of(new taskActions.ExecuteTaskActionFail(error))));
+
+  private mapTaskInstances(taskInstances: TaskInstance[], taskDefinitions: TaskDefinition[]): FimsTaskInstance[] {
+    return taskInstances.map(instance => ({
+      taskDefinition: taskDefinitions.find(definition => definition.identifier === instance.taskIdentifier),
+      comment: instance.comment,
+      executedOn: instance.executedOn,
+      executedBy: instance.executedBy
+    }))
+  }
 }

@@ -17,10 +17,10 @@
 import {Component, Input, forwardRef, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
-import {TransactionType} from '../../../../../services/accounting/domain/transaction-type.model';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
-import {TransactionTypePage} from '../../../../../services/accounting/domain/transaction-type-page.model';
+import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {TransactionTypePage} from '../../../../services/accounting/domain/transaction-type-page.model';
 
 const noop: () => void = () => {
   // empty method

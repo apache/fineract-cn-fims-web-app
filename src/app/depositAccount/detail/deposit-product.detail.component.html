@@ -35,68 +35,58 @@
   <td-message *ngIf="definition.active" label="{{'Product enabled' | translate }}"
               sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
   </td-message>
-  <div class="md-content inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Management</h3>
-              <a md-list-item [routerLink]="['./tasks']"
-                 *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line translate>Tasks</h3>
-                <p md-line translate>Change the status of this deposit product</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <div layout="row">
-              <md-list dense>
-                <md-list-item>
-                  <h3 md-line translate>Type</h3>
-                  <p md-line>{{definition.type}}</p>
-                </md-list-item>
-                <md-list-item *ngIf="hasTerm(definition)">
-                  <h3 md-line translate>Term</h3>
-                  <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Interest payable</h3>
-                  <p md-line>{{definition.term?.interestPayable}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Minimum balance</h3>
-                  <p md-line>{{definition.minimumBalance | number:numberFormat}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Interest</h3>
-                  <p md-line>{{definition.interest | number:numberFormat}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Currency</h3>
-                  <p md-line>{{definition.currency.code}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Expense account</h3>
-                  <p md-line>{{definition.expenseAccountIdentifier}}</p>
-                </md-list-item>
-                <md-list-item>
-                  <h3 md-line translate>Equity ledger</h3>
-                  <p md-line>{{definition.equityLedgerIdentifier}}</p>
-                </md-list-item>
-              </md-list>
-            </div>
-            <div layout="column">
-              <h4>Charges</h4>
-              <fims-data-table flex [data]="charges" [columns]="columns" [selectable]="false" [actionColumn]="false"></fims-data-table>
-            </div>
-          </div>
-        </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['./tasks']"
+         *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
+        <md-icon md-list-avatar>playlist_add_check</md-icon>
+        <h3 md-line translate>Tasks</h3>
+        <p md-line translate>Change the status of this deposit product</p>
+      </a>
+    </md-nav-list>
+    <ng-container right>
+      <div layout="row">
+        <md-list dense>
+          <md-list-item>
+            <h3 md-line translate>Type</h3>
+            <p md-line>{{definition.type}}</p>
+          </md-list-item>
+          <md-list-item *ngIf="hasTerm(definition)">
+            <h3 md-line translate>Term</h3>
+            <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Interest payable</h3>
+            <p md-line>{{definition.term?.interestPayable}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Minimum balance</h3>
+            <p md-line>{{definition.minimumBalance | number:numberFormat}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Interest</h3>
+            <p md-line>{{definition.interest | number:numberFormat}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Currency</h3>
+            <p md-line>{{definition.currency.code}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Expense account</h3>
+            <p md-line>{{definition.expenseAccountIdentifier}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Equity ledger</h3>
+            <p md-line>{{definition.equityLedgerIdentifier}}</p>
+          </md-list-item>
+        </md-list>
       </div>
-    </div>
-  </div>
+      <div layout="column">
+        <h4>Charges</h4>
+        <fims-data-table flex [data]="charges" [columns]="columns" [actionColumn]="false"></fims-data-table>
+      </div>
+    </ng-container>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Edit product' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
-  <md-icon>edit_mode</md-icon>
-</a>
+<fims-fab-button title="{{'Edit product' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}"></fims-fab-button>

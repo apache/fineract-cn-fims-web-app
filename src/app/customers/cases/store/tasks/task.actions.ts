@@ -14,16 +14,31 @@
  * limitations under the License.
  */
 
-import {type} from '../../../../util';
+import {type} from '../../../../store/util';
 import {Action} from '@ngrx/store';
-import {TaskInstance} from '../../../../../services/portfolio/domain/task-instance.model';
+import {TaskInstance} from '../../../../services/portfolio/domain/task-instance.model';
+import {Error} from '../../../../services/domain/error.model';
+import {FimsTaskInstance} from '../model/fims-task-instance.model';
 
 export const LOAD_ALL = type('[Case Task] Load All');
 export const LOAD_ALL_COMPLETE = type('[Case Task] Load All Complete');
 
-export interface LoadAllTasksPayload{
+export const EXECUTE_TASK = type('[Case Task] Execute');
+export const EXECUTE_TASK_SUCCESS = type('[Case Task] Execute Success');
+export const EXECUTE_TASK_FAIL = type('[Case Task] Execute Fail');
+
+export interface LoadAllTasksPayload {
   caseId: string;
   productId: string;
+}
+
+export interface ExecuteTaskPayload {
+  action: string;
+  productIdentifier: string;
+  caseIdentifier: string;
+  taskIdentifier: string;
+  executedBy: string;
+  executed: boolean;
 }
 
 export class LoadAllAction implements Action {
@@ -35,9 +50,30 @@ export class LoadAllAction implements Action {
 export class LoadAllCompleteAction implements Action {
   readonly type = LOAD_ALL_COMPLETE;
 
-  constructor(public payload: TaskInstance[]) { }
+  constructor(public payload: FimsTaskInstance[]) { }
+}
+
+export class ExecuteTaskAction implements Action {
+  readonly type = EXECUTE_TASK;
+
+  constructor(public payload: ExecuteTaskPayload) {}
+}
+
+export class ExecuteTaskActionSuccess implements Action {
+  readonly type = EXECUTE_TASK_SUCCESS;
+
+  constructor(public payload: ExecuteTaskPayload) {}
+}
+
+export class ExecuteTaskActionFail implements Action {
+  readonly type = EXECUTE_TASK_FAIL;
+
+  constructor(public payload: Error) {}
 }
 
 export type Actions
   = LoadAllAction
-  | LoadAllCompleteAction;
+  | LoadAllCompleteAction
+  | ExecuteTaskAction
+  | ExecuteTaskActionSuccess
+  | ExecuteTaskActionFail;

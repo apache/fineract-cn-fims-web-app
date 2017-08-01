@@ -17,42 +17,58 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import * as fromCustomers from '../../store/index';
-import {CustomersStore} from '../../store/index';
-import {Customer} from '../../../../services/customer/domain/customer.model';
-import {DELETE, SelectAction} from '../../store/identityCards/identity-cards.actions';
+import {CustomersStore, getSelectedIdentificationCard} from '../../store/index';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {DELETE} from '../../store/identityCards/identity-cards.actions';
+import {DELETE as DELETE_SCAN, LOAD_ALL, LoadAllAction} from '../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute} from '@angular/router';
-import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
+import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Observable} from 'rxjs/Observable';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
+import {IdentificationCardScan} from '../../../services/customer/domain/identification-card-scan.model';
+import {UploadIdentificationCardScanEvent} from './scans/scan.list.component';
+import {CREATE} from '../../store/identityCards/scans/scans.actions';
+import {ImageComponent} from '../../../common/image/image.component';
+import {CustomerService} from '../../../services/customer/customer.service';
 
 @Component({
   templateUrl: './identity-card.detail.component.html'
 })
 export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
 
-  private customerSubscription: Subscription;
-
-  private identificationCardSubscription: Subscription;
+  private actionSubscription: Subscription;
 
   private customer: Customer;
 
   identificationCard: IdentificationCard;
 
-  constructor(private route: ActivatedRoute, private customersStore: CustomersStore, private translate: TranslateService, private dialogService: TdDialogService) {}
+  scans$: Observable<IdentificationCardScan[]>;
+
+  constructor(private route: ActivatedRoute, private customersStore: CustomersStore, private translate: TranslateService, private dialogService: TdDialogService, private customerService: CustomerService) {}
 
   ngOnInit(): void {
-    this.identificationCardSubscription = this.customersStore.select(fromCustomers.getSelectedIdentificationCard)
-      .filter(identificationCard => !!identificationCard)
-      .subscribe(identificationCard => this.identificationCard = identificationCard);
+    this.scans$ = this.customersStore.select(fromCustomers.getAllIdentificationCardScanEntities);
 
-    this.customerSubscription = this.customersStore.select(fromCustomers.getSelectedCustomer)
-      .subscribe(customer => this.customer = customer);
+    this.actionSubscription = Observable.combineLatest(
+      this.customersStore.select(fromCustomers.getSelectedIdentificationCard)
+        .filter(identificationCard => !!identificationCard),
+      this.customersStore.select(fromCustomers.getSelectedCustomer),
+      (identificationCard, customer) => ({
+        identificationCard,
+        customer
+      }))
+      .do(result => this.customer = result.customer)
+      .do(result => this.identificationCard = result.identificationCard)
+      .map(result => new LoadAllAction({
+        customerIdentifier: result.customer.identifier,
+        identificationCardNumber: result.identificationCard.number
+      }))
+      .subscribe(this.customersStore);
   }
 
   ngOnDestroy(): void {
-    this.customerSubscription.unsubscribe();
-    this.identificationCardSubscription.unsubscribe();
+    this.actionSubscription.unsubscribe();
   }
 
   confirmDeletion(): Observable<boolean> {
@@ -78,6 +94,54 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
           customerId: this.customer.identifier,
           identificationCard: this.identificationCard,
           activatedRoute: this.route
+        }})
+      });
+  }
+
+  viewScan(identifier: string): void {
+    this.customerService.getIdentificationCardScanImage(this.customer.identifier, this.identificationCard.number, identifier)
+      .subscribe(blob => {
+        this.dialogService.open(ImageComponent, {
+          data: blob
+        })
+      });
+  }
+
+  uploadScan(event: UploadIdentificationCardScanEvent): void {
+    this.customersStore.dispatch({
+      type: CREATE,
+      payload: {
+        customerIdentifier: this.customer.identifier,
+        identificationCardNumber: this.identificationCard.number,
+        scan: event.scan,
+        file: event.file
+      }
+    })
+  }
+
+  confirmScanDeletion(): Observable<boolean> {
+    const message = 'Do you want to delete this scan?';
+    const title = 'Confirm deletion';
+    const button = 'DELETE SCAN';
+
+    return this.translate.get([title, message, button])
+      .flatMap(result =>
+        this.dialogService.openConfirm({
+          message: result[message],
+          title: result[title],
+          acceptButton: result[button]
+        }).afterClosed()
+      );
+  }
+
+  deleteScan(scan: IdentificationCardScan): void {
+    this.confirmScanDeletion()
+      .filter(accept => accept)
+      .subscribe(() => {
+        this.customersStore.dispatch({ type: DELETE_SCAN, payload: {
+          customerIdentifier: this.customer.identifier,
+          identificationCardNumber: this.identificationCard.number,
+          scan
         }})
       });
   }

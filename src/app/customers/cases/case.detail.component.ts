@@ -17,24 +17,24 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCases from './store/index';
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
 import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';
 import {FimsCase} from './store/model/fims-case.model';
 import {Observable} from 'rxjs/Observable';
-import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './case.detail.component.html'
 })
-export class CaseDetailComponent implements OnInit, OnDestroy{
+export class CaseDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  private caseSubscription: Subscription;
+  numberFormat: string = '1.2-2';
 
-  caseInstance: FimsCase;
+  caseInstance$: Observable<FimsCase>;
 
   canEdit$: Observable<boolean>;
 
@@ -45,14 +45,11 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
       .map(params => new SelectAction(params['caseId']))
       .subscribe(this.casesStore);
 
-    const case$: Observable<FimsCase> = this.casesStore.select(fromCases.getSelectedCase);
-
-    this.caseSubscription = case$
-      .subscribe(caseInstance => this.caseInstance = caseInstance);
+    this.caseInstance$ = this.casesStore.select(fromCases.getSelectedCase);
 
     this.canEdit$ = Observable.combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
-      case$,
+      this.caseInstance$,
       (permissions, caseInstance: FimsCase) => ({
         hasPermission: this.hasChangePermission(permissions),
         isCreatedOrPending: caseInstance.currentState === 'PENDING' || caseInstance.currentState === 'CREATED'
@@ -69,7 +66,6 @@ export class CaseDetailComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.caseSubscription.unsubscribe();
   }
 
   disburse(): void{

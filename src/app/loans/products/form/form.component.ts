@@ -18,17 +18,22 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {InterestFormData, ProductInterestFormComponent} from './interests/interests.component';
-import {AccountAssignment} from '../../../../services/portfolio/domain/account-assignment.model';
-import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
+import {AccountAssignment} from '../../../services/portfolio/domain/account-assignment.model';
+import {AccountDesignators} from '../../../services/portfolio/domain/individuallending/account-designators.model';
 import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
-import {ProductParameters} from '../../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {FimsValidators} from '../../../../common/validator/validators';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {ProductParameters} from '../../../services/portfolio/domain/individuallending/product-parameters.model';
+import {FimsValidators} from '../../../common/validator/validators';
+import {AccountingService} from '../../../services/accounting/accounting.service';
 import {FimsProduct} from '../store/model/fims-product.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {accountExists} from '../../../common/validator/account-exists.validator';
 import {ProductSettingsFormComponent, SettingsFormData} from './settings/settings.component';
-import {temporalOptionList} from '../../../../common/domain/temporal.domain';
-import {Currency} from '../../../../services/currency/domain/currency.model';
+import {temporalOptionList} from '../../../common/domain/temporal.domain';
+import {Currency} from '../../../services/currency/domain/currency.model';
+import {
+  accountIdentifier,
+  createAccountAssignment, createLedgerAssignment,
+  findAccountDesignator, ledgerIdentifier
+} from '../../../common/util/account-assignments';
 
 @Component({
   selector: 'fims-product-form-component',
@@ -46,7 +51,7 @@ export class ProductFormComponent implements OnInit{
 
   @Input('editMode') editMode: boolean;
 
-  @Input('product') set product(product: FimsProduct){
+  @Input('product') set product(product: FimsProduct) {
     this.prepareDetailForm(product);
     this.prepareSettingsForm(product);
     this.prepareInterestForm(product);
@@ -70,7 +75,7 @@ export class ProductFormComponent implements OnInit{
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.step.open();
   }
 
@@ -81,7 +86,7 @@ export class ProductFormComponent implements OnInit{
       this.arrearsAllowanceForm.valid;
   }
 
-  save(): void{
+  save(): void {
     const parameters: ProductParameters = {
       maximumDispersalAmount: 0,
       maximumDispersalCount: 0,
@@ -122,38 +127,24 @@ export class ProductFormComponent implements OnInit{
   private collectAccountAssignments(): AccountAssignment[] {
     const assignments: AccountAssignment[] = [];
 
-    assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.ENTRY));
-    assignments.push(this.createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
+    assignments.push(createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
 
-    assignments.push(this.createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
-    assignments.push(this.createAccountAssignment(this.settingsForm.formData.pendingDisbursal, AccountDesignators.PENDING_DISBURSAL));
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.loansPayableLedger, AccountDesignators.LOANS_PAYABLE));
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
+    assignments.push(createAccountAssignment(this.settingsForm.formData.pendingDisbursal, AccountDesignators.PENDING_DISBURSAL));
 
-    assignments.push(this.createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
-    assignments.push(this.createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
-    assignments.push(this.createAccountAssignment(this.feeForm.formData.lateFeeIncomeAccount, AccountDesignators.LATE_FEE_INCOME));
-    assignments.push(this.createAccountAssignment(this.feeForm.formData.lateFeeAccrualAccount, AccountDesignators.LATE_FEE_ACCRUAL));
-    assignments.push(this.createAccountAssignment(this.feeForm.formData.originationFeeAccount, AccountDesignators.ORIGINATION_FEE_INCOME));
+    assignments.push(createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
+    assignments.push(createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
+    assignments.push(createAccountAssignment(this.feeForm.formData.lateFeeIncomeAccount, AccountDesignators.LATE_FEE_INCOME));
+    assignments.push(createAccountAssignment(this.feeForm.formData.lateFeeAccrualAccount, AccountDesignators.LATE_FEE_ACCRUAL));
+    assignments.push(createAccountAssignment(this.feeForm.formData.originationFeeAccount, AccountDesignators.ORIGINATION_FEE_INCOME));
 
-    assignments.push(this.createAccountAssignment(this.interestForm.formData.incomeAccount, AccountDesignators.INTEREST_INCOME));
-    assignments.push(this.createAccountAssignment(this.interestForm.formData.accrualAccount, AccountDesignators.INTEREST_ACCRUAL));
+    assignments.push(createAccountAssignment(this.interestForm.formData.incomeAccount, AccountDesignators.INTEREST_INCOME));
+    assignments.push(createAccountAssignment(this.interestForm.formData.accrualAccount, AccountDesignators.INTEREST_ACCRUAL));
 
-    assignments.push(this.createAccountAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.ARREARS_ALLOWANCE));
+    assignments.push(createAccountAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.ARREARS_ALLOWANCE));
 
     return assignments;
-  }
-
-  private createAccountAssignment(identifier: string, designator: string): AccountAssignment {
-    return {
-      accountIdentifier: identifier,
-      designator: designator
-    }
-  }
-
-  private createLedgerAssignment(identifier: string, designator: string): AccountAssignment {
-    return {
-      ledgerIdentifier: identifier,
-      designator: designator
-    }
   }
 
   cancel(): void{
@@ -177,65 +168,54 @@ export class ProductFormComponent implements OnInit{
   }
 
   prepareSettingsForm(product: FimsProduct) {
-    const loanFoundAccount = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
-    const customerLoanLedger = this.findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
-    const pendingDisbursal = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PENDING_DISBURSAL);
+    const loanFoundAccount = findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
+    const loansPayableLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.LOANS_PAYABLE);
+    const customerLoanLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
+    const pendingDisbursal = findAccountDesignator(product.accountAssignments, AccountDesignators.PENDING_DISBURSAL);
 
     this.settingsFormData = {
-      loanFundAccount: this.accountIdentifier(loanFoundAccount),
-      customerLoanLedger: this.ledgerIdentifier(customerLoanLedger),
-      pendingDisbursal: this.accountIdentifier(pendingDisbursal)
+      loanFundAccount: accountIdentifier(loanFoundAccount),
+      loansPayableLedger: ledgerIdentifier(loansPayableLedger),
+      customerLoanLedger: ledgerIdentifier(customerLoanLedger),
+      pendingDisbursal: accountIdentifier(pendingDisbursal)
     }
   }
 
   private prepareInterestForm(product: FimsProduct) {
-    const interestIncome = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
-    const interestAccrual = this.findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
+    const interestIncome = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
+    const interestAccrual = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
     const interestRange = product.interestRange;
 
     this.interestFormData = {
       minimum: interestRange.minimum.toFixed(2),
       maximum: interestRange.maximum.toFixed(2),
       interestBasis: product.interestBasis,
-      incomeAccount: this.accountIdentifier(interestIncome),
-      accrualAccount: this.accountIdentifier(interestAccrual)
+      incomeAccount: accountIdentifier(interestIncome),
+      accrualAccount: accountIdentifier(interestAccrual)
     }
   }
 
   private prepareFeeForm(product: FimsProduct) {
-    const processingFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
-    const disbursementFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
-    const lateFeeIncomeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
-    const lateFeeAccrualDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_ACCRUAL);
-    const loanOriginationFeeDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ORIGINATION_FEE_INCOME);
+    const processingFeeDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.PROCESSING_FEE_INCOME);
+    const disbursementFeeDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.DISBURSEMENT_FEE_INCOME);
+    const lateFeeIncomeDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_INCOME);
+    const lateFeeAccrualDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.LATE_FEE_ACCRUAL);
+    const loanOriginationFeeDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.ORIGINATION_FEE_INCOME);
 
     this.feeFormData = {
-      disbursementFeeAccount: this.accountIdentifier(disbursementFeeDesignator),
-      lateFeeIncomeAccount: this.accountIdentifier(lateFeeIncomeDesignator),
-      lateFeeAccrualAccount: this.accountIdentifier(lateFeeAccrualDesignator),
-      processingFeeAccount: this.accountIdentifier(processingFeeDesignator),
-      originationFeeAccount: this.accountIdentifier(loanOriginationFeeDesignator)
+      disbursementFeeAccount: accountIdentifier(disbursementFeeDesignator),
+      lateFeeIncomeAccount: accountIdentifier(lateFeeIncomeDesignator),
+      lateFeeAccrualAccount: accountIdentifier(lateFeeAccrualDesignator),
+      processingFeeAccount: accountIdentifier(processingFeeDesignator),
+      originationFeeAccount: accountIdentifier(loanOriginationFeeDesignator)
     }
   }
 
   private prepareAllowanceForm(product: FimsProduct) {
-    const allowanceDesignator = this.findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
+    const allowanceDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
     this.arrearsAllowanceForm = this.formBuilder.group({
-      account: [this.accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
+      account: [accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });
-  }
-
-  private accountIdentifier(assignment: AccountAssignment): string {
-    return assignment ? assignment.accountIdentifier : undefined;
-  }
-
-  private ledgerIdentifier(assignment: AccountAssignment): string {
-    return assignment ? assignment.ledgerIdentifier : undefined;
-  }
-
-  private findAccountDesignator(accountAssignments: AccountAssignment[], designator: string): AccountAssignment{
-    const result = accountAssignments.find(assignment => assignment.designator === designator);
-    return result;
   }
 
 }

@@ -17,10 +17,10 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {TellerManagementCommand} from '../../../../../../services/teller/domain/teller-management-command.model';
-import {FormComponent} from '../../../../../../common/forms/form.component';
-import {OfficeService} from '../../../../../../services/office/office.service';
-import {employeeExists} from '../../../../../../common/validator/employee-exists.validator';
+import {TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
+import {FormComponent} from '../../../../../common/forms/form.component';
+import {OfficeService} from '../../../../../services/office/office.service';
+import {employeeExists} from '../../../../../common/validator/employee-exists.validator';
 
 @Component({
   selector: 'fims-teller-open-command',

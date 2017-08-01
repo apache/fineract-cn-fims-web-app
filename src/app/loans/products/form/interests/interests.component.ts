@@ -15,12 +15,12 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../../../common/forms/form.component';
-import {InterestBasis} from '../../../../../services/portfolio/domain/interest-basis.model';
+import {FormComponent} from '../../../../common/forms/form.component';
+import {InterestBasis} from '../../../../services/portfolio/domain/interest-basis.model';
 import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../../../common/validator/validators';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {accountExists} from '../../../../../common/validator/account-exists.validator';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
 import {createNumberMask} from 'text-mask-addons/dist/textMaskAddons';
 
 interface InterestBasisOption {

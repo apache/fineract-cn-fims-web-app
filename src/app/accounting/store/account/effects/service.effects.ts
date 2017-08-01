@@ -19,7 +19,7 @@ import {Effect, Actions} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {Observable} from 'rxjs';
 
 @Injectable()

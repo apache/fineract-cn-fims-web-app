@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-import {FimsSharedModule} from '../../../common/common.module';
+import {FimsSharedModule} from '../../common/common.module';
 import {CaseRoutes} from './case.routes';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {CaseTasksComponent} from './tasks/task.component';
 import {CasePaymentsComponent} from './payments/payments.component';
 import {CaseDetailFormComponent} from './form/detail/detail.component';
 import {CaseCreateComponent} from './form/create.component';
@@ -41,12 +40,13 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MdAutocompleteModule,
-  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdRadioModule,
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule,
+  MdRadioModule,
   MdSelectModule, MdTabsModule,
-  MdToolbarModule
+  MdToolbarModule, MdTooltipModule
 } from '@angular/material';
 import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentFileModule, CovalentMessageModule,
+  CovalentCommonModule, CovalentDataTableModule, CovalentFileModule, CovalentMessageModule, CovalentNotificationsModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';
@@ -55,6 +55,12 @@ import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
 import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
 import {CaseDocumentsFormComponent} from './form/documents/documents.component';
 import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
+import {CaseTasksComponent} from './status/tasks.component';
+import {CaseCommandComponent} from './status/command.component';
+import {CaseTasksNotificationEffects} from './store/tasks/effects/notification.effects';
+import {CaseCommandConfirmationComponent} from './status/confirmation/confirmation.component';
+import {CaseCommandConfirmationFormComponent} from './status/confirmation/form.component';
+import {CaseTaskComponent} from './status/task.component';
 
 @NgModule({
   imports: [
@@ -63,6 +69,7 @@ import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
+    MdTooltipModule,
     MdTabsModule,
     MdIconModule,
     MdListModule,
@@ -73,18 +80,21 @@ import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
     MdSelectModule,
     MdRadioModule,
     MdCardModule,
+    MdCheckboxModule,
     MdAutocompleteModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentDataTableModule,
     CovalentMessageModule,
     CovalentFileModule,
+    CovalentNotificationsModule,
 
     EffectsModule.run(CaseApiEffects),
     EffectsModule.run(CaseRouteEffects),
     EffectsModule.run(CaseNotificationEffects),
 
     EffectsModule.run(CaseTasksApiEffects),
+    EffectsModule.run(CaseTasksNotificationEffects),
     EffectsModule.run(CasePaymentsApiEffects)
   ],
   declarations: [
@@ -96,7 +106,11 @@ import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
     CaseDetailComponent,
     CaseDetailPaymentCycleComponent,
     CasePaymentsComponent,
+    CaseCommandComponent,
     CaseTasksComponent,
+    CaseTaskComponent,
+    CaseCommandConfirmationComponent,
+    CaseCommandConfirmationFormComponent,
     CaseStatusComponent,
     CaseDebtToIncomeFormComponent,
     CaseCreditFactorFormComponent,

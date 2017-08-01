@@ -15,7 +15,7 @@
  */
 
 import * as journalEntry from './journal-entry.actions';
-import {JournalEntry} from '../../../../../services/accounting/domain/journal-entry.model';
+import {JournalEntry} from '../../../../services/accounting/domain/journal-entry.model';
 
 
 export interface State {

@@ -15,11 +15,11 @@
  */
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Office} from '../../../../services/office/domain/office.model';
-import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
+import {Office} from '../../../services/office/domain/office.model';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../../reducers';
-import {SEARCH} from '../../../reducers/office/office.actions';
+import * as fromRoot from '../../../store';
+import {SEARCH} from '../../../store/office/office.actions';
 
 @Component({
   selector: 'fims-customer-offices-form',

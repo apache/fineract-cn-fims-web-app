@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import {type} from '../../util';
-import {RoutePayload} from '../../../common/store/route-payload';
-import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
+import {type} from '../../store/util';
+import {RoutePayload} from '../../common/store/route-payload';
+import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
 import {Action} from '@ngrx/store';
-import {SearchResult} from '../../../common/store/search.reducer';
+import {SearchResult} from '../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
   SelectResourcePayload, UpdateResourceSuccessPayload
-} from '../../../common/store/resource.reducer';
-import {ProductDefinitionCommand} from '../../../services/depositAccount/domain/definition/product-definition-command.model';
+} from '../../common/store/resource.reducer';
+import {ProductDefinitionCommand} from '../../services/depositAccount/domain/definition/product-definition-command.model';
 
 export const SEARCH = type('[Deposit Product Definition] Search');
 export const SEARCH_COMPLETE = type('[Deposit Product Definition] Search Complete');

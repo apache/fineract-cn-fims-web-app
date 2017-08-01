@@ -20,8 +20,8 @@ import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as caseActions from '../case.actions';
-import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
-import {Product} from '../../../../../services/portfolio/domain/product.model';
+import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {Product} from '../../../../services/portfolio/domain/product.model';
 import {mapToFimsCasePage} from '../model/fims-case-page.model';
 import {mapToCase} from '../model/fims-case.mapper';
 

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import * as fromTellers from '../store/teller/tellers.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer, getResourceAll,
@@ -25,8 +25,8 @@ import {
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
-} from '../../../common/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
+} from '../../common/store/resource.reducer';
+import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
 export interface State extends fromRoot.State{
   offices: ResourceState;

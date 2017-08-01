@@ -26,12 +26,7 @@
                    (onFetch)="fetchProductInstances($event)"
                    (onActionCellClick)="rowSelect($event)"
                    [columns]="columns"
-                   [data]="productInstancesData$ | async"
-                   [selectable]="false"
-                   [actionColumn]="true">
+                   [data]="productInstancesData$ | async">
   </fims-data-table>
 </fims-layout-card-over>
-
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create new deposit account for customer' | translate}}" [routerLink]="['create']" *hasPermission="{ id: 'deposit_instances', accessLevel: 'CHANGE'}">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create new deposit account for customer' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'deposit_instances', accessLevel: 'CHANGE'}"></fims-fab-button>

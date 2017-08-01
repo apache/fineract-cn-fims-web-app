@@ -15,7 +15,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {ReportingService} from '../../services/reporting/reporting.service';
+import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 

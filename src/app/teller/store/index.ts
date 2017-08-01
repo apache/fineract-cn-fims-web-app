@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import * as fromRoot from '../../reducers';
+import * as fromRoot from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../reducers/index';
+import {createReducer} from '../../store/index';
 import * as fromAuthentication from './authentication.reducer';
 import * as fromDepositProducts from './customer-deposit-products.reducer';
 import * as fromLoanProducts from './customer-loan-products.reducer';
@@ -24,7 +24,7 @@ import {createSelector} from 'reselect';
 import {
   createResourceReducer, getResourceAll, getResourceLoadedAt, getResourceSelected,
   ResourceState
-} from '../../../common/store/resource.reducer';
+} from '../../common/store/resource.reducer';
 
 export interface State extends fromRoot.State {
   tellerAuthentication: fromAuthentication.State;

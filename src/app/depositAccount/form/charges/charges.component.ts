@@ -16,12 +16,12 @@
 
 import {Component, Input} from '@angular/core';
 import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
-import {Charge} from '../../../../services/depositAccount/domain/definition/charge.model';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {Action} from '../../../../services/depositAccount/domain/definition/action.model';
-import {accountExists} from '../../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {FimsValidators} from '../../../../common/validator/validators';
+import {Charge} from '../../../services/depositAccount/domain/definition/charge.model';
+import {FormComponent} from '../../../common/forms/form.component';
+import {Action} from '../../../services/depositAccount/domain/definition/action.model';
+import {accountExists} from '../../../common/validator/account-exists.validator';
+import {AccountingService} from '../../../services/accounting/accounting.service';
+import {FimsValidators} from '../../../common/validator/validators';
 
 @Component({
   selector: 'fims-deposit-product-charges-form',

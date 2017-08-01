@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';

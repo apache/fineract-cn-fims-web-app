@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {TellerService} from '../../../../../services/teller/teller-service';
+import {TellerService} from '../../../../services/teller/teller-service';
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';

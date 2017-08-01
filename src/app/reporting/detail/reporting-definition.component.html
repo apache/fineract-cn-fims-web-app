@@ -18,24 +18,15 @@
 </md-toolbar>
 
 <fims-layout-card-over title="{{ 'Report definitions' | translate}}">
-  <div class="md-content inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30" class="md-content">
-            <fims-reporting-criteria #criteria
-                                     [queryParameter]="queryParameter$ | async"
-                                     [displayableFields]="displayableFields$ | async"
-                                     (onGenerateReport)="generateReport($event)">
-            </fims-reporting-criteria>
-          </div>
-          <div flex-gt-md="70" class="md-content">
-            <fims-reporting-report-page [reportPage]="reportPage$ | async"></fims-reporting-report-page>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <fims-two-column-layout>
+    <fims-reporting-criteria #criteria
+                             [queryParameter]="queryParameter$ | async"
+                             [displayableFields]="displayableFields$ | async"
+                             (onGenerateReport)="generateReport($event)"
+                             left>
+    </fims-reporting-criteria>
+    <fims-reporting-report-page [reportPage]="reportPage$ | async" right></fims-reporting-report-page>
+  </fims-two-column-layout>
 </fims-layout-card-over>
 
 

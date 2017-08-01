@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import {ResourceState} from '../../../../common/store/resource.reducer';
+import {ResourceState} from '../../../common/store/resource.reducer';
 import * as tellers from '../teller/teller.actions';
-import {Status, Teller} from '../../../../services/teller/domain/teller.model';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../common/store/reducer.helper';
-import {TellerManagementCommand} from '../../../../services/teller/domain/teller-management-command.model';
+import {Status, Teller} from '../../../services/teller/domain/teller.model';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
+import {TellerManagementCommand} from '../../../services/teller/domain/teller-management-command.model';
 
 export const initialState: ResourceState = {
   ids: [],

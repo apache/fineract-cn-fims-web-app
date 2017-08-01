@@ -31,53 +31,43 @@
 
 <fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
-    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>edit_mode</md-icon></a>
+    <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>
     <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content" class="inset" flex>
-    <div layout="row">
-      <div layout="column" flex-gt-md="100">
-        <div layout-gt-md="row">
-          <div flex-gt-md="30">
-            <md-nav-list>
-              <h3 md-subheader translate>Details</h3>
-              <a md-list-item [routerLink]="['./ledgers']">
-                <md-icon md-list-avatar>library_books</md-icon>
-                <h3 md-line translate>Subledgers</h3>
-                <p md-line translate>View subledgers</p>
-              </a>
-            </md-nav-list>
-          </div>
-          <div flex-gt-md="70">
-            <div layout="row">
-              <md-list>
-                <md-list-item>
-                  <md-icon md-list-avatar>account_balance</md-icon>
-                  <h3 md-line translate>Type</h3>
-                  <p md-line>{{ledger.type}}</p>
-                </md-list-item>
-              </md-list>
-            </div>
-            <div layout="row">
-              <div layout="column" flex-gt-md="100">
-                <h3 translate>Accounts</h3>
-                <fims-data-table flex
-                                 (onFetch)="fetchAccounts($event)"
-                                 (onActionCellClick)="rowSelect($event)"
-                                 [columns]="columns"
-                                 [data]="accountData$ | async"
-                                 [loading]="loading$ | async"
-                                 [sortable]="true"
-                                 [pageable]="true">
-                </fims-data-table>
-              </div>
-            </div>
-          </div>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Details</h3>
+      <a md-list-item [routerLink]="['./ledgers']">
+        <md-icon md-list-avatar>library_books</md-icon>
+        <h3 md-line translate>Subledgers</h3>
+        <p md-line translate>View subledgers</p>
+      </a>
+    </md-nav-list>
+    <ng-container right>
+      <div layout="row">
+        <md-list>
+          <md-list-item>
+            <md-icon md-list-avatar>account_balance</md-icon>
+            <h3 md-line translate>Type</h3>
+            <p md-line>{{ledger.type}}</p>
+          </md-list-item>
+        </md-list>
+      </div>
+      <div layout="row">
+        <div layout="column" flex-gt-md="100">
+          <h3 translate>Accounts</h3>
+          <fims-data-table flex
+                           (onFetch)="fetchAccounts($event)"
+                           (onActionCellClick)="rowSelect($event)"
+                           [columns]="columns"
+                           [data]="accountData$ | async"
+                           [loading]="loading$ | async"
+                           [sortable]="true"
+                           [pageable]="true">
+          </fims-data-table>
         </div>
       </div>
-    </div>
-  </div>
+    </ng-container>
+  </fims-two-column-layout>
 </fims-layout-card-over>
-<a md-fab color="accent" class="md-fab-position-bottom-right" title="{{'Create account' | translate}}" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'CHANGE' }" [routerLink]="['accounts/create']">
-  <md-icon>add</md-icon>
-</a>
+<fims-fab-button title="{{'Create account' | translate}}" icon="add" [link]="['accounts/create']" [permission]="{ id: 'accounting_accounts', accessLevel: 'CHANGE'}"></fims-fab-button>

@@ -16,8 +16,8 @@
 
 import * as catalog from "./catalog.actions";
 import {createSelector} from "reselect";
-import {Catalog} from "../../../../services/catalog/domain/catalog.model";
-import {resourcesToHash} from '../../../../common/store/reducer.helper';
+import {Catalog} from "../../../services/catalog/domain/catalog.model";
+import {resourcesToHash} from '../../../common/store/reducer.helper';
 
 export interface State {
   ids: string[];

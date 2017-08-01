@@ -17,17 +17,17 @@
 import {
   createResourceReducer, getResourceLoadedAt, getResourceSelected,
   ResourceState
-} from '../../../../common/store/resource.reducer';
+} from '../../../common/store/resource.reducer';
 import * as fromCustomer from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../../reducers/index';
+import {createReducer} from '../../../store/index';
 import {
   createSearchReducer,
   getSearchEntities,
   getSearchTotalElements,
   getSearchTotalPages,
   SearchState
-} from '../../../../common/store/search.reducer';
+} from '../../../common/store/search.reducer';
 import {createSelector} from 'reselect';
 
 export interface State extends fromCustomer.State {

@@ -16,8 +16,8 @@
 
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DepositFormComponent} from './form.component';
-import {Customer} from '../../../../services/customer/domain/customer.model';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromDeposits from '../store/index';
 import {DepositsStore} from '../store/index';

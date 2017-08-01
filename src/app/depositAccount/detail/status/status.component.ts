@@ -21,10 +21,10 @@ import * as fromDepositAccounts from '../../store/index';
 import {
   Action,
   ProductDefinitionCommand
-} from '../../../../services/depositAccount/domain/definition/product-definition-command.model';
+} from '../../../services/depositAccount/domain/definition/product-definition-command.model';
 import {DepositAccountStore} from '../../store/index';
 import {EXECUTE_COMMAND} from '../../store/product.actions';
-import {ProductDefinition} from '../../../../services/depositAccount/domain/definition/product-definition.model';
+import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
 
 interface StatusCommand {
   action: Action;

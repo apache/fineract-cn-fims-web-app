@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {TellerService} from '../../../../services/teller/teller-service';
+import {TellerService} from '../../../services/teller/teller-service';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as tellerActions from '../teller.actions';
@@ -52,7 +52,7 @@ export class TellerApiEffects {
     .ofType(tellerActions.CONFIRM_TRANSACTION)
     .map((action: tellerActions.ConfirmTransactionAction) => action.payload)
     .mergeMap(payload =>
-      this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command)
+      this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command, payload.chargesIncluded)
         .map(() => new tellerActions.ConfirmTransactionSuccessAction(payload))
         .catch((error) => of(new tellerActions.ConfirmTransactionFailAction(error)))
     );

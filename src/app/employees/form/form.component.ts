@@ -17,17 +17,17 @@ import {Component, ViewChild, Input, Output, EventEmitter, OnInit} from '@angula
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {TdStepComponent} from '@covalent/core';
-import {Office} from '../../../services/office/domain/office.model';
-import {Employee} from '../../../services/office/domain/employee.model';
-import {ContactDetail, BUSINESS, PHONE, EMAIL, MOBILE} from '../../../services/domain/contact/contact-detail.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Role} from '../../../services/identity/domain/role.model';
-import {User} from '../../../services/identity/domain/user.model';
-import {FimsValidators} from '../../../common/validator/validators';
+import {Office} from '../../services/office/domain/office.model';
+import {Employee} from '../../services/office/domain/employee.model';
+import {ContactDetail, BUSINESS, PHONE, EMAIL, MOBILE} from '../../services/domain/contact/contact-detail.model';
+import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
+import {Role} from '../../services/identity/domain/role.model';
+import {User} from '../../services/identity/domain/user.model';
+import {FimsValidators} from '../../common/validator/validators';
 import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import {SEARCH as SEARCH_OFFICE} from '../../reducers/office/office.actions';
-import {SEARCH as SEARCH_ROLE} from '../../reducers/role/role.actions';
+import * as fromRoot from '../../store';
+import {SEARCH as SEARCH_OFFICE} from '../../store/office/office.actions';
+import {SEARCH as SEARCH_ROLE} from '../../store/role/role.actions';
 
 export interface EmployeeFormData {
   user: User;

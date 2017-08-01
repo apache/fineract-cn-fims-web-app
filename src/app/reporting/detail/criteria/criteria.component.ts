@@ -15,9 +15,9 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, Query, ViewChild} from '@angular/core';
-import {QueryParameter} from '../../../../services/reporting/domain/query-parameter.model';
+import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
 import {ReportingQueryParamsComponent} from '../queryParams/query-params.component';
-import {DisplayableField} from '../../../../services/reporting/domain/displayable-field.model';
+import {DisplayableField} from '../../../services/reporting/domain/displayable-field.model';
 import {ReportingDisplayableFieldsComponent} from '../displayableFields/displayable-fields.component';
 
 export interface GenerateReportEvent {

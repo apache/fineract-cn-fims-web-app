@@ -15,9 +15,9 @@
  */
 
 import * as tellers from './teller.actions';
-import {ResourceState} from '../../../common/store/resource.reducer';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
-import {Case} from '../../../services/portfolio/domain/case.model';
+import {ResourceState} from '../../common/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../common/store/reducer.helper';
+import {Case} from '../../services/portfolio/domain/case.model';
 
 export const initialState: ResourceState = {
   ids: [],

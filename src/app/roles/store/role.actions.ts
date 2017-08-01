@@ -15,14 +15,14 @@
  */
 
 import {Action} from '@ngrx/store';
-import {type} from '../../util';
-import {Role} from '../../../services/identity/domain/role.model';
-import {Error} from '../../../services/domain/error.model';
+import {type} from '../../store/util';
+import {Role} from '../../services/identity/domain/role.model';
+import {Error} from '../../services/domain/error.model';
 import {
   CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload, SelectResourcePayload,
   UpdateResourceSuccessPayload
-} from '../../../common/store/resource.reducer';
-import {RoutePayload} from '../../../common/store/route-payload';
+} from '../../common/store/resource.reducer';
+import {RoutePayload} from '../../common/store/route-payload';
 
 export const LOAD = type('[Role] Load');
 export const SELECT = type('[Role] Select');

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {type} from '../../util';
+import {type} from '../../store/util';
 import {Action} from '@ngrx/store';
-import {LoadResourcePayload, SelectResourcePayload} from '../../../common/store/resource.reducer';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
-import {Case} from '../../../services/portfolio/domain/case.model';
-import {RoutePayload} from '../../../common/store/route-payload';
-import {Teller} from '../../../services/teller/domain/teller.model';
+import {LoadResourcePayload, SelectResourcePayload} from '../../common/store/resource.reducer';
+import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
+import {Case} from '../../services/portfolio/domain/case.model';
+import {RoutePayload} from '../../common/store/route-payload';
+import {Teller} from '../../services/teller/domain/teller.model';
 
 export const UNLOCK_DRAWER = type('[Teller] Unlock Drawer');
 export const UNLOCK_DRAWER_SUCCESS = type('[Teller] Unlock Drawer Success');
@@ -53,7 +53,8 @@ export interface LockDrawerPayload {
 export interface ConfirmTransactionPayload extends RoutePayload {
   tellerCode: string;
   tellerTransactionIdentifier: string;
-  command: string
+  command: string,
+  chargesIncluded: boolean;
 }
 
 export class UnlockDrawerAction implements Action {

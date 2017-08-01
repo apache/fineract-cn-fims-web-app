@@ -15,7 +15,7 @@
  */
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {Role} from '../../../../services/identity/domain/role.model';
+import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
 import {Subscription} from 'rxjs';
 import {UPDATE, SelectAction} from '../../store/role.actions';

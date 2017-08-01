@@ -15,12 +15,12 @@
  */
 
 import {Component, OnInit, Input, EventEmitter, Output, ViewChild} from '@angular/core';
-import {TaskDefinition} from '../../../../../services/portfolio/domain/task-definition.model';
+import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {TdStepComponent} from '@covalent/core';
 import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from '@angular/forms';
-import {ActionOption} from '../../../../../common/domain/action-option.model';
-import {WorkflowAction} from '../../../../../services/portfolio/domain/individuallending/workflow-action.model';
-import {FimsValidators} from '../../../../../common/validator/validators';
+import {ActionOption} from '../../../../common/domain/action-option.model';
+import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {FimsValidators} from '../../../../common/validator/validators';
 
 @Component({
   selector: 'fims-product-task-form-component',
