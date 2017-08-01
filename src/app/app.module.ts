@@ -53,6 +53,7 @@ import {CurrencyService} from './services/currency/currency.service';
 import {TellerService} from './services/teller/teller-service';
 import {ReportingService} from './services/reporting/reporting.service';
 import {getSelectedLanguage} from './common/i18n/translate';
+import {environment} from '../environments/environment';
 
 export function HttpLoaderFactory(http: Http){
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -76,9 +77,7 @@ export function HttpLoaderFactory(http: Http){
     appRoutes,
     StoreModule.provideStore(reducer),
 
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    }),
+    !environment.production ? StoreDevtoolsModule.instrumentOnlyWithExtension({ maxAge: 5 }) : [],
 
     /**
      * Root effects
