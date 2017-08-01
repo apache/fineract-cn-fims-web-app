@@ -51,6 +51,7 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.selectionSubscription = this.store.select(fromAccounting.getSelectedLedger)
+      .filter(ledger => !!ledger)
       .subscribe(ledger => this.ledger = ledger);
   }
 

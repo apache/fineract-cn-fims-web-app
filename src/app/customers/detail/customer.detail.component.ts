@@ -65,6 +65,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer)
       .do(customer => this.customer = customer)
       .do(customer => this.isCustomerActive = customer.currentState === 'ACTIVE')
       .flatMap(customer => this.customerService.getPortrait(customer.identifier))

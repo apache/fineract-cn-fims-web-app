@@ -20,7 +20,6 @@ import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {GeneralLedgerComponent} from './general-ledger.component';
 import {TrailBalanceComponent} from './trailBalance/trial-balance.component';
-import {AccountComponent} from './accounts/account.component';
 import {SubLedgerDetailComponent} from './subLedger/sub-ledger.detail.component';
 import {AccountDetailComponent} from './accounts/account.detail.component';
 import {AccountStatusComponent} from './status/status.component';
@@ -132,7 +131,6 @@ import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-
     TrailBalanceComponent,
     ChartOfAccountComponent,
     ChartOfAccountTableComponent,
-    AccountComponent,
     AccountEntryListComponent,
     AccountDetailComponent,
     AccountStatusComponent,

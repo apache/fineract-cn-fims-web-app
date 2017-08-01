@@ -45,6 +45,7 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy{
       .subscribe(this.store);
 
     this.employeeSubscription = this.store.select(fromEmployee.getSelectedEmployee)
+      .filter(employee => !!employee)
       .subscribe(employee => this.employee = employee);
 
     // TODO load user via store
