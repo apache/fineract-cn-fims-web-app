@@ -6,6 +6,7 @@
 * Install Node packages `npm i`
 
 ## Development
+* Follow instructions at https://github.com/mifosio/demo-server and start demo-server
 * Run local dev environment `npm run dev`
 * Go to http://localhost:4200
 
