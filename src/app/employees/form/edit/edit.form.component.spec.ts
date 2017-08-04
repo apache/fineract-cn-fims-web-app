@@ -35,6 +35,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
 import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 let userMock: User = {
   identifier: 'test',
@@ -75,7 +76,6 @@ describe('Test employee form component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        LayoutCardOverComponent,
         IdInputComponent,
         FormContinueActionComponent,
         FormFinalActionComponent,
@@ -112,7 +112,8 @@ describe('Test employee form component', () => {
             })
           }
         }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(EditEmployeeFormComponent);

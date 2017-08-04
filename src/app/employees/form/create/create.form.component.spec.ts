@@ -32,7 +32,9 @@ import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
 import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
-import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {MdButtonModule, MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {RouterLinkStubDirective} from '../../../common/testing/router-stubs';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 
 let eventMock: EmployeeSaveEvent = {
@@ -68,7 +70,6 @@ describe('Test employee form component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        LayoutCardOverComponent,
         IdInputComponent,
         FormContinueActionComponent,
         FormFinalActionComponent,
@@ -100,7 +101,8 @@ describe('Test employee form component', () => {
             select = jasmine.createSpy('select').and.returnValue(Observable.empty())
           }
         }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(CreateEmployeeFormComponent);
