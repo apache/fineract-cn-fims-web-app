@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import {Router, NavigationEnd, ActivatedRoute, RouterState} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {HttpClient, Action} from '../services/http/http.service';
@@ -23,6 +23,8 @@ import {LOGOUT} from '../store/security/security.actions';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../services/security/authz/fims-permission.model';
 import {CountryService} from '../services/country/country.service';
+import {TdMediaService} from '@covalent/core';
+import {MdSidenav} from '@angular/material';
 
 interface MenuItem {
   permission?: FimsPermission;
@@ -34,9 +36,12 @@ interface MenuItem {
 
 @Component({
   selector: 'fims-main',
-  templateUrl: './main.component.html'
+  templateUrl: './main.component.html',
+  styleUrls: ['main.component.scss']
 })
 export class MainComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MdSidenav) sidenav: MdSidenav;
 
   menuItems: MenuItem[] = [
     { title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess' },
@@ -63,7 +68,7 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   username$: Observable<string>;
 
-  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService, private store: Store<fromRoot.State>) {}
+  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService, private store: Store<fromRoot.State>, private media: TdMediaService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -78,6 +83,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.username$ = this.store.select(fromRoot.getUsername);
 
     this.countryService.init();
+
+    this.media.broadcast();
   }
 
   ngAfterViewInit(): void {
@@ -86,7 +93,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       .map((action: Action) => action === Action.QueryStart);
   }
 
-  getTitle(state: RouterState, parent: ActivatedRoute){
+  getTitle(state: RouterState, parent: ActivatedRoute): string[] {
     let data = [];
 
     if(parent && parent.snapshot.data){
@@ -102,6 +109,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     return data;
+  }
+
+  toggleSideNav(): void {
+    this.sidenav.toggle(!this.sidenav.opened)
   }
 
   logout(): void {

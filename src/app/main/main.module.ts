@@ -35,6 +35,7 @@ import {
 } from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
+import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
 
 @NgModule({
   imports: [
@@ -50,7 +51,9 @@ import {CommonModule} from '@angular/common';
     MdIconModule,
     MdMenuModule,
     MdTooltipModule,
-    MdCardModule
+    MdCardModule,
+    CovalentLayoutModule,
+    CovalentMediaModule
   ],
   declarations: [
     MainComponent,
