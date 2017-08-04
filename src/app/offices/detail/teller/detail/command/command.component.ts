@@ -65,9 +65,11 @@ export class OfficeTellerCommandComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => this.action = params['action']);
 
     this.officeSubscription = this.store.select(fromOffices.getSelectedOffice)
+      .filter(office => !!office)
       .subscribe(office => this.office = office);
 
     this.tellerSubscription = this.store.select(fromOffices.getSelectedTeller)
+      .filter(teller => !!teller)
       .subscribe(teller => this.teller = teller);
   }
 

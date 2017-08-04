@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../../../../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Loan products' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over [title]="caseInstance.identifier" *ngIf="caseInstance$ | async as caseInstance">
+<fims-layout-card-over [title]="caseInstance.identifier" *ngIf="caseInstance$ | async as caseInstance" [navigateBackTo]="['../../../../../../../../']">
   <td-message *ngIf="caseInstance.currentState === 'APPROVED'" label="{{'Customer loan approved' | translate }}" sublabel="{{'To activate this loan you need to disburse' | translate }}" color="accent" icon="error">
     <button td-message-actions md-button *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}" [routerLink]="['tasks']" translate>GO TO TASKS</button>
   </td-message>

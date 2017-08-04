@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['/employees']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Employees' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{employee.givenName}} {{employee.surname}}">
+<fims-layout-card-over title="{{employee.givenName}} {{employee.surname}}" [navigateBackTo]="'/employees'">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box placeholder="{{'Search' | translate}}" (search)="searchEmployee($event)" [alwaysVisible]="false"></td-search-box>
     <button md-icon-button (click)="deleteEmployee()" title="{{'Delete this employee' | translate}}" *hasPermission="{ id: 'office_employees', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>

@@ -49,8 +49,7 @@ export class CaseDebtIncomeComponent implements OnInit {
 
   cosignerOverview$: Observable<IncomeDebtOverview>;
 
-  constructor(private store: CasesStore) {
-  }
+  constructor(private store: CasesStore) {}
 
   ngOnInit(): void {
     const selectedCustomer$: Observable<Customer> = this.store.select(fromCustomers.getSelectedCustomer);

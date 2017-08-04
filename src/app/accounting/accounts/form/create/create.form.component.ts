@@ -51,6 +51,7 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
       .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.selectedLedgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
+      .filter(ledger => !!ledger)
       .subscribe(ledger => {
         this.ledger = ledger;
         this.account.ledger = this.ledger.identifier;

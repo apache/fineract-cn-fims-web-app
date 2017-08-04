@@ -64,9 +64,11 @@ export class CaseEditComponent implements OnInit, OnDestroy{
       .subscribe(this.casesStore);
 
     this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
+      .filter(caseInstance => !!caseInstance)
       .subscribe(caseInstance => this.caseInstance = caseInstance);
 
-    const selectedCustomer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
+    const selectedCustomer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer);
 
     this.customerSubscription = selectedCustomer$
       .subscribe(customer => this.customer = customer);

@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'General Ledger' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Journal entries' | translate}}">
+<fims-layout-card-over title="{{'Journal entries' | translate}}" [navigateBackTo]="['../']">
   <form [formGroup]="form">
     <div layout="row" layout-margin>
       <md-input-container layout-margin>

@@ -14,11 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-</md-toolbar>
-
 <fims-layout-card-over title="{{'Manage employees' | translate}}">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+  <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
   <fims-data-table flex

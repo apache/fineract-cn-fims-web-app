@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Teller overview' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over *ngIf="customer$ | async as customer" title="{{customer.givenName}} {{customer.surname}}">
+<fims-layout-card-over *ngIf="customer$ | async as customer" title="{{customer.givenName}} {{customer.surname}}" [navigateBackTo]="['../../../../']">
   <fims-two-column-layout>
     <ng-container left>
       <fims-portrait [blob]="portrait"></fims-portrait>

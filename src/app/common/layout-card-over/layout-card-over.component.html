@@ -14,21 +14,20 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary">
-</md-toolbar>
-<div layout-gt-xs="row" layout-align-gt-xs="center start" layout-fill class="margin">
-  <div flex-gt-xs="85">
+<div layout="column" layout-fill>
+  <md-toolbar>
+    <div layout="row" layout-align="start center" flex>
+      <button md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
+        <md-icon>keyboard_arrow_left</md-icon>
+      </button>
+      {{fullTitle}}
+    </div>
+    <span flex></span>
+    <ng-content select="fims-layout-card-over-header-menu"></ng-content>
+  </md-toolbar>
+  <div class="md-content">
     <md-card>
-      <md-card-title-group>
-        <div class="push-right">
-            <ng-content select="fims-layout-card-over-header-menu"></ng-content>
-        </div>
-        <md-card-title *ngIf="title">{{title}}</md-card-title>
-        <md-card-subtitle *ngIf="subTitle">{{subTitle}}</md-card-subtitle>
-      </md-card-title-group>
-      <md-divider *ngIf="title || subTitle || searchable"></md-divider>
       <ng-content></ng-content>
     </md-card>
-    <ng-content select="[after-card]"></ng-content>
   </div>
 </div>

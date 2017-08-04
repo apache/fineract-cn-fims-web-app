@@ -14,15 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Charges' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over [title]="charge.name" [subTitle]="charge.description">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+<fims-layout-card-over [title]="charge.name" [subTitle]="charge.description" [navigateBackTo]="['../../']">
+  <fims-layout-card-over-header-menu>
     <button md-icon-button (click)="deleteCharge()" title="{{'Delete this charge' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <div class="md-content inset" flex>

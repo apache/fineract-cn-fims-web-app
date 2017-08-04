@@ -14,15 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Deposit products' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over [title]="definition.name" [subTitle]="definition.description">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+<fims-layout-card-over [title]="definition.name" [subTitle]="definition.description" [navigateBackTo]="['../../../']">
+  <fims-layout-card-over-header-menu>
     <button md-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'DELETE'}"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <td-message *ngIf="!definition.active" label="{{'Product not enabled' | translate }}"

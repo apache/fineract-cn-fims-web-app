@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to office' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Office' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{ 'Manage teller' | translate}}">
+<fims-layout-card-over title="{{ 'Manage teller' | translate}}" [navigateBackTo]="['../']">
   <fims-data-table flex
                    (onActionCellClick)="rowSelect($event)"
                    [columns]="columns"

@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to teller' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Teller' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Teller balance' | translate}}">
+<fims-layout-card-over title="{{'Teller balance' | translate}}" [navigateBackTo]="['../']">
   <div layout="row" layout-margin>
 
   </div>

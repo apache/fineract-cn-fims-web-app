@@ -14,13 +14,6 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Product' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Manage loan product charges' | translate}}">
+<fims-layout-card-over title="{{'Manage loan product charges' | translate}}" [navigateBackTo]="['../']">
   <fims-data-table flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
 </fims-layout-card-over>

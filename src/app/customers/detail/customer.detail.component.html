@@ -14,15 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to customers' | translate}}" [routerLink]="['/customers']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Customers' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{customer.givenName}} {{customer.surname}}">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+<fims-layout-card-over title="{{customer.givenName}} {{customer.surname}}" [navigateBackTo]="['/customers']">
+  <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchCustomer($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
   <td-message *ngIf="!isCustomerActive" label="{{'Customer not active' | translate }}"

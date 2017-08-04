@@ -30,6 +30,8 @@ export class LayoutCardOverComponent implements OnInit {
 
   @Input() subTitle: string;
 
+  @Input() navigateBackTo: string[];
+
   @Input() searchTerm: string;
 
   @Input() searchable: boolean;
@@ -40,5 +42,10 @@ export class LayoutCardOverComponent implements OnInit {
 
   onSearch(searchTerm: string): void{
     this.search.emit(searchTerm);
+  }
+
+  get fullTitle(): string {
+    const titles = [this.title, this.subTitle];
+    return titles.filter(title => !!title).join(' - ')
   }
 }

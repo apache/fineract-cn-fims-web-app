@@ -46,7 +46,8 @@ export class DepositCreateComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private depositService: DepositAccountService) {}
 
   ngOnInit(): void {
-    this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer);
+    this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer);
 
     this.productDefinitions$ = this.depositService.fetchProductDefinitions()
       .map(productDefinitions => productDefinitions.filter(productDefinitions => productDefinitions.active));

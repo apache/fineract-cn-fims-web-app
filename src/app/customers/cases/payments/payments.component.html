@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Customer loan' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Planned payments' | translate}}">
+<fims-layout-card-over title="{{'Planned payments' | translate}}" [navigateBackTo]="['../']">
   <div layout="row" layout-margin>
     <md-input-container layout-margin>
       <input mdInput type="date" placeholder="{{'Start date' | translate}}" [(ngModel)]="startDate">

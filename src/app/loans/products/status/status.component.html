@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Tasks' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Manage task definitions' | translate}}">
+<fims-layout-card-over title="{{'Manage task definitions' | translate}}" [navigateBackTo]="['../']">
   <fims-data-table flex (onFetch)="fetchTasks($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="tasksData$ | async" [sortable]="false"></fims-data-table>
 </fims-layout-card-over>
 <fims-fab-button title="{{'Create new task' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"></fims-fab-button>

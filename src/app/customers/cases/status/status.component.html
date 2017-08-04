@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to customer loan' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Customer loan' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Tasks' | translate}}" *ngIf="caseInstance$ | async as caseInstance">
+<fims-layout-card-over title="{{'Tasks' | translate}}" *ngIf="caseInstance$ | async as caseInstance" [navigateBackTo]="['../']">
   <div layout="row" layout-align="start start" layout-margin>
     <div layout="column" flex="100">
       <div layout="row" layout-align="start start" *ngFor="let command of statusCommands$ | async">
