@@ -20,12 +20,14 @@
       <div flex-gt-xs="25" layout-align="center center" layout-margin>
           <md-card>
             <md-card-title>
-              <md-select [(ngModel)]="currentLanguage" name="language" style="width: 240px"
-                         mdTooltip="{{'Change language' | translate}}" mdTooltipPosition="right" (change)="selectLanguage($event)">
-                <md-option *ngFor="let option of languageOptions" [value]="option.id">
-                  {{option.label}}
-                </md-option>
-              </md-select>
+              <div layout="row">
+                <md-select [(ngModel)]="currentLanguage" name="language" flex
+                           mdTooltip="{{'Change language' | translate}}" mdTooltipPosition="right" (change)="selectLanguage($event)">
+                  <md-option *ngFor="let option of languageOptions" [value]="option.id">
+                    {{option.label}}
+                  </md-option>
+                </md-select>
+              </div>
             </md-card-title>
             <md-card-subtitle translate>sign in via your current account</md-card-subtitle>
             <form [formGroup]="form" (ngSubmit)="login()">
