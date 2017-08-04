@@ -64,7 +64,9 @@
                 </div>
               </md-card-content>
               <md-card-actions>
-                <button type="submit" md-raised-button color="primary" [disabled]="form.invalid">{{'Sign In' | translate}}</button>
+                <div layout="row">
+                  <button flex type="submit" md-raised-button color="primary" [disabled]="form.invalid">{{'Sign In' | translate}}</button>
+                </div>
               </md-card-actions>
             </form>
           </md-card>
