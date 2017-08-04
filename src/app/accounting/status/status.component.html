@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to account' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Account' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Change state' | translate}}">
+<fims-layout-card-over title="{{'Change state' | translate}}" [navigateBackTo]="['../']">
   <div layout="row" layout-align="start start" layout-margin>
     <div layout="column" flex="100">
       <div layout="row" layout-align="start start" *ngFor="let command of statusCommands">

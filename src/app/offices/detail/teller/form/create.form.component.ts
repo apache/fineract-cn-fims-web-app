@@ -48,6 +48,7 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {
     this.officeSubscription = this.store.select(fromTeller.getSelectedOffice)
+      .filter(office => !!office)
       .subscribe(office => this.office = office);
 
     this.formStateSubscription = store.select(fromTeller.getTellerFormError)

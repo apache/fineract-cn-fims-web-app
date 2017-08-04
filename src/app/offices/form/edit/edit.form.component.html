@@ -14,9 +14,6 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-</md-toolbar>
-
 <fims-layout-card-over title="{{'Edit office' | translate}}">
   <fims-office-form-component #form [editMode]="true" (onSave)="onSave($event)" (onCancel)="onCancel()" [office]="office"></fims-office-form-component>
 </fims-layout-card-over>

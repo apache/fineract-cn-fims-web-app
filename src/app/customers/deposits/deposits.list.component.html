@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to customer' | translate}}" [routerLink]="['../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Customer' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Manage customer deposit accounts' | translate}}">
+<fims-layout-card-over title="{{'Manage customer deposit accounts' | translate}}" [navigateBackTo]="['../../../../']">
   <fims-data-table flex
                    (onFetch)="fetchProductInstances($event)"
                    (onActionCellClick)="rowSelect($event)"

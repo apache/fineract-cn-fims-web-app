@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to deposit product' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Deposit product' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Tasks' | translate}}">
+<fims-layout-card-over title="{{'Tasks' | translate}}" [navigateBackTo]="['../']">
   <div layout="column" flex="100">
     <div layout="row" layout-align="start center" *ngFor="let command of statusCommands" layout-margin>
       <md-input-container flex>

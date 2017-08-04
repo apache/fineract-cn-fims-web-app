@@ -32,8 +32,8 @@ export class TellerBalanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.balance$ = Observable.combineLatest(
-      this.store.select(fromOffices.getSelectedTeller),
-      this.store.select(fromOffices.getSelectedOffice),
+      this.store.select(fromOffices.getSelectedTeller).filter(teller => !!teller),
+      this.store.select(fromOffices.getSelectedOffice).filter(office => !!office),
       (teller, office) => ({
         teller,
         office

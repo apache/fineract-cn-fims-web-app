@@ -68,6 +68,7 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
       .subscribe(this.store);
 
     this.accountSubscription = this.store.select(fromAccounting.getSelectedAccount)
+      .filter(account => !!account)
       .subscribe(account => {
         this.account = account;
         this.fetchAccountsEntries();

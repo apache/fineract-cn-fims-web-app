@@ -56,7 +56,8 @@ export class CaseListComponent implements OnInit, OnDestroy {
         data: casePage.cases
       }));
 
-    const customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
+    const customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer);
 
     this.customerSubscription = customer$
       .subscribe(customer => {

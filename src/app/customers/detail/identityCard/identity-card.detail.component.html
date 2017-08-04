@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to identification cards' | translate}}" [routerLink]="['../../../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Identification cards' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{ 'Identification card' | translate }}">
+<fims-layout-card-over title="{{ 'Identification card' | translate }}" [navigateBackTo]="['../../../../../../']">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <a md-icon-button title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
       <md-icon>mode_edit</md-icon>

@@ -14,9 +14,6 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-</md-toolbar>
-
 <fims-layout-card-over title="{{'Manage roles' | translate}}">
   <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="rolesData$ | async" [loading]="loading$ | async"></fims-data-table>
 </fims-layout-card-over>

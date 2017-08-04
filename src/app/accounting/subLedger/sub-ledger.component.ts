@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SELECT, SelectAction} from '../store/ledger/ledger.actions';
+import {SelectAction} from '../store/ledger/ledger.actions';
 import {AccountingStore} from '../store/index';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
@@ -37,7 +37,5 @@ export class SubLedgerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-
-    this.store.dispatch({ type: SELECT })
   }
 }

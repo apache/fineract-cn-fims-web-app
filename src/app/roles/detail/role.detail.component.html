@@ -14,15 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to overview' | translate}}" [routerLink]="['../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Roles' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{ role.identifier }}">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+<fims-layout-card-over title="{{ role.identifier }}" [navigateBackTo]="'../../'">
+  <fims-layout-card-over-header-menu>
     <button md-icon-button (click)="deleteRole()" title="{{'Delete this role' | translate}}" *hasPermission="{ id: 'identity_roles', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <md-list>

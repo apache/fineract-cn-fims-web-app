@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to deposits' | translate}}" [routerLink]="['../../../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Deposits' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Deposit account' | translate}}">
+<fims-layout-card-over title="{{'Deposit account' | translate}}" [navigateBackTo]="['../../../../../../']">
   <div class="md-content inset" flex>
     <div layout="row">
       <md-list *ngIf="(depositInstance$ | async) as instance">

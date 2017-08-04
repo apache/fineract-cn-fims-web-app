@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'General Ledger' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Manage transaction types' | translate}}">
+<fims-layout-card-over title="{{'Manage transaction types' | translate}}" [navigateBackTo]="['../']">
   <fims-data-table
     (onFetch)="fetchTransactionTypes($event)"
     (onActionCellClick)="rowSelect($event)"

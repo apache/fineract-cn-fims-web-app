@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to account' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Account' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Activities' | translate}}">
+<fims-layout-card-over title="{{'Activities' | translate}}" [navigateBackTo]="['../']">
   <md-list>
     <h3 md-subheader translate>Latest activity</h3>
     <ng-template let-item let-last="last" ngFor [ngForOf]="commands">

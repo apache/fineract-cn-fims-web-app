@@ -38,9 +38,11 @@ export class EditOfficeTellerFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {}
 
   ngOnInit(): void {
-    this.teller$ = this.store.select(fromOffices.getSelectedTeller);
+    this.teller$ = this.store.select(fromOffices.getSelectedTeller)
+      .filter(teller => !!teller);
 
     this.officeSubscription = this.store.select(fromOffices.getSelectedOffice)
+      .filter(office => !!office)
       .subscribe(office => this.office = office);
   }
 

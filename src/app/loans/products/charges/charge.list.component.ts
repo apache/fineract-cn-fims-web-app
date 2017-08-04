@@ -53,6 +53,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .filter(product => !!product)
       .subscribe(product => {
         this.product = product;
         this.fetchCharges();

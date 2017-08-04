@@ -47,9 +47,11 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
       .subscribe(this.portfolioStore);
 
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .filter(product => !!product)
       .subscribe(product => this.product = product);
 
     this.chargeSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
+      .filter(charge => !!charge)
       .subscribe(charge => this.charge = charge);
   }
 

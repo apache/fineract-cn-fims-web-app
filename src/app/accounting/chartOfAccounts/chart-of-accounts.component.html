@@ -14,13 +14,6 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'General Ledger' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Chart of accounts' | translate}}">
+<fims-layout-card-over title="{{'Chart of accounts' | translate}}" [navigateBackTo]="['../']">
   <fims-chart-of-account-table [chartOfAccountEntries]="chartOfAccountEntries$ | async" [loading]="loading$ | async"></fims-chart-of-account-table>
 </fims-layout-card-over>

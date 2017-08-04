@@ -14,14 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go back to tellers' | translate}}" [routerLink]="['../../../../../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Tellers' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{ 'Teller' | translate }}">
+<fims-layout-card-over title="{{ 'Teller' | translate }}" [navigateBackTo]="['../../../../../']">
   <td-message *ngIf="isClosed$ | async" label="{{'Teller can be opened' | translate }}" color="warn" icon="error">
     <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'OPEN'}"
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>OPEN TELLER

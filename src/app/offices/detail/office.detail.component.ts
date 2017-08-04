@@ -81,14 +81,6 @@ export class OfficeDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['../../../'], {queryParams: {term: searchTerm}, relativeTo: this.route});
   }
 
-  goToParent(): void {
-    if (this.office.parentIdentifier) {
-      this.router.navigate(['../../', this.office.parentIdentifier], {relativeTo: this.route});
-    } else {
-      this.router.navigate(['../../'], {relativeTo: this.route});
-    }
-  }
-
   confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete this office?',

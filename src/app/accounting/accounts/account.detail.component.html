@@ -14,15 +14,8 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to ledger' | translate}}" [routerLink]="['../../../ledgers/detail', account.ledger ]">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'Ledger' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Account with value' | translate:{ value: account.identifier } }}" [subTitle]="account.name">
-  <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+<fims-layout-card-over title="{{'Account with value' | translate:{ value: account.identifier } }}" [subTitle]="account.name" [navigateBackTo]="['../../../ledgers/detail', account.ledger]">
+  <fims-layout-card-over-header-menu>
     <button md-icon-button (click)="deleteAccount()" title="{{'Delete this account' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
   </fims-layout-card-over-header-menu>
   <fims-two-column-layout>

@@ -14,22 +14,7 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <ng-container *ngIf="ledger.parentLedgerIdentifier">
-    <a md-icon-button title="{{'Go to accounts' | translate}}" [routerLink]="['../']">
-      <md-icon>keyboard_arrow_left</md-icon>
-    </a>
-    {{'Accounts' | translate}}
-  </ng-container>
-  <ng-container *ngIf="!ledger.parentLedgerIdentifier">
-    <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../../../../']">
-      <md-icon>keyboard_arrow_left</md-icon>
-    </a>
-    {{'General Ledger' | translate}}
-  </ng-container>
-</md-toolbar>
-
-<fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description">
+<fims-layout-card-over title="{{ ledger.identifier + ' - ' + ledger.name }}" [subTitle]="ledger.description" [navigateBackTo]="ledger.parentLedgerIdentifier ? ['../'] : ['../../../../']">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>
     <button md-icon-button (click)="deleteLedger()" title="{{'Delete this ledger' | translate}}" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>

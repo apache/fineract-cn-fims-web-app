@@ -14,17 +14,10 @@
  limitations under the License.
 -->
 
-<md-toolbar color="primary" class="md-whiteframe-z1">
-  <a md-icon-button title="{{'Go to general ledger' | translate}}" [routerLink]="['../']">
-    <md-icon>keyboard_arrow_left</md-icon>
-  </a>
-  {{'General Ledger' | translate}}
-</md-toolbar>
-
-<fims-layout-card-over title="{{'Trial Balance' | translate}}">
-  <div layout="row" layout-margin>
+<fims-layout-card-over title="{{'Trial Balance' | translate}}" [navigateBackTo]="['../']">
+  <fims-layout-card-over-header-menu>
     <md-checkbox [(ngModel)]="includeEmptyEntries" (change)="fetchTrialBalance($event)" translate>Include empty entries?</md-checkbox>
-  </div>
+  </fims-layout-card-over-header-menu>
   <div layout="row">
     <table td-data-table>
       <th td-data-table-column>
