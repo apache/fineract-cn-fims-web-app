@@ -37,6 +37,11 @@
         <h3 md-line translate>Tasks</h3>
         <p md-line translate>Change the status of this deposit product</p>
       </a>
+      <a md-list-item [routerLink]="['./dividends']" *ngIf="canDistributeDividends$ | async">
+        <md-icon md-list-avatar>zoom_out_map</md-icon>
+        <h3 md-line translate>Dividends</h3>
+        <p md-line translate>View and distribute dividends</p>
+      </a>
     </md-nav-list>
     <ng-container right>
       <div layout="row">
@@ -66,8 +71,16 @@
             <p md-line>{{definition.currency.code}}</p>
           </md-list-item>
           <md-list-item>
+            <h3 md-line translate>Cash account</h3>
+            <p md-line>{{definition.cashAccountIdentifier}}</p>
+          </md-list-item>
+          <md-list-item>
             <h3 md-line translate>Expense account</h3>
             <p md-line>{{definition.expenseAccountIdentifier}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Accrue account</h3>
+            <p md-line>{{definition.accrueAccountIdentifier}}</p>
           </md-list-item>
           <md-list-item>
             <h3 md-line translate>Equity ledger</h3>

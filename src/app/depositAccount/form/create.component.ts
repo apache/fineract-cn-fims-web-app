@@ -52,6 +52,7 @@ export class DepositProductCreateComponent implements OnInit, OnDestroy {
     },
     flexible: false,
     minimumBalance: 0,
+    cashAccountIdentifier: '',
     expenseAccountIdentifier: '',
     term: {
       interestPayable: 'ANNUALLY'

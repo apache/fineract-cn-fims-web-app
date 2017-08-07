@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {FimsValidators} from '../../common/validator/validators';
 import {interestPayableOptionList} from '../domain/interest-payable-option-list.model';
 import {timeUnitOptionList} from '../domain/time-unit-option-list.model';
@@ -29,12 +32,18 @@ import {typeOptionList} from '../domain/type-option-list.model';
 import {accountExists} from '../../common/validator/account-exists.validator';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {ledgerExists} from '../../common/validator/ledger-exists.validator';
+import {Subscription} from 'rxjs/Subscription';
+import {Type} from '../../services/depositAccount/domain/type.model';
 
 @Component({
   selector: 'fims-deposit-product-form',
   templateUrl: './form.component.html'
 })
-export class DepositProductFormComponent implements OnInit, OnChanges {
+export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges {
+
+  private termChangeSubscription: Subscription;
+
+  private typeChangeSubscription: Subscription;
 
   interestPayableOptions = interestPayableOptionList;
 
@@ -75,17 +84,28 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
       termPeriod: [''],
       termTimeUnit: [''],
       termInterestPayable: ['', [Validators.required]],
+      cashAccountIdentifier: ['', [Validators.required], accountExists(this.accountingService)],
       expenseAccountIdentifier: ['', [Validators.required], accountExists(this.accountingService)],
-      equityLedgerIdentifier: ['', [Validators.required], ledgerExists(this.accountingService)]
+      equityLedgerIdentifier: ['', [Validators.required], ledgerExists(this.accountingService)],
+      accrueAccountIdentifier: ['', [Validators.required], accountExists(this.accountingService)]
     });
 
-    this.formGroup.get('fixedTermEnabled').valueChanges
+    this.termChangeSubscription = this.formGroup.get('fixedTermEnabled').valueChanges
       .startWith(null)
       .subscribe(enabled => this.toggleFixedTerm(enabled));
+
+    this.typeChangeSubscription = this.formGroup.get('type').valueChanges
+      .startWith(null)
+      .subscribe(type => this.toggleType(type));
   }
 
   ngOnInit(): void {
     this.step.open();
+  }
+
+  ngOnDestroy(): void {
+    this.termChangeSubscription.unsubscribe();
+    this.typeChangeSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -108,7 +128,9 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
       termPeriod: this.definition.term.period,
       termTimeUnit: this.definition.term.timeUnit,
       termInterestPayable: this.definition.term.interestPayable,
+      cashAccountIdentifier: this.definition.cashAccountIdentifier,
       expenseAccountIdentifier: this.definition.expenseAccountIdentifier,
+      accrueAccountIdentifier: this.definition.accrueAccountIdentifier,
       equityLedgerIdentifier: this.definition.equityLedgerIdentifier
     });
   }
@@ -118,20 +140,37 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
     const termTimeUnitControl: FormControl = this.formGroup.get('termTimeUnit') as FormControl;
 
     if(enabled) {
-      termPeriodControl.enable();
-      termTimeUnitControl.enable();
-
-      termPeriodControl.setValidators([Validators.required, FimsValidators.minValue(1)]);
-      termTimeUnitControl.setValidators([Validators.required]);
+      this.enable(termPeriodControl, [Validators.required, FimsValidators.minValue(1)]);
+      this.enable(termTimeUnitControl, [Validators.required]);
     } else {
-      termPeriodControl.disable();
-      termTimeUnitControl.disable();
-
-      termPeriodControl.clearValidators();
-      termTimeUnitControl.clearValidators();
+      this.disable(termPeriodControl);
+      this.disable(termTimeUnitControl);
     }
-    termPeriodControl.updateValueAndValidity();
-    termTimeUnitControl.updateValueAndValidity();
+  }
+
+  toggleType(type: Type): void {
+    const enableAccrueAccount = type !== 'SHARE';
+
+    const accrueAccountControl: FormControl = this.formGroup.get('accrueAccountIdentifier') as FormControl;
+
+    if(enableAccrueAccount) {
+      this.enable(accrueAccountControl, [Validators.required], accountExists(this.accountingService));
+    } else {
+      this.disable(accrueAccountControl);
+    }
+  }
+
+  private enable(formControl: FormControl, validators: ValidatorFn[], asyncValidator?: AsyncValidatorFn): void {
+    formControl.enable();
+    formControl.setValidators(validators);
+    formControl.setAsyncValidators(asyncValidator);
+    formControl.updateValueAndValidity();
+  }
+
+  private disable(formControl: FormControl): void {
+    formControl.disable();
+    formControl.clearValidators();
+    formControl.updateValueAndValidity();
   }
 
   hasPeriodOrTimeUnit(product: ProductDefinition): boolean {
@@ -140,6 +179,8 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
 
   save(): void {
     const currency = this.currencies.find(currency => currency.code === this.formGroup.get('currencyCode').value);
+
+    const isShare = this.formGroup.get('type').value === 'SHARE';
 
     const fixedTerm: boolean = this.formGroup.get('fixedTermEnabled').value === true;
 
@@ -164,7 +205,9 @@ export class DepositProductFormComponent implements OnInit, OnChanges {
       },
       charges: this.chargesForm.formData,
       expenseAccountIdentifier: this.formGroup.get('expenseAccountIdentifier').value,
-      equityLedgerIdentifier: this.formGroup.get('equityLedgerIdentifier').value
+      equityLedgerIdentifier: this.formGroup.get('equityLedgerIdentifier').value,
+      cashAccountIdentifier: this.formGroup.get('cashAccountIdentifier').value,
+      accrueAccountIdentifier: !isShare ? this.formGroup.get('accrueAccountIdentifier').value : undefined
     };
 
     this.onSave.emit(definition);
