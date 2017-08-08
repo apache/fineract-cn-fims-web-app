@@ -16,7 +16,7 @@
 
 export type State = 'PENDING' | 'CANCELED' | 'CONFIRMED';
 
-export type TransactionType = 'ACCO' | 'ACCC' | 'ACCT' | 'CDPT' | 'CWDL';
+export type TransactionType = 'ACCO' | 'ACCC' | 'ACCT' | 'CDPT' | 'CWDL' | 'PPAY';
 
 export interface TellerTransaction {
   identifier?: string;

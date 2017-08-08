@@ -22,7 +22,7 @@ import {of} from 'rxjs/observable/of';
 import {CasesStore} from './store/index';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
-import {mapToFimsCase} from './store/model/fims-case.mapper';
+import {mapToFimsCase} from '../../services/portfolio/domain/mapper/fims-case.mapper';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
 
 @Injectable()
@@ -42,7 +42,7 @@ export class CaseExistsGuard implements CanActivate {
   hasCaseInApi(productId: string, caseId: string): Observable<boolean> {
     const getCase$ = this.portfolioService.getCase(productId, caseId)
       .map(caseEntity => new LoadAction({
-        resource: mapToFimsCase(caseEntity)
+        resource: caseEntity
       }))
       .do((action: LoadAction) => this.store.dispatch(action))
       .map(caseEntity => !!caseEntity);

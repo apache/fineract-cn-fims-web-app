@@ -30,7 +30,6 @@ export interface FimsProduct {
   name: string;
   termRange: TermRange;
   balanceRange: BalanceRange;
-  interestRange: InterestRange;
   interestBasis: InterestBasis;
   patternPackage: string;
   description: string;

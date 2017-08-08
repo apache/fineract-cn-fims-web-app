@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-import {ChargeMethod} from './charge-method.model';
-import {ChronoUnit} from './chrono-unit.model';
-import {WorkflowAction} from './individuallending/workflow-action.model';
+import {Component, Input, OnInit} from '@angular/core';
+import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 
-export interface ChargeDefinition {
-  identifier: string;
-  name: string;
-  description: string;
-  chargeAction: WorkflowAction;
-  chargeMethod: ChargeMethod;
-  amount: number;
-  fromAccountDesignator: string;
-  toAccountDesignator: string;
-  forCycleSizeUnit: ChronoUnit;
-  accrualAccountDesignator?: string;
-  accrueAction?: WorkflowAction;
-  readOnly?: boolean;
-  proportionalTo: string;
+@Component({
+  templateUrl: './cost.component.html',
+  selector: 'fims-teller-transaction-cost'
+})
+export class TransactionCostComponent {
+
+  @Input('transactionAmount') transactionAmount: number;
+
+  @Input('transactionCosts') transactionCosts: TellerTransactionCosts;
+
 }

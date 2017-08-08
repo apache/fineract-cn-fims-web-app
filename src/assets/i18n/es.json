@@ -4,7 +4,7 @@
   "Account can't be deleted": "",
   "Account Closing": "",
   "Account details": "Detalles de cuenta",
-  "Account entries for account": "Entradas de cuenta",
+  "Account entries for account": "Entradas de cuenta {{value}}",
   "Account entries": "Entrada de cuenta",
   "Account has account entries": "",
   "Account is going to be deleted": "",

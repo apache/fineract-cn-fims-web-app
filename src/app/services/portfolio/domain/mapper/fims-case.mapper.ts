@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {FimsCase} from './fims-case.model';
-import {Case} from '../../../../services/portfolio/domain/case.model';
-import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
+import {Case} from '../case.model';
+import {AccountDesignators} from '../individuallending/account-designators.model';
 import {accountIdentifier, findAccountDesignator} from '../../../../common/util/account-assignments';
+import {FimsCase} from '../fims-case.model';
 
 export function mapToCase(caseInstance: FimsCase): Case {
   return Object.assign({}, caseInstance, {
@@ -30,9 +30,17 @@ export function mapToCase(caseInstance: FimsCase): Case {
 
 export function mapToFimsCase(caseInstance: Case): FimsCase {
   const entryDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.ENTRY);
+  const customerLoanDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
+  const loansPayableDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.LOANS_PAYABLE);
 
   return Object.assign({}, caseInstance, {
     parameters: JSON.parse(caseInstance.parameters),
-    depositAccountIdentifier: accountIdentifier(entryDesignator)
+    depositAccountIdentifier: accountIdentifier(entryDesignator),
+    customerLoanAccountIdentifier: accountIdentifier(customerLoanDesignator),
+    loansPayableAccountIdentifier: accountIdentifier(loansPayableDesignator),
   })
+}
+
+export function mapToFimsCases(caseInstances: Case[]): FimsCase[] {
+  return caseInstances.map(instance => mapToFimsCase(instance));
 }

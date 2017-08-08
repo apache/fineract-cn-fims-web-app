@@ -24,8 +24,8 @@ import {Observable} from 'rxjs/Observable';
 import {EXECUTE_TASK, LoadAllAction} from '../store/tasks/task.actions';
 import {ExecuteTaskEvent} from './tasks.component';
 import {StatusCommand} from '../store/model/fims-command.model';
-import {FimsCase} from '../store/model/fims-case.model';
 import {WorkflowAction} from '../../../services/portfolio/domain/individuallending/workflow-action.model';
+import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 @Component({
   templateUrl: './status.component.html'

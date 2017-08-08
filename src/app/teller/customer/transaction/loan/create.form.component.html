@@ -13,7 +13,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<fims-layout-card-over [title]="'Dividend distributions' | translate" [navigateBackTo]="['../']">
-  <fims-data-table flex [columns]="columns" [data]="dividendData$ | async" [actionColumn]="false"></fims-data-table>
+
+<fims-layout-card-over title="Teller transaction">
+  <fims-loan-transaction-form
+    [caseInstances]="caseInstances$ | async"
+    [transactionCosts]="transactionCosts$ | async"
+    (onCreateTransaction)="createTransaction($event)"
+    (onConfirmTransaction)="confirmTransaction($event)"
+    (onCancelTransaction)="cancelTransaction()"
+    (onCancel)="cancel()">
+  </fims-loan-transaction-form>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Distribute dividends' | translate}}" icon="zoom_out_map" [link]="['distribute']" [permission]="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}"></fims-fab-button>

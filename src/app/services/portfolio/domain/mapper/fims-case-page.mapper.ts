@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {mapToFimsCase} from './fims-case.mapper';
+import {FimsCasePage} from '../fims-case-page.model';
+import {CasePage} from '../case-page.model';
 
-import {ChargeMethod} from './charge-method.model';
-import {ChronoUnit} from './chrono-unit.model';
-import {WorkflowAction} from './individuallending/workflow-action.model';
-
-export interface ChargeDefinition {
-  identifier: string;
-  name: string;
-  description: string;
-  chargeAction: WorkflowAction;
-  chargeMethod: ChargeMethod;
-  amount: number;
-  fromAccountDesignator: string;
-  toAccountDesignator: string;
-  forCycleSizeUnit: ChronoUnit;
-  accrualAccountDesignator?: string;
-  accrueAction?: WorkflowAction;
-  readOnly?: boolean;
-  proportionalTo: string;
+export function mapToFimsCasePage(casePage: CasePage): FimsCasePage {
+  let elements = [];
+  
+  for(let caseInstance of casePage.elements) {
+    elements.push(mapToFimsCase(caseInstance));
+  }
+  
+  return {
+    elements: elements,
+    totalPages: casePage.totalPages,
+    totalElements: casePage.totalElements
+  }
 }

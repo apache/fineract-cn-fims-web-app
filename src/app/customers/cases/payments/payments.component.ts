@@ -15,18 +15,16 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Case} from '../../../services/portfolio/domain/case.model';
 import {PlannedPaymentPage} from '../../../services/portfolio/domain/individuallending/planned-payment-page.model';
-import {CasesStore} from '../store/index';
 import * as fromCases from '../store/index';
+import {CasesStore} from '../store/index';
 import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from '../store/payments/payment.actions';
 import {PlannedPayment} from '../../../services/portfolio/domain/individuallending/planned-payment.model';
-import {ITdDataTableColumn} from '@covalent/core';
 import {CostComponent} from '../../../services/portfolio/domain/individuallending/cost-component.model';
 import {ChargeName} from '../../../services/portfolio/domain/individuallending/charge-name.model';
-import {FimsCase} from '../store/model/fims-case.model';
 import {todayAsISOString} from '../../../services/domain/date.converter';
+import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 interface CostComponents {
   [id: string]: CostComponent
@@ -70,7 +68,7 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
         date: payment.date,
         interestRate: payment.interestRate,
         remainingPrincipal: payment.remainingPrincipal,
-        costComponents: costComponents
+        costComponents
       })
     }
 

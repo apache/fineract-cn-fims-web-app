@@ -18,9 +18,9 @@ import {type} from '../../store/util';
 import {Action} from '@ngrx/store';
 import {LoadResourcePayload, SelectResourcePayload} from '../../common/store/resource.reducer';
 import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
-import {Case} from '../../services/portfolio/domain/case.model';
 import {RoutePayload} from '../../common/store/route-payload';
 import {Teller} from '../../services/teller/domain/teller.model';
+import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
 
 export const UNLOCK_DRAWER = type('[Teller] Unlock Drawer');
 export const UNLOCK_DRAWER_SUCCESS = type('[Teller] Unlock Drawer Success');
@@ -120,7 +120,7 @@ export class LoadAllLoanProductsAction implements Action {
 export class LoadAllLoanProductsSuccessAction implements Action {
   readonly type = LOAD_ALL_LOAN_PRODUCTS_SUCCESS;
 
-  constructor(public payload: Case[]) { }
+  constructor(public payload: FimsCase[]) { }
 }
 
 export class ConfirmTransactionAction implements Action {

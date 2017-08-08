@@ -21,9 +21,9 @@ import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
 import {Subscription} from 'rxjs';
 import {SelectAction} from './store/case.actions';
-import {FimsCase} from './store/model/fims-case.model';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
 
 @Component({
   templateUrl: './case.detail.component.html'

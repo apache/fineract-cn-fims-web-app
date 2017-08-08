@@ -13,23 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {FimsCase} from './fims-case.model';
 
-import {ChargeMethod} from './charge-method.model';
-import {ChronoUnit} from './chrono-unit.model';
-import {WorkflowAction} from './individuallending/workflow-action.model';
-
-export interface ChargeDefinition {
-  identifier: string;
-  name: string;
-  description: string;
-  chargeAction: WorkflowAction;
-  chargeMethod: ChargeMethod;
-  amount: number;
-  fromAccountDesignator: string;
-  toAccountDesignator: string;
-  forCycleSizeUnit: ChronoUnit;
-  accrualAccountDesignator?: string;
-  accrueAction?: WorkflowAction;
-  readOnly?: boolean;
-  proportionalTo: string;
+export interface FimsCasePage {
+  elements: FimsCase[];
+  totalPages: number;
+  totalElements: number;
 }

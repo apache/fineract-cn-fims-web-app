@@ -67,7 +67,6 @@ describe('Test product list component', () => {
       name: 'test',
       termRange: undefined,
       balanceRange: undefined,
-      interestRange: undefined,
       interestBasis: undefined,
       patternPackage: 'test',
       description: '',

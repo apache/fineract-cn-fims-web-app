@@ -19,20 +19,12 @@
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [disabled]="transactionCreated">
     <form [formGroup]="form" layout="column">
       <div layout="row" class="pad-top">
-        <md-select formControlName="productInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
-          <md-option *ngFor="let instance of productInstances" [value]="instance">
-            {{instance.accountIdentifier}}({{instance.productIdentifier}})
+        <md-select formControlName="caseInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
+          <md-option *ngFor="let instance of caseInstances" [value]="instance">
+            {{instance.customerLoanAccountIdentifier}}({{instance.productIdentifier}})
           </md-option>
         </md-select>
       </div>
-      <fims-account-select title="{{'Target account' | translate}}" formControlName="targetAccountIdentifier" *ngIf="enableTargetAccount">
-        <ng-container *ngIf="!form.get('targetAccountIdentifier').pristine && form.get('targetAccountIdentifier').hasError('required')" translate>
-          Required
-        </ng-container>
-        <ng-container *ngIf="form.get('targetAccountIdentifier').hasError('invalidAccount')" translate>
-          Invalid account
-        </ng-container>
-      </fims-account-select>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
@@ -45,8 +37,6 @@
           </md-error>
         </md-input-container>
       </div>
-      <span *ngIf="checkCashdrawLimit" class="text-md" translate>Cashdraw limit is: {{cashdrawLimit | number:numberFormat}}</span>
-      <span *ngIf="checkBalanceLimit" class="text-md" translate>Balance limit is: {{balanceLimit | number:numberFormat}}</span>
     </form>
     <ng-template td-step-actions>
       <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
@@ -60,47 +50,16 @@
         <div flex-gt-xs="25"></div>
         <div flex-gt-xs="50">
           <h3 translate>Costs</h3>
-          <table td-data-table>
-            <tr>
-              <th td-data-table-column>
-                <span translate>Name</span>
-              </th>
-              <th td-data-table-column>
-                <span translate>Description</span>
-              </th>
-              <th td-data-table-column>
-                <span translate>Amount</span>
-              </th>
-            </tr>
-            <tr td-data-table-row>
-              <td td-data-table-cell translate>Transaction amount</td>
-              <td td-data-table-cell></td>
-              <td td-data-table-cell>{{form.get('amount').value}}</td>
-            </tr>
-            <tr td-data-table-row *ngFor="let row of transactionCosts?.charges">
-              <td td-data-table-cell>
-                {{row['name']}}
-              </td>
-              <td td-data-table-cell>
-                {{row['description'] }}
-              </td>
-              <td td-data-table-cell>
-                {{row['amount']}}
-              </td>
-            </tr>
-            <tr td-data-table-row>
-              <td td-data-table-cell translate>Total</td>
-              <td td-data-table-cell></td>
-              <td td-data-table-cell>{{transactionCosts?.totalAmount}}</td>
-            </tr>
-          </table>
+          <fims-teller-transaction-cost
+            [transactionAmount]="form.get('amount').value"
+            [transactionCosts]="transactionCosts">
+          </fims-teller-transaction-cost>
           <div layout="row" layout-margin>
             <md-checkbox [(ngModel)]="chargesIncluded" translate>Charges are payed in cash</md-checkbox>
           </div>
         </div>
       </div>
     </div>
-
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>

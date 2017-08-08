@@ -29,8 +29,8 @@
       <h3 md-subheader translate>Management</h3>
       <a md-list-item [routerLink]="['./charges']">
         <md-icon md-list-avatar>assignment</md-icon>
-        <h3 md-line translate>Charges</h3>
-        <p md-line translate>Charges</p>
+        <h3 md-line translate>Interest and fees</h3>
+        <p md-line translate>Manage interest and fees</p>
       </a>
       <a md-list-item [routerLink]="['./tasks']">
         <md-icon md-list-avatar>playlist_add_check</md-icon>
@@ -42,11 +42,6 @@
       <md-list-item>
         <h3 md-line translate>Balance range</h3>
         <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Interest range</h3>
-        <p md-line>{{product.interestBasis | translate}}</p>
-        <p md-line>{{product.interestRange?.minimum | number:numberFormat}} - {{product.interestRange?.maximum | number:numberFormat}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Term</h3>
