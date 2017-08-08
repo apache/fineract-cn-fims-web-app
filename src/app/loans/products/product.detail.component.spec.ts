@@ -65,14 +65,18 @@ describe('Test product list component', () => {
     const product: FimsProduct = {
       identifier: 'test',
       name: 'test',
-      termRange: undefined,
-      balanceRange: undefined,
-      interestBasis: undefined,
+      termRange: { temporalUnit: 'MONTHS', maximum: 1 },
+      balanceRange: { minimum: 1, maximum: 2 },
+      interestBasis: 'BEGINNING_BALANCE',
       patternPackage: 'test',
       description: '',
       accountAssignments: [],
-      parameters: undefined,
-      currencyCode: '',
+      parameters: {
+        moratoriums: [],
+        maximumDispersalAmount: 1,
+        maximumDispersalCount: 1
+      },
+      currencyCode: 'USD',
       minorCurrencyUnitDigits: 1,
       enabled
     };
@@ -98,20 +102,18 @@ describe('Test product list component', () => {
     return fixture.debugElement.query(By.css('fims-fab-button'));
   }
 
-  xit('should not display add button when product is not enabled but has change permission', () => {
-    // This test breaks with XMLHttpRequest cannot load ng:///DynamicTestModule/ProductDetailComponent.ngfactory.js
+  it('should display edit button when product is not enabled and has change permission', () => {
     setup(false, true);
 
     fixture.detectChanges();
 
     const button = getCreateButton();
 
-    expect(button).toBeNull();
+    expect(button).not.toBeNull();
   });
 
-  xit('should not display add button when product is enabled but has no change permission', () => {
-    // This test breaks with XMLHttpRequest cannot load ng:///DynamicTestModule/ProductDetailComponent.ngfactory.js
-    setup(false, false);
+  it('should not display edit button when product is enabled and has no change permission', () => {
+    setup(true, false);
 
     fixture.detectChanges();
 
@@ -120,15 +122,14 @@ describe('Test product list component', () => {
     expect(button).toBeNull();
   });
 
-  xit('should display add button when product is enabled and has change permission', () => {
-    // This test breaks with XMLHttpRequest cannot load ng:///DynamicTestModule/ProductDetailComponent.ngfactory.js
+  it('should not display edit button when product is enabled and has change permission', () => {
     setup(true, true);
 
     fixture.detectChanges();
 
     const button = getCreateButton();
 
-    expect(button).not.toBeNull();
+    expect(button).toBeNull();
   })
 
 });

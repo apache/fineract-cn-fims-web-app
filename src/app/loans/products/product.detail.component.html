@@ -41,11 +41,11 @@
     <md-list right>
       <md-list-item>
         <h3 md-line translate>Balance range</h3>
-        <p md-line>{{product.balanceRange.minimum | number:numberFormat}} - {{product.balanceRange.maximum | number:numberFormat}}</p>
+        <p md-line>{{product.balanceRange?.minimum | number:numberFormat}} - {{product.balanceRange?.maximum | number:numberFormat}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Term</h3>
-        <p md-line>{{product.termRange.maximum | number}} {{product.termRange.temporalUnit | translate}}</p>
+        <p md-line>{{product.termRange?.maximum | number}} {{product.termRange?.temporalUnit | translate}}</p>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Currency</h3>
