@@ -68,7 +68,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   username$: Observable<string>;
 
-  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService, private store: Store<fromRoot.State>, private media: TdMediaService) {}
+  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService,
+              private store: Store<fromRoot.State>, private media: TdMediaService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
