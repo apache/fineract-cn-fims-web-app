@@ -23,9 +23,8 @@ import {EXECUTE_COMMAND} from '../../store/case.actions';
 import {ExecuteCommandEvent} from './form.component';
 import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {FimsCase} from '../../store/model/fims-case.model';
 import * as fromCases from '../../store/index';
-import {AccountDesignators} from '../../../../services/portfolio/domain/individuallending/account-designators.model';
+import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 
 interface Parameter {
   productId: string,
@@ -62,7 +61,8 @@ export class CaseCommandConfirmationComponent implements OnInit {
 
   executeCommand(event: ExecuteCommandEvent): void {
     const command: CaseCommand = {
-      note: event.note
+      note: event.note,
+      paymentSize: event.paymentSize
     };
 
     this.casesStore.dispatch({ type: EXECUTE_COMMAND, payload: {

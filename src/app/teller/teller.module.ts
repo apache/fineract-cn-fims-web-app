@@ -43,9 +43,12 @@ import {TellerCustomerDetailComponent} from './customer/customer-detail.componen
 import {TellerProductsApiEffects} from './store/effects/products.service.effects';
 import {TellerCustomerIndexComponent} from './customer/customer-index.component';
 import {FimsSharedModule} from '../common/common.module';
-import {TellerTransactionFormComponent} from './customer/transaction/form.component';
-import {CreateTellerTransactionForm} from './customer/transaction/create.form.component';
+import {TellerTransactionFormComponent} from './customer/transaction/deposit/form.component';
 import {TellerNotificationEffects} from './store/effects/notification.effects';
+import {LoanTransactionFormComponent} from './customer/transaction/loan/form.component';
+import {CreateLoanTransactionForm} from './customer/transaction/loan/create.form.component';
+import {TransactionCostComponent} from './customer/transaction/components/cost.component';
+import {CreateDepositTransactionForm} from './customer/transaction/deposit/create.form.component';
 
 @NgModule({
   imports: [
@@ -77,8 +80,11 @@ import {TellerNotificationEffects} from './store/effects/notification.effects';
     TellerAuthComponent,
     TellerCustomerIndexComponent,
     TellerCustomerDetailComponent,
-    CreateTellerTransactionForm,
-    TellerTransactionFormComponent
+    CreateDepositTransactionForm,
+    TellerTransactionFormComponent,
+    LoanTransactionFormComponent,
+    CreateLoanTransactionForm,
+    TransactionCostComponent
   ],
   providers: [
     TellerLoginGuard,

@@ -15,33 +15,27 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
-import {TellerTransactionCosts} from '../../../services/teller/domain/teller-transaction-costs.model';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
-import {accountExists} from '../../../common/validator/account-exists.validator';
-import {AccountingService} from '../../../services/accounting/accounting.service';
-import {TransactionType} from '../../../services/teller/domain/teller-transaction.model';
+import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {FimsValidators} from '../../../../common/validator/validators';
+import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {accountExists} from '../../../../common/validator/account-exists.validator';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+import {TransactionForm} from '../domain/transaction-form.model';
 
 const withdrawalCheckTypes: TransactionType[] = ['ACCC', 'CWDL'];
 
 const balanceCheckTypes: TransactionType[] = ['ACCT', 'ACCC', 'CWDL'];
 
-export interface TellerTransactionFormData {
-  customerIdentifier: string;
-  productIdentifier: string;
-  accountIdentifier: string;
-  targetAccountIdentifier?: string;
-  amount: number;
-}
-
 @Component({
   selector: 'fims-teller-transaction-form',
   templateUrl: './form.component.html'
 })
-export class TellerTransactionFormComponent extends FormComponent<TellerTransactionFormData> implements OnInit {
+export class TellerTransactionFormComponent implements OnInit {
+
+  form: FormGroup;
 
   private _transactionCreated: boolean;
 
@@ -89,7 +83,7 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   @Input('cashdrawLimit') cashdrawLimit: number;
 
-  @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TellerTransactionFormData>();
+  @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TransactionForm>();
 
   @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<boolean>();
 
@@ -97,9 +91,7 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
-    super();
-  }
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -153,16 +145,11 @@ export class TellerTransactionFormComponent extends FormComponent<TellerTransact
     this.onCancel.emit();
   }
 
-  get formData(): TellerTransactionFormData {
-    // Not needed
-    return null;
-  }
-
   createTransaction(): void {
     const productInstance: ProductInstance = this.form.get('productInstance').value;
     const targetAccountIdentifierControl: FormControl = this.form.get('targetAccountIdentifier') as FormControl;
 
-    const formData: TellerTransactionFormData = {
+    const formData: TransactionForm = {
       productIdentifier: productInstance.productIdentifier,
       accountIdentifier: productInstance.accountIdentifier,
       customerIdentifier: productInstance.customerIdentifier,

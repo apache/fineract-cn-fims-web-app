@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {By} from '@angular/platform-browser';
+import {ComponentFixture} from '@angular/core/testing';
 
-import {FimsCase} from './fims-case.model';
-import {CasePage} from '../../../../services/portfolio/domain/case-page.model';
-import {mapToFimsCase} from './fims-case.mapper';
+export function clickOption(fixture: ComponentFixture<any>, optionIndex: number): void {
+  const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
 
-export interface FimsCasePage{
-  elements: FimsCase[];
-  totalPages: number;
-  totalElements: number;
-}
+  trigger.click();
 
-export function mapToFimsCasePage(casePage: CasePage): FimsCasePage {
-  let elements = [];
-  for(let caseInstance of casePage.elements) {
-    elements.push(mapToFimsCase(caseInstance));
-  }
-  return {
-    elements: elements,
-    totalPages: casePage.totalPages,
-    totalElements: casePage.totalElements
-  }
+  fixture.detectChanges();
+
+  const options = fixture.debugElement.queryAll(By.css('md-option'));
+
+  options[optionIndex].nativeElement.click();
+
+  fixture.detectChanges();
 }

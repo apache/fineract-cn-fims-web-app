@@ -29,6 +29,9 @@
         <md-input-container layout-margin flex>
           <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
           <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('name').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: form.get('name').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CasesStore} from '../store/index';
+import {Component, OnInit} from '@angular/core';
 import * as fromCases from '../store/index';
-import {FimsCase} from '../store/model/fims-case.model';
+import {CasesStore} from '../store/index';
 import {Observable} from 'rxjs/Observable';
 import {CreditWorthinessFactor} from '../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 import {CreditWorthinessSnapshot} from '../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
 import * as fromCustomers from '../../store/index';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {TableData} from '../../../common/data-table/data-table.component';
+import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 interface IncomeDebtOverview {
   debtTableData: TableData,

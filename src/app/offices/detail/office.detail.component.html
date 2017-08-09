@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{office.parentIdentifier ? office.name : office.name + ' (Headquarter)'}}" subTitle="{{office.description}}" [navigateBackTo]="office.parentIdentifier ? ['../../', this.office.parentIdentifier] : ['../../']">
+<fims-layout-card-over title="{{office.parentIdentifier ? office.name : office.name + ' (Headquarter)'}}" subTitle="{{office.description}}" [navigateBackTo]="office.parentIdentifier ? ['../../', this.office.parentIdentifier] : undefined">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchOffice($event)" [alwaysVisible]="false"></td-search-box>
     <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }"><md-icon>mode_edit</md-icon></a>

@@ -18,13 +18,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {FimsCase} from '../../store/model/fims-case.model';
+import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 
 export interface ExecuteCommandEvent {
   productId: string;
   caseId: string;
   action: WorkflowAction;
   note: string;
+  paymentSize: number;
 }
 
 @Component({
@@ -65,7 +66,8 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
       caseId: this.fimsCase.identifier,
       productId: this.fimsCase.productIdentifier,
       note: this.formGroup.get('note').value,
-      action: this.action
+      action: this.action,
+      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0
     });
   }
 

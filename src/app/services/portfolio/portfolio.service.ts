@@ -21,7 +21,6 @@ import {Product} from './domain/product.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TaskDefinition} from './domain/task-definition.model';
 import {ChargeDefinition} from './domain/charge-definition.model';
-import {Case} from './domain/case.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {buildSearchParams} from '../domain/paging/search-param.builder';
 import {CaseCommand} from './domain/case-command.model';
@@ -32,6 +31,11 @@ import {AccountAssignment} from './domain/account-assignment.model';
 import {WorkflowAction} from './domain/individuallending/workflow-action.model';
 import {ProductPage} from './domain/product-page.model';
 import {CostComponent} from './domain/individuallending/cost-component.model';
+import {FimsCase} from './domain/fims-case.model';
+import {FimsCasePage} from './domain/fims-case-page.model';
+import {Case} from './domain/case.model';
+import {mapToCase, mapToFimsCase, mapToFimsCases} from './domain/mapper/fims-case.mapper';
+import {mapToFimsCasePage} from './domain/mapper/fims-case-page.mapper';
 
 @Injectable()
 export class PortfolioService {
@@ -120,30 +124,34 @@ export class PortfolioService {
     return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinitionIdentifier}`);
   }
 
-  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean, forCustomer?: string): Observable<Case[]>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
-    params.append('includeClosed', includeClosed ? 'true' : 'false');
-    params.append('forCustomer', forCustomer);
+  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean): Observable<FimsCasePage>{
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    //TODO remove when the api follows fetch request naming
-    params.append('page', "1");
+    params.append('includeClosed', includeClosed ? 'true' : 'false');
+    params.append('pageIndex', "1");
     params.append('size', "10");
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       search: params
     };
+
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/`, requestOptions)
+      .map((casePage: CasePage) => mapToFimsCasePage(casePage))
   }
 
-  createCase(productIdentifier: string, caseInstance: Case): Observable<void>{
+  createCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
+    const caseInstance: Case = mapToCase(fimsCase);
+
     return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/`, caseInstance)
   }
 
-  getCase(productIdentifier: string, caseIdentifier: string): Observable<Case>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}`);
+  getCase(productIdentifier: string, caseIdentifier: string): Observable<FimsCase>{
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}`)
+      .map((caseInstance: Case) => mapToFimsCase(caseInstance));
   }
 
-  changeCase(productIdentifier: string, caseInstance: Case): Observable<void>{
+  changeCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
+    const caseInstance: Case = mapToCase(fimsCase);
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseInstance.identifier}`, caseInstance)
   }
 
@@ -171,7 +179,6 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/`, requestOptions)
   }
 
-
   getTaskForCase(productIdentifier: string, caseIdentifier: string, taskIdentifier: string): Observable<TaskInstance> {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`)
   }
@@ -180,13 +187,15 @@ export class PortfolioService {
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}/executed`, executed)
   }
 
-  findAllCases(fetchRequest?: FetchRequest): Observable<Case[]> {
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+  findAllCases(fetchRequest?: FetchRequest): Observable<FimsCase[]> {
+    const search: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
-      search: params
+    const requestOptions: RequestOptionsArgs = {
+      search
     };
+
     return this.http.get(`${this.baseUrl}/cases/`, requestOptions)
+      .map((caseInstances: Case[]) => mapToFimsCases(caseInstances))
   }
 
   getPaymentScheduleForCase(productIdentifier: string, caseIdentifier: string, initialDisbursalDate?: string): Observable<PlannedPaymentPage>{
@@ -200,14 +209,15 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/cases/${caseIdentifier}/plannedpayments`, requestOptions)
   }
 
-  getAllCasesForCustomer(customerIdentifier: string, fetchRequest?: FetchRequest): Observable<CasePage>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+  getAllCasesForCustomer(customerIdentifier: string, fetchRequest?: FetchRequest): Observable<FimsCasePage>{
+    const search: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
-      search: params
+    const requestOptions: RequestOptionsArgs = {
+      search
     };
 
-    return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions);
+    return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions)
+      .map((casePage: CasePage) => mapToFimsCasePage(casePage));
   }
 
 }

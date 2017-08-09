@@ -20,7 +20,6 @@ import {type} from '../../../store/util';
 import {RoutePayload} from '../../../common/store/route-payload';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
-import {FimsCase} from './model/fims-case.model';
 import {SearchResult} from '../../../common/store/search.reducer';
 import {
   CreateResourceSuccessPayload,
@@ -30,7 +29,7 @@ import {
 } from '../../../common/store/resource.reducer';
 import {CaseCommand} from '../../../services/portfolio/domain/case-command.model';
 import {WorkflowAction} from '../../../services/portfolio/domain/individuallending/workflow-action.model';
-import {CostComponent} from '../../../services/portfolio/domain/individuallending/cost-component.model';
+import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 export const SEARCH = type('[Case] Search');
 export const SEARCH_COMPLETE = type('[Case] Search Complete');

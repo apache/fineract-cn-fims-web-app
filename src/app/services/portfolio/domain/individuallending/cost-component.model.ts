@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export class CostComponent{
+export class CostComponent {
   chargeIdentifier: string;
   amount: number;
 }

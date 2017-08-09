@@ -42,7 +42,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
     { name: 'name', label: 'Name' },
     { name: 'amount', label: 'Amount', numeric: true, format: value => value.toFixed(2) },
     { name: 'chargeAction', label: 'Applied when', format: value => {
-      let result: ActionOption = ActionOptions.find((option) => {
+      const result: ActionOption = ActionOptions.find((option) => {
         return option.type === value
       });
       return result.label;
@@ -60,11 +60,15 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
       });
 
     this.chargesData$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeEntities)
-      .map(charges => ({
-        totalElements: charges.length,
-        totalPages: 1,
-        data: charges
-      }));
+      .map(charges => {
+        const data = charges.filter(charge => !charge.readOnly);
+
+        return {
+          totalElements: data.length,
+          totalPages: 1,
+          data
+        }
+      });
   }
 
   ngOnDestroy(): void {

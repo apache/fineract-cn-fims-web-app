@@ -20,10 +20,12 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import * as fromDepositAccounts from './../store';
+import * as fromRoot from '../../store';
 import {TableData} from '../../common/data-table/data-table.component';
 import {TdDialogService} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
 import {DELETE} from '../store/product.actions';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
   templateUrl: './deposit-product.detail.component.html'
@@ -35,6 +37,8 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
   numberFormat: string = '1.2-2';
 
   definition: ProductDefinition;
+
+  canDistributeDividends$: Observable<boolean>;
 
   charges: TableData;
 
@@ -50,8 +54,10 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    this.productSubscription = this.store.select(fromDepositAccounts.getSelectedProduct)
-      .filter(product => !!product)
+    const selectedProduct$ = this.store.select(fromDepositAccounts.getSelectedProduct)
+      .filter(product => !!product);
+
+    this.productSubscription = selectedProduct$
       .subscribe(product => {
         this.definition = product;
         this.charges = {
@@ -60,6 +66,15 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
           totalPages: 1
         }
       });
+
+    this.canDistributeDividends$ = Observable.combineLatest(
+      selectedProduct$,
+      this.store.select(fromRoot.getPermissions),
+      (product, permissions) => ({
+        isShareProduct: product.type === 'SHARE',
+        hasPermission: this.hasChangePermission(permissions)
+      })
+    ).map(result => result.isShareProduct && result.hasPermission);
   }
 
   ngOnDestroy(): void {
@@ -91,5 +106,12 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   hasTerm(defininition: ProductDefinition): boolean {
     return !!defininition.term.timeUnit || !!defininition.term.period;
+  }
+
+  private hasChangePermission(permissions: FimsPermission[]): boolean {
+    return permissions.filter(permission =>
+      permission.id === 'deposit_definitions' &&
+      permission.accessLevel === 'CHANGE'
+    ).length > 0
   }
 }

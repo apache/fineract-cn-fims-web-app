@@ -14,6 +14,7 @@
  limitations under the License.
 -->
 <div layout="column" layout-fill>
+  <md-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></md-progress-bar>
   <md-toolbar color="primary" class="md-whiteframe-z1">
     <button md-icon-button (click)="toggleSideNav()">
       <md-icon>menu</md-icon>
@@ -42,7 +43,7 @@
   <md-sidenav-container>
     <md-sidenav
       [mode]="'side'"
-      [opened]="true">
+      [opened]="media.registerQuery('gt-md') | async">
       <md-toolbar>
         <div layout="column">
           <span layout="row" layout-align="start center">
@@ -64,7 +65,6 @@
       </md-nav-list>
     </md-sidenav>
     <!-- Main content -->
-    <md-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></md-progress-bar>
     <div layout-fill>
       <router-outlet></router-outlet>
     </div>

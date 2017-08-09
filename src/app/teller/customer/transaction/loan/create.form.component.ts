@@ -15,25 +15,26 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TellerTransaction, TransactionType} from '../../../services/teller/domain/teller-transaction.model';
-import {TellerService} from '../../../services/teller/teller-service';
-import {TellerTransactionCosts} from '../../../services/teller/domain/teller-transaction-costs.model';
-import {CONFIRM_TRANSACTION} from '../../store/teller.actions';
-import * as fromTeller from '../../store/index';
-import {TellerStore} from '../../store/index';
-import * as fromRoot from '../../../store/index';
-import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
+import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+import {TellerService} from '../../../../services/teller/teller-service';
+import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
+import * as fromTeller from '../../../store/index';
+import {TellerStore} from '../../../store/index';
+import * as fromRoot from '../../../../store/index';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {TellerTransactionFormComponent, TellerTransactionFormData} from './form.component';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
-import {Teller} from '../../../services/teller/domain/teller.model';
+import {TellerTransactionFormComponent} from '../deposit/form.component';
+import {Teller} from '../../../../services/teller/domain/teller.model';
+import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
+import {TransactionForm} from '../domain/transaction-form.model';
+import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateTellerTransactionForm implements OnInit, OnDestroy {
+export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
   private authenticatedTellerSubscription: Subscription;
 
@@ -41,13 +42,13 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
 
   private tellerTransactionIdentifier: string;
 
-  transactionType: TransactionType;
-
   private clerk: string;
+
+  private transactionType: TransactionType;
 
   @ViewChild('form') form: TellerTransactionFormComponent;
 
-  productInstances$: Observable<ProductInstance[]>;
+  caseInstances$: Observable<FimsCase[]>;
 
   transactionCosts$: Observable<TellerTransactionCosts>;
 
@@ -57,13 +58,14 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
 
   error: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private portfolioService: PortfolioService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
 
-    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+    this.caseInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .switchMap(customer => this.portfolioService.getAllCasesForCustomer(customer.identifier))
+      .map(casePage => casePage.elements.filter(element => element.currentState === 'ACTIVE'));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .subscribe(teller => { this.teller = teller } );
@@ -77,12 +79,12 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
     this.usernameSubscription.unsubscribe();
   }
 
-  createTransaction(formData: TellerTransactionFormData): void {
+  createTransaction(formData: TransactionForm): void {
     const transaction: TellerTransaction = {
       customerIdentifier: formData.customerIdentifier,
       productIdentifier: formData.productIdentifier,
+      productCaseIdentifier: formData.productCaseIdentifier,
       customerAccountIdentifier: formData.accountIdentifier,
-      targetAccountIdentifier: formData.targetAccountIdentifier,
       amount: formData.amount,
       clerk: this.clerk,
       transactionDate: new Date().toISOString(),
@@ -120,6 +122,6 @@ export class CreateTellerTransactionForm implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../../'], { relativeTo: this.route })
   }
 }

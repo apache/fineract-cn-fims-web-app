@@ -22,6 +22,7 @@ import {ProductDefinitionCommand} from './domain/definition/product-definition-c
 import {ProductInstance} from './domain/instance/product-instance.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Action} from './domain/definition/action.model';
+import {DividendDistribution} from './domain/definition/dividend-distribution.model';
 
 @Injectable()
 export class DepositAccountService {
@@ -52,6 +53,14 @@ export class DepositAccountService {
     return this.http.post(`${this.baseUrl}/definitions/${identifier}/commands`, command);
   }
 
+  fetchDividendDistributions(identifier: string): Observable<DividendDistribution[]> {
+    return this.http.get(`${this.baseUrl}/definitions/${identifier}/dividends`)
+  }
+
+  distributeDividend(identifier: string, dividendDistribution: DividendDistribution): Observable<void> {
+    return this.http.post(`${this.baseUrl}/definitions/${identifier}/dividends`, dividendDistribution)
+  }
+
   createProductInstance(productInstance: ProductInstance): Observable<void> {
     return this.http.post(`${this.baseUrl}/instances`, productInstance);
   }
@@ -80,4 +89,6 @@ export class DepositAccountService {
   fetchActions(): Observable<Action[]> {
     return this.http.get(`${this.baseUrl}/actions`);
   }
+
+
 }

@@ -25,12 +25,12 @@ import * as fromCustomers from '../../store/index';
 import {Subscription} from 'rxjs';
 import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../services/domain/error.model';
-import {FimsCase} from '../store/model/fims-case.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {Observable} from 'rxjs/Observable';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -104,7 +104,7 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.casesStore.dispatch({ type: RESET_FORM })
   }
 
-  onSave(caseToSave: Case): void {
+  onSave(caseToSave: FimsCase): void {
     this.casesStore.dispatch({ type: CREATE, payload: {
       productId: caseToSave.productIdentifier,
       caseInstance: caseToSave,

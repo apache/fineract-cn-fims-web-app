@@ -68,7 +68,8 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   username$: Observable<string>;
 
-  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService, private store: Store<fromRoot.State>, private media: TdMediaService) {}
+  constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService,
+              private store: Store<fromRoot.State>, private media: TdMediaService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -83,14 +84,14 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.username$ = this.store.select(fromRoot.getUsername);
 
     this.countryService.init();
-
-    this.media.broadcast();
   }
 
   ngAfterViewInit(): void {
     this.isLoading$ = this.httpClient.process
       .debounceTime(1000)
       .map((action: Action) => action === Action.QueryStart);
+
+    this.media.broadcast();
   }
 
   getTitle(state: RouterState, parent: ActivatedRoute): string[] {

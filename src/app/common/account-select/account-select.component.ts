@@ -75,6 +75,14 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
     this._onTouchedCallback = fn;
   }
 
+  setDisabledState(isDisabled: boolean): void {
+    if(isDisabled) {
+      this.formControl.disable();
+    } else {
+      this.formControl.enable();
+    }
+  }
+
   private _onTouchedCallback: () => void = noop;
 
   private _onChangeCallback: (_: any) => void = noop;

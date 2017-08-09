@@ -17,7 +17,7 @@
 import * as tellers from './teller.actions';
 import {ResourceState} from '../../common/store/resource.reducer';
 import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../common/store/reducer.helper';
-import {Case} from '../../services/portfolio/domain/case.model';
+import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
 
 export const initialState: ResourceState = {
   ids: [],
@@ -35,11 +35,11 @@ export function reducer(state = initialState, action: tellers.Actions): Resource
     }
 
     case tellers.LOAD_ALL_LOAN_PRODUCTS_SUCCESS: {
-      const loanProducts: Case[] = action.payload;
+      const caseInstances: FimsCase[] = action.payload;
 
-      const ids = loanProducts.map(loanProduct => loanProduct.identifier);
+      const ids = caseInstances.map(caseInstance => caseInstance.identifier);
 
-      const entities = resourcesToHash(loanProducts);
+      const entities = resourcesToHash(caseInstances);
 
       const loadedAt = idsToHashWithCurrentTimestamp(ids);
 

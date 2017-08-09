@@ -33,11 +33,17 @@
           <md-error *ngIf="formGroup.get('name').hasError('required')" translate>
             Required
           </md-error>
+          <md-error *ngIf="formGroup.get('name').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: formGroup.get('name').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <textarea mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description"></textarea>
+          <md-error *ngIf="formGroup.get('description').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: formGroup.get('description').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -85,7 +91,15 @@
           </md-radio-button>
         </md-radio-group>
       </div>
-      <fims-account-select title="{{'Expense account' | translate}}" formControlName="expenseAccountIdentifier" [type]="'EXPENSE'">
+      <fims-account-select title="{{'Cash account(Asset accounts only)' | translate}}" formControlName="cashAccountIdentifier" [type]="'ASSET'">
+        <ng-container *ngIf="!formGroup.get('cashAccountIdentifier').pristine && formGroup.get('cashAccountIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="formGroup.get('cashAccountIdentifier').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+      <fims-account-select title="{{'Expense account(Expense accounts only)' | translate}}" formControlName="expenseAccountIdentifier" [type]="'EXPENSE'">
         <ng-container *ngIf="!formGroup.get('expenseAccountIdentifier').pristine && formGroup.get('expenseAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>
@@ -93,7 +107,15 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <fims-ledger-select title="{{'Equity ledger' | translate}}" formControlName="equityLedgerIdentifier" [type]="'EQUITY'">
+      <fims-account-select title="{{'Accrue account(Liability accounts only)' | translate}}" formControlName="accrueAccountIdentifier" [type]="'LIABILITY'">
+        <ng-container *ngIf="!formGroup.get('accrueAccountIdentifier').pristine && formGroup.get('accrueAccountIdentifier').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="formGroup.get('accrueAccountIdentifier').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+      <fims-ledger-select title="{{'Equity ledger(Equity ledgers only)' | translate}}" formControlName="equityLedgerIdentifier" [type]="'EQUITY'">
         <ng-container *ngIf="!formGroup.get('equityLedgerIdentifier').pristine && formGroup.get('equityLedgerIdentifier').hasError('required')" translate>
           Required
         </ng-container>

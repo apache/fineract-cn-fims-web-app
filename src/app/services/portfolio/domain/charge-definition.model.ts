@@ -18,7 +18,7 @@ import {ChargeMethod} from './charge-method.model';
 import {ChronoUnit} from './chrono-unit.model';
 import {WorkflowAction} from './individuallending/workflow-action.model';
 
-export interface ChargeDefinition{
+export interface ChargeDefinition {
   identifier: string;
   name: string;
   description: string;
@@ -30,4 +30,6 @@ export interface ChargeDefinition{
   forCycleSizeUnit: ChronoUnit;
   accrualAccountDesignator?: string;
   accrueAction?: WorkflowAction;
+  readOnly?: boolean;
+  proportionalTo: string;
 }

@@ -21,16 +21,25 @@
       <md-error *ngIf="form.get('email').hasError('email')" translate>
         Invalid email
       </md-error>
+      <md-error *ngIf="form.get('email').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('email').getError('maxlength')['requiredLength']} }}
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Phone(optional)' | translate}}" type="tel" formControlName="phone" tdAutoTrim/>
+      <md-error *ngIf="form.get('phone').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('phone').getError('maxlength')['requiredLength']} }}
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Mobile(optional)' | translate}}" type="tel" formControlName="mobile" tdAutoTrim/>
+      <md-error *ngIf="form.get('mobile').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('mobile').getError('maxlength')['requiredLength']} }}
+      </md-error>
     </md-input-container>
   </div>
 </form>

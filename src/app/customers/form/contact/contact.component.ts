@@ -46,9 +46,9 @@ export class CustomerContactFormComponent extends FormComponent<ContactDetail[]>
     }
 
     this.form = this.formBuilder.group({
-      email: [email, FimsValidators.email],
-      phone: [phone],
-      mobile: [mobile]
+      email: [email, [Validators.maxLength(32), FimsValidators.email]],
+      phone: [phone, Validators.maxLength(32)],
+      mobile: [mobile, Validators.maxLength(32)]
     });
   };
 

@@ -41,7 +41,8 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
     chargeMethod: 'FIXED',
     fromAccountDesignator: '',
     toAccountDesignator: '',
-    forCycleSizeUnit: 'WEEKS'
+    forCycleSizeUnit: 'WEEKS',
+    proportionalTo: ''
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}

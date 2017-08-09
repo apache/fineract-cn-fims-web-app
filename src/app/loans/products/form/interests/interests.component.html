@@ -22,18 +22,7 @@
       </md-radio-button>
     </md-radio-group>
   </div>
-  <div layout="row">
-    <md-slide-toggle formControlName="interestRangeEnabled" layout-margin>
-      Interest range?
-    </md-slide-toggle>
-  </div>
-  <div layout="row" *ngIf="form.get('interestRangeEnabled').value === false">
-    <fims-number-input [form]="form" controlName="minimum" placeholder="{{'Interest rate' | translate}}"></fims-number-input>
-  </div>
-  <div layout="row" *ngIf="form.get('interestRangeEnabled').value === true">
-    <fims-min-max minPlaceholder="{{'Minimum interest rate' | translate}}" maxPlaceholder="{{'Maximum interest rate' | translate}}" [form]="form" minControlName="minimum" maxControlName="maximum"></fims-min-max>
-  </div>
-  <fims-account-select title="{{'Interest income account' | translate}}" formControlName="incomeAccount" [type]="'REVENUE'">
+  <fims-account-select title="{{'Interest income account(Revenue accounts only)' | translate}}" formControlName="incomeAccount" [type]="'REVENUE'">
     <ng-container *ngIf="!form.get('incomeAccount').pristine && form.get('incomeAccount').hasError('required')">
       Required
     </ng-container>
@@ -41,7 +30,7 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <fims-account-select title="{{'Interest accrual account' | translate}}" formControlName="accrualAccount" [type]="'ASSET'">
+  <fims-account-select title="{{'Interest accrual account(Asset accounts only)' | translate}}" formControlName="accrualAccount" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('accrualAccount').pristine && form.get('accrualAccount').hasError('required')">
       Required
     </ng-container>
@@ -49,5 +38,6 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <span class="text-md" translate>Interests will be calculated on a daily basis</span>
+  <p class="text-md" translate>Interests will be calculated on a daily basis</p>
+  <p class="text-md" translate>As soon as the product has been created you can manage the interest rate under "Interest and fees".</p>
 </form>

@@ -62,8 +62,8 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
     return this.formBuilder.group({
       actionIdentifier: [charge ? charge.actionIdentifier : '', Validators.required],
       incomeAccountIdentifier: [charge ? charge.incomeAccountIdentifier : '', [Validators.required], accountExists(this.accountingService)],
-      name: [charge ? charge.name : '', Validators.required],
-      description: [charge ? charge.description : ''],
+      name: [charge ? charge.name : '', [Validators.required, Validators.maxLength(256)]],
+      description: [charge ? charge.description : '', Validators.maxLength(2048)],
       proportional: [charge ? charge.proportional : false ],
       amount: [amount.toFixed(2), [ FimsValidators.minValue(0)] ]
     })

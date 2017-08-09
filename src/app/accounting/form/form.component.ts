@@ -55,9 +55,9 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
     this.form = this.formBuilder.group({
       'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe ] ],
       'type': [ this.parentLedger ? this.parentLedger.type : this.ledger.type, [Validators.required] ],
-      'name': [ this.ledger.name, [Validators.required] ],
+      'name': [ this.ledger.name, [Validators.required, Validators.maxLength(256)] ],
       'showAccountsInChart': [ this.ledger.showAccountsInChart, [Validators.required]],
-      'description': [ this.ledger.description ],
+      'description': [ this.ledger.description, Validators.maxLength(2048) ],
     });
   }
 

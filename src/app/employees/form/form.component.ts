@@ -97,9 +97,9 @@ export class EmployeeFormComponent implements OnInit{
   prepareDetailForm(employee: Employee, user: User): void {
     this.detailForm = this.formBuilder.group({
       identifier: [employee.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      firstName: [employee.givenName, Validators.required],
-      middleName: [employee.middleName],
-      lastName: [employee.surname, Validators.required],
+      firstName: [employee.givenName, [Validators.required, Validators.maxLength(256)]],
+      middleName: [employee.middleName, Validators.maxLength(256)],
+      lastName: [employee.surname, [Validators.required, Validators.maxLength(256)]],
       password: ['', this.editMode ? Validators.nullValidator : Validators.required],
       role: [user ? user.role : '', Validators.required]
     });
@@ -125,9 +125,9 @@ export class EmployeeFormComponent implements OnInit{
     }
 
     this.contactForm = this.formBuilder.group({
-      email: [email],
-      phone: [phone],
-      mobile: [mobile]
+      email: [email, [Validators.maxLength(256), FimsValidators.email]],
+      phone: [phone, Validators.maxLength(256)],
+      mobile: [mobile, Validators.maxLength(256)]
     });
   }
 

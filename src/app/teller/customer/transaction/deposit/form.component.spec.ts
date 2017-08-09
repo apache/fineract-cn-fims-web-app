@@ -15,18 +15,20 @@
  */
 
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {FimsSharedModule} from '../../../common/common.module';
+import {FimsSharedModule} from '../../../../common/common.module';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
 import {MdButtonModule, MdCheckboxModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {Component, DebugElement, ViewChild} from '@angular/core';
 import {TellerTransactionFormComponent} from './form.component';
 import {By} from '@angular/platform-browser';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AccountingService} from '../../../services/accounting/accounting.service';
+import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {setValueByFormControlName} from '../../../common/testing/input-fields';
+import {setValueByFormControlName} from '../../../../common/testing/input-fields';
+import {TransactionCostComponent} from '../components/cost.component';
+import {clickOption} from '../../../../common/testing/select-fields';
 
 describe('Test transaction form', () => {
 
@@ -63,6 +65,7 @@ describe('Test transaction form', () => {
         }
       ],
       declarations: [
+        TransactionCostComponent,
         TellerTransactionFormComponent,
         TestComponent
       ]
@@ -80,20 +83,6 @@ describe('Test transaction form', () => {
     fixture.detectChanges();
   }
 
-  function selectFirstOption(): void {
-    const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
-
-    trigger.click();
-
-    fixture.detectChanges();
-
-    let option = fixture.debugElement.query(By.css('md-option')).nativeElement;
-
-    option.click();
-
-    fixture.detectChanges();
-  }
-
   function transactionButton(): DebugElement {
     const element = fixture.debugElement.query(By.css('td-steps > div:nth-child(1) > td-step-body > div > div.td-step-body > div > div.td-step-actions > button.mat-raised-button.mat-primary'));
     return element;
@@ -106,7 +95,7 @@ describe('Test transaction form', () => {
   it('test if create transaction is enabled when amount matches balance limit', () => {
     setup(1000);
 
-    selectFirstOption();
+    clickOption(fixture, 0);
 
     const productInstance = component.form.form.get('productInstance').value;
 
@@ -124,7 +113,7 @@ describe('Test transaction form', () => {
     beforeEach(() => {
       setup(1000);
 
-      selectFirstOption();
+      clickOption(fixture, 0);
     });
 
     it('when amount exeeds balance', () => {

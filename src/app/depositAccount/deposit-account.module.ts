@@ -42,6 +42,12 @@ import {DepositProductDetailComponent} from './detail/deposit-product.detail.com
 import {DepositProductStatusComponent} from './detail/status/status.component';
 import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
 import {DepositProductEditComponent} from './form/edit.component';
+import {DepositProductDividendsComponent} from './detail/dividends/dividends.component';
+import {DepositProductDividendApiEffects} from './store/dividends/effects/service.effects';
+import {DepositProductDividendNotificationEffects} from './store/dividends/effects/notification.effects';
+import {DepositProductDividendRouteEffects} from './store/dividends/effects/route.effects';
+import {DividendFormComponent} from './detail/dividends/form/form.component';
+import {CreateDividendFormComponent} from './detail/dividends/form/create.component';
 
 @NgModule({
   imports: [
@@ -67,7 +73,11 @@ import {DepositProductEditComponent} from './form/edit.component';
 
     EffectsModule.run(DepositProductDefinitionApiEffects),
     EffectsModule.run(DepositProductDefinitionRouteEffects),
-    EffectsModule.run(DepositProductDefinitionNotificationEffects)
+    EffectsModule.run(DepositProductDefinitionNotificationEffects),
+
+    EffectsModule.run(DepositProductDividendApiEffects),
+    EffectsModule.run(DepositProductDividendRouteEffects),
+    EffectsModule.run(DepositProductDividendNotificationEffects)
   ],
   declarations: [
     DepositProductComponent,
@@ -77,7 +87,10 @@ import {DepositProductEditComponent} from './form/edit.component';
     DepositProductChargesFormComponent,
     DepositProductIndexComponent,
     DepositProductDetailComponent,
-    DepositProductStatusComponent
+    DepositProductStatusComponent,
+    DepositProductDividendsComponent,
+    CreateDividendFormComponent,
+    DividendFormComponent
   ],
   providers: [
     ProductDefinitionExistsGuard,

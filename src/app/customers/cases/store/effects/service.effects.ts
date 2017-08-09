@@ -22,8 +22,6 @@ import {of} from 'rxjs/observable/of';
 import * as caseActions from '../case.actions';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {Product} from '../../../../services/portfolio/domain/product.model';
-import {mapToFimsCasePage} from '../model/fims-case-page.model';
-import {mapToCase} from '../model/fims-case.mapper';
 
 @Injectable()
 export class CaseApiEffects {
@@ -40,7 +38,6 @@ export class CaseApiEffects {
 
       return this.portfolioService.getAllCasesForCustomer(payload.customerId, payload.fetchRequest)
         .takeUntil(nextSearch$)
-        .map(casePage => mapToFimsCasePage(casePage))
         .map(fimsCasePage => new caseActions.SearchCompleteAction(fimsCasePage))
         .catch(() => of(new caseActions.SearchCompleteAction({
           totalElements: 0,
@@ -55,7 +52,7 @@ export class CaseApiEffects {
     .ofType(caseActions.CREATE)
     .map((action: caseActions.CreateCaseAction) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.createCase(payload.productId, mapToCase(payload.caseInstance))
+      this.portfolioService.createCase(payload.productId, payload.caseInstance)
         .map(() => new caseActions.CreateCaseSuccessAction({
           resource: payload.caseInstance,
           activatedRoute: payload.activatedRoute
@@ -68,13 +65,12 @@ export class CaseApiEffects {
     .ofType(caseActions.UPDATE)
     .map((action: caseActions.UpdateCaseAction) => action.payload)
     .mergeMap(payload =>
-        this.portfolioService.changeCase(payload.productId, mapToCase(payload.caseInstance))
+        this.portfolioService.changeCase(payload.productId, payload.caseInstance)
           .map(() => new caseActions.UpdateCaseSuccessAction({
             resource: payload.caseInstance,
             activatedRoute: payload.activatedRoute
           }))
           .catch((error) => of(new caseActions.UpdateCaseFailAction(error)))
-
     );
 
   @Effect()

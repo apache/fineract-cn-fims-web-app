@@ -25,7 +25,6 @@ export interface Product {
   name: string;
   termRange: TermRange;
   balanceRange: BalanceRange;
-  interestRange: InterestRange;
   interestBasis: InterestBasis;
   patternPackage: string;
   description: string;

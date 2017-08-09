@@ -13,7 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {CaseParameters} from './individuallending/case-parameters.model';
+import {CaseState} from './case-state.model';
 
-import * as product from './product.actions';
-import {FimsProduct} from './model/fims-product.model';
-
+export interface FimsCase {
+  identifier: string;
+  productIdentifier: string;
+  parameters: CaseParameters;
+  depositAccountIdentifier: string;
+  customerLoanAccountIdentifier?: string;
+  loansPayableAccountIdentifier?: string;
+  currentState: CaseState;
+  createdOn?: string;
+  createdBy?: string;
+  lastModifiedOn?: string;
+  lastModifiedBy?: string;
+}

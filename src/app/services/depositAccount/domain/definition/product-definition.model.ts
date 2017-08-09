@@ -29,6 +29,8 @@ export interface ProductDefinition {
   minimumBalance: number;
   equityLedgerIdentifier?: string;
   expenseAccountIdentifier: string;
+  cashAccountIdentifier: string;
+  accrueAccountIdentifier?: string;
   interest?: number;
   term: Term;
   charges: Charge[];

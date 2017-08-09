@@ -18,7 +18,7 @@ import {CostComponent} from './individuallending/cost-component.model';
 
 export interface CaseCommand {
   oneTimeAccountAssignments?: AccountAssignment[];
-  costComponents?: CostComponent[];
+  paymentSize?: number;
   note?: string;
   createdOn?: string;
   createdBy?: string;

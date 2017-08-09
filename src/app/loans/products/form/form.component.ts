@@ -104,10 +104,6 @@ export class ProductFormComponent implements OnInit{
       minorCurrencyUnitDigits: currency.digits,
       currencyCode: currency.code,
       interestBasis: this.interestForm.formData.interestBasis,
-      interestRange: {
-        minimum: parseFloat(this.interestForm.formData.minimum),
-        maximum: parseFloat(this.interestForm.formData.maximum),
-      },
       termRange: {
         maximum: this.detailForm.get('term').value,
         temporalUnit: this.detailForm.get('temporalUnit').value
@@ -157,8 +153,8 @@ export class ProductFormComponent implements OnInit{
 
     this.detailForm = this.formBuilder.group({
       identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      name: [product.name, [Validators.required]],
-      description: [product.description, [Validators.required]],
+      name: [product.name, [Validators.required, Validators.maxLength(256)]],
+      description: [product.description, [Validators.required, Validators.maxLength(4096)]],
       currencyCode: [product.currencyCode, [Validators.required]],
       minimumBalance: [balanceRange.minimum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange.maximum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
@@ -184,11 +180,8 @@ export class ProductFormComponent implements OnInit{
   private prepareInterestForm(product: FimsProduct) {
     const interestIncome = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
     const interestAccrual = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
-    const interestRange = product.interestRange;
 
     this.interestFormData = {
-      minimum: interestRange.minimum.toFixed(2),
-      maximum: interestRange.maximum.toFixed(2),
       interestBasis: product.interestBasis,
       incomeAccount: accountIdentifier(interestIncome),
       accrualAccount: accountIdentifier(interestAccrual)
