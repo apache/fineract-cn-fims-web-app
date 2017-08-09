@@ -29,6 +29,8 @@ export class LoanTransactionFormComponent implements OnInit {
 
   private _transactionCreated: boolean;
 
+  chargesIncluded: boolean = true;
+
   form: FormGroup;
 
   @Input() caseInstances: FimsCase[];
