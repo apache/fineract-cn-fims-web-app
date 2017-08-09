@@ -41,6 +41,8 @@ interface MenuItem {
 })
 export class MainComponent implements OnInit, AfterViewInit {
 
+  isOpened$: Observable<boolean>;
+
   @ViewChild(MdSidenav) sidenav: MdSidenav;
 
   menuItems: MenuItem[] = [
@@ -90,6 +92,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.isLoading$ = this.httpClient.process
       .debounceTime(1000)
       .map((action: Action) => action === Action.QueryStart);
+
+    this.isOpened$ = this.media.registerQuery('gt-md');
 
     this.media.broadcast();
   }

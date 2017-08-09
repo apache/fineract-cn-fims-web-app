@@ -27,7 +27,7 @@ import {DistributeDividendFormData} from './form.component';
 })
 export class CreateDividendFormComponent implements OnInit {
 
-  private productDefinitionId$: Observable<string>;
+  productDefinitionId$: Observable<string>;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore) {}
 

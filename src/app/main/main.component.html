@@ -43,7 +43,7 @@
   <md-sidenav-container>
     <md-sidenav
       [mode]="'side'"
-      [opened]="media.registerQuery('gt-md') | async">
+      [opened]="isOpened$ | async">
       <md-toolbar>
         <div layout="column">
           <span layout="row" layout-align="start center">
