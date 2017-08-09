@@ -124,13 +124,11 @@ export class PortfolioService {
     return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinitionIdentifier}`);
   }
 
-  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean, forCustomer?: string): Observable<FimsCase[]>{
+  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean): Observable<FimsCasePage>{
     const params: URLSearchParams = buildSearchParams(fetchRequest);
-    params.append('includeClosed', includeClosed ? 'true' : 'false');
-    params.append('forCustomer', forCustomer);
 
-    //TODO remove when the api follows fetch request naming
-    params.append('page', "1");
+    params.append('includeClosed', includeClosed ? 'true' : 'false');
+    params.append('pageIndex', "1");
     params.append('size', "10");
 
     const requestOptions: RequestOptionsArgs = {
@@ -138,7 +136,7 @@ export class PortfolioService {
     };
 
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/`, requestOptions)
-      .map((caseInstances: Case[]) => mapToFimsCases(caseInstances))
+      .map((casePage: CasePage) => mapToFimsCasePage(casePage))
   }
 
   createCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {

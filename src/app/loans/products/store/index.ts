@@ -24,11 +24,8 @@ import * as fromProductCharges from './charges/charges.reducer';
 import {
   createResourceReducer,
   getResourceAll,
-  getResourceEntities,
-  getResourceIds,
   getResourceLoadedAt,
   getResourceSelected,
-  getResourceSelectedId,
   ResourceState
 } from '../../../common/store/resource.reducer';
 import {
@@ -39,7 +36,6 @@ import {
   SearchState
 } from '../../../common/store/search.reducer';
 import {createFormReducer, FormState, getFormError} from '../../../common/store/form.reducer';
-import {FimsProduct} from './model/fims-product.model';
 
 export interface State extends fromRoot.State {
   products: ResourceState;

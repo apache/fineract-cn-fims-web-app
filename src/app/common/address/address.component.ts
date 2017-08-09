@@ -42,10 +42,10 @@ export class AddressFormComponent extends FormComponent<Address> implements OnIn
     }
 
     this.form = this.formBuilder.group({
-      street: [address ? address.street : undefined, Validators.required],
-      city: [address ? address.city : undefined, Validators.required],
+      street: [address ? address.street : undefined, [Validators.required, Validators.maxLength(256)]],
+      city: [address ? address.city : undefined, [Validators.required, Validators.maxLength(256)]],
       postalCode: [address ? address.postalCode : undefined, Validators.maxLength(32)],
-      region: [address ? address.region : undefined],
+      region: [address ? address.region : undefined, Validators.maxLength(256)],
       country: [country, [Validators.required], countryExists(this.countryService)]
     });
   };

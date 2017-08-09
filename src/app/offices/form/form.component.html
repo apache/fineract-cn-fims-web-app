@@ -25,11 +25,17 @@
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Name' | translate}}" formControlName="name" tdAutoTrim/>
           <md-error *ngIf="detailForm.get('name').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="detailForm.get('name').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('name').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description" tdAutoTrim/>
+          <md-error *ngIf="detailForm.get('description').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('description').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
     </form>

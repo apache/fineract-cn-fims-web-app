@@ -43,9 +43,9 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
 
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      firstName: [formData.firstName, Validators.required],
-      middleName: [formData.middleName],
-      lastName: [formData.lastName, Validators.required],
+      firstName: [formData.firstName, [Validators.required, Validators.maxLength(256)]],
+      middleName: [formData.middleName, Validators.maxLength(256)],
+      lastName: [formData.lastName, [Validators.required, Validators.maxLength(256)]],
       dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined, Validators.required],
       member: [formData.member],
     })

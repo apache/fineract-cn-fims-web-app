@@ -16,6 +16,7 @@
 
 <fims-layout-card-over title="Teller transaction">
   <fims-loan-transaction-form
+    [transactionCreated]="transactionCreated"
     [caseInstances]="caseInstances$ | async"
     [transactionCosts]="transactionCosts$ | async"
     (onCreateTransaction)="createTransaction($event)"

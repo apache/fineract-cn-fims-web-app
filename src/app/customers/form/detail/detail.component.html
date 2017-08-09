@@ -24,12 +24,18 @@
       <md-error *ngIf="form.get('firstName').hasError('required')" translate>
         Required
       </md-error>
+      <md-error *ngIf="form.get('firstName').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('firstName').getError('maxlength')['requiredLength']} }}
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
     <md-input-container layout-margin flex>
       <input mdInput placeholder="{{'Middle name(optional)' | translate}}" formControlName="middleName"
              tdAutoTrim/>
+      <md-error *ngIf="form.get('middleName').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('middleName').getError('maxlength')['requiredLength']} }}
+      </md-error>
     </md-input-container>
   </div>
   <div layout="row">
@@ -37,6 +43,9 @@
       <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
       <md-error *ngIf="form.get('lastName').hasError('required')" translate>
         Required
+      </md-error>
+      <md-error *ngIf="form.get('lastName').hasError('maxlength')">
+        {{ 'Only characters allowed.' | translate:{ value: form.get('lastName').getError('maxlength')['requiredLength']} }}
       </md-error>
     </md-input-container>
   </div>

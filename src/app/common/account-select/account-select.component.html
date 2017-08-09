@@ -25,6 +25,6 @@
 
 <md-autocomplete #auto="mdAutocomplete">
   <md-option *ngFor="let account of accounts | async" [value]="account.identifier">
-    {{ account.identifier }}
+    {{ account.identifier }}({{account.name}})
   </md-option>
 </md-autocomplete>

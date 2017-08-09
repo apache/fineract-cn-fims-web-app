@@ -24,11 +24,17 @@
             <md-error *ngIf="charge.get('name').hasError('required')" translate>
               Required
             </md-error>
+            <md-error *ngIf="charge.get('name').hasError('maxlength')">
+              {{ 'Only characters allowed.' | translate:{ value: charge.get('name').getError('maxlength')['requiredLength']} }}
+            </md-error>
           </md-input-container>
         </div>
         <div layout="row">
           <md-input-container layout-margin flex>
             <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+            <md-error *ngIf="charge.get('description').hasError('maxlength')">
+              {{ 'Only characters allowed.' | translate:{ value: charge.get('description').getError('maxlength')['requiredLength']} }}
+            </md-error>
           </md-input-container>
         </div>
         <div layout="row">

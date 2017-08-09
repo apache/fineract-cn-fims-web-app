@@ -24,7 +24,7 @@
 </div>
 
 <md-autocomplete #auto="mdAutocomplete">
-  <md-option *ngFor="let ledger of ledgers | async" [value]="ledger.identifier">
-    {{ ledger.identifier }}
+  <md-option *ngFor="let ledger of ledgers | async" [value]="ledger.identifier" [mdTooltip]="ledger.description">
+    {{ ledger.identifier }}({{ledger.name}})
   </md-option>
 </md-autocomplete>

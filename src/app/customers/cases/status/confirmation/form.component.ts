@@ -25,6 +25,7 @@ export interface ExecuteCommandEvent {
   caseId: string;
   action: WorkflowAction;
   note: string;
+  paymentSize: number;
 }
 
 @Component({
@@ -65,7 +66,8 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
       caseId: this.fimsCase.identifier,
       productId: this.fimsCase.productIdentifier,
       note: this.formGroup.get('note').value,
-      action: this.action
+      action: this.action,
+      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0
     });
   }
 

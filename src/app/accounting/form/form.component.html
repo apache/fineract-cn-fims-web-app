@@ -30,11 +30,17 @@
         <md-input-container layout-margin flex>
           <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
           <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('name').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: form.get('name').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+          <md-error *ngIf="form.get('description').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row" layout-margin>

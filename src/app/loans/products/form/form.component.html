@@ -26,6 +26,9 @@
           <md-error *ngIf="detailForm.get('name').hasError('required')" translate>
             Required
           </md-error>
+          <md-error *ngIf="detailForm.get('name').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('name').getError('maxlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -33,6 +36,9 @@
           <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
           <md-error *ngIf="detailForm.get('description').hasError('required')" translate>
             Required
+          </md-error>
+          <md-error *ngIf="detailForm.get('description').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('description').getError('maxlength')['requiredLength']} }}
           </md-error>
         </md-input-container>
       </div>
@@ -91,7 +97,7 @@
   </td-step>
   <td-step #arrearsStep label="{{'Arrears allowance reserve account' | translate}}" [state]="arrearsAllowanceForm.valid ? 'complete' : arrearsAllowanceForm.pristine ? 'none' : 'required'">
     <form [formGroup]="arrearsAllowanceForm">
-      <fims-account-select title="{{'Arrears allowance' | translate}}" formControlName="account" [type]="'EXPENSE'">
+      <fims-account-select title="{{'Arrears allowance(Expense accounts only)' | translate}}" formControlName="account" [type]="'EXPENSE'">
         <ng-container *ngIf="!arrearsAllowanceForm.get('account').pristine && arrearsAllowanceForm.get('account').hasError('required')" translate>
           Required
         </ng-container>

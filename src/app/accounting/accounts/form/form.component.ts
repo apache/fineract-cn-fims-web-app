@@ -56,7 +56,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     this.openDetailStep();
     this.form = this.formBuilder.group({
       'identifier': [ this.account.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(34), FimsValidators.urlSafe] ],
-      'name': [ this.account.name, [Validators.required] ],
+      'name': [ this.account.name, [Validators.required, Validators.maxLength(256)] ],
       'type': [ this.account.type, [Validators.required] ],
       'ledger': [ this.account.ledger, [Validators.required] ],
       'balance': [ { value: this.account.balance, disabled: this.editMode }, [Validators.required] ],

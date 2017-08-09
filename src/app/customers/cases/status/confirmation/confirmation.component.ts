@@ -61,7 +61,8 @@ export class CaseCommandConfirmationComponent implements OnInit {
 
   executeCommand(event: ExecuteCommandEvent): void {
     const command: CaseCommand = {
-      note: event.note
+      note: event.note,
+      paymentSize: event.paymentSize
     };
 
     this.casesStore.dispatch({ type: EXECUTE_COMMAND, payload: {

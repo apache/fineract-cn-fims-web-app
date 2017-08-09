@@ -74,8 +74,8 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
     this.formGroup = this.formBuilder.group({
       identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       type: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      description: [''],
+      name: ['', [Validators.required, Validators.maxLength(256)]],
+      description: ['', Validators.maxLength(2048)],
       currencyCode: ['', [Validators.required]],
       minimumBalance: ['', [Validators.required]],
       fixedTermEnabled: [false],

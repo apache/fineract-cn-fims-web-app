@@ -86,4 +86,8 @@ export class LoanTransactionFormComponent implements OnInit {
   cancel(): void {
     this.onCancel.emit();
   }
+
+  get transactionCreated(): boolean {
+    return this._transactionCreated;
+  }
 }

@@ -84,14 +84,14 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.username$ = this.store.select(fromRoot.getUsername);
 
     this.countryService.init();
-
-    this.media.broadcast();
   }
 
   ngAfterViewInit(): void {
     this.isLoading$ = this.httpClient.process
       .debounceTime(1000)
       .map((action: Action) => action === Action.QueryStart);
+
+    this.media.broadcast();
   }
 
   getTitle(state: RouterState, parent: ActivatedRoute): string[] {

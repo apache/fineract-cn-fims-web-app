@@ -153,8 +153,8 @@ export class ProductFormComponent implements OnInit{
 
     this.detailForm = this.formBuilder.group({
       identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      name: [product.name, [Validators.required]],
-      description: [product.description, [Validators.required]],
+      name: [product.name, [Validators.required, Validators.maxLength(256)]],
+      description: [product.description, [Validators.required, Validators.maxLength(4096)]],
       currencyCode: [product.currencyCode, [Validators.required]],
       minimumBalance: [balanceRange.minimum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: [balanceRange.maximum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
