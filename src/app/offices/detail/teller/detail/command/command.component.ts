@@ -102,4 +102,8 @@ export class OfficeTellerCommandComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route })
   }
 
+  get title(): string {
+    return this.action === 'OPEN' ? 'Open teller' : 'Close teller';
+  }
+
 }
