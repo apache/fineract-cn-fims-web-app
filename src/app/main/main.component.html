@@ -47,8 +47,6 @@
       <md-toolbar>
         <div layout="column">
           <span layout="row" layout-align="start center">
-            <md-icon *ngIf="icon">{{icon}}</md-icon>
-            <md-icon *ngIf="logo" class="md-icon-logo"></md-icon>
             <span class="md-subhead" mdTooltip="{{ 'Tenant' | translate }}" mdTooltipPosition="right">{{tenant$ | async}}</span>
           </span>
         </div>
