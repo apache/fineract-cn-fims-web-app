@@ -25,6 +25,9 @@
         <md-input-container layout-margin flex>
           <input mdInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" tdAutoTrim autocomplete="new-password"/>
           <md-error *ngIf="form.get('password').hasError('required')" translate>Required</md-error>
+          <md-error *ngIf="form.get('password').hasError('minlength')">
+            {{ 'Must have at least characters.' | translate:{ value: form.get('password').getError('minlength')['requiredLength']} }}
+          </md-error>
           <md-error *ngIf="form.get('password').hasError('maxlength')">
             {{ 'Only characters allowed.' | translate:{ value: form.get('password').getError('maxlength')['requiredLength']} }}
           </md-error>

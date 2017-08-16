@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Teller} from '../../../../services/teller/domain/teller.model';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../common/validator/account-exists.validator';
@@ -51,7 +51,7 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
   prepareForm(teller: Teller): void {
     this.form = this.formBuilder.group({
       code: [teller.code, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      password: [teller.password, [Validators.required, Validators.maxLength(4096)]],
+      password: [teller.password, [Validators.required, Validators.minLength(8), Validators.maxLength(4096)]],
       cashdrawLimit: [teller.cashdrawLimit, [FimsValidators.minValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],
       vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)]

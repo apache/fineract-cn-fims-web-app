@@ -64,8 +64,7 @@ export class PasswordComponent implements OnInit, OnDestroy{
 
   private createFormGroup(): FormGroup{
     return this.formBuilder.group({
-      currentPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', Validators.required]
     }, { validator: FimsValidators.matchValues('newPassword', 'confirmNewPassword')});
   }
