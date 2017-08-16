@@ -18,7 +18,7 @@
   <td-step #detailsStep label="{{'Account details' | translate}}" [state]="">
     <form [formGroup]="form">
       <div layout="row">
-        <md-radio-group formControlName="type" [disabled]="true">
+        <md-radio-group formControlName="type">
           <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
             {{type.label}}
           </md-radio-button>

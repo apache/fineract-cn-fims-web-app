@@ -61,18 +61,13 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
   }
 
   save(): void {
-    const teller: Teller = {
+    const teller: Teller = Object.assign({}, this.teller, {
       code: this.form.get('code').value,
       password: this.form.get('password').value,
       cashdrawLimit: this.form.get('cashdrawLimit').value,
       tellerAccountIdentifier: this.form.get('tellerAccountIdentifier').value,
-      vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value,
-      state: this.teller.state,
-      createdBy: this.teller.createdBy,
-      createdOn: this.teller.createdOn,
-      lastModifiedBy: this.teller.lastModifiedBy,
-      lastModifiedOn: this.teller.lastModifiedOn
-    };
+      vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value
+    });
 
     this.onSave.emit(teller);
   }

@@ -28,8 +28,7 @@ import {FormContinueActionComponent} from '../../common/forms/form-continue-acti
 import {MdAutocompleteModule, MdInputModule} from '@angular/material';
 import {AddressFormComponent} from '../../common/address/address.component';
 import {CountryService} from '../../services/country/country.service';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Country} from '../../services/country/model/country.model';
 
 const officeTemplate: Office = {
   identifier: 'test',
@@ -42,7 +41,15 @@ const officeTemplate: Office = {
     postalCode: '12345',
     countryCode: 'CC',
     country: 'country'
-  }};
+  }
+};
+
+const country: Country = {
+  displayName: '',
+  name: officeTemplate.address.country,
+  alpha2Code: officeTemplate.address.countryCode,
+  translations:{}
+};
 
 describe('Test office form', () => {
 
@@ -64,17 +71,8 @@ describe('Test office form', () => {
         {
           // Used by address component
           provide: CountryService, useClass: class {
-            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
-              displayName: '',
-              name: officeTemplate.address.country,
-              alpha2Code: officeTemplate.address.countryCode
-            })
-          }
-        },
-        {
-          provide: Store, useClass: class {
-            dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country])
           }
         }
       ],
