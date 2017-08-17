@@ -128,5 +128,26 @@ describe('Validators', () => {
         email: true
       });
     })
+  });
+
+  describe('requiredNotEmpty', () => {
+    it('should return null when value exists', () => {
+      const result = FimsValidators.requiredNotEmpty(new FormControl('value'));
+      expect(result).toBeNull();
+    });
+
+    it('should return error when no value exists', () => {
+      const result = FimsValidators.requiredNotEmpty(new FormControl(''));
+      expect(result).toEqual({
+        required: true
+      });
+    });
+
+    it('should return error when value with only whitespaces exists', () => {
+      const result = FimsValidators.requiredNotEmpty(new FormControl(' '));
+      expect(result).toEqual({
+        required: true
+      });
+    });
   })
 });

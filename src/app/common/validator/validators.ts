@@ -19,6 +19,14 @@ import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angula
 const EMAIL_REGEXP =
   /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 
+export function isEmptyInputValue(value: any): boolean {
+  return value == null || value.length === 0;
+}
+
+export function isString(value: any): boolean {
+  return typeof value === 'string';
+}
+
 export class FimsValidators {
 
   static urlSafe(control: AbstractControl): ValidationErrors | null {
@@ -41,7 +49,7 @@ export class FimsValidators {
 
   static scale(scale: number): ValidatorFn {
     return (c: AbstractControl): ValidationErrors | null => {
-      if (c.value != null) {
+      if (!isEmptyInputValue(c.value)) {
         const stringValue = String(c.value);
 
         const valueChunks = stringValue.split('.');
@@ -64,7 +72,7 @@ export class FimsValidators {
 
   static maxScale(scale: number): ValidatorFn {
     return (c: AbstractControl): ValidationErrors | null => {
-      if (c.value != null) {
+      if (!isEmptyInputValue(c.value)) {
         const stringValue = String(c.value);
         const valueChunks = stringValue.split('.');
 
@@ -80,7 +88,7 @@ export class FimsValidators {
 
   static minValue(minValue: number): ValidatorFn {
     return (c: AbstractControl): ValidationErrors | null => {
-      if (c.value != null && (c.value < minValue)) {
+      if (!isEmptyInputValue(c.value) && (c.value < minValue)) {
         return {
           minValue: {
             valid: false,
@@ -94,7 +102,7 @@ export class FimsValidators {
 
   static maxValue(maxValue: number): ValidatorFn {
     return (c: AbstractControl): ValidationErrors | null => {
-      if (c.value != null && (c.value > maxValue)) {
+      if (!isEmptyInputValue(c.value) != null && (c.value > maxValue)) {
         return {
           maxValue: {
             valid: false,
@@ -140,8 +148,8 @@ export class FimsValidators {
 
   static matchRange(firstValue: string, secondValue: string) {
     return (group: FormGroup): ValidationErrors | null => {
-      const val1 = group.controls[firstValue];
-      const val2 = group.controls[secondValue];
+      const val1: AbstractControl = group.controls[firstValue];
+      const val2: AbstractControl = group.controls[secondValue];
 
       const dateStart: number = Date.parse(val1.value);
       const dateEnd: number = Date.parse(val2.value);
@@ -157,7 +165,7 @@ export class FimsValidators {
   }
 
   static email(control: AbstractControl): ValidationErrors | null {
-    if(control.value == null || control.value.length === 0) {
+    if(isEmptyInputValue(control.value)) {
       return null;
     }
 
@@ -166,8 +174,8 @@ export class FimsValidators {
 
   static maxFileSize(maxSizeInKB: number) {
     return (c: AbstractControl): ValidationErrors | null => {
-      const bytes = maxSizeInKB * 1024;
-      if (c.value != null && (c.value.size > bytes)) {
+      const bytes: number = maxSizeInKB * 1024;
+      if (!isEmptyInputValue(c.value) && (c.value.size > bytes)) {
         return {
           maxFileSize: {
             value: maxSizeInKB
@@ -176,5 +184,9 @@ export class FimsValidators {
       }
       return null;
     }
+  }
+
+  static requiredNotEmpty(control: AbstractControl): ValidationErrors | null {
+    return isEmptyInputValue(control.value) || (isString(control.value) && control.value.trim() === "") ? {'required': true} : null;
   }
 }
