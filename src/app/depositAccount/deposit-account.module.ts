@@ -39,7 +39,6 @@ import {DepositProductCreateComponent} from './form/create.component';
 import {DepositProductFormComponent} from './form/form.component';
 import {DepositProductChargesFormComponent} from './form/charges/charges.component';
 import {DepositProductDetailComponent} from './detail/deposit-product.detail.component';
-import {DepositProductStatusComponent} from './detail/status/status.component';
 import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
 import {DepositProductEditComponent} from './form/edit.component';
 import {DepositProductDividendsComponent} from './detail/dividends/dividends.component';
@@ -87,7 +86,6 @@ import {CreateDividendFormComponent} from './detail/dividends/form/create.compon
     DepositProductChargesFormComponent,
     DepositProductIndexComponent,
     DepositProductDetailComponent,
-    DepositProductStatusComponent,
     DepositProductDividendsComponent,
     CreateDividendFormComponent,
     DividendFormComponent

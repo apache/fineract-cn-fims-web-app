@@ -24,7 +24,7 @@ import * as fromRoot from '../../store';
 import {TableData} from '../../common/data-table/data-table.component';
 import {TdDialogService} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
-import {DELETE} from '../store/product.actions';
+import {DELETE, EXECUTE_COMMAND} from '../store/product.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
@@ -113,5 +113,23 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
       permission.id === 'deposit_definitions' &&
       permission.accessLevel === 'CHANGE'
     ).length > 0
+  }
+
+  enableProduct(): void {
+    this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
+      definitionId: this.definition.identifier,
+      command: {
+        action: 'ACTIVATE'
+      }
+    }})
+  }
+
+  disableProduct(): void {
+    this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
+      definitionId: this.definition.identifier,
+      command: {
+        action: 'DEACTIVATE'
+      }
+    }})
   }
 }
