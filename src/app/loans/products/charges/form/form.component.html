@@ -15,7 +15,7 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
     <form [formGroup]="detailForm">
       <div layout="row">
         <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
@@ -23,11 +23,17 @@
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-error *ngIf="detailForm.get('name').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>
           <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          <md-error *ngIf="detailForm.get('description').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
       <div layout="row">
@@ -36,20 +42,29 @@
             {{basis.label}}
           </md-radio-button>
         </md-radio-group>
+        <md-select formControlName="proportionalTo" layout-margin placeholder="{{ 'Proportional to' | translate }}" flex="15">
+          <md-option *ngFor="let proportionalTo of proportionalToOptions" [value]="proportionalTo.designator">
+            {{proportionalTo.label}}
+          </md-option>
+        </md-select>
       </div>
       <div layout="row">
         <md-input-container>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
+          <md-error *ngIf="detailForm.get('amount').hasError('required')" translate>
+            Required
+          </md-error>
         </md-input-container>
       </div>
-
     </form>
-
     <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary">{{'SAVE CHARGE' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary">{{'UPDATE CHARGE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-final-action
+        [resourceName]="'CHARGE'"
+        [editMode]="editMode"
+        [disabled]="!detailForm.valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
     </ng-template>
   </td-step>
 </td-steps>

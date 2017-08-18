@@ -17,7 +17,9 @@
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentDialogsModule,
+  CovalentCommonModule,
+  CovalentDataTableModule,
+  CovalentDialogsModule,
   CovalentPagingModule
 } from '@covalent/core';
 import {LayoutCardOverComponent, LayoutCardOverComponentTags} from './layout-card-over/layout-card-over.component';
@@ -43,8 +45,10 @@ import {CommonModule} from '@angular/common';
 import {
   MdAutocompleteModule,
   MdButtonModule,
-  MdCardModule, MdIconModule,
-  MdInputModule, MdListModule,
+  MdCardModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
   MdOptionModule,
   MdSnackBarModule,
   MdToolbarModule,

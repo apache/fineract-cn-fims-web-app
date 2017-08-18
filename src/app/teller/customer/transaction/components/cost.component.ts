@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 
 @Component({

@@ -15,13 +15,12 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {ChartOfAccountEntry} from '../../../../services/accounting/domain/chart-of-account-entry.model';
 
 @Injectable()
 export class LedgerApiEffects {

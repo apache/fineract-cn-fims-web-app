@@ -40,13 +40,25 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
   MdAutocompleteModule,
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule,
+  MdButtonModule,
+  MdCardModule,
+  MdCheckboxModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdOptionModule,
   MdRadioModule,
-  MdSelectModule, MdTabsModule,
-  MdToolbarModule, MdTooltipModule
+  MdSelectModule,
+  MdTabsModule,
+  MdToolbarModule,
+  MdTooltipModule
 } from '@angular/material';
 import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentFileModule, CovalentMessageModule, CovalentNotificationsModule,
+  CovalentCommonModule,
+  CovalentDataTableModule,
+  CovalentFileModule,
+  CovalentMessageModule,
+  CovalentNotificationsModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {CaseStatusComponent} from './status/status.component';

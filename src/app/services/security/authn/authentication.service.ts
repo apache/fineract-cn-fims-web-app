@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
-import {Http, RequestOptionsArgs, Headers, Response} from '@angular/http';
+import {Headers, Http, RequestOptionsArgs, Response} from '@angular/http';
 import {Error} from '../../domain/error.model';
 import {Authentication} from '../../identity/domain/authentication.model';
 import {Permission} from '../../identity/domain/permission.model';

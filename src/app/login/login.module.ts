@@ -18,10 +18,13 @@ import {NgModule} from '@angular/core';
 import {LoginComponent} from './login.component';
 import {LoginRoutes} from './login.routing';
 import {RouterModule} from '@angular/router';
-import {FimsSharedModule} from '../common/common.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdSelectModule,
+  MdButtonModule,
+  MdCardModule,
+  MdIconModule,
+  MdInputModule,
+  MdSelectModule,
   MdTooltipModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';

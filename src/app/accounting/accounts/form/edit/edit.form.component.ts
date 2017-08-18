@@ -15,7 +15,7 @@
  */
 import {Account} from '../../../../services/accounting/domain/account.model';
 import {AccountFormComponent} from '../form.component';
-import {ViewChild, OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import * as fromAccounting from '../../../store';

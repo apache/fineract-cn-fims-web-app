@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, Input, Output, EventEmitter, Directive} from '@angular/core';
+import {Component, Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Directive({selector: 'fims-layout-card-over-header-menu'})
 export class LayoutCardOverComponentTags{ }

@@ -28,10 +28,12 @@ import {TellerApiEffects} from './store/effects/service.effects';
 import {
   MdAutocompleteModule,
   MdButtonModule,
-  MdCardModule, MdCheckboxModule,
+  MdCardModule,
+  MdCheckboxModule,
   MdIconModule,
   MdInputModule,
-  MdListModule, MdSelectModule,
+  MdListModule,
+  MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Close teller' | translate}}">
+<fims-layout-card-over title="{{title | translate}}">
   <fims-teller-open-command *ngIf="action === 'OPEN'" (onOpen)="onOpen($event)" (onCancel)="onCancel()"></fims-teller-open-command>
   <fims-teller-close-command *ngIf="action === 'CLOSE'" (onClose)="onClose($event)" (onCancel)="onCancel()"></fims-teller-close-command>
 </fims-layout-card-over>

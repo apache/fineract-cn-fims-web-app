@@ -17,7 +17,7 @@
 import {FormComponent} from '../../../../common/forms/form.component';
 import {Component, Input} from '@angular/core';
 import {Moratorium} from '../../../../services/portfolio/domain/individuallending/moratorium.model';
-import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 
 @Component({

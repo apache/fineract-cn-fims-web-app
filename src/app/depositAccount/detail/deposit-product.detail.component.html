@@ -21,23 +21,16 @@
   <td-message *ngIf="!definition.active" label="{{'Product not enabled' | translate }}"
               sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}"
               color="warn" icon="error">
-    <button td-message-actions md-button (click)="goToTasks()"
-            *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>GO TO TASKS
-    </button>
+    <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
   <td-message *ngIf="definition.active" label="{{'Product enabled' | translate }}"
               sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
+    <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
   </td-message>
   <fims-two-column-layout>
-    <md-nav-list left>
+    <md-nav-list left *ngIf="canDistributeDividends$ | async">
       <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['./tasks']"
-         *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}">
-        <md-icon md-list-avatar>playlist_add_check</md-icon>
-        <h3 md-line translate>Tasks</h3>
-        <p md-line translate>Change the status of this deposit product</p>
-      </a>
-      <a md-list-item [routerLink]="['./dividends']" *ngIf="canDistributeDividends$ | async">
+      <a md-list-item [routerLink]="['./dividends']">
         <md-icon md-list-avatar>zoom_out_map</md-icon>
         <h3 md-line translate>Dividends</h3>
         <p md-line translate>View and distribute dividends</p>

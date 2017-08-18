@@ -46,7 +46,6 @@ import {LedgerSearchApiEffects} from './store/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExistsGuardService} from './common/guards/exists-guard';
 import {CountryService} from './services/country/country.service';
-import {CountrySearchApiEffects} from './store/country/service.effects';
 import {ImageService} from './services/image/image.service';
 import {DepositAccountService} from './services/depositAccount/deposit-account.service';
 import {CurrencyService} from './services/currency/currency.service';
@@ -87,7 +86,6 @@ export function HttpLoaderFactory(http: Http){
     EffectsModule.run(SecurityNotificationEffects),
 
     EffectsModule.run(OfficeSearchApiEffects),
-    EffectsModule.run(CountrySearchApiEffects),
     EffectsModule.run(EmployeeSearchApiEffects),
     EffectsModule.run(CustomerSearchApiEffects),
     EffectsModule.run(AccountSearchApiEffects),

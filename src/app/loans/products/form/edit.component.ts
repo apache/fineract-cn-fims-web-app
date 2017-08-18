@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../store/index';
-import {RESET_FORM, SelectAction, UPDATE} from '../store/product.actions';
+import {RESET_FORM, UPDATE} from '../store/product.actions';
 import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {FimsProduct} from '../store/model/fims-product.model';

@@ -18,7 +18,13 @@ import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {Type} from '../../../../services/reporting/domain/type.model';
 import {
   AbstractControl,
-  ControlValueAccessor, FormBuilder, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator,
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
   Validators
 } from '@angular/forms';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';

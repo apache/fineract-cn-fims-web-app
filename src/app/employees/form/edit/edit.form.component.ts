@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {EmployeeSaveEvent, EmployeeFormComponent, EmployeeFormData} from '../form.component';
-import {mapEmployee, mapContactDetails} from '../form.mapper';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EmployeeFormComponent, EmployeeFormData, EmployeeSaveEvent} from '../form.component';
+import {mapContactDetails, mapEmployee} from '../form.mapper';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {User} from '../../../services/identity/domain/user.model';
 import {UPDATE} from '../../store/employee.actions';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {EmployeesStore, getSelectedEmployee} from '../../store/index';
 
 @Component({

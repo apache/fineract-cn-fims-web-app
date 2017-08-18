@@ -19,6 +19,7 @@
                                   (onSave)="onSave($event)"
                                   (onCancel)="onCancel()"
                                   [currencies]="currencies$ | async"
-                                  [product]="product">
+                                  [product]="product"
+                                  [error]="error$ | async">
   </fims-product-form-component>
 </fims-layout-card-over>

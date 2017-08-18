@@ -63,7 +63,8 @@ import {
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
-  MdListModule, MdOptionModule,
+  MdListModule,
+  MdOptionModule,
   MdRadioModule,
   MdToolbarModule
 } from '@angular/material';

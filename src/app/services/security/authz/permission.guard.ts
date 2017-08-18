@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';

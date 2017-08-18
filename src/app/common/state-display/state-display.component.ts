@@ -15,6 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
+
 @Component({
   selector: 'fims-state-display',
   templateUrl: 'state-display.component.html'

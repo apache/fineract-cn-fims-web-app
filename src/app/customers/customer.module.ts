@@ -48,7 +48,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdCheckboxModule,
+  MdButtonModule,
+  MdCheckboxModule,
   MdIconModule,
   MdInputModule,
   MdListModule,

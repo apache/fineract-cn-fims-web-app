@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
@@ -22,7 +22,7 @@ import {TdDialogService} from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as fromAccounting from '../store';
 import * as fromRoot from '../../store';
-import {SelectAction, DELETE} from '../store/ledger/ledger.actions';
+import {DELETE} from '../store/ledger/ledger.actions';
 import {AccountingStore} from '../store/index';
 import {SEARCH_BY_LEDGER} from '../../store/account/account.actions';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';

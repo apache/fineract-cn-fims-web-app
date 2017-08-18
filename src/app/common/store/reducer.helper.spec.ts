@@ -1,4 +1,5 @@
 import {idsToHashWithCurrentTimestamp, resourcesToHash} from './reducer.helper';
+
 /**
  * Copyright 2017 The Mifos Initiative.
  *

@@ -15,7 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Charge} from '../../../services/depositAccount/domain/definition/charge.model';
 import {FormComponent} from '../../../common/forms/form.component';
 import {Action} from '../../../services/depositAccount/domain/definition/action.model';

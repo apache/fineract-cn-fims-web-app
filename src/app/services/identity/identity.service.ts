@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Error} from '../domain/error.model';
 import 'rxjs/add/observable/throw';
@@ -27,7 +27,6 @@ import {Role} from './domain/role.model';
 import {RoleIdentifier} from './domain/role-identifier.model';
 import {User} from './domain/user.model';
 import {PermittableGroup} from '../anubis/permittable-group.model';
-import {Permission} from './domain/permission.model';
 
 @Injectable()
 export class IdentityService {

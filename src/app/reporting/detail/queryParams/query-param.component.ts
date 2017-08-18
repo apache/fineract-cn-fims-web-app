@@ -15,8 +15,15 @@
  */
 
 import {
-  Component, ComponentFactoryResolver, ComponentRef, Directive, forwardRef, Input, OnInit,
-  ViewChild, ViewContainerRef
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  forwardRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import {Operator} from '../../../services/reporting/domain/query-parameter.model';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';

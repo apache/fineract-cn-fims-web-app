@@ -15,12 +15,11 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
 import {Router} from '@angular/router';
-import {CreateOfficeSuccessAction} from '../office.actions';
 
 @Injectable()
 export class OfficeRouteEffects {

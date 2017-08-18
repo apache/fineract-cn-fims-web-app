@@ -20,8 +20,11 @@ import {type} from '../../../../store/util';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Task] Load All');

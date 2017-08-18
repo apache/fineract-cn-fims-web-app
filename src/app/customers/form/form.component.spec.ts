@@ -37,6 +37,7 @@ import {MdAutocompleteModule, MdCheckboxModule, MdIconModule, MdInputModule, MdR
 import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
 import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {CountryService} from '../../services/country/country.service';
+import {Country} from '../../services/country/model/country.model';
 
 const customerTemplate: Customer = {
   identifier: 'test',
@@ -78,6 +79,13 @@ const customerTemplate: Customer = {
   customValues: []
 };
 
+const country: Country = {
+  displayName: '',
+  name: customerTemplate.address.country,
+  alpha2Code: customerTemplate.address.countryCode,
+  translations: {}
+};
+
 describe('Test customer form', () => {
 
   let fixture: ComponentFixture<TestComponent>;
@@ -115,11 +123,8 @@ describe('Test customer form', () => {
         {
           // Used by address component
           provide: CountryService, useClass: class {
-            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
-              displayName: '',
-              name: customerTemplate.address.country,
-              alpha2Code: customerTemplate.address.countryCode
-            })
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country])
           }
         },
         {

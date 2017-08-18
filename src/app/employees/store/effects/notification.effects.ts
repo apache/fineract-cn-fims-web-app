@@ -15,11 +15,11 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as employeeActions from '../employee.actions';
-import {NotificationType, NotificationService} from '../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class EmployeeNotificationEffects {

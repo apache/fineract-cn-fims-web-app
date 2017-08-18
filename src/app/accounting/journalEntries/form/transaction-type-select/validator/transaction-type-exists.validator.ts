@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {AsyncValidatorFn, AbstractControl} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';

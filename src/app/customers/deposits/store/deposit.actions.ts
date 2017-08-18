@@ -19,8 +19,10 @@ import {FetchRequest} from '../../../services/domain/paging/fetch-request.model'
 import {RoutePayload} from '../../../common/store/route-payload';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../../common/store/search.reducer';

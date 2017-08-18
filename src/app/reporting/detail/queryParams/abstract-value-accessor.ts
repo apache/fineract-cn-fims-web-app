@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ControlValueAccessor } from '@angular/forms';
+import {ControlValueAccessor} from '@angular/forms';
 
 const noop: any = () => {
   // empty method

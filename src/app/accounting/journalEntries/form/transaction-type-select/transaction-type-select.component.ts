@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, Input, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';

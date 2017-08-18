@@ -16,9 +16,13 @@
 
 import {reducer, State} from './ledgers.reducer';
 import {
-  CreateLedgerSuccessAction, CreateSubLedgerPayload, CreateSubLedgerSuccessAction, DeleteLedgerSuccessAction,
+  CreateLedgerSuccessAction,
+  CreateSubLedgerPayload,
+  CreateSubLedgerSuccessAction,
+  DeleteLedgerSuccessAction,
   LedgerRoutePayload,
-  LoadAllTopLevelComplete, UpdateLedgerSuccessAction
+  LoadAllTopLevelComplete,
+  UpdateLedgerSuccessAction
 } from './ledger.actions';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
 

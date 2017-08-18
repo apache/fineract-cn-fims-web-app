@@ -16,17 +16,21 @@
 
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {CustomerService} from '../../services/customer/customer.service';
+import {isString} from './validators';
+
+const invalid = Observable.of({
+  invalidCustomer: true
+});
 
 export function customerExists(customerService: CustomerService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
+    if(isString(control.value) && control.value.trim().length === 0) return invalid;
+
     return customerService.getCustomer(control.value, true)
       .map(customer => null)
-      .catch(() => Observable.of({
-        invalidCustomer: true
-      }));
+      .catch(() => invalid);
   }
 }

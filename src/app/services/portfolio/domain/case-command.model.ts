@@ -1,5 +1,5 @@
 import {AccountAssignment} from './account-assignment.model';
-import {CostComponent} from './individuallending/cost-component.model';
+
 /**
  * Copyright 2017 The Mifos Initiative.
  *

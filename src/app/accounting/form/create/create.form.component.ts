@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {LedgerFormComponent} from '../form.component';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Error} from '../../../services/domain/error.model';
 import * as fromAccounting from '../../store';
 import {Subscription} from 'rxjs';
-import {CREATE, CREATE_SUB_LEDGER, RESET_FORM, SelectAction} from '../../store/ledger/ledger.actions';
+import {CREATE, CREATE_SUB_LEDGER, RESET_FORM} from '../../store/ledger/ledger.actions';
 import {AccountingStore} from '../../store/index';
 
 @Component({

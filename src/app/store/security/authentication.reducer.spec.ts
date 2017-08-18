@@ -16,10 +16,7 @@
 
 import {mockAuthentication} from './testing/authentication.mock';
 import {reducer} from './authentication.reducer';
-import {
-  ChangePasswordSuccessAction, LoginSuccessAction, LoginSuccessPayload,
-  RefreshAccessTokenSuccessAction
-} from './security.actions';
+import {LoginSuccessAction, LoginSuccessPayload, RefreshAccessTokenSuccessAction} from './security.actions';
 import {Authentication} from '../../services/identity/domain/authentication.model';
 
 describe('Authentication Reducer', () => {

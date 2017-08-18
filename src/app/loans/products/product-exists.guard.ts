@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromProducts from './store';
 import {Observable} from 'rxjs';
@@ -24,7 +24,6 @@ import {PortfolioStore} from './store/index';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {mapToFimsProduct} from './store/model/fims-product.mapper';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
-import {Product} from '../../services/portfolio/domain/product.model';
 
 @Injectable()
 export class ProductExistsGuard implements CanActivate {
@@ -40,16 +39,8 @@ export class ProductExistsGuard implements CanActivate {
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
-  private mapProductEnabled(product: Product) : Observable<Product> {
-    return this.portfolioService.getProductEnabled(product.identifier)
-      .map(enabled => (Object.assign({}, product, {
-        enabled: enabled
-      })))
-  }
-
   hasProductInApi(id: string): Observable<boolean> {
     const getProduct = this.portfolioService.getProduct(id)
-      .mergeMap(product => this.mapProductEnabled(product))
       .map(productEntity => new LoadAction({
         resource: mapToFimsProduct(productEntity)
       }))

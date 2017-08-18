@@ -20,11 +20,16 @@ import {SecurityApiEffects} from './service.effects';
 import {Observable} from 'rxjs';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {AuthenticationService} from '../../../services/security/authn/authentication.service';
-import {Authentication} from '../../../services/identity/domain/authentication.model';
 import {
-  ChangePasswordAction, ChangePasswordSuccessAction,
-  LoginAction, LoginSuccessAction, LogoutAction, LogoutSuccessAction, PermissionUpdateSuccessAction,
-  RefreshAccessTokenAction, RefreshAccessTokenStartTimerAction,
+  ChangePasswordAction,
+  ChangePasswordSuccessAction,
+  LoginAction,
+  LoginSuccessAction,
+  LogoutAction,
+  LogoutSuccessAction,
+  PermissionUpdateSuccessAction,
+  RefreshAccessTokenAction,
+  RefreshAccessTokenStartTimerAction,
   RefreshAccessTokenSuccessAction,
   RefreshTokenStartTimerAction
 } from '../security.actions';

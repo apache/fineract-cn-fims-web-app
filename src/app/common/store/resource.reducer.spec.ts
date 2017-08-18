@@ -15,7 +15,11 @@
  */
 
 import {
-  createResourceReducer, CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload, ResourceState,
+  createResourceReducer,
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  ResourceState,
   UpdateResourceSuccessPayload
 } from './resource.reducer';
 import {Action} from '@ngrx/store';

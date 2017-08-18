@@ -22,7 +22,6 @@ import {AccountAssignment} from '../../../services/portfolio/domain/account-assi
 import {AccountDesignators} from '../../../services/portfolio/domain/individuallending/account-designators.model';
 import {FeeFormData, ProductFeeFormComponent} from './fees/fee.component';
 import {ProductParameters} from '../../../services/portfolio/domain/individuallending/product-parameters.model';
-import {FimsValidators} from '../../../common/validator/validators';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {FimsProduct} from '../store/model/fims-product.model';
 import {accountExists} from '../../../common/validator/account-exists.validator';
@@ -31,9 +30,13 @@ import {temporalOptionList} from '../../../common/domain/temporal.domain';
 import {Currency} from '../../../services/currency/domain/currency.model';
 import {
   accountIdentifier,
-  createAccountAssignment, createLedgerAssignment,
-  findAccountDesignator, ledgerIdentifier
+  createAccountAssignment,
+  createLedgerAssignment,
+  findAccountDesignator,
+  ledgerIdentifier
 } from '../../../common/util/account-assignments';
+import {DetailFormData, ProductDetailFormComponent} from './detail/detail.component';
+import {Error} from '../../../services/domain/error.model';
 
 @Component({
   selector: 'fims-product-form-component',
@@ -41,9 +44,9 @@ import {
 })
 export class ProductFormComponent implements OnInit{
 
-  temporalOptions = temporalOptionList;
+  private _error: Error;
 
-  detailForm: FormGroup;
+  temporalOptions = temporalOptionList;
 
   arrearsAllowanceForm: FormGroup;
 
@@ -61,8 +64,16 @@ export class ProductFormComponent implements OnInit{
 
   @Input('currencies') currencies: Currency[];
 
+  @Input('error') set error(error: Error) {
+    this._error = error;
+    this.step.open();
+  };
+
   @Output('onSave') onSave = new EventEmitter<FimsProduct>();
   @Output('onCancel') onCancel = new EventEmitter<void>();
+
+  @ViewChild('detailForm') detailForm: ProductDetailFormComponent;
+  detailFormData: DetailFormData;
 
   @ViewChild('settingsForm') settingsForm: ProductSettingsFormComponent;
   settingsFormData: SettingsFormData;
@@ -93,24 +104,26 @@ export class ProductFormComponent implements OnInit{
       moratoriums: []
     };
 
-    const currencyCode: string = this.detailForm.get('currencyCode').value;
-
-    const currency = this.currencies.find(currency => currency.code === currencyCode);
+    const currency = this.currencies.find(currency => currency.code === this.detailForm.formData.currencyCode);
 
     const product: FimsProduct = {
-      identifier: this.detailForm.get('identifier').value,
-      name: this.detailForm.get('name').value,
-      description: this.detailForm.get('description').value,
+      identifier: this.detailForm.formData.identifier,
+      name: this.detailForm.formData.name,
+      description: this.detailForm.formData.description,
       minorCurrencyUnitDigits: currency.digits,
       currencyCode: currency.code,
       interestBasis: this.interestForm.formData.interestBasis,
+      interestRange: {
+        minimum: parseFloat(this.interestForm.formData.minimum),
+        maximum: parseFloat(this.interestForm.formData.maximum),
+      },
       termRange: {
-        maximum: this.detailForm.get('term').value,
-        temporalUnit: this.detailForm.get('temporalUnit').value
+        maximum: this.detailForm.formData.term,
+        temporalUnit: this.detailForm.formData.temporalUnit
       },
       balanceRange: {
-        minimum: parseFloat(this.detailForm.get('minimumBalance').value),
-        maximum: parseFloat(this.detailForm.get('maximumBalance').value)
+        minimum: parseFloat(this.detailForm.formData.minimumBalance),
+        maximum: parseFloat(this.detailForm.formData.maximumBalance)
       },
       parameters: parameters,
       patternPackage: 'io.mifos.individuallending.api.v1',
@@ -148,19 +161,16 @@ export class ProductFormComponent implements OnInit{
   }
 
   prepareDetailForm(product: FimsProduct): void {
-    const balanceRange = product.balanceRange;
-    const termRange = product.termRange;
-
-    this.detailForm = this.formBuilder.group({
-      identifier: [product.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      name: [product.name, [Validators.required, Validators.maxLength(256)]],
-      description: [product.description, [Validators.required, Validators.maxLength(4096)]],
-      currencyCode: [product.currencyCode, [Validators.required]],
-      minimumBalance: [balanceRange.minimum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
-      maximumBalance: [balanceRange.maximum.toFixed(2), [Validators.required, FimsValidators.minValue(0)]],
-      term: [termRange ? termRange.maximum : undefined, [ Validators.required, FimsValidators.minValue(0) ]],
-      temporalUnit: [termRange ? termRange.temporalUnit : undefined, Validators.required]
-    }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
+    this.detailFormData = {
+      identifier: product.identifier,
+      name: product.name,
+      description: product.description,
+      currencyCode: product.currencyCode,
+      minimumBalance: product.balanceRange.minimum.toFixed(2),
+      maximumBalance: product.balanceRange.maximum.toFixed(2),
+      term: product.termRange.maximum,
+      temporalUnit: product.termRange.temporalUnit
+    };
   }
 
   prepareSettingsForm(product: FimsProduct) {
@@ -180,8 +190,11 @@ export class ProductFormComponent implements OnInit{
   private prepareInterestForm(product: FimsProduct) {
     const interestIncome = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_INCOME);
     const interestAccrual = findAccountDesignator(product.accountAssignments, AccountDesignators.INTEREST_ACCRUAL);
+    const interestRange = product.interestRange;
 
     this.interestFormData = {
+      minimum: interestRange.minimum.toFixed(2),
+      maximum: interestRange.maximum.toFixed(2),
       interestBasis: product.interestBasis,
       incomeAccount: accountIdentifier(interestIncome),
       accrualAccount: accountIdentifier(interestAccrual)
@@ -209,6 +222,10 @@ export class ProductFormComponent implements OnInit{
     this.arrearsAllowanceForm = this.formBuilder.group({
       account: [accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });
+  }
+
+  get error(): Error {
+    return this._error;
   }
 
 }

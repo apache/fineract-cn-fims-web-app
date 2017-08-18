@@ -29,13 +29,10 @@
  * limitations under the License.
  */
 
-import {Component, Input, forwardRef, OnInit, OnDestroy} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable, Subscription} from 'rxjs';
-import {AccountingService} from '../../services/accounting/accounting.service';
-import {Account} from '../../services/accounting/domain/account.model';
-import {AccountPage} from '../../services/accounting/domain/account-page.model';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';

@@ -21,7 +21,7 @@ import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
-import {mapToFimsProduct, mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
+import {mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 @Injectable()

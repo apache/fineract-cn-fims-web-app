@@ -21,8 +21,11 @@ import {RoutePayload} from '../../../common/store/route-payload';
 import {FimsProduct} from './model/fims-product.model';
 import {SearchResult} from '../../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {AccountAssignment} from '../../../services/portfolio/domain/account-assignment.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';

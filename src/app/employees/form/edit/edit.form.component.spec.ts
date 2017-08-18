@@ -23,7 +23,6 @@ import {EmployeeFormComponent} from '../form.component';
 import {SelectListComponent} from '../../../common/select-list/select-list.component';
 import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LayoutCardOverComponent} from '../../../common/layout-card-over/layout-card-over.component';
 import {User} from '../../../services/identity/domain/user.model';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {Observable} from 'rxjs';

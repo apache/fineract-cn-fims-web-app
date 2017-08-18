@@ -15,6 +15,7 @@
  */
 
 import {Field} from './field.model';
+
 export interface Catalog{
   identifier: string;
   name: string;

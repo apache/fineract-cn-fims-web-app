@@ -17,16 +17,20 @@
 import {OfficeService} from '../../services/office/office.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
+import {isString} from './validators';
+
+const invalid = Observable.of({
+  invalidEmployee: true
+});
 
 export function employeeExists(officeService: OfficeService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
 
+    if(isString(control.value) && control.value.trim().length === 0) return invalid;
+
     return officeService.getEmployee(control.value, true)
       .map(employee => null)
-      .catch(() => Observable.of({
-        invalidEmployee: true
-      }));
+      .catch(() => invalid);
   }
 }

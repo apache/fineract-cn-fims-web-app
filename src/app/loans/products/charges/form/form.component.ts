@@ -14,72 +14,85 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, Input, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
-import {Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChargeMethod} from '../../../../services/portfolio/domain/charge-method.model';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
-import {TdStepComponent} from '@covalent/core';
-import {ActionOption, ActionOptions} from '../../../../common/domain/action-option.model';
 import {FimsValidators} from '../../../../common/validator/validators';
+import {ChargeProportionalDesignators} from '../../../../services/portfolio/domain/individuallending/charge-proportional-designators.model';
 
 interface ChargeMethodOption {
   type: ChargeMethod,
   label: string
 }
 
-const ChargeActionToProportionalMap = {
-  "OPEN": "{maximumbalance}",
-  "ACCEPT_PAYMENT": "{runningbalance}",
-  "MARK_LATE": "repayment",
-  "DISBURSE": "{maximumbalance}",
-  "APPROVE": "{maximumbalance}"
-};
-
 @Component({
   selector: 'fims-product-charge-form-component',
   templateUrl: './form.component.html'
 })
-export class ProductChargeFormComponent implements OnInit {
-
-  private _charge: ChargeDefinition;
+export class ProductChargeFormComponent implements OnChanges {
 
   chargeMethodOptions: ChargeMethodOption[] = [
     { type: 'FIXED', label: 'Fixed'},
     { type: 'PROPORTIONAL', label: 'Proportional'}
   ];
 
+  proportionalToOptions: any[] = [
+    { label: 'Maximum balance', designator: ChargeProportionalDesignators.MAXIMUM_BALANCE_DESIGNATOR },
+    { label: 'Repayment', designator: ChargeProportionalDesignators.REPAYMENT_DESIGNATOR },
+    { label: 'Running balance', designator: ChargeProportionalDesignators.RUNNING_BALANCE_DESIGNATOR }
+  ];
+
   temporalOptions = temporalOptionList;
 
   detailForm: FormGroup;
 
-  @ViewChild('detailsStep') detailsStep: TdStepComponent;
-
   @Input() editMode: boolean;
 
-  @Input() set charge(charge: ChargeDefinition){
-    this._charge = charge;
-    this.prepareDetailForm(charge);
-  };
+  @Input() charge: ChargeDefinition;
 
   @Output('onSave') onSave = new EventEmitter<ChargeDefinition>();
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+    this.detailForm = this.formBuilder.group({
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      chargeMethod: ['', [Validators.required]],
+      proportionalTo: ['', [Validators.required]],
+      amount: [0, [Validators.required]]
+    });
 
-  ngOnInit(): void {
-    this.detailsStep.open();
+    this.detailForm.get('chargeMethod').valueChanges
+      .subscribe(value => this.toggleChargeMethod(value))
   }
 
-  private prepareDetailForm(charge: ChargeDefinition) {
-    this.detailForm = this.formBuilder.group({
-      identifier: [charge.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      name: [charge.name, [Validators.required]],
-      description: [charge.description, [Validators.required]],
-      chargeMethod: [charge.chargeMethod, [Validators.required]],
-      amount: [charge.amount, [Validators.required]]
+  ngOnChanges(changes: SimpleChanges): void {
+    this.detailForm.reset({
+      identifier: this.charge.identifier,
+      name: this.charge.name,
+      description: this.charge.description,
+      chargeMethod: this.charge.chargeMethod,
+      proportionalTo: this.charge.proportionalTo,
+      amount: this.charge.amount
     });
+  }
+
+  private toggleChargeMethod(chargeMethod: ChargeMethod): void {
+    const proportionalTo = this.detailForm.get('proportionalTo');
+
+    if(chargeMethod === 'PROPORTIONAL') {
+      proportionalTo.enable();
+      proportionalTo.setValidators(Validators.required);
+      proportionalTo.updateValueAndValidity();
+    } else {
+      proportionalTo.disable();
+      proportionalTo.clearValidators();
+      proportionalTo.updateValueAndValidity();
+    }
   }
 
   save(): void {
@@ -91,7 +104,7 @@ export class ProductChargeFormComponent implements OnInit {
       description: this.detailForm.get('description').value,
       chargeMethod,
       amount: this.detailForm.get('amount').value,
-      proportionalTo: chargeMethod === 'PROPORTIONAL' ? ChargeActionToProportionalMap[this.charge.chargeAction] : undefined
+      proportionalTo: chargeMethod === 'PROPORTIONAL' ? this.detailForm.get('proportionalTo').value : undefined
     });
 
     this.onSave.emit(charge);
@@ -101,7 +114,4 @@ export class ProductChargeFormComponent implements OnInit {
     this.onCancel.emit();
   }
 
-  get charge(): ChargeDefinition {
-    return this._charge;
-  }
 }

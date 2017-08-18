@@ -15,8 +15,8 @@
  */
 
 import {AuthGuard} from './auth-guard.service';
-import {Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {TestBed, inject} from '@angular/core/testing';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {inject, TestBed} from '@angular/core/testing';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';

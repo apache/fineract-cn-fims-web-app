@@ -22,22 +22,22 @@
     <div layout="row">
       <md-list>
         <md-list-item>
-          <md-icon md-list-avatar>account_balance</md-icon>
           <h3 md-line translate>Action</h3>
           <p md-line>{{charge.chargeAction}}</p>
         </md-list-item>
         <md-list-item>
-          <md-icon md-list-avatar>person</md-icon>
           <h3 md-line translate>Amount</h3>
           <p md-line>{{charge.amount | number}}</p>
         </md-list-item>
         <md-list-item>
-          <md-icon md-list-avatar>person</md-icon>
           <h3 md-line translate>Charge method</h3>
           <p md-line>{{charge.chargeMethod}}</p>
         </md-list-item>
         <md-list-item>
-          <md-icon md-list-avatar>person</md-icon>
+          <h3 md-line translate>Proportional to</h3>
+          <p md-line>{{charge.proportionalTo}}</p>
+        </md-list-item>
+        <md-list-item>
           <h3 md-line translate>Cycle</h3>
           <p md-line>{{charge.forCycleSizeUnit}}</p>
         </md-list-item>

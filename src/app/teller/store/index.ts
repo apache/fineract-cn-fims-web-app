@@ -22,7 +22,10 @@ import * as fromDepositProducts from './customer-deposit-products.reducer';
 import * as fromLoanProducts from './customer-loan-products.reducer';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceAll, getResourceLoadedAt, getResourceSelected,
+  createResourceReducer,
+  getResourceAll,
+  getResourceLoadedAt,
+  getResourceSelected,
   ResourceState
 } from '../../common/store/resource.reducer';
 

@@ -20,8 +20,11 @@ import {ProductDefinition} from '../../services/depositAccount/domain/definition
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../common/store/resource.reducer';
 import {ProductDefinitionCommand} from '../../services/depositAccount/domain/definition/product-definition-command.model';
 

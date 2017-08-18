@@ -39,11 +39,14 @@ import {
   MdCardModule,
   MdIconModule,
   MdInputModule,
-  MdListModule, MdRadioModule,
+  MdListModule,
+  MdRadioModule,
   MdToolbarModule
 } from '@angular/material';
 import {
-  CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule,
+  CovalentDataTableModule,
+  CovalentMessageModule,
+  CovalentSearchModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {CommonModule} from '@angular/common';

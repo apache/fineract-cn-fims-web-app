@@ -15,7 +15,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../common/data-table/data-table.component';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import * as fromDepositAccounts from './store';
@@ -35,7 +35,7 @@ export class DepositProductComponent implements OnInit{
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'type', label: 'Type' },
-    { name: 'active', label: 'Active'},
+    { name: 'active', label: 'Enabled'},
     { name: 'interest', label: 'Interest'}
   ];
 

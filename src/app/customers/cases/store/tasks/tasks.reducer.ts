@@ -15,9 +15,7 @@
  */
 
 import * as task from './task.actions';
-import {TaskInstance} from '../../../../services/portfolio/domain/task-instance.model';
 import {StatusCommand} from '../model/fims-command.model';
-import {FimsTaskInstance} from '../model/fims-task-instance.model';
 
 export interface State {
   commands: StatusCommand[];

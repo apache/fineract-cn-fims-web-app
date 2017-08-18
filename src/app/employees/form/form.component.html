@@ -65,6 +65,9 @@
           <md-error *ngIf="detailForm.get('password').hasError('required')" translate>
             Required
           </md-error>
+          <md-error *ngIf="detailForm.get('password').hasError('minlength')">
+            {{ 'Must have at least characters.' | translate:{ value: detailForm.get('password').getError('minlength')['requiredLength']} }}
+          </md-error>
         </md-input-container>
       </div>
     </form>

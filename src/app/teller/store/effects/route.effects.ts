@@ -20,7 +20,6 @@ import {Router} from '@angular/router';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as tellerActions from '../../store/teller.actions';
-import {ConfirmTransactionSuccessAction} from '../teller.actions';
 
 @Injectable()
 export class TellerRouteEffects {

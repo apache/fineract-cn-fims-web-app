@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Inject, Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action, Store} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';

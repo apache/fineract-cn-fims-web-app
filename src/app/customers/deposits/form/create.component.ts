@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DepositFormComponent} from './form.component';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';

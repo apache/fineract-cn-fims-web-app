@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Employee} from '../services/office/domain/employee.model';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData} from '../common/data-table/data-table.component';

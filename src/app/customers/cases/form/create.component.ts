@@ -16,7 +16,6 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Case} from '../../../services/portfolio/domain/case.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {CaseFormComponent} from './form.component';
 import * as fromCases from '../store/index';

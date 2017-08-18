@@ -20,7 +20,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import {PortfolioStore} from './store/index';
 import {CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {CovalentDialogsModule, TdDialogService} from '@covalent/core';
+import {TdDialogService} from '@covalent/core';
 import {FimsProduct} from './store/model/fims-product.model';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import * as fromPortfolio from './store';
@@ -67,6 +67,7 @@ describe('Test product list component', () => {
       name: 'test',
       termRange: { temporalUnit: 'MONTHS', maximum: 1 },
       balanceRange: { minimum: 1, maximum: 2 },
+      interestRange: { minimum: 1, maximum: 2 },
       interestBasis: 'BEGINNING_BALANCE',
       patternPackage: 'test',
       description: '',

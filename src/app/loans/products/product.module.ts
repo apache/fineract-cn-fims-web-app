@@ -57,18 +57,20 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdCheckboxModule,
+  MdButtonModule,
+  MdCheckboxModule,
   MdIconModule,
   MdInputModule,
   MdListModule,
   MdOptionModule,
-  MdRadioModule, MdSelectModule,
+  MdRadioModule,
+  MdSelectModule,
   MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
-import {TextMaskModule} from 'angular2-text-mask';
+import {ProductDetailFormComponent} from './form/detail/detail.component';
 
 @NgModule({
   imports: [
@@ -110,6 +112,7 @@ import {TextMaskModule} from 'angular2-text-mask';
     ProductFormComponent,
     ProductCreateComponent,
     ProductEditComponent,
+    ProductDetailFormComponent,
     ProductFeeFormComponent,
     ProductInterestFormComponent,
     ProductTermFormComponent,

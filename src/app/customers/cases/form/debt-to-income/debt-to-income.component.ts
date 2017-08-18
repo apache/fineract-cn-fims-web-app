@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
+import {Component, Input, ViewChild} from '@angular/core';
 import {CaseCreditFactorFormComponent} from '../components/credit-factor.component';
 import {CreditWorthinessFactor} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 

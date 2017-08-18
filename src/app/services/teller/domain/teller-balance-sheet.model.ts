@@ -1,4 +1,5 @@
 import {TellerEntry} from './teller-entry.model';
+
 /**
  * Copyright 2017 The Mifos Initiative.
  *

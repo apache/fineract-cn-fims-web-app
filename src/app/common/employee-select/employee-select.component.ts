@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
-import {CustomerService} from '../../services/customer/customer.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {CustomerPage} from '../../services/customer/domain/customer-page.model';
 import {Observable} from 'rxjs';
-import {Customer} from '../../services/customer/domain/customer.model';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';

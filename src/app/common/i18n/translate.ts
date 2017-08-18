@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 export const TRANSLATE_STORAGE_KEY: string = 'fims-translate-lang';
 
