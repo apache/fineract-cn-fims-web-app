@@ -67,6 +67,7 @@ describe('Test product list component', () => {
       name: 'test',
       termRange: { temporalUnit: 'MONTHS', maximum: 1 },
       balanceRange: { minimum: 1, maximum: 2 },
+      interestRange: { minimum: 1, maximum: 2 },
       interestBasis: 'BEGINNING_BALANCE',
       patternPackage: 'test',
       description: '',

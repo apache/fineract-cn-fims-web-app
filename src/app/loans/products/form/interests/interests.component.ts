@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
 import {InterestBasis} from '../../../../services/portfolio/domain/interest-basis.model';
 import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
@@ -29,6 +29,8 @@ interface InterestBasisOption {
 }
 
 export interface InterestFormData {
+  minimum: string;
+  maximum: string;
   interestBasis: InterestBasis;
   incomeAccount: string;
   accrualAccount: string;
@@ -38,7 +40,9 @@ export interface InterestFormData {
   selector: 'fims-product-interests-form',
   templateUrl: './interests.component.html'
 })
-export class ProductInterestFormComponent extends FormComponent<InterestFormData> {
+export class ProductInterestFormComponent extends FormComponent<InterestFormData> implements OnChanges {
+
+  private _formData: InterestFormData;
 
   private minMaxValidators: ValidatorFn[] = [Validators.required, FimsValidators.minValue(0), FimsValidators.scale(2)];
 
@@ -47,27 +51,43 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
     {type: 'BEGINNING_BALANCE', label: 'BEGINNING_BALANCE'}
   ];
 
-  @Input() set formData(interestFormData: InterestFormData) {
-    // Portfolio service does not support ranges yet
-    const interestRangeEnabled: boolean = false;
-
-    this.form = this.formBuilder.group({
-      interestRangeEnabled: [interestRangeEnabled],
-      interestBasis: [interestFormData.interestBasis, Validators.required],
-      incomeAccount: [interestFormData.incomeAccount, [Validators.required], accountExists(this.accountingService)],
-      accrualAccount: [interestFormData.accrualAccount, [Validators.required], accountExists(this.accountingService)]
-    });
-
-    this.form.get('interestRangeEnabled').valueChanges
-      .subscribe(enabled => this.toggleInterestRange(enabled));
+  @Input() set formData(formData: InterestFormData) {
+    this._formData = formData;
   };
 
   constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
     super();
+
+    this.form = this.formBuilder.group({
+      interestRangeEnabled: [false],
+      minimum: ['', this.minMaxValidators],
+      maximum: [''],
+      interestBasis: ['', Validators.required],
+      incomeAccount: ['', [Validators.required], accountExists(this.accountingService)],
+      accrualAccount: ['', [Validators.required], accountExists(this.accountingService)]
+    });
+
+    this.form.get('interestRangeEnabled').valueChanges
+      .subscribe(enabled => this.toggleInterestRange(enabled));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const interestRangeEnabled: boolean = this.hasInterestRange(this._formData.minimum, this._formData.maximum);
+
+    this.form.reset({
+      interestRangeEnabled: interestRangeEnabled,
+      minimum: this._formData.minimum,
+      maximum: this._formData.maximum,
+      interestBasis: this._formData.interestBasis,
+      incomeAccount: this._formData.incomeAccount,
+      accrualAccount: this._formData.accrualAccount
+    })
   }
 
   get formData(): InterestFormData {
     return {
+      minimum: this.form.get('minimum').value,
+      maximum: this.form.get('interestRangeEnabled').value ? this.form.get('maximum').value : this.form.get('minimum').value,
       interestBasis: this.form.get('interestBasis').value,
       incomeAccount: this.form.get('incomeAccount').value,
       accrualAccount: this.form.get('accrualAccount').value
@@ -87,6 +107,12 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
 
     maximumControl.updateValueAndValidity();
     this.form.updateValueAndValidity();
+  }
+
+  private hasInterestRange(min: string, max: string): boolean {
+    return this.hasValue(min) &&
+        this.hasValue(max) &&
+        min !== max;
   }
 
   private hasValue(value: string): boolean {
