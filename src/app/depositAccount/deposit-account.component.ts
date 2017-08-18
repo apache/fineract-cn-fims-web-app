@@ -35,7 +35,7 @@ export class DepositProductComponent implements OnInit{
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'type', label: 'Type' },
-    { name: 'active', label: 'Active'},
+    { name: 'active', label: 'Enabled'},
     { name: 'interest', label: 'Interest'}
   ];
 
