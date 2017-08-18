@@ -45,6 +45,8 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
     this._formData = formData;
   };
 
+  @Input('editMode') editMode: boolean;
+
   @Input('temporalOptions') temporalOptions: TemporalOption[];
 
   @Input('currencies') currencies: Currency[];

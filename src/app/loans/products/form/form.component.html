@@ -16,7 +16,7 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <fims-product-detail-form #detailForm [formData]="detailFormData" [currencies]="currencies" [temporalOptions]="temporalOptions" [error]="error"></fims-product-detail-form>
+    <fims-product-detail-form #detailForm [formData]="detailFormData" [currencies]="currencies" [temporalOptions]="temporalOptions" [error]="error" [editMode]="editMode"></fims-product-detail-form>
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="settingsStep.open()"></fims-form-continue-action>
     </ng-template>
