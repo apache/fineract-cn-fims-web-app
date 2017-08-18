@@ -15,7 +15,9 @@
  */
 
 import {
-  createResourceReducer, getResourceLoadedAt, getResourceSelected,
+  createResourceReducer,
+  getResourceLoadedAt,
+  getResourceSelected,
   ResourceState
 } from '../../../common/store/resource.reducer';
 import * as fromCustomer from '../../store';

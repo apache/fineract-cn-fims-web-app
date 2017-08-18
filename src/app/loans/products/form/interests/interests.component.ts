@@ -21,7 +21,6 @@ import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms'
 import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../common/validator/account-exists.validator';
-import {createNumberMask} from 'text-mask-addons/dist/textMaskAddons';
 
 interface InterestBasisOption {
   type: InterestBasis;

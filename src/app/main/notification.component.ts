@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-import {AfterViewInit, OnInit, Component, ViewContainerRef, OnDestroy} from '@angular/core';
-import {
-  NotificationType, NotificationEvent,
-  NotificationService
-} from '../services/notification/notification.service';
-import {MdSnackBarConfig, MdSnackBarRef, MdSnackBar} from '@angular/material';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {NotificationEvent, NotificationService, NotificationType} from '../services/notification/notification.service';
+import {MdSnackBar, MdSnackBarConfig, MdSnackBarRef} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';

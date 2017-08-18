@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {
-  Action, Adjustment,
+  Adjustment,
   TellerManagementCommand
 } from '../../../../../services/teller/domain/teller-management-command.model';
 import {FormComponent} from '../../../../../common/forms/form.component';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {FimsValidators} from '../../../../../common/validator/validators';
-import {OfficeService} from '../../../../../services/office/office.service';
-import {employeeExists} from '../../../../../common/validator/employee-exists.validator';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
 
 interface AdjustmentOption {
   key: string | Adjustment,

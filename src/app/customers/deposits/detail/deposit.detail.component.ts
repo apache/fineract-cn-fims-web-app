@@ -17,8 +17,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {Observable} from 'rxjs/Observable';
-import {DepositsStore} from '../store/index';
 import * as fromDeposits from '../store/index';
+import {DepositsStore} from '../store/index';
 
 @Component({
   templateUrl: './deposit.detail.component.html'

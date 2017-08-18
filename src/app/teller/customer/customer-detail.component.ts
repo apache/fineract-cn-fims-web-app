@@ -15,8 +15,8 @@
  */
 
 import {Component, OnDestroy} from '@angular/core';
-import {TellerStore} from '../store/index';
 import * as fromTeller from '../store/index';
+import {TellerStore} from '../store/index';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';

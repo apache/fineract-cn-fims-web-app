@@ -32,7 +32,12 @@ import {EffectsModule} from '@ngrx/effects';
 import {EmployeeApiEffects} from './store/effects/service.effects';
 import {EmployeeRouteEffects} from './store/effects/route.effects';
 import {
-  MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdOptionModule, MdSelectModule,
+  MdButtonModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdOptionModule,
+  MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
 import {CovalentSearchModule, CovalentStepsModule} from '@covalent/core';

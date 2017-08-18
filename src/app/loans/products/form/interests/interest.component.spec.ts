@@ -16,10 +16,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {InterestFormData, ProductInterestFormComponent} from './interests.component';
-import {Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, ViewChild} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {MdInputModule, MdRadioModule, MdSliderModule, MdSlideToggleModule} from '@angular/material';
+import {MdInputModule, MdRadioModule, MdSlideToggleModule} from '@angular/material';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 

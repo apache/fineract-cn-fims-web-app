@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs/Observable";
-import {Action} from "@ngrx/store";
-import {of} from "rxjs/observable/of";
-import * as catalogActions from "../catalog.actions";
-import {CatalogService} from "../../../../services/catalog/catalog.service";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
+import {of} from 'rxjs/observable/of';
+import * as catalogActions from '../catalog.actions';
+import {CatalogService} from '../../../../services/catalog/catalog.service';
 
 @Injectable()
 export class CatalogApiEffects {

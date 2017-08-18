@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute, RouterState} from '@angular/router';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router, RouterState} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpClient, Action} from '../services/http/http.service';
+import {Action, HttpClient} from '../services/http/http.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
 import {LOGOUT} from '../store/security/security.actions';

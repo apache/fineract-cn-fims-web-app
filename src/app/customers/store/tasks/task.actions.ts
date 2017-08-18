@@ -21,7 +21,8 @@ import {TaskDefinition} from '../../../services/customer/domain/task-definition.
 import {Command} from '../../../services/customer/domain/command.model';
 import {RoutePayload} from '../../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
   SelectResourcePayload
 } from '../../../common/store/resource.reducer';
 

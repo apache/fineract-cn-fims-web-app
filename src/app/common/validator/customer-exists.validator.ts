@@ -16,7 +16,6 @@
 
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {CustomerService} from '../../services/customer/customer.service';
 import {isString} from './validators';
 

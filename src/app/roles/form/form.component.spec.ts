@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-import {TestBed, ComponentFixture, async} from '@angular/core/testing';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
 import {Observable} from 'rxjs';
 import {IdentityService} from '../../services/identity/identity.service';
-import {MaterialModule, MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
+import {MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
 import {Role} from '../../services/identity/domain/role.model';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {PermittableGroupIdMapper} from '../../services/security/authz/permittable-group-id-mapper';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormPermissionService} from '../helper/form-permission.service';
-import {CovalentStepsModule} from '@covalent/core';
 import {PermissionListItemComponent} from '../components/permission-list-item.component';
 
 class FakeLoader implements TranslateLoader {

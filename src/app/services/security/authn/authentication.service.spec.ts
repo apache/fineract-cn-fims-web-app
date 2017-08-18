@@ -15,7 +15,7 @@
  */
 
 import {AuthenticationService} from './authentication.service';
-import {Http, BaseRequestOptions, ResponseOptions, Response} from '@angular/http';
+import {BaseRequestOptions, Http, Response, ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {Authentication} from '../../identity/domain/authentication.model';
 

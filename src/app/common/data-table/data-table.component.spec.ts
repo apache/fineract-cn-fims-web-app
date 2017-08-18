@@ -17,8 +17,11 @@
 import {Component, DebugElement, EventEmitter, ViewChild} from '@angular/core';
 import {DataTableComponent, TableData, TableFetchRequest} from './data-table.component';
 import {
-  CovalentDataTableModule, CovalentPagingModule, ITdDataTableColumn,
-  TdDataTableColumnComponent, TdDataTableComponent, TdDataTableSortingOrder
+  CovalentDataTableModule,
+  CovalentPagingModule,
+  ITdDataTableColumn,
+  TdDataTableColumnComponent,
+  TdDataTableSortingOrder
 } from '@covalent/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';

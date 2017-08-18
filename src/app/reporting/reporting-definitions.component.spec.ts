@@ -15,12 +15,10 @@
  */
 
 import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {ReportingComponent} from './reporting.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {MdCardModule, MdListModule, MdToolbarModule} from '@angular/material';
+import {MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
 import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';

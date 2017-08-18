@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {accountTypes, AccountTypeOption} from '../account-types.model';
-import {OnInit, Component, ViewChild, Input, EventEmitter, Output} from '@angular/core';
+import {AccountTypeOption, accountTypes} from '../account-types.model';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormComponent} from '../../common/forms/form.component';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TdStepComponent} from '@covalent/core';

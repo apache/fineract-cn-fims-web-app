@@ -15,11 +15,18 @@
  */
 
 import {
-  CovalentChipsModule, CovalentDataTableModule, CovalentExpansionPanelModule,
+  CovalentChipsModule,
+  CovalentDataTableModule,
+  CovalentExpansionPanelModule,
   CovalentStepsModule
 } from '@covalent/core';
 import {
-  MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdTabsModule,
+  MdButtonModule,
+  MdCardModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdTabsModule,
   MdToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';

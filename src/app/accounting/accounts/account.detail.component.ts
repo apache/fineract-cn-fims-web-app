@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Account} from '../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromAccounting from '../store';

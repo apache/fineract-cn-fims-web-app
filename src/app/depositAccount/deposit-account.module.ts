@@ -22,8 +22,15 @@ import {DepositProductDefinitionApiEffects} from './store/effects/service.effect
 import {EffectsModule} from '@ngrx/effects';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
-  MdSelectModule, MdSlideToggleModule,
+  MdButtonModule,
+  MdCardModule,
+  MdCheckboxModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdRadioModule,
+  MdSelectModule,
+  MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
 import {Ledger} from './domain/ledger.model';
 import {Observable} from 'rxjs';
@@ -26,7 +26,7 @@ import {TrialBalance} from './domain/trial-balance.model';
 import {AccountEntryPage} from './domain/account-entry-page.model';
 import {AccountPage} from './domain/account-page.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
-import {buildSearchParams, buildDateRangeParam} from '../domain/paging/search-param.builder';
+import {buildDateRangeParam, buildSearchParams} from '../domain/paging/search-param.builder';
 import {LedgerPage} from './domain/ledger-page.model';
 import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 import {TransactionType} from './domain/transaction-type.model';

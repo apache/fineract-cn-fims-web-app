@@ -18,9 +18,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData} from '../common/data-table/data-table.component';
 import {Office} from '../services/office/domain/office.model';
-import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
-import * as fromOffice from './store';
 
 import {Observable} from 'rxjs';
 import {SEARCH} from '../store/office/office.actions';

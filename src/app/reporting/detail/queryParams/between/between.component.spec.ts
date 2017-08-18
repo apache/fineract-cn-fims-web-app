@@ -5,6 +5,7 @@ import {ReportingBetweenParamComponent} from './between.component';
 import {Component, ViewChild} from '@angular/core';
 import {MdInputModule} from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
+
 describe('Test between component', () => {
 
   let fixture: ComponentFixture<DateTestComponent>;

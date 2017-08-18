@@ -18,12 +18,12 @@ import {Component, OnInit} from '@angular/core';
 import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as fromCases from '../../store/index';
 import {CasesStore} from '../../store/index';
 import {EXECUTE_COMMAND} from '../../store/case.actions';
 import {ExecuteCommandEvent} from './form.component';
 import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import * as fromCases from '../../store/index';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 
 interface Parameter {

@@ -15,8 +15,6 @@
  */
 
 import * as product from './product.actions';
-import {createSelector} from 'reselect';
-import {FimsProduct} from './model/fims-product.model';
 import {ResourceState} from '../../../common/store/resource.reducer';
 
 export const initialState: ResourceState = {

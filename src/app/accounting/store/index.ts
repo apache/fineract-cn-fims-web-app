@@ -26,14 +26,18 @@ import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceEntities,
+  createResourceReducer,
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
 } from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 import {
-  createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchLoading,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../../common/store/search.reducer';
 

@@ -15,7 +15,7 @@
  */
 
 import {Store} from '@ngrx/store';
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromRoles from './store';
 import {Observable} from 'rxjs';

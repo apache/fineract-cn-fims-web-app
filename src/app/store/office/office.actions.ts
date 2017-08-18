@@ -16,7 +16,6 @@
 
 import {Action} from '@ngrx/store';
 import {type} from '../util';
-import {OfficePage} from '../../services/office/domain/office-page.model';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {SearchResult} from '../../common/store/search.reducer';
 

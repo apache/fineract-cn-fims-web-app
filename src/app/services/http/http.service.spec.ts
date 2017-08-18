@@ -15,7 +15,7 @@
  */
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {AUTHORIZATION_HEADER, HttpClient, TENANT_HEADER, USER_HEADER} from './http.service';
-import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
+import {BaseRequestOptions, ConnectionBackend, Headers, Http, RequestOptions, RequestOptionsArgs} from '@angular/http';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {ReflectiveInjector} from '@angular/core';

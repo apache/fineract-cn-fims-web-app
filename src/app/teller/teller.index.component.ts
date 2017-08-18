@@ -16,8 +16,8 @@
 
 import {Component, OnDestroy} from '@angular/core';
 import * as fromTeller from './store/index';
-import * as fromRoot from '../store/index';
 import {TellerStore} from './store/index';
+import * as fromRoot from '../store/index';
 import {LOCK_DRAWER} from './store/teller.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';

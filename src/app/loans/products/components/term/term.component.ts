@@ -16,7 +16,7 @@
 
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
-import {Validators, FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {ChronoUnit} from '../../../../services/portfolio/domain/chrono-unit.model';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {FimsValidators} from '../../../../common/validator/validators';

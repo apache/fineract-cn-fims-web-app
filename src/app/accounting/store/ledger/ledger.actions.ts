@@ -20,7 +20,6 @@ import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {Error} from '../../../services/domain/error.model';
 import {TrialBalance} from '../../../services/accounting/domain/trial-balance.model';
 import {RoutePayload} from '../../../common/store/route-payload';
-import {LedgerPage} from '../../../services/accounting/domain/ledger-page.model';
 import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-account-entry.model';
 
 export const LOAD_ALL_TOP_LEVEL = type('[Ledger] Load All Top Level');

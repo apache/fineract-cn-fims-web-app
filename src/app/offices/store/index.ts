@@ -20,7 +20,8 @@ import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceAll,
+  createResourceReducer,
+  getResourceAll,
   getResourceEntities,
   getResourceLoadedAt,
   getResourceSelected,

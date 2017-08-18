@@ -16,8 +16,8 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
-import {CustomersStore} from '../../../../store/index';
 import * as fromCustomers from '../../../../store/index';
+import {CustomersStore} from '../../../../store/index';
 import {IdentificationCardScanComponent, IdentityCardScanFormData} from './scan.form.component';
 import {CREATE, RESET_FORM} from '../../../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute, Router} from '@angular/router';

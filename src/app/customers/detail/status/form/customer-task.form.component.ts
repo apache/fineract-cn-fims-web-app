@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';

@@ -20,8 +20,10 @@ import {TransactionType} from '../../../../services/accounting/domain/transactio
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {SearchPayload, SearchResult} from '../../../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 
 export const SEARCH = type('[Transaction Type] Search');

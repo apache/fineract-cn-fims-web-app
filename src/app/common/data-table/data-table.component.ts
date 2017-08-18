@@ -18,7 +18,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Sort} from '../../services/domain/paging/sort.model';
 import {Page} from '../../services/domain/paging/page.model';
 import {
-  IPageChangeEvent, ITdDataTableColumn, ITdDataTableSortChangeEvent,
+  IPageChangeEvent,
+  ITdDataTableColumn,
+  ITdDataTableSortChangeEvent,
   TdDataTableSortingOrder
 } from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';

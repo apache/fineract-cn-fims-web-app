@@ -17,10 +17,7 @@
 import * as identityCards from './identity-cards.actions';
 import {ResourceState} from '../../../common/store/resource.reducer';
 import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
-import {
-  idsToHashWithCurrentTimestamp,
-  resourcesToHash
-} from '../../../common/store/reducer.helper';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],

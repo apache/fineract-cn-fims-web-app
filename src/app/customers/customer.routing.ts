@@ -25,12 +25,6 @@ import {CustomerIndexComponent} from './detail/customer.index.component';
 import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form.component';
 import {CustomerExistsGuard} from './customer-exists.guard';
 import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
-import {CustomerIdentityCardListComponent} from './detail/identityCard/identity-card.list.component';
-import {CreateCustomerIdentificationCardFormComponent} from './detail/identityCard/form/create.form.component';
-import {CustomerIdentityCardDetailComponent} from './detail/identityCard/identity-card.detail.component';
-import {EditCustomerIdentificationCardFormComponent} from './detail/identityCard/form/edit.form.component';
-import {CustomerIdentityCardIndexComponent} from './detail/identityCard/identity-card.index.component';
-import {IdentityCardExistsGuard} from './detail/identityCard/identity-card-exists.guard';
 
 export const CustomerRoutes: Routes = [
   {

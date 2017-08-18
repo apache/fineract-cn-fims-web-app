@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit, Query} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {FormComponent} from '../../../common/forms/form.component';
 
 @Component({

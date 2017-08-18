@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';

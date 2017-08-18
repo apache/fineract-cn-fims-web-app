@@ -16,13 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import * as fromTeller from '../store/index';
 import {TellerStore} from '../store/index';
 import {CustomerService} from '../../services/customer/customer.service';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
 import {Observable} from 'rxjs/Observable';
 import {LoadCustomerAction} from '../store/teller.actions';
 import {of} from 'rxjs/observable/of';
-import * as fromTeller from '../store/index';
 
 @Injectable()
 export class TellerCustomerExistsGuard implements CanActivate {

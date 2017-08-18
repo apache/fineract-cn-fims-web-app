@@ -19,9 +19,9 @@ import {Subscription} from 'rxjs/Subscription';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {IdentityCardFormComponent} from './identity-card-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {CREATE, RESET_FORM} from '../../../store/identityCards/identity-cards.actions';
-import * as fromCustomers from '../../../store/index'
 import {Error} from '../../../../services/domain/error.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, ValidatorFn} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../services/office/domain/office.model';
 import {Employee} from '../../services/office/domain/employee.model';
-import {ContactDetail, BUSINESS, PHONE, EMAIL, MOBILE} from '../../services/domain/contact/contact-detail.model';
+import {BUSINESS, ContactDetail, EMAIL, MOBILE, PHONE} from '../../services/domain/contact/contact-detail.model';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {Role} from '../../services/identity/domain/role.model';
 import {User} from '../../services/identity/domain/user.model';

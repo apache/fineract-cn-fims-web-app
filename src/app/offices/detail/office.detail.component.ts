@@ -22,7 +22,7 @@ import {OfficePage} from '../../services/office/domain/office-page.model';
 import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {TableData} from '../../common/data-table/data-table.component';
-import {DELETE, SelectAction} from '../store/office.actions';
+import {DELETE} from '../store/office.actions';
 import {getSelectedOffice, OfficesStore} from '../store/index';
 
 @Component({

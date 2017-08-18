@@ -17,7 +17,6 @@
 import {OfficeService} from '../../services/office/office.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {isString} from './validators';
 
 const invalid = Observable.of({

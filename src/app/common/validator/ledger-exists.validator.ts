@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import {AsyncValidatorFn, AbstractControl, ValidationErrors} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {AccountingService} from '../../services/accounting/accounting.service';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {isString} from './validators';
 
 const invalid = Observable.of({

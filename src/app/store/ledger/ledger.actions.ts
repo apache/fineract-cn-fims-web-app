@@ -17,7 +17,6 @@
 import {type} from '../util';
 import {Action} from '@ngrx/store';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {LedgerPage} from '../../services/accounting/domain/ledger-page.model';
 import {SearchResult} from '../../common/store/search.reducer';
 
 export const SEARCH = type('[Ledger] Search');

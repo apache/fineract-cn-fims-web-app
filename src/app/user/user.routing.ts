@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Routes}  from '@angular/router';
+import {Routes} from '@angular/router';
 import {PasswordComponent} from './password.component';
 
 export const UserRoutes: Routes = [

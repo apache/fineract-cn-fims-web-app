@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/customer.actions';
 import {CustomersStore} from '../store/index';
 import {Subscription} from 'rxjs';

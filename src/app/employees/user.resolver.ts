@@ -15,7 +15,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {Observable} from 'rxjs';
 import {IdentityService} from '../services/identity/identity.service';
 import {User} from '../services/identity/domain/user.model';

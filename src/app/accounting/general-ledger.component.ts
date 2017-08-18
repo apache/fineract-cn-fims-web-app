@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component} from '@angular/core';
-import {Params, ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Ledger} from '../services/accounting/domain/ledger.model';
 import {TableData} from '../common/data-table/data-table.component';
 import * as fromAccounting from './store';

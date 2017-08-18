@@ -18,8 +18,8 @@ import {Component, OnInit} from '@angular/core';
 import {TellerService} from '../../../../../services/teller/teller-service';
 import {TellerBalanceSheet} from '../../../../../services/teller/domain/teller-balance-sheet.model';
 import {Observable} from 'rxjs/Observable';
-import {OfficesStore} from '../../../../store/index';
 import * as fromOffices from '../../../../store/index';
+import {OfficesStore} from '../../../../store/index';
 
 @Component({
   templateUrl: './balance.component.html'

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DepositAccountStore} from '../store/index';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';

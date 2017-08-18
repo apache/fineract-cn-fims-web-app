@@ -16,7 +16,6 @@
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FimsTaskInstance} from '../store/model/fims-task-instance.model';
-import {MdCheckboxChange} from '@angular/material';
 import {SelectTaskEvent} from './task.component';
 
 export interface ExecuteTaskEvent {

@@ -30,8 +30,10 @@ import {temporalOptionList} from '../../../common/domain/temporal.domain';
 import {Currency} from '../../../services/currency/domain/currency.model';
 import {
   accountIdentifier,
-  createAccountAssignment, createLedgerAssignment,
-  findAccountDesignator, ledgerIdentifier
+  createAccountAssignment,
+  createLedgerAssignment,
+  findAccountDesignator,
+  ledgerIdentifier
 } from '../../../common/util/account-assignments';
 import {DetailFormData, ProductDetailFormComponent} from './detail/detail.component';
 import {Error} from '../../../services/domain/error.model';

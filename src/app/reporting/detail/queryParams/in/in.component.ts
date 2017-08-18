@@ -15,11 +15,17 @@
  */
 
 import {Component, forwardRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {Operator, QueryParameter} from '../../../../services/reporting/domain/query-parameter.model';
+import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {Type} from '../../../../services/reporting/domain/type.model';
 import {
-  AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors,
-  Validator, Validators
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
+  Validators
 } from '@angular/forms';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
 import {Subscription} from 'rxjs/Subscription';

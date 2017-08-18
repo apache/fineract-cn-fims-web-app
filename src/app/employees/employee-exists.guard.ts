@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../services/office/office.service';
 import * as fromEmployees from './store';

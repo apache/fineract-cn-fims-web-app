@@ -24,7 +24,11 @@ import * as authenticationActions from './security/security.actions';
 import {compose} from '@ngrx/core/compose';
 import {localStorageSync} from 'ngrx-store-localstorage';
 import {
-  createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchLoading,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../common/store/search.reducer';
 

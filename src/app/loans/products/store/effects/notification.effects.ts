@@ -15,7 +15,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions, toPayload} from '@ngrx/effects';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as productActions from '../product.actions';

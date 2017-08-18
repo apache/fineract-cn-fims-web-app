@@ -29,7 +29,6 @@ import {EditOfficeTellerFormComponent} from './detail/teller/form/edit.form.comp
 import {CreateOfficeTellerFormComponent} from './detail/teller/form/create.form.component';
 import {OfficeTellerDetailComponent} from './detail/teller/detail/teller.detail.component';
 import {TellerBalanceComponent} from './detail/teller/detail/balance/balance.component';
-import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/close.component';
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
 
 export const OfficeRoutes: Routes = [
