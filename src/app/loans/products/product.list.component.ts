@@ -33,7 +33,8 @@ export class ProductListComponent implements OnInit{
 
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
-    { name: 'name', label: 'Name' }
+    { name: 'name', label: 'Name' },
+    { name: 'enabled', label: 'Enabled'}
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: PortfolioStore) {}
