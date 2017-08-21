@@ -68,6 +68,7 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
       .map(casePage => casePage.elements.filter(element => element.currentState === 'ACTIVE'));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
+      .filter(teller => !!teller)
       .subscribe(teller => { this.teller = teller } );
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)

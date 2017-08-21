@@ -67,6 +67,7 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
+      .filter(teller => !!teller)
       .subscribe(teller => { this.teller = teller } );
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
