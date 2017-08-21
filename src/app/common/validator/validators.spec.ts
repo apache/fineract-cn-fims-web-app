@@ -28,7 +28,22 @@ describe('Validators', () => {
     it('should return error when not url safe', () => {
       const result = FimsValidators.urlSafe(new FormControl(' '));
       expect(result).toEqual({ urlSafe: true });
-    })
+    });
+
+    const notAllowed: string[] = [
+      '!',
+      '\'',
+      '(',
+      ')',
+      '~',
+    ];
+
+    notAllowed.forEach(char => {
+      it(`should return error when when it contains ${char}`, () => {
+        const result = FimsValidators.urlSafe(new FormControl(`${char}`));
+        expect(result).toEqual({ urlSafe: true });
+      })
+    });
 
   });
 

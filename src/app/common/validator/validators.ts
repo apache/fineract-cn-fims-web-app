@@ -30,7 +30,17 @@ export function isString(value: any): boolean {
 export class FimsValidators {
 
   static urlSafe(control: AbstractControl): ValidationErrors | null {
-    if (control.value && encodeURIComponent(control.value) !== control.value) {
+    const notAllowed: string[] = [
+      '!',
+      '\'',
+      '(',
+      ')',
+      '~',
+    ];
+
+    const foundNotAllowed = notAllowed.find(char => control.value.indexOf(char) > -1);
+
+    if (control.value && (encodeURIComponent(control.value) !== control.value || !!foundNotAllowed)) {
       return {
         urlSafe: true
       };
