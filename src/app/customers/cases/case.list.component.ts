@@ -43,6 +43,8 @@ export class CaseListComponent implements OnInit, OnDestroy {
 
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
+    { name: 'parameters', label: 'Principal', format: v => v.maximumBalance },
+    { name: 'interest', label: 'Interest' },
     { name: 'currentState', label: 'Current status' }
   ];
 

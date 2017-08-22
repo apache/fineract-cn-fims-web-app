@@ -80,7 +80,8 @@ export class CaseFormComponent implements OnInit {
     this.detailFormData = {
       identifier: caseInstance.identifier,
       productIdentifier: caseInstance.productIdentifier,
-      principalAmount: caseInstance.parameters.maximumBalance,
+      interest: caseInstance.interest.toFixed(2),
+      principalAmount: caseInstance.parameters.maximumBalance.toFixed(2),
       term: caseInstance.parameters.termRange.maximum,
       termTemporalUnit: caseInstance.parameters.termRange.temporalUnit,
       paymentTemporalUnit: caseInstance.parameters.paymentCycle.temporalUnit,
@@ -152,7 +153,7 @@ export class CaseFormComponent implements OnInit {
 
     const caseParameters: CaseParameters = {
       customerIdentifier: this.customerId,
-      maximumBalance: this.detailForm.formData.principalAmount,
+      maximumBalance: parseFloat(this.detailForm.formData.principalAmount),
       paymentCycle: {
         alignmentDay: this.detailForm.formData.paymentAlignmentDay,
         alignmentMonth: this.detailForm.formData.paymentAlignmentMonth,
@@ -171,6 +172,7 @@ export class CaseFormComponent implements OnInit {
       currentState: this.caseInstance.currentState,
       identifier: this.detailForm.formData.identifier,
       productIdentifier: this.detailForm.formData.productIdentifier,
+      interest: parseFloat(this.detailForm.formData.interest),
       parameters: caseParameters,
       depositAccountIdentifier: this.detailForm.formData.depositAccountIdentifier
     };

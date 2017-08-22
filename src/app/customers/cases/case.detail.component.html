@@ -42,13 +42,15 @@
       <fims-state-display [state]="caseInstance.currentState"></fims-state-display>
       <h3 md-subheader translate>Details</h3>
       <md-list-item>
-        <md-icon md-list-avatar>account_balance</md-icon>
         <h3 md-line translate>Principal amount</h3>
         <p md-line>{{caseInstance.parameters.maximumBalance | number:numberFormat}}</p>
       </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Interest</h3>
+        <p md-line>{{caseInstance.interest | number:numberFormat}}</p>
+      </md-list-item>
       <fims-case-detail-payment-cycle [paymentCycle]="caseInstance.parameters.paymentCycle"></fims-case-detail-payment-cycle>
       <md-list-item>
-        <md-icon md-list-avatar>date_range</md-icon>
         <h3 md-line translate>Term</h3>
         <p md-line>{{caseInstance.parameters.termRange.maximum | number}} {{caseInstance.parameters.termRange.temporalUnit}}</p>
       </md-list-item>

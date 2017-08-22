@@ -41,7 +41,7 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
 
   private _formData: DetailFormData;
 
-  @Input() set formData(formData: DetailFormData) {
+  @Input('formData') set formData(formData: DetailFormData) {
     this._formData = formData;
   };
 
@@ -51,9 +51,7 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
 
   @Input('currencies') currencies: Currency[];
 
-  @Input('error') set error(error: Error) {
-    this.setError('identifier', 'unique', true);
-  };
+  @Input('error') error: Error;
 
   constructor(private formBuilder: FormBuilder) {
     super();
@@ -67,20 +65,26 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
       maximumBalance: ['', [Validators.required, FimsValidators.minValue(0)]],
       term: ['', [ Validators.required, FimsValidators.minValue(0) ]],
       temporalUnit: ['', Validators.required]
-    }, { validator: FimsValidators.greaterThan('minimumBalance', 'maximumBalance') });
+    }, { validator: FimsValidators.greaterThanEquals('minimumBalance', 'maximumBalance') });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.form.reset({
-      identifier: this._formData.identifier,
-      name: this._formData.name,
-      description: this._formData.description,
-      currencyCode: this._formData.currencyCode,
-      minimumBalance: this._formData.minimumBalance,
-      maximumBalance: this._formData.maximumBalance,
-      term: this._formData.term,
-      temporalUnit: this._formData.temporalUnit
-    });
+    if(changes.formData) {
+      this.form.reset({
+        identifier: this._formData.identifier,
+        name: this._formData.name,
+        description: this._formData.description,
+        currencyCode: this._formData.currencyCode,
+        minimumBalance: this._formData.minimumBalance,
+        maximumBalance: this._formData.maximumBalance,
+        term: this._formData.term,
+        temporalUnit: this._formData.temporalUnit
+      });
+    }
+
+    if(changes.error) {
+      this.setError('identifier', 'unique', true);
+    }
   }
 
   get formData(): DetailFormData {

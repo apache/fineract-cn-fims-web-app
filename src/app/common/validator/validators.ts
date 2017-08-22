@@ -141,6 +141,23 @@ export class FimsValidators {
     }
   }
 
+  static greaterThanEquals(firstValue: string, secondValue: string) {
+    return (group: FormGroup): ValidationErrors | null => {
+      const firstNumber: number = Number(group.controls[firstValue].value);
+      const secondNumber: number = Number(group.controls[secondValue].value);
+
+      if(firstNumber == null || secondNumber == null) return null;
+
+      if (firstNumber > secondNumber) {
+        return {
+          greaterThanEquals: true
+        };
+      }
+
+      return null;
+    }
+  }
+
   static matchValues(firstValue: string, secondValue: string) {
     return (group: FormGroup): ValidationErrors | null => {
       const val1 = group.controls[firstValue];

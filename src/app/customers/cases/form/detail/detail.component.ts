@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
@@ -26,11 +26,13 @@ import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {Subscription} from 'rxjs/Subscription';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {FimsProduct} from '../../../../loans/products/store/model/fims-product.model';
 
 export interface DetailFormData {
   identifier: string,
   productIdentifier: string,
-  principalAmount: number,
+  interest: string;
+  principalAmount: string,
   term: number,
   termTemporalUnit: ChronoUnit,
   paymentTemporalUnit: ChronoUnit,
@@ -50,6 +52,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   private productIdentifierChangeSubscription: Subscription;
 
   private _formData: DetailFormData;
+
+  numberFormat: string = '1.2-2';
 
   @Input() editMode: boolean;
 
@@ -79,6 +83,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     this.form = this.formBuilder.group({
       identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       productIdentifier: ['', [Validators.required]],
+      interest: ['', [Validators.required]],
       principalAmount: [''],
       term: [''],
       termTemporalUnit: ['', Validators.required],
@@ -114,6 +119,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       this.form.reset({
         identifier: this._formData.identifier,
         productIdentifier: this._formData.productIdentifier,
+        interest: this._formData.interest,
         principalAmount: this._formData.principalAmount,
         term: this._formData.term,
         termTemporalUnit: this._formData.termTemporalUnit,
@@ -133,29 +139,36 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     }
   }
 
-  toggleProduct(product: Product) {
+  private toggleProduct(product: Product) {
     this.product = product;
+
     // Override validator with product constraints
     const principalAmount = this.form.get('principalAmount') as FormControl;
-    principalAmount.setValidators([
-      Validators.required,
-      FimsValidators.minValue(product.balanceRange.minimum),
-      FimsValidators.maxValue(product.balanceRange.maximum)
-    ]);
-    principalAmount.updateValueAndValidity();
-
-    // pre set temporal unit from product
-    const termTemporalUnit: FormControl = this.form.get('termTemporalUnit') as FormControl;
-    termTemporalUnit.setValue(product.termRange.temporalUnit);
-    termTemporalUnit.updateValueAndValidity();
+    this.toggleDisabledState(principalAmount, product.balanceRange.minimum, product.balanceRange.maximum);
 
     const term: FormControl = this.form.get('term') as FormControl;
-    term.setValidators([
-      Validators.required,
-      FimsValidators.minValue(1),
-      FimsValidators.maxValue(product.termRange.maximum)
-    ]);
-    term.updateValueAndValidity();
+    this.toggleDisabledState(term, 1, product.termRange.maximum);
+
+    const interest: FormControl = this.form.get('interest') as FormControl;
+    this.toggleDisabledState(interest, product.interestRange.minimum, product.interestRange.maximum);
+  }
+
+  private toggleDisabledState(formControl: FormControl, minimum: number, maximum: number): void {
+    const hasRange: boolean = minimum !== maximum;
+
+    if(hasRange) {
+      formControl.enable();
+      formControl.setValidators([
+        Validators.required,
+        FimsValidators.minValue(minimum),
+        FimsValidators.maxValue(maximum)
+      ]);
+    } else {
+      formControl.disable();
+      formControl.setValidators(Validators.required);
+    }
+
+    formControl.updateValueAndValidity();
   }
 
   get formData(): DetailFormData {
@@ -164,6 +177,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     const formData: DetailFormData = {
       identifier: this.form.get('identifier').value,
       productIdentifier: this.form.get('productIdentifier').value,
+      interest: this.form.get('interest').value,
       principalAmount: this.form.get('principalAmount').value,
       term: this.form.get('term').value,
       termTemporalUnit: this.form.get('termTemporalUnit').value,
@@ -175,6 +189,10 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       depositAccountIdentifier: this.form.get('depositAccountIdentifier').value
     };
     return formData;
+  }
+
+  get fixedDigits(): number {
+    return 2;
   }
 
 }

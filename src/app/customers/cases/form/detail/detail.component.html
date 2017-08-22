@@ -16,25 +16,29 @@
 
 <form [formGroup]="form">
   <div layout="row" class="pad-top">
-    <md-select placeholder="{{'Product' | translate}}" formControlName="productIdentifier" layout-margin>
-      <md-option *ngFor="let product of products" [value]="product.identifier">{{ product.name }}</md-option>
+    <md-select placeholder="{{'Choose product' | translate}}" formControlName="productIdentifier" layout-margin>
+      <md-option *ngFor="let product of products" [value]="product.identifier" mdTooltip="{{product.description}}">{{ product.name }}</md-option>
     </md-select>
   </div>
   <div layout="row">
     <fims-id-input placeholder="{{'Short name' | translate}}" [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
   </div>
   <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput type="number" placeholder="{{'Principal Amount' | translate}}" formControlName="principalAmount" step="any"/>
-      <md-error *ngIf="form.get('principalAmount').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('principalAmount').hasError('minValue')" translate>Value must be greater than or equals {{form.get('principalAmount').getError('minValue').value}}</md-error>
-      <md-error *ngIf="form.get('principalAmount').hasError('maxValue')" translate>Value must be lower than or equals {{form.get('principalAmount').getError('maxValue').value}}</md-error>
-      <md-hint align="end">
-        {{product?.balanceRange.minimum}} - {{product?.balanceRange.maximum}}
-      </md-hint>
-    </md-input-container>
+    <fims-number-input
+      [form]="form"
+      controlName="principalAmount"
+      placeholder="{{'Principal amount' | translate}}"
+      hint="{{product?.balanceRange.minimum | number:numberFormat}} - {{product?.balanceRange.maximum | number:numberFormat}}">
+    </fims-number-input>
   </div>
-
+  <div layout="row">
+    <fims-number-input
+      [form]="form"
+      controlName="interest"
+      placeholder="{{'Interest rate' | translate}}"
+      hint="{{product?.interestRange.minimum | number:numberFormat}} - {{product?.interestRange.maximum | number:numberFormat}}">
+    </fims-number-input>
+  </div>
   <div layout="row" layout-margin>
     <md-input-container>
       <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
