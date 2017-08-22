@@ -17,12 +17,13 @@
 import {AccountAssignment} from './account-assignment.model';
 import {CaseState} from './case-state.model';
 
-export interface Case{
+export interface Case {
   identifier: string;
   productIdentifier: string;
+  interest: number;
   parameters: string;
   accountAssignments: AccountAssignment[];
-  currentState: CaseState;
+  currentState?: CaseState;
   createdOn?: string;
   createdBy?: string;
   lastModifiedOn?: string;

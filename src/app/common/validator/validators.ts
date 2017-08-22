@@ -30,7 +30,17 @@ export function isString(value: any): boolean {
 export class FimsValidators {
 
   static urlSafe(control: AbstractControl): ValidationErrors | null {
-    if (control.value && encodeURIComponent(control.value) !== control.value) {
+    const notAllowed: string[] = [
+      '!',
+      '\'',
+      '(',
+      ')',
+      '~',
+    ];
+
+    const foundNotAllowed = notAllowed.find(char => control.value.indexOf(char) > -1);
+
+    if (control.value && (encodeURIComponent(control.value) !== control.value || !!foundNotAllowed)) {
       return {
         urlSafe: true
       };
@@ -124,6 +134,23 @@ export class FimsValidators {
       if (firstNumber >= secondNumber) {
         return {
           greaterThan: true
+        };
+      }
+
+      return null;
+    }
+  }
+
+  static greaterThanEquals(firstValue: string, secondValue: string) {
+    return (group: FormGroup): ValidationErrors | null => {
+      const firstNumber: number = Number(group.controls[firstValue].value);
+      const secondNumber: number = Number(group.controls[secondValue].value);
+
+      if(firstNumber == null || secondNumber == null) return null;
+
+      if (firstNumber > secondNumber) {
+        return {
+          greaterThanEquals: true
         };
       }
 

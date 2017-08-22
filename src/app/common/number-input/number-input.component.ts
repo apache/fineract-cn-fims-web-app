@@ -34,6 +34,8 @@ export class NumberInputComponent {
 
   @Input() decimalLimit: number = 2;
 
+  @Input() hint: string;
+
   mask: any;
 
   constructor() {
@@ -48,15 +50,19 @@ export class NumberInputComponent {
     });
   }
 
-  hasRequiredError(): boolean {
+  get hasRequiredError(): boolean {
     return this.hasError('required');
   }
 
-  hasMinValueError(): boolean {
+  get hasMinValueError(): boolean {
     return this.hasError('minValue');
   }
 
-  hasScaleError(): boolean {
+  get hasMaxValueError(): boolean {
+    return this.hasError('maxValue');
+  }
+
+  get hasScaleError(): boolean {
     return this.hasError('scale');
   }
 

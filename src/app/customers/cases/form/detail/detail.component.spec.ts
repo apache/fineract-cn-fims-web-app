@@ -1,0 +1,147 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {TranslateModule} from '@ngx-translate/core';
+import {Component, ViewChild} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CaseDetailFormComponent, DetailFormData} from './detail.component';
+import {MdInputModule, MdOptionModule, MdRadioModule, MdSelectModule, MdTooltipModule} from '@angular/material';
+import {FimsSharedModule} from '../../../../common/common.module';
+import {Product} from '../../../../services/portfolio/domain/product.model';
+
+describe('Test case detail form component', () => {
+
+  const products: Product[] = [
+    {
+      identifier: 'productIdentifier',
+      name: 'product',
+      termRange: {
+        temporalUnit: 'WEEKS',
+        maximum: 2
+      },
+      balanceRange: {
+        minimum: 1,
+        maximum: 2
+      },
+      interestRange: {
+        minimum: 1,
+        maximum: 2
+      },
+      interestBasis: 'CURRENT_BALANCE',
+      patternPackage: '',
+      description: '',
+      accountAssignments: [],
+      parameters: null,
+      currencyCode: '',
+      minorCurrencyUnitDigits: 2
+    }
+  ];
+
+  const validFormData: DetailFormData = {
+    identifier: 'identifier',
+    productIdentifier: 'productIdentifier',
+    interest: '1.00',
+    principalAmount: '1.00',
+    term: 1,
+    termTemporalUnit: 'WEEKS',
+    paymentTemporalUnit: 'WEEKS',
+    paymentPeriod: 1,
+    paymentAlignmentDay: 1,
+    paymentAlignmentWeek: undefined,
+    paymentAlignmentMonth: undefined,
+    depositAccountIdentifier: 'depositAccountIdentifier'
+  };
+
+  let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot(),
+        ReactiveFormsModule,
+        MdRadioModule,
+        MdInputModule,
+        MdSelectModule,
+        MdOptionModule,
+        MdTooltipModule,
+        FimsSharedModule,
+        NoopAnimationsModule
+      ],
+      declarations: [
+        TestComponent,
+        CaseDetailFormComponent
+      ]
+    });
+
+    fixture = TestBed.createComponent(TestComponent);
+
+    component = fixture.componentInstance;
+
+    component.products = products;
+  });
+
+  it('should return same form data', () => {
+    component.formData = validFormData;
+    fixture.detectChanges();
+    expect(component.form.formData).toEqual(component.formData);
+  });
+
+  it('should mark form as valid', () => {
+    component.formData = validFormData;
+    fixture.detectChanges();
+    expect(component.form.valid).toBeTruthy();
+  });
+
+  it('should mark form as invalid when principal amount is invalid', () => {
+    component.formData = Object.assign({}, validFormData, {
+      principalAmount: '3'
+    });
+    fixture.detectChanges();
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should mark form as invalid when interest is invalid', () => {
+    component.formData = Object.assign({}, validFormData, {
+      interest: '3'
+    });
+    fixture.detectChanges();
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should mark form as invalid when term range is invalid', () => {
+    component.formData = Object.assign({}, validFormData, {
+      term: 3
+    });
+    fixture.detectChanges();
+    expect(component.form.valid).toBeFalsy();
+  });
+
+});
+
+@Component({
+  template: '<fims-case-detail-form #form [formData]="formData" [products]="products"></fims-case-detail-form>'
+})
+class TestComponent {
+
+  @ViewChild('form') form: CaseDetailFormComponent;
+
+  formData: DetailFormData;
+
+  products: Product[];
+}

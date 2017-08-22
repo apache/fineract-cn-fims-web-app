@@ -68,6 +68,7 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
       },
       creditWorthinessSnapshots: []
     },
+    interest: 0,
     depositAccountIdentifier: ''
   };
 

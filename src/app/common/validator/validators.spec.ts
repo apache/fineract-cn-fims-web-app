@@ -28,7 +28,22 @@ describe('Validators', () => {
     it('should return error when not url safe', () => {
       const result = FimsValidators.urlSafe(new FormControl(' '));
       expect(result).toEqual({ urlSafe: true });
-    })
+    });
+
+    const notAllowed: string[] = [
+      '!',
+      '\'',
+      '(',
+      ')',
+      '~',
+    ];
+
+    notAllowed.forEach(char => {
+      it(`should return error when when it contains ${char}`, () => {
+        const result = FimsValidators.urlSafe(new FormControl(`${char}`));
+        expect(result).toEqual({ urlSafe: true });
+      })
+    });
 
   });
 
@@ -97,7 +112,7 @@ describe('Validators', () => {
 
   });
 
-  describe('greaterThan', () => {
+  describe('matchRange', () => {
     const dateOne = new Date();
     const dateTwo = new Date(dateOne.getTime() + 1000);
 
@@ -149,5 +164,87 @@ describe('Validators', () => {
         required: true
       });
     });
-  })
+  });
+
+  describe('greaterThan', () => {
+    it('should return null when min < max', () => {
+      const validator = FimsValidators.greaterThan('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(1),
+        max: new FormControl(2)
+      });
+
+      const result = validator(group);
+
+      expect(result).toBeNull()
+    });
+
+    it('should return error when min = max', () => {
+      const validator = FimsValidators.greaterThan('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(2),
+        max: new FormControl(2)
+      });
+
+      const result = validator(group);
+
+      expect(result).toEqual({
+        greaterThan: true
+      })
+    });
+
+    it('should return error when min > max', () => {
+      const validator = FimsValidators.greaterThan('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(2),
+        max: new FormControl(1)
+      });
+
+      const result = validator(group);
+
+      expect(result).toEqual({
+        greaterThan: true
+      })
+    })
+  });
+
+  describe('greaterThanEquals', () => {
+    it('should return null when min < max', () => {
+      const validator = FimsValidators.greaterThanEquals('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(1),
+        max: new FormControl(2)
+      });
+
+      const result = validator(group);
+
+      expect(result).toBeNull()
+    });
+
+    it('should return null when min = max', () => {
+      const validator = FimsValidators.greaterThanEquals('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(2),
+        max: new FormControl(2)
+      });
+
+      const result = validator(group);
+
+      expect(result).toBeNull()
+    });
+
+    it('should return error when min > max', () => {
+      const validator = FimsValidators.greaterThanEquals('min', 'max');
+      const group = new FormGroup({
+        min: new FormControl(2),
+        max: new FormControl(1)
+      });
+
+      const result = validator(group);
+
+      expect(result).toEqual({
+        greaterThanEquals: true
+      })
+    })
+  });
 });
