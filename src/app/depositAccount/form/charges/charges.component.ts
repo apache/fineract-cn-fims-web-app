@@ -70,8 +70,8 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
   }
 
   addCharge(): void {
-    const moratoriums: FormArray = this.form.get('charges') as FormArray;
-    moratoriums.push(this.initCharge());
+    const charges: FormArray = this.form.get('charges') as FormArray;
+    charges.push(this.initCharge());
   }
 
   removeCharge(index: number): void {
