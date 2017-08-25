@@ -22,15 +22,9 @@ import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../common/validator/account-exists.validator';
 
-interface InterestBasisOption {
-  type: InterestBasis;
-  label: string;
-}
-
 export interface InterestFormData {
   minimum: string;
   maximum: string;
-  interestBasis: InterestBasis;
   incomeAccount: string;
   accrualAccount: string;
 }
@@ -45,11 +39,6 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
 
   private minMaxValidators: ValidatorFn[] = [Validators.required, FimsValidators.minValue(0), FimsValidators.scale(2)];
 
-  interestBasisOptions: InterestBasisOption[] = [
-    {type: 'CURRENT_BALANCE', label: 'CURRENT_BALANCE'},
-    {type: 'BEGINNING_BALANCE', label: 'BEGINNING_BALANCE'}
-  ];
-
   @Input() set formData(formData: InterestFormData) {
     this._formData = formData;
   };
@@ -61,7 +50,6 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
       interestRangeEnabled: [false],
       minimum: ['', this.minMaxValidators],
       maximum: [''],
-      interestBasis: ['', Validators.required],
       incomeAccount: ['', [Validators.required], accountExists(this.accountingService)],
       accrualAccount: ['', [Validators.required], accountExists(this.accountingService)]
     });
@@ -77,7 +65,6 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
       interestRangeEnabled: interestRangeEnabled,
       minimum: this._formData.minimum,
       maximum: this._formData.maximum,
-      interestBasis: this._formData.interestBasis,
       incomeAccount: this._formData.incomeAccount,
       accrualAccount: this._formData.accrualAccount
     })
@@ -87,7 +74,6 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
     return {
       minimum: this.form.get('minimum').value,
       maximum: this.form.get('interestRangeEnabled').value ? this.form.get('maximum').value : this.form.get('minimum').value,
-      interestBasis: this.form.get('interestBasis').value,
       incomeAccount: this.form.get('incomeAccount').value,
       accrualAccount: this.form.get('accrualAccount').value
     };

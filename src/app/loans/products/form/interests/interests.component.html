@@ -16,13 +16,6 @@
 
 <form [formGroup]="form">
   <div layout="row">
-    <md-radio-group formControlName="interestBasis">
-      <md-radio-button *ngFor="let basis of interestBasisOptions" [value]="basis.type" layout-margin>
-        {{basis.label | translate}}
-      </md-radio-button>
-    </md-radio-group>
-  </div>
-  <div layout="row">
     <md-slide-toggle formControlName="interestRangeEnabled" layout-margin translate>
       Interest range?
     </md-slide-toggle>
