@@ -17,9 +17,9 @@
 <div layout="column" layout-fill>
   <md-toolbar>
     <div layout="row" layout-align="start center" flex>
-      <button md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
+      <a md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
         <md-icon>keyboard_arrow_left</md-icon>
-      </button>
+      </a>
       {{fullTitle}}
     </div>
     <span flex></span>

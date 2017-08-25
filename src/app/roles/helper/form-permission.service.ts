@@ -21,64 +21,86 @@ import {FimsPermissionDescriptor} from '../../services/security/authz/fims-permi
 import {Injectable} from '@angular/core';
 import {PermittableGroupIdMapper} from '../../services/security/authz/permittable-group-id-mapper';
 import {Role} from '../../services/identity/domain/role.model';
+import {FormPermissionGroup} from '../model/form-permission-group.model';
 
 @Injectable()
 export class FormPermissionService {
 
-  constructor(private idMapper: PermittableGroupIdMapper) {
-  }
+  constructor(private idMapper: PermittableGroupIdMapper) {}
 
-  mapToFormPermissions(groups: PermittableGroup[], permissions: Permission[]): FormPermission[] {
-  let result: FormPermission[] = [];
+  mapToFormPermissions(groups: PermittableGroup[], permissions: Permission[]): FormPermissionGroup[] {
+    const formGroups: FormPermissionGroup[] = [];
 
-  for(let permittableGroup of groups) {
-    let foundPermission: Permission = this.findPermission(permittableGroup.identifier, permissions);
+    for (let permittableGroup of groups) {
+      const groupId = this.groupId(permittableGroup);
 
-    let descriptor: FimsPermissionDescriptor = this.idMapper.map(permittableGroup.identifier);
+      let group = formGroups.find(group => group.groupId === groupId);
 
-    if(!descriptor) continue;
+      if(!group) {
+        group = {
+          groupId,
+          formPermissions: []
+        };
+        formGroups.push(group);
+      }
 
-    let formPermission = new FormPermission(permittableGroup.identifier);
+      const foundPermission: Permission = this.findPermission(permittableGroup.identifier, permissions);
 
-    formPermission.label = descriptor.label;
-    formPermission.readOnly = descriptor.readOnly;
+      const descriptor: FimsPermissionDescriptor = this.idMapper.map(permittableGroup.identifier);
 
-    if(foundPermission) {
-      formPermission.read = this.hasOperation(foundPermission.allowedOperations, 'READ');
-      formPermission.change = this.hasOperation(foundPermission.allowedOperations, 'CHANGE');
-      formPermission.remove = this.hasOperation(foundPermission.allowedOperations, 'DELETE');
+      if (!descriptor) continue;
+
+      const formPermission = new FormPermission(permittableGroup.identifier);
+
+      formPermission.label = descriptor.label;
+      formPermission.readOnly = descriptor.readOnly;
+
+      if (foundPermission) {
+        formPermission.read = this.hasOperation(foundPermission.allowedOperations, 'READ');
+        formPermission.change = this.hasOperation(foundPermission.allowedOperations, 'CHANGE');
+        formPermission.remove = this.hasOperation(foundPermission.allowedOperations, 'DELETE');
+      }
+      group.formPermissions.push(formPermission)
     }
-    result.push(formPermission)
+
+    this.sortGroups(formGroups);
+
+    return formGroups;
   }
 
-  result.sort((a: FormPermission, b: FormPermission) => a.label.localeCompare(b.label));
+  private sortGroups(formGroups: FormPermissionGroup[]) {
+    formGroups.sort((a: FormPermissionGroup, b: FormPermissionGroup) => a.groupId.localeCompare(b.groupId));
+    formGroups.forEach(group => group.formPermissions.sort((a: FormPermission, b: FormPermission) => a.label.localeCompare(b.label)))
+  }
 
-  return result;
-}
+  private groupId(group: PermittableGroup) : string {
+    const identifier = group.identifier;
+    return identifier.substring(0, identifier.indexOf('_')).toUpperCase();
+  }
 
   private hasOperation(allowedOperations: AllowedOperation[], operation: AllowedOperation): boolean {
-  return allowedOperations.indexOf(operation) > -1;
-}
+    return allowedOperations.indexOf(operation) > -1;
+  }
 
   private findPermission(identifier: string, permissions: Permission[]): Permission {
-  return permissions.find((permission: Permission) => permission.permittableEndpointGroupIdentifier === identifier);
-}
+    return permissions.find((permission: Permission) => permission.permittableEndpointGroupIdentifier === identifier);
+  }
 
   mapToRole(identifier: string, formPermissions: FormPermission[]): Role {
-    let permissions: Permission[] = [];
+    const permissions: Permission[] = [];
 
-    for(let formPermission of formPermissions) {
-      let allowedOperations: AllowedOperation[] = [];
+    for (let formPermission of formPermissions) {
+      const allowedOperations: AllowedOperation[] = [];
 
-      if(formPermission.read) {
+      if (formPermission.read) {
         allowedOperations.push('READ')
       }
 
-      if(formPermission.change) {
+      if (formPermission.change) {
         allowedOperations.push('CHANGE')
       }
 
-      if(formPermission.remove) {
+      if (formPermission.remove) {
         allowedOperations.push('DELETE')
       }
 

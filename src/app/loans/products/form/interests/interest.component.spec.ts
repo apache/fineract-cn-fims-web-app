@@ -28,7 +28,6 @@ describe('Test product interest component', () => {
   const validFormData: InterestFormData = {
     minimum: '1.23',
     maximum: '4.56',
-    interestBasis: 'CURRENT_BALANCE',
     accrualAccount: 'accrualAccount',
     incomeAccount: 'incomeAccount'
   };
@@ -36,7 +35,6 @@ describe('Test product interest component', () => {
   const invalidFormData: InterestFormData = {
     minimum: '4.56',
     maximum: '1.23',
-    interestBasis: 'CURRENT_BALANCE',
     accrualAccount: 'accrualAccount',
     incomeAccount: 'incomeAccount'
   };

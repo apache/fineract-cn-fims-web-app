@@ -33,7 +33,11 @@
         <md-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</md-checkbox>
       </md-list-item>
       <md-divider></md-divider>
-      <fims-permission-list-item *ngFor="let permission of formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
+      <ng-container *ngFor="let group of permissionGroups">
+        <h3 md-subheader translate>{{group.groupId}}</h3>
+        <fims-permission-list-item *ngFor="let permission of group.formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
+        <md-divider></md-divider>
+      </ng-container>
     </md-list>
   </div>
   <div layout="row" layout-margin>

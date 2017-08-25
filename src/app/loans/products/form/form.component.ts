@@ -94,6 +94,7 @@ export class ProductFormComponent implements OnInit{
     return this.detailForm.valid &&
       this.settingsForm.valid &&
       this.interestForm.valid &&
+      this.feeForm.valid &&
       this.arrearsAllowanceForm.valid;
   }
 
@@ -112,7 +113,7 @@ export class ProductFormComponent implements OnInit{
       description: this.detailForm.formData.description,
       minorCurrencyUnitDigits: currency.digits,
       currencyCode: currency.code,
-      interestBasis: this.interestForm.formData.interestBasis,
+      interestBasis: 'CURRENT_BALANCE',
       interestRange: {
         minimum: parseFloat(this.interestForm.formData.minimum),
         maximum: parseFloat(this.interestForm.formData.maximum),
@@ -195,7 +196,6 @@ export class ProductFormComponent implements OnInit{
     this.interestFormData = {
       minimum: interestRange.minimum.toFixed(2),
       maximum: interestRange.maximum.toFixed(2),
-      interestBasis: product.interestBasis,
       incomeAccount: accountIdentifier(interestIncome),
       accrualAccount: accountIdentifier(interestAccrual)
     }
