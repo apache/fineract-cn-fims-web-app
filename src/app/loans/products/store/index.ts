@@ -21,6 +21,8 @@ import {createReducer} from '../../../store/index';
 import * as fromProducts from './products.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
+import * as fromProductChargeRanges from './ranges/ranges.reducer';
+
 import {
   createResourceReducer,
   getResourceAll,
@@ -45,6 +47,7 @@ export interface State extends fromRoot.State {
   productTaskForm: FormState;
   productCharges: ResourceState;
   productChargeForm: FormState;
+  productChargeRanges: ResourceState;
 }
 
 const reducers = {
@@ -54,7 +57,8 @@ const reducers = {
   productTasks: createResourceReducer('Product Task', fromProductTasks.reducer),
   productTaskForm: createFormReducer('Product Task'),
   productCharges: createResourceReducer('Product Charge', fromProductCharges.reducer),
-  productChargeForm: createFormReducer('Product Charge')
+  productChargeForm: createFormReducer('Product Charge'),
+  productChargeRanges: createResourceReducer('Product Charge Range', fromProductChargeRanges.reducer)
 };
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -116,3 +120,14 @@ export const getProductChargesLoadedAt = createSelector(getProductChargesState, 
 export const getSelectedProductCharge = createSelector(getProductChargesState, getResourceSelected);
 
 export const getAllProductChargeEntities = createSelector(getProductChargesState, getResourceAll);
+
+/**
+ * Product Charge Range Selectors
+ */
+
+export const getProductChargeRangesState = (state: State) => state.productChargeRanges;
+
+export const getProductChargeRangesLoadedAt = createSelector(getProductChargeRangesState, getResourceLoadedAt);
+export const getSelectedProductChargeRange = createSelector(getProductChargeRangesState, getResourceSelected);
+
+export const getAllProductChargeRangeEntities = createSelector(getProductChargeRangesState, getResourceAll);

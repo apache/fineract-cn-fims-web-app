@@ -1,0 +1,35 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<md-select formControlName="productIdentifier" layout-margin placeholder="{{ 'Select product' | translate }}">
+  <md-option *ngFor="let segmentSet of balanceSegmentSets" [value]="definition.identifier">
+    {{segmentSet.identifier}}
+  </md-option>
+</md-select>
+
+<div layout="row" *ngFor="let range of segmentSet.; let i=index" [formGroupName]="i">
+  <md-input-container>
+    <input mdInput formControlName="segment" placeholder="Range start"/>
+  </md-input-container>
+  <fims-id-input [form]="getFormGroup(i)" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <md-input-container layout-margin>
+    <input mdInput type="number" formControlName="segment" placeholder="Range start"/>
+  </md-input-container>
+  <md-input-container layout-margin>
+    <input mdInput placeholder="Range end" [disabled]="true" [value]="getNextSegmentValue(i)"/>
+  </md-input-container>
+  <button md-button (click)="removeRange(i)">{{'REMOVE RANGE' | translate}}</button>
+</div>

@@ -32,4 +32,7 @@ export interface ChargeDefinition {
   accrueAction?: WorkflowAction;
   readOnly?: boolean;
   proportionalTo: string;
+  forSegmentSet?: string; // my_range
+  fromSegment?: string; // 001
+  toSegment?: string; // 003
 }

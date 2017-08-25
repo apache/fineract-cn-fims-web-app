@@ -14,12 +14,10 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit charge' | translate}}">
-  <fims-product-charge-form-component
-    (onSave)="onSave($event)"
-    (onCancel)="onCancel()"
-    [charge]="charge$ | async"
-    [balanceSegmentSets]="balanceSegmentSets$ | async"
-    [editMode]="true">
-  </fims-product-charge-form-component>
+<fims-layout-card-over title="{{'Create range' | translate}}">
+  <fims-product-charge-range-form-component
+    [balanceSegmentSet]="balanceSegmentSet"
+    (onCancel)="cancel()"
+    (onSave)="save($event)">
+  </fims-product-charge-range-form-component>
 </fims-layout-card-over>

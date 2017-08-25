@@ -21,6 +21,7 @@ import {ChargeMethod} from '../../../../services/portfolio/domain/charge-method.
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {ChargeProportionalDesignators} from '../../../../services/portfolio/domain/individuallending/charge-proportional-designators.model';
+import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
 
 interface ChargeMethodOption {
   type: ChargeMethod,
@@ -52,6 +53,8 @@ export class ProductChargeFormComponent implements OnChanges {
 
   @Input() charge: ChargeDefinition;
 
+  @Input() balanceSegmentSets: BalanceSegmentSet[];
+
   @Output('onSave') onSave = new EventEmitter<ChargeDefinition>();
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
@@ -71,14 +74,16 @@ export class ProductChargeFormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.detailForm.reset({
-      identifier: this.charge.identifier,
-      name: this.charge.name,
-      description: this.charge.description,
-      chargeMethod: this.charge.chargeMethod,
-      proportionalTo: this.charge.proportionalTo,
-      amount: this.charge.amount
-    });
+    if(changes.charge) {
+      this.detailForm.reset({
+        identifier: this.charge.identifier,
+        name: this.charge.name,
+        description: this.charge.description,
+        chargeMethod: this.charge.chargeMethod,
+        proportionalTo: this.charge.proportionalTo,
+        amount: this.charge.amount
+      });
+    }
   }
 
   private toggleChargeMethod(chargeMethod: ChargeMethod): void {

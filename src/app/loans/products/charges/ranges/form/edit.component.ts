@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
+import {BalanceSegmentSet} from '../../../../../services/portfolio/domain/balance-segment-set.model';
+import {PortfolioStore} from '../../../store/index';
+import * as fromPortfolio from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {UPDATE} from '../../store/charges/charge.actions';
-import * as fromPortfolio from '../../store';
-import {PortfolioStore} from '../../store/index';
-import {FimsProduct} from '../../store/model/fims-product.model';
+import {RangeActions} from '../../../store/ranges/range.actions';
+import {Subscription} from 'rxjs/Subscription';
+import {FimsProduct} from '../../../store/model/fims-product.model';
 import {Observable} from 'rxjs/Observable';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
-import {RangeActions} from '../../store/ranges/range.actions';
 
 @Component({
   templateUrl: './edit.component.html'
 })
-export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
+export class EditProductChargeRangeFormComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
   private product: FimsProduct;
 
-  charge$: Observable<ChargeDefinition>;
-
-  balanceSegmentSets$: Observable<BalanceSegmentSet[]>;
+  balanceSegmentSet$: Observable<BalanceSegmentSet>;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
@@ -46,31 +41,26 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
       .filter(product => !!product)
       .subscribe(product => this.product = product);
 
-    this.charge$ = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
-      .filter(charge => !!charge);
-
-    this.balanceSegmentSets$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
-
-    this.portfolioStore.dispatch(RangeActions.loadAllAction());
+    this.balanceSegmentSet$ = this.portfolioStore.select(fromPortfolio.getSelectedProductChargeRange);
   }
 
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
   }
 
-  onSave(charge: ChargeDefinition): void {
-    this.portfolioStore.dispatch({ type: UPDATE, payload: {
-      productId: this.product.identifier,
-      charge: charge,
-      activatedRoute: this.route
-    }});
+  save(resource: BalanceSegmentSet): void {
+    this.portfolioStore.dispatch(RangeActions.updateAction({
+      resource,
+      data: {
+        productIdentifier: this.product.identifier,
+        activatedRoute: this.route
+      }
+    }))
   }
 
-  onCancel(): void{
-    this.navigateAway();
-  }
 
-  navigateAway(): void{
+  cancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
+
 }

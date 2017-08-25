@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-export type ChargeMethod = 'FIXED' | 'PROPORTIONAL' | 'INTEREST';
+import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
+import {createResourceActions} from '../../../../common/store/action-creator/action-creator';
+
+export const RangeActions = createResourceActions<BalanceSegmentSet>('Product Charge Range');

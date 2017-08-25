@@ -36,6 +36,7 @@ import {FimsCasePage} from './domain/fims-case-page.model';
 import {Case} from './domain/case.model';
 import {mapToCase, mapToFimsCase, mapToFimsCases} from './domain/mapper/fims-case.mapper';
 import {mapToFimsCasePage} from './domain/mapper/fims-case-page.mapper';
+import {BalanceSegmentSet} from './domain/balance-segment-set.model';
 
 @Injectable()
 export class PortfolioService {
@@ -218,6 +219,32 @@ export class PortfolioService {
 
     return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions)
       .map((casePage: CasePage) => mapToFimsCasePage(casePage));
+  }
+
+  balanceSet: BalanceSegmentSet = { identifier: 'test', segmentIdentifiers: ['test'], segments: [1,2] };
+
+  findAllBalanceSegmentSets(productIdentifier: string): Observable<BalanceSegmentSet[]> {
+    return Observable.of([
+      this.balanceSet
+    ]);
+    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`);
+  }
+
+  createBalanceSegmentSet(productIdentifier: string, balanceSegmentSet: BalanceSegmentSet): Observable<void> {
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`, balanceSegmentSet)
+  }
+
+  getBalanceSegmentSet(productIdentifier: string, balanceSegmentSetIdentifier: string): Observable<BalanceSegmentSet> {
+    return Observable.of(this.balanceSet);
+    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSetIdentifier}`)
+  }
+
+  changeBalanceSegmentSet(productIdentifier: string, balanceSegmentSet: BalanceSegmentSet): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSet.identifier}`, balanceSegmentSet)
+  }
+
+  deleteBalanceSegmentSet(productIdentifier: string, balanceSegmentSetIdentifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSetIdentifier}`)
   }
 
 }
