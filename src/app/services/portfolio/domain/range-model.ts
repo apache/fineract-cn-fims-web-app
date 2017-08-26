@@ -13,26 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {RangeSegment} from './range-segment.model';
 
-import {ChargeMethod} from './charge-method.model';
-import {ChronoUnit} from './chrono-unit.model';
-import {WorkflowAction} from './individuallending/workflow-action.model';
-
-export interface ChargeDefinition {
+export interface FimsRange {
   identifier: string;
-  name: string;
-  description: string;
-  chargeAction: WorkflowAction;
-  chargeMethod: ChargeMethod;
-  amount: number;
-  fromAccountDesignator: string;
-  toAccountDesignator: string;
-  forCycleSizeUnit: ChronoUnit;
-  accrualAccountDesignator?: string;
-  accrueAction?: WorkflowAction;
-  readOnly?: boolean;
-  proportionalTo: string;
-  forSegmentSet?: string;
-  fromSegment?: string;
-  toSegment?: string;
+  segments: RangeSegment[]
 }

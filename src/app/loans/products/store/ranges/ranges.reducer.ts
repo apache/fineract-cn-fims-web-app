@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 import {ResourceState} from '../../../../common/store/resource.reducer';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
 import {RangeActions} from './range.actions';
 import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../../common/store/reducer.helper';
 import {Actions} from '../../../../common/store/action-creator/action-creator';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 
 export interface State extends ResourceState {
   ids: string[];
-  entities: { [id: string]: BalanceSegmentSet };
+  entities: { [id: string]: FimsRange };
   selectedId: string | null;
 }
 
@@ -33,7 +33,7 @@ export const initialState: State = {
   selectedId: null,
 };
 
-export function reducer(state = initialState, action: Actions<BalanceSegmentSet>): ResourceState {
+export function reducer(state = initialState, action: Actions<FimsRange>): ResourceState {
 
   switch (action.type) {
 
@@ -42,11 +42,11 @@ export function reducer(state = initialState, action: Actions<BalanceSegmentSet>
     }
 
     case RangeActions.LOAD_ALL_COMPLETE: {
-      const balanceSegmentSets: BalanceSegmentSet[] = action.payload.resources;
+      const ranges: FimsRange[] = action.payload.resources;
 
-      const ids = balanceSegmentSets.map(chargeDefinition => chargeDefinition.identifier);
+      const ids = ranges.map(chargeDefinition => chargeDefinition.identifier);
 
-      const entities = resourcesToHash(balanceSegmentSets);
+      const entities = resourcesToHash(ranges);
 
       const loadedAt = idsToHashWithCurrentTimestamp(ids);
 

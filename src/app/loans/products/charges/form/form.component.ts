@@ -21,7 +21,8 @@ import {ChargeMethod} from '../../../../services/portfolio/domain/charge-method.
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {ChargeProportionalDesignators} from '../../../../services/portfolio/domain/individuallending/charge-proportional-designators.model';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+import {ITdDataTableColumn} from '@covalent/core';
 
 interface ChargeMethodOption {
   type: ChargeMethod,
@@ -33,6 +34,8 @@ interface ChargeMethodOption {
   templateUrl: './form.component.html'
 })
 export class ProductChargeFormComponent implements OnChanges {
+
+  numberFormat: string = '1.2-2';
 
   chargeMethodOptions: ChargeMethodOption[] = [
     { type: 'FIXED', label: 'Fixed'},
@@ -49,11 +52,13 @@ export class ProductChargeFormComponent implements OnChanges {
 
   detailForm: FormGroup;
 
+  selectedRange: FimsRange;
+
   @Input() editMode: boolean;
 
   @Input() charge: ChargeDefinition;
 
-  @Input() balanceSegmentSets: BalanceSegmentSet[];
+  @Input() ranges: FimsRange[];
 
   @Output('onSave') onSave = new EventEmitter<ChargeDefinition>();
 
@@ -66,23 +71,44 @@ export class ProductChargeFormComponent implements OnChanges {
       description: ['', [Validators.required]],
       chargeMethod: ['', [Validators.required]],
       proportionalTo: ['', [Validators.required]],
-      amount: [0, [Validators.required]]
+      amount: [0, [Validators.required]],
+      rangeEnabled: [false],
+      rangeIdentifier: ['', Validators.required],
+      rangeSegmentIdentifier: ['', Validators.required]
     });
 
     this.detailForm.get('chargeMethod').valueChanges
-      .subscribe(value => this.toggleChargeMethod(value))
+      .subscribe(value => this.toggleChargeMethod(value));
+
+    this.detailForm.get('rangeIdentifier').valueChanges
+      .subscribe(identifier => this.toggleRange(identifier));
+
+    this.detailForm.get('rangeEnabled').valueChanges
+      .subscribe(enabled => this.toggleRangeEnabled(enabled))
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.charge) {
-      this.detailForm.reset({
+      const chargeData: any = {
         identifier: this.charge.identifier,
         name: this.charge.name,
         description: this.charge.description,
         chargeMethod: this.charge.chargeMethod,
         proportionalTo: this.charge.proportionalTo,
         amount: this.charge.amount
-      });
+      };
+
+      if(this.charge.forSegmentSet) {
+        chargeData.rangeEnabled = true;
+        chargeData.rangeIdentifier = this.charge.forSegmentSet;
+        chargeData.rangeSegmentIdentifier = this.charge.fromSegment ? [this.charge.fromSegment] : []
+      }
+
+      this.detailForm.reset(chargeData);
+    }
+
+    if(changes.ranges) {
+      this.toggleRange(this.detailForm.get('rangeIdentifier').value)
     }
   }
 
@@ -92,12 +118,33 @@ export class ProductChargeFormComponent implements OnChanges {
     if(chargeMethod === 'PROPORTIONAL') {
       proportionalTo.enable();
       proportionalTo.setValidators(Validators.required);
-      proportionalTo.updateValueAndValidity();
     } else {
       proportionalTo.disable();
       proportionalTo.clearValidators();
-      proportionalTo.updateValueAndValidity();
     }
+    proportionalTo.updateValueAndValidity();
+  }
+
+  toggleRange(identifier: string): void {
+    if(this.ranges) {
+      this.selectedRange = this.ranges.find(range => range.identifier === identifier);
+    }
+  }
+
+  toggleRangeEnabled(enabled: boolean): void {
+    const rangeIdentifier = this.detailForm.get('rangeIdentifier');
+    const rangeSegmentIdentifier = this.detailForm.get('rangeSegmentIdentifier');
+
+    if(enabled) {
+      rangeIdentifier.setValidators(Validators.required);
+      rangeSegmentIdentifier.setValidators(Validators.required);
+    } else {
+      rangeIdentifier.clearValidators();
+      rangeSegmentIdentifier.clearValidators();
+    }
+
+    rangeIdentifier.updateValueAndValidity();
+    rangeSegmentIdentifier.updateValueAndValidity();
   }
 
   save(): void {
@@ -111,6 +158,17 @@ export class ProductChargeFormComponent implements OnChanges {
       amount: this.detailForm.get('amount').value,
       proportionalTo: chargeMethod === 'PROPORTIONAL' ? this.detailForm.get('proportionalTo').value : undefined
     });
+
+    if(this.detailForm.get('rangeEnabled').value) {
+      charge.forSegmentSet = this.detailForm.get('rangeIdentifier').value;
+      const segmentIdentifier = this.detailForm.get('rangeSegmentIdentifier').value;
+      charge.fromSegment = segmentIdentifier;
+      charge.toSegment = segmentIdentifier;
+    } else {
+      delete charge.forSegmentSet;
+      delete charge.fromSegment;
+      delete charge.toSegment;
+    }
 
     this.onSave.emit(charge);
   }

@@ -14,25 +14,8 @@
  * limitations under the License.
  */
 
-import {ChargeMethod} from './charge-method.model';
-import {ChronoUnit} from './chrono-unit.model';
-import {WorkflowAction} from './individuallending/workflow-action.model';
-
-export interface ChargeDefinition {
+export interface RangeSegment {
   identifier: string;
-  name: string;
-  description: string;
-  chargeAction: WorkflowAction;
-  chargeMethod: ChargeMethod;
-  amount: number;
-  fromAccountDesignator: string;
-  toAccountDesignator: string;
-  forCycleSizeUnit: ChronoUnit;
-  accrualAccountDesignator?: string;
-  accrueAction?: WorkflowAction;
-  readOnly?: boolean;
-  proportionalTo: string;
-  forSegmentSet?: string;
-  fromSegment?: string;
-  toSegment?: string;
+  start: number;
+  end?: number;
 }

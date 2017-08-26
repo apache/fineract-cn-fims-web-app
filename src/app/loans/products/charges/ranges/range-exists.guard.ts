@@ -23,7 +23,7 @@ import {ExistsGuardService} from '../../../../common/guards/exists-guard';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {PortfolioStore} from '../../store/index';
 import {RangeActions} from '../../store/ranges/range.actions';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Injectable()
 export class ProductChargeRangeExistsGuard implements CanActivate {
@@ -40,8 +40,8 @@ export class ProductChargeRangeExistsGuard implements CanActivate {
   }
 
   hasRangeInApi(productId: string, rangeId: string): Observable<boolean> {
-    const getRange = this.portfolioService.getBalanceSegmentSet(productId, rangeId)
-      .do((resource: BalanceSegmentSet) => this.store.dispatch(RangeActions.loadAction({
+    const getRange = this.portfolioService.getRange(productId, rangeId)
+      .do((resource: FimsRange) => this.store.dispatch(RangeActions.loadAction({
         resource
       })))
       .map(resource => !!resource);

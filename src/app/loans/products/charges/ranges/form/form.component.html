@@ -20,20 +20,20 @@
       <div layout="row">
         <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
       </div>
-      <ng-container formArrayName="ranges">
-        <div layout="row" *ngFor="let range of ranges; let i=index" [formGroupName]="i">
+      <ng-container formArrayName="rangeSegments">
+        <div layout="row" *ngFor="let range of rangeSegmentControls; let i=index" [formGroupName]="i">
           <fims-id-input [form]="getFormGroup(i)" controlName="identifier" [readonly]="editMode"></fims-id-input>
           <md-input-container layout-margin>
-            <input mdInput type="number" formControlName="segment" placeholder="Range start"/>
+            <input mdInput type="number" formControlName="start" placeholder="Range start"/>
           </md-input-container>
           <md-input-container layout-margin>
-            <input mdInput type="text" placeholder="Range end" [disabled]="true" [value]="getNextSegmentValue(i)"/>
+            <input mdInput placeholder="Range end" formControlName="end" [value]="getNextSegmentValue(i)"/>
           </md-input-container>
-          <button md-button (click)="removeRange(i)">{{'REMOVE RANGE' | translate}}</button>
+          <button md-button (click)="removeRangeSegment(i)" *ngIf="i > 0">{{'REMOVE RANGE' | translate}}</button>
         </div>
       </ng-container>
       <div layout="row">
-        <button flex md-button md-raised-button (click)="addRange()">{{'ADD RANGE' | translate}}</button>
+        <button flex md-button md-raised-button (click)="addRangeSegment()">{{'ADD RANGE' | translate}}</button>
       </div>
     </form>
     <ng-template td-step-actions>

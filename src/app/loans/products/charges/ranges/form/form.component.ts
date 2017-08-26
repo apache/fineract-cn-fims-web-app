@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {BalanceSegmentSet} from '../../../../../services/portfolio/domain/balance-segment-set.model';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../../common/validator/validators';
+import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
 
 @Component({
   selector: 'fims-product-charge-range-form-component',
@@ -26,92 +26,83 @@ export class ProductChargeRangeFormComponent {
 
   form: FormGroup;
 
-  @Input() set balanceSegmentSet(balanceSegmentSet: BalanceSegmentSet) {
+  @Input() set range(range: FimsRange) {
     this.form = this.formBuilder.group({
-      identifier: [balanceSegmentSet.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      ranges: this.initRanges(balanceSegmentSet)
+      identifier: [range.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
+      rangeSegments: this.initRangeSegments(range)
     })
+
+    // TODO: Validate unique identifier and ranges across range segments
   };
 
   @Input() editMode: boolean;
 
-  @Output('onSave') onSave = new EventEmitter<BalanceSegmentSet>();
+  @Output('onSave') onSave = new EventEmitter<FimsRange>();
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
   constructor(private formBuilder: FormBuilder) {}
 
-  private initRanges(balanceSegmentSet: BalanceSegmentSet): FormArray {
+  private initRangeSegments(range: FimsRange): FormArray {
     const formControls: FormGroup[] = [];
-    const segments = balanceSegmentSet.segments;
-    const segmentIdentifier = balanceSegmentSet.segmentIdentifiers;
 
-    for(let i = 0; i < segments.length; i++) {
-      const identifier = segmentIdentifier[i];
-      const segment = segments[i];
-
-      formControls.push(this.initRange(identifier, segment, i === 0));
-    }
+    range.segments.forEach((segment, index) => {
+      formControls.push(this.initRange(segment.identifier, segment.start, index === 0));
+    });
 
     return this.formBuilder.array(formControls);
   }
 
-  private initRange(identifier: string = '', segment: number = 0, disabled: boolean = false): FormGroup {
+  private initRange(identifier: string = '', start: number = 0, disabled: boolean = false): FormGroup {
     return this.formBuilder.group({
       identifier: [identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      segment: [{ value: segment, disabled }, [Validators.required, FimsValidators.minValue(0)]],
+      start: [{ value: start, disabled }, [Validators.required, FimsValidators.minValue(0)]],
+      end: [{ value: 0, disabled: true }, [Validators.required, FimsValidators.minValue(0)]],
     })
   }
 
-  addRange(): void {
-    const ranges: FormArray = this.form.get('ranges') as FormArray;
-    ranges.push(this.initRange());
+  get rangeSegments(): FormArray {
+    return this.form.get('rangeSegments') as FormArray;
   }
 
-  removeRange(index: number): void {
-    const ranges: FormArray = this.form.get('ranges') as FormArray;
-    ranges.removeAt(index);
+  addRangeSegment(): void {
+    this.rangeSegments.push(this.initRange());
   }
 
-  get ranges(): AbstractControl[] {
-    const ranges: FormArray = this.form.get('ranges') as FormArray;
-    return ranges.controls;
+  removeRangeSegment(index: number): void {
+    this.rangeSegments.removeAt(index);
+  }
+
+  get rangeSegmentControls(): AbstractControl[] {
+    return this.rangeSegments.controls;
   }
 
   getFormGroup(index: number): FormGroup {
-    const ranges = this.form.get('ranges') as FormArray;
-    return ranges.at(index) as FormGroup;
+    return this.rangeSegments.at(index) as FormGroup;
   }
 
   getNextSegmentValue(index: number): string {
-    const ranges = this.form.get('ranges') as FormArray;
-
     const nextIndex = index + 1;
 
-    if(nextIndex >= ranges.length) return '-';
+    if(nextIndex >= this.rangeSegments.length) return '-';
 
     const formGroup: FormGroup = this.getFormGroup(nextIndex);
-    return formGroup.get('segment').value;
+    return formGroup.get('start').value;
   }
 
   save(): void {
     const formValue = this.form.getRawValue();
 
-    const segments: number[] = [];
-    const segmentIdentifiers: string[] = [];
-
-    formValue.ranges.forEach(range => {
-      segments.push(range.segment);
-      segmentIdentifiers.push(range.identifier);
-    });
-
-    const balanceSegmentSet: BalanceSegmentSet = {
+    const range: FimsRange = {
       identifier: formValue.identifier,
-      segments,
-      segmentIdentifiers
+      segments: formValue.rangeSegments.map(segment => ({
+        identifier: segment.identifier,
+        start: segment.start,
+        end: segment.end
+      }))
     };
 
-    this.onSave.emit(balanceSegmentSet)
+    this.onSave.emit(range)
   }
 
   cancel(): void {

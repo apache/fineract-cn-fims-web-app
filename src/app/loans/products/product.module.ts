@@ -68,7 +68,7 @@ import {
   MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
 import {ProductDetailFormComponent} from './form/detail/detail.component';
 import {ProductChargeRangeListComponent} from './charges/ranges/range.list.component';
@@ -99,6 +99,7 @@ import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/not
     MdOptionModule,
     MdSelectModule,
     MdCheckboxModule,
+    CovalentDataTableModule,
     CovalentStepsModule,
     CovalentMessageModule,
 

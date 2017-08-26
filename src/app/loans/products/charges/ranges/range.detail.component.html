@@ -20,16 +20,15 @@
   </fims-layout-card-over-header-menu>
   <div class="md-content inset" flex>
     <div layout="row">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Segments</h3>
-          <p md-line>{{range.segments?.join(',')}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Segment identifiers</h3>
-          <p md-line>{{range.segmentIdentifiers?.join(',')}}</p>
-        </md-list-item>
-      </md-list>
+      <td-data-table
+        flex
+        [data]="range?.segments"
+        [columns]="rangeColumns"
+        [selectable]="false"
+        [clickable]="false"
+        [multiple]="false"
+        [sortable]="false">
+      </td-data-table>
     </div>
   </div>
 </fims-layout-card-over>

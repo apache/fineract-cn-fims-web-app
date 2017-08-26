@@ -22,7 +22,7 @@ import {of} from 'rxjs/observable/of';
 import * as resourceActions from '../../../../../common/store/action-creator/actions'
 import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
 import {RangeActions} from '../range.actions';
-import {BalanceSegmentSet} from '../../../../../services/portfolio/domain/balance-segment-set.model';
+import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
 
 @Injectable()
 export class ProductChargeRangesApiEffects {
@@ -37,7 +37,7 @@ export class ProductChargeRangesApiEffects {
     .switchMap(id => {
       const nextSearch$ = this.actions$.ofType(RangeActions.LOAD_ALL).skip(1);
 
-      return this.portfolioService.findAllBalanceSegmentSets(id)
+      return this.portfolioService.findAllRanges(id)
         .takeUntil(nextSearch$)
         .map(resources => RangeActions.loadAllCompleteAction({
           resources
@@ -48,11 +48,11 @@ export class ProductChargeRangesApiEffects {
     });
 
   @Effect()
-  createBalanceSegmentSet$: Observable<Action> = this.actions$
+  createRange$: Observable<Action> = this.actions$
     .ofType(RangeActions.CREATE)
-    .map((action: resourceActions.ResourceAction<BalanceSegmentSet>) => action.payload)
+    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.createBalanceSegmentSet(payload.data.productIdentifier, payload.resource)
+      this.portfolioService.createRange(payload.data.productIdentifier, payload.resource)
         .map(() => RangeActions.createSuccessAction(payload))
         .catch((error) => of(RangeActions.createFailAction({
           resource: payload.resource,
@@ -62,11 +62,11 @@ export class ProductChargeRangesApiEffects {
     );
 
   @Effect()
-  updateBalanceSegmentSet$: Observable<Action> = this.actions$
+  updateRange$: Observable<Action> = this.actions$
     .ofType(RangeActions.UPDATE)
-    .map((action: resourceActions.ResourceAction<BalanceSegmentSet>) => action.payload)
+    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.changeBalanceSegmentSet(payload.data.productIdentifier, payload.resource)
+      this.portfolioService.changeRange(payload.data.productIdentifier, payload.resource)
         .map(() => RangeActions.updateSuccessAction(payload))
         .catch((error) => of(RangeActions.updateFailAction({
           resource: payload.resource,
@@ -76,11 +76,11 @@ export class ProductChargeRangesApiEffects {
     );
 
   @Effect()
-  deleteBalanceSegmentSet$: Observable<Action> = this.actions$
+  deleteRange$: Observable<Action> = this.actions$
     .ofType(RangeActions.DELETE)
-    .map((action: resourceActions.ResourceAction<BalanceSegmentSet>) => action.payload)
+    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
     .mergeMap(payload =>
-      this.portfolioService.deleteBalanceSegmentSet(payload.data.productIdentifier, payload.resource.identifier)
+      this.portfolioService.deleteRange(payload.data.productIdentifier, payload.resource.identifier)
         .map(() => RangeActions.deleteSuccessAction(payload))
         .catch((error) => of(RangeActions.deleteFailAction({
           resource: payload.resource,

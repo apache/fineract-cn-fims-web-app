@@ -16,7 +16,7 @@
 
 <fims-layout-card-over title="{{'Edit range' | translate}}">
   <fims-product-charge-range-form-component
-    [balanceSegmentSet]="balanceSegmentSet$ | async"
+    [range]="range$ | async"
     (onCancel)="cancel()"
     (onSave)="save($event)"
     [editMode]="true">

@@ -37,6 +37,8 @@ import {Case} from './domain/case.model';
 import {mapToCase, mapToFimsCase, mapToFimsCases} from './domain/mapper/fims-case.mapper';
 import {mapToFimsCasePage} from './domain/mapper/fims-case-page.mapper';
 import {BalanceSegmentSet} from './domain/balance-segment-set.model';
+import {mapToBalanceSegmentSet, mapToFimsRange, mapToFimsRanges} from './domain/mapper/fims-range.mapper';
+import {FimsRange} from './domain/range-model';
 
 @Injectable()
 export class PortfolioService {
@@ -221,30 +223,34 @@ export class PortfolioService {
       .map((casePage: CasePage) => mapToFimsCasePage(casePage));
   }
 
-  balanceSet: BalanceSegmentSet = { identifier: 'test', segmentIdentifiers: ['test'], segments: [1,2] };
+  balanceSetOne: BalanceSegmentSet = { identifier: 'testOne', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
+  balanceSetTwo: BalanceSegmentSet = { identifier: 'testTwo', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
 
-  findAllBalanceSegmentSets(productIdentifier: string): Observable<BalanceSegmentSet[]> {
-    return Observable.of([
-      this.balanceSet
-    ]);
+  findAllRanges(productIdentifier: string): Observable<FimsRange[]> {
+    return Observable.of(mapToFimsRanges([
+      this.balanceSetOne,
+      this.balanceSetTwo
+    ]));
     // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`);
   }
 
-  createBalanceSegmentSet(productIdentifier: string, balanceSegmentSet: BalanceSegmentSet): Observable<void> {
+  createRange(productIdentifier: string, range: FimsRange): Observable<void> {
+    const balanceSegmentSet = mapToBalanceSegmentSet(range);
     return this.http.post(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`, balanceSegmentSet)
   }
 
-  getBalanceSegmentSet(productIdentifier: string, balanceSegmentSetIdentifier: string): Observable<BalanceSegmentSet> {
-    return Observable.of(this.balanceSet);
-    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSetIdentifier}`)
+  getRange(productIdentifier: string, rangeIdentifier: string): Observable<FimsRange> {
+    return Observable.of(mapToFimsRange(this.balanceSetOne));
+    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
   }
 
-  changeBalanceSegmentSet(productIdentifier: string, balanceSegmentSet: BalanceSegmentSet): Observable<void> {
+  changeRange(productIdentifier: string, range: FimsRange): Observable<void> {
+    const balanceSegmentSet = mapToBalanceSegmentSet(range);
     return this.http.put(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSet.identifier}`, balanceSegmentSet)
   }
 
-  deleteBalanceSegmentSet(productIdentifier: string, balanceSegmentSetIdentifier: string): Observable<void> {
-    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSetIdentifier}`)
+  deleteRange(productIdentifier: string, rangeIdentifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
   }
 
 }

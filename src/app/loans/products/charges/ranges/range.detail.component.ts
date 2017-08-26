@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store'
 import {Observable} from 'rxjs/Observable';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute} from '@angular/router';
-import {TdDialogService} from '@covalent/core';
+import {ITdDataTableColumn, TdDialogService} from '@covalent/core';
 import {FimsProduct} from '../../store/model/fims-product.model';
 import {Subscription} from 'rxjs/Subscription';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './range.detail.component.html'
@@ -33,7 +33,13 @@ export class ProductChargeRangeDetailComponent implements OnInit {
 
   private product: FimsProduct;
 
-  range$: Observable<BalanceSegmentSet>;
+  range$: Observable<FimsRange>;
+
+  rangeColumns: ITdDataTableColumn[] = [
+    { name: 'identifier', label: 'Identifier' },
+    { name: 'start', label: 'Start', numeric: true, format: value => value ? value.toFixed(2) : '-' },
+    { name: 'end', label: 'End', numeric: true, format: value => value ? value.toFixed(2) : '-' },
+  ];
 
   constructor(private portfolioStore: PortfolioStore, private route: ActivatedRoute, private dialogService: TdDialogService) {}
 
@@ -54,7 +60,7 @@ export class ProductChargeRangeDetailComponent implements OnInit {
     }).afterClosed();
   }
 
-  deleteRange(resource: BalanceSegmentSet): void {
+  deleteRange(resource: FimsRange): void {
     this.confirmDeletion()
       .filter(accept => accept)
       .subscribe(() => {

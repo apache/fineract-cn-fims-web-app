@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BalanceSegmentSet} from '../../../../../services/portfolio/domain/balance-segment-set.model';
-import {PortfolioStore} from '../../../store/index';
 import * as fromPortfolio from '../../../store/index';
+import {PortfolioStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RangeActions} from '../../../store/ranges/range.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {FimsProduct} from '../../../store/model/fims-product.model';
 import {Observable} from 'rxjs/Observable';
+import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -32,7 +32,7 @@ export class EditProductChargeRangeFormComponent implements OnInit, OnDestroy {
 
   private product: FimsProduct;
 
-  balanceSegmentSet$: Observable<BalanceSegmentSet>;
+  range$: Observable<FimsRange[]>;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
@@ -41,14 +41,14 @@ export class EditProductChargeRangeFormComponent implements OnInit, OnDestroy {
       .filter(product => !!product)
       .subscribe(product => this.product = product);
 
-    this.balanceSegmentSet$ = this.portfolioStore.select(fromPortfolio.getSelectedProductChargeRange);
+    this.range$ = this.portfolioStore.select(fromPortfolio.getSelectedProductChargeRange);
   }
 
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
   }
 
-  save(resource: BalanceSegmentSet): void {
+  save(resource: FimsRange): void {
     this.portfolioStore.dispatch(RangeActions.updateAction({
       resource,
       data: {

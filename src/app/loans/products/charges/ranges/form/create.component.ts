@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BalanceSegmentSet} from '../../../../../services/portfolio/domain/balance-segment-set.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as fromPortfolio from '../../../store/index';
 import {PortfolioStore} from '../../../store/index';
 import {RangeActions} from '../../../store/ranges/range.actions';
 import {FimsProduct} from '../../../store/model/fims-product.model';
 import {Subscription} from 'rxjs/Subscription';
-import * as fromPortfolio from '../../../store/index';
+import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -31,10 +31,11 @@ export class CreateProductChargeRangeFormComponent implements OnInit, OnDestroy 
 
   private product: FimsProduct;
 
-  balanceSegmentSet: BalanceSegmentSet = {
+  range: FimsRange = {
     identifier: '',
-    segments: [0],
-    segmentIdentifiers: ['Start']
+    segments: [
+      { identifier: 'Start', start: 0 }
+    ]
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
@@ -49,7 +50,7 @@ export class CreateProductChargeRangeFormComponent implements OnInit, OnDestroy 
     this.productSubscription.unsubscribe();
   }
 
-  save(resource: BalanceSegmentSet): void {
+  save(resource: FimsRange): void {
     this.portfolioStore.dispatch(RangeActions.createAction({
       resource,
       data: {

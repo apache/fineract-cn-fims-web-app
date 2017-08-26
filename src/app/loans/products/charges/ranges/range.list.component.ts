@@ -20,8 +20,8 @@ import {Observable} from 'rxjs/Observable';
 import {PortfolioStore} from '../../store/index';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute, Router} from '@angular/router';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
 import * as fromPortfolio from '../../store';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './range.list.component.html'
@@ -51,7 +51,7 @@ export class ProductChargeRangeListComponent implements OnInit {
     this.portfolioStore.dispatch(RangeActions.loadAllAction());
   }
 
-  rowSelect(balanceSegmentSet: BalanceSegmentSet): void {
-    this.router.navigate(['detail', balanceSegmentSet.identifier], { relativeTo: this.route })
+  rowSelect(range: FimsRange): void {
+    this.router.navigate(['detail', range.identifier], { relativeTo: this.route })
   }
 }

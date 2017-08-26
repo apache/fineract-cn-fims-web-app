@@ -20,8 +20,8 @@
       <h3 md-subheader translate>Management</h3>
       <a md-list-item [routerLink]="['./ranges']">
         <md-icon md-list-avatar>assignment</md-icon>
-        <h3 md-line translate>Balance ranges</h3>
-        <p md-line translate>Manage balance ranges</p>
+        <h3 md-line translate>Ranges</h3>
+        <p md-line translate>Manage ranges</p>
       </a>
     </md-nav-list>
     <fims-data-table right flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>

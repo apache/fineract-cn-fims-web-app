@@ -23,8 +23,8 @@ import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
 import {FimsProduct} from '../../store/model/fims-product.model';
 import {Observable} from 'rxjs/Observable';
-import {BalanceSegmentSet} from '../../../../services/portfolio/domain/balance-segment-set.model';
 import {RangeActions} from '../../store/ranges/range.actions';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -37,7 +37,7 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
 
   charge$: Observable<ChargeDefinition>;
 
-  balanceSegmentSets$: Observable<BalanceSegmentSet[]>;
+  ranges$: Observable<FimsRange[]>;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
@@ -49,7 +49,7 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
     this.charge$ = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
       .filter(charge => !!charge);
 
-    this.balanceSegmentSets$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
+    this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
 
     this.portfolioStore.dispatch(RangeActions.loadAllAction());
   }
