@@ -22,11 +22,12 @@ import {emptySearchResult} from '../../../../common/store/search.reducer';
 import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {Injectable} from '@angular/core';
 import * as instanceActions from '../deposit.actions';
+import {ChequeService} from '../../../../services/cheque/cheque.service';
 
 @Injectable()
 export class DepositProductInstanceApiEffects {
 
-  constructor(private actions$: Actions, private depositService: DepositAccountService) { }
+  constructor(private actions$: Actions, private depositService: DepositAccountService, private chequeService: ChequeService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -70,5 +71,15 @@ export class DepositProductInstanceApiEffects {
           activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new instanceActions.UpdateProductInstanceFailAction(error)))
+    );
+
+  @Effect()
+  issueCheques$: Observable<Action> = this.actions$
+    .ofType(instanceActions.ISSUE_CHEQUES)
+    .map((action: instanceActions.IssueChequesAction) => action.payload)
+    .mergeMap(payload =>
+      this.chequeService.issue(payload.issuingCount)
+        .map(() => new instanceActions.IssueChequesSuccessAction(payload))
+        .catch((error) => of(new instanceActions.IssueChequesFailAction(error)))
     );
 }

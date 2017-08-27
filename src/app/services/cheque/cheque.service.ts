@@ -27,7 +27,7 @@ import {MICRResolution} from './domain/micr-resolution.model';
 @Injectable()
 export class ChequeService {
 
-  constructor(private http: HttpClient, @Inject('reportingBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('chequeBaseUrl') private baseUrl: string) {}
 
   public issue(issuingCount: IssuingCount): Observable<string> {
     return this.http.post(`${this.baseUrl}/cheques/`, issuingCount);

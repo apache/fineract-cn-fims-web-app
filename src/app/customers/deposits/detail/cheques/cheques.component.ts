@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import {Component, OnInit} from '@angular/core';
-import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
+import * as fromDeposits from '../../store/index';
 import {Observable} from 'rxjs/Observable';
-import * as fromDeposits from '../store/index';
-import {DepositsStore} from '../store/index';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {DepositsStore} from '../../store/index';
+import {IssuingCount} from '../../../../services/cheque/domain/issuing-count.model';
+import {ISSUE_CHEQUES} from '../../store/deposit.actions';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  templateUrl: './deposit.detail.component.html'
+  templateUrl: './cheques.component.html'
 })
-export class DepositDetailComponent implements OnInit {
+export class IssueChequeComponent implements OnInit {
 
   depositInstance$: Observable<ProductInstance>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: DepositsStore) {}
+  constructor(private store: DepositsStore, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance)
   }
 
-  issueCheques(): void {
-    this.router.navigate(['cheques'], { relativeTo: this.route })
+  issueCheques(issuingCount: IssuingCount): void {
+    this.store.dispatch({
+      type: ISSUE_CHEQUES,
+      payload: {
+        issuingCount,
+        activatedRoute: this.route
+      }
+    })
   }
+
 }

@@ -107,7 +107,11 @@ export class HttpClient {
 
         return request.map((res: Response) => {
           if(res.text()) {
-            return res.json()
+            try {
+              return res.json()
+            } catch(err) {
+              return res.text();
+            }
           }
         });
       });

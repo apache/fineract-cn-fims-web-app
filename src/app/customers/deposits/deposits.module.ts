@@ -46,6 +46,8 @@ import {DepositIndexComponent} from './detail/deposit.index.component';
 import {DepositDetailComponent} from './detail/deposit.detail.component';
 import {DepositInstanceExistsGuard} from './deposit-instance-exists.guard';
 import {DepositEditComponent} from './form/edit.component';
+import {IssueChequesFormComponent} from './detail/cheques/form.component';
+import {IssueChequeComponent} from './detail/cheques/cheques.component';
 
 @NgModule({
   imports: [
@@ -77,7 +79,9 @@ import {DepositEditComponent} from './form/edit.component';
     DepositIndexComponent,
     DepositCreateComponent,
     DepositEditComponent,
-    DepositDetailComponent
+    DepositDetailComponent,
+    IssueChequeComponent,
+    IssueChequesFormComponent,
   ],
   providers: [
     DepositInstanceExistsGuard,

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {Subscription} from 'rxjs/Subscription';
@@ -31,7 +31,7 @@ import * as fromCustomers from '../store';
 @Component({
   templateUrl: './deposits.list.component.html'
 })
-export class DepositsListComponent implements OnInit {
+export class DepositsListComponent implements OnInit, OnDestroy {
 
   private customerSubscription: Subscription;
 
@@ -57,10 +57,15 @@ export class DepositsListComponent implements OnInit {
       }));
 
     this.customerSubscription = this.depositsStore.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer)
       .subscribe(customer => {
         this.customer = customer;
         this.fetchProductInstances();
       });
+  }
+
+  ngOnDestroy(): void {
+    this.customerSubscription.unsubscribe();
   }
 
   fetchProductInstances(fetchRequest?: FetchRequest): void{

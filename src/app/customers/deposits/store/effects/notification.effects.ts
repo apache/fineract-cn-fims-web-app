@@ -34,4 +34,19 @@ export class DepositProductInstanceNotificationEffects {
       message: 'Deposit account is going to be saved'
     }));
 
+  @Effect({dispatch: false})
+  issueChequesSuccess$: Observable<Action> = this.actions$
+    .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Cheques are going to be issued'
+    }));
+
+  @Effect({dispatch: false})
+  issueChequesFail$: Observable<Action> = this.actions$
+    .ofType(instanceActions.ISSUE_CHEQUES_FAIL)
+    .do(() => this.notificationService.send({
+      type: NotificationType.ALERT,
+      message: 'There was an issue issuing cheques'
+    }));
 }

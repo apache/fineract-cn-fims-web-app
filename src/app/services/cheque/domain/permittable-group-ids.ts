@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-export interface IssuingCount {
-  accountIdentifier: string;
-  start?: number;
-  amount: number;
+export class ChequePermittableGroupIds {
+  public static readonly CHEQUE_TRANSACTION: string = 'cheques__v1__transaction';
+  public static readonly CHEQUE_MANAGEMENT: string = 'cheques__v1__management';
 }

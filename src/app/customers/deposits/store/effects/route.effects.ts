@@ -30,6 +30,12 @@ export class DepositProductInstanceRouteEffects {
   createProductInstanceSuccess$: Observable<Action> = this.actions$
     .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
     .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }))
+
+  @Effect({ dispatch: false })
+  issueChequesSuccess$: Observable<Action> = this.actions$
+    .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS)
+    .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
 }

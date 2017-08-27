@@ -101,7 +101,7 @@ import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, Covalen
     CustomerDetailComponent,
     CustomerStatusComponent,
     CustomerActivityComponent,
-    CustomerPortraitComponent,
+    CustomerPortraitComponent
   ],
   providers: [
     CustomerExistsGuard,
