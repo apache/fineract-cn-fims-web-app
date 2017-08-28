@@ -20,7 +20,7 @@ import {ProductInstance} from '../../../../services/depositAccount/domain/instan
 import {DepositsStore} from '../../store/index';
 import {IssuingCount} from '../../../../services/cheque/domain/issuing-count.model';
 import {ISSUE_CHEQUES} from '../../store/deposit.actions';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   templateUrl: './cheques.component.html'
@@ -29,7 +29,7 @@ export class IssueChequeComponent implements OnInit {
 
   depositInstance$: Observable<ProductInstance>;
 
-  constructor(private store: DepositsStore, private route: ActivatedRoute) {}
+  constructor(private store: DepositsStore, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance)
@@ -43,6 +43,10 @@ export class IssueChequeComponent implements OnInit {
         activatedRoute: this.route
       }
     })
+  }
+
+  cancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route })
   }
 
 }

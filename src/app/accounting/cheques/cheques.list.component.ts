@@ -37,7 +37,7 @@ export class ChequesListComponent {
   ];
 
   constructor(private store: AccountingStore, private dialogService: TdDialogService, private translate: TranslateService) {
-    this.cheques$ = store.select(fromAccounting.getChequeEntities);
+    this.cheques$ = store.select(fromAccounting.getAllChequeEntities);
   }
 
   ngOnInit(): void {

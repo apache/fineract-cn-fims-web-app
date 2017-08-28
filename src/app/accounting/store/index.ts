@@ -27,7 +27,7 @@ import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,
-  getResourceEntities,
+  getResourceAll,
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
@@ -194,4 +194,4 @@ export const getChequesState = (state: State) => state.cheques;
 export const getChequeLoadedAt = createSelector(getChequesState, getResourceLoadedAt);
 export const getSelectedCheque = createSelector(getChequesState, getResourceSelected);
 
-export const getChequeEntities = createSelector(getChequesState, getResourceEntities);
+export const getAllChequeEntities = createSelector(getChequesState, getResourceAll);

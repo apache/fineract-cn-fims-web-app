@@ -24,8 +24,8 @@
       </th>
       <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">APPROVE</th>
       <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">CANCEL</th>
-      <tr td-data-table-row *ngFor="let row of tableData?.data">
-        <ng-container *ngFor="let column of _columns">
+      <tr td-data-table-row *ngFor="let row of cheques$ | async">
+        <ng-container *ngFor="let column of columns">
           <td td-data-table-cell [numeric]="column.numeric">
             {{column.format ? column.format(row[column.name]) : row[column.name]}}
           </td>
