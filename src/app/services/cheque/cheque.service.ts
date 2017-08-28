@@ -23,6 +23,8 @@ import {IssuingCount} from './domain/issuing-count.model';
 import {ChequeProcessingCommand} from './domain/cheque-processing-command';
 import {ChequeTransaction} from './domain/cheque-transaction';
 import {MICRResolution} from './domain/micr-resolution.model';
+import {FimsCheque} from './domain/fims-cheque.model';
+import {mapToFimsCheque, mapToFimsCheques} from './domain/mapper/fims-cheque.mapper';
 
 @Injectable()
 export class ChequeService {
@@ -33,7 +35,7 @@ export class ChequeService {
     return this.http.post(`${this.baseUrl}/cheques/`, issuingCount);
   }
 
-  public fetch(state?: string, accountIdentifier?: string): Observable<Cheque> {
+  public fetch(state?: string, accountIdentifier?: string): Observable<FimsCheque[]> {
     const search = new URLSearchParams();
 
     search.append('state', state);
@@ -44,10 +46,12 @@ export class ChequeService {
     };
 
     return this.http.get(`${this.baseUrl}/cheques/`, requestOptions)
+      .map((cheques: Cheque[]) => mapToFimsCheques(cheques))
   }
 
-  public get(identifier: string): Observable<Cheque> {
+  public get(identifier: string): Observable<FimsCheque> {
     return this.http.get(`${this.baseUrl}/cheques/${identifier}`)
+      .map((cheque: Cheque) => mapToFimsCheque(cheque))
   }
 
   public process(identifier: string, command: ChequeProcessingCommand): Observable<void> {
@@ -59,7 +63,7 @@ export class ChequeService {
   }
 
   public expandMicr(identifier: string): Observable<MICRResolution> {
-    return this.http.get(`${this.baseUrl}/micr/${identifier}`)
+    return this.http.get(`${this.baseUrl}/micr/${identifier}`, {}, true)
   }
 
 }

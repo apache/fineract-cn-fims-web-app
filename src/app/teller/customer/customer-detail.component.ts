@@ -55,11 +55,15 @@ export class TellerCustomerDetailComponent implements OnDestroy {
     { transactionType: 'ACCC', color: 'indigo-A400', icon: 'close', title: 'Close account', description: ''},
     { transactionType: 'ACCT', color: 'indigo-A400', icon: 'swap_horiz', title: 'Account transfer', description: ''},
     { transactionType: 'CDPT', color: 'indigo-A400', icon: 'arrow_forward', title: 'Cash deposit', description: ''},
-    { transactionType: 'CWDL', color: 'indigo-A400', icon: 'arrow_back', title: 'Cash withdrawal', description: ''}
+    { transactionType: 'CWDL', color: 'indigo-A400', icon: 'arrow_back', title: 'Cash withdrawal', description: ''},
   ];
 
   loanActions: Action[] = [
     { transactionType: 'PPAY', color: 'indigo-A400', icon: 'arrow_forward', title: 'Repay loan', description: '' }
+  ];
+
+  chequeActions: Action[] = [
+    { transactionType: 'CCHQ', color: 'indigo-A400', icon: 'import_contacts', title: 'Cash cheque', description: ''}
   ];
 
   constructor(private store: TellerStore, private customerService: CustomerService) {

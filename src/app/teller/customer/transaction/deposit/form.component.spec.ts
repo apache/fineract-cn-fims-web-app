@@ -19,7 +19,7 @@ import {FimsSharedModule} from '../../../../common/common.module';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
 import {MdButtonModule, MdCheckboxModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {Component, DebugElement, ViewChild} from '@angular/core';
-import {TellerTransactionFormComponent} from './form.component';
+import {DepositTransactionFormComponent} from './form.component';
 import {By} from '@angular/platform-browser';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {TranslateModule} from '@ngx-translate/core';
@@ -66,7 +66,7 @@ describe('Test transaction form', () => {
       ],
       declarations: [
         TransactionCostComponent,
-        TellerTransactionFormComponent,
+        DepositTransactionFormComponent,
         TestComponent
       ]
     });
@@ -167,6 +167,6 @@ class TestComponent {
 
   transactionType: string = 'ACCC';
 
-  @ViewChild('form') form: TellerTransactionFormComponent;
+  @ViewChild('form') form: DepositTransactionFormComponent;
 
 }

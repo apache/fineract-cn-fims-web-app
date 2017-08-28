@@ -25,15 +25,17 @@ import {AccountingService} from '../../../../services/accounting/accounting.serv
 import {TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
 import {TransactionForm} from '../domain/transaction-form.model';
 
+// List of types to check withdrawal limit
 const withdrawalCheckTypes: TransactionType[] = ['ACCC', 'CWDL'];
 
+// List of types to check balance limit
 const balanceCheckTypes: TransactionType[] = ['ACCT', 'ACCC', 'CWDL'];
 
 @Component({
   selector: 'fims-teller-transaction-form',
   templateUrl: './form.component.html'
 })
-export class TellerTransactionFormComponent implements OnInit {
+export class DepositTransactionFormComponent implements OnInit {
 
   form: FormGroup;
 

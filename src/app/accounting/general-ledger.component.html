@@ -33,6 +33,11 @@
         <h3 md-line translate>Transaction types</h3>
         <p md-line translate>View transaction types</p>
       </a>
+      <a md-list-item [routerLink]="['./cheques']" *hasPermission="{ id: 'cheque_management', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>import_contacts</md-icon>
+        <h3 md-line translate>Cheque clearing</h3>
+        <p md-line translate>View and clear cheques</p>
+      </a>
       <a md-list-item [routerLink]="['./trialBalance']">
         <md-icon md-list-avatar>account_balance</md-icon>
         <h3 md-line translate>Trial balance</h3>

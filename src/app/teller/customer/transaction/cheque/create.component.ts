@@ -22,19 +22,21 @@ import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
 import {TellerStore} from '../../../store/index';
 import * as fromRoot from '../../../../store/index';
+import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {DepositTransactionFormComponent} from '../deposit/form.component';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {TransactionForm} from '../domain/transaction-form.model';
-import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {ChequeTransactionFormComponent} from './form.component';
+import {ChequeService} from '../../../../services/cheque/cheque.service';
+import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
 
 @Component({
-  templateUrl: './create.form.component.html'
+  templateUrl: './create.component.html'
 })
-export class CreateLoanTransactionForm implements OnInit, OnDestroy {
+export class CreateChequeTransactionForm implements OnInit, OnDestroy {
 
   private authenticatedTellerSubscription: Subscription;
 
@@ -42,13 +44,17 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
   private tellerTransactionIdentifier: string;
 
+  transactionType: TransactionType;
+
   private clerk: string;
 
-  private transactionType: TransactionType;
+  @ViewChild('form') form: ChequeTransactionFormComponent;
 
-  @ViewChild('form') form: DepositTransactionFormComponent;
+  customerName$: Observable<string>;
 
-  caseInstances$: Observable<FimsCase[]>;
+  micrResolution$: Observable<MICRResolution>;
+
+  productInstances$: Observable<ProductInstance[]>;
 
   transactionCosts$: Observable<TellerTransactionCosts>;
 
@@ -56,14 +62,13 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
   transactionCreated: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private portfolioService: PortfolioService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
+              private tellerService: TellerService, private depositService: DepositAccountService,
+              private chequeService: ChequeService) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
-
-    this.caseInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .switchMap(customer => this.portfolioService.getAllCasesForCustomer(customer.identifier))
-      .map(casePage => casePage.elements.filter(element => element.currentState === 'ACTIVE'));
+    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .filter(teller => !!teller)
@@ -71,6 +76,10 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
+
+    this.customerName$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .filter(customer => !!customer)
+      .map(customer => `${customer.givenName} ${customer.surname}`);
   }
 
   ngOnDestroy(): void {
@@ -78,16 +87,22 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
     this.usernameSubscription.unsubscribe();
   }
 
+  expandMICR(identifier: string): void {
+    this.micrResolution$ = this.chequeService.expandMicr(identifier)
+      .catch(error => Observable.of(null));
+  }
+
   createTransaction(formData: TransactionForm): void {
     const transaction: TellerTransaction = {
       customerIdentifier: formData.customerIdentifier,
       productIdentifier: formData.productIdentifier,
-      productCaseIdentifier: formData.productCaseIdentifier,
       customerAccountIdentifier: formData.accountIdentifier,
+      targetAccountIdentifier: formData.targetAccountIdentifier,
       amount: formData.amount,
       clerk: this.clerk,
       transactionDate: new Date().toISOString(),
-      transactionType: this.transactionType
+      cheque: formData.cheque,
+      transactionType: 'CCHQ'
     };
 
     this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)

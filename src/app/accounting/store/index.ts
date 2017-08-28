@@ -27,6 +27,7 @@ import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,
+  getResourceEntities,
   getResourceLoadedAt,
   getResourceSelected,
   ResourceState
@@ -56,6 +57,8 @@ export interface State extends fromRoot.State{
   transactionTypes: ResourceState;
   transactionTypeSearch: SearchState;
   transactionForm: FormState;
+
+  cheques: ResourceState;
 }
 
 const reducers = {
@@ -74,6 +77,8 @@ const reducers = {
   accounts: createResourceReducer('Account', fromAccounts.reducer),
   accountForm: createFormReducer('Account'),
   accountEntrySearch: fromAccountEntrySearch.reducer,
+
+  cheques: createResourceReducer('Cheque'),
 };
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -179,3 +184,14 @@ export const getTransactionTypeSearchResults = createSelector(getSearchTransacti
     totalElements
   };
 });
+
+/**
+ * Cheques
+ */
+
+export const getChequesState = (state: State) => state.cheques;
+
+export const getChequeLoadedAt = createSelector(getChequesState, getResourceLoadedAt);
+export const getSelectedCheque = createSelector(getChequesState, getResourceSelected);
+
+export const getChequeEntities = createSelector(getChequesState, getResourceEntities);
