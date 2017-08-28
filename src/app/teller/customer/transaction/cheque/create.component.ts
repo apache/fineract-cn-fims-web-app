@@ -1,0 +1,141 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
+import {TellerService} from '../../../../services/teller/teller-service';
+import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
+import * as fromTeller from '../../../store/index';
+import {TellerStore} from '../../../store/index';
+import * as fromRoot from '../../../../store/index';
+import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
+import {Observable} from 'rxjs/Observable';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {Teller} from '../../../../services/teller/domain/teller.model';
+import {TransactionForm} from '../domain/transaction-form.model';
+import {ChequeTransactionFormComponent} from './form.component';
+import {ChequeService} from '../../../../services/cheque/cheque.service';
+import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
+
+@Component({
+  templateUrl: './create.component.html'
+})
+export class CreateChequeTransactionForm implements OnInit, OnDestroy {
+
+  private authenticatedTellerSubscription: Subscription;
+
+  private usernameSubscription: Subscription;
+
+  private tellerTransactionIdentifier: string;
+
+  transactionType: TransactionType;
+
+  private clerk: string;
+
+  @ViewChild('form') form: ChequeTransactionFormComponent;
+
+  customerName$: Observable<string>;
+
+  micrResolution$: Observable<MICRResolution>;
+
+  productInstances$: Observable<ProductInstance[]>;
+
+  transactionCosts$: Observable<TellerTransactionCosts>;
+
+  teller: Teller;
+
+  transactionCreated: boolean;
+
+  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
+              private tellerService: TellerService, private depositService: DepositAccountService,
+              private chequeService: ChequeService) {}
+
+  ngOnInit(): void {
+    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+
+    this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
+      .filter(teller => !!teller)
+      .subscribe(teller => { this.teller = teller } );
+
+    this.usernameSubscription = this.store.select(fromRoot.getUsername)
+      .subscribe(username => this.clerk = username);
+
+    this.customerName$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .filter(customer => !!customer)
+      .map(customer => `${customer.givenName} ${customer.surname}`);
+  }
+
+  ngOnDestroy(): void {
+    this.authenticatedTellerSubscription.unsubscribe();
+    this.usernameSubscription.unsubscribe();
+  }
+
+  expandMICR(identifier: string): void {
+    this.micrResolution$ = this.chequeService.expandMicr(identifier)
+      .catch(error => Observable.of(null));
+  }
+
+  createTransaction(formData: TransactionForm): void {
+    const transaction: TellerTransaction = {
+      customerIdentifier: formData.customerIdentifier,
+      productIdentifier: formData.productIdentifier,
+      customerAccountIdentifier: formData.accountIdentifier,
+      targetAccountIdentifier: formData.targetAccountIdentifier,
+      amount: formData.amount,
+      clerk: this.clerk,
+      transactionDate: new Date().toISOString(),
+      cheque: formData.cheque,
+      transactionType: 'CCHQ'
+    };
+
+    this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)
+      .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
+      .do(() => this.transactionCreated = true);
+  }
+
+  confirmTransaction(chargesIncluded: boolean): void {
+    this.store.dispatch({
+      type: CONFIRM_TRANSACTION,
+      payload: {
+        tellerCode: this.teller.code,
+        tellerTransactionIdentifier: this.tellerTransactionIdentifier,
+        command: 'CONFIRM',
+        chargesIncluded,
+        activatedRoute: this.route
+      }
+    });
+  }
+
+  cancelTransaction(): void {
+    this.store.dispatch({
+      type: CONFIRM_TRANSACTION,
+      payload: {
+        tellerCode: this.teller.code,
+        tellerTransactionIdentifier: this.tellerTransactionIdentifier,
+        command: 'CANCEL',
+        activatedRoute: this.route
+      }
+    });
+  }
+
+  cancel(): void {
+    this.router.navigate(['../../'], { relativeTo: this.route })
+  }
+}

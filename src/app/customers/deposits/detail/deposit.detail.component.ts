@@ -19,6 +19,7 @@ import {ProductInstance} from '../../../services/depositAccount/domain/instance/
 import {Observable} from 'rxjs/Observable';
 import * as fromDeposits from '../store/index';
 import {DepositsStore} from '../store/index';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   templateUrl: './deposit.detail.component.html'
@@ -27,9 +28,13 @@ export class DepositDetailComponent implements OnInit {
 
   depositInstance$: Observable<ProductInstance>;
 
-  constructor(private store: DepositsStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: DepositsStore) {}
 
   ngOnInit(): void {
     this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance)
+  }
+
+  issueCheques(): void {
+    this.router.navigate(['cheques'], { relativeTo: this.route })
   }
 }

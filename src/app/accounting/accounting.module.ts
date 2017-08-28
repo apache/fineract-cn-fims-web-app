@@ -80,6 +80,8 @@ import {CreateTransactionTypeFormComponent} from './transactionTypes/form/create
 import {EditTransactionTypeFormComponent} from './transactionTypes/form/edit/edit.form.component';
 import {TransactionTypeExistsGuard} from './transactionTypes/transaction-type-exists.guard';
 import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-type-select/transaction-type-select.component';
+import {ChequeApiEffects} from './store/cheques/effects/service.effects';
+import {ChequesListComponent} from './cheques/cheques.list.component';
 
 @NgModule({
   imports: [
@@ -120,6 +122,8 @@ import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-
     EffectsModule.run(AccountCommandApiEffects),
     EffectsModule.run(AccountCommandRouteEffects),
     EffectsModule.run(AccountCommandNotificationEffects),
+
+    EffectsModule.run(ChequeApiEffects)
   ],
   declarations: [
     GeneralLedgerComponent,
@@ -145,7 +149,8 @@ import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-
     TransactionTypeFormComponent,
     CreateTransactionTypeFormComponent,
     EditTransactionTypeFormComponent,
-    TransactionTypeSelectComponent
+    TransactionTypeSelectComponent,
+    ChequesListComponent
   ],
   providers: [
     CommandsResolver,

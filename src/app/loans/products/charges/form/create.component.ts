@@ -22,6 +22,9 @@ import {PortfolioStore} from '../../store/index';
 import {Subscription} from 'rxjs';
 import {CREATE} from '../../store/charges/charge.actions';
 import {FimsProduct} from '../../store/model/fims-product.model';
+import {Observable} from 'rxjs/Observable';
+import {RangeActions} from '../../store/ranges/range.actions';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -31,6 +34,8 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
   private productSubscription: Subscription;
 
   private product: FimsProduct;
+
+  ranges$: Observable<FimsRange[]>;
 
   charge: ChargeDefinition = {
     identifier: '',
@@ -49,7 +54,10 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
       .subscribe(product => this.product = product);
+
+    this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
   }
 
   ngOnDestroy(): void {

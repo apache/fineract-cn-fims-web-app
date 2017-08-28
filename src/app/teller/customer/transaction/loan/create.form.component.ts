@@ -25,7 +25,7 @@ import * as fromRoot from '../../../../store/index';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {TellerTransactionFormComponent} from '../deposit/form.component';
+import {DepositTransactionFormComponent} from '../deposit/form.component';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {TransactionForm} from '../domain/transaction-form.model';
@@ -46,7 +46,7 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
   private transactionType: TransactionType;
 
-  @ViewChild('form') form: TellerTransactionFormComponent;
+  @ViewChild('form') form: DepositTransactionFormComponent;
 
   caseInstances$: Observable<FimsCase[]>;
 
@@ -55,8 +55,6 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
   teller: Teller;
 
   transactionCreated: boolean;
-
-  error: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private portfolioService: PortfolioService) {}
 

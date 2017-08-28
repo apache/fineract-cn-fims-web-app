@@ -54,5 +54,12 @@
     "pathRewrite": {
       "^/api/reporting": "/reporting"
     }
+  },
+  "/api/cheques": {
+    "target": "http://localhost:2030",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/cheques": "/cheques"
+    }
   }
 }

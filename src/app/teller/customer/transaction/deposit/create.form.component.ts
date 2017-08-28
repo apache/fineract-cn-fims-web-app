@@ -26,7 +26,7 @@ import {DepositAccountService} from '../../../../services/depositAccount/deposit
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {TellerTransactionFormComponent} from './form.component';
+import {DepositTransactionFormComponent} from './form.component';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {TransactionForm} from '../domain/transaction-form.model';
@@ -46,7 +46,7 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
 
   private clerk: string;
 
-  @ViewChild('form') form: TellerTransactionFormComponent;
+  @ViewChild('form') form: DepositTransactionFormComponent;
 
   productInstances$: Observable<ProductInstance[]>;
 
@@ -55,8 +55,6 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
   teller: Teller;
 
   transactionCreated: boolean;
-
-  error: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private depositService: DepositAccountService) {}
 

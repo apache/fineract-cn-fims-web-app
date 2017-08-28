@@ -38,6 +38,7 @@ import {TransactionTypeListComponent} from './transactionTypes/transaction-types
 import {EditTransactionTypeFormComponent} from './transactionTypes/form/edit/edit.form.component';
 import {CreateTransactionTypeFormComponent} from './transactionTypes/form/create/create.form.component';
 import {TransactionTypeExistsGuard} from './transactionTypes/transaction-type-exists.guard';
+import {ChequesListComponent} from './cheques/cheques.list.component';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -95,5 +96,6 @@ export const AccountingRoutes: Routes = [
   {path: 'transactiontypes/edit/:code', component: EditTransactionTypeFormComponent, canActivate: [TransactionTypeExistsGuard], data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'CHANGE' }}},
   {path: 'chartOfAccounts', component: ChartOfAccountComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
   {path: 'journalEntries', component: JournalEntryListComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'READ' }}},
-  {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}}
+  {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}},
+  {path: 'cheques', component: ChequesListComponent, data: { hasPermission: { id: 'cheque_management', accessLevel: 'READ' } }}
 ];

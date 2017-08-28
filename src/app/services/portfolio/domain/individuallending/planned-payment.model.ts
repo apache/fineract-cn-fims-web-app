@@ -16,7 +16,7 @@
 
 import {CostComponent} from './cost-component.model';
 
-export class PlannedPayment{
+export class PlannedPayment {
   interestRate: number;
   costComponents: CostComponent[];
   remainingPrincipal: number;

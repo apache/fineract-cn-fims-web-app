@@ -15,5 +15,16 @@
 -->
 
 <fims-layout-card-over title="{{'Manage loan product charges' | translate}}" [navigateBackTo]="['../']">
-  <fims-data-table flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['./ranges']">
+        <md-icon md-list-avatar>assignment</md-icon>
+        <h3 md-line translate>Ranges</h3>
+        <p md-line translate>Manage ranges</p>
+      </a>
+    </md-nav-list>
+    <fims-data-table right flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
+  </fims-two-column-layout>
+
 </fims-layout-card-over>

@@ -21,6 +21,7 @@ import {DepositIndexComponent} from './detail/deposit.index.component';
 import {DepositDetailComponent} from './detail/deposit.detail.component';
 import {DepositInstanceExistsGuard} from './deposit-instance-exists.guard';
 import {DepositEditComponent} from './form/edit.component';
+import {IssueChequeComponent} from './detail/cheques/cheques.component';
 
 export const DepositRoutes: Routes = [
   {
@@ -47,6 +48,13 @@ export const DepositRoutes: Routes = [
         component: DepositEditComponent,
         data: {
           hasPermission: {id: 'deposit_instances', accessLevel: 'CHANGE'}
+        }
+      },
+      {
+        path: 'cheques',
+        component: IssueChequeComponent,
+        data: {
+          hasPermission: {id: 'cheque_management', accessLevel: 'CHANGE'}
         }
       }
     ]

@@ -23,6 +23,8 @@ import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
 import {FimsProduct} from '../../store/model/fims-product.model';
 import {Observable} from 'rxjs/Observable';
+import {RangeActions} from '../../store/ranges/range.actions';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -35,15 +37,20 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
 
   charge$: Observable<ChargeDefinition>;
 
+  ranges$: Observable<FimsRange[]>;
+
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .filter(product => !!product)
+      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
       .subscribe(product => this.product = product);
 
     this.charge$ = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
       .filter(charge => !!charge);
+
+    this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
   }
 
   ngOnDestroy(): void {

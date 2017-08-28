@@ -15,7 +15,15 @@
  */
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {AUTHORIZATION_HEADER, HttpClient, TENANT_HEADER, USER_HEADER} from './http.service';
-import {BaseRequestOptions, ConnectionBackend, Headers, Http, RequestOptions, RequestOptionsArgs} from '@angular/http';
+import {
+  BaseRequestOptions,
+  ConnectionBackend,
+  Headers,
+  Http,
+  RequestOptions,
+  RequestOptionsArgs,
+  Response, ResponseOptions
+} from '@angular/http';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {ReflectiveInjector} from '@angular/core';
@@ -87,6 +95,37 @@ describe('Test http client', () => {
         headers: new Headers({
           "Content-Type": "multipart/form-data"
         })
+      });
+    });
+
+    it('should return json if json', (done: DoneFn) => {
+      const expectedResponse: any = {
+        text: 'text'
+      };
+      this.backend.connections.subscribe((connection: MockConnection) => {
+        const response = new Response(new ResponseOptions({
+          body: JSON.stringify(expectedResponse)
+        }));
+        connection.mockRespond(response);
+      });
+
+      this.httpClient.post('/test', {}).subscribe(response => {
+        expect(response).toEqual(expectedResponse);
+        done();
+      });
+    });
+
+    it('should return text if no json', (done: DoneFn) => {
+      this.backend.connections.subscribe((connection: MockConnection) => {
+        const response = new Response(new ResponseOptions({
+          body: 'text'
+        }));
+        connection.mockRespond(response);
+      });
+
+      this.httpClient.post('/test', {}).subscribe(text => {
+        expect(text).toEqual('text');
+        done();
       });
     })
 
