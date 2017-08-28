@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-export type ChargeMethod = 'FIXED' | 'PROPORTIONAL' | 'INTEREST';
+import {createResourceActions} from '../../../../common/store/action-creator/action-creator';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+
+export const RangeActions = createResourceActions<FimsRange>('Product Charge Range');

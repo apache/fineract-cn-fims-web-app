@@ -164,6 +164,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         FimsValidators.maxValue(maximum)
       ]);
     } else {
+      formControl.setValue(minimum.toFixed(2));
       formControl.disable();
       formControl.setValidators(Validators.required);
     }

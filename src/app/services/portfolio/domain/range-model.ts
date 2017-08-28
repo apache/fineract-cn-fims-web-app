@@ -13,5 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {RangeSegment} from './range-segment.model';
 
-export type ChargeMethod = 'FIXED' | 'PROPORTIONAL' | 'INTEREST';
+export interface FimsRange {
+  identifier: string;
+  segments: RangeSegment[]
+}

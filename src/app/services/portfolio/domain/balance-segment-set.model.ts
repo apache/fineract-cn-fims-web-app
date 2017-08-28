@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-export type ChargeMethod = 'FIXED' | 'PROPORTIONAL' | 'INTEREST';
+export interface BalanceSegmentSet {
+  identifier: string;
+  segments: number[];
+  segmentIdentifiers: string[];
+}

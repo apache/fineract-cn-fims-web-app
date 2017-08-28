@@ -68,9 +68,19 @@ import {
   MdSlideToggleModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
 import {ProductDetailFormComponent} from './form/detail/detail.component';
+import {ProductChargeRangeListComponent} from './charges/ranges/range.list.component';
+import {ProductChargeRangeDetailComponent} from './charges/ranges/range.detail.component';
+import {ProductChargeRangeFormComponent} from './charges/ranges/form/form.component';
+import {EditProductChargeRangeFormComponent} from './charges/ranges/form/edit.component';
+import {CreateProductChargeRangeFormComponent} from './charges/ranges/form/create.component';
+import {ProductChargeRangesRouteEffects} from './store/ranges/effects/route.effects';
+import {ProductChargeRangesApiEffects} from './store/ranges/effects/service.effects';
+import {ProductChargeRangeExistsGuard} from './charges/ranges/range-exists.guard';
+import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.component';
+import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/notification.effects';
 
 @NgModule({
   imports: [
@@ -89,6 +99,7 @@ import {ProductDetailFormComponent} from './form/detail/detail.component';
     MdOptionModule,
     MdSelectModule,
     MdCheckboxModule,
+    CovalentDataTableModule,
     CovalentStepsModule,
     CovalentMessageModule,
 
@@ -103,6 +114,10 @@ import {ProductDetailFormComponent} from './form/detail/detail.component';
     EffectsModule.run(ProductChargesApiEffects),
     EffectsModule.run(ProductChargesRouteEffects),
     EffectsModule.run(ProductChargesNotificationEffects),
+
+    EffectsModule.run(ProductChargeRangesApiEffects),
+    EffectsModule.run(ProductChargeRangesRouteEffects),
+    EffectsModule.run(ProductChargeRangesNotificationEffects)
   ],
   declarations: [
     // product
@@ -126,6 +141,14 @@ import {ProductDetailFormComponent} from './form/detail/detail.component';
     ProductChargeCreateFormComponent,
     ProductChargeEditFormComponent,
 
+    // ranges
+    ProductChargeRangeListComponent,
+    ProductChargeRangeIndexComponent,
+    ProductChargeRangeDetailComponent,
+    ProductChargeRangeFormComponent,
+    CreateProductChargeRangeFormComponent,
+    EditProductChargeRangeFormComponent,
+
     // status
     ProductStatusComponent,
     ProductTaskFormComponent,
@@ -138,6 +161,7 @@ import {ProductDetailFormComponent} from './form/detail/detail.component';
     ProductExistsGuard,
     ProductTaskExistsGuard,
     ProductChargeExistsGuard,
+    ProductChargeRangeExistsGuard,
     { provide: PortfolioStore, useFactory: portfolioStoreFactory, deps: [Store]}
   ]
 })

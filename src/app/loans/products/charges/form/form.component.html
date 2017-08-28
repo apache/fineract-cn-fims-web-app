@@ -15,7 +15,7 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
+  <td-step #detailsStep label="{{'Charge details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
     <form [formGroup]="detailForm">
       <div layout="row">
         <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
@@ -37,6 +37,12 @@
         </md-input-container>
       </div>
       <div layout="row">
+        <md-input-container>
+          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
+          <md-error *ngIf="detailForm.get('amount').hasError('required')" translate>
+            Required
+          </md-error>
+        </md-input-container>
         <md-radio-group formControlName="chargeMethod">
           <md-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
             {{basis.label}}
@@ -49,13 +55,26 @@
         </md-select>
       </div>
       <div layout="row">
-        <md-input-container>
-          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
-          <md-error *ngIf="detailForm.get('amount').hasError('required')" translate>
-            Required
-          </md-error>
-        </md-input-container>
+        <md-slide-toggle formControlName="rangeEnabled" layout-margin translate layout-margin>
+          Apply amount only within range?
+        </md-slide-toggle>
       </div>
+      <ng-container *ngIf="detailForm.get('rangeEnabled').value === true">
+        <div layout="row">
+          <md-select formControlName="rangeIdentifier" layout-margin placeholder="{{ 'Select range' | translate }}" layout-margin>
+            <md-option *ngFor="let range of ranges" [value]="range.identifier">
+              {{range.identifier}}
+            </md-option>
+          </md-select>
+        </div>
+        <div layout="row">
+          <md-select formControlName="rangeSegmentIdentifier" layout-margin placeholder="{{ 'Select range segment' | translate }}" layout-margin>
+            <md-option *ngFor="let segment of selectedRange?.segments" [value]="segment.identifier">
+              {{segment.identifier}}({{segment.start | number:numberFormat}} - {{segment.end | number:numberFormat}})
+            </md-option>
+          </md-select>
+        </div>
+      </ng-container>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

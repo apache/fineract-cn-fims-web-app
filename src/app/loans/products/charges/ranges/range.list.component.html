@@ -14,11 +14,13 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Add new charge' | translate}}">
-  <fims-product-charge-form-component
-    (onSave)="onSave($event)"
-    (onCancel)="onCancel()"
-    [charge]="charge"
-    [ranges]="ranges$ | async">
-  </fims-product-charge-form-component>
+<fims-layout-card-over title="{{ 'Manage ranges' | translate }}" [navigateBackTo]="['../../../../']">
+  <fims-data-table right flex
+                   (onFetch)="fetchRanges($event)"
+                   (onActionCellClick)="rowSelect($event)"
+                   [columns]="columns"
+                   [data]="rangesData$ | async"
+                   [sortable]="false">
+  </fims-data-table>
 </fims-layout-card-over>
+<fims-fab-button title="{{'Create new range' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"></fims-fab-button>

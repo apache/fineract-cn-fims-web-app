@@ -36,6 +36,9 @@ import {FimsCasePage} from './domain/fims-case-page.model';
 import {Case} from './domain/case.model';
 import {mapToCase, mapToFimsCase, mapToFimsCases} from './domain/mapper/fims-case.mapper';
 import {mapToFimsCasePage} from './domain/mapper/fims-case-page.mapper';
+import {BalanceSegmentSet} from './domain/balance-segment-set.model';
+import {mapToBalanceSegmentSet, mapToFimsRange, mapToFimsRanges} from './domain/mapper/fims-range.mapper';
+import {FimsRange} from './domain/range-model';
 
 @Injectable()
 export class PortfolioService {
@@ -218,6 +221,36 @@ export class PortfolioService {
 
     return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions)
       .map((casePage: CasePage) => mapToFimsCasePage(casePage));
+  }
+
+  balanceSetOne: BalanceSegmentSet = { identifier: 'testOne', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
+  balanceSetTwo: BalanceSegmentSet = { identifier: 'testTwo', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
+
+  findAllRanges(productIdentifier: string): Observable<FimsRange[]> {
+    return Observable.of(mapToFimsRanges([
+      this.balanceSetOne,
+      this.balanceSetTwo
+    ]));
+    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`);
+  }
+
+  createRange(productIdentifier: string, range: FimsRange): Observable<void> {
+    const balanceSegmentSet = mapToBalanceSegmentSet(range);
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`, balanceSegmentSet)
+  }
+
+  getRange(productIdentifier: string, rangeIdentifier: string): Observable<FimsRange> {
+    return Observable.of(mapToFimsRange(this.balanceSetOne));
+    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
+  }
+
+  changeRange(productIdentifier: string, range: FimsRange): Observable<void> {
+    const balanceSegmentSet = mapToBalanceSegmentSet(range);
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSet.identifier}`, balanceSegmentSet)
+  }
+
+  deleteRange(productIdentifier: string, rangeIdentifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
   }
 
 }
