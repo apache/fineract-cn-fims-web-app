@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ITdDataTableColumn} from '@covalent/core';
 import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
 import {Observable} from 'rxjs/Observable';
@@ -22,11 +22,17 @@ import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromPortfolio from '../../store';
 import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+import {Subscription} from 'rxjs/Subscription';
+import {FimsProduct} from '../../store/model/fims-product.model';
 
 @Component({
   templateUrl: './range.list.component.html'
 })
-export class ProductChargeRangeListComponent implements OnInit {
+export class ProductChargeRangeListComponent implements OnInit, OnDestroy {
+
+  private productSubscription: Subscription;
+
+  private product: FimsProduct;
 
   rangesData$: Observable<TableData>;
 
@@ -44,11 +50,18 @@ export class ProductChargeRangeListComponent implements OnInit {
         data
       }));
 
-    this.fetchRanges();
+    this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .filter(product => !!product)
+      .do(product => this.fetchRanges())
+      .subscribe(product => this.product = product);
+  }
+
+  ngOnDestroy(): void {
+    this.productSubscription.unsubscribe();
   }
 
   fetchRanges(event?: TableFetchRequest): void {
-    this.portfolioStore.dispatch(RangeActions.loadAllAction());
+    this.portfolioStore.dispatch(RangeActions.loadAllAction(this.product.identifier));
   }
 
   rowSelect(range: FimsRange): void {

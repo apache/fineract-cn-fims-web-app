@@ -223,15 +223,9 @@ export class PortfolioService {
       .map((casePage: CasePage) => mapToFimsCasePage(casePage));
   }
 
-  balanceSetOne: BalanceSegmentSet = { identifier: 'testOne', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
-  balanceSetTwo: BalanceSegmentSet = { identifier: 'testTwo', segmentIdentifiers: ['one','two','three'], segments: [0,1,2] };
-
   findAllRanges(productIdentifier: string): Observable<FimsRange[]> {
-    return Observable.of(mapToFimsRanges([
-      this.balanceSetOne,
-      this.balanceSetTwo
-    ]));
-    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`);
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`)
+      .map((segments: BalanceSegmentSet[]) => mapToFimsRanges(segments));
   }
 
   createRange(productIdentifier: string, range: FimsRange): Observable<void> {
@@ -240,8 +234,8 @@ export class PortfolioService {
   }
 
   getRange(productIdentifier: string, rangeIdentifier: string): Observable<FimsRange> {
-    return Observable.of(mapToFimsRange(this.balanceSetOne));
-    // return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
+      .map(segments => mapToFimsRange(segments))
   }
 
   changeRange(productIdentifier: string, range: FimsRange): Observable<void> {

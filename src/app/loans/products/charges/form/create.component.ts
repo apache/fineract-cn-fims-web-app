@@ -54,11 +54,10 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
+      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
       .subscribe(product => this.product = product);
 
     this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
-
-    this.portfolioStore.dispatch(RangeActions.loadAllAction());
   }
 
   ngOnDestroy(): void {

@@ -44,14 +44,13 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .filter(product => !!product)
+      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
       .subscribe(product => this.product = product);
 
     this.charge$ = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
       .filter(charge => !!charge);
 
     this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
-
-    this.portfolioStore.dispatch(RangeActions.loadAllAction());
   }
 
   ngOnDestroy(): void {
