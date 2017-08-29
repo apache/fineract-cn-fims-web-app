@@ -19,6 +19,7 @@ import {CostComponent} from '../../../../services/portfolio/domain/individuallen
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {todayAsISOString} from '../../../../services/domain/date.converter';
 
 export interface ExecuteCommandEvent {
   productId: string;
@@ -26,6 +27,7 @@ export interface ExecuteCommandEvent {
   action: WorkflowAction;
   note: string;
   paymentSize: number;
+  createdOn: string;
 }
 
 @Component({
@@ -67,7 +69,8 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
       productId: this.fimsCase.productIdentifier,
       note: this.formGroup.get('note').value,
       action: this.action,
-      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0
+      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0,
+      createdOn: new Date().toISOString()
     });
   }
 
