@@ -52,8 +52,10 @@ export class ProductChargeRangeListComponent implements OnInit, OnDestroy {
 
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .filter(product => !!product)
-      .do(product => this.fetchRanges())
-      .subscribe(product => this.product = product);
+      .subscribe(product => {
+        this.product = product;
+        this.fetchRanges();
+      });
   }
 
   ngOnDestroy(): void {

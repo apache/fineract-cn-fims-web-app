@@ -39,7 +39,12 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {TellerRouteEffects} from './store/effects/route.effects';
-import {CovalentDataTableModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {
+  CovalentDataTableModule,
+  CovalentMessageModule,
+  CovalentSearchModule,
+  CovalentStepsModule
+} from '@covalent/core';
 import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard';
 import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
 import {TellerProductsApiEffects} from './store/effects/products.service.effects';
@@ -71,6 +76,7 @@ import {CreateChequeTransactionForm} from './customer/transaction/cheque/create.
     MdAutocompleteModule,
     MdSelectModule,
     MdCheckboxModule,
+    CovalentMessageModule,
     CovalentStepsModule,
     CovalentSearchModule,
     CovalentDataTableModule,

@@ -16,7 +16,9 @@
 
 <fims-layout-card-over title="{{'Deposit account' | translate}}" [navigateBackTo]="['../../../../../../']">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="issueCheques()" title="{{'Issue cheques' | translate}}" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE'}"><md-icon>import_contacts</md-icon></button>
+    <button md-icon-button (click)="issueCheques()" title="{{'Issue cheques' | translate}}" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE'}">
+      <md-icon>import_contacts</md-icon>
+    </button>
   </fims-layout-card-over-header-menu>
   <div class="md-content inset" flex>
     <div layout="row">
