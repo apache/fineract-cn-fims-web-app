@@ -57,7 +57,7 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
 
   constructor(private formBuilder: FormBuilder) {
     this.chequeForm = this.formBuilder.group({
-      chequeNumber: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(8)]],
+      chequeNumber: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(8), FimsValidators.isNumber]],
       branchSortCode: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(11)]],
       accountNumber: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(34)]]
     });

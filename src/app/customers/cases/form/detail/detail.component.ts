@@ -89,9 +89,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       termTemporalUnit: ['', Validators.required],
       paymentTemporalUnit: ['', [ Validators.required, FimsValidators.minValue(1) ]],
       paymentPeriod: ['', [ Validators.required, FimsValidators.minValue(1)]],
-      alignmentDay: [''],
-      alignmentWeek: [''],
-      alignmentMonth: [''],
+      alignmentDay: ['', [ Validators.required ]],
+      alignmentWeek: ['', [ Validators.required ]],
+      alignmentMonth: ['', [ Validators.required ]],
       alignmentDaySetting: [''],
       depositAccountIdentifier: ['', Validators.required]
     });
@@ -100,6 +100,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       .filter(() => !!this.products)
       .map(identifier => this.products.find(product => product.identifier === identifier))
       .subscribe(product => this.toggleProduct(product));
+
+    this.form.get('alignmentDaySetting').valueChanges
+      .subscribe(setting => this.toggleAlignmentDaySetting(setting));
   }
 
   ngOnInit(): void {
@@ -126,6 +129,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         paymentTemporalUnit: this._formData.paymentTemporalUnit,
         paymentPeriod: this._formData.paymentPeriod,
         alignmentDay: this._formData.paymentAlignmentDay,
+        alignmentDayFixed: this._formData.paymentAlignmentDay,
+        alignmentDayRelative: this._formData.paymentAlignmentDay,
         alignmentWeek: this._formData.paymentAlignmentWeek,
         alignmentMonth: this._formData.paymentAlignmentMonth,
         alignmentDaySetting: this._formData.paymentAlignmentWeek ? 'relative' : 'fixed',
@@ -170,6 +175,25 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     }
 
     formControl.updateValueAndValidity();
+  }
+
+  private toggleAlignmentDaySetting(setting: string): void {
+    const dayControlFixed = this.form.get('alignmentDayFixed');
+    const dayControlRelative = this.form.get('alignmentDayRelative');
+    const weekControl = this.form.get('alignmentWeek');
+    const monthControl = this.form.get('alignmentMonth');
+
+    if(setting === 'relative') {
+      dayControlFixed.disable();
+      dayControlRelative.enable();
+      weekControl.enable();
+      monthControl.enable();
+    } else {
+      dayControlFixed.enable();
+      dayControlRelative.enable();
+      weekControl.disable();
+      monthControl.disable();
+    }
   }
 
   get formData(): DetailFormData {

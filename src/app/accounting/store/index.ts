@@ -22,6 +22,7 @@ import * as fromChartOfAccounts from './ledger/chart-of-account.reducer';
 import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
 import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
+import * as fromCheques from './cheques/cheques.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -78,7 +79,7 @@ const reducers = {
   accountForm: createFormReducer('Account'),
   accountEntrySearch: fromAccountEntrySearch.reducer,
 
-  cheques: createResourceReducer('Cheque'),
+  cheques: createResourceReducer('Cheque', fromCheques.reducer),
 };
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);

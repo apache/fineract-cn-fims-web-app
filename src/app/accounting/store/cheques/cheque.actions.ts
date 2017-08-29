@@ -47,5 +47,11 @@ export class ProcessSuccessAction implements Action {
 export class ProcessFailAction implements Action {
   readonly type = PROCESS_FAIL;
 
-  constructor(public error: Error) { }
+  constructor(public payload: Error) { }
 }
+
+export type Actions
+  = ProcessAction
+  | ProcessSuccessAction
+  | ProcessFailAction;
+

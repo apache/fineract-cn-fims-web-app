@@ -27,6 +27,9 @@
         <md-error *ngIf="chequeForm.get('chequeNumber').hasError('maxlength')">
           {{ 'Only characters allowed.' | translate:{ value: chequeForm.get('chequeNumber').getError('maxlength')['requiredLength']} }}
         </md-error>
+        <md-error *ngIf="chequeForm.get('chequeNumber').hasError('isNumber')" translate>
+          Must be a number
+        </md-error>
       </md-input-container>
       <md-input-container>
         <input mdInput type="text" placeholder="{{'Branch sort code' | translate}}" formControlName="branchSortCode"/>

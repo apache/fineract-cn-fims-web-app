@@ -25,17 +25,15 @@
       <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">APPROVE</th>
       <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">CANCEL</th>
       <tr td-data-table-row *ngFor="let row of cheques$ | async">
-        <ng-container *ngFor="let column of columns">
-          <td td-data-table-cell [numeric]="column.numeric">
-            {{column.format ? column.format(row[column.name]) : row[column.name]}}
-          </td>
-          <td td-data-table-cell (click)="approveCheque(row)" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
-            <button md-button class="md-accent">{{ 'APPROVE' | translate}}</button>
-          </td>
-          <td td-data-table-cell (click)="cancelCheque(row)" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
-            <button md-button class="md-accent">{{ 'CANCEL' | translate}}</button>
-          </td>
-        </ng-container>
+        <td td-data-table-cell [numeric]="column.numeric" *ngFor="let column of columns">
+          {{column.format ? column.format(row[column.name]) : row[column.name]}}
+        </td>
+        <td td-data-table-cell (click)="approveCheque(row)" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
+          <button md-button md-raised-button color="primary" [disabled]="row.state === 'PROCESSED'">{{ 'APPROVE' | translate}}</button>
+        </td>
+        <td td-data-table-cell (click)="cancelCheque(row)" *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
+          <button md-button md-raised-button color="warn" [disabled]="row.state === 'CANCELED'">{{ 'CANCEL' | translate}}</button>
+        </td>
       </tr>
     </table>
   </div>
