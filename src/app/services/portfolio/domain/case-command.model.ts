@@ -20,6 +20,6 @@ export interface CaseCommand {
   oneTimeAccountAssignments?: AccountAssignment[];
   paymentSize?: number;
   note?: string;
-  createdOn?: string;
+  createdOn: string;
   createdBy?: string;
 }
