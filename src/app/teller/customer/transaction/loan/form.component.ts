@@ -34,9 +34,7 @@ export class LoanTransactionFormComponent implements OnInit {
   form: FormGroup;
 
   @Input() caseInstances: FimsCase[];
-
   @Input('transactionCosts') transactionCosts: TellerTransactionCosts;
-
   @Input('transactionCreated') set transactionCreated(transactionCreated: boolean) {
     this._transactionCreated = transactionCreated;
     if(transactionCreated) {
@@ -45,13 +43,11 @@ export class LoanTransactionFormComponent implements OnInit {
   };
 
   @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TransactionForm>();
-
   @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<boolean>();
-
   @Output('onCancelTransaction') onCancelTransaction = new EventEmitter<void>();
-
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
+  @ViewChild('transactionStep') transactionStep: TdStepComponent;
   @ViewChild('confirmationStep') confirmationStep: TdStepComponent;
 
   constructor(private formBuilder: FormBuilder) {}
@@ -61,6 +57,8 @@ export class LoanTransactionFormComponent implements OnInit {
       caseInstance: ['', Validators.required],
       amount: ['', [Validators.required, FimsValidators.minValue(0)]]
     });
+
+    this.transactionStep.open();
   }
 
   createTransaction(): void {

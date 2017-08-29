@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
@@ -33,7 +33,6 @@ import {toShortISOString} from '../../../../services/domain/date.converter';
 export class ChequeTransactionFormComponent implements OnInit, OnChanges {
 
   chequeForm: FormGroup;
-
   amountForm: FormGroup;
 
   chargesIncluded: boolean = true;
@@ -41,34 +40,26 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
   numberFormat: string = '1.2-2';
 
   @ViewChild('transactionStep') transactionStep: TdStepComponent;
-
   @ViewChild('confirmationStep') confirmationStep: TdStepComponent;
 
   @Input('productInstances') productInstances: ProductInstance[];
-
   @Input('transactionCosts') transactionCosts: TellerTransactionCosts;
-
   @Input('transactionCreated') transactionCreated: boolean;
-
   @Input('micrResolution') micrResolution: MICRResolution;
-
+  @Input('micrResolutionError') micrResolutionError: Error;
   @Input('customerName') customerName: string;
 
   @Output('onExpandMICR') onExpandMICR = new EventEmitter<string>();
-
   @Output('onCreateTransaction') onCreateTransaction = new EventEmitter<TransactionForm>();
-
   @Output('onConfirmTransaction') onConfirmTransaction = new EventEmitter<boolean>();
-
   @Output('onCancelTransaction') onCancelTransaction = new EventEmitter<void>();
-
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
   constructor(private formBuilder: FormBuilder) {
     this.chequeForm = this.formBuilder.group({
-      chequeNumber: ['', [Validators.required, FimsValidators.minValue(1)]],
-      branchSortCode: ['', [Validators.required, Validators.maxLength(11)]],
-      accountNumber: ['', [Validators.required, Validators.maxLength(34)]]
+      chequeNumber: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(8), FimsValidators.isNumber]],
+      branchSortCode: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(11)]],
+      accountNumber: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(34)]]
     });
 
     this.amountForm = this.formBuilder.group({
@@ -89,16 +80,15 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const draweeControl = this.amountForm.get('drawee');
     const drawerControl = this.amountForm.get('drawer');
+
     if(changes.micrResolution && this.micrResolution) {
       draweeControl.setValue(this.micrResolution.office);
       drawerControl.setValue(this.micrResolution.customer);
-      draweeControl.disable();
-      drawerControl.disable();
-    } else {
+    }
+
+    if(changes.micrResolutionError && this.micrResolutionError) {
       draweeControl.setValue('');
       drawerControl.setValue('');
-      draweeControl.enable();
-      drawerControl.enable();
     }
 
     if(changes.transactionCreated && this.transactionCreated) {

@@ -21,9 +21,11 @@ import * as fromAccounting from '../store'
 import {ChequeCRUDActions, ProcessAction} from '../store/cheques/cheque.actions';
 import {TranslateService} from '@ngx-translate/core';
 import {FimsCheque} from '../../services/cheque/domain/fims-cheque.model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   templateUrl: './cheques.list.component.html',
+  providers: [DatePipe]
 })
 export class ChequesListComponent {
 
@@ -32,11 +34,15 @@ export class ChequesListComponent {
   columns: ITdDataTableColumn[] = [
     { name: 'identifier', label: 'Identifier' },
     { name: 'drawee', label: 'Drawee' },
-    { name: 'dateIssued', label: 'Date issued' },
+    { name: 'drawer', label: 'Drawer' },
+    { name: 'payee', label: 'Payee' },
+    { name: 'amount', label: 'Amount' },
+    { name: 'dateIssued', label: 'Date issued', format: value => this.datePipe.transform(value, 'shortDate') },
     { name: 'state', label: 'State' }
   ];
 
-  constructor(private store: AccountingStore, private dialogService: TdDialogService, private translate: TranslateService) {
+  constructor(private store: AccountingStore, private dialogService: TdDialogService,
+              private translate: TranslateService, private datePipe: DatePipe) {
     this.cheques$ = store.select(fromAccounting.getAllChequeEntities);
   }
 

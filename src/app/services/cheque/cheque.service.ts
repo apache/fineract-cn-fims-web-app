@@ -55,7 +55,7 @@ export class ChequeService {
   }
 
   public process(identifier: string, command: ChequeProcessingCommand): Observable<void> {
-    return this.http.post(`${this.baseUrl}/cheques/${identifier}`, command);
+    return this.http.post(`${this.baseUrl}/cheques/${identifier}/commands`, command);
   }
 
   public processTransaction(transaction: ChequeTransaction): Observable<void> {

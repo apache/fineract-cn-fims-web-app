@@ -32,6 +32,7 @@ import {TransactionForm} from '../domain/transaction-form.model';
 import {ChequeTransactionFormComponent} from './form.component';
 import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
+import {Error} from '../../../../services/domain/error.model';
 
 @Component({
   templateUrl: './create.component.html'
@@ -54,6 +55,8 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
 
   micrResolution$: Observable<MICRResolution>;
 
+  micrResolutionError: Error;
+
   productInstances$: Observable<ProductInstance[]>;
 
   transactionCosts$: Observable<TellerTransactionCosts>;
@@ -67,7 +70,10 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
               private chequeService: ChequeService) {}
 
   ngOnInit(): void {
-    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+    const selectedCustomer$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+      .filter(customer => !!customer);
+
+    this.productInstances$ = selectedCustomer$
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
@@ -77,8 +83,7 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
 
-    this.customerName$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .filter(customer => !!customer)
+    this.customerName$ = selectedCustomer$
       .map(customer => `${customer.givenName} ${customer.surname}`);
   }
 
@@ -89,7 +94,11 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
 
   expandMICR(identifier: string): void {
     this.micrResolution$ = this.chequeService.expandMicr(identifier)
-      .catch(error => Observable.of(null));
+      .do(resolution => this.micrResolutionError = null)
+      .catch(error => {
+        this.micrResolutionError = error;
+        return Observable.empty();
+      });
   }
 
   createTransaction(formData: TransactionForm): void {

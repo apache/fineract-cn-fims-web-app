@@ -39,7 +39,8 @@ export class IssueChequesFormComponent {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      amount: [0, [Validators.required, FimsValidators.minValue(1)]]
+      start: [1, [FimsValidators.minValue(1)]],
+      amount: [1, [Validators.required, FimsValidators.minValue(1)]]
     });
 
     this.detailsStep.open();
@@ -47,6 +48,7 @@ export class IssueChequesFormComponent {
 
   save(): void {
     const issuingCount: IssuingCount = {
+      start: this.form.get('start').value,
       amount: this.form.get('amount').value,
       accountIdentifier: this.accountIdentifier
     };

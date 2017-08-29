@@ -17,34 +17,57 @@
 <td-steps mode="'vertical'">
   <td-step #transactionStep label="{{'Transaction' | translate}}"
            [state]="!invalid ? 'complete' : 'required'" [disabled]="transactionCreated">
-    <form [formGroup]="chequeForm" layout="column">
-      <div layout="row">
-        <md-input-container>
-          <input mdInput type="number" placeholder="{{'Cheque number' | translate}}" formControlName="chequeNumber"/>
-          <md-error *ngIf="chequeForm.get('chequeNumber').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-        <md-input-container>
-          <input mdInput type="text" placeholder="{{'Branch sort code' | translate}}" formControlName="branchSortCode"/>
-          <md-error *ngIf="chequeForm.get('branchSortCode').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-        <md-input-container>
-          <input mdInput type="text" placeholder="{{'Account number' | translate}}" formControlName="accountNumber"/>
-          <md-error *ngIf="chequeForm.get('accountNumber').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-      </div>
+    <form [formGroup]="chequeForm">
+      <md-input-container>
+        <input mdInput type="text" placeholder="{{'Cheque number' | translate}}" formControlName="chequeNumber"/>
+        <md-error *ngIf="chequeForm.get('chequeNumber').hasError('required')" translate>Required</md-error>
+        <md-error *ngIf="chequeForm.get('chequeNumber').hasError('minlength')">
+          {{ 'Must have at least characters.' | translate:{ value: chequeForm.get('chequeNumber').getError('minlength')['requiredLength']} }}
+        </md-error>
+        <md-error *ngIf="chequeForm.get('chequeNumber').hasError('maxlength')">
+          {{ 'Only characters allowed.' | translate:{ value: chequeForm.get('chequeNumber').getError('maxlength')['requiredLength']} }}
+        </md-error>
+        <md-error *ngIf="chequeForm.get('chequeNumber').hasError('isNumber')" translate>
+          Must be a number
+        </md-error>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="text" placeholder="{{'Branch sort code' | translate}}" formControlName="branchSortCode"/>
+        <md-error *ngIf="chequeForm.get('branchSortCode').hasError('required')" translate>Required</md-error>
+        <md-error *ngIf="chequeForm.get('branchSortCode').hasError('minlength')">
+          {{ 'Must have at least characters.' | translate:{ value: chequeForm.get('branchSortCode').getError('minlength')['requiredLength']} }}
+        </md-error>
+        <md-error *ngIf="chequeForm.get('branchSortCode').hasError('maxlength')">
+          {{ 'Only characters allowed.' | translate:{ value: chequeForm.get('branchSortCode').getError('maxlength')['requiredLength']} }}
+        </md-error>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="text" placeholder="{{'Account number' | translate}}" formControlName="accountNumber"/>
+        <md-error *ngIf="chequeForm.get('accountNumber').hasError('required')" translate>Required</md-error>
+        <md-error *ngIf="chequeForm.get('accountNumber').hasError('minlength')">
+          {{ 'Must have at least characters.' | translate:{ value: chequeForm.get('accountNumber').getError('minlength')['requiredLength']} }}
+        </md-error>
+        <md-error *ngIf="chequeForm.get('accountNumber').hasError('maxlength')">
+          {{ 'Only characters allowed.' | translate:{ value: chequeForm.get('accountNumber').getError('maxlength')['requiredLength']} }}
+        </md-error>
+      </md-input-container>
     </form>
     <form [formGroup]="amountForm">
-      <div layout="row">
-        <md-input-container>
-          <input mdInput type="text" placeholder="{{'Drawee' | translate}}" formControlName="drawee"/>
-          <md-error *ngIf="amountForm.get('drawee').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-        <md-input-container>
-          <input mdInput type="text" placeholder="{{'Drawer' | translate}}" formControlName="drawer"/>
-          <md-error *ngIf="amountForm.get('drawer').hasError('required')" translate>Required</md-error>
-        </md-input-container>
-        <button md-raised-button color="primary" (click)="validateCheque()" [disabled]="chequeForm.invalid">{{'DETERMINE FROM MICR' | translate}}</button>
-      </div>
+      <md-input-container>
+        <input mdInput type="text" placeholder="{{'Drawee' | translate}}" formControlName="drawee"/>
+        <md-error *ngIf="amountForm.get('drawee').hasError('required')" translate>Required</md-error>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="text" placeholder="{{'Drawer' | translate}}" formControlName="drawer"/>
+        <md-error *ngIf="amountForm.get('drawer').hasError('required')" translate>Required</md-error>
+      </md-input-container>
+      <button md-raised-button color="primary" (click)="validateCheque()" [disabled]="chequeForm.invalid">{{'DETERMINE FROM MICR' | translate}}</button>
+      <td-message *ngIf="!!micrResolutionError"
+                  label="Drawee/Drawer could not be determined in our system from the MICR your entered."
+                  sublabel="Possible reasons: Cheque number has not been issued, Branch sort code is not known in system or account number does not exists in system"
+                  color="accent"
+                  icon="warning">
+      </td-message>
       <div layout="row">
         <md-input-container>
           <input mdInput type="text" placeholder="{{'Payee' | translate}}" formControlName="payee"/>
@@ -61,6 +84,7 @@
       <div layout="row" layout-margin>
         <md-checkbox formControlName="openCheque" translate>Is cheque open?</md-checkbox>
       </div>
+      <td-message *ngIf="amountForm.get('openCheque').value" label="Please check identification card of customer" color="accent" icon="warning"></td-message>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>

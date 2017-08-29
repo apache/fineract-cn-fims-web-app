@@ -19,6 +19,12 @@
     <form [formGroup]="form" layout="column">
       <div layout="row">
         <md-input-container layout-margin>
+          <input mdInput type="number" placeholder="{{'Start at(optional)' | translate}}" formControlName="start" step="any"/>
+          <md-error *ngIf="form.get('start').errors?.minValue">{{ 'Value must be greater than' | translate:{ value: form.get('start').errors?.minValue.value} }}</md-error>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin>
           <input mdInput type="number" placeholder="{{'Cheque amount' | translate}}" formControlName="amount" step="any"/>
           <md-error *ngIf="form.get('amount').errors?.minValue">{{ 'Value must be greater than' | translate:{ value: form.get('amount').errors?.minValue.value} }}</md-error>
         </md-input-container>
