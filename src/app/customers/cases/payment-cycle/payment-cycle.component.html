@@ -1,16 +1,16 @@
 <md-list-item>
   <h3 md-line translate>Payment cycle</h3>
-  <p md-line>Repay every {{paymentCycle.period + ' ' + getTemporalOption(paymentCycle.temporalUnit).label}}</p>
+  <p md-line>Repay every {{paymentCycle.period + ' ' + getTemporalOption(paymentCycle.temporalUnit)?.label}}</p>
   <p md-line *ngIf="paymentCycle.temporalUnit === 'WEEKS'">
-    on {{getWeekDayOption(paymentCycle.alignmentDay).label}}
+    on {{getWeekDayOption(paymentCycle.alignmentDay)?.label}}
   </p>
   <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting === 'fixed'">
     on the {{paymentCycle.alignmentDay +1}}. day
   </p>
   <p md-line *ngIf="paymentCycle.temporalUnit !== 'WEEKS' && alignmentDaySetting === 'relative'">
-    on the {{getAlignment(paymentCycle.alignmentWeek).label + ' ' + getWeekDayOption(paymentCycle.alignmentDay).label}}
+    on the {{getAlignment(paymentCycle.alignmentWeek)?.label + ' ' + getWeekDayOption(paymentCycle.alignmentDay)?.label}}
   </p>
   <p md-line *ngIf="paymentCycle.temporalUnit === 'YEARS'">
-    in {{getMonthOption(paymentCycle.alignmentMonth).label}}
+    in {{getMonthOption(paymentCycle.alignmentMonth)?.label}}
   </p>
 </md-list-item>
