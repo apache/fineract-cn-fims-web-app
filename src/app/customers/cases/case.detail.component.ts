@@ -68,8 +68,4 @@ export class CaseDetailComponent implements OnInit, OnDestroy {
     this.actionsSubscription.unsubscribe();
   }
 
-  disburse(): void{
-    // TODO: Implement when API available
-  }
-
 }
