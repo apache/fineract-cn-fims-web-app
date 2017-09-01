@@ -64,47 +64,47 @@
       </md-option>
     </md-select>
   </div>
-  <div layout="row" *ngIf="form.get('paymentTemporalUnit').value === 'WEEKS'">
-    <md-select formControlName="alignmentDay" layout-margin placeholder="{{'on' | translate}}">
-      <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
-        {{alignment.label | translate}}
+  <!-- Days in weeks -->
+  <div layout="row" *ngIf="displayDaysInWeek">
+    <md-select formControlName="dayInWeek" layout-margin placeholder="{{'on' | translate}}">
+      <md-option *ngFor="let day of weekDays" [value]="day.type">
+        {{day.label | translate}}
       </md-option>
     </md-select>
   </div>
-  <div layout="column" *ngIf="form.get('paymentTemporalUnit').value !== 'WEEKS'">
-    <md-radio-group formControlName="alignmentDaySetting">
+  <!-- Month setting -->
+  <div layout="column" *ngIf="displayMonthSetting">
+    <md-radio-group formControlName="monthSetting">
       <div layout="row">
-        <md-radio-button layout-margin value="fixed"></md-radio-button>
-        <md-select formControlName="alignmentDay" placeholder="{{'on the' | translate}}" layout-margin
-                   [disabled]="form.get('alignmentDaySetting').value === 'relative'">
-          <md-option *ngFor="let alignment of monthDays" [value]="alignment.type">
-            {{alignment.label}}
+        <md-radio-button layout-margin value="DAY"></md-radio-button>
+        <md-select formControlName="monthSettingDay" placeholder="{{'on the' | translate}}" layout-margin>
+          <md-option *ngFor="let day of monthDays" [value]="day.type">
+            {{day.label}}
           </md-option>
         </md-select>
         <p translate>Day</p>
       </div>
       <div layout="row">
         <ng-container>
-          <md-radio-button layout-margin value="relative"></md-radio-button>
-          <md-select formControlName="alignmentWeek" placeholder="{{'on the' | translate}}" layout-margin
-                     [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
-            <md-option *ngFor="let alignment of alignments" [value]="alignment.type">
+          <md-radio-button layout-margin value="WEEK_AND_DAY"></md-radio-button>
+          <md-select formControlName="monthSettingWeek" placeholder="{{'on the' | translate}}" layout-margin>
+            <md-option *ngFor="let alignment of weekAlignments" [value]="alignment.type">
               {{alignment.label | translate}}
             </md-option>
           </md-select>
         </ng-container>
-        <md-select formControlName="alignmentDay" layout-margin [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
-          <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
-            {{alignment.label | translate}}
+        <md-select formControlName="monthSettingDayInWeek" layout-margin>
+          <md-option *ngFor="let weekDay of weekDays" [value]="weekDay.type">
+            {{weekDay.label | translate}}
           </md-option>
         </md-select>
       </div>
     </md-radio-group>
   </div>
-  <md-select formControlName="alignmentMonth" placeholder="{{'in' | translate}}" *ngIf="form.get('paymentTemporalUnit').value === 'YEARS'"
-             layout-margin>
-    <md-option *ngFor="let alignment of months" [value]="alignment.type">
-      {{alignment.label | translate}}
+  <!-- Months -->
+  <md-select formControlName="month" placeholder="{{'in' | translate}}" layout-margin *ngIf="displayMonths">
+    <md-option *ngFor="let month of months" [value]="month.type">
+      {{month.label | translate}}
     </md-option>
   </md-select>
   <div layout="row" class="pad-top">

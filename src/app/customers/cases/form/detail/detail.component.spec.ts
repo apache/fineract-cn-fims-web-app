@@ -23,6 +23,7 @@ import {CaseDetailFormComponent, DetailFormData} from './detail.component';
 import {MdInputModule, MdOptionModule, MdRadioModule, MdSelectModule, MdTooltipModule} from '@angular/material';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {Product} from '../../../../services/portfolio/domain/product.model';
+import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 
 describe('Test case detail form component', () => {
 
@@ -49,6 +50,14 @@ describe('Test case detail form component', () => {
       parameters: null,
       currencyCode: '',
       minorCurrencyUnitDigits: 2
+    }
+  ];
+
+  const productInstances: ProductInstance[] = [
+    {
+      customerIdentifier: 'customerIdentifier',
+      accountIdentifier: 'depositAccountIdentifier',
+      productIdentifier: 'productIdentifier'
     }
   ];
 
@@ -94,6 +103,7 @@ describe('Test case detail form component', () => {
     component = fixture.componentInstance;
 
     component.products = products;
+    component.productInstances = productInstances;
   });
 
   it('should return same form data', () => {
@@ -132,10 +142,59 @@ describe('Test case detail form component', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
+  describe('weeks selection', () => {
+    it('should mark form as invalid when no week day is given', () => {
+      component.formData = Object.assign({}, validFormData, {
+        paymentTemporalUnit: 'WEEKS',
+        paymentAlignmentDay: undefined
+      });
+      fixture.detectChanges();
+      expect(component.form.valid).toBeFalsy();
+    });
+  });
+
+  describe('months selection', () => {
+    it('should mark form as invalid when no week day is given on DAY', () => {
+      component.formData = Object.assign({}, validFormData, {
+        paymentTemporalUnit: 'MONTHS',
+        paymentAlignmentDay: undefined,
+        paymentAlignmentWeek: undefined,
+        paymentAlignmentMonth: undefined
+      });
+      fixture.detectChanges();
+      expect(component.form.valid).toBeFalsy();
+    });
+
+    it('should mark form as invalid when no week day is given on WEEK_AND_DAY', () => {
+      component.formData = Object.assign({}, validFormData, {
+        paymentTemporalUnit: 'MONTHS',
+        paymentAlignmentDay: undefined,
+        paymentAlignmentWeek: 1,
+        paymentAlignmentMonth: undefined
+      });
+      fixture.detectChanges();
+      expect(component.form.valid).toBeFalsy();
+    });
+
+  });
+
+  describe('years selection', () => {
+    it('should mark form as invalid when no month is given', () => {
+      component.formData = Object.assign({}, validFormData, {
+        paymentTemporalUnit: 'YEARS',
+        paymentAlignmentDay: 1,
+        paymentAlignmentWeek: 1,
+        paymentAlignmentMonth: undefined,
+      });
+      fixture.detectChanges();
+      expect(component.form.valid).toBeFalsy();
+    });
+  });
+
 });
 
 @Component({
-  template: '<fims-case-detail-form #form [formData]="formData" [products]="products"></fims-case-detail-form>'
+  template: '<fims-case-detail-form #form [formData]="formData" [products]="products" [productInstances]="productInstances"></fims-case-detail-form>'
 })
 class TestComponent {
 
@@ -144,4 +203,6 @@ class TestComponent {
   formData: DetailFormData;
 
   products: Product[];
+
+  productInstances: ProductInstance[];
 }
