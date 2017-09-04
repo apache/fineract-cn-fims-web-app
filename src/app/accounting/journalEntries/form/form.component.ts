@@ -22,7 +22,7 @@ import {TdStepComponent} from '@covalent/core';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {Observable, Subscription} from 'rxjs';
-import {todayAsISOString, toLongISOString} from '../../../services/domain/date.converter';
+import {addCurrentTime, parseDate, todayAsISOString, toLongISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../store';
@@ -93,12 +93,13 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
   }
 
   save(): void {
-    const transactionDateString = toLongISOString(this.form.get('transactionDate').value);
+    const date: Date = parseDate(this.form.get('transactionDate').value);
+    const dateWithTime = addCurrentTime(date);
 
     const journalEntry: JournalEntry = {
       transactionIdentifier: this.form.get('transactionIdentifier').value,
       transactionType: this.form.get('transactionType').value,
-      transactionDate: transactionDateString,
+      transactionDate: dateWithTime.toISOString(),
       clerk: this.username,
       note: this.form.get('note').value,
       message: this.form.get('message').value,

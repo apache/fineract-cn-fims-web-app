@@ -23,11 +23,37 @@ export function todayAsISOString(): string {
  * @param dateString
  */
 export function toLongISOString(dateString: string): string {
-  const millis = Date.parse(dateString);
-  const date: Date = new Date(millis);
+  const date: Date = parseDate(dateString);
   return date.toISOString();
 }
 
 export function toShortISOString(dateString: string): string {
   return `${toLongISOString(dateString).slice(0, 10)}Z`;
+}
+
+export function toEndOfDay(dateString: string): string {
+  const date: Date = parseDate(dateString);
+
+  date.setDate(date.getDate() + 1);
+  date.setTime(date.getTime() - 1);
+
+  return date.toISOString();
+}
+
+export function addCurrentTime(date: Date): Date {
+  const now: Date = new Date();
+
+  date.setUTCHours(now.getUTCHours());
+  date.setUTCMinutes(now.getUTCMinutes());
+  date.setUTCSeconds(now.getUTCSeconds());
+  date.setUTCMilliseconds(now.getUTCMilliseconds());
+
+  return date;
+}
+
+export function parseDate(dateString: string): Date {
+  const millis = Date.parse(dateString);
+  const date: Date = new Date(millis);
+
+  return date;
 }
