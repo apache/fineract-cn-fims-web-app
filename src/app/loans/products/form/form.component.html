@@ -41,7 +41,7 @@
   </td-step>
   <td-step #arrearsStep label="{{'Arrears allowance reserve account' | translate}}" [state]="arrearsAllowanceForm.valid ? 'complete' : arrearsAllowanceForm.pristine ? 'none' : 'required'">
     <form [formGroup]="arrearsAllowanceForm">
-      <fims-account-select title="{{'Arrears allowance(Expense accounts only)' | translate}}" formControlName="account" [type]="'EXPENSE'">
+      <fims-account-select flex title="{{'Arrears allowance(Expense accounts only)' | translate}}" formControlName="account" [type]="'EXPENSE'">
         <ng-container *ngIf="!arrearsAllowanceForm.get('account').pristine && arrearsAllowanceForm.get('account').hasError('required')" translate>
           Required
         </ng-container>

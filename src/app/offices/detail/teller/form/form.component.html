@@ -42,7 +42,7 @@
           </md-error>
         </md-input-container>
       </div>
-      <fims-account-select title="{{'Teller account(Asset accounts only)' | translate}}" formControlName="tellerAccountIdentifier" [type]="'ASSET'">
+      <fims-account-select flex title="{{'Teller account(Asset accounts only)' | translate}}" formControlName="tellerAccountIdentifier" [type]="'ASSET'">
         <ng-container *ngIf="!form.get('tellerAccountIdentifier').pristine && form.get('tellerAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>
@@ -50,7 +50,7 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <fims-account-select title="{{'Vault account(Asset accounts only)' | translate}}" formControlName="vaultAccountIdentifier" [type]="'ASSET'">
+      <fims-account-select flex title="{{'Vault account(Asset accounts only)' | translate}}" formControlName="vaultAccountIdentifier" [type]="'ASSET'">
         <ng-container *ngIf="!form.get('vaultAccountIdentifier').pristine && form.get('vaultAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>

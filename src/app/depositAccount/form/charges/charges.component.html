@@ -46,7 +46,7 @@
           </md-select>
           <md-checkbox layout-margin formControlName="proportional" translate>Proportional?</md-checkbox>
         </div>
-        <fims-account-select title="{{'Income account' | translate}}" formControlName="incomeAccountIdentifier" [type]="'REVENUE'">
+        <fims-account-select flex title="{{'Income account' | translate}}" formControlName="incomeAccountIdentifier" [type]="'REVENUE'">
           <ng-container *ngIf="!charge.get('incomeAccountIdentifier').pristine && charge.get('incomeAccountIdentifier').hasError('required')" translate>
             Required
           </ng-container>

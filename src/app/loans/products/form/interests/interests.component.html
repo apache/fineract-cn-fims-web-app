@@ -26,7 +26,7 @@
   <div layout="row" *ngIf="form.get('interestRangeEnabled').value === true">
     <fims-min-max minPlaceholder="{{'Minimum interest rate' | translate}}" maxPlaceholder="{{'Maximum interest rate' | translate}}" [form]="form" minControlName="minimum" maxControlName="maximum"></fims-min-max>
   </div>
-  <fims-account-select title="{{'Interest income account(Revenue accounts only)' | translate}}" formControlName="incomeAccount" [type]="'REVENUE'">
+  <fims-account-select flex title="{{'Interest income account(Revenue accounts only)' | translate}}" formControlName="incomeAccount" [type]="'REVENUE'">
     <ng-container *ngIf="!form.get('incomeAccount').pristine && form.get('incomeAccount').hasError('required')">
       Required
     </ng-container>
@@ -34,7 +34,7 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <fims-account-select title="{{'Interest accrual account(Asset accounts only)' | translate}}" formControlName="accrualAccount" [type]="'ASSET'">
+  <fims-account-select flex title="{{'Interest accrual account(Asset accounts only)' | translate}}" formControlName="accrualAccount" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('accrualAccount').pristine && form.get('accrualAccount').hasError('required')">
       Required
     </ng-container>
