@@ -22,7 +22,7 @@ import {TdStepComponent} from '@covalent/core';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Account} from '../../../services/accounting/domain/account.model';
 import {Observable, Subscription} from 'rxjs';
-import {toLongISOString} from '../../../services/domain/date.converter';
+import {todayAsISOString, toLongISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../store';
@@ -33,6 +33,7 @@ import {AccountingStore} from '../../store/index';
 import {JournalEntryValidators} from './journal-entry.validator';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {transactionTypeExists} from './transaction-type-select/validator/transaction-type-exists.validator';
+import {accountExists} from '../../../common/validator/account-exists.validator';
 
 @Component({
   selector: 'fims-journal-entry-form-component',
@@ -46,13 +47,13 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-  selectedClerk: string;
+  username: string;
 
   term = new FormControl();
 
-  accounts: Observable<Account[]>;
-
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private store: AccountingStore, private accountingService: AccountingService) {
+  constructor(private formBuilder: FormBuilder, private router: Router,
+              private route: ActivatedRoute, private store: AccountingStore,
+              private accountingService: AccountingService) {
     super();
   }
 
@@ -65,28 +66,23 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => this.setError('transactionIdentifier', 'unique', true));
 
-    this.accounts = this.store.select(fromRoot.getAccountSearchResults)
-      .map(accountPage => accountPage.accounts);
-
-    this.detailsStep.open();
-
-    this.userNameSubscription = this.store.select(fromRoot.getUsername).subscribe(username => this.selectedClerk = username);
+    this.userNameSubscription = this.store.select(fromRoot.getUsername)
+      .subscribe(username => this.username = username);
 
     this.form = this.formBuilder.group({
       transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       transactionType: ['', [Validators.required], transactionTypeExists(this.accountingService)],
-      transactionDate: [new Date().toISOString().slice(0, 10), Validators.required],
+      transactionDate: [todayAsISOString(), Validators.required],
       note: [''],
       message: [''],
       creditors: this.formBuilder.array([], JournalEntryValidators.minItems(1)),
       debtors: this.formBuilder.array([], JournalEntryValidators.minItems(1))
     }, { validator: JournalEntryValidators.equalSum('creditors', 'debtors') });
 
-    this.term.valueChanges
-      .debounceTime(500)
-      .subscribe((event) => this.onAccountSearch(event));
+    this.addDebtor();
+    this.addCreditor();
 
-    this.onAccountSearch();
+    this.detailsStep.open();
   }
 
   ngOnDestroy(): void {
@@ -96,18 +92,14 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     this.store.dispatch({ type: RESET_FORM })
   }
 
-  onClerkSelectionChange(selections: string[]): void {
-    this.selectedClerk = selections[0];
-  }
-
   save(): void {
-    let transactionDateString = toLongISOString(this.form.get('transactionDate').value);
+    const transactionDateString = toLongISOString(this.form.get('transactionDate').value);
 
-    let journalEntry: JournalEntry = {
+    const journalEntry: JournalEntry = {
       transactionIdentifier: this.form.get('transactionIdentifier').value,
       transactionType: this.form.get('transactionType').value,
       transactionDate: transactionDateString,
-      clerk: this.selectedClerk,
+      clerk: this.username,
       note: this.form.get('note').value,
       message: this.form.get('message').value,
       creditors: this.form.get('creditors').value,
@@ -120,9 +112,9 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     } });
   }
 
-  addCreditor(accountNumber: string): void {
+  addCreditor(): void {
     const control: FormArray = this.form.get('creditors') as FormArray;
-    control.push(this.initCreditor(accountNumber));
+    control.push(this.initCreditor());
   }
 
   removeCreditor(index: number): void {
@@ -130,9 +122,9 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     control.removeAt(index);
   }
 
-  addDebtor(accountNumber: string): void {
+  addDebtor(): void {
     const control: FormArray = this.form.get('debtors') as FormArray;
-    control.push(this.initDebtor(accountNumber));
+    control.push(this.initDebtor());
   }
 
   removeDebtor(index: number): void {
@@ -158,29 +150,17 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     return creditors.controls;
   }
 
-  private onAccountSearch(searchTerm?: string): void {
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 5
-      },
-      searchTerm: searchTerm
-    };
-
-    this.store.dispatch({ type: SEARCH, payload: fetchRequest });
-  }
-
-  private initCreditor(accountNumber: string): FormGroup {
+  private initCreditor(): FormGroup {
     return this.formBuilder.group({
-      accountNumber: [accountNumber],
-      amount: [0]
+      accountNumber: ['', [Validators.required], accountExists(this.accountingService)],
+      amount: [0, [Validators.required]]
     })
   }
 
-  private initDebtor(accountNumber: string): FormGroup {
+  private initDebtor(): FormGroup {
     return this.formBuilder.group({
-      accountNumber: [accountNumber],
-      amount: [0]
+      accountNumber: ['', [Validators.required], accountExists(this.accountingService)],
+      amount: [0, [Validators.required]]
     })
   }
 
