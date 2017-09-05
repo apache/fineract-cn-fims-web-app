@@ -131,11 +131,14 @@ export class AccountingService{
     return this.http.post(`${this.baseUrl}/journal`, journalEntry);
   }
 
-  public fetchJournalEntries(startDate: string, endDate: string): Observable<JournalEntry[]>{
-    let params: URLSearchParams = new URLSearchParams();
-    params.append('dateRange', buildDateRangeParam(startDate, endDate));
+  public fetchJournalEntries(startDate: string, endDate: string, account?: string, amount?: string): Observable<JournalEntry[]>{
+    const params: URLSearchParams = new URLSearchParams();
 
-    let requestOptions: RequestOptionsArgs = {
+    params.append('dateRange', buildDateRangeParam(startDate, endDate));
+    params.append('account', account && account.length > 0 ? account : undefined);
+    params.append('amount', amount && amount.length > 0 ? amount : undefined);
+
+    const requestOptions: RequestOptionsArgs = {
       params
     };
     return this.http.get(`${this.baseUrl}/journal`, requestOptions)

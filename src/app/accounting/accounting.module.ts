@@ -59,7 +59,7 @@ import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {
   MdAutocompleteModule,
-  MdButtonModule,
+  MdButtonModule, MdCardModule,
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
@@ -91,6 +91,7 @@ import {ChequesListComponent} from './cheques/cheques.list.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MdCardModule,
     MdIconModule,
     MdListModule,
     MdToolbarModule,

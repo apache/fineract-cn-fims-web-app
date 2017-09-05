@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface Debtor{
+export interface Debtor {
   accountNumber: string;
-  amount: number;
+  amount: string;
 }
