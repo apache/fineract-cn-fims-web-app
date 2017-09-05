@@ -25,7 +25,7 @@
           </md-option>
         </md-select>
       </div>
-      <fims-account-select flex title="{{'Target account' | translate}}" formControlName="targetAccountIdentifier" *ngIf="enableTargetAccount">
+      <fims-account-select title="{{'Target account' | translate}}" formControlName="targetAccountIdentifier" *ngIf="enableTargetAccount">
         <ng-container *ngIf="!form.get('targetAccountIdentifier').pristine && form.get('targetAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>

@@ -32,7 +32,7 @@ export class JournalEntryApiEffects {
     .ofType(journalEntryActions.SEARCH)
     .map((action: journalEntryActions.SearchAction) => action.payload)
     .mergeMap(payload =>
-      this.accountingService.fetchJournalEntries(payload.startDate, payload.endDate)
+      this.accountingService.fetchJournalEntries(payload.startDate, payload.endDate, payload.account, payload.amount)
         .map(journalEntries => new journalEntryActions.SearchCompleteAction(journalEntries))
         .catch(() => of(new journalEntryActions.SearchCompleteAction([])))
     );

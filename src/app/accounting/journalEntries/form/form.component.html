@@ -55,8 +55,8 @@
           <md-card flex formArrayName="debtors">
             <md-card-title>Debit</md-card-title>
             <md-card-content>
-              <div [formGroupName]="i" *ngFor="let debtor of debtors; let i = index;">
-                <fims-account-select flex formControlName="accountNumber" [title]="'Account' | translate">
+              <div layout="row" layout-align="start center" [formGroupName]="i" *ngFor="let debtor of debtors; let i = index;">
+                <fims-account-select formControlName="accountNumber" [title]="'Account' | translate" flex="50">
                   <ng-container *ngIf="!debtor.get('accountNumber').pristine && debtor.get('accountNumber').hasError('required')" translate>
                     Required
                   </ng-container>
@@ -80,8 +80,8 @@
           <md-card flex formArrayName="creditors">
             <md-card-title>Credit</md-card-title>
             <md-card-content>
-              <div [formGroupName]="i" *ngFor="let creditor of creditors; let i = index;">
-                <fims-account-select flex formControlName="accountNumber" [title]="'Account' | translate">
+              <div layout="row" layout-align="start center" [formGroupName]="i" *ngFor="let creditor of creditors; let i = index;">
+                <fims-account-select formControlName="accountNumber" [title]="'Account' | translate" flex="50">
                   <ng-container *ngIf="!creditor.get('accountNumber').pristine && creditor.get('accountNumber').hasError('required')" translate>
                     Required
                   </ng-container>

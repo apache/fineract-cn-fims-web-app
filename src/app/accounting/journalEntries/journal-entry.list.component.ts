@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {TableData} from '../../common/data-table/data-table.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {todayAsISOString, toShortISOString} from '../../services/domain/date.converter';
 import {FimsValidators} from '../../common/validator/validators';
@@ -22,8 +21,9 @@ import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
 import {Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
-import {ITdDataTableColumn} from '@covalent/core';
 import {DatePipe} from '@angular/common';
+import {JournalEntry} from '../../services/accounting/domain/journal-entry.model';
+import {Debtor} from '../../services/accounting/domain/debtor.model';
 
 @Component({
   templateUrl: './journal-entry.list.component.html',
@@ -31,50 +31,54 @@ import {DatePipe} from '@angular/common';
 })
 export class JournalEntryListComponent implements OnInit{
 
+  numberFormat: string = '1.2-2';
+
   form: FormGroup;
 
-  journalEntryData$: Observable<TableData>;
+  journalEntries$: Observable<JournalEntry[]>;
 
-  columns: ITdDataTableColumn[];
+  journalEntry: JournalEntry;
 
-  constructor(private formBuilder: FormBuilder, private store: AccountingStore, private datePipe: DatePipe) {}
+  constructor(private formBuilder: FormBuilder, private store: AccountingStore) {}
 
   ngOnInit(): void {
-    this.columns = [
-      { name: 'transactionIdentifier', label: 'Id', tooltip: 'Id' },
-      { name: 'clerk', label: 'Clerk', tooltip: 'Clerk' },
-      { name: 'state', label: 'State', tooltip: 'State' },
-      { name: 'transactionType', label: 'Transaction type', tooltip: 'Transaction type' },
-      { name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format:  (v: any) => {
-        return this.datePipe.transform(v, 'short')
-      }}
-    ];
+    this.journalEntries$ = this.store.select(fromAccounting.getJournalEntriesSearchResult)
+      .do(journalEntries => this.select(journalEntries.length > 0 ? journalEntries[0] : undefined));
 
-    this.journalEntryData$ = this.store.select(fromAccounting.getJournalEntriesSearchResult)
-      .map(journalEntries => ({
-        totalElements: journalEntries.length,
-        totalPages: 1,
-        data: journalEntries
-      }));
-
-    let today = todayAsISOString();
+    const today = todayAsISOString();
 
     this.form = this.formBuilder.group({
-      'startDate': [ today, [Validators.required] ],
-      'endDate': [ today, [Validators.required] ],
+      'startDate': [today, [Validators.required] ],
+      'endDate': [today, [Validators.required] ],
+      'account': [],
+      'amount': [],
     }, { validator: FimsValidators.matchRange('startDate', 'endDate') });
+
     this.fetchJournalEntries()
   }
 
   fetchJournalEntries(): void{
     const startDate = toShortISOString(this.form.get('startDate').value);
     const endDate = toShortISOString(this.form.get('endDate').value);
+    const account = this.form.get('account').value;
+    const amount = this.form.get('amount').value;
 
     this.store.dispatch({ type: SEARCH, payload: {
       startDate,
-      endDate
+      endDate,
+      account,
+      amount: amount ? amount.toFixed(2) : undefined
     }});
+  }
 
+  select(journalEntry: JournalEntry): void {
+    this.journalEntry = journalEntry;
+  }
+
+  sumDebtors(debtors: Debtor[]): number {
+    return debtors.reduce((sum, debtor) => {
+      return sum + parseFloat(debtor.amount);
+    }, 0)
   }
 
 }

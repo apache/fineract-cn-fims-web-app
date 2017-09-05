@@ -14,12 +14,14 @@
  limitations under the License.
 -->
 
-<md-input-container layout-margin>
-  <input mdInput [placeholder]="title" [mdAutocomplete]="auto" [formControl]="formControl">
-  <md-hint class="tc-red-600">
-    <ng-content></ng-content>
-  </md-hint>
-</md-input-container>
+<div layout="row">
+  <md-input-container layout-margin flex>
+    <input mdInput [placeholder]="title" [mdAutocomplete]="auto" [formControl]="formControl">
+    <md-hint class="tc-red-600">
+      <ng-content></ng-content>
+    </md-hint>
+  </md-input-container>
+</div>
 
 <md-autocomplete #auto="mdAutocomplete">
   <md-option *ngFor="let account of accounts | async" [value]="account.identifier">
