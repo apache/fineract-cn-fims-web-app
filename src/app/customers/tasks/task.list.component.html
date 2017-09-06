@@ -16,7 +16,6 @@
 
 <fims-layout-card-over title="{{'Manage tasks' | translate}}" [navigateBackTo]="['../']">
   <fims-data-table
-    (onFetch)="fetchTasks($event)"
     (onActionCellClick)="rowSelect($event)"
     [columns]="columns"
     [data]="tasksData$ | async"
