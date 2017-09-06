@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {TaskDefinitionCommand} from '../../../services/customer/domain/task-definition.model';
 
-export type TaskDefinitionType = 'ID_CARD' | 'FOUR_EYES' | 'CUSTOM';
-
-export type TaskDefinitionCommand = 'ACTIVATE' | 'LOCK' | 'UNLOCK' | 'CLOSE' | 'REOPEN';
-
-export interface TaskDefinition {
-  identifier: string;
-  type: TaskDefinitionType;
-  commands: TaskDefinitionCommand[];
-  name: string;
-  description: string;
-  mandatory: boolean;
-  predefined: boolean;
+interface CommandOption {
+  command: TaskDefinitionCommand,
+  label: string,
 }
+
+export const defaultCommandOptions: CommandOption[] = [
+  { command: 'ACTIVATE', label: 'is activated' },
+  { command: 'UNLOCK', label: 'is unlocked' },
+  { command: 'REOPEN', label: 'is reopened' }
+];

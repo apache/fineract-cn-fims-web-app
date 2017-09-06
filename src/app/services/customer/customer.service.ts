@@ -27,6 +27,7 @@ import {TaskDefinition} from './domain/task-definition.model';
 import {ImageService} from '../image/image.service';
 import {IdentificationCard} from './domain/identification-card.model';
 import {IdentificationCardScan} from './domain/identification-card-scan.model';
+import {ProcessStep} from './domain/process-step.model';
 
 @Injectable()
 export class CustomerService {
@@ -79,8 +80,20 @@ export class CustomerService {
     return this.http.get(`${this.baseUrl}/tasks`)
   }
 
+  getTask(identifier: string): Observable<TaskDefinition> {
+    return this.http.get(`${this.baseUrl}/tasks/${identifier}`)
+  }
+
   createTask(task: TaskDefinition): Observable<void> {
     return this.http.post(`${this.baseUrl}/tasks`, task);
+  }
+
+  updateTask(task: TaskDefinition): Observable<void> {
+    return this.http.put(`${this.baseUrl}/tasks/${task.identifier}`, task);
+  }
+
+  fetchProcessSteps(customerId: string): Observable<ProcessStep[]> {
+    return this.http.get(`${this.baseUrl}/customer/${customerId}/actions`)
   }
 
   getPortrait(customerId: string): Observable<Blob> {

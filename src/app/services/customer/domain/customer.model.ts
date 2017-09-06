@@ -39,4 +39,8 @@ export interface Customer{
   currentState?: CustomerState;
   customValues: Value[];
   member: boolean;
+  createdBy?: string;
+  createdOn?: string;
+  lastModifiedBy?: string;
+  lastModifiedOn?: string;
 }

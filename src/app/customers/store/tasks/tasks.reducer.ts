@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import * as task from './task.actions';
-import {TaskDefinition} from '../../../services/customer/domain/task-definition.model';
 import {ResourceState} from '../../../common/store/resource.reducer';
+import {TaskDefinition} from '../../../services/customer/domain/task-definition.model';
 import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
+import * as task from './task.actions';
 
 export const initialState: ResourceState = {
   ids: [],

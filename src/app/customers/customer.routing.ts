@@ -22,9 +22,14 @@ import {EditCustomerFormComponent} from './form/edit/edit.form.component';
 import {CustomerActivityComponent} from './detail/activity/activity.component';
 import {CustomerStatusComponent} from './detail/status/status.component';
 import {CustomerIndexComponent} from './detail/customer.index.component';
-import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form.component';
 import {CustomerExistsGuard} from './customer-exists.guard';
 import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
+import {TaskListComponent} from './tasks/task.list.component';
+import {TaskExistsGuard} from './tasks/task-exists.guard';
+import {TaskEditFormComponent} from './tasks/form/edit.form.component';
+import {TaskCreateFormComponent} from './tasks/form/create.form.component';
+import {TaskIndexComponent} from './tasks/task.index.component';
+import {TaskDetailComponent} from './tasks/task.detail.component';
 
 export const CustomerRoutes: Routes = [
   {
@@ -60,10 +65,6 @@ export const CustomerRoutes: Routes = [
         data: {title: 'Manage Customer Tasks'},
       },
       {
-        path: 'tasks/create',
-        component: CustomerTaskFormComponent
-      },
-      {
         path: 'activities',
         component: CustomerActivityComponent,
         data: {title: 'Manage Customer Tasks'}
@@ -80,5 +81,40 @@ export const CustomerRoutes: Routes = [
       {path: 'loans', loadChildren: './cases/case.module#CaseModule'},
       {path: 'deposits', loadChildren: './deposits/deposits.module#DepositsModule'},
     ]
+  },
+  {
+    path: 'tasks',
+    component: TaskListComponent,
+    data: {
+      hasPermission: { id: 'customer_tasks', accessLevel: 'READ' }
+    }
+  },
+  {
+    path: 'tasks/detail/:id',
+    canActivate: [ TaskExistsGuard ],
+    component: TaskIndexComponent,
+    data: {
+      hasPermission: { id: 'customer_tasks', accessLevel: 'READ' }
+    },
+    children: [
+      {
+        path: '',
+        component: TaskDetailComponent
+      },
+      {
+        path: 'edit',
+        component: TaskEditFormComponent,
+        data: {
+          hasPermission: { id: 'customer_tasks', accessLevel: 'CHANGE' }
+        }
+      }
+    ]
+  },
+  {
+    path: 'tasks/create',
+    component: TaskCreateFormComponent,
+    data: {
+      hasPermission: { id: 'customer_tasks', accessLevel: 'CHANGE' }
+    }
   }
 ];

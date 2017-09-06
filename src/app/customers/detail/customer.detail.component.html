@@ -83,6 +83,14 @@
         <md-icon md-list-avatar>cake</md-icon>
         <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
       </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Created by</h3>
+        <p md-line>{{customer.createdBy}} - {{customer.createdOn | date:'medium'}}</p>
+      </md-list-item>
+      <md-list-item>
+        <h3 md-line translate>Last modified by</h3>
+        <p md-line>{{customer.lastModifiedBy}} - {{customer.lastModifiedOn | date:'medium'}}</p>
+      </md-list-item>
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
