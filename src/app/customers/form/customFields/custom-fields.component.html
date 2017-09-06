@@ -42,10 +42,10 @@
                  [translate]="'Only numbers allowed.'" [translateParams]="{value: field.length}">
         </md-error>
         <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.minValue"
-                 [translate]="'Value must be greater than or equals'" [translateParams]="{value: field.minValue}">
+                 [translate]="'Value must be greater than or equal to'" [translateParams]="{value: field.minValue}">
         </md-error>
         <md-error *ngIf="getControlForCatalog(catalog.identifier, field.identifier).errors?.maxValue"
-                 [translate]="'Value must be smaller than or equals'" [translateParams]="{value: field.maxValue}">
+                 [translate]="'Value must be smaller than or equal to'" [translateParams]="{value: field.maxValue}">
         </md-error>
       </md-input-container>
 

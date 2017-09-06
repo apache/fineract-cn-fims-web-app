@@ -30,10 +30,10 @@
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
           <md-error *ngIf="form.get('amount').hasError('required')" translate>Required</md-error>
           <md-error *ngIf="form.get('amount').hasError('minValue')">
-            {{ 'Value must be greater than or equals' | translate:{ value: form.get('amount').getError('minValue').value} }}
+            {{ 'Value must be greater than or equal to' | translate:{ value: form.get('amount').getError('minValue').value} }}
           </md-error>
           <md-error *ngIf="form.get('amount').hasError('maxValue')">
-            {{ 'Value must be smaller than or equals' | translate:{ value: form.get('amount').getError('maxValue').value} }}
+            {{ 'Value must be smaller than or equal to' | translate:{ value: form.get('amount').getError('maxValue').value} }}
           </md-error>
         </md-input-container>
       </div>
