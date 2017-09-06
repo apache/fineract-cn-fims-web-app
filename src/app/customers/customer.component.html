@@ -18,14 +18,26 @@
   <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <fims-data-table
-    (onFetch)="fetchCustomers($event)"
-    (onActionCellClick)="rowSelect($event)"
-    [columns]="columns"
-    [data]="customerData$ | async"
-    [loading]="loading$ | async"
-    [sortable]="true"
-    [pageable]="true">
-  </fims-data-table>
+  <fims-two-column-layout>
+    <md-nav-list left>
+      <h3 md-subheader translate>Management</h3>
+      <a md-list-item [routerLink]="['tasks']" *hasPermission="{ id: 'customer_tasks', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>playlist_add_check</md-icon>
+        <h3 md-line translate>Tasks</h3>
+        <p md-line translate>Manage tasks</p>
+      </a>
+    </md-nav-list>
+    <fims-data-table
+      right
+      (onFetch)="fetchCustomers($event)"
+      (onActionCellClick)="rowSelect($event)"
+      [columns]="columns"
+      [data]="customerData$ | async"
+      [loading]="loading$ | async"
+      [sortable]="true"
+      [pageable]="true">
+    </fims-data-table>
+  </fims-two-column-layout>
+
 </fims-layout-card-over>
 <fims-fab-button title="{{'Create new customer' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>

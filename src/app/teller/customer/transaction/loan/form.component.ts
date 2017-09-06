@@ -90,4 +90,8 @@ export class LoanTransactionFormComponent implements OnInit {
   get transactionCreated(): boolean {
     return this._transactionCreated;
   }
+
+  get createTransactionDisabled(): boolean {
+    return this.form.invalid || this.transactionCreated
+  }
 }

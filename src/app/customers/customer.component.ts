@@ -78,4 +78,8 @@ export class CustomerComponent implements OnInit{
 
     this.store.dispatch({ type: SEARCH, payload: this.lastFetchRequest });
   }
+
+  goToTasks(): void {
+    this.router.navigate(['tasks'], { relativeTo: this.route })
+  }
 }
