@@ -14,47 +14,33 @@
  * limitations under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TaskDefinition} from '../../../services/customer/domain/task-definition.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
-import {Command, CommandAction} from '../../../services/customer/domain/command.model';
-import {CustomerState} from '../../../services/customer/domain/customer-state.model';
+import {Command} from '../../../services/customer/domain/command.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCustomers from '../../store';
 import {Subscription} from 'rxjs';
-import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/tasks/task.actions';
+import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/customerTasks/customer-task.actions';
 import {CustomersStore} from '../../store/index';
+import {Observable} from 'rxjs/Observable';
+import {ProcessStep} from '../../../services/customer/domain/process-step.model';
+import {SelectTaskEvent} from './customer-task.component';
 
-interface StatusCommand {
-  action: CommandAction;
-  comment?: string;
-  tasks: TaskDefinition[];
-  preStates: CustomerState[]
-}
 
 @Component({
   templateUrl: './status.component.html'
 })
 export class CustomerStatusComponent implements OnInit, OnDestroy {
 
-  private tasksSubscription: Subscription;
-
   private customerSubscription: Subscription;
 
   customer: Customer;
 
-  statusCommands: StatusCommand[] = [
-    { action: 'ACTIVATE', preStates: ['PENDING'], tasks: []},
-    { action: 'LOCK', preStates: ['ACTIVE'], tasks: []},
-    { action: 'UNLOCK', preStates: ['LOCKED'], tasks: []},
-    { action: 'CLOSE', preStates: ['LOCKED', 'ACTIVE'], tasks: []},
-    { action: 'REOPEN', preStates: ['CLOSED'], tasks: []},
-  ];
+  processSteps$: Observable<ProcessStep[]>;
 
   constructor(private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.tasksSubscription = this.store.select(fromCustomers.getAllCustomerTaskEntities)
-      .subscribe(tasks => this.mergeTasks(tasks));
+    this.processSteps$ = this.store.select(fromCustomers.getCustomerTaskProcessSteps);
 
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .do(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier }))
@@ -62,36 +48,24 @@ export class CustomerStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.tasksSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
   }
 
-  private mergeTasks(tasks: TaskDefinition[]): void {
-    for(let statusCommand of this.statusCommands){
-      statusCommand.tasks = [];
-      let foundTasks = tasks.filter((task: TaskDefinition) => task.commands.indexOf(statusCommand.action) > -1);
-      statusCommand.tasks.push(...foundTasks);
-    }
-  }
-
-  executeTask(taskId: string): void {
+  executeTask(event: SelectTaskEvent): void {
     this.store.dispatch({ type: EXECUTE_TASK, payload: {
       customerId: this.customer.identifier,
-      taskId: taskId
+      taskId: event.taskIdentifier
     } });
   }
 
-  executeCommand(statusCommand: StatusCommand): void {
-    let command: Command = {
-      comment: statusCommand.comment,
-      action: statusCommand.action
-    };
-
+  executeCommand(command: Command): void {
     this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
       customerId: this.customer.identifier,
-      command: command,
+      command,
       activatedRoute: this.route
     } });
   }
+
+
 
 }

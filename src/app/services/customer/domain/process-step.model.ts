@@ -13,17 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Command} from './command.model';
+import {TaskDefinition} from './task-definition.model';
 
-export type TaskDefinitionType = 'ID_CARD' | 'FOUR_EYES' | 'CUSTOM';
-
-export type TaskDefinitionCommand = 'ACTIVATE' | 'LOCK' | 'UNLOCK' | 'CLOSE' | 'REOPEN';
-
-export interface TaskDefinition {
-  identifier: string;
-  type: TaskDefinitionType;
-  commands: TaskDefinitionCommand[];
-  name: string;
-  description: string;
-  mandatory: boolean;
-  predefined: boolean;
+export interface ProcessStep {
+  command: Command;
+  taskDefinitions: TaskDefinition[]
 }

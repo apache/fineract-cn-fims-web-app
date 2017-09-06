@@ -1,0 +1,79 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Task details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+    <form [formGroup]="form">
+      <div layout="row">
+        <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
+          <md-error *ngIf="form.get('name').hasError('required')" translate>
+            Required
+          </md-error>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container layout-margin flex>
+          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          <md-error *ngIf="form.get('description').hasError('required')" translate>
+            Required
+          </md-error>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-radio-group formControlName="type">
+          <md-radio-button *ngFor="let type of typeOptions" [value]="type.type" layout-margin>
+            {{type.label}}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+      <div layout="row">
+        <md-checkbox formControlName="mandatory" layout-margin translate>
+          Mandatory
+        </md-checkbox>
+      </div>
+      <div layout="row">
+        <md-checkbox formControlName="predefined" layout-margin translate>
+          Automatically assign this task when customer is created
+        </md-checkbox>
+      </div>
+      <div layout-gt-xs="column" layout-margin formArrayName="commands">
+        <h4 translate>Task needs to be executed, before customer</h4>
+        <div *ngFor="let test of commands; let i=index" layout="row" [formGroupName]="i">
+          <md-select formControlName="command" flex-gt-xs="15">
+            <md-option *ngFor="let commandOption of commandOptions" [value]="commandOption.command">
+              {{commandOption.label}}
+            </md-option>
+          </md-select>
+          <button md-button (click)="removeCommand(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
+        </div>
+        <button md-button (click)="addCommand()">{{'Add trigger' | translate}}</button>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'TASK'"
+        [editMode]="editMode"
+        [disabled]="!form.valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

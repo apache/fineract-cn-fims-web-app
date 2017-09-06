@@ -31,7 +31,6 @@ import {CustomerCustomFieldsComponent} from './form/customFields/custom-fields.c
 import {CustomerStatusComponent} from './detail/status/status.component';
 import {CustomerActivityComponent} from './detail/activity/activity.component';
 import {CustomerIndexComponent} from './detail/customer.index.component';
-import {CustomerTaskFormComponent} from './detail/status/form/customer-task.form.component';
 import {CustomerExistsGuard} from './customer-exists.guard';
 import {CustomersStore, customerStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
@@ -40,9 +39,9 @@ import {CustomerRouteEffects} from './store/effects/route.effects';
 import {EffectsModule} from '@ngrx/effects';
 import {CustomerApiEffects} from './store/effects/service.effects';
 import {CustomerCommandApiEffects} from './store/commands/effects/service.effects';
-import {CustomerTasksNotificationEffects} from './store/tasks/effects/notification.effects';
-import {CustomerTasksApiEffects} from './store/tasks/effects/service.effects';
-import {CustomerTasksRouteEffects} from './store/tasks/effects/route.effects';
+import {CustomerTasksNotificationEffects} from './store/customerTasks/effects/notification.effects';
+import {CustomerTasksApiEffects} from './store/customerTasks/effects/service.effects';
+import {CustomerTasksRouteEffects} from './store/customerTasks/effects/route.effects';
 import {CustomerPortraitComponent} from './detail/portrait/portrait.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -53,10 +52,23 @@ import {
   MdIconModule,
   MdInputModule,
   MdListModule,
+  MdOptionModule,
   MdRadioModule,
+  MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
 import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {TaskListComponent} from './tasks/task.list.component';
+import {TasksApiEffects} from './store/tasks/effects/service.effects';
+import {TasksRouteEffects} from './store/tasks/effects/route.effects';
+import {TasksNotificationEffects} from './store/tasks/effects/notification.effects';
+import {TaskCreateFormComponent} from './tasks/form/create.form.component';
+import {TaskEditFormComponent} from './tasks/form/edit.form.component';
+import {TaskFormComponent} from './tasks/form/form.component';
+import {TaskExistsGuard} from './tasks/task-exists.guard';
+import {TaskIndexComponent} from './tasks/task.index.component';
+import {TaskDetailComponent} from './tasks/task.detail.component';
+import {CustomerTaskComponent} from './detail/status/customer-task.component';
 
 @NgModule({
   imports: [
@@ -73,6 +85,8 @@ import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, Covalen
     MdButtonModule,
     MdRadioModule,
     MdCheckboxModule,
+    MdOptionModule,
+    MdSelectModule,
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentFileModule,
@@ -81,6 +95,9 @@ import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, Covalen
     EffectsModule.run(CustomerApiEffects),
     EffectsModule.run(CustomerRouteEffects),
     EffectsModule.run(CustomerNotificationEffects),
+    EffectsModule.run(TasksApiEffects),
+    EffectsModule.run(TasksRouteEffects),
+    EffectsModule.run(TasksNotificationEffects),
     EffectsModule.run(CustomerTasksApiEffects),
     EffectsModule.run(CustomerTasksRouteEffects),
     EffectsModule.run(CustomerTasksNotificationEffects),
@@ -95,16 +112,23 @@ import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, Covalen
     CustomerEmployeesComponent,
     CustomerFormComponent,
     CreateCustomerFormComponent,
-    CustomerTaskFormComponent,
     EditCustomerFormComponent,
     CustomerIndexComponent,
     CustomerDetailComponent,
     CustomerStatusComponent,
     CustomerActivityComponent,
-    CustomerPortraitComponent
+    CustomerPortraitComponent,
+    TaskListComponent,
+    TaskIndexComponent,
+    TaskCreateFormComponent,
+    TaskEditFormComponent,
+    TaskFormComponent,
+    TaskDetailComponent,
+    CustomerTaskComponent
   ],
   providers: [
     CustomerExistsGuard,
+    TaskExistsGuard,
     { provide: CustomersStore, useFactory: customerStoreFactory, deps: [Store]}
   ]
 })

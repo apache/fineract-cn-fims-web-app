@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {CustomerState} from '../../../../services/customer/domain/customer-state.model';
+import {TaskDefinition} from '../../../../services/customer/domain/task-definition.model';
+import {CommandAction} from '../../../../services/customer/domain/command.model';
 
-export type TaskDefinitionType = 'ID_CARD' | 'FOUR_EYES' | 'CUSTOM';
-
-export type TaskDefinitionCommand = 'ACTIVATE' | 'LOCK' | 'UNLOCK' | 'CLOSE' | 'REOPEN';
-
-export interface TaskDefinition {
-  identifier: string;
-  type: TaskDefinitionType;
-  commands: TaskDefinitionCommand[];
-  name: string;
-  description: string;
-  mandatory: boolean;
-  predefined: boolean;
+export interface StatusCommand {
+  action: CommandAction;
+  comment?: string;
+  tasks: TaskDefinition[];
+  preStates: CustomerState[]
 }

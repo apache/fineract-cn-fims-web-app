@@ -16,11 +16,12 @@
 
 import * as fromRoot from '../../store';
 import * as fromCustomers from './customers.reducer';
-import * as fromCustomerTasks from './tasks/tasks.reducer';
+import * as fromCustomerTasks from './customerTasks/customer-tasks.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
 import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import * as fromScans from './identityCards/scans/scans.reducer';
+import * as fromTasks from './tasks/tasks.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -36,7 +37,9 @@ import {createFormReducer, FormState, getFormError} from '../../common/store/for
 export interface State extends fromRoot.State{
   customers: ResourceState;
   customerForm: FormState;
-  customerTasks: ResourceState;
+  tasks: ResourceState;
+  taskForm: FormState;
+  customerTasks: fromCustomerTasks.State;
   customerCatalogs: fromCatalogs.State;
   customerCommands: fromCommands.State;
   customerIdentificationCards: ResourceState;
@@ -48,7 +51,9 @@ export interface State extends fromRoot.State{
 const reducers = {
   customers: createResourceReducer('Customer', fromCustomers.reducer),
   customerForm: createFormReducer('Customer'),
-  customerTasks: createResourceReducer('Customer Task', fromCustomerTasks.reducer),
+  tasks: createResourceReducer('Task', fromTasks.reducer),
+  taskForm: createFormReducer('Task'),
+  customerTasks: fromCustomerTasks.reducer,
   customerCatalogs: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer,
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
@@ -75,11 +80,22 @@ export const getCustomerLoadedAt = createSelector(getCustomersState, getResource
 export const getSelectedCustomer = createSelector(getCustomersState, getResourceSelected);
 
 /**
+ * Task Selectors
+ */
+export const getTasksState = (state: State) => state.tasks;
+
+export const getAllTaskEntities = createSelector(getTasksState, getResourceAll);
+
+export const getTaskLoadedAt = createSelector(getTasksState, getResourceLoadedAt);
+export const getSelectedTask = createSelector(getTasksState, getResourceSelected);
+
+/**
  * Customer Task Selectors
  */
-export const getCustomerTasksState = (state: State) => state.customerTasks;
+export const getCustomerTaskCommandsState = (state: State) => state.customerTasks;
 
-export const getAllCustomerTaskEntities = createSelector(getCustomerTasksState, getResourceAll);
+export const getCustomerTaskProcessSteps = createSelector(getCustomerTaskCommandsState, fromCustomerTasks.getProcessSteps);
+
 
 /**
  * Customer Catalog Selectors
