@@ -43,6 +43,11 @@
         <h3 md-line translate>Trial balance</h3>
         <p md-line translate>View trial balance</p>
       </a>
+      <a md-list-item [routerLink]="['./payrolls']" *hasPermission="{ id: 'accounting_accounts', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>receipt</md-icon>
+        <h3 md-line translate>Payrolls</h3>
+        <p md-line translate>Manage payrolls</p>
+      </a>
     </md-nav-list>
     <div layout="column" flex-gt-md="100" right>
       <h3 translate>Ledger</h3>

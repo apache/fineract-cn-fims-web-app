@@ -23,6 +23,7 @@ import * as fromJournalEntrySearch from './ledger/journal-entry/search.reducer';
 import * as fromAccounts from './account/accounts.reducer';
 import * as fromAccountEntrySearch from './account/entries/search.reducer';
 import * as fromCheques from './cheques/cheques.reducer';
+import * as fromPayrolls from './payroll/payrolls.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -60,6 +61,9 @@ export interface State extends fromRoot.State{
   transactionForm: FormState;
 
   cheques: ResourceState;
+
+  payrollCollections: ResourceState;
+  payrollPayments: SearchState;
 }
 
 const reducers = {
@@ -80,6 +84,9 @@ const reducers = {
   accountEntrySearch: fromAccountEntrySearch.reducer,
 
   cheques: createResourceReducer('Cheque', fromCheques.reducer),
+
+  payrollCollections: createResourceReducer('Payroll Collection', fromPayrolls.reducer),
+  payrollPayments: createSearchReducer('Payroll Payment')
 };
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -161,7 +168,6 @@ export const getAccountEntrySearchResults = createSelector(getAccountEntrySearch
 /**
  * Transaction Types
  */
-
 export const getTransactionTypesState = (state: State) => state.transactionTypes;
 
 export const getTransactionTypeLoadedAt = createSelector(getTransactionTypesState, getResourceLoadedAt);
@@ -189,10 +195,33 @@ export const getTransactionTypeSearchResults = createSelector(getSearchTransacti
 /**
  * Cheques
  */
-
 export const getChequesState = (state: State) => state.cheques;
 
 export const getChequeLoadedAt = createSelector(getChequesState, getResourceLoadedAt);
 export const getSelectedCheque = createSelector(getChequesState, getResourceSelected);
 
 export const getAllChequeEntities = createSelector(getChequesState, getResourceAll);
+
+/**
+ * Payroll collections
+ */
+export const getPayrollCollectionsState = (state: State) => state.payrollCollections;
+
+export const getPayrollCollectionLoadedAt = createSelector(getPayrollCollectionsState, getResourceLoadedAt);
+export const getSelectedPayrollCollection = createSelector(getPayrollCollectionsState, getResourceSelected);
+
+export const getAllPayrollCollectionEntities = createSelector(getPayrollCollectionsState, getResourceAll);
+
+export const getPayrollPaymentSearchState = (state: State) => state.payrollPayments;
+
+export const getSearchPayrollPayments = createSelector(getPayrollPaymentSearchState, getSearchEntities);
+export const getPayrollPaymentsSearchTotalElements = createSelector(getPayrollPaymentSearchState, getSearchTotalElements);
+export const getPayrollPaymentsSearchTotalPages = createSelector(getPayrollPaymentSearchState, getSearchTotalPages);
+
+export const getPayrollPaymentSearchResults = createSelector(getSearchPayrollPayments, getPayrollPaymentsSearchTotalElements, getPayrollPaymentsSearchTotalPages, (data, totalPages, totalElements) => {
+  return {
+    data,
+    totalPages,
+    totalElements
+  };
+});
