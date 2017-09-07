@@ -1,0 +1,60 @@
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {PayrollDistribution} from '../../../services/customer/domain/payroll-distribution.model';
+import * as payrollActions from './payroll.actions';
+import {PayrollDistributionRoutePayload} from './payroll.actions';
+
+export interface State {
+  distribution: PayrollDistribution;
+  loadedAt: number
+}
+
+const initialState: State = {
+  distribution: null,
+  loadedAt: null
+};
+
+export function reducer(state: State = initialState, action: payrollActions.Actions): State {
+
+  switch (action.type) {
+
+    case payrollActions.LOAD: {
+      const distribution: PayrollDistribution = action.payload;
+
+      return {
+        distribution,
+        loadedAt: Date.now()
+      }
+    }
+
+    case payrollActions.UPDATE_SUCCESS: {
+      const payload: PayrollDistributionRoutePayload = action.payload;
+
+      return {
+        distribution: payload.distribution,
+        loadedAt: state.loadedAt
+      }
+    }
+
+    default: {
+      return state;
+    }
+  }
+}
+
+export const getPayrollDistribution = (state: State) => state.distribution;
+export const getPayrollDistributionLoadedAt = (state: State) => state.loadedAt;

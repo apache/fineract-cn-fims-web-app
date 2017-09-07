@@ -32,6 +32,9 @@ import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 import {TransactionType} from './domain/transaction-type.model';
 import {TransactionTypePage} from './domain/transaction-type-page.model';
 import {AccountType} from './domain/account-type.model';
+import {PayrollCollectionSheet} from './domain/payroll-collection-sheet.model';
+import {PayrollCollectionHistory} from './domain/payroll-collection-history.model';
+import {PayrollPaymentPage} from './domain/payroll-payment-page.model';
 
 @Injectable()
 export class AccountingService{
@@ -72,9 +75,9 @@ export class AccountingService{
   }
 
   public fetchAccountsOfLedger(identifier: string, fetchRequest?: FetchRequest): Observable<AccountPage>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       params
     };
     return this.http.get(`${this.baseUrl}/ledgers/${identifier}/accounts`, requestOptions);
@@ -109,11 +112,11 @@ export class AccountingService{
   }
 
   public fetchAccountEntries(identifier: string, startDate: string, endDate: string, fetchRequest?: FetchRequest): Observable<AccountEntryPage>{
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
-    let dateRange = buildDateRangeParam(startDate, endDate);
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
+    const dateRange = buildDateRangeParam(startDate, endDate);
     params.append('dateRange', dateRange);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       params
     };
     return this.http.get(`${this.baseUrl}/accounts/${identifier}/entries`, requestOptions);
@@ -149,10 +152,10 @@ export class AccountingService{
   }
 
   public getTrialBalance(includeEmptyEntries?: boolean): Observable<TrialBalance>{
-    let params: URLSearchParams = new URLSearchParams();
+    const params: URLSearchParams = new URLSearchParams();
     params.append('includeEmptyEntries', includeEmptyEntries ? 'true' : 'false');
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       params
     };
     return this.http.get(`${this.baseUrl}/trialbalance`, requestOptions)
@@ -171,9 +174,9 @@ export class AccountingService{
   }
 
   public fetchTransactionTypes(fetchRequest?: FetchRequest): Observable<TransactionTypePage> {
-    let params: URLSearchParams = buildSearchParams(fetchRequest);
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       params
     };
 
@@ -182,5 +185,22 @@ export class AccountingService{
 
   public changeTransactionType(transactionType: TransactionType): Observable<void> {
     return this.http.put(`${this.baseUrl}/transactiontypes/${transactionType.code}`, transactionType);
+  }
+
+  public postPayrollPayments(sheet: PayrollCollectionSheet): Observable<void> {
+    return this.http.post(`${this.baseUrl}/payroll`, sheet);
+  }
+
+  public getPayrollCollectionHistory(): Observable<PayrollCollectionHistory[]> {
+    return this.http.get(`${this.baseUrl}/payroll`);
+  }
+
+  public getPayrollPaymentHistory(identifier: string, fetchRequest?: FetchRequest): Observable<PayrollPaymentPage> {
+    const params: URLSearchParams = buildSearchParams(fetchRequest);
+
+    const requestOptions: RequestOptionsArgs = {
+      params
+    };
+    return this.http.get(`${this.baseUrl}/payroll/${identifier}/payments`, requestOptions);
   }
 }

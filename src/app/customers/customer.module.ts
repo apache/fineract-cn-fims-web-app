@@ -69,6 +69,13 @@ import {TaskExistsGuard} from './tasks/task-exists.guard';
 import {TaskIndexComponent} from './tasks/task.index.component';
 import {TaskDetailComponent} from './tasks/task.detail.component';
 import {CustomerTaskComponent} from './detail/status/customer-task.component';
+import {CustomerPayrollFormComponent} from './detail/payroll/form/form.component';
+import {CustomerPayrollDetailComponent} from './detail/payroll/payroll.detail.component';
+import {CreateCustomerPayrollFormComponent} from './detail/payroll/form/create.form.component';
+import {PayrollExistsGuard} from './detail/payroll/payroll-exists.guard';
+import {CustomerPayrollApiEffects} from './store/payroll/effects/service.effects';
+import {CustomerPayrollRouteEffects} from './store/payroll/effects/route.effects';
+import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notification.effects';
 
 @NgModule({
   imports: [
@@ -101,7 +108,12 @@ import {CustomerTaskComponent} from './detail/status/customer-task.component';
     EffectsModule.run(CustomerTasksApiEffects),
     EffectsModule.run(CustomerTasksRouteEffects),
     EffectsModule.run(CustomerTasksNotificationEffects),
-    EffectsModule.run(CustomerCommandApiEffects)
+    EffectsModule.run(CustomerCommandApiEffects),
+
+    EffectsModule.run(CustomerPayrollApiEffects),
+    EffectsModule.run(CustomerPayrollRouteEffects),
+    EffectsModule.run(CustomerPayrollNotificationEffects),
+
   ],
   declarations: [
     CustomerComponent,
@@ -124,11 +136,17 @@ import {CustomerTaskComponent} from './detail/status/customer-task.component';
     TaskEditFormComponent,
     TaskFormComponent,
     TaskDetailComponent,
-    CustomerTaskComponent
+    CustomerTaskComponent,
+
+    CustomerPayrollDetailComponent,
+    CreateCustomerPayrollFormComponent,
+    CustomerPayrollFormComponent,
+
   ],
   providers: [
     CustomerExistsGuard,
     TaskExistsGuard,
+    PayrollExistsGuard,
     { provide: CustomersStore, useFactory: customerStoreFactory, deps: [Store]}
   ]
 })
