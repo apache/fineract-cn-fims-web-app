@@ -30,6 +30,9 @@ import {TaskEditFormComponent} from './tasks/form/edit.form.component';
 import {TaskCreateFormComponent} from './tasks/form/create.form.component';
 import {TaskIndexComponent} from './tasks/task.index.component';
 import {TaskDetailComponent} from './tasks/task.detail.component';
+import {PayrollExistsGuard} from './detail/payroll/payroll-exists.guard';
+import {CustomerPayrollDetailComponent} from './detail/payroll/payroll.detail.component';
+import {CreateCustomerPayrollFormComponent} from './detail/payroll/form/create.form.component';
 
 export const CustomerRoutes: Routes = [
   {
@@ -80,6 +83,16 @@ export const CustomerRoutes: Routes = [
       {path: 'identifications', loadChildren: './detail/identityCard/identity-card.module#IdentityCardModule'},
       {path: 'loans', loadChildren: './cases/case.module#CaseModule'},
       {path: 'deposits', loadChildren: './deposits/deposits.module#DepositsModule'},
+      {
+        path: 'payroll',
+        component: CustomerPayrollDetailComponent,
+        canActivate: [ PayrollExistsGuard ]
+      },
+      {
+        path: 'payroll/edit',
+        component: CreateCustomerPayrollFormComponent,
+        canActivate: [ PayrollExistsGuard ]
+      }
     ]
   },
   {

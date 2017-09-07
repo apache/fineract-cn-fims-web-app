@@ -22,6 +22,8 @@ import * as fromCatalogs from './catalogs/catalogs.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import * as fromScans from './identityCards/scans/scans.reducer';
 import * as fromTasks from './tasks/tasks.reducer';
+import * as fromPayrollDistribution from './payroll/payroll.reducer';
+
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -46,6 +48,7 @@ export interface State extends fromRoot.State{
   customerIdentificationCardForm: FormState;
   customerIdentificationCardScans: ResourceState;
   customerIdentificationCardScanForm: FormState;
+  customerPayrollDistribution: fromPayrollDistribution.State
 }
 
 const reducers = {
@@ -59,7 +62,8 @@ const reducers = {
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
   customerIdentificationCardForm: createFormReducer('Customer Identity Card'),
   customerIdentificationCardScans: createResourceReducer('Customer Identity Card Scan', fromScans.reducer),
-  customerIdentificationCardScanForm: createFormReducer('Customer Identity Card Scan')
+  customerIdentificationCardScanForm: createFormReducer('Customer Identity Card Scan'),
+  customerPayrollDistribution: fromPayrollDistribution.reducer
 };
 
 export class CustomersStore extends Store<State>{}
@@ -129,10 +133,17 @@ export const getSelectedIdentificationCard = createSelector(getCustomerIdentific
 /**
  * Customer Identification Card Scan Selectors
  */
-
 export const getIdentificationCardScansState = (state: State) => state.customerIdentificationCardScans;
 
 export const getAllIdentificationCardScanEntities = createSelector(getIdentificationCardScansState, getResourceAll);
 
 export const getCustomerIdentificationCardScanFormState = (state: State) => state.customerIdentificationCardScanForm;
 export const getCustomerIdentificationCardScanFormError = createSelector(getCustomerIdentificationCardScanFormState, getFormError);
+
+/**
+ * Customer Payroll Distribution Selectors
+ */
+export const getPayrollDistributionState = (state: State) => state.customerPayrollDistribution;
+
+export const getPayrollDistribution = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistribution);
+export const getPayrollDistributionLoadedAt = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistributionLoadedAt);

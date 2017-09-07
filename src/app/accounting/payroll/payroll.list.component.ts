@@ -34,7 +34,7 @@ export class PayrollListComponent implements OnInit {
 
   columns: any[] = [
     { name: 'createdBy', label: 'Created by' },
-    { name: 'createdOn', label: 'Created on', format: value => this.datePipe.transform(value, 'shortDate') },
+    { name: 'createdOn', label: 'Created on', format: value => this.datePipe.transform(value, 'short') },
     { name: 'sourceAccountNumber', label: 'Account number' }
   ];
 

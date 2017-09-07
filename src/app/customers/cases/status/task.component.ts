@@ -37,8 +37,7 @@ export class CaseTaskComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   selectTask(change: MdCheckboxChange): void {
     this.onSelectTask.emit({

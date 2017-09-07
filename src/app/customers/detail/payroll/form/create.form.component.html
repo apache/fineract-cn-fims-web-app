@@ -14,13 +14,11 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="Payments" [navigateBackTo]="['../../']" *ngIf="selectedPayrollCollection$ | async as collection">
-  <fims-data-table flex
-                   (onActionCellClick)="rowSelect($event)"
-                   (onFetch)="fetchPayments(collection.identifier, $event)"
-                   [columns]="columns"
-                   [data]="paymentData$ | async"
-                   [pageable]="true"
-                   [actionColumn]="false">
-  </fims-data-table>
+<fims-layout-card-over title="Change payroll allocations" [navigateBackTo]="['../']">
+  <fims-customer-payroll-form
+    [productInstances]="productInstances$ | async"
+    [distribution]="distribution$ | async"
+    (onSave)="onSave($event)"
+    (onCancel)="onCancel()">
+  </fims-customer-payroll-form>
 </fims-layout-card-over>
