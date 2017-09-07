@@ -59,7 +59,8 @@ import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {
   MdAutocompleteModule,
-  MdButtonModule, MdCardModule,
+  MdButtonModule,
+  MdCardModule,
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
@@ -82,6 +83,13 @@ import {TransactionTypeExistsGuard} from './transactionTypes/transaction-type-ex
 import {TransactionTypeSelectComponent} from './journalEntries/form/transaction-type-select/transaction-type-select.component';
 import {ChequeApiEffects} from './store/cheques/effects/service.effects';
 import {ChequesListComponent} from './cheques/cheques.list.component';
+import {PayrollCollectionApiEffects} from './store/payroll/effects/service.effects';
+import {PayrollListComponent} from './payroll/payroll.list.component';
+import {CreatePayrollFormComponent} from './payroll/form/create.form.component';
+import {PayrollFormComponent} from './payroll/form/form.component';
+import {PayrollCollectionRouteEffects} from './store/payroll/effects/route.effects';
+import {PayrollCollectionNotificationEffects} from './store/payroll/effects/notification.effects';
+import {PaymentsListComponent} from './payroll/payments.list.component';
 
 @NgModule({
   imports: [
@@ -124,7 +132,11 @@ import {ChequesListComponent} from './cheques/cheques.list.component';
     EffectsModule.run(AccountCommandRouteEffects),
     EffectsModule.run(AccountCommandNotificationEffects),
 
-    EffectsModule.run(ChequeApiEffects)
+    EffectsModule.run(ChequeApiEffects),
+
+    EffectsModule.run(PayrollCollectionApiEffects),
+    EffectsModule.run(PayrollCollectionRouteEffects),
+    EffectsModule.run(PayrollCollectionNotificationEffects)
   ],
   declarations: [
     GeneralLedgerComponent,
@@ -151,7 +163,11 @@ import {ChequesListComponent} from './cheques/cheques.list.component';
     CreateTransactionTypeFormComponent,
     EditTransactionTypeFormComponent,
     TransactionTypeSelectComponent,
-    ChequesListComponent
+    ChequesListComponent,
+    PayrollListComponent,
+    CreatePayrollFormComponent,
+    PayrollFormComponent,
+    PaymentsListComponent
   ],
   providers: [
     CommandsResolver,
