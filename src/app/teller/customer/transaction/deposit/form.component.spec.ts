@@ -73,10 +73,11 @@ describe('Test transaction form', () => {
 
   });
 
-  function setup(cashdrawLimit: number): any {
+  function setup(cashdrawLimit: number, transactionType: string): any {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
 
+    component.transactionType = transactionType;
     component.productInstances = productInstances;
     component.cashdrawLimit = cashdrawLimit;
 
@@ -92,63 +93,104 @@ describe('Test transaction form', () => {
     setValueByFormControlName(fixture, 'amount', value);
   }
 
-  it('test if create transaction is enabled when amount matches balance limit', () => {
-    setup(1000);
-
-    clickOption(fixture, 0);
-
-    const productInstance = component.form.form.get('productInstance').value;
-
-    expect(productInstance).toEqual(productInstances[0]);
-
-    setAmount('500');
-
-    const button: DebugElement = transactionButton();
-
-    expect(button.properties['disabled']).toBeFalsy('Button should be enabled');
-  });
-
-  describe('test if create transaction is disabled', () => {
+  describe('test if create transaction is enabled', () => {
 
     beforeEach(() => {
-      setup(1000);
+      setup(1000, 'ACCC');
 
       clickOption(fixture, 0);
     });
 
-    it('when amount exeeds balance', () => {
+    it('when amount matches balance limit', () => {
       const productInstance = component.form.form.get('productInstance').value;
 
       expect(productInstance).toEqual(productInstances[0]);
 
-      setAmount('501');
+      setAmount('500');
 
       const button: DebugElement = transactionButton();
 
-      expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      expect(button.properties['disabled']).toBeFalsy('Button should be enabled');
     });
 
-    it('when amount exeeds withdrawal limit', () => {
+    it('when amount is 0 and type ACCC', () => {
       const productInstance = component.form.form.get('productInstance').value;
 
-      expect(productInstance).toEqual(productInstances[0]);
-
-      setAmount('1001');
-
-      const button: DebugElement = transactionButton();
-
-      expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
-    });
-
-    it('when no amount is given', () => {
-      const productInstance = component.form.form.get('productInstance').value;
+      setAmount('0');
 
       expect(productInstance).toEqual(productInstances[0]);
 
       const button: DebugElement = transactionButton();
 
-      expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      expect(button.properties['disabled']).toBeFalsy('Button should be enabled');
     });
+  });
+
+  describe('test if create transaction is disabled', () => {
+
+    describe('and type is ACCC', () => {
+      beforeEach(() => {
+        setup(1000, 'ACCC');
+
+        clickOption(fixture, 0);
+      });
+
+      it('when amount exeeds balance', () => {
+        const productInstance = component.form.form.get('productInstance').value;
+
+        expect(productInstance).toEqual(productInstances[0]);
+
+        setAmount('501');
+
+        const button: DebugElement = transactionButton();
+
+        expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      });
+
+      it('when amount exeeds withdrawal limit', () => {
+        const productInstance = component.form.form.get('productInstance').value;
+
+        expect(productInstance).toEqual(productInstances[0]);
+
+        setAmount('1001');
+
+        const button: DebugElement = transactionButton();
+
+        expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      });
+
+      it('when no amount is given', () => {
+        const productInstance = component.form.form.get('productInstance').value;
+
+        expect(productInstance).toEqual(productInstances[0]);
+
+        const button: DebugElement = transactionButton();
+
+        expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      });
+    });
+
+
+    describe('and type is not ACCC', () => {
+      beforeEach(() => {
+        setup(1000, 'ACCO');
+
+        clickOption(fixture, 0);
+      });
+
+      it('when amount is 0', () => {
+        const productInstance = component.form.form.get('productInstance').value;
+
+        setAmount('0');
+
+        expect(productInstance).toEqual(productInstances[0]);
+
+        const button: DebugElement = transactionButton();
+
+        expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
+      });
+    });
+
   })
 });
 

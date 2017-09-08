@@ -75,14 +75,14 @@ describe('Validators', () => {
     });
   });
 
-  describe('minValue', () => {
+  describe('minValue with 0', () => {
 
-    it('should not return error when min value 0', () => {
+    it('should not return error when value 0', () => {
       const validator = FimsValidators.minValue(0);
       expect(validator(new FormControl(0))).toBeNull();
     });
 
-    it('should return error when min value 0', () => {
+    it('should return error when value -1', () => {
       const validator = FimsValidators.minValue(0);
       expect(validator(new FormControl(-1))).toEqual({
         minValue: {
@@ -94,18 +94,47 @@ describe('Validators', () => {
 
   });
 
-  describe('maxValue', () => {
-    it('should not return error when max value 10', () => {
+  describe('maxValue with 10', () => {
+    it('should not return error when value 10', () => {
       const validator = FimsValidators.maxValue(10);
       expect(validator(new FormControl(10))).toBeNull();
     });
 
-    it('should return error when max value 10', () => {
+    it('should return error when value 11', () => {
       const validator = FimsValidators.maxValue(10);
       expect(validator(new FormControl(11))).toEqual({
         maxValue: {
           valid: false,
           value: 10
+        }
+      });
+    })
+
+  });
+
+  describe('greaterThanValue with 0', () => {
+
+    it('should not return error when value 1', () => {
+      const validator = FimsValidators.greaterThanValue(0);
+      expect(validator(new FormControl(1))).toBeNull();
+    });
+
+    it('should return error when value 0', () => {
+      const validator = FimsValidators.greaterThanValue(0);
+      expect(validator(new FormControl(0))).toEqual({
+        greaterThanValue: {
+          valid: false,
+          value: 0
+        }
+      });
+    });
+
+    it('should return error when value -1', () => {
+      const validator = FimsValidators.greaterThanValue(0);
+      expect(validator(new FormControl(-1))).toEqual({
+        greaterThanValue: {
+          valid: false,
+          value: 0
         }
       });
     })

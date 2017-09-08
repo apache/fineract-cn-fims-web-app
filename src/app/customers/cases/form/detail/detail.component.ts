@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
-import {FormBuilder, FormControl, ValidationErrors, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {ChronoUnit} from '../../../../services/portfolio/domain/chrono-unit.model';
 import {alignmentOptions} from '../../../../common/domain/alignment.model';
@@ -24,9 +24,7 @@ import {weekDayOptions} from '../../../../common/domain/week-days.model';
 import {monthOptions} from '../../../../common/domain/months.model';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {Product} from '../../../../services/portfolio/domain/product.model';
-import {Subscription} from 'rxjs/Subscription';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {FimsProduct} from '../../../../loans/products/store/model/fims-product.model';
 
 export interface DetailFormData {
   identifier: string,
@@ -137,7 +135,10 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         interest: this._formData.interest,
         principalAmount: this._formData.principalAmount,
         term: this._formData.term,
-        termTemporalUnit: this._formData.termTemporalUnit,
+        termTemporalUnit: {
+          value: this._formData.termTemporalUnit,
+          disabled: true
+        },
         paymentTemporalUnit: this._formData.paymentTemporalUnit,
         paymentPeriod: this._formData.paymentPeriod,
 

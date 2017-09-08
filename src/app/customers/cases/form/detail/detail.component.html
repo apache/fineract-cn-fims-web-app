@@ -46,7 +46,7 @@
       <md-error *ngIf="form.get('term').hasError('minValue')" translate>Value must be greater than or equal to {{form.get('term').getError('minValue').value}}</md-error>
       <md-error *ngIf="form.get('term').hasError('maxValue')" translate>Value must be lower than or equal to {{form.get('term').getError('maxValue').value}}</md-error>
     </md-input-container>
-    <md-select formControlName="termTemporalUnit" layout-margin [disabled]="true">
+    <md-select formControlName="termTemporalUnit" layout-margin>
       <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
         {{basis.label | translate}}
       </md-option>
