@@ -43,6 +43,9 @@
           <md-error *ngIf="form.get('amount').hasError('maxValue')">
             {{ 'Value must be smaller than or equal to' | translate:{ value: form.get('amount').getError('maxValue').value} }}
           </md-error>
+          <md-error *ngIf="form.get('amount').hasError('greaterThanValue')">
+            {{ 'Value must be greater than' | translate:{ value: form.get('amount').getError('greaterThanValue').value} }}
+          </md-error>
         </md-input-container>
       </div>
       <span *ngIf="checkCashdrawLimit" class="text-md" translate>Cashdraw limit is: {{cashdrawLimit | number:numberFormat}}</span>

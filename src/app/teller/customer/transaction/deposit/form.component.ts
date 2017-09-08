@@ -63,16 +63,18 @@ export class DepositTransactionFormComponent implements OnInit {
 
   @Input('transactionCosts') transactionCosts: TellerTransactionCosts;
 
-  @Input('transactionCreated') set transactionCreated(transactionCreated: boolean) {
+  @Input('transactionCreated')
+  set transactionCreated(transactionCreated: boolean) {
     this._transactionCreated = transactionCreated;
-    if(transactionCreated) {
+    if (transactionCreated) {
       this.confirmationStep.open();
     }
   };
 
   @Input('error') error: string;
 
-  @Input('transactionType') set transactionType(transactionType: TransactionType) {
+  @Input('transactionType')
+  set transactionType(transactionType: TransactionType) {
     this._transactionType = transactionType;
 
     if (transactionType === 'ACCT') {
@@ -93,7 +95,8 @@ export class DepositTransactionFormComponent implements OnInit {
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {}
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -101,7 +104,7 @@ export class DepositTransactionFormComponent implements OnInit {
       amount: ['']
     });
 
-    if(this.enableTargetAccount) {
+    if (this.enableTargetAccount) {
       this.form.addControl('targetAccountIdentifier', new FormControl('', [Validators.required], accountExists(this.accountingService)));
     }
 
@@ -112,13 +115,16 @@ export class DepositTransactionFormComponent implements OnInit {
   }
 
   private toggleProductInstance(productInstance: ProductInstance): void {
-    const amountValidators: ValidatorFn[] = [Validators.required, FimsValidators.minValue(0)];
+    const amountValidators: ValidatorFn[] = [Validators.required];
+
+    const valueValidator: ValidatorFn = this._transactionType === 'ACCC' ? FimsValidators.minValue(0) : FimsValidators.greaterThanValue(0);
+    amountValidators.push(valueValidator);
 
     this.balanceLimit = productInstance.balance;
 
     const maxValue = this.getAmountMaxValue(productInstance);
 
-    if(maxValue !== undefined) {
+    if (maxValue !== undefined) {
       amountValidators.push(FimsValidators.maxValue(maxValue));
     }
 
@@ -130,11 +136,11 @@ export class DepositTransactionFormComponent implements OnInit {
   }
 
   private getAmountMaxValue(productInstance: ProductInstance): number {
-    if(this.checkBalanceLimit && this.checkCashdrawLimit) {
+    if (this.checkBalanceLimit && this.checkCashdrawLimit) {
       return Math.min(this.cashdrawLimit, productInstance.balance);
     }
 
-    if(this.checkBalanceLimit && !this.checkCashdrawLimit) {
+    if (this.checkBalanceLimit && !this.checkCashdrawLimit) {
       return productInstance.balance;
     }
   }
