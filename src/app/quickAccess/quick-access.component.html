@@ -49,14 +49,14 @@
   <div layout="column" layout-gt-sm="row" class="inset">
     <div flex-gt-sm="40" *hasPermission="{ id: 'customer_customers', accessLevel: 'READ'}">
       <md-card>
-        <md-card-title translate>Customer</md-card-title>
-        <md-card-subtitle translate>Create/edit customers for your offices.</md-card-subtitle>
+        <md-card-title translate>Member</md-card-title>
+        <md-card-subtitle translate>Create/edit members for your offices.</md-card-subtitle>
         <md-card-actions>
           <a md-button color="accent" class="text-upper" [routerLink]="['/customers']">
-            <span translate>View customer</span>
+            <span translate>View member </span>
           </a>
           <a md-button color="accent" class="text-upper" [routerLink]="['/customers/create']" *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE'}">
-            <span translate>Create new customer</span>
+            <span translate>Create new member </span>
           </a>
         </md-card-actions>
       </md-card>

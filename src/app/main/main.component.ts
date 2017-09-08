@@ -52,7 +52,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     { title: 'Roles/Permissions', description: 'Manage roles and permissions', icon: 'https', routerLink: '/roles', permission: { id: 'identity_roles', accessLevel: 'READ'} },
     { title: 'Employees', description: 'Manage employees', icon: 'group', routerLink: '/employees', permission: { id: 'office_employees', accessLevel: 'READ'} },
     { title: 'Accounting', description: 'Manage ledger accounts', icon: 'receipt', routerLink: '/accounting', permission: { id: 'accounting_ledgers', accessLevel: 'READ'} },
-    { title: 'Customer', description: 'Manage customers', icon: 'face', routerLink: '/customers', permission: { id: 'customer_customers', accessLevel: 'READ'} },
+    { title: 'Member', description: 'Manage members', icon: 'face', routerLink: '/customers', permission: { id: 'customer_customers', accessLevel: 'READ'} },
     { title: 'Loan products', description: 'Manage loan products', icon: 'credit_card', routerLink: '/loans', permission: { id: 'portfolio_products', accessLevel: 'READ'} },
     { title: 'Deposit', description: 'Account management', icon: 'attach_money', routerLink: '/deposits', permission: { id: 'deposit_definitions', accessLevel: 'READ'} },
     { title: 'Teller', description: 'Teller management', icon: 'person', routerLink: '/teller', permission: { id: 'teller_operations', accessLevel: 'READ'} },

@@ -50,11 +50,11 @@
       </div>
       <div layout="row">
         <md-checkbox formControlName="predefined" layout-margin translate>
-          Automatically assign this task when customer is created
+          Automatically assign this task when member is created
         </md-checkbox>
       </div>
       <div layout-gt-xs="column" layout-margin formArrayName="commands">
-        <h4 translate>Task needs to be executed, before customer</h4>
+        <h4 translate>Task needs to be executed, before member </h4>
         <div *ngFor="let test of commands; let i=index" layout="row" [formGroupName]="i">
           <md-select formControlName="command" flex-gt-xs="15">
             <md-option *ngFor="let commandOption of commandOptions" [value]="commandOption.command">

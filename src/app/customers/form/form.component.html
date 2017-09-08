@@ -15,7 +15,7 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Customer details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+  <td-step #detailsStep label="{{'Member details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
 
     <fims-customer-detail-form #detailForm [formData]="detailFormData" [editMode]="editMode"></fims-customer-detail-form>
 
@@ -24,7 +24,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #addressStep label="{{'Customer Address' | translate}}" [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
+  <td-step #addressStep label="{{'Member Address' | translate}}" [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
 
     <fims-address-form #addressForm [formData]="addressFormData"></fims-address-form>
 
@@ -33,7 +33,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #contactStep label="{{'Customer contact(optional)' | translate}}" [state]="contactForm.pristine ? 'none' : contactForm.valid ? 'completed' : 'required'">
+  <td-step #contactStep label="{{'Member contact(optional)' | translate}}" [state]="contactForm.pristine ? 'none' : contactForm.valid ? 'completed' : 'required'">
 
     <fims-customer-contact-form #contactForm [formData]="contactFormData"></fims-customer-contact-form>
 
@@ -42,7 +42,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #officeStep label="{{'Assign customer to office(optional)' | translate}}"
+  <td-step #officeStep label="{{'Assign member to office(optional)' | translate}}"
            [state]="selectedOffices.length ? 'complete' : 'none'">
 
     <fims-customer-offices-form [preSelection]="selectedOffices" (onSelectionChange)="selectOffice($event)"></fims-customer-offices-form>
@@ -50,11 +50,11 @@
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="employeeStep.open()"></fims-form-continue-action>
     </ng-template>
-    <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Customer is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
+    <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Member is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
     </ng-template>
   </td-step>
 
-  <td-step #employeeStep label="{{'Assign customer to employee(optional)' | translate}}"
+  <td-step #employeeStep label="{{'Assign member to employee(optional)' | translate}}"
            [state]="selectedEmployees.length ? 'complete' : 'none'">
 
     <fims-customer-employees-form [preSelection]="selectedEmployees" (onSelectionChange)="selectEmployee($event)"></fims-customer-employees-form>
@@ -71,7 +71,7 @@
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
       <fims-form-final-action
-        [resourceName]="'CUSTOMER'"
+        [resourceName]="'MEMBER'"
         [editMode]="editMode"
         [disabled]="!isValid"
         (onCancel)="cancel()"
