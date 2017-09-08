@@ -15,7 +15,7 @@
 -->
 
 <fims-layout-card-over [title]="caseInstance.identifier" *ngIf="caseInstance$ | async as caseInstance" [navigateBackTo]="['../../../../../../../../']">
-  <td-message *ngIf="caseInstance.currentState === 'APPROVED'" label="{{'Customer loan approved' | translate }}" sublabel="{{'To activate this loan you need to disburse' | translate }}" color="accent" icon="error">
+  <td-message *ngIf="caseInstance.currentState === 'APPROVED'" label="{{'Member loan approved' | translate }}" sublabel="{{'To activate this loan you need to disburse' | translate }}" color="accent" icon="error">
     <button td-message-actions md-button *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}" [routerLink]="['tasks']" translate>GO TO TASKS</button>
   </td-message>
   <fims-two-column-layout>
@@ -29,7 +29,7 @@
       <a md-list-item [routerLink]="['./tasks']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
         <md-icon md-list-avatar>playlist_add_check</md-icon>
         <h3 md-line translate>Tasks</h3>
-        <p md-line translate>Change the status of the customer loan</p>
+        <p md-line translate>Change the status of the member loan</p>
       </a>
       <a md-list-item [routerLink]="['./debtIncome']">
         <md-icon md-list-avatar>show_chart</md-icon>
@@ -55,7 +55,7 @@
         <p md-line>{{caseInstance.parameters.termRange.maximum | number}} {{caseInstance.parameters.termRange.temporalUnit}}</p>
       </md-list-item>
       <md-list-item>
-        <h3 md-line translate>Customer deposit account</h3>
+        <h3 md-line translate>Member deposit account</h3>
         <p md-line>{{caseInstance.depositAccountIdentifier}}</p>
       </md-list-item>
       <md-list-item>
@@ -69,4 +69,4 @@
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit customer loan' | translate}}" icon="mode_edit" [link]="['edit']" *ngIf="canEdit$ | async"></fims-fab-button>
+<fims-fab-button title="{{'Edit member loan' | translate}}" icon="mode_edit" [link]="['edit']" *ngIf="canEdit$ | async"></fims-fab-button>

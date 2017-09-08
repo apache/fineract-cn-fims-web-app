@@ -31,7 +31,7 @@ export class CustomerNotificationEffects {
     .ofType(customerActions.CREATE_SUCCESS, customerActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Customer is going to be saved'
+      message: 'Member is going to be saved'
     }));
 
 }

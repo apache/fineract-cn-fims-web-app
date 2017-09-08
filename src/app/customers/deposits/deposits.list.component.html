@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Manage customer deposit accounts' | translate}}" [navigateBackTo]="['../../../../']">
+<fims-layout-card-over title="{{'Manage member deposit accounts' | translate}}" [navigateBackTo]="['../../../../']">
   <fims-data-table flex
                    (onFetch)="fetchProductInstances($event)"
                    (onActionCellClick)="rowSelect($event)"
@@ -22,5 +22,4 @@
                    [data]="productInstancesData$ | async">
   </fims-data-table>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create new deposit account for customer' | translate}}" icon="add" [link]="['create']"
-                 [permission]="{ id: 'deposit_instances', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Create new deposit account for member ' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'deposit_instances', accessLevel: 'CHANGE'}"></fims-fab-button>

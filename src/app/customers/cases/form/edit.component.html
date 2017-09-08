@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit loan for customer' | translate:{value: customer.givenName + ' ' + customer.surname} }}">
+<fims-layout-card-over title="{{'Edit loan for member ' | translate:{value: customer.givenName + ' ' + customer.surname} }}">
   <fims-case-form-component #form
                               (onSave)="onSave($event)"
                               (onCancel)="onCancel()"

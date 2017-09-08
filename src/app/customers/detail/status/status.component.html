@@ -20,7 +20,7 @@
       <div layout="row" layout-align="start start" *ngFor="let step of processSteps$ | async">
         <div layout="column" flex="100">
           <h5 translate [translateParams]="{ value: step.command.action }">Please verify the following tasks before you
-            can action this customer</h5>
+            can action this member </h5>
           <fims-customer-task *ngFor="let task of step.taskDefinitions"
             [task]="task"
             (onSelectTask)="executeTask($event)">
