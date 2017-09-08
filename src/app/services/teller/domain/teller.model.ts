@@ -22,6 +22,7 @@ export interface Teller {
   cashdrawLimit: number;
   tellerAccountIdentifier: string;
   vaultAccountIdentifier: string;
+  chequesReceivableAccount: string;
   assignedEmployee?: string;
   state?: Status;
   createdBy?: string;

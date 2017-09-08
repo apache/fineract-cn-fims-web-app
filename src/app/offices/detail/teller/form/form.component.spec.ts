@@ -95,6 +95,7 @@ class TestComponent {
     cashdrawLimit: 10,
     tellerAccountIdentifier: 'tellerAccountIdentifier',
     vaultAccountIdentifier: 'vaultAccountIdentifier',
+    chequesReceivableAccount: 'chequesReceivableAccount',
     assignedEmployee: 'assignedEmployee',
     createdBy: 'createdBy',
     createdOn: 'createdOn',

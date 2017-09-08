@@ -41,7 +41,8 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
     password: '',
     cashdrawLimit: 0,
     tellerAccountIdentifier: '',
-    vaultAccountIdentifier: ''
+    vaultAccountIdentifier: '',
+    chequesReceivableAccount: ''
   };
 
   @ViewChild('form') formComponent: OfficeTellerFormComponent;
