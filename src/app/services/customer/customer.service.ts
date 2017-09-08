@@ -94,7 +94,7 @@ export class CustomerService {
   }
 
   fetchProcessSteps(customerId: string): Observable<ProcessStep[]> {
-    return this.http.get(`${this.baseUrl}/customer/${customerId}/actions`)
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/actions`)
   }
 
   getPortrait(customerId: string): Observable<Blob> {
@@ -161,10 +161,10 @@ export class CustomerService {
   }
 
   setPayrollDistribution(customerId: string, distribution: PayrollDistribution): Observable<void> {
-    return this.http.put(`${this.baseUrl}/customer/${customerId}/payroll`, distribution)
+    return this.http.put(`${this.baseUrl}/customers/${customerId}/payroll`, distribution)
   }
 
   getPayrollDistribution(customerId: string): Observable<PayrollDistribution> {
-    return this.http.get(`${this.baseUrl}/customer/${customerId}/payroll`)
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/payroll`)
   }
 }
