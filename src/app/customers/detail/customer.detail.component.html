@@ -18,8 +18,8 @@
   <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchCustomer($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <td-message *ngIf="!isCustomerActive" label="{{'Customer not active' | translate }}"
-              sublabel="{{'You can activate the customer under tasks' | translate }}"
+  <td-message *ngIf="!isCustomerActive" label="{{'Member not active' | translate }}"
+              sublabel="{{'You can activate the member under tasks' | translate }}"
               color="warn" icon="error">
     <button td-message-actions md-button (click)="goToTasks()"
             *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE'}" translate>GO TO TASKS
@@ -50,7 +50,7 @@
         <a md-list-item [routerLink]="['tasks']">
           <md-icon md-list-avatar>playlist_add_check</md-icon>
           <h3 md-line translate>Tasks</h3>
-          <p md-line translate>Change the status of the customer</p>
+          <p md-line translate>Change the status of the member </p>
         </a>
         <a md-list-item [routerLink]="['activities']">
           <md-icon md-list-avatar>event</md-icon>
@@ -99,4 +99,4 @@
     </md-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit customer' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Edit member ' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>

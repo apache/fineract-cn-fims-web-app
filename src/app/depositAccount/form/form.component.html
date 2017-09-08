@@ -107,7 +107,7 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <fims-account-select title="{{'Accrue account(Liability accounts only)' | translate}}" formControlName="accrueAccountIdentifier" [type]="'LIABILITY'">
+      <fims-account-select title="{{'Accrue account(Liability accounts only)' | translate}}" formControlName="accrueAccountIdentifier" [type]="'LIABILITY'" *ngIf="formGroup.get('accrueAccountIdentifier').status !== 'DISABLED'">
         <ng-container *ngIf="!formGroup.get('accrueAccountIdentifier').pristine && formGroup.get('accrueAccountIdentifier').hasError('required')" translate>
           Required
         </ng-container>

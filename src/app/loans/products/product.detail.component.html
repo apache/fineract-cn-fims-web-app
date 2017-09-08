@@ -21,7 +21,7 @@
   <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}" color="warn" icon="error">
     <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
-  <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a customer' | translate }}" color="accent" icon="check">
+  <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a member ' | translate }}" color="accent" icon="check">
     <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
   </td-message>
   <fims-two-column-layout>

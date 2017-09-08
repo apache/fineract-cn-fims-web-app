@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Manage customers' | translate}}">
+<fims-layout-card-over title="{{'Manage members' | translate}}">
   <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
@@ -40,4 +40,4 @@
   </fims-two-column-layout>
 
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create new customer' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Create new member ' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>

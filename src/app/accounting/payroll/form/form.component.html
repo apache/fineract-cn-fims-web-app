@@ -28,12 +28,12 @@
       <div layout-gt-xs="column" layout-margin formArrayName="payments">
         <h4 translate>Payments</h4>
         <div *ngFor="let payment of payments; let i=index" layout="row" [formGroupName]="i">
-          <fims-customer-select title="Customer" formControlName="customerIdentifier">
+          <fims-customer-select title="Member" formControlName="customerIdentifier">
             <ng-container *ngIf="!payment.get('customerIdentifier').pristine && payment.get('customerIdentifier').hasError('required')" translate>
               Required
             </ng-container>
             <ng-container *ngIf="payment.get('customerIdentifier').hasError('invalidAccount')" translate>
-              Invalid customer
+              Invalid member
             </ng-container>
           </fims-customer-select>
           <md-input-container layout-margin>

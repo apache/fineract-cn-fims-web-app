@@ -16,7 +16,7 @@
 
 <fims-layout-card-over title="{{'View debt income ratio' | translate}}" [navigateBackTo]="['../']">
   <md-tab-group>
-    <md-tab label="Customer(Ratio: {{customerOverview.ratio ? (customerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="customerOverview$ | async as customerOverview">
+    <md-tab label="Member(Ratio: {{customerOverview.ratio ? (customerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="customerOverview$ | async as customerOverview">
       <div class="md-content inset" flex>
         <h5>Debts(Total: {{customerOverview.debtTotal | number:numberFormat}})</h5>
         <fims-data-table flex

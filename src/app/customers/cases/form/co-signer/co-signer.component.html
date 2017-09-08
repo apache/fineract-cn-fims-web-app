@@ -15,9 +15,9 @@
 -->
 
 <form [formGroup]="form">
-  <fims-customer-select title="{{'Customer' | translate}}" formControlName="customerIdentifier">
+  <fims-customer-select title="{{'Member' | translate}}" formControlName="customerIdentifier">
     <ng-container *ngIf="form.get('customerIdentifier').hasError('invalidCustomer')" translate>
-      Invalid customer
+      Invalid member
     </ng-container>
   </fims-customer-select>
   <fims-case-debt-to-income-form #debtToIncomeForm [formData]="debtToIncomeFormData"></fims-case-debt-to-income-form>

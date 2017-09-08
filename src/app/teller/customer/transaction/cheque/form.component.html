@@ -84,7 +84,7 @@
       <div layout="row" layout-margin>
         <md-checkbox formControlName="openCheque" translate>Is cheque open?</md-checkbox>
       </div>
-      <td-message *ngIf="!amountForm.get('openCheque').value" label="Please check identification card of customer" color="accent" icon="warning"></td-message>
+      <td-message *ngIf="!amountForm.get('openCheque').value" label="Please check identification card of member " color="accent" icon="warning"></td-message>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>

@@ -31,7 +31,7 @@
       Invalid ledger
     </ng-container>
   </fims-ledger-select>
-  <fims-ledger-select title="{{'Customer loan ledger(Asset ledgers only)' | translate}}" formControlName="customerLoanLedger" [type]="'ASSET'">
+  <fims-ledger-select title="{{'Member loan ledger(Asset ledgers only)' | translate}}" formControlName="customerLoanLedger" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('customerLoanLedger').pristine && form.get('customerLoanLedger').hasError('required')" translate>
       Required
     </ng-container>
@@ -40,7 +40,7 @@
     </ng-container>
   </fims-ledger-select>
   <span layout-margin class="text-md" translate>
-    Ledger used to create customer loan account.
+    Ledger used to create member loan account.
   </span>
   <fims-account-select title="{{'Pending disbursal account(Asset accounts only)' | translate}}" formControlName="pendingDisbursal" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('pendingDisbursal').pristine && form.get('pendingDisbursal').hasError('required')" translate>
