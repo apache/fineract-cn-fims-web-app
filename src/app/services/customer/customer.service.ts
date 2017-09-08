@@ -94,7 +94,7 @@ export class CustomerService {
   }
 
   fetchProcessSteps(customerId: string): Observable<ProcessStep[]> {
-    return this.http.get(`${this.baseUrl}/customer/${customerId}/actions`)
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/actions`)
   }
 
   getPortrait(customerId: string): Observable<Blob> {
