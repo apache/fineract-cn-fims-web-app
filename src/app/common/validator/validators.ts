@@ -124,6 +124,20 @@ export class FimsValidators {
     }
   }
 
+  static greaterThanValue(greaterThanValue: number): ValidatorFn {
+    return (c: AbstractControl): ValidationErrors | null => {
+      if (!isEmptyInputValue(c.value) && (c.value <= greaterThanValue)) {
+        return {
+          greaterThanValue: {
+            valid: false,
+            value: greaterThanValue
+          }
+        }
+      }
+      return null;
+    }
+  }
+
   static greaterThan(firstValue: string, secondValue: string) {
     return (group: FormGroup): ValidationErrors | null => {
       const firstNumber: number = Number(group.controls[firstValue].value);
