@@ -57,7 +57,7 @@
               </md-error>
             </md-input-container>
           </div>
-          <div layout="row" *ngIf="error">
+          <div layout="row" *ngIf="error$ | async as error">
             <p class="md-caption tc-red-700">{{error | translate}}</p>
           </div>
         </md-card-content>
