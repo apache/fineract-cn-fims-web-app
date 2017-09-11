@@ -48,11 +48,11 @@ export class PermittableGroupIdMapper {
     this._permittableGroupMap[IdentityPermittableGroupIds.ROLE_MANAGEMENT] = { id: 'identity_roles', label: 'Roles' };
     this._permittableGroupMap[IdentityPermittableGroupIds.SELF_MANAGEMENT] = { id: 'identity_self', label: 'User created resources(Identity & Roles)' };
 
-    this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = { id: 'customer_customers', label: 'Customers' };
+    this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = { id: 'customer_customers', label: 'Members' };
     this._permittableGroupMap[CustomerPermittableGroupIds.TASK_MANAGEMENT] = { id: 'customer_tasks', label: 'Tasks' };
     this._permittableGroupMap[CustomerPermittableGroupIds.CATALOG_MANAGEMENT] = { id: 'catalog_catalogs', label: 'Custom fields' };
-    this._permittableGroupMap[CustomerPermittableGroupIds.IDENTITY_CARD_MANAGEMENT] = { id: 'customer_identifications', label: 'Customer identification cards' };
-    this._permittableGroupMap[CustomerPermittableGroupIds.PORTRAIT_MANAGEMENT] = { id: 'customer_portrait', label: 'Customer portrait' };
+    this._permittableGroupMap[CustomerPermittableGroupIds.IDENTITY_CARD_MANAGEMENT] = { id: 'customer_identifications', label: 'Member identification cards' };
+    this._permittableGroupMap[CustomerPermittableGroupIds.PORTRAIT_MANAGEMENT] = { id: 'customer_portrait', label: 'Member portrait' };
 
     this._permittableGroupMap[AccountingPermittableGroupIds.ACCOUNT_MANAGEMENT] = { id: 'accounting_accounts', label: 'Accounts' };
     this._permittableGroupMap[AccountingPermittableGroupIds.JOURNAL_MANAGEMENT] = { id: 'accounting_journals', label: 'Journal' };
@@ -61,10 +61,10 @@ export class PermittableGroupIdMapper {
 
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_OPERATIONS_MANAGEMENT] = { id: 'portfolio_product_operations', label: 'Loan product operations' };
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_MANAGEMENT] = { id: 'portfolio_products', label: 'Loan products' };
-    this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = { id: 'portfolio_cases', label: 'Customer loans' };
+    this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = { id: 'portfolio_cases', label: 'Member loans' };
 
     this._permittableGroupMap[DepositAccountPermittableGroupIds.DEFINITION_MANAGEMENT] = { id: 'deposit_definitions', label: 'Deposit account management' };
-    this._permittableGroupMap[DepositAccountPermittableGroupIds.INSTANCE_MANAGEMENT] = { id: 'deposit_instances', label: 'Deposit account for customers' };
+    this._permittableGroupMap[DepositAccountPermittableGroupIds.INSTANCE_MANAGEMENT] = { id: 'deposit_instances', label: 'Deposit account for members' };
 
     this._permittableGroupMap[TellerPermittableGroupIds.TELLER_MANAGEMENT] = { id: 'teller_management', label: 'Teller management' };
     this._permittableGroupMap[TellerPermittableGroupIds.TELLER_OPERATION] = { id: 'teller_operations', label: 'Teller operations' };
