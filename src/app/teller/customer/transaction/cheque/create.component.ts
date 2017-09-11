@@ -16,7 +16,6 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
-import {TellerService} from '../../../../services/teller/teller-service';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
@@ -33,6 +32,7 @@ import {ChequeTransactionFormComponent} from './form.component';
 import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
 import {Error} from '../../../../services/domain/error.model';
+import {TellerTransactionService} from '../services/transaction.service';
 
 @Component({
   templateUrl: './create.component.html'
@@ -45,11 +45,11 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
 
   private tellerTransactionIdentifier: string;
 
-  transactionType: TransactionType;
-
   private clerk: string;
 
   @ViewChild('form') form: ChequeTransactionFormComponent;
+
+  transactionType: TransactionType;
 
   customerName$: Observable<string>;
 
@@ -66,8 +66,8 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
   transactionCreated: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
-              private tellerService: TellerService, private depositService: DepositAccountService,
-              private chequeService: ChequeService) {}
+              private depositService: DepositAccountService, private chequeService: ChequeService,
+              private tellerTransactionService: TellerTransactionService) {}
 
   ngOnInit(): void {
     const selectedCustomer$ = this.store.select(fromTeller.getTellerSelectedCustomer)
@@ -114,7 +114,7 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
       transactionType: 'CCHQ'
     };
 
-    this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)
+    this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
       .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
       .do(() => this.transactionCreated = true);
   }

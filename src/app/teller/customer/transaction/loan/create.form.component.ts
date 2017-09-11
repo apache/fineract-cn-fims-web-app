@@ -16,7 +16,6 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
-import {TellerService} from '../../../../services/teller/teller-service';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
@@ -30,6 +29,7 @@ import {Teller} from '../../../../services/teller/domain/teller.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {TransactionForm} from '../domain/transaction-form.model';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {TellerTransactionService} from '../services/transaction.service';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -56,7 +56,8 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
 
   transactionCreated: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private portfolioService: PortfolioService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
+              private portfolioService: PortfolioService, private tellerTransactionService: TellerTransactionService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
@@ -90,7 +91,7 @@ export class CreateLoanTransactionForm implements OnInit, OnDestroy {
       transactionType: this.transactionType
     };
 
-    this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)
+    this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
       .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
       .do(() => this.transactionCreated = true);
   }
