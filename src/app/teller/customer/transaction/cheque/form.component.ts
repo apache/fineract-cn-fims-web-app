@@ -67,7 +67,7 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
       drawee: ['', Validators.required],
       drawer: ['', Validators.required],
       payee: [{ value: '', disabled: true }, Validators.required],
-      amount: ['', [Validators.required, FimsValidators.minValue(0)]],
+      amount: ['', [Validators.required, FimsValidators.greaterThanValue(0)]],
       dateIssued: ['', [Validators.required]],
       openCheque: [false],
     });

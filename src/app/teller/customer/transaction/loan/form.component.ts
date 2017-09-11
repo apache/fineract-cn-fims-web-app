@@ -55,7 +55,7 @@ export class LoanTransactionFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       caseInstance: ['', Validators.required],
-      amount: ['', [Validators.required, FimsValidators.minValue(0)]]
+      amount: ['', [Validators.required, FimsValidators.greaterThanValue(0)]],
     });
 
     this.transactionStep.open();
