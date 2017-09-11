@@ -35,9 +35,9 @@ export class CustomerPortraitComponent implements OnInit, OnDestroy {
 
   private customer: Customer;
 
-  fileSelectMsg: string = 'No file selected yet.';
+  fileSelectMsg = 'No file selected yet.';
 
-  invalidSize: boolean = false;
+  invalidSize = false;
 
   portrait: Blob;
 
@@ -63,7 +63,9 @@ export class CustomerPortraitComponent implements OnInit, OnDestroy {
   };
 
   uploadEvent(file: File): void {
-    if(this.invalidSize) return;
+    if (this.invalidSize) {
+      return;
+    }
 
     this.customerService.uploadPortrait(this.customer.identifier, file).subscribe(() => {
       this.notificationService.send({
@@ -74,10 +76,10 @@ export class CustomerPortraitComponent implements OnInit, OnDestroy {
     });
   };
 
-  confirmDeletion(): Observable<boolean>{
-    let message = 'Do you want to delete the portrait?';
-    let title = 'Confirm deletion';
-    let button = 'DELETE PORTRAIT';
+  confirmDeletion(): Observable<boolean> {
+    const message = 'Do you want to delete the portrait?';
+    const title = 'Confirm deletion';
+    const button = 'DELETE PORTRAIT';
 
     return this.translate.get([title, message, button])
       .flatMap(result =>

@@ -16,7 +16,7 @@
 
 import {ChronoUnit} from '../chrono-unit.model';
 
-export class Moratorium{
+export class Moratorium {
   chargeTask: string;
   temporalUnit: ChronoUnit;
   period: number;

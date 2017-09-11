@@ -70,10 +70,10 @@ export class TaskListComponent {
   fetchTasks(): void {
     this.store.dispatch({
       type: LOAD_ALL
-    })
+    });
   }
 
-  rowSelect(task: TaskDefinition): void{
+  rowSelect(task: TaskDefinition): void {
     this.router.navigate(['detail', task.identifier], { relativeTo: this.route });
   }
 }

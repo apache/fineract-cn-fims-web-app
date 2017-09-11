@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: charge.Actions): ResourceS
   switch (action.type) {
 
     case charge.LOAD_ALL: {
-      return initialState
+      return initialState;
     }
 
     case charge.LOAD_ALL_COMPLETE: {

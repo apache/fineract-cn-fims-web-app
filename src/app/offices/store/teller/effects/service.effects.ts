@@ -25,8 +25,6 @@ import {of} from 'rxjs/observable/of';
 @Injectable()
 export class TellerApiEffects {
 
-  constructor(private actions$: Actions, private tellerService: TellerService) {}
-
   @Effect()
   loadTeller$: Observable<Action> = this.actions$
     .ofType(tellerActions.LOAD_TELLER)
@@ -75,4 +73,7 @@ export class TellerApiEffects {
           error
         })))
     );
+
+  constructor(private actions$: Actions, private tellerService: TellerService) {}
+
 }

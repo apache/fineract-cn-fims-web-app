@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as caseActions from '../case.actions';
@@ -25,8 +25,6 @@ import {Product} from '../../../../services/portfolio/domain/product.model';
 
 @Injectable()
 export class CaseApiEffects {
-
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -46,7 +44,6 @@ export class CaseApiEffects {
         })));
     });
 
-
   @Effect()
   createCase$: Observable<Action> = this.actions$
     .ofType(caseActions.CREATE)
@@ -59,6 +56,7 @@ export class CaseApiEffects {
         }))
         .catch((error) => of(new caseActions.CreateCaseFailAction(error)))
     );
+
 
   @Effect()
   updateCase$: Observable<Action> = this.actions$
@@ -92,5 +90,7 @@ export class CaseApiEffects {
         .map(() => new caseActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new caseActions.ExecuteCommandFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 
 }

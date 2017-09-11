@@ -75,7 +75,13 @@ describe('Test account form', () => {
 });
 
 @Component({
-  template: '<fims-account-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [account]="account" [editMode]="true"></fims-account-form-component>'
+  template: `
+    <fims-account-form-component 
+      (onSave)="onSave($event)"
+      (onCancel)="onCancel($event)"
+      [account]="account"
+      [editMode]="true">
+    </fims-account-form-component>`
 })
 class TestComponent {
 

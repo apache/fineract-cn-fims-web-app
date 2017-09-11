@@ -24,13 +24,13 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class DepositProductDividendRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) {
-  }
-
   @Effect({dispatch: false})
   createDividendDistributionSuccess$: Observable<Action> = this.actions$
     .ofType(dividendActions.CREATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], {relativeTo: payload.activatedRoute}));
+
+  constructor(private actions$: Actions, private router: Router) {
+  }
 
 }

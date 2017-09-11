@@ -47,16 +47,70 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MdSidenav) sidenav: MdSidenav;
 
   menuItems: MenuItem[] = [
-    { title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess' },
-    { title: 'Offices', description: 'Manage offices', icon: 'store', routerLink: '/offices', permission: { id: 'office_offices', accessLevel: 'READ'} },
-    { title: 'Roles/Permissions', description: 'Manage roles and permissions', icon: 'https', routerLink: '/roles', permission: { id: 'identity_roles', accessLevel: 'READ'} },
-    { title: 'Employees', description: 'Manage employees', icon: 'group', routerLink: '/employees', permission: { id: 'office_employees', accessLevel: 'READ'} },
-    { title: 'Accounting', description: 'Manage ledger accounts', icon: 'receipt', routerLink: '/accounting', permission: { id: 'accounting_ledgers', accessLevel: 'READ'} },
-    { title: 'Member', description: 'Manage members', icon: 'face', routerLink: '/customers', permission: { id: 'customer_customers', accessLevel: 'READ'} },
-    { title: 'Loan products', description: 'Manage loan products', icon: 'credit_card', routerLink: '/loans', permission: { id: 'portfolio_products', accessLevel: 'READ'} },
-    { title: 'Deposit', description: 'Account management', icon: 'attach_money', routerLink: '/deposits', permission: { id: 'deposit_definitions', accessLevel: 'READ'} },
-    { title: 'Teller', description: 'Teller management', icon: 'person', routerLink: '/teller', permission: { id: 'teller_operations', accessLevel: 'READ'} },
-    { title: 'Reports', description: 'View reports', icon: 'show_chart', routerLink: '/reports', permission: { id: 'reporting_management', accessLevel: 'READ' } },
+    {title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess'},
+    {
+      title: 'Offices',
+      description: 'Manage offices',
+      icon: 'store',
+      routerLink: '/offices',
+      permission: {id: 'office_offices', accessLevel: 'READ'}
+    },
+    {
+      title: 'Roles/Permissions',
+      description: 'Manage roles and permissions',
+      icon: 'https',
+      routerLink: '/roles',
+      permission: {id: 'identity_roles', accessLevel: 'READ'}
+    },
+    {
+      title: 'Employees',
+      description: 'Manage employees',
+      icon: 'group',
+      routerLink: '/employees',
+      permission: {id: 'office_employees', accessLevel: 'READ'}
+    },
+    {
+      title: 'Accounting',
+      description: 'Manage ledger accounts',
+      icon: 'receipt',
+      routerLink: '/accounting',
+      permission: {id: 'accounting_ledgers', accessLevel: 'READ'}
+    },
+    {
+      title: 'Member',
+      description: 'Manage members',
+      icon: 'face',
+      routerLink: '/customers',
+      permission: {id: 'customer_customers', accessLevel: 'READ'}
+    },
+    {
+      title: 'Loan products',
+      description: 'Manage loan products',
+      icon: 'credit_card',
+      routerLink: '/loans',
+      permission: {id: 'portfolio_products', accessLevel: 'READ'}
+    },
+    {
+      title: 'Deposit',
+      description: 'Account management',
+      icon: 'attach_money',
+      routerLink: '/deposits',
+      permission: {id: 'deposit_definitions', accessLevel: 'READ'}
+    },
+    {
+      title: 'Teller',
+      description: 'Teller management',
+      icon: 'person',
+      routerLink: '/teller',
+      permission: {id: 'teller_operations', accessLevel: 'READ'}
+    },
+    {
+      title: 'Reports',
+      description: 'View reports',
+      icon: 'show_chart',
+      routerLink: '/reports',
+      permission: {id: 'reporting_management', accessLevel: 'READ'}
+    },
   ];
 
   isLoading$: Observable<boolean>;
@@ -73,7 +127,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.routerEventSubscription = this.router.events
       .filter(event => event instanceof NavigationEnd)
-      .map(() => this.getTitle(this.router.routerState, this.router.routerState.root).join(" - "))
+      .map(() => this.getTitle(this.router.routerState, this.router.routerState.root).join(' - '))
       .subscribe(title => this.titleService.setTitle(title));
 
     this.tenant$ = this.store.select(fromRoot.getTenant);
@@ -98,15 +152,15 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   getTitle(state: RouterState, parent: ActivatedRoute): string[] {
     const data = [];
 
-    if(parent && parent.snapshot.data){
-      let dataProperty: any = parent.snapshot.data;
+    if (parent && parent.snapshot.data) {
+      const dataProperty: any = parent.snapshot.data;
 
-      if(dataProperty.title){
+      if (dataProperty.title) {
         data.push(dataProperty.title);
       }
     }
 
-    if(state && parent){
+    if (state && parent) {
       data.push(... this.getTitle(state, parent.firstChild));
     }
 
@@ -114,7 +168,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   toggleSideNav(): void {
-    this.sidenav.toggle(!this.sidenav.opened)
+    this.sidenav.toggle(!this.sidenav.opened);
   }
 
   logout(): void {

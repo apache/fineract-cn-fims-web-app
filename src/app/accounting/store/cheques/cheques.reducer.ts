@@ -38,7 +38,7 @@ export function reducer(state = initialState, action: Actions<FimsCheque> | cheq
   switch (action.type) {
 
     case cheque.ChequeCRUDActions.LOAD_ALL: {
-      return initialState
+      return initialState;
     }
 
     case cheque.ChequeCRUDActions.LOAD_ALL_COMPLETE: {
@@ -64,7 +64,7 @@ export function reducer(state = initialState, action: Actions<FimsCheque> | cheq
 
       const cheque = state.entities[chequeIdentifier];
 
-      if(command.action === 'APPROVE') {
+      if (command.action === 'APPROVE') {
         cheque.state = 'PROCESSED';
       } else {
         cheque.state = 'CANCELED';

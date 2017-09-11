@@ -24,7 +24,7 @@ import {temporalOptionList} from '../../../../common/domain/temporal.domain';
   selector: 'fims-product-moratorium-form',
   templateUrl: './moratorium.component.html'
 })
-export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]>{
+export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]> {
 
   temporalOptions = temporalOptionList;
 
@@ -54,7 +54,7 @@ export class ProductMoratoriumFormComponent extends FormComponent<Moratorium[]>{
       period: [moratorium ? moratorium.period : '1', Validators.required],
       chargeTask: [moratorium ? moratorium.chargeTask : '', Validators.required],
       temporalUnit: [moratorium ? moratorium.temporalUnit : 'WEEKS', Validators.required]
-    })
+    });
   }
 
   addMoratorium(): void {

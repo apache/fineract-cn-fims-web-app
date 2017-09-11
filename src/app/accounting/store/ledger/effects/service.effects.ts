@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
@@ -24,8 +24,6 @@ import {AccountingService} from '../../../../services/accounting/accounting.serv
 
 @Injectable()
 export class LedgerApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -99,5 +97,7 @@ export class LedgerApiEffects {
         .map(chartOfAccountEntries => new ledgerActions.LoadChartOfAccountsActionComplete(chartOfAccountEntries))
         .catch(() => of(new ledgerActions.LoadChartOfAccountsActionComplete([])))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
 }

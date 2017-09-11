@@ -16,8 +16,8 @@
 
 import {AccountType} from '../services/accounting/domain/account-type.model';
 
-export interface AccountTypeOption{
-  type: AccountType,
+export interface AccountTypeOption {
+  type: AccountType;
   label: string;
 }
 

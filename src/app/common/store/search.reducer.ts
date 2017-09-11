@@ -23,25 +23,25 @@ export function emptySearchResult(): SearchResult {
     elements: [],
     totalElements: 0,
     totalPages: 0
-  }
+  };
 }
 
 export interface SearchPayload {
-  fetchRequest: FetchRequest
+  fetchRequest: FetchRequest;
 }
 
 export interface SearchResult {
-  elements: any[],
-  totalElements: number,
-  totalPages: number
+  elements: any[];
+  totalElements: number;
+  totalPages: number;
 }
 
 export interface SearchState {
-  entities: any[],
-  totalPages: number,
-  totalElements: number,
-  loading: boolean,
-  fetchRequest: FetchRequest
+  entities: any[];
+  totalPages: number;
+  totalElements: number;
+  loading: boolean;
+  fetchRequest: FetchRequest;
 }
 
 const initialState: SearchState = {
@@ -80,13 +80,13 @@ export const createSearchReducer = (entityName: string, reducer?: ActionReducer<
 
       default: {
         // delegate to wrapped reducer
-        if(reducer) {
+        if (reducer) {
           return reducer(state, action);
         }
         return state;
       }
     }
-  }
+  };
 };
 
 export const getSearchEntities = (state: SearchState) => state.entities;
@@ -94,10 +94,11 @@ export const getSearchTotalElements = (state: SearchState) => state.totalElement
 export const getSearchTotalPages = (state: SearchState) => state.totalPages;
 export const getSearchLoading = (state: SearchState) => state.loading;
 
-export const getSearchResult = createSelector(getSearchEntities, getSearchTotalElements, getSearchTotalPages, (elements, totalElements, totalPages) => {
+export const getSearchResult = createSelector(getSearchEntities, getSearchTotalElements, getSearchTotalPages,
+  (elements, totalElements, totalPages) => {
   return {
     elements,
     totalElements,
     totalPages
-  }
+  };
 });

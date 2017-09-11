@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 import {Component} from '@angular/core';
-import {
-  TaskDefinition,
-  TaskDefinitionCommand,
-  TaskDefinitionType
-} from '../../services/customer/domain/task-definition.model';
+import {TaskDefinition, TaskDefinitionCommand, TaskDefinitionType} from '../../services/customer/domain/task-definition.model';
 import {Observable} from 'rxjs/Observable';
 import * as fromCustomers from '../store/index';
 import {CustomersStore} from '../store/index';
@@ -45,6 +41,6 @@ export class TaskDetailComponent {
       defaultCommandOptions.find(option => option.command === command).label
     );
 
-    return options.join(", ")
+    return options.join(', ');
   }
 }

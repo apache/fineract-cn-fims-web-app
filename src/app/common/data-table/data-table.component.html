@@ -26,7 +26,7 @@
         {{column.label}}
     </th>
     <th td-data-table-column *ngIf="actionColumn"></th>
-    <tr td-data-table-row *ngFor="let row of tableData?.data">
+    <tr td-data-table-row *ngFor="let row of data?.data">
       <ng-container *ngFor="let column of _columns">
         <td td-data-table-cell [numeric]="column.numeric" *ngIf="!isBoolean(row[column.name])">
           {{column.format ? column.format(row[column.name]) : row[column.name]}}
@@ -50,7 +50,7 @@
     <h3 translate>Fetching results...</h3>
   </div>
 
-  <td-paging-bar #pagingBar *ngIf="pageable" [pageSizes]="pageSizes" [total]="tableData?.totalElements" (change)="page($event)">
+  <td-paging-bar #pagingBar *ngIf="pageable" [pageSizes]="pageSizes" [total]="data?.totalElements" (change)="page($event)">
     <span td-paging-bar-label hide-xs translate>Rows per page</span>
     {{pagingBar.range}} <span hide-xs translate>of</span><span> {{pagingBar.total}}</span>
   </td-paging-bar>

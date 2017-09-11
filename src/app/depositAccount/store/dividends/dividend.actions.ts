@@ -27,7 +27,7 @@ export const CREATE_FAIL = type('[Deposit Product Definition Dividend] Create Fa
 
 export interface DividendPayload extends RoutePayload {
   productDefinitionId: string;
-  dividendDistribution: DividendDistribution
+  dividendDistribution: DividendDistribution;
 }
 
 export class LoadAllAction implements Action {

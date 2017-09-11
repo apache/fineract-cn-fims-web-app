@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromPortfolio from '../../store';
 import {UPDATE} from '../../store/tasks/task.actions';
 import {FimsProduct} from '../../store/model/fims-product.model';
@@ -26,7 +26,7 @@ import {FimsProduct} from '../../store/model/fims-product.model';
 @Component({
   templateUrl: './edit.component.html'
 })
-export class ProductStatusEditFormComponent implements OnInit, OnDestroy{
+export class ProductStatusEditFormComponent implements OnInit, OnDestroy {
 
   private taskSubscription: Subscription;
 
@@ -59,11 +59,11 @@ export class ProductStatusEditFormComponent implements OnInit, OnDestroy{
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

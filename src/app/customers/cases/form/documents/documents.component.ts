@@ -51,7 +51,7 @@ export class CaseDocumentsFormComponent extends FormComponent<Document[]> implem
     return this.formBuilder.group({
       description: [document ? document.description : '', [Validators.required]],
       file: []
-    })
+    });
   }
 
   get formDocuments(): FormArray {

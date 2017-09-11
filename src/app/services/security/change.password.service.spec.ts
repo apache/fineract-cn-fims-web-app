@@ -16,19 +16,20 @@
 
 import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {TestBed} from '@angular/core/testing';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {ChangePasswordGuard} from './change.password.service';
 import {Authentication} from '../identity/domain/authentication.model';
 
 describe('Test Password Change Service', () => {
 
-  let route: ActivatedRouteSnapshot;
+  const route: ActivatedRouteSnapshot = undefined;
 
-  let state: RouterStateSnapshot;
+  const state: RouterStateSnapshot = undefined;
 
-  let router = {
-    navigate(){}
+  const router = {
+    navigate() {
+    }
   };
 
   describe('when logged in', () => {
@@ -37,18 +38,18 @@ describe('Test Password Change Service', () => {
       TestBed.configureTestingModule({
         providers: [
           ChangePasswordGuard,
-          { provide: Router, useValue: router },
+          {provide: Router, useValue: router},
           {
             provide: Store, useClass: class {
-              select = jasmine.createSpy('select').and.callFake(selector => Observable.of({}))
-            }
+            select = jasmine.createSpy('select').and.callFake(selector => Observable.of({}));
+          }
           }
         ]
       });
     });
 
     function setup(authentication: Authentication): ChangePasswordGuard {
-      let store = TestBed.get(Store);
+      const store = TestBed.get(Store);
 
       store.select.and.returnValue(Observable.of({
         authentication

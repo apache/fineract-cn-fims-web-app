@@ -28,7 +28,7 @@ export interface CustomerDetailFormData {
     day?: number;
     month?: number;
     year?: number;
-  }
+  };
   member: boolean;
 }
 
@@ -48,16 +48,16 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       lastName: [formData.lastName, [Validators.required, Validators.maxLength(256)]],
       dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined, Validators.required],
       member: [formData.member],
-    })
+    });
   };
 
   @Input() editMode: boolean;
 
-  private formatDate(year: number, month: number, day: number): string{
+  private formatDate(year: number, month: number, day: number): string {
     return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
   }
 
-  private addZero(value: number): string{
+  private addZero(value: number): string {
     return ('0' + value).slice(-2);
   }
 
@@ -81,7 +81,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
         day: chunks.length ? Number(chunks[2]) : undefined,
       },
       member: this.form.get('member').value
-    }
+    };
   }
 
 }

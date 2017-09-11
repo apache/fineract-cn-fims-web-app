@@ -39,7 +39,7 @@ export function reducer(state = initialState, action: product.Actions): Resource
         }),
         selectedId: state.selectedId,
         loadedAt: state.loadedAt
-      }
+      };
     }
 
     default: {

@@ -23,8 +23,6 @@ import * as dividendActions from '../dividend.actions';
 @Injectable()
 export class DepositProductDividendNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({dispatch: false})
   createDividendDistributionSuccess$: Observable<Action> = this.actions$
     .ofType(dividendActions.CREATE_SUCCESS)
@@ -32,5 +30,7 @@ export class DepositProductDividendNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Dividend is going to be distributed'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

@@ -23,30 +23,30 @@
 
 export class AccountDesignators {
 
-  public static readonly CUSTOMER_LOAN: string = "customer-loan";
+  public static readonly CUSTOMER_LOAN = 'customer-loan';
 
-  public static readonly PENDING_DISBURSAL: string = "pending-disbursal";
+  public static readonly PENDING_DISBURSAL = 'pending-disbursal';
 
-  public static readonly LOAN_FUNDS_SOURCE: string = "loan-funds-source";
+  public static readonly LOAN_FUNDS_SOURCE = 'loan-funds-source';
 
-  public static readonly LOANS_PAYABLE: string = "loans-payable";
+  public static readonly LOANS_PAYABLE = 'loans-payable';
 
-  public static readonly PROCESSING_FEE_INCOME = "processing-fee-income";
+  public static readonly PROCESSING_FEE_INCOME = 'processing-fee-income';
 
-  public static readonly ORIGINATION_FEE_INCOME = "origination-fee-income";
+  public static readonly ORIGINATION_FEE_INCOME = 'origination-fee-income';
 
-  public static readonly DISBURSEMENT_FEE_INCOME = "disbursement-fee-income";
+  public static readonly DISBURSEMENT_FEE_INCOME = 'disbursement-fee-income';
 
-  public static readonly INTEREST_INCOME = "interest-income";
+  public static readonly INTEREST_INCOME = 'interest-income';
 
-  public static readonly INTEREST_ACCRUAL = "interest-accrual";
+  public static readonly INTEREST_ACCRUAL = 'interest-accrual';
 
-  public static readonly LATE_FEE_INCOME = "late-fee-income";
+  public static readonly LATE_FEE_INCOME = 'late-fee-income';
 
-  public static readonly LATE_FEE_ACCRUAL = "late-fee-accrual";
+  public static readonly LATE_FEE_ACCRUAL = 'late-fee-accrual';
 
-  public static readonly ARREARS_ALLOWANCE = "arrears-allowance";
+  public static readonly ARREARS_ALLOWANCE = 'arrears-allowance';
 
-  public static readonly ENTRY = "entry";
+  public static readonly ENTRY = 'entry';
 
 }

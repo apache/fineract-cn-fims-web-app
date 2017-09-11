@@ -55,7 +55,7 @@ export class EditProductChargeRangeFormComponent implements OnInit, OnDestroy {
         productIdentifier: this.product.identifier,
         activatedRoute: this.route
       }
-    }))
+    }));
   }
 
 

@@ -75,19 +75,25 @@ describe('Test case list component', () => {
 
     const permissions: FimsPermission[] = [];
 
-    if(hasChangePermission) {
+    if (hasChangePermission) {
       permissions.push({
         id: 'portfolio_cases',
         accessLevel: 'CHANGE'
-      })
+      });
     }
 
     const casesStore = TestBed.get(CasesStore);
 
     casesStore.select.and.callFake(selector => {
-      if(selector === fromCases.getCaseSearchResults) return Observable.of({});
-      if(selector === fromCustomers.getSelectedCustomer) return Observable.of(customer);
-      if(selector === fromRoot.getPermissions) return Observable.of(permissions);
+      if (selector === fromCases.getCaseSearchResults) {
+        return Observable.of({});
+      }
+      if (selector === fromCustomers.getSelectedCustomer) {
+        return Observable.of(customer);
+      }
+      if (selector === fromRoot.getPermissions) {
+        return Observable.of(permissions);
+      }
     });
   }
 
@@ -123,6 +129,6 @@ describe('Test case list component', () => {
     const button = getCreateButton();
 
     expect(button).not.toBeNull();
-  })
+  });
 
 });

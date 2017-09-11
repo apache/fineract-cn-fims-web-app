@@ -57,7 +57,7 @@ export class CaseCreditFactorFormComponent extends FormComponent<CreditWorthines
     return this.formBuilder.group({
       description: [factor ? factor.description : ''],
       amount: [factor ? factor.amount : 0, [ Validators.required, FimsValidators.minValue(0)] ]
-    })
+    });
   }
 
   get formFactors(): FormArray {

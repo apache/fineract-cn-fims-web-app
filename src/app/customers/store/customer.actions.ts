@@ -39,8 +39,8 @@ export const UPDATE_FAIL = type('[Customer] Update Fail');
 
 export const RESET_FORM = type('[Customer] Reset Form');
 
-export interface CustomerRoutePayload extends RoutePayload{
-  customer: Customer
+export interface CustomerRoutePayload extends RoutePayload {
+  customer: Customer;
 }
 
 export class LoadAction implements Action {

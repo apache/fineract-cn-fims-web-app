@@ -26,8 +26,6 @@ import {of} from 'rxjs/observable/of';
 @Injectable()
 export class TellerProductsApiEffects {
 
-  constructor(private actions$: Actions, private depositService: DepositAccountService, private portfolioService: PortfolioService) {}
-
   @Effect()
   loadAllDepositProducts$: Observable<Action> = this.actions$
     .ofType(tellerActions.LOAD_ALL_DEPOSIT_PRODUCTS)
@@ -47,4 +45,6 @@ export class TellerProductsApiEffects {
         .map(casePage => new tellerActions.LoadAllLoanProductsSuccessAction(casePage.elements))
         .catch((error) => of(new tellerActions.LoadAllLoanProductsSuccessAction([])))
     );
+
+  constructor(private actions$: Actions, private depositService: DepositAccountService, private portfolioService: PortfolioService) {}
 }

@@ -60,7 +60,7 @@ export class EditOfficeTellerFormComponent implements OnInit, OnDestroy {
   }
 
   onCancel(): void {
-    this.navigateAway()
+    this.navigateAway();
   }
 
   navigateAway(): void {

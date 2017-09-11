@@ -17,7 +17,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Employee} from '../../services/office/domain/employee.model';
 import {TdDialogService} from '@covalent/core';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {User} from '../../services/identity/domain/user.model';
 import * as fromEmployee from '../store';
 import {DELETE, SelectAction} from '../store/employee.actions';
@@ -27,7 +28,7 @@ import {EmployeesStore} from '../store/index';
   selector: 'fims-employee-detail',
   templateUrl: './employee.detail.component.html'
 })
-export class EmployeeDetailComponent implements OnInit, OnDestroy{
+export class EmployeeDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
@@ -37,7 +38,8 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy{
 
   user: User;
 
-  constructor(private route: ActivatedRoute, private router: Router, private dialogService: TdDialogService, private store: EmployeesStore) {}
+  constructor(private route: ActivatedRoute, private router: Router, private dialogService: TdDialogService,
+              private store: EmployeesStore) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -60,11 +62,13 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy{
   }
 
   searchEmployee(term): void {
-    if(!term) return;
+    if (!term) {
+      return;
+    }
     this.goToOverviewPage(term);
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete employee "' + this.employee.givenName + ' ' + this.employee.surname + '"?',
       title: 'Confirm deletion',
@@ -79,11 +83,11 @@ export class EmployeeDetailComponent implements OnInit, OnDestroy{
         this.store.dispatch({ type: DELETE, payload: {
           employee: this.employee,
           activatedRoute: this.route
-        } })
+        } });
       });
   }
 
-  goToOverviewPage(term?: string): void{
+  goToOverviewPage(term?: string): void {
     this.router.navigate(['../../'], { queryParams: { term: term }, relativeTo: this.route });
   }
 }

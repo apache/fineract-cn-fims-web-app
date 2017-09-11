@@ -36,7 +36,9 @@ import {CreateCustomerPayrollFormComponent} from './detail/payroll/form/create.f
 
 export const CustomerRoutes: Routes = [
   {
-    path: '', component: CustomerComponent, data: {title: 'Manage Customers', hasPermission: { id: 'customer_customers', accessLevel: 'READ' }}
+    path: '',
+    component: CustomerComponent,
+    data: {title: 'Manage Customers', hasPermission: {id: 'customer_customers', accessLevel: 'READ'}}
   },
   {
     path: 'create',

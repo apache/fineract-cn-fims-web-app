@@ -16,7 +16,7 @@
 
 import {ChronoUnit} from './chrono-unit.model';
 
-export interface TermRange{
+export interface TermRange {
   temporalUnit: ChronoUnit;
   maximum: number;
 }

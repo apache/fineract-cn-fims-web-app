@@ -23,8 +23,6 @@ import * as payrollActions from '../../payroll/payroll-collection.actions';
 @Injectable()
 export class PayrollCollectionNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   createPayrollSuccess$: Observable<Action> = this.actions$
     .ofType(payrollActions.CREATE_SUCCESS)
@@ -32,5 +30,7 @@ export class PayrollCollectionNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Payroll is going to be created'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

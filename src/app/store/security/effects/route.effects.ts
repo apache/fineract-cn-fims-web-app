@@ -17,14 +17,12 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as securityActions from '../security.actions';
 
 @Injectable()
 export class SecurityRouteEffects {
-
-  constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
   loginSuccess$: Observable<Action> = this.actions$
@@ -39,5 +37,7 @@ export class SecurityRouteEffects {
   @Effect({ dispatch: false })
   passwordChangeSuccess$: Observable<Action> = this.actions$
     .ofType(securityActions.CHANGE_PASSWORD_SUCCESS)
-    .do((payload) => this.router.navigate(['/']))
+    .do((payload) => this.router.navigate(['/']));
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

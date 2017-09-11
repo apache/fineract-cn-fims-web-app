@@ -37,7 +37,7 @@ export interface ExecuteTaskPayload extends RoutePayload {
   taskId: string;
 }
 
-export interface ExecuteCommandPayload{
+export interface ExecuteCommandPayload {
   customerId: string;
   command: Command;
 }
@@ -98,4 +98,4 @@ export type Actions
   | ExecuteTaskFailAction
   | ExecuteCommandAction
   | ExecuteCommandSuccessAction
-  | ExecuteCommandFailAction
+  | ExecuteCommandFailAction;

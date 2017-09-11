@@ -17,7 +17,7 @@
 import {Injectable} from '@angular/core';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {of} from 'rxjs/observable/of';
@@ -26,8 +26,6 @@ import {emptySearchResult} from '../../../../common/store/search.reducer';
 
 @Injectable()
 export class ProductApiEffects {
-
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -97,4 +95,6 @@ export class ProductApiEffects {
           this.portfolioService.incompleteaccountassignments(payload.product.identifier)
             .map(accountAssignments => new productActions.EnableProductFailAction(accountAssignments)))
     );
+
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 }

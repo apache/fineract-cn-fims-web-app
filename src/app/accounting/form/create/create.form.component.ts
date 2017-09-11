@@ -19,7 +19,7 @@ import {LedgerFormComponent} from '../form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Error} from '../../../services/domain/error.model';
 import * as fromAccounting from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CREATE, CREATE_SUB_LEDGER, RESET_FORM} from '../../store/ledger/ledger.actions';
 import {AccountingStore} from '../../store/index';
 
@@ -44,7 +44,8 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
     subLedgers: [],
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {
+  }
 
   ngOnInit() {
     this.formStateSubscription = this.store.select(fromAccounting.getLedgerFormError)
@@ -59,21 +60,25 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
     this.formStateSubscription.unsubscribe();
     this.ledgerSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({type: RESET_FORM});
   }
 
   onSave(ledger: Ledger) {
-    if(this.parentLedger){
-      this.store.dispatch({ type: CREATE_SUB_LEDGER, payload: {
-        parentLedgerId: this.parentLedger.identifier,
-        ledger,
-        activatedRoute: this.route
-      }});
-    }else{
-      this.store.dispatch({ type: CREATE, payload: {
-        ledger,
-        activatedRoute: this.route
-      }});
+    if (this.parentLedger) {
+      this.store.dispatch({
+        type: CREATE_SUB_LEDGER, payload: {
+          parentLedgerId: this.parentLedger.identifier,
+          ledger,
+          activatedRoute: this.route
+        }
+      });
+    } else {
+      this.store.dispatch({
+        type: CREATE, payload: {
+          ledger,
+          activatedRoute: this.route
+        }
+      });
     }
   }
 
@@ -82,6 +87,6 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
   }
 
   navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

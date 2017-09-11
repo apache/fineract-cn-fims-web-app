@@ -17,15 +17,12 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {
-  Adjustment,
-  TellerManagementCommand
-} from '../../../../../services/teller/domain/teller-management-command.model';
+import {Adjustment, TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
 import {FormComponent} from '../../../../../common/forms/form.component';
 import {FimsValidators} from '../../../../../common/validator/validators';
 
 interface AdjustmentOption {
-  key: string | Adjustment,
+  key: string | Adjustment;
   label: string;
 }
 

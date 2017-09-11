@@ -23,6 +23,8 @@ import {CountryService} from '../../services/country/country.service';
 import {countryExists} from '../validator/country-exists.validator';
 import {Observable} from 'rxjs/Observable';
 
+import 'rxjs/add/operator/startWith';
+
 @Component({
   selector: 'fims-address-form',
   templateUrl: './address.component.html'
@@ -34,7 +36,7 @@ export class AddressFormComponent extends FormComponent<Address> implements OnIn
   @Input() set formData(address: Address) {
     let country: Country;
 
-    if(address) {
+    if (address) {
       country = this.countryService.fetchByCountryCode(address.countryCode);
     }
 
@@ -68,7 +70,7 @@ export class AddressFormComponent extends FormComponent<Address> implements OnIn
       region: this.form.get('region').value,
       country: country.name,
       countryCode: country.alpha2Code
-    }
+    };
   }
 
   countryDisplay(country: Country): string {

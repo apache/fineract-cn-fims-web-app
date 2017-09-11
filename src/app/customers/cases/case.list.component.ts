@@ -24,9 +24,12 @@ import * as fromCases from './store/index';
 import {CasesStore} from './store/index';
 import * as fromCustomers from '../store';
 import * as fromRoot from '../../store';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {SEARCH} from './store/case.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   templateUrl: './case.list.component.html'
@@ -81,7 +84,7 @@ export class CaseListComponent implements OnInit, OnDestroy {
     this.customerSubscription.unsubscribe();
   }
 
-  fetchCases(fetchRequest?: FetchRequest): void{
+  fetchCases(fetchRequest?: FetchRequest): void {
     this.casesStore.dispatch({ type: SEARCH, payload: {
       customerId: this.customer.identifier,
       fetchRequest
@@ -89,14 +92,14 @@ export class CaseListComponent implements OnInit, OnDestroy {
   }
 
   rowSelect(caseInstance: Case): void {
-    this.router.navigate(['products', caseInstance.productIdentifier, 'detail', caseInstance.identifier], { relativeTo: this.route })
+    this.router.navigate(['products', caseInstance.productIdentifier, 'detail', caseInstance.identifier], { relativeTo: this.route });
   }
 
   private hasChangePermission(permissions: FimsPermission[]): boolean {
     return permissions.filter(permission =>
         permission.id === 'portfolio_cases' &&
         permission.accessLevel === 'CHANGE'
-      ).length > 0
+      ).length > 0;
   }
 
 }

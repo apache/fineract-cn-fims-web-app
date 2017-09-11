@@ -17,5 +17,5 @@ import {RangeSegment} from './range-segment.model';
 
 export interface FimsRange {
   identifier: string;
-  segments: RangeSegment[]
+  segments: RangeSegment[];
 }

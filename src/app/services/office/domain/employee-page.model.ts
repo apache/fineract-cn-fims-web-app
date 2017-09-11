@@ -16,7 +16,7 @@
 
 import {Employee} from './employee.model';
 
-export interface EmployeePage{
+export interface EmployeePage {
   employees: Employee[];
   totalPages: number;
   totalElements: number;

@@ -17,16 +17,16 @@
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
 import {emptySearchResult} from '../../../common/store/search.reducer';
 
+import 'rxjs/add/operator/takeUntil';
+
 @Injectable()
 export class OfficeSearchApiEffects {
-
-  constructor(private actions$: Actions, private officeService: OfficeService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -46,4 +46,5 @@ export class OfficeSearchApiEffects {
         .catch(() => of(new officeActions.SearchCompleteAction(emptySearchResult())));
     });
 
+  constructor(private actions$: Actions, private officeService: OfficeService) { }
 }

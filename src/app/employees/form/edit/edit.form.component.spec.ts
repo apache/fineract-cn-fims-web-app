@@ -25,7 +25,7 @@ import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../services/identity/domain/user.model';
 import {Employee} from '../../../services/office/domain/employee.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {EmployeesStore} from '../../store/index';
 import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
@@ -36,12 +36,12 @@ import {FormContinueActionComponent} from '../../../common/forms/form-continue-a
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-let userMock: User = {
+const userMock: User = {
   identifier: 'test',
   role: 'test'
 };
 
-let employeeMock: Employee = {
+const employeeMock: Employee = {
   identifier: 'test',
   assignedOffice: 'test',
   givenName: 'test',
@@ -57,7 +57,7 @@ let employeeMock: Employee = {
   ]
 };
 
-let activatedRoute = {
+const activatedRoute = {
   data: Observable.of({
     user: userMock
   })
@@ -98,17 +98,19 @@ describe('Test employee form component', () => {
         {
           provide: Store, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         },
         {
           provide: EmployeesStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = jasmine.createSpy('select').and.callFake(selector => {
-              if(selector === fromEmployees.getSelectedEmployee) return Observable.of(employeeMock);
+              if (selector === fromEmployees.getSelectedEmployee) {
+                return Observable.of(employeeMock);
+              }
 
               return Observable.empty();
-            })
+            });
           }
         }
       ],
@@ -136,7 +138,7 @@ describe('Test employee form component', () => {
         password: 'newPassword',
         activatedRoute: activatedRoute
       }});
-    })
+    });
 
   })));
 });

@@ -18,7 +18,7 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../services/office/office.service';
 import {getOfficesLoadedAt, OfficesStore} from './store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {LoadAction} from './store/office.actions';
 import {of} from 'rxjs/observable/of';
 import {ExistsGuardService} from '../common/guards/exists-guard';

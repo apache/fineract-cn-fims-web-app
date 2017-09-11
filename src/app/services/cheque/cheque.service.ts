@@ -17,7 +17,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
 import {Observable} from 'rxjs/Observable';
-import {URLSearchParams, RequestOptionsArgs} from '@angular/http';
+import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Cheque} from './domain/cheque.model';
 import {IssuingCount} from './domain/issuing-count.model';
 import {ChequeProcessingCommand} from './domain/cheque-processing-command';
@@ -29,7 +29,8 @@ import {mapToFimsCheque, mapToFimsCheques} from './domain/mapper/fims-cheque.map
 @Injectable()
 export class ChequeService {
 
-  constructor(private http: HttpClient, @Inject('chequeBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('chequeBaseUrl') private baseUrl: string) {
+  }
 
   public issue(issuingCount: IssuingCount): Observable<string> {
     return this.http.post(`${this.baseUrl}/cheques/`, issuingCount);
@@ -46,12 +47,12 @@ export class ChequeService {
     };
 
     return this.http.get(`${this.baseUrl}/cheques/`, requestOptions)
-      .map((cheques: Cheque[]) => mapToFimsCheques(cheques))
+      .map((cheques: Cheque[]) => mapToFimsCheques(cheques));
   }
 
   public get(identifier: string): Observable<FimsCheque> {
     return this.http.get(`${this.baseUrl}/cheques/${identifier}`)
-      .map((cheque: Cheque) => mapToFimsCheque(cheque))
+      .map((cheque: Cheque) => mapToFimsCheque(cheque));
   }
 
   public process(identifier: string, command: ChequeProcessingCommand): Observable<void> {
@@ -59,11 +60,11 @@ export class ChequeService {
   }
 
   public processTransaction(transaction: ChequeTransaction): Observable<void> {
-    return this.http.post(`${this.baseUrl}/transactions/`, transaction)
+    return this.http.post(`${this.baseUrl}/transactions/`, transaction);
   }
 
   public expandMicr(identifier: string): Observable<MICRResolution> {
-    return this.http.get(`${this.baseUrl}/micr/${identifier}`, {}, true)
+    return this.http.get(`${this.baseUrl}/micr/${identifier}`, {}, true);
   }
 
 }

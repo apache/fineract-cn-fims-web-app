@@ -18,7 +18,7 @@ import {Customer} from '../../../services/customer/domain/customer.model';
 import {Command} from '../../../services/customer/domain/command.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCustomers from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/customerTasks/customer-task.actions';
 import {CustomersStore} from '../../store/index';
 import {Observable} from 'rxjs/Observable';

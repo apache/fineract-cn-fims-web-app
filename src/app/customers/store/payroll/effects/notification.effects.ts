@@ -23,8 +23,6 @@ import * as payrollActions from '../payroll.actions';
 @Injectable()
 export class CustomerPayrollNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   updatePayrollSuccess$: Observable<Action> = this.actions$
     .ofType(payrollActions.UPDATE_SUCCESS)
@@ -32,5 +30,7 @@ export class CustomerPayrollNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Payroll is going to be saved'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

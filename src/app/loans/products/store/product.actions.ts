@@ -55,7 +55,7 @@ export const ENABLE_FAIL = type('[Product] Enable Fail');
 export const RESET_FORM = type('[Product] Reset Form');
 
 export interface ProductRoutePayload extends RoutePayload {
-  product: FimsProduct
+  product: FimsProduct;
 }
 
 export interface EnableProductPayload {

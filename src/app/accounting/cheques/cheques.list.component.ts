@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ITdDataTableColumn, TdDialogService} from '@covalent/core';
 import {AccountingStore} from '../store/index';
-import * as fromAccounting from '../store'
+import * as fromAccounting from '../store';
 import {ChequeCRUDActions, ProcessAction} from '../store/cheques/cheque.actions';
 import {TranslateService} from '@ngx-translate/core';
 import {FimsCheque} from '../../services/cheque/domain/fims-cheque.model';
@@ -27,18 +27,18 @@ import {DatePipe} from '@angular/common';
   templateUrl: './cheques.list.component.html',
   providers: [DatePipe]
 })
-export class ChequesListComponent {
+export class ChequesListComponent implements OnInit {
 
   cheques$: Observable<FimsCheque[]>;
 
   columns: ITdDataTableColumn[] = [
-    { name: 'identifier', label: 'Identifier' },
-    { name: 'drawee', label: 'Drawee' },
-    { name: 'drawer', label: 'Drawer' },
-    { name: 'payee', label: 'Payee' },
-    { name: 'amount', label: 'Amount' },
-    { name: 'dateIssued', label: 'Date issued', format: value => this.datePipe.transform(value, 'shortDate') },
-    { name: 'state', label: 'State' }
+    {name: 'identifier', label: 'Identifier'},
+    {name: 'drawee', label: 'Drawee'},
+    {name: 'drawer', label: 'Drawer'},
+    {name: 'payee', label: 'Payee'},
+    {name: 'amount', label: 'Amount'},
+    {name: 'dateIssued', label: 'Date issued', format: value => this.datePipe.transform(value, 'shortDate')},
+    {name: 'state', label: 'State'}
   ];
 
   constructor(private store: AccountingStore, private dialogService: TdDialogService,
@@ -49,10 +49,10 @@ export class ChequesListComponent {
   ngOnInit(): void {
     this.store.dispatch(ChequeCRUDActions.loadAllAction({
       state: 'PENDING'
-    }))
+    }));
   }
 
-  confirmAction(action: string): Observable<boolean>{
+  confirmAction(action: string): Observable<boolean> {
     const message = `Do you want to ${action} this cheque?`;
     const title = 'Confirm action';
     const button = `${action} cheque`;
@@ -76,7 +76,7 @@ export class ChequesListComponent {
           command: {
             action: 'APPROVE'
           }
-        }))
+        }));
       });
   }
 
@@ -89,7 +89,7 @@ export class ChequesListComponent {
           command: {
             action: 'CANCEL'
           }
-        }))
+        }));
       });
   }
 

@@ -41,15 +41,15 @@ export function reducer(state = initialState, action: customer.Actions | custome
 
       let customerState: CustomerState = null;
 
-      if(command.action === 'ACTIVATE') {
+      if (command.action === 'ACTIVATE') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'LOCK') {
+      }else if (command.action === 'LOCK') {
         customerState = 'LOCKED';
-      }else if(command.action === 'UNLOCK') {
+      }else if (command.action === 'UNLOCK') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'CLOSE') {
+      }else if (command.action === 'CLOSE') {
         customerState = 'CLOSED';
-      }else if(command.action === 'REOPEN') {
+      }else if (command.action === 'REOPEN') {
         customerState = 'ACTIVE';
       }
 
@@ -62,7 +62,7 @@ export function reducer(state = initialState, action: customer.Actions | custome
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

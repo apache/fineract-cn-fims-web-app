@@ -57,7 +57,7 @@ export class DepositProductDividendsComponent implements OnInit, OnDestroy {
     this.store.dispatch({
       type: LOAD_ALL,
       payload: this.productIdentifer
-    })
+    });
   }
 
   ngOnDestroy(): void {

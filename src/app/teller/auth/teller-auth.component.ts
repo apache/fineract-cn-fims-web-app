@@ -66,7 +66,7 @@ export class TellerAuthComponent implements OnInit, OnDestroy {
         tellerCode,
         password
       }
-    })
+    });
   }
 
 }

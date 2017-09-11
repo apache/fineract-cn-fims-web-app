@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
@@ -26,8 +26,6 @@ import {AccountPage} from '../../../services/accounting/domain/account-page.mode
 
 @Injectable()
 export class AccountSearchApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -64,7 +62,9 @@ export class AccountSearchApiEffects {
       elements: accountPage.accounts,
       totalElements: accountPage.totalElements,
       totalPages: accountPage.totalPages
-    }
+    };
   }
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
 }

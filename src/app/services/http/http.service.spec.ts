@@ -22,19 +22,20 @@ import {
   Http,
   RequestOptions,
   RequestOptionsArgs,
-  Response, ResponseOptions
+  Response,
+  ResponseOptions
 } from '@angular/http';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {ReflectiveInjector} from '@angular/core';
 
 describe('Test http client', () => {
 
-  let tenant: string = 'Reynholm Industries';
+  const tenant = 'Reynholm Industries';
 
-  let baseUrl: string = 'baseUrl';
+  const baseUrl = 'baseUrl';
 
-  let authenticationState = {
+  const authenticationState = {
     username: 'test',
     tenant: tenant,
     authentication: {
@@ -47,8 +48,9 @@ describe('Test http client', () => {
     }
   };
 
-  let doPostRequest = function (httpClient: HttpClient, options?: RequestOptionsArgs): void {
-    httpClient.post('/test', {}, options).subscribe(() => {});
+  const doPostRequest = function (httpClient: HttpClient, options?: RequestOptionsArgs): void {
+    httpClient.post('/test', {}, options).subscribe(() => {
+    });
   };
 
   describe('Test http header', () => {
@@ -59,8 +61,8 @@ describe('Test http client', () => {
         {provide: RequestOptions, useClass: BaseRequestOptions},
         {
           provide: Store, useClass: class {
-            select = jasmine.createSpy('select').and.returnValue(Observable.of(authenticationState))
-          }
+          select = jasmine.createSpy('select').and.returnValue(Observable.of(authenticationState));
+        }
         },
         Http,
         HttpClient,
@@ -88,12 +90,12 @@ describe('Test http client', () => {
 
     it('should send custom headers', (done: DoneFn) => {
       this.backend.connections.subscribe((connection: MockConnection) => {
-        expect(connection.request.headers.get("Content-Type")).toBe("multipart/form-data");
+        expect(connection.request.headers.get('Content-Type')).toBe('multipart/form-data');
         done();
       });
       doPostRequest(this.httpClient, {
         headers: new Headers({
-          "Content-Type": "multipart/form-data"
+          'Content-Type': 'multipart/form-data'
         })
       });
     });
@@ -127,7 +129,7 @@ describe('Test http client', () => {
         expect(text).toEqual('text');
         done();
       });
-    })
+    });
 
   });
 

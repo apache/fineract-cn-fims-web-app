@@ -18,7 +18,7 @@ import {TimeUnit} from '../../services/depositAccount/domain/time-unit.model';
 
 export interface TimeUnitOption {
   label: string;
-  type: TimeUnit
+  type: TimeUnit;
 }
 
 export const timeUnitOptionList: TimeUnitOption[] = [

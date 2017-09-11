@@ -17,15 +17,13 @@
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as paymentActions from '../payment.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
 
 @Injectable()
 export class CasePaymentsApiEffects {
-
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -35,7 +33,8 @@ export class CasePaymentsApiEffects {
     .switchMap(payload => {
       const nextSearch$ = this.actions$.ofType(paymentActions.SEARCH).skip(1);
 
-      return this.portfolioService.getPaymentScheduleForCase(payload.productIdentifier, payload.caseIdentifier, payload.initialDisbursalDate)
+      return this.portfolioService.getPaymentScheduleForCase(payload.productIdentifier, payload.caseIdentifier,
+        payload.initialDisbursalDate)
         .takeUntil(nextSearch$)
         .map(paymentsPage => new paymentActions.SearchCompleteAction(paymentsPage))
         .catch(() => of(new paymentActions.SearchCompleteAction({
@@ -45,4 +44,6 @@ export class CasePaymentsApiEffects {
           chargeNames: []
         })));
     });
+
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
 }

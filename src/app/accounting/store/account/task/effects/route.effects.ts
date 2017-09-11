@@ -24,11 +24,11 @@ import * as taskActions from '../task.actions';
 @Injectable()
 export class AccountCommandRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

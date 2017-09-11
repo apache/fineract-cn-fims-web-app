@@ -34,7 +34,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   definition: ProductDefinition;
 
@@ -51,7 +51,8 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     { name: 'amount', label: 'Amount', numeric: true, format: value => value ? value.toFixed(2) : undefined }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore, private dialogService: TdDialogService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore,
+              private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     const selectedProduct$ = this.store.select(fromDepositAccounts.getSelectedProduct)
@@ -64,7 +65,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
           data: product.charges,
           totalElements: product.charges.length,
           totalPages: 1
-        }
+        };
       });
 
     this.canDistributeDividends$ = Observable.combineLatest(
@@ -82,7 +83,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
   }
 
   goToTasks(): void {
-    this.router.navigate(['tasks'], { relativeTo: this.route })
+    this.router.navigate(['tasks'], { relativeTo: this.route });
   }
 
   confirmDeletion(): Observable<boolean> {
@@ -112,7 +113,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     return permissions.filter(permission =>
       permission.id === 'deposit_definitions' &&
       permission.accessLevel === 'CHANGE'
-    ).length > 0
+    ).length > 0;
   }
 
   enableProduct(): void {
@@ -121,7 +122,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
       command: {
         action: 'ACTIVATE'
       }
-    }})
+    }});
   }
 
   disableProduct(): void {
@@ -130,6 +131,6 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
       command: {
         action: 'DEACTIVATE'
       }
-    }})
+    }});
   }
 }

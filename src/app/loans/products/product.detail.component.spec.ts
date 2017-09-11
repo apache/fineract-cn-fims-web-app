@@ -84,18 +84,22 @@ describe('Test product list component', () => {
 
     const permissions: FimsPermission[] = [];
 
-    if(hasChangePermission) {
+    if (hasChangePermission) {
       permissions.push({
         id: 'portfolio_products',
         accessLevel: 'CHANGE'
-      })
+      });
     }
 
     const portfolioStore = TestBed.get(PortfolioStore);
 
     portfolioStore.select.and.callFake(selector => {
-      if(selector === fromPortfolio.getSelectedProduct) return Observable.of(product);
-      if(selector === fromRoot.getPermissions) return Observable.of(permissions);
+      if (selector === fromPortfolio.getSelectedProduct) {
+        return Observable.of(product);
+      }
+      if (selector === fromRoot.getPermissions) {
+        return Observable.of(permissions);
+      }
     });
   }
 
@@ -131,6 +135,6 @@ describe('Test product list component', () => {
     const button = getCreateButton();
 
     expect(button).toBeNull();
-  })
+  });
 
 });

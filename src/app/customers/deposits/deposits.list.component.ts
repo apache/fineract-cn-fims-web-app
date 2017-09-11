@@ -68,14 +68,14 @@ export class DepositsListComponent implements OnInit, OnDestroy {
     this.customerSubscription.unsubscribe();
   }
 
-  fetchProductInstances(fetchRequest?: FetchRequest): void{
+  fetchProductInstances(fetchRequest?: FetchRequest): void {
     this.depositsStore.dispatch({ type: SEARCH, payload: {
       customerId: this.customer.identifier,
       fetchRequest: fetchRequest
     }});
   }
 
-  rowSelect(productInstance: ProductInstance): void{
-    this.router.navigate(['detail', productInstance.accountIdentifier], { relativeTo: this.route })
+  rowSelect(productInstance: ProductInstance): void {
+    this.router.navigate(['detail', productInstance.accountIdentifier], { relativeTo: this.route });
   }
 }

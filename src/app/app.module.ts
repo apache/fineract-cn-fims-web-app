@@ -55,7 +55,7 @@ import {getSelectedLanguage} from './common/i18n/translate';
 import {environment} from '../environments/environment';
 import {ChequeService} from './services/cheque/cheque.service';
 
-export function HttpLoaderFactory(http: Http){
+export function HttpLoaderFactory(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 

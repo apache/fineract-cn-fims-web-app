@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface Sort{
+export interface Sort {
   sortColumn: string;
   sortDirection: string;
 }

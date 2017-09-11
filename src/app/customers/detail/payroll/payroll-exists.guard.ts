@@ -18,7 +18,7 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
@@ -48,11 +48,11 @@ export class PayrollExistsGuard implements CanActivate {
   }
 
   private emptyIfNull(distribution: PayrollDistribution): PayrollDistribution {
-    if(!distribution) {
+    if (!distribution) {
       return {
         mainAccountNumber: '',
         payrollAllocations: []
-      }
+      };
     }
 
     return distribution;

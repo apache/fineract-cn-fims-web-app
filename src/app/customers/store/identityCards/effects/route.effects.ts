@@ -23,8 +23,6 @@ import * as identificationCardActions from '../identity-cards.actions';
 
 @Injectable()
 export class CustomerIdentificationCardRouteEffects {
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createIdentificationCardSuccess$: Observable<Action> = this.actions$
     .ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS)
@@ -36,5 +34,7 @@ export class CustomerIdentificationCardRouteEffects {
     .ofType(identificationCardActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

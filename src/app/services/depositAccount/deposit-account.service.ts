@@ -27,18 +27,19 @@ import {DividendDistribution} from './domain/definition/dividend-distribution.mo
 @Injectable()
 export class DepositAccountService {
 
-  constructor(private http: HttpClient, @Inject('depositAccountBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('depositAccountBaseUrl') private baseUrl: string) {
+  }
 
   createProductDefinition(productDefinition: ProductDefinition): Observable<void> {
-    return this.http.post(`${this.baseUrl}/definitions`, productDefinition)
+    return this.http.post(`${this.baseUrl}/definitions`, productDefinition);
   }
 
   updateProductDefinition(productDefinition: ProductDefinition): Observable<void> {
-    return this.http.put(`${this.baseUrl}/definitions/${productDefinition.identifier}`, productDefinition)
+    return this.http.put(`${this.baseUrl}/definitions/${productDefinition.identifier}`, productDefinition);
   }
 
   deleteProductDefinition(identifier: string): Observable<void> {
-    return this.http.delete(`${this.baseUrl}/definitions/${identifier}`)
+    return this.http.delete(`${this.baseUrl}/definitions/${identifier}`);
   }
 
   fetchProductDefinitions(): Observable<ProductDefinition[]> {
@@ -54,11 +55,11 @@ export class DepositAccountService {
   }
 
   fetchDividendDistributions(identifier: string): Observable<DividendDistribution[]> {
-    return this.http.get(`${this.baseUrl}/definitions/${identifier}/dividends`)
+    return this.http.get(`${this.baseUrl}/definitions/${identifier}/dividends`);
   }
 
   distributeDividend(identifier: string, dividendDistribution: DividendDistribution): Observable<void> {
-    return this.http.post(`${this.baseUrl}/definitions/${identifier}/dividends`, dividendDistribution)
+    return this.http.post(`${this.baseUrl}/definitions/${identifier}/dividends`, dividendDistribution);
   }
 
   createProductInstance(productInstance: ProductInstance): Observable<void> {
@@ -74,12 +75,12 @@ export class DepositAccountService {
   }
 
   fetchProductInstances(customerIdentifier: string, productIdentifier?: string): Observable<ProductInstance[]> {
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
 
     params.append('customer', customerIdentifier);
     params.append('product', productIdentifier);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       search: params
     };
 

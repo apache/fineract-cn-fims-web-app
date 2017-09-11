@@ -31,24 +31,26 @@ export class FormPermissionService {
   mapToFormPermissions(groups: PermittableGroup[], permissions: Permission[]): FormPermissionGroup[] {
     const formGroups: FormPermissionGroup[] = [];
 
-    for (let permittableGroup of groups) {
+    for (const permittableGroup of groups) {
       const groupId = this.groupId(permittableGroup);
 
-      let group = formGroups.find(group => group.groupId === groupId);
+      let foundGroup = formGroups.find(group => group.groupId === groupId);
 
-      if(!group) {
-        group = {
+      if (!foundGroup) {
+        foundGroup = {
           groupId,
           formPermissions: []
         };
-        formGroups.push(group);
+        formGroups.push(foundGroup);
       }
 
       const foundPermission: Permission = this.findPermission(permittableGroup.identifier, permissions);
 
       const descriptor: FimsPermissionDescriptor = this.idMapper.map(permittableGroup.identifier);
 
-      if (!descriptor) continue;
+      if (!descriptor) {
+        continue;
+      }
 
       const formPermission = new FormPermission(permittableGroup.identifier);
 
@@ -60,7 +62,7 @@ export class FormPermissionService {
         formPermission.change = this.hasOperation(foundPermission.allowedOperations, 'CHANGE');
         formPermission.remove = this.hasOperation(foundPermission.allowedOperations, 'DELETE');
       }
-      group.formPermissions.push(formPermission)
+      foundGroup.formPermissions.push(formPermission);
     }
 
     this.sortGroups(formGroups);
@@ -70,10 +72,10 @@ export class FormPermissionService {
 
   private sortGroups(formGroups: FormPermissionGroup[]) {
     formGroups.sort((a: FormPermissionGroup, b: FormPermissionGroup) => a.groupId.localeCompare(b.groupId));
-    formGroups.forEach(group => group.formPermissions.sort((a: FormPermission, b: FormPermission) => a.label.localeCompare(b.label)))
+    formGroups.forEach(group => group.formPermissions.sort((a: FormPermission, b: FormPermission) => a.label.localeCompare(b.label)));
   }
 
-  private groupId(group: PermittableGroup) : string {
+  private groupId(group: PermittableGroup): string {
     const identifier = group.identifier;
     return identifier.substring(0, identifier.indexOf('_')).toUpperCase();
   }
@@ -89,19 +91,19 @@ export class FormPermissionService {
   mapToRole(identifier: string, formPermissions: FormPermission[]): Role {
     const permissions: Permission[] = [];
 
-    for (let formPermission of formPermissions) {
+    for (const formPermission of formPermissions) {
       const allowedOperations: AllowedOperation[] = [];
 
       if (formPermission.read) {
-        allowedOperations.push('READ')
+        allowedOperations.push('READ');
       }
 
       if (formPermission.change) {
-        allowedOperations.push('CHANGE')
+        allowedOperations.push('CHANGE');
       }
 
       if (formPermission.remove) {
-        allowedOperations.push('DELETE')
+        allowedOperations.push('DELETE');
       }
 
       permissions.push({

@@ -39,12 +39,7 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {TellerRouteEffects} from './store/effects/route.effects';
-import {
-  CovalentDataTableModule,
-  CovalentMessageModule,
-  CovalentSearchModule,
-  CovalentStepsModule
-} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard';
 import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
 import {TellerProductsApiEffects} from './store/effects/products.service.effects';
@@ -53,11 +48,11 @@ import {FimsSharedModule} from '../common/common.module';
 import {DepositTransactionFormComponent} from './customer/transaction/deposit/form.component';
 import {TellerNotificationEffects} from './store/effects/notification.effects';
 import {LoanTransactionFormComponent} from './customer/transaction/loan/form.component';
-import {CreateLoanTransactionForm} from './customer/transaction/loan/create.form.component';
+import {CreateLoanTransactionFormComponent} from './customer/transaction/loan/create.form.component';
 import {TransactionCostComponent} from './customer/transaction/components/cost.component';
-import {CreateDepositTransactionForm} from './customer/transaction/deposit/create.form.component';
+import {CreateDepositTransactionFormComponent} from './customer/transaction/deposit/create.form.component';
 import {ChequeTransactionFormComponent} from './customer/transaction/cheque/form.component';
-import {CreateChequeTransactionForm} from './customer/transaction/cheque/create.component';
+import {CreateChequeTransactionFormComponent} from './customer/transaction/cheque/create.component';
 import {TellerTransactionService} from './customer/transaction/services/transaction.service';
 
 @NgModule({
@@ -91,12 +86,12 @@ import {TellerTransactionService} from './customer/transaction/services/transact
     TellerAuthComponent,
     TellerCustomerIndexComponent,
     TellerCustomerDetailComponent,
-    CreateDepositTransactionForm,
+    CreateDepositTransactionFormComponent,
     DepositTransactionFormComponent,
     LoanTransactionFormComponent,
-    CreateLoanTransactionForm,
+    CreateLoanTransactionFormComponent,
     TransactionCostComponent,
-    CreateChequeTransactionForm,
+    CreateChequeTransactionFormComponent,
     ChequeTransactionFormComponent
   ],
   providers: [

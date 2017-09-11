@@ -21,9 +21,9 @@ import {TellerIndexComponent} from './teller.index.component';
 import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
 import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard';
 import {TellerCustomerIndexComponent} from './customer/customer-index.component';
-import {CreateDepositTransactionForm} from './customer/transaction/deposit/create.form.component';
-import {CreateLoanTransactionForm} from './customer/transaction/loan/create.form.component';
-import {CreateChequeTransactionForm} from './customer/transaction/cheque/create.component';
+import {CreateDepositTransactionFormComponent} from './customer/transaction/deposit/create.form.component';
+import {CreateLoanTransactionFormComponent} from './customer/transaction/loan/create.form.component';
+import {CreateChequeTransactionFormComponent} from './customer/transaction/cheque/create.component';
 
 export const TellerRoutes: Routes = [
   {
@@ -48,9 +48,9 @@ export const TellerRoutes: Routes = [
             component: TellerCustomerDetailComponent,
             data: {title: 'View Customer'}
           },
-          {path: 'transaction/deposit', component: CreateDepositTransactionForm, data: { title: 'Create transaction' } },
-          {path: 'transaction/loan', component: CreateLoanTransactionForm, data: { title: 'Create transaction' } },
-          {path: 'transaction/cheque', component: CreateChequeTransactionForm, data: { title: 'Create transaction' }},
+          {path: 'transaction/deposit', component: CreateDepositTransactionFormComponent, data: { title: 'Create transaction' } },
+          {path: 'transaction/loan', component: CreateLoanTransactionFormComponent, data: { title: 'Create transaction' } },
+          {path: 'transaction/cheque', component: CreateChequeTransactionFormComponent, data: { title: 'Create transaction' }},
           {path: 'identifications', loadChildren: '../customers/detail/identityCard/identity-card.module#IdentityCardModule'},
         ]
       }

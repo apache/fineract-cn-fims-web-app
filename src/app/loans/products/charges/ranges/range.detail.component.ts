@@ -15,7 +15,7 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {PortfolioStore} from '../../store/index';
-import * as fromPortfolio from '../../store'
+import * as fromPortfolio from '../../store';
 import {Observable} from 'rxjs/Observable';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute} from '@angular/router';
@@ -70,7 +70,7 @@ export class ProductChargeRangeDetailComponent implements OnInit {
             productIdentifier: this.product.identifier,
             activatedRoute: this.route
           }
-        }))
+        }));
       });
   }
 }

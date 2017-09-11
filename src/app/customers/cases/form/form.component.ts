@@ -94,34 +94,34 @@ export class CaseFormComponent implements OnInit {
   }
 
   private prepareDeptToIncomeForm(snapshots: CreditWorthinessSnapshot[]): void {
-    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
-    if(snapshot) {
+    const foundSnapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
+    if (foundSnapshot) {
       this.debtToIncomeFormData = {
-        incomeSources: snapshot.incomeSources,
-        debts: snapshot.debts
+        incomeSources: foundSnapshot.incomeSources,
+        debts: foundSnapshot.debts
       };
     } else {
       this.debtToIncomeFormData = {
         incomeSources: [],
         debts: []
-      }
+      };
     }
   }
 
   private prepareCosignerForm(snapshots: CreditWorthinessSnapshot[]): void {
-    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer !== this.customerId);
-    if(snapshot) {
+    const foundSnapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer !== this.customerId);
+    if (foundSnapshot) {
       this.coSignerFormData = {
-        customerId: snapshot.forCustomer,
-        incomeSources: snapshot.incomeSources,
-        debts: snapshot.debts
+        customerId: foundSnapshot.forCustomer,
+        incomeSources: foundSnapshot.incomeSources,
+        debts: foundSnapshot.debts
       };
     } else {
       this.coSignerFormData = {
         customerId: null,
         incomeSources: [],
         debts: []
-      }
+      };
     }
   }
 
@@ -147,7 +147,7 @@ export class CaseFormComponent implements OnInit {
     };
 
     const creditWorthinessSnapshots = [customerSnapshot];
-    if(cosignerSnapshot.forCustomer) {
+    if (cosignerSnapshot.forCustomer) {
       creditWorthinessSnapshots.push(cosignerSnapshot);
     }
 

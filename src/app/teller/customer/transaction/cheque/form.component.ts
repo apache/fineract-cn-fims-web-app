@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
@@ -35,9 +35,9 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
   chequeForm: FormGroup;
   amountForm: FormGroup;
 
-  chargesIncluded: boolean = true;
+  chargesIncluded = true;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   @ViewChild('transactionStep') transactionStep: TdStepComponent;
   @ViewChild('confirmationStep') confirmationStep: TdStepComponent;
@@ -66,7 +66,7 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
       productInstance: ['', Validators.required],
       drawee: ['', Validators.required],
       drawer: ['', Validators.required],
-      payee: [{ value: '', disabled: true }, Validators.required],
+      payee: [{value: '', disabled: true}, Validators.required],
       amount: ['', [Validators.required, FimsValidators.minValue(0)]],
       dateIssued: ['', [Validators.required]],
       openCheque: [false],
@@ -81,21 +81,21 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
     const draweeControl = this.amountForm.get('drawee');
     const drawerControl = this.amountForm.get('drawer');
 
-    if(changes.micrResolution && this.micrResolution) {
+    if (changes.micrResolution && this.micrResolution) {
       draweeControl.setValue(this.micrResolution.office);
       drawerControl.setValue(this.micrResolution.customer);
     }
 
-    if(changes.micrResolutionError && this.micrResolutionError) {
+    if (changes.micrResolutionError && this.micrResolutionError) {
       draweeControl.setValue('');
       drawerControl.setValue('');
     }
 
-    if(changes.transactionCreated && this.transactionCreated) {
+    if (changes.transactionCreated && this.transactionCreated) {
       this.confirmationStep.open();
     }
 
-    if(changes.customerName) {
+    if (changes.customerName) {
       this.amountForm.get('payee').setValue(this.customerName);
     }
   }
@@ -148,11 +148,11 @@ export class ChequeTransactionFormComponent implements OnInit, OnChanges {
   }
 
   get createTransactionDisabled(): boolean {
-    return this.invalid || this.transactionCreated
+    return this.invalid || this.transactionCreated;
   }
 
   get invalid(): boolean {
-    return this.chequeForm.invalid || this.amountForm.invalid
+    return this.chequeForm.invalid || this.amountForm.invalid;
   }
 
 }

@@ -48,7 +48,7 @@ const country: Country = {
   displayName: '',
   name: officeTemplate.address.country,
   alpha2Code: officeTemplate.address.countryCode,
-  translations:{}
+  translations: {}
 };
 
 describe('Test office form', () => {
@@ -72,7 +72,7 @@ describe('Test office form', () => {
           // Used by address component
           provide: CountryService, useClass: class {
             fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
-            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country])
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
           }
         }
       ],
@@ -115,9 +115,11 @@ describe('Test office form', () => {
 });
 
 @Component({
-  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false"></fims-office-form-component>'
+  template: `
+    <fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false">
+    </fims-office-form-component>`
 })
-class TestComponent{
+class TestComponent {
 
   saveEmitter = new EventEmitter<Office>();
 

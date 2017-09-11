@@ -19,12 +19,15 @@ import {NavigationExtras, Params} from '@angular/router';
 import {Component, Directive, Injectable, Input} from '@angular/core';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[routerLink]',
+  // tslint:disable-next-line:use-host-property-decorator
   host: {
     '(click)': 'onClick()'
   }
 })
 export class RouterLinkStubDirective {
+  // tslint:disable-next-line:no-input-rename
   @Input('routerLink') linkParams: any;
   navigatedTo: any = null;
 
@@ -33,7 +36,12 @@ export class RouterLinkStubDirective {
   }
 }
 
-@Component({selector: 'router-outlet', template: ''})
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'router-outlet',
+  template: ''
+})
 export class RouterOutletStubComponent { }
 
 @Injectable()

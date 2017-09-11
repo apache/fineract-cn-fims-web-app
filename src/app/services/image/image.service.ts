@@ -22,10 +22,13 @@ import * as fromRoot from '../../store';
 import {AUTHORIZATION_HEADER, TENANT_HEADER, USER_HEADER} from '../http/http.service';
 import {State} from '../../store/security/authentication.reducer';
 
+import 'rxjs/add/observable/empty';
+
 @Injectable()
 export class ImageService {
 
-  constructor(private http: Http, private store: Store<fromRoot.State>) {}
+  constructor(private http: Http, private store: Store<fromRoot.State>) {
+  }
 
   public getImage(url: string): Observable<Blob> {
     return this.store.select(fromRoot.getAuthenticationState)
@@ -36,8 +39,8 @@ export class ImageService {
           responseType: ResponseContentType.Blob,
           headers: headers
         })
-        .map((response: Response) => response.blob())
-        .catch(() => Observable.empty()));
+          .map((response: Response) => response.blob())
+          .catch(() => Observable.empty()));
   }
 
   private mapHeader(authenticationState: State): Headers {

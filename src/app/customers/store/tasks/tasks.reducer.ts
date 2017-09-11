@@ -30,7 +30,7 @@ export function reducer(state = initialState, action: task.Actions): ResourceSta
   switch (action.type) {
 
     case task.LOAD_ALL: {
-      return initialState
+      return initialState;
     }
 
     case task.LOAD_ALL_COMPLETE: {

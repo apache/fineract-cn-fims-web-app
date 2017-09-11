@@ -45,8 +45,8 @@ export const DELETE_FAIL = type('[Office] Delete Fail');
 
 export const RESET_FORM = type('[Office] Reset Form');
 
-export interface OfficeRoutePayload extends RoutePayload{
-  office: Office
+export interface OfficeRoutePayload extends RoutePayload {
+  office: Office;
 }
 
 export class LoadAction implements Action {

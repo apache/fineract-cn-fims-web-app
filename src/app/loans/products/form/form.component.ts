@@ -42,7 +42,7 @@ import {Error} from '../../../services/domain/error.model';
   selector: 'fims-product-form-component',
   templateUrl: './form.component.html'
 })
-export class ProductFormComponent implements OnInit{
+export class ProductFormComponent implements OnInit {
 
   private _error: Error;
 
@@ -105,14 +105,14 @@ export class ProductFormComponent implements OnInit{
       moratoriums: []
     };
 
-    const currency = this.currencies.find(currency => currency.code === this.detailForm.formData.currencyCode);
+    const foundCurrency = this.currencies.find(currency => currency.code === this.detailForm.formData.currencyCode);
 
     const product: FimsProduct = {
       identifier: this.detailForm.formData.identifier,
       name: this.detailForm.formData.name,
       description: this.detailForm.formData.description,
-      minorCurrencyUnitDigits: currency.digits,
-      currencyCode: currency.code,
+      minorCurrencyUnitDigits: foundCurrency.digits,
+      currencyCode: foundCurrency.code,
       interestBasis: 'CURRENT_BALANCE',
       interestRange: {
         minimum: parseFloat(this.interestForm.formData.minimum),
@@ -157,7 +157,7 @@ export class ProductFormComponent implements OnInit{
     return assignments;
   }
 
-  cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
   }
 
@@ -185,7 +185,7 @@ export class ProductFormComponent implements OnInit{
       loansPayableLedger: ledgerIdentifier(loansPayableLedger),
       customerLoanLedger: ledgerIdentifier(customerLoanLedger),
       pendingDisbursal: accountIdentifier(pendingDisbursal)
-    }
+    };
   }
 
   private prepareInterestForm(product: FimsProduct) {
@@ -198,7 +198,7 @@ export class ProductFormComponent implements OnInit{
       maximum: interestRange.maximum.toFixed(2),
       incomeAccount: accountIdentifier(interestIncome),
       accrualAccount: accountIdentifier(interestAccrual)
-    }
+    };
   }
 
   private prepareFeeForm(product: FimsProduct) {
@@ -214,7 +214,7 @@ export class ProductFormComponent implements OnInit{
       lateFeeAccrualAccount: accountIdentifier(lateFeeAccrualDesignator),
       processingFeeAccount: accountIdentifier(processingFeeDesignator),
       originationFeeAccount: accountIdentifier(loanOriginationFeeDesignator)
-    }
+    };
   }
 
   private prepareAllowanceForm(product: FimsProduct) {

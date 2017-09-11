@@ -16,7 +16,7 @@
 
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
@@ -34,7 +34,11 @@ const noop: () => void = () => {
   selector: 'fims-ledger-select',
   templateUrl: './ledger-select.component.html'
 })
-export class LedgerSelectComponent implements ControlValueAccessor, OnInit{
+export class LedgerSelectComponent implements ControlValueAccessor, OnInit {
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
 
   formControl: FormControl;
 
@@ -59,7 +63,7 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit{
       .switchMap(name => this.onSearch(name));
   }
 
-  changeValue(value: string): void{
+  changeValue(value: string): void {
     this._onChangeCallback(value);
   }
 
@@ -75,17 +79,13 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit{
     this._onTouchedCallback = fn;
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
-  onSearch(searchTerm?: string): Observable<Ledger[]>{
-    let fetchRequest: FetchRequest = {
+  onSearch(searchTerm?: string): Observable<Ledger[]> {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
       },
-      searchTerm: searchTerm
+      searchTerm
     };
 
     return this.accountingService.fetchLedgers(true, fetchRequest, this.type)

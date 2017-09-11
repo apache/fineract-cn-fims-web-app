@@ -51,7 +51,7 @@ export class PayrollListComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch({
       type: LOAD_ALL_COLLECTIONS
-    })
+    });
   }
 
   rowSelect(collection: PayrollCollectionHistory): void {

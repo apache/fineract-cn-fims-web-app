@@ -24,18 +24,18 @@ import {Action} from '@ngrx/store';
 @Injectable()
 export class DepositProductInstanceRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createProductInstanceSuccess$: Observable<Action> = this.actions$
     .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
     .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }))
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
   @Effect({ dispatch: false })
   issueChequesSuccess$: Observable<Action> = this.actions$
     .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

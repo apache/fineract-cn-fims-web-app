@@ -60,12 +60,12 @@ export const LOAD_ALL_COST_COMPONENTS = type('[Case] Load All Cost Components');
 export const LOAD_ALL_COST_COMPONENTS_SUCCESS = type('[Case] Load All Cost Components Success');
 export const LOAD_ALL_COST_COMPONENTS_FAIL = type('[Case] Load All Cost Components Fail');
 
-export interface SearchCasePayload{
+export interface SearchCasePayload {
   customerId: string;
   fetchRequest: FetchRequest;
 }
 
-export interface CaseRoutePayload extends RoutePayload{
+export interface CaseRoutePayload extends RoutePayload {
   productId: string;
   caseInstance: FimsCase;
 }

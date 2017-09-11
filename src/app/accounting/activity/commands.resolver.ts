@@ -16,16 +16,16 @@
 
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {AccountCommand} from '../../services/accounting/domain/account-command.model';
 
 @Injectable()
-export class CommandsResolver implements Resolve<AccountCommand[]>{
+export class CommandsResolver implements Resolve<AccountCommand[]> {
 
   constructor(private accountingService: AccountingService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<AccountCommand[]> {
-    return this.accountingService.fetchAccountCommands(route.params['id'])
+    return this.accountingService.fetchAccountCommands(route.params['id']);
   }
 }

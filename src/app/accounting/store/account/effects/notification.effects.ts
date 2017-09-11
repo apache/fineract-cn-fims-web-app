@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as accountActions from '../account.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class AccountNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createAccountSuccess$: Observable<Action> = this.actions$
@@ -50,5 +48,7 @@ export class AccountNotificationEffects {
       title: 'Account can\'t be deleted',
       message: 'Account has account entries'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

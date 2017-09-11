@@ -38,7 +38,7 @@ export function reducer(state = initialState, action: Actions<FimsRange>): Resou
   switch (action.type) {
 
     case RangeActions.LOAD_ALL: {
-      return initialState
+      return initialState;
     }
 
     case RangeActions.LOAD_ALL_COMPLETE: {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface InterestRange{
+export interface InterestRange {
   minimum: number;
   maximum: number;
 }

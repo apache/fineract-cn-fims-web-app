@@ -24,8 +24,6 @@ import {of} from 'rxjs/observable/of';
 @Injectable()
 export class CustomerPayrollApiEffects {
 
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
-
   @Effect()
   updatePayroll$: Observable<Action> = this.actions$
     .ofType(payrollActions.UPDATE)
@@ -35,5 +33,7 @@ export class CustomerPayrollApiEffects {
         .map(() => new payrollActions.UpdatePayrollDistributionSuccessAction(payload))
         .catch((error) => of(new payrollActions.UpdatePayrollDistributionFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
 }

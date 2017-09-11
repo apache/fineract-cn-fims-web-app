@@ -91,5 +91,5 @@ describe('Test reporting definitions component', () => {
 
   it('should call the service with the right param', inject([ReportingService], (service: ReportingService) => {
     expect(service.fetchReportDefinitions).toHaveBeenCalledWith('categoryOne');
-  }))
+  }));
 });

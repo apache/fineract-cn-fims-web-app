@@ -29,7 +29,7 @@ export class LoanTransactionFormComponent implements OnInit {
 
   private _transactionCreated: boolean;
 
-  chargesIncluded: boolean = true;
+  chargesIncluded = true;
 
   form: FormGroup;
 
@@ -37,7 +37,7 @@ export class LoanTransactionFormComponent implements OnInit {
   @Input('transactionCosts') transactionCosts: TellerTransactionCosts;
   @Input('transactionCreated') set transactionCreated(transactionCreated: boolean) {
     this._transactionCreated = transactionCreated;
-    if(transactionCreated) {
+    if (transactionCreated) {
       this.confirmationStep.open();
     }
   };
@@ -92,6 +92,6 @@ export class LoanTransactionFormComponent implements OnInit {
   }
 
   get createTransactionDisabled(): boolean {
-    return this.form.invalid || this.transactionCreated
+    return this.form.invalid || this.transactionCreated;
   }
 }

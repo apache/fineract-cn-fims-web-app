@@ -16,13 +16,8 @@
 
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {
-  CovalentCommonModule,
-  CovalentDataTableModule,
-  CovalentDialogsModule,
-  CovalentPagingModule
-} from '@covalent/core';
-import {LayoutCardOverComponent, LayoutCardOverComponentTags} from './layout-card-over/layout-card-over.component';
+import {CovalentCommonModule, CovalentDataTableModule, CovalentDialogsModule, CovalentPagingModule} from '@covalent/core';
+import {LayoutCardOverComponent, LayoutCardOverComponentTagsDirective} from './layout-card-over/layout-card-over.component';
 import {IdInputComponent} from './id-input/id-input.component';
 import {PermissionDirective} from '../services/security/authz/permission.directive';
 import {DataTableComponent} from './data-table/data-table.component';
@@ -87,7 +82,7 @@ import {RouterModule} from '@angular/router';
   ],
   declarations: [
     LayoutCardOverComponent,
-    LayoutCardOverComponentTags,
+    LayoutCardOverComponentTagsDirective,
     FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
@@ -113,7 +108,7 @@ import {RouterModule} from '@angular/router';
   ],
   exports: [
     LayoutCardOverComponent,
-    LayoutCardOverComponentTags,
+    LayoutCardOverComponentTagsDirective,
     FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
@@ -141,4 +136,4 @@ import {RouterModule} from '@angular/router';
     ImageComponent
   ]
 })
-export class FimsSharedModule{}
+export class FimsSharedModule {}

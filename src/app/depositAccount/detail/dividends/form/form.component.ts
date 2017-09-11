@@ -52,7 +52,7 @@ export class DividendFormComponent implements OnInit {
       productDefinitionId: this.productDefinitionId,
       dueDate: toShortISOString(this.form.get('dueDate').value),
       dividendRate: this.form.get('dividendRate').value
-    })
+    });
   }
 
   cancel(): void {

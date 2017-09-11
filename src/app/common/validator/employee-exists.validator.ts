@@ -25,12 +25,16 @@ const invalid = Observable.of({
 
 export function employeeExists(officeService: OfficeService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
-    if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
+    if (!control.dirty || !control.value || control.value.length === 0) {
+      return Observable.of(null);
+    }
 
-    if(isString(control.value) && control.value.trim().length === 0) return invalid;
+    if (isString(control.value) && control.value.trim().length === 0) {
+      return invalid;
+    }
 
     return officeService.getEmployee(control.value, true)
       .map(employee => null)
       .catch(() => invalid);
-  }
+  };
 }

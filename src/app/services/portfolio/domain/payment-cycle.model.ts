@@ -16,7 +16,7 @@
 
 import {ChronoUnit} from './chrono-unit.model';
 
-export interface PaymentCycle{
+export interface PaymentCycle {
   temporalUnit: ChronoUnit;
   period: number;
   alignmentDay: number;

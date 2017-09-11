@@ -17,12 +17,7 @@
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
-import {
-  createResourceReducer,
-  getResourceLoadedAt,
-  getResourceSelected,
-  ResourceState
-} from '../../common/store/resource.reducer';
+import {createResourceReducer, getResourceLoadedAt, getResourceSelected, ResourceState} from '../../common/store/resource.reducer';
 
 import * as fromRoot from '../../store';
 import * as fromProducts from './products.reducer';
@@ -36,11 +31,11 @@ import {
   SearchState
 } from '../../common/store/search.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   depositProducts: ResourceState;
   depositProductForm: FormState;
   depositProductSearch: SearchState;
-  depositProductDividends: fromDividends.State
+  depositProductDividends: fromDividends.State;
 }
 
 const reducers = {
@@ -52,9 +47,9 @@ const reducers = {
 
 export const depositAccountModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class DepositAccountStore extends Store<State>{}
+export class DepositAccountStore extends Store<State> {}
 
-export function depositAccountStoreFactory(appStore: Store<fromRoot.State>){
+export function depositAccountStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(depositAccountModuleReducer);
   return appStore;
 }
@@ -76,7 +71,8 @@ export const getSearchProducts = createSelector(getProductSearchState, getSearch
 export const getProductSearchTotalElements = createSelector(getProductSearchState, getSearchTotalElements);
 export const getProductSearchTotalPages = createSelector(getProductSearchState, getSearchTotalPages);
 
-export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements, (products, totalPages, totalElements) => {
+export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements,
+  (products, totalPages, totalElements) => {
   return {
     products: products,
     totalPages: totalPages,

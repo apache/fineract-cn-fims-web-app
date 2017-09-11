@@ -30,7 +30,7 @@ import {LOAD_ALL} from '../../store/catalogs/catalog.actions';
   selector: 'fims-custom-fields-component',
   templateUrl: './custom-fields.component.html'
 })
-export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implements OnInit{
+export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implements OnInit {
 
   private _formData: Value[];
 
@@ -40,43 +40,47 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     this._formData = formData;
   };
 
-  get formData(): Value[]{
-    let raw: any = this.form.getRawValue();
-    let values: Value[] = [];
-    for(let catalogIdentifier in raw){
-      let fields = raw[catalogIdentifier];
-      for(let fieldIdentifier in fields){
-        let fieldValue = fields[fieldIdentifier];
+  get formData(): Value[] {
+    const raw: any = this.form.getRawValue();
+    const values: Value[] = [];
+    for (const catalogIdentifier in raw) {
+      if (raw.hasOwnProperty(catalogIdentifier)) {
+        const fields = raw[catalogIdentifier];
+        for (const fieldIdentifier in fields) {
+          if (fields.hasOwnProperty(fieldIdentifier)) {
+            let fieldValue = fields[fieldIdentifier];
 
-        let field: Field = this.findField(catalogIdentifier, fieldIdentifier);
+            const field: Field = this.findField(catalogIdentifier, fieldIdentifier);
 
-        if(field.dataType === 'DATE'){
-          fieldValue = fieldValue && fieldValue.length ? new Date(fieldValue).toISOString() : '';
+            if (field.dataType === 'DATE') {
+              fieldValue = fieldValue && fieldValue.length ? new Date(fieldValue).toISOString() : '';
+            }
+
+            values.push({
+              catalogIdentifier: catalogIdentifier,
+              fieldIdentifier: fieldIdentifier,
+              value: fieldValue
+            });
+          }
         }
-
-        values.push({
-          catalogIdentifier: catalogIdentifier,
-          fieldIdentifier: fieldIdentifier,
-          value: fieldValue
-        })
       }
     }
     return values;
   }
 
   set catalogs(catalogs: Catalog[]){
-    for(let catalog of catalogs){
+    for (const catalog of catalogs){
       this.form.setControl(catalog.identifier, this.buildFormGroup(catalog));
     }
     this._catalogs = catalogs;
   }
 
-  get catalogs() : Catalog[] {
+  get catalogs(): Catalog[] {
     return this._catalogs;
   }
 
-  private getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl{
-    let formGroup: FormGroup = this.form.controls[catalogIdentifier] as FormGroup;
+  private getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl {
+    const formGroup: FormGroup = this.form.controls[catalogIdentifier] as FormGroup;
     return formGroup.controls[fieldIdentifier] as FormControl;
   }
 
@@ -89,29 +93,30 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     this.store.select(fromCustomers.getAllCustomerCatalogEntities)
       .subscribe(catalogs => this.catalogs = catalogs);
 
-    this.store.dispatch({ type: LOAD_ALL })
+    this.store.dispatch({ type: LOAD_ALL });
   }
 
-  private findValue(catalogIdentifier: string, fieldIdentifier: string): Value{
-    return this._formData.find((value: Value) => value.catalogIdentifier === catalogIdentifier && value.fieldIdentifier == fieldIdentifier)
+  private findValue(catalogIdentifier: string, fieldIdentifier: string): Value {
+    return this._formData.find((value: Value) =>
+      value.catalogIdentifier === catalogIdentifier && value.fieldIdentifier === fieldIdentifier);
   }
 
-  private findField(catalogIdentifier: string, fieldIdentifier: string): Field{
-    let catalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === catalogIdentifier);
+  private findField(catalogIdentifier: string, fieldIdentifier: string): Field {
+    const foundCatalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === catalogIdentifier);
 
-    return catalog.fields.find((field: Field) => field.identifier === fieldIdentifier);
+    return foundCatalog.fields.find((field: Field) => field.identifier === fieldIdentifier);
   }
 
-  private buildFormGroup(catalog: Catalog): FormGroup{
-    let group: any = {};
+  private buildFormGroup(catalog: Catalog): FormGroup {
+    const group: any = {};
 
-    for(let field of catalog.fields){
-      let value = this.findValue(catalog.identifier, field.identifier);
-      let valueString: string = value ? value.value : '';
+    for (const field of catalog.fields) {
+      const value = this.findValue(catalog.identifier, field.identifier);
+      const valueString: string = value ? value.value : '';
 
-      let formControl: FormControl = new FormControl({value: valueString, disabled: false});
+      const formControl: FormControl = new FormControl({value: valueString, disabled: false});
 
-      switch(field.dataType){
+      switch (field.dataType) {
         case 'NUMBER':
           formControl.setValidators(this.buildNumberValidators(field));
           break;
@@ -132,32 +137,32 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     return this.formBuilder.group(group);
   }
 
-  private buildTextValidators(field: Field): ValidatorFn[]{
-    let validators: ValidatorFn[] = [];
+  private buildTextValidators(field: Field): ValidatorFn[] {
+    const validators: ValidatorFn[] = [];
 
-    if(field.length){
+    if (field.length) {
       validators.push(Validators.maxLength(field.length));
     }
 
     return validators;
   }
 
-  private buildNumberValidators(field: Field): ValidatorFn[]{
-    let validators: ValidatorFn[] = [];
+  private buildNumberValidators(field: Field): ValidatorFn[] {
+    const validators: ValidatorFn[] = [];
 
-    if(field.mandatory){
+    if (field.mandatory) {
       validators.push(Validators.required);
     }
 
-    if(field.minValue){
+    if (field.minValue) {
       validators.push(FimsValidators.minValue(field.minValue));
     }
 
-    if(field.maxValue){
+    if (field.maxValue) {
       validators.push(FimsValidators.maxValue(field.maxValue));
     }
 
-    if(field.precision){
+    if (field.precision) {
       validators.push(FimsValidators.maxScale(field.precision));
     }
 

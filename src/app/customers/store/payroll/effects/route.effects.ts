@@ -22,12 +22,12 @@ import {Action} from '@ngrx/store';
 
 @Injectable()
 export class CustomerPayrollRouteEffects {
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   updatePayrollSuccess$: Observable<Action> = this.actions$
     .ofType(payrollActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

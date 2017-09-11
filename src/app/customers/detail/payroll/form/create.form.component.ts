@@ -51,10 +51,10 @@ export class CreateCustomerPayrollFormComponent {
         distribution,
         activatedRoute: this.route
       }
-    })
+    });
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

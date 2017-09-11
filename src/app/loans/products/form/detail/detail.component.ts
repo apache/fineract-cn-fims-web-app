@@ -69,7 +69,7 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.formData) {
+    if (changes.formData) {
       this.form.reset({
         identifier: this._formData.identifier,
         name: this._formData.name,
@@ -82,7 +82,7 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
       });
     }
 
-    if(changes.error) {
+    if (changes.error) {
       this.setError('identifier', 'unique', true);
     }
   }

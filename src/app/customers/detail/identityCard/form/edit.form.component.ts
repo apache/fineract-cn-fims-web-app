@@ -62,7 +62,7 @@ export class EditCustomerIdentificationCardFormComponent implements OnInit, OnDe
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

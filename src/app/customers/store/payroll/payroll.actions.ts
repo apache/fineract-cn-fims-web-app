@@ -26,7 +26,7 @@ export const UPDATE_FAIL = type('[Customer Payroll] Update Fail');
 
 export interface PayrollDistributionRoutePayload extends RoutePayload {
   customerId: string;
-  distribution: PayrollDistribution
+  distribution: PayrollDistribution;
 }
 
 export class LoadAction implements Action {

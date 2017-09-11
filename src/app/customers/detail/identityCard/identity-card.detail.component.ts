@@ -44,7 +44,8 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
 
   scans$: Observable<IdentificationCardScan[]>;
 
-  constructor(private route: ActivatedRoute, private customersStore: CustomersStore, private translate: TranslateService, private dialogService: TdDialogService, private customerService: CustomerService) {}
+  constructor(private route: ActivatedRoute, private customersStore: CustomersStore, private translate: TranslateService,
+              private dialogService: TdDialogService, private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.scans$ = this.customersStore.select(fromCustomers.getAllIdentificationCardScanEntities);
@@ -71,9 +72,9 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
   }
 
   confirmDeletion(): Observable<boolean> {
-    let message = 'Do you want to delete this identification card?';
-    let title = 'Confirm deletion';
-    let button = 'DELETE IDENTIFICATION CARD';
+    const message = 'Do you want to delete this identification card?';
+    const title = 'Confirm deletion';
+    const button = 'DELETE IDENTIFICATION CARD';
 
     return this.translate.get([title, message, button])
       .flatMap(result =>
@@ -93,7 +94,7 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
           customerId: this.customer.identifier,
           identificationCard: this.identificationCard,
           activatedRoute: this.route
-        }})
+        }});
       });
   }
 
@@ -102,7 +103,7 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
       .subscribe(blob => {
         this.dialogService.open(ImageComponent, {
           data: blob
-        })
+        });
       });
   }
 
@@ -115,7 +116,7 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
         scan: event.scan,
         file: event.file
       }
-    })
+    });
   }
 
   confirmScanDeletion(): Observable<boolean> {
@@ -141,7 +142,7 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
           customerIdentifier: this.customer.identifier,
           identificationCardNumber: this.identificationCard.number,
           scan
-        }})
+        }});
       });
   }
 }

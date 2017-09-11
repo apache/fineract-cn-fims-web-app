@@ -16,9 +16,9 @@
 
 import {WorkflowAction} from '../../services/portfolio/domain/individuallending/workflow-action.model';
 
-export interface ActionOption{
-  type: WorkflowAction,
-  label: string,
+export interface ActionOption {
+  type: WorkflowAction;
+  label: string;
 }
 
 export const ActionOptions: ActionOption[] = [

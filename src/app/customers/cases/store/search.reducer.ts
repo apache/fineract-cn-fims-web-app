@@ -21,8 +21,8 @@ import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 export interface State {
   cases: FimsCase[];
-  totalPages: number,
-  totalElements: number,
+  totalPages: number;
+  totalElements: number;
   loading: boolean;
   fetchRequest: FetchRequest;
 }

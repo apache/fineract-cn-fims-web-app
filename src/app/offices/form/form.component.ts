@@ -70,13 +70,13 @@ export class OfficeFormComponent implements OnInit {
   }
 
   save(): void {
-    let office: Office = {
+    const office: Office = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value
     };
 
-    if(this.addressForm.pristine) {
+    if (this.addressForm.pristine) {
       office.address = this.office.address;
     } else {
       office.address = this.addressForm.formData;

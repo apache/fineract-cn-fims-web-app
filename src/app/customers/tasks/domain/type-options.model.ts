@@ -16,7 +16,7 @@
 import {TaskDefinitionType} from '../../../services/customer/domain/task-definition.model';
 
 interface TypeOption {
-  type: TaskDefinitionType,
+  type: TaskDefinitionType;
   label: string;
 }
 
