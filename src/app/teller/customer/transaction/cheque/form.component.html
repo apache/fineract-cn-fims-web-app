@@ -84,13 +84,13 @@
       <div layout="row" layout-margin>
         <md-checkbox formControlName="openCheque" translate>Is cheque open?</md-checkbox>
       </div>
-      <td-message *ngIf="!amountForm.get('openCheque').value" label="Please check identification card of member " color="accent" icon="warning"></td-message>
+      <td-message *ngIf="!amountForm.get('openCheque').value" label="Please check identification card of member" color="accent" icon="warning"></td-message>
       <div layout="row">
         <md-input-container layout-margin flex>
           <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
           <md-error *ngIf="amountForm.get('amount').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="amountForm.get('amount').hasError('minValue')">
-            {{ 'Value must be greater than or equal to' | translate:{ value: amountForm.get('amount').getError('minValue').value} }}
+          <md-error *ngIf="amountForm.get('amount').hasError('greaterThanValue')">
+            {{ 'Value must be greater than' | translate:{ value: amountForm.get('amount').getError('greaterThanValue').value} }}
           </md-error>
         </md-input-container>
       </div>

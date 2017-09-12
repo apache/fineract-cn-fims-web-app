@@ -71,7 +71,7 @@
             <h3 md-line translate>Expense account</h3>
             <p md-line>{{definition.expenseAccountIdentifier}}</p>
           </md-list-item>
-          <md-list-item>
+          <md-list-item *ngIf="definition.accrueAccountIdentifier">
             <h3 md-line translate>Accrue account</h3>
             <p md-line>{{definition.accrueAccountIdentifier}}</p>
           </md-list-item>
