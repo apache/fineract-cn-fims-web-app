@@ -15,9 +15,9 @@
  */
 import {Component, OnInit} from '@angular/core';
 import * as fromDeposits from '../../store/index';
+import {DepositsStore} from '../../store/index';
 import {Observable} from 'rxjs/Observable';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {DepositsStore} from '../../store/index';
 import {IssuingCount} from '../../../../services/cheque/domain/issuing-count.model';
 import {ISSUE_CHEQUES} from '../../store/deposit.actions';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -32,7 +32,7 @@ export class IssueChequeComponent implements OnInit {
   constructor(private store: DepositsStore, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance)
+    this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance);
   }
 
   issueCheques(issuingCount: IssuingCount): void {
@@ -42,11 +42,11 @@ export class IssueChequeComponent implements OnInit {
         issuingCount,
         activatedRoute: this.route
       }
-    })
+    });
   }
 
   cancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

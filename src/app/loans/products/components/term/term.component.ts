@@ -21,7 +21,7 @@ import {ChronoUnit} from '../../../../services/portfolio/domain/chrono-unit.mode
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {FimsValidators} from '../../../../common/validator/validators';
 
-export interface TermRangeFormData{
+export interface TermRangeFormData {
   temporalUnit: ChronoUnit;
   term: number;
 }
@@ -30,11 +30,11 @@ export interface TermRangeFormData{
   selector: 'fims-product-term-form',
   templateUrl: './term.component.html'
 })
-export class ProductTermFormComponent extends FormComponent<TermRangeFormData>{
+export class ProductTermFormComponent extends FormComponent<TermRangeFormData> {
 
   temporalOptions = temporalOptionList;
 
-  @Input() set formData(termRange: TermRangeFormData){
+  @Input() set formData(termRange: TermRangeFormData) {
     this.form = this.formBuilder.group({
       term: [termRange.term, [ Validators.required, FimsValidators.minValue(0) ]],
       temporalUnit: [termRange.temporalUnit, Validators.required],
@@ -45,7 +45,7 @@ export class ProductTermFormComponent extends FormComponent<TermRangeFormData>{
     super();
   }
 
-  get formData(): TermRangeFormData{
+  get formData(): TermRangeFormData {
     return this.form.getRawValue();
   }
 

@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
         authentication: state.authentication
       }))
       .map(payload => new LoginSuccessAction(payload))
-      .subscribe((action: LoginSuccessAction) => this.store.dispatch(action))
+      .subscribe((action: LoginSuccessAction) => this.store.dispatch(action));
   }
 
   ngOnDestroy(): void {

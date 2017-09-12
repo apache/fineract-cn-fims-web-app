@@ -36,7 +36,7 @@ import {
 } from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   customers: ResourceState;
   customerForm: FormState;
   tasks: ResourceState;
@@ -48,7 +48,7 @@ export interface State extends fromRoot.State{
   customerIdentificationCardForm: FormState;
   customerIdentificationCardScans: ResourceState;
   customerIdentificationCardScanForm: FormState;
-  customerPayrollDistribution: fromPayrollDistribution.State
+  customerPayrollDistribution: fromPayrollDistribution.State;
 }
 
 const reducers = {
@@ -66,14 +66,14 @@ const reducers = {
   customerPayrollDistribution: fromPayrollDistribution.reducer
 };
 
-export class CustomersStore extends Store<State>{}
+export class CustomersStore extends Store<State> {}
 
-export function customerStoreFactory(appStore: Store<fromRoot.State>){
+export const customerModuleReducer: ActionReducer<State> = createReducer(reducers);
+
+export function customerStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(customerModuleReducer);
   return appStore;
 }
-
-export const customerModuleReducer: ActionReducer<State> = createReducer(reducers);
 
 export const getCustomersState = (state: State) => state.customers;
 
@@ -146,4 +146,5 @@ export const getCustomerIdentificationCardScanFormError = createSelector(getCust
 export const getPayrollDistributionState = (state: State) => state.customerPayrollDistribution;
 
 export const getPayrollDistribution = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistribution);
-export const getPayrollDistributionLoadedAt = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistributionLoadedAt);
+export const getPayrollDistributionLoadedAt = createSelector(getPayrollDistributionState,
+  fromPayrollDistribution.getPayrollDistributionLoadedAt);

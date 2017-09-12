@@ -47,7 +47,7 @@ export const DELETE_FAIL = type('[Product Charge] Delete Fail');
 
 export const RESET_FORM = type('[Product Charge] Reset Form');
 
-export interface ChargeRoutePayload extends RoutePayload{
+export interface ChargeRoutePayload extends RoutePayload {
   productId: string;
   charge: ChargeDefinition;
 }

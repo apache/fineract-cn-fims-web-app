@@ -122,7 +122,9 @@ describe('Test data table component', () => {
 });
 
 @Component({
-  template: '<fims-data-table #datatable [data]="tableData" [columns]="columns" (onFetch)="onFetch($event)" [sortable]="true" [actionColumn]="false"></fims-data-table>'
+  template: `
+    <fims-data-table #datatable [data]="tableData" [columns]="columns" (onFetch)="onFetch($event)" [sortable]="true" [actionColumn]="false">
+    </fims-data-table>`
 })
 class TestComponent {
 

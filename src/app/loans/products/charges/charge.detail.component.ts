@@ -17,7 +17,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChargeDefinition} from '../../../services/portfolio/domain/charge-definition.model';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {TdDialogService} from '@covalent/core';
 import {DELETE, SelectAction} from '../store/charges/charge.actions';
 import {PortfolioStore} from '../store/index';
@@ -27,7 +28,7 @@ import {FimsProduct} from '../store/model/fims-product.model';
 @Component({
   templateUrl: './charge.detail.component.html'
 })
-export class ProductChargeDetailComponent implements OnInit, OnDestroy{
+export class ProductChargeDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
@@ -39,7 +40,7 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
 
   charge: ChargeDefinition;
 
-  constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private portfolioStore: PortfolioStore){}
+  constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -61,7 +62,7 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy{
     this.chargeSubscription.unsubscribe();
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete charge "' + this.charge.identifier + '"?',
       title: 'Confirm deletion',

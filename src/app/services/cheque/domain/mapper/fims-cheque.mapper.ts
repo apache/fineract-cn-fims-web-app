@@ -20,7 +20,7 @@ import {MICR} from '../micr.model';
 export function mapToFimsCheque(cheque: Cheque): FimsCheque {
   return Object.assign({}, cheque, {
     identifier: micrToIdentifier(cheque.micr)
-  })
+  });
 }
 
 export function mapToFimsCheques(cheques: Cheque[]): FimsCheque[] {
@@ -32,5 +32,5 @@ export function micrToIdentifier(micr: MICR): string {
 }
 
 export function toMICRIdentifier(chequeNumber: string, branchSortCode: string, accountNumber: string): string {
-  return `${chequeNumber}~${branchSortCode}~${accountNumber}`
+  return `${chequeNumber}~${branchSortCode}~${accountNumber}`;
 }

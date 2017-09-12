@@ -51,7 +51,7 @@ export class CustomerIdentityCardListComponent implements OnInit, OnDestroy {
 
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .subscribe(customer => {
-        this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier})
+        this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier});
       });
   }
 

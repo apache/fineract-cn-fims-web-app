@@ -60,7 +60,7 @@ export class CreateIdentificationCardScanComponent implements OnInit, OnDestroy 
     this.customerSubscription.unsubscribe();
     this.identificationCardSubscription.unsubscribe();
 
-    this.customersStore.dispatch({ type: RESET_FORM })
+    this.customersStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(formData: IdentityCardScanFormData): void {
@@ -78,11 +78,11 @@ export class CreateIdentificationCardScanComponent implements OnInit, OnDestroy 
         file: formData.file,
         activatedRoute: this.route
       }
-    })
+    });
   }
 
   onCancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

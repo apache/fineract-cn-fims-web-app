@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export type CustomerType = 'PERSON' | 'BUSINESS'
+export type CustomerType = 'PERSON' | 'BUSINESS';

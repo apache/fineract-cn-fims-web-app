@@ -33,7 +33,7 @@ export const CREATE_FAIL = type('[Payroll Collection] Create Fail');
 export const RESET_FORM = type('[Payroll Collection] Reset Form');
 
 export interface CreateSheetPayload extends RoutePayload {
-  sheet: PayrollCollectionSheet
+  sheet: PayrollCollectionSheet;
 }
 
 export class LoadAllAction implements Action {
@@ -92,4 +92,4 @@ export type Actions
   | CreateAction
   | CreateSuccessAction
   | CreateFailAction
-  | ResetFormAction
+  | ResetFormAction;

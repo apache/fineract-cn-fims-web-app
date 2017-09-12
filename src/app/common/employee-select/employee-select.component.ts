@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';
@@ -25,13 +25,13 @@ import {EmployeePage} from '../../services/office/domain/employee-page.model';
   selector: 'fims-employee-select',
   templateUrl: './employee-select.component.html'
 })
-export class EmployeeSelectComponent implements OnInit{
+export class EmployeeSelectComponent implements OnInit {
 
   @Input() title: string;
 
   @Input() preSelection: string[];
 
-  @Input() multiple: boolean = true;
+  @Input() multiple = true;
 
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
 
@@ -40,21 +40,21 @@ export class EmployeeSelectComponent implements OnInit{
   constructor(private officeService: OfficeService) {}
 
   ngOnInit(): void {
-    this.onSearch()
+    this.onSearch();
   }
 
-  onSearch(searchTerm?: string): void{
-    let fetchRequest: FetchRequest = {
+  onSearch(searchTerm?: string): void {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
       },
-      searchTerm: searchTerm
+      searchTerm
     };
     this.employees = this.officeService.listEmployees(fetchRequest).map((employeePage: EmployeePage) => employeePage.employees);
   }
 
-  selectionChange(selections: string[]): void{
+  selectionChange(selections: string[]): void {
     this.onSelectionChange.emit(selections);
   }
 

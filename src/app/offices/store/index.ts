@@ -29,7 +29,7 @@ import {
 } from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   offices: ResourceState;
   officeForm: FormState;
   tellers: ResourceState;
@@ -45,9 +45,9 @@ const reducers = {
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class OfficesStore extends Store<State>{}
+export class OfficesStore extends Store<State> {}
 
-export function officeStoreFactory(appStore: Store<fromRoot.State>){
+export function officeStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(officeModuleReducer);
   return appStore;
 }

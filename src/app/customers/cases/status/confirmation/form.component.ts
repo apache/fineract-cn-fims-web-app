@@ -19,7 +19,6 @@ import {CostComponent} from '../../../../services/portfolio/domain/individuallen
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
-import {todayAsISOString} from '../../../../services/domain/date.converter';
 
 export interface ExecuteCommandEvent {
   productId: string;
@@ -36,7 +35,7 @@ export interface ExecuteCommandEvent {
 })
 export class CaseCommandConfirmationFormComponent implements OnInit {
 
-  numberFormat: string = '2.2-2';
+  numberFormat = '2.2-2';
 
   formGroup: FormGroup;
 
@@ -55,11 +54,13 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       note: ['']
-    })
+    });
   }
 
   get totalAmount(): number {
-    if(!this.costComponents) return 0;
+    if (!this.costComponents) {
+      return 0;
+    }
     return this.costComponents.reduce((acc, val) => acc + val.amount, 0);
   }
 

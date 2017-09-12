@@ -28,7 +28,7 @@ import {RouterLinkStubDirective, RouterOutletStubComponent} from '../common/test
 
 describe('Test reporting component', () => {
 
-  let activatedRoute: ActivatedRoute;
+  const activatedRoute: ActivatedRoute = undefined;
 
   let fixture: ComponentFixture<ReportingComponent>;
 
@@ -84,6 +84,6 @@ describe('Test reporting component', () => {
       .map(de => de.injector.get(RouterLinkStubDirective) as RouterLinkStubDirective);
 
     expect(links[0].navigatedTo).toEqual(['categories', 'categoryOne']);
-  })
+  });
 
 });

@@ -16,7 +16,7 @@
 
 import {ExpirationDate} from './expiration-date.model';
 
-export interface IdentificationCard{
+export interface IdentificationCard {
   type: string;
   number: string;
   expirationDate: ExpirationDate;

@@ -25,7 +25,7 @@ export const MainRoutes: Routes = [
   {
     path: '', component: MainComponent, canActivateChild: [ChangePasswordGuard, PermissionGuard], children: [
       { path: '', redirectTo: '/quickAccess', pathMatch: 'full'},
-      { path: 'quickAccess', component: QuickAccessComponent, data: { title: "Quick access" } },
+      { path: 'quickAccess', component: QuickAccessComponent, data: { title: 'Quick access' } },
       { path: 'offices', loadChildren: './../offices/office.module#OfficeModule' },
       { path: 'employees', loadChildren: './../employees/employee.module#EmployeeModule' },
       { path: 'roles', loadChildren: './../roles/role.module#RoleModule' },
@@ -36,11 +36,11 @@ export const MainRoutes: Routes = [
       { path: 'deposits', loadChildren: './../depositAccount/deposit-account.module#DepositAccountModule' },
       { path: 'teller', loadChildren: './../teller/teller.module#TellerModule' },
       { path: 'reports', loadChildren: './../reporting/reporting.module#ReportingModule' },
-      { path: 'denied', component: AccessDeniedComponent, data: { title: "Not allowed" } }
+      { path: 'denied', component: AccessDeniedComponent, data: { title: 'Not allowed' } }
     ]
   },
   {
-    path: 'changePassword', loadChildren: './../user/user.module#UserModule', data: { title: "Change password" }
+    path: 'changePassword', loadChildren: './../user/user.module#UserModule', data: { title: 'Change password' }
   }
 
 ];

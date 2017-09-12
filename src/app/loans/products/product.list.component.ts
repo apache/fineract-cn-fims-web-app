@@ -20,14 +20,14 @@ import {TableData} from '../../common/data-table/data-table.component';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {PortfolioStore} from './store/index';
 import * as fromPortfolio from './store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {SEARCH} from './store/product.actions';
 import {FimsProduct} from './store/model/fims-product.model';
 
 @Component({
   templateUrl: './product.list.component.html'
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
 
   productData: Observable<TableData>;
 
@@ -49,11 +49,11 @@ export class ProductListComponent implements OnInit{
     this.fetchProducts();
   }
 
-  fetchProducts(fetchRequest?: FetchRequest): void{
+  fetchProducts(fetchRequest?: FetchRequest): void {
     this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
-  rowSelect(product: FimsProduct): void{
-    this.router.navigate(['detail', product.identifier], { relativeTo: this.route })
+  rowSelect(product: FimsProduct): void {
+    this.router.navigate(['detail', product.identifier], { relativeTo: this.route });
   }
 }

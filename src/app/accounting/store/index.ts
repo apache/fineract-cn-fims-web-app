@@ -44,7 +44,7 @@ import {
   SearchState
 } from '../../common/store/search.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   accounts: ResourceState;
   accountForm: FormState;
   accountEntrySearch: fromAccountEntrySearch.State;
@@ -91,9 +91,9 @@ const reducers = {
 
 export const accountingModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class AccountingStore extends Store<State>{}
+export class AccountingStore extends Store<State> {}
 
-export function accountingStoreFactory(appStore: Store<fromRoot.State>){
+export function accountingStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(accountingModuleReducer);
   return appStore;
 }
@@ -157,13 +157,15 @@ export const getAccountEntrySearchEntities = createSelector(getAccountEntrySearc
 export const getAccountEntrySearchTotalElements = createSelector(getAccountEntrySearchState, fromAccountEntrySearch.getTotalElements);
 export const getAccountEntrySearchTotalPages = createSelector(getAccountEntrySearchState, fromAccountEntrySearch.getTotalPages);
 
-export const getAccountEntrySearchResults = createSelector(getAccountEntrySearchEntities, getAccountEntrySearchTotalElements, getAccountEntrySearchTotalPages, (entities, totalElements, totalPages) => {
-  return {
-    entries: entities,
-    totalPages: totalPages,
-    totalElements: totalElements
-  }
-});
+export const getAccountEntrySearchResults = createSelector(
+  getAccountEntrySearchEntities, getAccountEntrySearchTotalElements, getAccountEntrySearchTotalPages,
+  (entities, totalElements, totalPages) => {
+    return {
+      entries: entities,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Transaction Types
@@ -184,13 +186,15 @@ export const getTransactionTypeSearchTotalElements = createSelector(getTransacti
 export const getTransactionTypeSearchTotalPages = createSelector(getTransactionTypeSearchState, getSearchTotalPages);
 export const getTransactionTypeSearchLoading = createSelector(getTransactionTypeSearchState, getSearchLoading);
 
-export const getTransactionTypeSearchResults = createSelector(getSearchTransactionTypes, getTransactionTypeSearchTotalPages, getTransactionTypeSearchTotalElements, (transactionTypes, totalPages, totalElements) => {
-  return {
-    transactionTypes,
-    totalPages,
-    totalElements
-  };
-});
+export const getTransactionTypeSearchResults = createSelector(
+  getSearchTransactionTypes, getTransactionTypeSearchTotalPages, getTransactionTypeSearchTotalElements,
+  (transactionTypes, totalPages, totalElements) => {
+    return {
+      transactionTypes,
+      totalPages,
+      totalElements
+    };
+  });
 
 /**
  * Cheques
@@ -218,10 +222,12 @@ export const getSearchPayrollPayments = createSelector(getPayrollPaymentSearchSt
 export const getPayrollPaymentsSearchTotalElements = createSelector(getPayrollPaymentSearchState, getSearchTotalElements);
 export const getPayrollPaymentsSearchTotalPages = createSelector(getPayrollPaymentSearchState, getSearchTotalPages);
 
-export const getPayrollPaymentSearchResults = createSelector(getSearchPayrollPayments, getPayrollPaymentsSearchTotalElements, getPayrollPaymentsSearchTotalPages, (data, totalPages, totalElements) => {
-  return {
-    data,
-    totalPages,
-    totalElements
-  };
-});
+export const getPayrollPaymentSearchResults = createSelector(
+  getSearchPayrollPayments, getPayrollPaymentsSearchTotalElements, getPayrollPaymentsSearchTotalPages,
+  (data, totalPages, totalElements) => {
+    return {
+      data,
+      totalPages,
+      totalElements
+    };
+  });

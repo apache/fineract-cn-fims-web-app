@@ -39,8 +39,12 @@ import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.com
 import {ProductChargeRangeDetailComponent} from './charges/ranges/range.detail.component';
 
 export const ProductRoutes: Routes = [
-  {path: '', component: ProductListComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'READ' } } /* List */},
-  {path: 'create', component: ProductCreateComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Create */},
+  {path: '', component: ProductListComponent, data: {hasPermission: {id: 'portfolio_products', accessLevel: 'READ'}} /* List */},
+  {
+    path: 'create',
+    component: ProductCreateComponent,
+    data: {hasPermission: {id: 'portfolio_products', accessLevel: 'CHANGE'}} /* Create */
+  },
   {
     path: 'detail/:productId', /* Parent view to resolve product */
     component: ProductIndexComponent,

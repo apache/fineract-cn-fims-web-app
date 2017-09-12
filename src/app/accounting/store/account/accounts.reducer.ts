@@ -32,33 +32,33 @@ export function reducer(state = initialState, action: accounts.Actions | account
   switch (action.type) {
 
     case accountTasks.EXECUTE_COMMAND_SUCCESS: {
-      let payload = action.payload;
+      const payload = action.payload;
 
       const accountId = payload.accountId;
       const command: AccountCommand = payload.command;
 
-      let account: Account = state.entities[accountId];
+      const account: Account = state.entities[accountId];
 
       let accountState: AccountState = null;
 
-      if(command.action === 'LOCK') {
+      if (command.action === 'LOCK') {
         accountState = 'LOCKED';
-      }else if(command.action === 'UNLOCK' || command.action === 'REOPEN') {
+      } else if (command.action === 'UNLOCK' || command.action === 'REOPEN') {
         accountState = 'OPEN';
-      }else if(command.action === 'CLOSE') {
+      } else if (command.action === 'CLOSE') {
         accountState = 'CLOSED';
       }
 
       account.state = accountState;
 
       return {
-        ids: [ ...state.ids ],
+        ids: [...state.ids],
         entities: Object.assign({}, state.entities, {
           [account.identifier]: account
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

@@ -16,7 +16,7 @@
 
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {Account} from '../../services/accounting/domain/account.model';
 import {AccountPage} from '../../services/accounting/domain/account-page.model';
@@ -46,6 +46,10 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
 
   accounts: Observable<Account[]>;
 
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
+
   constructor(private accountingService: AccountingService) {}
 
   ngOnInit(): void {
@@ -59,7 +63,7 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
       .switchMap(name => this.onSearch(name));
   }
 
-  changeValue(value: string): void{
+  changeValue(value: string): void {
     this._onChangeCallback(value);
   }
 
@@ -76,18 +80,14 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    if(isDisabled) {
+    if (isDisabled) {
       this.formControl.disable();
     } else {
       this.formControl.enable();
     }
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
-  onSearch(searchTerm?: string): Observable<Account[]>{
+  onSearch(searchTerm?: string): Observable<Account[]> {
     const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,

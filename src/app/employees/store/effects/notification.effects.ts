@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as employeeActions from '../employee.actions';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class EmployeeNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createEmployeeSuccess$: Observable<Action> = this.actions$
@@ -41,5 +39,7 @@ export class EmployeeNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Employee is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

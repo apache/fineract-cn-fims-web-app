@@ -56,7 +56,7 @@ describe('Test address form', () => {
         {
           provide: CountryService, useClass: class {
             fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
-            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country])
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
           }
         }
       ]

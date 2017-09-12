@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface BalanceRange{
-  minimum: number,
+export interface BalanceRange {
+  minimum: number;
   maximum: number;
 }

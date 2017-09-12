@@ -30,7 +30,7 @@ export class ProductChargeRangeFormComponent {
     this.form = this.formBuilder.group({
       identifier: [range.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       rangeSegments: this.initRangeSegments(range)
-    })
+    });
 
     // TODO: Validate unique identifier and ranges across range segments
   };
@@ -58,7 +58,7 @@ export class ProductChargeRangeFormComponent {
       identifier: [identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       start: [{ value: start, disabled }, [Validators.required, FimsValidators.minValue(0)]],
       end: [{ value: 0, disabled: true }, [Validators.required, FimsValidators.minValue(0)]],
-    })
+    });
   }
 
   get rangeSegments(): FormArray {
@@ -84,7 +84,9 @@ export class ProductChargeRangeFormComponent {
   getNextSegmentValue(index: number): string {
     const nextIndex = index + 1;
 
-    if(nextIndex >= this.rangeSegments.length) return '-';
+    if (nextIndex >= this.rangeSegments.length) {
+      return '-';
+    }
 
     const formGroup: FormGroup = this.getFormGroup(nextIndex);
     return formGroup.get('start').value;
@@ -102,7 +104,7 @@ export class ProductChargeRangeFormComponent {
       }))
     };
 
-    this.onSave.emit(range)
+    this.onSave.emit(range);
   }
 
   cancel(): void {

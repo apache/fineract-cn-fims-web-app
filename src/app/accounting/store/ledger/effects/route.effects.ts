@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
 import {Router} from '@angular/router';
 
 @Injectable()
 export class LedgerRouteEffects {
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
     .ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS)
@@ -36,10 +34,12 @@ export class LedgerRouteEffects {
     .ofType(ledgerActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => {
-      if(payload.ledger.parentLedgerIdentifier) {
-        this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier, 'ledgers'], { relativeTo: payload.activatedRoute })
+      if (payload.ledger.parentLedgerIdentifier) {
+        this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier, 'ledgers'], { relativeTo: payload.activatedRoute });
       } else {
-        this.router.navigate(['../../../../'], { relativeTo: payload.activatedRoute })
+        this.router.navigate(['../../../../'], { relativeTo: payload.activatedRoute });
       }
     });
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

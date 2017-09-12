@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface Pattern{
+export interface Pattern {
   parameterPackage: string;
-  accountAssignmentsRequired: string[]
+  accountAssignmentsRequired: string[];
 }

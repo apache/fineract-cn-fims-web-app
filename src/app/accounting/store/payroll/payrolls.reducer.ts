@@ -30,7 +30,7 @@ export function reducer(state = initialState, action: payroll.Actions): Resource
   switch (action.type) {
 
     case payroll.LOAD_ALL_COLLECTIONS: {
-      return initialState
+      return initialState;
     }
 
     case payroll.LOAD_ALL_COLLECTIONS_COMPLETE: {

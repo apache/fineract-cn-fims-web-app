@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
@@ -24,8 +24,6 @@ import {IdentityService} from '../../../services/identity/identity.service';
 
 @Injectable()
 export class RoleApiEffects {
-
-  constructor(private actions$: Actions, private identityService: IdentityService) { }
 
   @Effect()
   createRole$: Observable<Action> = this.actions$
@@ -65,5 +63,7 @@ export class RoleApiEffects {
         }))
         .catch((error) => of(new roleActions.DeleteRoleFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private identityService: IdentityService) { }
 
 }

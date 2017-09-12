@@ -18,7 +18,7 @@ import {Type} from '../../services/depositAccount/domain/type.model';
 
 export interface TypeOption {
   label: string;
-  type: Type
+  type: Type;
 }
 
 export const typeOptionList: TypeOption[] = [

@@ -90,7 +90,8 @@ export const getSearchProducts = createSelector(getProductSearchState, getSearch
 export const getProductSearchTotalElements = createSelector(getProductSearchState, getSearchTotalElements);
 export const getProductSearchTotalPages = createSelector(getProductSearchState, getSearchTotalPages);
 
-export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements, (products, totalPages, totalElements) => {
+export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements,
+  (products, totalPages, totalElements) => {
   return {
     products: products,
     totalPages: totalPages,

@@ -29,7 +29,7 @@ import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
 import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {SelectListComponent} from '../../common/select-list/select-list.component';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -124,19 +124,19 @@ describe('Test customer form', () => {
           // Used by address component
           provide: CountryService, useClass: class {
             fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
-            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country])
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
           }
         },
         {
           provide: CustomersStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         },
         {
           provide: Store, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         }
       ]
@@ -177,12 +177,15 @@ describe('Test customer form', () => {
     });
 
     testComponent.triggerSave();
-  })
+  });
 
 });
 
 @Component({
-  template: '<fims-customer-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [customer]="customer"></fims-customer-form-component>'
+  template: `
+    <fims-customer-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [customer]="customer">
+    </fims-customer-form-component>
+  `
 })
 class TestComponent {
 

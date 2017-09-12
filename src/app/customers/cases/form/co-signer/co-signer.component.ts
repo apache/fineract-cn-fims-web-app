@@ -55,7 +55,7 @@ export class CaseCoSignerFormComponent extends FormComponent<CoSignerFormData> i
     this.debtToIncomeFormData = {
       incomeSources: this._formData.incomeSources,
       debts: this._formData.debts
-    }
+    };
   }
 
   get formData(): CoSignerFormData {

@@ -20,7 +20,7 @@ import {TableData} from '../common/data-table/data-table.component';
 import {Office} from '../services/office/domain/office.model';
 import * as fromRoot from '../store';
 
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {SEARCH} from '../store/office/office.actions';
 import {OfficesStore} from './store/index';
 
@@ -60,7 +60,7 @@ export class OfficeComponent implements OnInit {
     this.loading$ = this.store.select(fromRoot.getOfficeSearchLoading);
   }
 
-  rowSelect(office: Office): void{
+  rowSelect(office: Office): void {
     this.router.navigate(['detail', office.identifier], { relativeTo: this.route });
   }
 
@@ -70,7 +70,7 @@ export class OfficeComponent implements OnInit {
   }
 
   fetchOffices(fetchRequest?: FetchRequest): void {
-    if(fetchRequest){
+    if (fetchRequest) {
       this.lastFetchRequest = fetchRequest;
     }
 

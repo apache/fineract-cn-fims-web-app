@@ -18,7 +18,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlannedPaymentPage} from '../../../services/portfolio/domain/individuallending/planned-payment-page.model';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {SEARCH} from '../store/payments/payment.actions';
 import {PlannedPayment} from '../../../services/portfolio/domain/individuallending/planned-payment.model';
 import {CostComponent} from '../../../services/portfolio/domain/individuallending/cost-component.model';
@@ -27,20 +28,20 @@ import {todayAsISOString} from '../../../services/domain/date.converter';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 interface CostComponents {
-  [id: string]: CostComponent
+  [id: string]: CostComponent;
 }
 
 interface PaymentRow {
   interestRate: number;
   remainingPrincipal: number;
   date: string;
-  costComponents: CostComponents
+  costComponents: CostComponents;
 }
 
 @Component({
   templateUrl: './payments.component.html'
 })
-export class CasePaymentsComponent implements OnInit, OnDestroy{
+export class CasePaymentsComponent implements OnInit, OnDestroy {
 
   private caseSubscription: Subscription;
 
@@ -55,21 +56,22 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
   constructor(private casesStore: CasesStore) {}
 
   private createRows(payments: PlannedPayment[]): PaymentRow[] {
-    let rows: PaymentRow[] = [];
+    const rows: PaymentRow[] = [];
 
-    for(let payment of payments) {
-      const costComponents: CostComponents = payment.costComponents.reduce((entities: { [id: string]: CostComponent }, costComponent: CostComponent) => {
-        return Object.assign(entities, {
-          [costComponent.chargeIdentifier]: costComponent
-        });
-      }, {});
+    for (const payment of payments) {
+      const costComponents: CostComponents = payment.costComponents
+        .reduce((entities: { [id: string]: CostComponent }, costComponent: CostComponent) => {
+          return Object.assign(entities, {
+            [costComponent.chargeIdentifier]: costComponent
+          });
+        }, {});
 
       rows.push({
         date: payment.date,
         interestRate: payment.interestRate,
         remainingPrincipal: payment.remainingPrincipal,
         costComponents
-      })
+      });
     }
 
     return rows;
@@ -93,7 +95,7 @@ export class CasePaymentsComponent implements OnInit, OnDestroy{
     this.caseSubscription.unsubscribe();
   }
 
-  fetchPayments(startDate?: string): void{
+  fetchPayments(startDate?: string): void {
     this.casesStore.dispatch({ type: SEARCH, payload: {
       productIdentifier: this.caseInstance.productIdentifier,
       caseIdentifier: this.caseInstance.identifier,

@@ -36,8 +36,8 @@ export interface SearchPayload {
   amount?: string;
 }
 
-export interface JournalEntryRoutePayload extends RoutePayload{
-  journalEntry: JournalEntry
+export interface JournalEntryRoutePayload extends RoutePayload {
+  journalEntry: JournalEntry;
 }
 
 export class SearchAction implements Action {
@@ -81,4 +81,4 @@ export type Actions = SearchAction
   | CreateJournalEntryAction
   | CreateJournalEntrySuccessAction
   | CreateJournalEntryFailAction
-  | ResetJournalEntryFormAction
+  | ResetJournalEntryFormAction;

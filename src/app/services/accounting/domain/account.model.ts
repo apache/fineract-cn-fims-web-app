@@ -17,7 +17,7 @@
 import {AccountType} from './account-type.model';
 import {AccountState} from './account-state.model';
 
-export interface Account{
+export interface Account {
   type?: AccountType;
   identifier: string;
   name: string;

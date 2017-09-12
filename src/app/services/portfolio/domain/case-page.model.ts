@@ -16,7 +16,7 @@
 
 import {Case} from './case.model';
 
-export interface CasePage{
+export interface CasePage {
   elements: Case[];
   totalPages: number;
   totalElements: number;

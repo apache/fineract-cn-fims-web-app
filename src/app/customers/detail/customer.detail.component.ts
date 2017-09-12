@@ -21,23 +21,23 @@ import {Catalog} from '../../services/catalog/domain/catalog.model';
 import {Field} from '../../services/catalog/domain/field.model';
 import {Option} from '../../services/catalog/domain/option.model';
 import * as fromCustomers from '../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CustomersStore} from '../store/index';
 import {LOAD_ALL} from '../store/catalogs/catalog.actions';
 import {CustomerService} from '../../services/customer/customer.service';
 
-interface CatalogFieldPair{
+interface CatalogFieldPair {
   catalog: Catalog;
   field: Field;
 }
 
-interface CustomCatalog{
+interface CustomCatalog {
   label: string;
-  fields: CustomDetailField[]
+  fields: CustomDetailField[];
 }
 
-interface CustomDetailField{
-  label: string,
+interface CustomDetailField {
+  label: string;
   value: string;
 }
 
@@ -61,7 +61,8 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   isCustomerActive: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore,
+              private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
@@ -83,7 +84,7 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   }
 
   searchCustomer(term): void {
-    if(term){
+    if (term) {
       this.router.navigate(['../../../'], { queryParams: { term: term }, relativeTo: this.route });
     }
   }
@@ -91,44 +92,46 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   set customer(customer: Customer){
     this._customer = customer;
 
-    let customCatalogs: CustomCatalog[] = [];
+    const customCatalogs: CustomCatalog[] = [];
 
-    if(customer.customValues){
-      for(let value of customer.customValues){
-        let catalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === value.catalogIdentifier);
-        let field: Field = catalog.fields.find((field: Field) => field.identifier === value.fieldIdentifier);
+    if (customer.customValues) {
+      for (const value of customer.customValues){
+        const foundCatalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === value.catalogIdentifier);
+        const foundField: Field = foundCatalog.fields.find((field: Field) => field.identifier === value.fieldIdentifier);
 
         let valueString: string = value.value;
 
-        switch(field.dataType){
+        switch (foundField.dataType) {
           case 'DATE':
             valueString = valueString ? valueString.substr(0, 10) : '';
             break;
           case 'SINGLE_SELECTION':
-            let option = field.options.find((option: Option) => option.value === Number(valueString));
-            valueString = option.label;
+            const foundOption = foundField.options.find((option: Option) => option.value === Number(valueString));
+            valueString = foundOption.label;
             break;
         }
 
-        let customField: CustomDetailField = {
-          label: field.label,
+        const customField: CustomDetailField = {
+          label: foundField.label,
           value: valueString
         };
 
         // If catalog does not exists
-        if(!customCatalogs[value.catalogIdentifier]){
+        if (!customCatalogs[value.catalogIdentifier]) {
           customCatalogs[value.catalogIdentifier] = {
-            label: catalog.name,
+            label: foundCatalog.name,
             fields: []
-          }
+          };
         }
         customCatalogs[value.catalogIdentifier].fields.push(customField);
       }
     }
 
     // change from associative array to array
-    for(let catalogIdentifier in customCatalogs){
-      this.customCatalogs.push(customCatalogs[catalogIdentifier]);
+    for (const catalogIdentifier in customCatalogs) {
+      if (customCatalogs.hasOwnProperty(catalogIdentifier)) {
+        this.customCatalogs.push(customCatalogs[catalogIdentifier]);
+      }
     }
   };
 
@@ -141,11 +144,11 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
   }
 
   changePortrait(): void {
-    this.router.navigate(['portrait'], { relativeTo: this.route })
+    this.router.navigate(['portrait'], { relativeTo: this.route });
   }
 
   goToTasks(): void {
-    this.router.navigate(['tasks'], { relativeTo: this.route })
+    this.router.navigate(['tasks'], { relativeTo: this.route });
   }
 
 }

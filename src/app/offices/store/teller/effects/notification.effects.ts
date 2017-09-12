@@ -23,8 +23,6 @@ import * as tellerActions from '../teller.actions';
 
 @Injectable()
 export class TellerNotificationEffects {
-  constructor(private actions$: Actions, private notificationService: NotificationService) {
-  }
 
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
@@ -53,4 +51,7 @@ export class TellerNotificationEffects {
         message: 'Employees can only be assigned to one teller. Please choose a different employee or unassign the employee first.'
       })
     );
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {
+  }
 }

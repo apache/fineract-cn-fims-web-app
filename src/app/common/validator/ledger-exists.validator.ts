@@ -15,7 +15,7 @@
  */
 
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {isString} from './validators';
 
@@ -25,12 +25,16 @@ const invalid = Observable.of({
 
 export function ledgerExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
+    if (!control.dirty || !control.value || control.value.length === 0) {
+      return Observable.of(null);
+    }
 
-    if(isString(control.value) && control.value.trim().length === 0) return invalid;
+    if (isString(control.value) && control.value.trim().length === 0) {
+      return invalid;
+    }
 
     return accountingService.findLedger(control.value, true)
       .map(ledger => null)
       .catch(() => invalid);
-  }
+  };
 }

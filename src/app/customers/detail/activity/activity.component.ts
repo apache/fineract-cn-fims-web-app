@@ -18,13 +18,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Command} from '../../../services/customer/domain/command.model';
 import {CustomersStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/commands/commands.actions';
-import {Subscription} from 'rxjs';
 import * as fromCustomers from '../../store';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   templateUrl: './activity.component.html'
 })
-export class CustomerActivityComponent implements OnInit, OnDestroy{
+export class CustomerActivityComponent implements OnInit, OnDestroy {
 
   private commandsSubscription: Subscription;
 
@@ -32,7 +32,7 @@ export class CustomerActivityComponent implements OnInit, OnDestroy{
 
   commands: Command[];
 
-  constructor(private store: CustomersStore){}
+  constructor(private store: CustomersStore) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)

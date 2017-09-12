@@ -53,7 +53,7 @@ export const EXECUTE_COMMAND_SUCCESS = type('[Deposit Product Definition] Execut
 export const EXECUTE_COMMAND_FAIL = type('[Deposit Product Definition] Execute Command Fail');
 
 export interface ProductDefinitionRoutePayload extends RoutePayload {
-  productDefinition: ProductDefinition
+  productDefinition: ProductDefinition;
 }
 
 export interface ExecuteCommandPayload extends RoutePayload {

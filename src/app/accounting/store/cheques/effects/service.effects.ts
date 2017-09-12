@@ -26,8 +26,6 @@ import {LoadAllAction} from '../../../../common/store/action-creator/actions';
 @Injectable()
 export class ChequeApiEffects {
 
-  constructor(private actions$: Actions, private chequeService: ChequeService) {}
-
   @Effect()
   loadAllChequesByState$: Observable<Action> = this.actions$
     .ofType(ChequeCRUDActions.LOAD_ALL)
@@ -53,5 +51,7 @@ export class ChequeApiEffects {
         .map(() => new chequeActions.ProcessSuccessAction(payload))
         .catch(error => of(new chequeActions.ProcessFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private chequeService: ChequeService) {}
 
 }

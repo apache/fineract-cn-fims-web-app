@@ -23,7 +23,7 @@ export interface Resource {
 }
 
 export interface LoadResourcePayload {
-  resource: any
+  resource: any;
 }
 
 export interface SelectResourcePayload {
@@ -31,22 +31,22 @@ export interface SelectResourcePayload {
 }
 
 export interface CreateResourceSuccessPayload extends RoutePayload {
-  resource: any
+  resource: any;
 }
 
 export interface UpdateResourceSuccessPayload extends RoutePayload {
-  resource: any
+  resource: any;
 }
 
 export interface DeleteResourceSuccessPayload extends RoutePayload {
-  resource: any
+  resource: any;
 }
 
 export interface ResourceState {
   ids: string[];
   entities: { [id: string]: any };
   selectedId: string | null;
-  loadedAt: { [id: string]: number }
+  loadedAt: { [id: string]: number };
 }
 
 const initialState: ResourceState = {
@@ -56,100 +56,101 @@ const initialState: ResourceState = {
   selectedId: null
 };
 
-export const createResourceReducer = (resource: string, reducer?: ActionReducer<ResourceState>, identifierName: string = 'identifier') => {
+export const createResourceReducer =
+  (resourceId: string, reducer?: ActionReducer<ResourceState>, identifierName: string = 'identifier') => {
 
-  const identifier = (resource: any) => resource[identifierName];
+    const identifier = (resource: any) => resource[identifierName];
 
-  return function(state: ResourceState = initialState, action: Action): ResourceState {
+    return function (state: ResourceState = initialState, action: Action): ResourceState {
 
-    switch (action.type) {
+      switch (action.type) {
 
-      case `[${resource}] Load`: {
-        const resource = action.payload.resource;
+        case `[${resourceId}] Load`: {
+          const resource = action.payload.resource;
 
-        const newIds = state.ids.filter(id => id !== identifier(resource));
+          const newIds = state.ids.filter(id => id !== identifier(resource));
 
-        return {
-          ids: [ ...newIds, identifier(resource) ],
-          entities: Object.assign({}, state.entities, {
-            [identifier(resource)]: resource
-          }),
-          selectedId: state.selectedId,
-          loadedAt: Object.assign({}, state.entities, {
-            [identifier(resource)]: Date.now()
-          })
-        };
-      }
-
-      case `[${resource}] Select`: {
-        return Object.assign({}, state, {
-          selectedId: action.payload
-        });
-      }
-
-      case `[${resource}] Create Success`: {
-        const resource = action.payload.resource;
-
-        return {
-          ids: [ ...state.ids, identifier(resource) ],
-          entities: Object.assign({}, state.entities, {
-            [identifier(resource)]: resource
-          }),
-          selectedId: state.selectedId,
-          loadedAt: state.loadedAt
+          return {
+            ids: [...newIds, identifier(resource)],
+            entities: Object.assign({}, state.entities, {
+              [identifier(resource)]: resource
+            }),
+            selectedId: state.selectedId,
+            loadedAt: Object.assign({}, state.entities, {
+              [identifier(resource)]: Date.now()
+            })
+          };
         }
-      }
 
-      case `[${resource}] Update Success`: {
-        const resource = action.payload.resource;
-
-        return {
-          ids: state.ids,
-          entities: Object.assign({}, state.entities, {
-            [identifier(resource)]: resource
-          }),
-          selectedId: state.selectedId,
-          loadedAt: state.loadedAt
-        }
-      }
-
-      case `[${resource}] Delete Success`: {
-        const resource = action.payload.resource;
-
-        const newIds = state.ids.filter(id => id !== identifier(resource));
-
-        const newEntities = newIds.reduce((entities: { [id: string]: any }, id: string) => {
-          let entity = state.entities[id];
-          return Object.assign(entities, {
-            [identifier(entity)]: entity
+        case `[${resourceId}] Select`: {
+          return Object.assign({}, state, {
+            selectedId: action.payload
           });
-        }, {});
+        }
 
-        const newLoadedAt = newIds.reduce((entities: { [id: string]: any }, id: string) => {
-          let loadedAt = state.loadedAt[id];
-          return Object.assign(entities, {
-            [id]: loadedAt
-          });
-        }, {});
+        case `[${resourceId}] Create Success`: {
+          const resource = action.payload.resource;
 
-        return {
-          ids: [ ...newIds ],
-          entities: newEntities,
-          loadedAt: newLoadedAt,
-          selectedId: state.selectedId,
+          return {
+            ids: [...state.ids, identifier(resource)],
+            entities: Object.assign({}, state.entities, {
+              [identifier(resource)]: resource
+            }),
+            selectedId: state.selectedId,
+            loadedAt: state.loadedAt
+          };
+        }
+
+        case `[${resourceId}] Update Success`: {
+          const resource = action.payload.resource;
+
+          return {
+            ids: state.ids,
+            entities: Object.assign({}, state.entities, {
+              [identifier(resource)]: resource
+            }),
+            selectedId: state.selectedId,
+            loadedAt: state.loadedAt
+          };
+        }
+
+        case `[${resourceId}] Delete Success`: {
+          const resource = action.payload.resource;
+
+          const newIds = state.ids.filter(id => id !== identifier(resource));
+
+          const newEntities = newIds.reduce((entities: { [id: string]: any }, id: string) => {
+            const entity = state.entities[id];
+            return Object.assign(entities, {
+              [identifier(entity)]: entity
+            });
+          }, {});
+
+          const newLoadedAt = newIds.reduce((entities: { [id: string]: any }, id: string) => {
+            const loadedAt = state.loadedAt[id];
+            return Object.assign(entities, {
+              [id]: loadedAt
+            });
+          }, {});
+
+          return {
+            ids: [...newIds],
+            entities: newEntities,
+            loadedAt: newLoadedAt,
+            selectedId: state.selectedId,
+          };
+        }
+
+        default: {
+          // delegate to wrapped reducer
+          if (reducer) {
+            return reducer(state, action);
+          }
+          return state;
         }
       }
-
-      default: {
-        // delegate to wrapped reducer
-        if(reducer) {
-          return reducer(state, action);
-        }
-        return state;
-      }
-    }
-  }
-};
+    };
+  };
 
 export const getResourceEntities = (cacheState: ResourceState) => cacheState.entities;
 export const getResourceLoadedAt = (cacheState: ResourceState) => cacheState.loadedAt;

@@ -96,7 +96,7 @@ export class ReportingQueryParamComponent extends AbstractControlValueAccessor i
   }
 
   private getComponentType(operator: Operator): any {
-    switch(operator) {
+    switch (operator) {
       case 'GREATER':
       case 'LESSER':
       case 'EQUALS':

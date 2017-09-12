@@ -18,7 +18,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {IdentityService} from '../../services/identity/identity.service';
 import {MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
 import {Role} from '../../services/identity/domain/role.model';
@@ -40,7 +40,7 @@ describe('Test roles form', () => {
   let fixture: ComponentFixture<RoleFormComponent>;
   let component: RoleFormComponent;
 
-  let officePermittable: PermittableGroup = {
+  const officePermittable: PermittableGroup = {
     identifier: 'office__v1__offices',
     permittables: [
       {path: '/offices', method: 'POST'},
@@ -48,9 +48,9 @@ describe('Test roles form', () => {
     ]
   };
 
-  let identityService = {
+  const identityService = {
     getPermittableGroups(): Observable<PermittableGroup[]> {
-      let permittableGroups: PermittableGroup[] = [];
+      const permittableGroups: PermittableGroup[] = [];
       permittableGroups.push(officePermittable);
       return Observable.of(permittableGroups);
     }
@@ -97,7 +97,7 @@ describe('Test roles form', () => {
     // Wait for async service call
     fixture.whenStable().then(() => {
       component.onSave.subscribe((role: Role) => {
-        let expected: Role = {
+        const expected: Role = {
           identifier: 'test',
           permissions: [{
             permittableEndpointGroupIdentifier: officePermittable.identifier,
@@ -120,13 +120,13 @@ describe('Test roles form', () => {
 
     fixture.detectChanges();
 
-    //Wait for async service call
+    // Wait for async service call
     fixture.whenStable().then(() => {
-      let formPermission = component.formPermissions[0];
+      const formPermission = component.formPermissions[0];
       formPermission.change = false;
 
       component.onSave.subscribe((role: Role) => {
-        let expected: Role = {
+        const expected: Role = {
           identifier: 'test',
           permissions: [{
             permittableEndpointGroupIdentifier: officePermittable.identifier,
@@ -137,5 +137,5 @@ describe('Test roles form', () => {
       });
       component.save();
     });
-  }))
+  }));
 });

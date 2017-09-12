@@ -63,6 +63,6 @@ describe('Reducer Helper', () => {
     const result = idsToHashWithCurrentTimestamp(ids);
 
     expect(result).toEqual(expectedResult);
-  })
+  });
 
 });

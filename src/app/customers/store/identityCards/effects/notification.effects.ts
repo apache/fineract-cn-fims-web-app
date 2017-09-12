@@ -24,8 +24,6 @@ import * as identificationCardActions from '../identity-cards.actions';
 @Injectable()
 export class CustomerIdentificationCardNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   createIdentificationCardSuccess$: Observable<Action> = this.actions$
     .ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS)
@@ -41,5 +39,7 @@ export class CustomerIdentificationCardNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Identification card is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

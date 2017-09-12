@@ -51,7 +51,8 @@ export const REPORTING_BETWEEN_PARAM_VALIDATOR: any = {
   selector: 'fims-reporting-between-param',
   templateUrl: './between.component.html'
 })
-export class ReportingBetweenParamComponent extends AbstractControlValueAccessor implements ControlValueAccessor, Validator, OnInit, OnDestroy {
+export class ReportingBetweenParamComponent extends AbstractControlValueAccessor
+  implements ControlValueAccessor, Validator, OnInit, OnDestroy {
 
   changeSubscription: Subscription;
 
@@ -93,7 +94,7 @@ export class ReportingBetweenParamComponent extends AbstractControlValueAccessor
   }
 
   writeValue(value: string): void {
-    if(value) {
+    if (value) {
       this.formGroup.setValue(this.splitValue(value));
     } else {
       this.formGroup.setValue({
@@ -106,11 +107,11 @@ export class ReportingBetweenParamComponent extends AbstractControlValueAccessor
   private splitValue(value: string): any {
     const values: string[] = value.split('..');
 
-    if(values.length === 2) {
+    if (values.length === 2) {
       return {
         start: values[0],
         end: values[1]
-      }
+      };
     }
   }
 

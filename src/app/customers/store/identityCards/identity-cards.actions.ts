@@ -48,8 +48,8 @@ export const DELETE_FAIL = type('[Customer Identity Card] Delete Fail');
 export const RESET_FORM = type('[Customer Identity Card] Reset Form');
 
 export interface IdentityCardPayload extends RoutePayload {
-  customerId: string,
-  identificationCard: IdentificationCard
+  customerId: string;
+  identificationCard: IdentificationCard;
 }
 
 export class LoadAllAction implements Action {
@@ -150,4 +150,4 @@ export type Actions
   | DeleteIdentityCardAction
   | DeleteIdentityCardSuccessAction
   | DeleteIdentityCardFailAction
-  | ResetIdentityCardForm
+  | ResetIdentityCardForm;

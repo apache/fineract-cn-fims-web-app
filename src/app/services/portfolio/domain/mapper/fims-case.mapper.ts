@@ -23,9 +23,9 @@ export function mapToCase(caseInstance: FimsCase): Case {
   return Object.assign({}, caseInstance, {
     parameters: JSON.stringify(caseInstance.parameters),
     accountAssignments: [
-      { accountIdentifier: caseInstance.depositAccountIdentifier, designator: AccountDesignators.ENTRY }
+      {accountIdentifier: caseInstance.depositAccountIdentifier, designator: AccountDesignators.ENTRY}
     ]
-  })
+  });
 }
 
 export function mapToFimsCase(caseInstance: Case): FimsCase {
@@ -38,7 +38,7 @@ export function mapToFimsCase(caseInstance: Case): FimsCase {
     depositAccountIdentifier: accountIdentifier(entryDesignator),
     customerLoanAccountIdentifier: accountIdentifier(customerLoanDesignator),
     loansPayableAccountIdentifier: accountIdentifier(loansPayableDesignator),
-  })
+  });
 }
 
 export function mapToFimsCases(caseInstances: Case[]): FimsCase[] {

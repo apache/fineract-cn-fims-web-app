@@ -85,7 +85,8 @@ describe('Test transaction form', () => {
   }
 
   function transactionButton(): DebugElement {
-    const element = fixture.debugElement.query(By.css('td-steps > div:nth-child(1) > td-step-body > div > div.td-step-body > div > div.td-step-actions > button.mat-raised-button.mat-primary'));
+    const element = fixture.debugElement.query(By.css('td-steps > div:nth-child(1) > td-step-body > div > ' +
+      'div.td-step-body > div > div.td-step-actions > button.mat-raised-button.mat-primary'));
     return element;
   }
 
@@ -191,7 +192,7 @@ describe('Test transaction form', () => {
       });
     });
 
-  })
+  });
 });
 
 @Component({
@@ -205,9 +206,9 @@ class TestComponent {
 
   productInstances: ProductInstance[];
 
-  cashdrawLimit: number = 1000;
+  cashdrawLimit = 1000;
 
-  transactionType: string = 'ACCC';
+  transactionType = 'ACCC';
 
   @ViewChild('form') form: DepositTransactionFormComponent;
 

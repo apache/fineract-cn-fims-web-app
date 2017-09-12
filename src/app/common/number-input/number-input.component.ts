@@ -30,9 +30,9 @@ export class NumberInputComponent {
 
   @Input() form: FormGroup;
 
-  @Input() requireDecimal: boolean = true;
+  @Input() requireDecimal = true;
 
-  @Input() decimalLimit: number = 2;
+  @Input() decimalLimit = 2;
 
   @Input() hint: string;
 

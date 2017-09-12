@@ -44,7 +44,7 @@ export const DELETE_FAIL = type('[Account] Delete Fail');
 
 export const RESET_FORM = type('[Account] Reset Form');
 
-export interface AccountRoutePayload extends RoutePayload{
+export interface AccountRoutePayload extends RoutePayload {
   account: Account;
 }
 

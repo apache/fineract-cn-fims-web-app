@@ -20,7 +20,7 @@ import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import {SelectAction, UPDATE} from '../store/case.actions';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromCustomers from '../../store/index';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {Observable} from 'rxjs/Observable';
@@ -32,7 +32,7 @@ import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 @Component({
   templateUrl: './edit.component.html'
 })
-export class CaseEditComponent implements OnInit, OnDestroy{
+export class CaseEditComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
@@ -50,11 +50,12 @@ export class CaseEditComponent implements OnInit, OnDestroy{
 
   caseInstance: FimsCase;
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore,
+              private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.productId = params['productId']
+      this.productId = params['productId'];
     });
 
     this.actionsSubscription = this.route.params

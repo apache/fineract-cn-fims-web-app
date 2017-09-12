@@ -16,7 +16,7 @@
 
 import {Option} from './option.model';
 
-export class Field{
+export class Field {
   identifier: string;
   dataType: FieldDataType;
   label: string;

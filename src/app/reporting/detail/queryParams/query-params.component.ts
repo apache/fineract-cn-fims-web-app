@@ -28,7 +28,9 @@ export class ReportingQueryParamsComponent extends FormComponent<QueryParameter[
   private _queryParams: QueryParameter[];
 
   @Input() set queryParams(queryParams: QueryParameter[]) {
-    if(!queryParams) return;
+    if (!queryParams) {
+      return;
+    }
 
     this._queryParams = queryParams;
 

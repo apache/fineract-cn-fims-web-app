@@ -61,10 +61,10 @@ export function reducer(state = initialState, action: tellers.Actions): Resource
       let tellerState: Status = null;
       let assignedEmployee = null;
 
-      if(command.action === 'OPEN') {
+      if (command.action === 'OPEN') {
         tellerState = 'OPEN';
         assignedEmployee = command.assignedEmployeeIdentifier;
-      } else if(command.action === 'CLOSE') {
+      } else if (command.action === 'CLOSE') {
         tellerState = 'CLOSED';
       }
 
@@ -80,7 +80,7 @@ export function reducer(state = initialState, action: tellers.Actions): Resource
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

@@ -15,13 +15,13 @@
  */
 
 export class ChargeProportionalDesignators {
-  public static readonly NOT_PROPORTIONAL: string = "{notproportional}";
+  public static readonly NOT_PROPORTIONAL = '{notproportional}';
 
-  public static readonly MAXIMUM_BALANCE_DESIGNATOR: string = "{maximumbalance}";
+  public static readonly MAXIMUM_BALANCE_DESIGNATOR = '{maximumbalance}';
 
-  public static readonly RUNNING_BALANCE_DESIGNATOR: string = "{runningbalance}";
+  public static readonly RUNNING_BALANCE_DESIGNATOR = '{runningbalance}';
 
-  public static readonly PRINCIPAL_ADJUSTMENT_DESIGNATOR: string = "{principaladjustment}";
+  public static readonly PRINCIPAL_ADJUSTMENT_DESIGNATOR = '{principaladjustment}';
 
-  public static readonly REPAYMENT_DESIGNATOR: string = "{repayment}";
+  public static readonly REPAYMENT_DESIGNATOR = '{repayment}';
 }

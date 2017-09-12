@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
 import {IssuingCount} from '../../../../services/cheque/domain/issuing-count.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -23,7 +23,7 @@ import {FimsValidators} from '../../../../common/validator/validators';
   selector: 'fims-issue-cheque-form',
   templateUrl: './form.component.html'
 })
-export class IssueChequesFormComponent {
+export class IssueChequesFormComponent implements OnInit {
 
   form: FormGroup;
 

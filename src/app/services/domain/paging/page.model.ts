@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface Page{
+export interface Page {
   pageIndex: number;
   size: number;
 }

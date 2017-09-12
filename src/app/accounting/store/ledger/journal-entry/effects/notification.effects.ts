@@ -16,14 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 
 @Injectable()
 export class JournalEntryNotificationEffects {
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createJournalEntrySuccess$: Observable<Action> = this.actions$
@@ -32,6 +31,8 @@ export class JournalEntryNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Journal entry is going to be processed'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
 

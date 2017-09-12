@@ -91,11 +91,11 @@ export class OfficeTellerCommandComponent implements OnInit, OnDestroy {
         activatedRoute: this.route,
         command
       }
-    })
+    });
   }
 
   onCancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   get title(): string {

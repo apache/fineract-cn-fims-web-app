@@ -34,7 +34,7 @@ export class CreateDividendFormComponent implements OnInit {
   ngOnInit() {
     this.productDefinitionId$ = this.store.select(fromDepositAccounts.getSelectedProduct)
       .filter(product => !!product)
-      .map(product => product.identifier)
+      .map(product => product.identifier);
   }
 
   save(payload: DistributeDividendFormData): void {
@@ -48,10 +48,10 @@ export class CreateDividendFormComponent implements OnInit {
         },
         activatedRoute: this.route
       }
-    })
+    });
   }
 
   cancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

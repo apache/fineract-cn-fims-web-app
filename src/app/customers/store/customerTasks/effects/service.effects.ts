@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as taskActions from '../customer-task.actions';
@@ -24,8 +24,6 @@ import {CustomerService} from '../../../../services/customer/customer.service';
 
 @Injectable()
 export class CustomerTasksApiEffects {
-
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
@@ -60,5 +58,7 @@ export class CustomerTasksApiEffects {
         .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
 }

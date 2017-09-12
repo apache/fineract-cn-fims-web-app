@@ -26,7 +26,8 @@ export class CountryService {
 
   private countries: Country[] = [];
 
-  constructor(private http: Http, private translateService: TranslateService) {}
+  constructor(private http: Http, private translateService: TranslateService) {
+  }
 
   init(): void {
     this.getCountries()
@@ -43,7 +44,7 @@ export class CountryService {
 
     let result: Country[];
 
-    if(term) {
+    if (term) {
       result = this.countries.filter((country: Country) => regTerm.test(country.displayName));
     } else {
       result = this.countries.slice();
@@ -52,11 +53,11 @@ export class CountryService {
   }
 
   fetchByCountryCode(countryCode: string): Country {
-    return this.countries.find((country: Country) => country.alpha2Code === countryCode)
+    return this.countries.find((country: Country) => country.alpha2Code === countryCode);
   }
 
   private translate(countries: Country[]): Country[] {
-    return countries.map(country => this.mapTranslation(country))
+    return countries.map(country => this.mapTranslation(country));
   }
 
   private mapTranslation(country: Country): Country {

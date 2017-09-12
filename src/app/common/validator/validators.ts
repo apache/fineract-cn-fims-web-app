@@ -16,6 +16,7 @@
 
 import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
+// tslint:disable-next-line:max-line-length
 const EMAIL_REGEXP =
   /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
 
@@ -64,9 +65,13 @@ export class FimsValidators {
 
         const valueChunks = stringValue.split('.');
 
-        if(valueChunks.length == 1 && scale === 0) return null;
+        if (valueChunks.length === 1 && scale === 0) {
+          return null;
+        }
 
-        if (valueChunks.length == 2 && valueChunks[1].length === scale) return null;
+        if (valueChunks.length === 2 && valueChunks[1].length === scale) {
+          return null;
+        }
 
         return {
           scale: {
@@ -77,7 +82,7 @@ export class FimsValidators {
 
       }
       return null;
-    }
+    };
   }
 
   static maxScale(scale: number): ValidatorFn {
@@ -86,14 +91,14 @@ export class FimsValidators {
         const stringValue = String(c.value);
         const valueChunks = stringValue.split('.');
 
-        if (valueChunks.length == 2 && valueChunks[1].length > scale) {
+        if (valueChunks.length === 2 && valueChunks[1].length > scale) {
           return {
             maxScale: true
           };
         }
       }
       return null;
-    }
+    };
   }
 
   static minValue(minValue: number): ValidatorFn {
@@ -104,10 +109,10 @@ export class FimsValidators {
             valid: false,
             value: minValue
           }
-        }
+        };
       }
       return null;
-    }
+    };
   }
 
   static maxValue(maxValue: number): ValidatorFn {
@@ -118,10 +123,10 @@ export class FimsValidators {
             valid: false,
             value: maxValue
           }
-        }
+        };
       }
       return null;
-    }
+    };
   }
 
   static greaterThanValue(greaterThanValue: number): ValidatorFn {
@@ -132,10 +137,10 @@ export class FimsValidators {
             valid: false,
             value: greaterThanValue
           }
-        }
+        };
       }
       return null;
-    }
+    };
   }
 
   static greaterThan(firstValue: string, secondValue: string) {
@@ -143,7 +148,9 @@ export class FimsValidators {
       const firstNumber: number = Number(group.controls[firstValue].value);
       const secondNumber: number = Number(group.controls[secondValue].value);
 
-      if(firstNumber == null || secondNumber == null) return null;
+      if (firstNumber == null || secondNumber == null) {
+        return null;
+      }
 
       if (firstNumber >= secondNumber) {
         return {
@@ -152,7 +159,7 @@ export class FimsValidators {
       }
 
       return null;
-    }
+    };
   }
 
   static greaterThanEquals(firstValue: string, secondValue: string) {
@@ -160,7 +167,9 @@ export class FimsValidators {
       const firstNumber: number = Number(group.controls[firstValue].value);
       const secondNumber: number = Number(group.controls[secondValue].value);
 
-      if(firstNumber == null || secondNumber == null) return null;
+      if (firstNumber == null || secondNumber == null) {
+        return null;
+      }
 
       if (firstNumber > secondNumber) {
         return {
@@ -169,7 +178,7 @@ export class FimsValidators {
       }
 
       return null;
-    }
+    };
   }
 
   static matchValues(firstValue: string, secondValue: string) {
@@ -184,7 +193,7 @@ export class FimsValidators {
       }
 
       return null;
-    }
+    };
   }
 
   static matchRange(firstValue: string, secondValue: string) {
@@ -202,11 +211,11 @@ export class FimsValidators {
       }
 
       return null;
-    }
+    };
   }
 
   static email(control: AbstractControl): ValidationErrors | null {
-    if(isEmptyInputValue(control.value)) {
+    if (isEmptyInputValue(control.value)) {
       return null;
     }
 
@@ -221,13 +230,13 @@ export class FimsValidators {
           maxFileSize: {
             value: maxSizeInKB
           }
-        }
+        };
       }
       return null;
-    }
+    };
   }
 
   static requiredNotEmpty(control: AbstractControl): ValidationErrors | null {
-    return isEmptyInputValue(control.value) || (isString(control.value) && control.value.trim() === "") ? {'required': true} : null;
+    return isEmptyInputValue(control.value) || (isString(control.value) && control.value.trim() === '') ? {'required': true} : null;
   }
 }

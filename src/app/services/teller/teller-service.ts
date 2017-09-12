@@ -28,7 +28,8 @@ import {TellerTransaction} from './domain/teller-transaction.model';
 @Injectable()
 export class TellerService {
 
-  constructor(private http: HttpClient, @Inject('tellerBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('tellerBaseUrl') private baseUrl: string) {
+  }
 
   create(officeIdentifier: string, teller: Teller): Observable<void> {
     return this.http.post(`${this.baseUrl}/offices/${officeIdentifier}/teller`, teller);
@@ -73,7 +74,8 @@ export class TellerService {
     return this.http.post(`${this.baseUrl}/teller/${tellerCode}/transactions`, tellerTransaction);
   }
 
-  confirmTransaction(tellerCode: string, tellerTransactionIdentifier: string, command: string, chargesIncluded?: boolean): Observable<void> {
+  confirmTransaction(tellerCode: string, tellerTransactionIdentifier: string, command: string,
+                     chargesIncluded?: boolean): Observable<void> {
     const params = new URLSearchParams();
     params.append('command', command);
     params.append('charges', chargesIncluded ? 'included' : 'excluded');

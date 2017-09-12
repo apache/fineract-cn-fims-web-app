@@ -67,6 +67,6 @@ export class ProductChargeRangeListComponent implements OnInit, OnDestroy {
   }
 
   rowSelect(range: FimsRange): void {
-    this.router.navigate(['detail', range.identifier], { relativeTo: this.route })
+    this.router.navigate(['detail', range.identifier], { relativeTo: this.route });
   }
 }

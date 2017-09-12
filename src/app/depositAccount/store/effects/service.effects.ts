@@ -26,8 +26,6 @@ import {emptySearchResult} from '../../../common/store/search.reducer';
 @Injectable()
 export class DepositProductDefinitionApiEffects {
 
-  constructor(private actions$: Actions, private depositService: DepositAccountService) { }
-
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(definitionActions.SEARCH)
@@ -93,4 +91,6 @@ export class DepositProductDefinitionApiEffects {
         .map(() => new definitionActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new definitionActions.ExecuteCommandFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private depositService: DepositAccountService) { }
 }

@@ -20,6 +20,6 @@ import {Component, Input} from '@angular/core';
   selector: 'fims-command-display',
   templateUrl: './command-display.component.html'
 })
-export class CommandDisplayComponent{
+export class CommandDisplayComponent {
   @Input() command: any;
 }

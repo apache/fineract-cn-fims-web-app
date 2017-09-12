@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface DateOfBirth{
+export interface DateOfBirth {
   year?: number;
   month?: number;
   day?: number;

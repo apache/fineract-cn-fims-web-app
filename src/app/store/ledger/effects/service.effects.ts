@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
@@ -25,8 +25,6 @@ import {emptySearchResult} from '../../../common/store/search.reducer';
 
 @Injectable()
 export class LedgerSearchApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -46,4 +44,5 @@ export class LedgerSearchApiEffects {
         .catch(() => of(new ledgerActions.SearchCompleteAction(emptySearchResult())));
     });
 
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

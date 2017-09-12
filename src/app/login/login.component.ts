@@ -20,7 +20,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as fromRoot from '../store';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../store/security/security.actions';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {MdSelectChange} from '@angular/material';
 import {TRANSLATE_STORAGE_KEY} from '../common/i18n/translate';
 import {Observable} from 'rxjs/Observable';
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   error$: Observable<string>;
 
-  constructor(private _loadingService: TdLoadingService, private translate: TranslateService, private formBuilder: FormBuilder, private store: Store<fromRoot.State>) {
+  constructor(private _loadingService: TdLoadingService, private translate: TranslateService, private formBuilder: FormBuilder,
+              private store: Store<fromRoot.State>) {
   }
 
   ngOnInit() {

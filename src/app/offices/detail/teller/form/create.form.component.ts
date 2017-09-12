@@ -60,7 +60,7 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
     this.officeSubscription.unsubscribe();
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(teller: Teller): void {
@@ -72,7 +72,7 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
   }
 
   onCancel(): void {
-    this.navigateAway()
+    this.navigateAway();
   }
 
   navigateAway(): void {

@@ -17,13 +17,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/customer.actions';
 import {CustomersStore} from '../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: './customer.index.component.html'
 })
-export class CustomerIndexComponent implements OnInit, OnDestroy{
+export class CustomerIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 

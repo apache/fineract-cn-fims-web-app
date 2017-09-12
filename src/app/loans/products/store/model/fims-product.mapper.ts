@@ -20,19 +20,19 @@ import {FimsProduct} from './fims-product.model';
 export function mapToProduct(product: FimsProduct): Product {
   return Object.assign({}, product, {
     parameters: JSON.stringify(product.parameters)
-  })
+  });
 }
 
 export function mapToFimsProduct(product: Product): FimsProduct {
   return Object.assign({}, product, {
     parameters: JSON.parse(product.parameters)
-  })
+  });
 }
 
 export function mapToFimsProducts(products: Product[]): FimsProduct[] {
-  let fimsProducts: FimsProduct[] = [];
+  const fimsProducts: FimsProduct[] = [];
 
-  for(let product of products){
+  for (const product of products){
     fimsProducts.push(mapToFimsProduct(product));
   }
 

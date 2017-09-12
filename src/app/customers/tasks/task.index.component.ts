@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/tasks/task.actions';
 import {CustomersStore} from '../store/index';
 import {ActivatedRoute} from '@angular/router';
@@ -22,7 +22,7 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
   templateUrl: './task.index.component.html'
 })
-export class TaskIndexComponent {
+export class TaskIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 

@@ -38,6 +38,6 @@ export function buildSearchParams(fetchRequest?: FetchRequest): URLSearchParams 
   return params;
 }
 
-export function buildDateRangeParam(startDate: string, endDate: string): string{
+export function buildDateRangeParam(startDate: string, endDate: string): string {
   return `${startDate}..${endDate}`;
 }

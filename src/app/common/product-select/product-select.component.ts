@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {ProductPage} from '../../services/portfolio/domain/product-page.model';
@@ -34,6 +34,10 @@ const noop: () => void = () => {
   templateUrl: './product-select.component.html'
 })
 export class ProductSelectComponent implements ControlValueAccessor, OnInit {
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
 
   formControl: FormControl;
 
@@ -54,8 +58,8 @@ export class ProductSelectComponent implements ControlValueAccessor, OnInit {
       .distinctUntilChanged()
       .debounceTime(500)
       .do(product => {
-        if(this.isObject(product)) {
-          this.onProductSelected.emit(product)
+        if (this.isObject(product)) {
+          this.onProductSelected.emit(product);
         }
       })
       .map(product => this.isObject(product) ? product.name : product)
@@ -83,17 +87,13 @@ export class ProductSelectComponent implements ControlValueAccessor, OnInit {
     this._onTouchedCallback = fn;
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
   onSearch(searchTerm?: string): Observable<Product[]> {
-    let fetchRequest: FetchRequest = {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
       },
-      searchTerm: searchTerm
+      searchTerm
     };
 
     return this.portfolioService.findAllProducts(false, fetchRequest)

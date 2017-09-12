@@ -32,7 +32,7 @@ const initialState: State = {
 };
 
 export function reducer(state = initialState, action: teller.Actions): State {
-  switch(action.type){
+  switch (action.type) {
 
     case teller.UNLOCK_DRAWER: {
       return Object.assign({}, state, {
@@ -51,7 +51,7 @@ export function reducer(state = initialState, action: teller.Actions): State {
     }
 
     case teller.UNLOCK_DRAWER_FAIL: {
-      let error = action.payload;
+      const error = action.payload;
       return Object.assign({}, state, {
         loading: false,
         error

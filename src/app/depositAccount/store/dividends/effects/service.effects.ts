@@ -24,9 +24,6 @@ import * as dividendActions from '../dividend.actions';
 @Injectable()
 export class DepositProductDividendApiEffects {
 
-  constructor(private actions$: Actions, private depositService: DepositAccountService) {
-  }
-
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(dividendActions.LOAD_ALL)
@@ -45,5 +42,8 @@ export class DepositProductDividendApiEffects {
         .map(() => new dividendActions.CreateDividendDistributionSuccessAction(payload))
         .catch((error) => of(new dividendActions.CreateDividendDistributionFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private depositService: DepositAccountService) {
+  }
 
 }

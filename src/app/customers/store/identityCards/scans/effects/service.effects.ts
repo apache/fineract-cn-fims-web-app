@@ -24,8 +24,6 @@ import * as identificationCardScans from '../scans.actions';
 @Injectable()
 export class CustomerIdentificationCardScanApiEffects {
 
-  constructor(private actions$: Actions, private customerService: CustomerService) {}
-
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(identificationCardScans.LOAD_ALL)
@@ -45,7 +43,8 @@ export class CustomerIdentificationCardScanApiEffects {
     .ofType(identificationCardScans.CREATE)
     .map((action: identificationCardScans.CreateIdentityCardScanAction) => action.payload)
     .mergeMap(payload =>
-      this.customerService.uploadIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber, payload.scan, payload.file)
+      this.customerService.uploadIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber,
+        payload.scan, payload.file)
         .map(() => new identificationCardScans.CreateIdentityCardScanSuccessAction({
           resource: payload.scan,
           activatedRoute: payload.activatedRoute
@@ -58,11 +57,14 @@ export class CustomerIdentificationCardScanApiEffects {
     .ofType(identificationCardScans.DELETE)
     .map((action: identificationCardScans.DeleteIdentityCardScanAction) => action.payload)
     .mergeMap(payload =>
-      this.customerService.deleteIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber, payload.scan.identifier)
+      this.customerService.deleteIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber,
+        payload.scan.identifier)
         .map(() => new identificationCardScans.DeleteIdentityCardScanSuccessAction({
           resource: payload.scan,
           activatedRoute: undefined
         }))
         .catch((error) => of(new identificationCardScans.DeleteIdentityCardScanFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) {}
 }

@@ -24,8 +24,6 @@ import * as taskActions from '../task.actions';
 @Injectable()
 export class TasksNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({dispatch: false})
   createTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.CREATE_SUCCESS)
@@ -41,5 +39,7 @@ export class TasksNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Task is going to be updated'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

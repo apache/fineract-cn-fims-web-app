@@ -18,15 +18,10 @@ import * as fromRoot from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
-import {
-  createResourceReducer,
-  getResourceLoadedAt,
-  getResourceSelected,
-  ResourceState
-} from '../../common/store/resource.reducer';
+import {createResourceReducer, getResourceLoadedAt, getResourceSelected, ResourceState} from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   roles: ResourceState;
   roleForm: FormState;
 }
@@ -38,9 +33,9 @@ const reducers = {
 
 export const roleModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class RolesStore extends Store<State>{}
+export class RolesStore extends Store<State> {}
 
-export function roleStoreFactory(appStore: Store<fromRoot.State>){
+export function roleStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(roleModuleReducer);
   return appStore;
 }

@@ -19,7 +19,7 @@ import {todayAsISOString, toShortISOString} from '../../services/domain/date.con
 import {FimsValidators} from '../../common/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingStore} from '../store/index';
 import {DatePipe} from '@angular/common';
 import {JournalEntry} from '../../services/accounting/domain/journal-entry.model';
@@ -29,9 +29,9 @@ import {Debtor} from '../../services/accounting/domain/debtor.model';
   templateUrl: './journal-entry.list.component.html',
   providers: [DatePipe]
 })
-export class JournalEntryListComponent implements OnInit{
+export class JournalEntryListComponent implements OnInit {
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   form: FormGroup;
 
@@ -39,7 +39,8 @@ export class JournalEntryListComponent implements OnInit{
 
   journalEntry: JournalEntry;
 
-  constructor(private formBuilder: FormBuilder, private store: AccountingStore) {}
+  constructor(private formBuilder: FormBuilder, private store: AccountingStore) {
+  }
 
   ngOnInit(): void {
     this.journalEntries$ = this.store.select(fromAccounting.getJournalEntriesSearchResult)
@@ -48,27 +49,29 @@ export class JournalEntryListComponent implements OnInit{
     const today = todayAsISOString();
 
     this.form = this.formBuilder.group({
-      'startDate': [today, [Validators.required] ],
-      'endDate': [today, [Validators.required] ],
+      'startDate': [today, [Validators.required]],
+      'endDate': [today, [Validators.required]],
       'account': [],
       'amount': [],
-    }, { validator: FimsValidators.matchRange('startDate', 'endDate') });
+    }, {validator: FimsValidators.matchRange('startDate', 'endDate')});
 
-    this.fetchJournalEntries()
+    this.fetchJournalEntries();
   }
 
-  fetchJournalEntries(): void{
+  fetchJournalEntries(): void {
     const startDate = toShortISOString(this.form.get('startDate').value);
     const endDate = toShortISOString(this.form.get('endDate').value);
     const account = this.form.get('account').value;
     const amount = this.form.get('amount').value;
 
-    this.store.dispatch({ type: SEARCH, payload: {
-      startDate,
-      endDate,
-      account,
-      amount: amount ? amount.toFixed(2) : undefined
-    }});
+    this.store.dispatch({
+      type: SEARCH, payload: {
+        startDate,
+        endDate,
+        account,
+        amount: amount ? amount.toFixed(2) : undefined
+      }
+    });
   }
 
   select(journalEntry: JournalEntry): void {
@@ -78,7 +81,7 @@ export class JournalEntryListComponent implements OnInit{
   sumDebtors(debtors: Debtor[]): number {
     return debtors.reduce((sum, debtor) => {
       return sum + parseFloat(debtor.amount);
-    }, 0)
+    }, 0);
   }
 
 }

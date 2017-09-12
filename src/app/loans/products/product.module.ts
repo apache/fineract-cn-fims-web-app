@@ -165,4 +165,4 @@ import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/not
     { provide: PortfolioStore, useFactory: portfolioStoreFactory, deps: [Store]}
   ]
 })
-export class ProductModule{}
+export class ProductModule {}

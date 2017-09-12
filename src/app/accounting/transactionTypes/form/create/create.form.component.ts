@@ -51,7 +51,7 @@ export class CreateTransactionTypeFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(transactionType: TransactionType) {
@@ -65,7 +65,7 @@ export class CreateTransactionTypeFormComponent implements OnInit, OnDestroy {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

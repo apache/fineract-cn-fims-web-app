@@ -27,8 +27,6 @@ import {ChequeService} from '../../../../services/cheque/cheque.service';
 @Injectable()
 export class DepositProductInstanceApiEffects {
 
-  constructor(private actions$: Actions, private depositService: DepositAccountService, private chequeService: ChequeService) { }
-
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(instanceActions.SEARCH)
@@ -82,4 +80,6 @@ export class DepositProductInstanceApiEffects {
         .map(() => new instanceActions.IssueChequesSuccessAction(payload))
         .catch((error) => of(new instanceActions.IssueChequesFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private depositService: DepositAccountService, private chequeService: ChequeService) { }
 }

@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import {CREATE, RESET_FORM} from '../store/product.actions';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromDepositAccount from '../store';
 import {Error} from '../../services/domain/error.model';
 import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
@@ -84,7 +84,7 @@ export class DepositProductCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
-    this.depositStore.dispatch({ type: RESET_FORM })
+    this.depositStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(productDefinition: ProductDefinition): void {
@@ -98,7 +98,7 @@ export class DepositProductCreateComponent implements OnInit, OnDestroy {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

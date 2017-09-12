@@ -19,39 +19,39 @@ import {ContactDetail, ContactDetailType} from '../../services/domain/contact/co
 import {Employee} from '../../services/office/domain/employee.model';
 import {UserWithPassword} from '../../services/identity/domain/user-with-password.model';
 
-function buildContactDetail(type: ContactDetailType, value: string): ContactDetail{
+function buildContactDetail(type: ContactDetailType, value: string): ContactDetail {
   return {
     group: 'BUSINESS',
     type: type,
     value: value,
     preferenceLevel: 1
-  }
+  };
 }
 
-export function mapContactDetails(contactForm: any): ContactDetail[]{
-  let contactDetails: ContactDetail[] = [];
+export function mapContactDetails(contactForm: any): ContactDetail[] {
+  const contactDetails: ContactDetail[] = [];
 
-  if(contactForm.phone){
+  if (contactForm.phone) {
     contactDetails.push(buildContactDetail('PHONE', contactForm.phone));
   }
 
-  if(contactForm.mobile){
+  if (contactForm.mobile) {
     contactDetails.push(buildContactDetail('MOBILE', contactForm.mobile));
   }
 
-  if(contactForm.email){
+  if (contactForm.email) {
     contactDetails.push(buildContactDetail('EMAIL', contactForm.email));
   }
 
   return contactDetails;
 }
 
-export function mapEmployee(event: EmployeeSaveEvent): Employee{
-  let assignedOffice = event.officeForm.assignedOffice;
+export function mapEmployee(event: EmployeeSaveEvent): Employee {
+  const assignedOffice = event.officeForm.assignedOffice;
 
-  let contactDetails: ContactDetail[] = mapContactDetails(event.contactForm);
+  const contactDetails: ContactDetail[] = mapContactDetails(event.contactForm);
 
-  let employee: Employee = {
+  const employee: Employee = {
     identifier: event.detailForm.identifier,
     givenName: event.detailForm.firstName,
     middleName: event.detailForm.middleName,
@@ -63,8 +63,8 @@ export function mapEmployee(event: EmployeeSaveEvent): Employee{
   return employee;
 }
 
-export function mapUser(event: EmployeeSaveEvent): UserWithPassword{
-  let userWithPassword: UserWithPassword = {
+export function mapUser(event: EmployeeSaveEvent): UserWithPassword {
+  const userWithPassword: UserWithPassword = {
     identifier: event.detailForm.identifier,
     password: event.detailForm.password,
     role: event.detailForm.role

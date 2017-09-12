@@ -59,11 +59,12 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
     };
 
     this.form = this.formBuilder.group({
-      'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe ] ],
-      'type': [ typeValue, [Validators.required] ],
-      'name': [ this.ledger.name, [Validators.required, Validators.maxLength(256)] ],
-      'showAccountsInChart': [ this.ledger.showAccountsInChart, [Validators.required]],
-      'description': [ this.ledger.description, Validators.maxLength(2048) ],
+      'identifier': [this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32),
+        FimsValidators.urlSafe]],
+      'type': [typeValue, [Validators.required]],
+      'name': [this.ledger.name, [Validators.required, Validators.maxLength(256)]],
+      'showAccountsInChart': [this.ledger.showAccountsInChart, [Validators.required]],
+      'description': [this.ledger.description, Validators.maxLength(2048)],
     });
   }
 
@@ -77,7 +78,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
   }
 
   save(): void {
-    let ledger: Ledger = {
+    const ledger: Ledger = {
       identifier: this.form.get('identifier').value,
       type: this.form.get('type').value,
       name: this.form.get('name').value,

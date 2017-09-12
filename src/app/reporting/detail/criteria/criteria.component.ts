@@ -42,7 +42,9 @@ export class ReportingCriteriaComponent {
   @ViewChild('displayableFieldComponent') displayableFieldsComponent: ReportingDisplayableFieldsComponent;
 
   @Input() set queryParameter(queryParameter: QueryParameter[]) {
-    if(!queryParameter) return;
+    if (!queryParameter) {
+      return;
+    }
 
     this.mandatoryParams = queryParameter.filter(param => param.mandatory);
     this.optionalParams = queryParameter.filter(param => !param.mandatory);

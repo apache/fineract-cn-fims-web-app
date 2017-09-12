@@ -53,7 +53,7 @@ describe('Test teller form', () => {
         {
           provide: AccountingService, useClass: class {
           findAccount = jasmine.createSpy('findAccount').and.returnValue({});
-          fetchAccounts = jasmine.createSpy('fetchAccounts').and.returnValue([])
+          fetchAccounts = jasmine.createSpy('fetchAccounts').and.returnValue([]);
         }
         }
       ]
@@ -85,7 +85,9 @@ describe('Test teller form', () => {
 });
 
 @Component({
-  template: '<fims-teller-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [teller]="teller" [editMode]="true"></fims-teller-form-component>'
+  template: `
+    <fims-teller-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [teller]="teller" [editMode]="true">
+    </fims-teller-form-component>`
 })
 class TestComponent {
 

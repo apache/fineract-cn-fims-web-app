@@ -20,7 +20,7 @@ import {MdSnackBar, MdSnackBarConfig, MdSnackBarRef} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'fims-notification',
@@ -31,12 +31,14 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   private notificationSubscription: Subscription;
   private errorSubscription: Subscription;
 
-  constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient, private snackBar: MdSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
+  constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient,
+              private snackBar: MdSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     const config: MdSnackBarConfig = new MdSnackBarConfig();
     config.viewContainerRef = this.viewContainerRef;
-    this.notificationSubscription = this.notificationService.notifications$.subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
+    this.notificationSubscription = this.notificationService.notifications$
+      .subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
   }
 
   ngOnDestroy(): void {
@@ -64,14 +66,20 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   private showError(error: any): void {
     switch (error.status) {
       case 400:
-        this.showAlert('Unexpected error', 'We are very sorry, it seems the request you sent could not be accepted by our servers.');
+        this.showAlert('Unexpected error',
+          'We are very sorry, it seems the request you sent could not be accepted by our servers.'
+        );
         break;
       case 404:
-        this.showAlert('Resource not available', 'It seems the resource you requested is either not available or you don\'t have the permission to access it.');
+        this.showAlert('Resource not available',
+          'It seems the resource you requested is either not available or you don\'t have the permission to access it.'
+        );
         break;
       case 504:
       case 500:
-        this.showAlert('Service not available', 'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.');
+        this.showAlert('Service not available',
+          'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.'
+        );
         break;
       default:
         break;

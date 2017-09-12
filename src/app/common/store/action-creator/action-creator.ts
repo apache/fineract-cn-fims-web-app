@@ -15,11 +15,19 @@
  */
 import {type} from '../../../store/util';
 import {
-  LoadActionPayload, LoadAllAction, LoadAllCompleteAction, LoadAllCompleteActionPayload,
-  ResourceActions, LoadAction, SelectActionPayload, SelectAction, ResourceActionPayload, ResourceAction
+  LoadAction,
+  LoadActionPayload,
+  LoadAllAction,
+  LoadAllCompleteAction,
+  LoadAllCompleteActionPayload,
+  ResourceAction,
+  ResourceActionPayload,
+  ResourceActions,
+  SelectAction,
+  SelectActionPayload
 } from './actions';
 
-export type Actions<T> = LoadAllAction | LoadAllCompleteAction<T>
+export type Actions<T> = LoadAllAction | LoadAllCompleteAction<T>;
 
 export function createResourceActions<T>(name: string): ResourceActions<T> {
 
@@ -53,84 +61,84 @@ export function createResourceActions<T>(name: string): ResourceActions<T> {
     return {
       payload,
       type: LOAD_ALL_COMPLETE
-    }
+    };
   }
 
   function loadAction(payload: LoadActionPayload<T>): LoadAction<T> {
     return {
       payload,
       type: LOAD
-    }
+    };
   }
 
   function selectAction(payload: SelectActionPayload): SelectAction {
     return {
       payload,
       type: SELECT
-    }
+    };
   }
 
   function createAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: CREATE
-    }
+    };
   }
 
   function createSuccessAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: CREATE_SUCCESS
-    }
+    };
   }
 
   function createFailAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: CREATE_FAIL
-    }
+    };
   }
 
   function updateAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: UPDATE
-    }
+    };
   }
 
   function updateSuccessAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: UPDATE_SUCCESS
-    }
+    };
   }
 
   function updateFailAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: UPDATE_FAIL
-    }
+    };
   }
 
   function deleteAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: DELETE
-    }
+    };
   }
 
   function deleteSuccessAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: DELETE_SUCCESS
-    }
+    };
   }
 
   function deleteFailAction(payload: ResourceActionPayload<T>): ResourceAction<T> {
     return {
       payload,
       type: DELETE_FAIL
-    }
+    };
   }
 
   return {
@@ -160,7 +168,7 @@ export function createResourceActions<T>(name: string): ResourceActions<T> {
     deleteAction,
     deleteSuccessAction,
     deleteFailAction
-  }
+  };
 }
 
 

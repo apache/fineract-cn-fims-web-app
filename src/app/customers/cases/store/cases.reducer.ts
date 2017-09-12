@@ -55,15 +55,15 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
 
       let caseState: CaseState = null;
 
-      if(commandAction === 'OPEN') {
+      if (commandAction === 'OPEN') {
         caseState = 'PENDING';
-      }else if(commandAction === 'APPROVE') {
+      }else if (commandAction === 'APPROVE') {
         caseState = 'APPROVED';
-      }else if(commandAction === 'DENY') {
+      }else if (commandAction === 'DENY') {
         caseState = 'CLOSED';
-      }else if(commandAction === 'CLOSE') {
+      }else if (commandAction === 'CLOSE') {
         caseState = 'CLOSED';
-      }else if(commandAction === 'DISBURSE') {
+      }else if (commandAction === 'DISBURSE') {
         caseState = 'ACTIVE';
       }
 
@@ -76,7 +76,7 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

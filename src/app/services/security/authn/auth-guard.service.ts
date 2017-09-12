@@ -15,19 +15,20 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../../store';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private store: Store<fromRoot.State>, private router: Router) {}
+  constructor(private store: Store<fromRoot.State>, private router: Router) {
+  }
 
   waitForAuthentication(): Observable<boolean> {
     return this.store.select(fromRoot.getAuthenticationLoading)
       .filter(loading => !loading)
-      .take(1)
+      .take(1);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

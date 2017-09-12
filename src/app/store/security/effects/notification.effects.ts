@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as securityActions from '../security.actions';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
@@ -24,14 +24,14 @@ import {NotificationService, NotificationType} from '../../../services/notificat
 @Injectable()
 export class SecurityNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   changePasswordSuccess$: Observable<Action> = this.actions$
     .ofType(securityActions.CHANGE_PASSWORD_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Your password has been changed'
-    }))
+    }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

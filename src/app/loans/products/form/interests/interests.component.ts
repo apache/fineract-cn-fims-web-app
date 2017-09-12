@@ -16,7 +16,6 @@
 
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormComponent} from '../../../../common/forms/form.component';
-import {InterestBasis} from '../../../../services/portfolio/domain/interest-basis.model';
 import {FormBuilder, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
@@ -67,7 +66,7 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
       maximum: this._formData.maximum,
       incomeAccount: this._formData.incomeAccount,
       accrualAccount: this._formData.accrualAccount
-    })
+    });
   }
 
   get formData(): InterestFormData {
@@ -82,9 +81,9 @@ export class ProductInterestFormComponent extends FormComponent<InterestFormData
   private toggleInterestRange(enabled: boolean): void {
     const maximumControl: FormControl = this.form.get('maximum') as FormControl;
 
-    if(enabled) {
+    if (enabled) {
       maximumControl.setValidators(this.minMaxValidators);
-      this.form.setValidators(FimsValidators.greaterThan('minimum', 'maximum'))
+      this.form.setValidators(FimsValidators.greaterThan('minimum', 'maximum'));
     } else {
       maximumControl.clearValidators();
       this.form.clearValidators();

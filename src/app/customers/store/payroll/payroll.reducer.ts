@@ -20,7 +20,7 @@ import {PayrollDistributionRoutePayload} from './payroll.actions';
 
 export interface State {
   distribution: PayrollDistribution;
-  loadedAt: number
+  loadedAt: number;
 }
 
 const initialState: State = {
@@ -38,7 +38,7 @@ export function reducer(state: State = initialState, action: payrollActions.Acti
       return {
         distribution,
         loadedAt: Date.now()
-      }
+      };
     }
 
     case payrollActions.UPDATE_SUCCESS: {
@@ -47,7 +47,7 @@ export function reducer(state: State = initialState, action: payrollActions.Acti
       return {
         distribution: payload.distribution,
         loadedAt: state.loadedAt
-      }
+      };
     }
 
     default: {

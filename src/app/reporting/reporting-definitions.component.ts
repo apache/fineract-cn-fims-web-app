@@ -35,6 +35,6 @@ export class ReportingDefinitionsComponent implements OnInit {
   }
 
   goToReport(identifier: string): void {
-    this.router.navigate(['reports', identifier], { relativeTo: this.route })
+    this.router.navigate(['reports', identifier], { relativeTo: this.route });
   }
 }

@@ -16,14 +16,14 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DepositAccountStore} from '../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {SelectAction} from '../store/product.actions';
 
 @Component({
   templateUrl: './deposit-product.index.component.html'
 })
-export class DepositProductIndexComponent implements OnInit, OnDestroy{
+export class DepositProductIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 

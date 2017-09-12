@@ -54,7 +54,8 @@ export const REPORTING_INPUT_PARAM_VALIDATOR: any = {
   providers: [ REPORTING_EQUALS_PARAM_CONTROL_VALUE_ACCESSOR, REPORTING_INPUT_PARAM_VALIDATOR ],
   templateUrl: './input.component.html'
 })
-export class ReportingInputParamComponent extends AbstractControlValueAccessor implements ControlValueAccessor, Validator, OnInit, OnDestroy {
+export class ReportingInputParamComponent extends AbstractControlValueAccessor
+  implements ControlValueAccessor, Validator, OnInit, OnDestroy {
 
   private changeSubscription: Subscription;
 

@@ -44,14 +44,14 @@ export const createFormReducer = (resource: string, reducer?: ActionReducer<Form
 
       default: {
         // delegate to wrapped reducer
-        if(reducer) {
+        if (reducer) {
           return reducer(state, action);
         }
         return state;
       }
 
     }
-  }
+  };
 };
 
 export const getFormError = (formState: FormState) => formState.error;

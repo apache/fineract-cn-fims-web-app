@@ -15,15 +15,13 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as caseActions from '../case.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class CaseNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createCaseSuccess$: Observable<Action> = this.actions$
@@ -40,4 +38,6 @@ export class CaseNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Case is going to be updated'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

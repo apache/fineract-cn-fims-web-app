@@ -135,4 +135,4 @@ import {CaseTaskComponent} from './status/task.component';
     { provide: CasesStore, useFactory: caseStoreFactory, deps: [Store]}
   ]
 })
-export class CaseModule{}
+export class CaseModule {}

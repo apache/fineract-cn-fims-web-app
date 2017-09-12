@@ -22,8 +22,8 @@ export interface State {
   entries: AccountEntry[];
   startDate: string;
   endDate: string;
-  totalPages: number,
-  totalElements: number,
+  totalPages: number;
+  totalElements: number;
   loading: boolean;
   fetchRequest: FetchRequest;
 }

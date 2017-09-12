@@ -19,7 +19,7 @@ import {TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {PermissionDirective} from './permission.directive';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from './fims-permission.model';
 
 describe('Test permission directive', () => {
@@ -29,12 +29,13 @@ describe('Test permission directive', () => {
       providers: [
         {
           provide: Store, useClass: class {
-            select = function(){}
-          }
+          select = function () {
+          };
+        }
         }
       ],
-      declarations: [PermissionDirective, TestComponentWithObject]
-    })
+      declarations: [PermissionDirective, TestComponent]
+    });
   });
 
   describe('Test permission directive with object parameter', () => {
@@ -42,10 +43,10 @@ describe('Test permission directive', () => {
       const store = TestBed.get(Store);
 
       spyOn(store, 'select').and.returnValue(Observable.of<FimsPermission[]>([
-        { id: 'office_offices', accessLevel: 'READ'}
+        {id: 'office_offices', accessLevel: 'READ'}
       ]));
 
-      const fixture = TestBed.createComponent(TestComponentWithObject);
+      const fixture = TestBed.createComponent(TestComponent);
       fixture.detectChanges();
 
       const element = fixture.debugElement.query(By.css('button'));
@@ -56,11 +57,11 @@ describe('Test permission directive', () => {
       const store = TestBed.get(Store);
       spyOn(store, 'select').and.returnValue(Observable.of([]));
 
-      const fixture = TestBed.createComponent(TestComponentWithObject);
+      const fixture = TestBed.createComponent(TestComponent);
       fixture.detectChanges();
       const element = fixture.debugElement.query(By.css('button'));
       expect(element).toBeNull('Button should be not existent within the dom');
-    })
+    });
   });
 
 });
@@ -70,4 +71,5 @@ describe('Test permission directive', () => {
     <button *hasPermission="{ id: 'office_offices', accessLevel: 'READ' }">randomTestValue</button>
   `
 })
-class TestComponentWithObject{}
+class TestComponent {
+}

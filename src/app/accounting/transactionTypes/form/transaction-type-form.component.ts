@@ -31,7 +31,7 @@ export class TransactionTypeFormComponent extends FormComponent<TransactionType>
 
   @Input() transactionType: TransactionType;
 
-  @Input() editMode: boolean = false;
+  @Input() editMode = false;
 
   @Output('onSave') onSave = new EventEmitter<TransactionType>();
 

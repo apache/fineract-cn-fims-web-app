@@ -23,11 +23,11 @@ import * as taskActions from '../task.actions';
 @Injectable()
 export class TasksRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createCustomerTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

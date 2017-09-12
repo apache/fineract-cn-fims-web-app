@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface PermittableEndpoint{
+export interface PermittableEndpoint {
   path: string;
   method: Method;
   groupId?: string;

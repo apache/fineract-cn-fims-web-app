@@ -19,7 +19,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductFormComponent} from './form.component';
 import {PortfolioStore} from '../store/index';
 import {CREATE, RESET_FORM} from '../store/product.actions';
-import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Error} from '../../../services/domain/error.model';
 import {FimsProduct} from '../store/model/fims-product.model';
@@ -30,9 +29,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   templateUrl: './create.component.html'
 })
-export class ProductCreateComponent implements OnInit, OnDestroy{
-
-  private formStateSubscription: Subscription;
+export class ProductCreateComponent implements OnInit, OnDestroy {
 
   @ViewChild('form') formComponent: ProductFormComponent;
 
@@ -69,7 +66,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     }
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore, private currencyService: CurrencyService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore,
+              private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
     this.error$ = this.portfolioStore.select(fromPortfolio.getProductFormError)
@@ -79,7 +77,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.portfolioStore.dispatch({ type: RESET_FORM })
+    this.portfolioStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(product: FimsProduct): void {
@@ -93,7 +91,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

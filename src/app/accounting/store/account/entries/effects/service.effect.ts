@@ -15,17 +15,15 @@
  */
 
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
-import * as accountEntryActions from '../entries.actions'
+import * as accountEntryActions from '../entries.actions';
 import {Injectable} from '@angular/core';
 import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 
 @Injectable()
 export class AccountEntryApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   loadAccountEntries$: Observable<Action> = this.actions$
@@ -40,4 +38,6 @@ export class AccountEntryApiEffects {
           totalElements: 0
         })))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

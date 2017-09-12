@@ -27,9 +27,9 @@ import {PortfolioService} from '../../../../services/portfolio/portfolio.service
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 
 interface Parameter {
-  productId: string,
-  caseId: string,
-  action: string
+  productId: string;
+  caseId: string;
+  action: string;
 }
 
 @Component({
@@ -43,7 +43,8 @@ export class CaseCommandConfirmationComponent implements OnInit {
 
   params$: Observable<Parameter>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore,
+              private portfolioService: PortfolioService) {}
 
   ngOnInit() {
     this.params$ = this.route.params
@@ -56,7 +57,7 @@ export class CaseCommandConfirmationComponent implements OnInit {
     this.costComponents$ = this.params$
       .flatMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action));
 
-    this.fimsCase$ = this.casesStore.select(fromCases.getSelectedCase)
+    this.fimsCase$ = this.casesStore.select(fromCases.getSelectedCase);
   }
 
   executeCommand(event: ExecuteCommandEvent): void {
