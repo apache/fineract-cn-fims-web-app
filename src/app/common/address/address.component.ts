@@ -23,8 +23,6 @@ import {CountryService} from '../../services/country/country.service';
 import {countryExists} from '../validator/country-exists.validator';
 import {Observable} from 'rxjs/Observable';
 
-import 'rxjs/add/operator/startWith';
-
 @Component({
   selector: 'fims-address-form',
   templateUrl: './address.component.html'

@@ -25,8 +25,6 @@ import {IdentityService} from '../../../services/identity/identity.service';
 import {RoleIdentifier} from '../../../services/identity/domain/role-identifier.model';
 import {Password} from '../../../services/identity/domain/password.model';
 
-import 'rxjs/add/observable/forkJoin';
-
 @Injectable()
 export class EmployeeApiEffects {
 

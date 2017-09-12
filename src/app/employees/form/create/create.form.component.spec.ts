@@ -34,8 +34,6 @@ import {FormFinalActionComponent} from '../../../common/forms/form-final-action.
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-import 'rxjs/add/observable/empty';
-
 const eventMock: EmployeeSaveEvent = {
   detailForm: {
     identifier: 'test',

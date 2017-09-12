@@ -17,9 +17,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Error} from '../domain/error.model';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import {HttpClient} from '../http/http.service';
 import {Password} from './domain/password.model';
 import {UserWithPassword} from './domain/user-with-password.model';

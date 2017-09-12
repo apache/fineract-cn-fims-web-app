@@ -19,8 +19,6 @@ import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 
-import 'rxjs/add/observable/fromPromise';
-
 export function setValueByFormControlName(fixture: ComponentFixture<any>, formControlName: string, value: string): Observable<any> {
   const debugElement: DebugElement = fixture.debugElement.query(By.css(`input[formControlName="${formControlName}"]`));
 

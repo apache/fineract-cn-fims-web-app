@@ -22,8 +22,6 @@ import * as fromRoot from '../../store';
 import {AUTHORIZATION_HEADER, TENANT_HEADER, USER_HEADER} from '../http/http.service';
 import {State} from '../../store/security/authentication.reducer';
 
-import 'rxjs/add/observable/empty';
-
 @Injectable()
 export class ImageService {
 

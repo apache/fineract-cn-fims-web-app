@@ -29,10 +29,6 @@ import * as fromRoot from '../../index';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {Password} from '../../../services/identity/domain/password.model';
 
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/observable/from';
-
-
 @Injectable()
 export class SecurityApiEffects {
 

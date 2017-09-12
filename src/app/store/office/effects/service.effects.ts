@@ -23,8 +23,6 @@ import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
 import {emptySearchResult} from '../../../common/store/search.reducer';
 
-import 'rxjs/add/operator/takeUntil';
-
 @Injectable()
 export class OfficeSearchApiEffects {
 

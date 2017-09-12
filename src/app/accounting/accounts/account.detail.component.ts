@@ -26,8 +26,6 @@ import {FimsPermission} from '../../services/security/authz/fims-permission.mode
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
 
-import 'rxjs/add/observable/combineLatest';
-
 @Component({
   templateUrl: './account.detail.component.html'
 })

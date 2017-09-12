@@ -34,8 +34,6 @@ import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution
 import {Error} from '../../../../services/domain/error.model';
 import {TellerTransactionService} from '../services/transaction.service';
 
-import 'rxjs/add/observable/empty';
-
 @Component({
   templateUrl: './create.component.html'
 })

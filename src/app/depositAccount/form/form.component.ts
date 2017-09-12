@@ -32,8 +32,6 @@ import {ledgerExists} from '../../common/validator/ledger-exists.validator';
 import {Subscription} from 'rxjs/Subscription';
 import {Type} from '../../services/depositAccount/domain/type.model';
 
-import 'rxjs/add/operator/startWith';
-
 @Component({
   selector: 'fims-deposit-product-form',
   templateUrl: './form.component.html'

@@ -29,8 +29,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {SEARCH} from './store/case.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
-import 'rxjs/add/observable/combineLatest';
-
 @Component({
   templateUrl: './case.list.component.html'
 })

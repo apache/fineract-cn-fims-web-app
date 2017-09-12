@@ -25,8 +25,6 @@ import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
 
-import 'rxjs/add/observable/combineLatest';
-
 @Component({
   templateUrl: './case.detail.component.html'
 })

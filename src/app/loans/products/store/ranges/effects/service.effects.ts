@@ -24,8 +24,6 @@ import {PortfolioService} from '../../../../../services/portfolio/portfolio.serv
 import {RangeActions} from '../range.actions';
 import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
 
-import 'rxjs/add/operator/takeUntil';
-
 @Injectable()
 export class ProductChargeRangesApiEffects {
 

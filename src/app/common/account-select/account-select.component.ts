@@ -23,8 +23,6 @@ import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AccountType} from '../../services/accounting/domain/account-type.model';
 
-import 'rxjs/add/operator/distinctUntilChanged';
-
 const noop: () => void = () => {
   // empty method
 };

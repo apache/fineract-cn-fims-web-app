@@ -26,8 +26,6 @@ import {FimsPermission} from '../../services/security/authz/fims-permission.mode
 import {Observable} from 'rxjs/Observable';
 import {TdDialogService} from '@covalent/core';
 
-import 'rxjs/add/observable/combineLatest';
-
 @Component({
   templateUrl: './product.detail.component.html'
 })

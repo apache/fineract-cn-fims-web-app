@@ -34,8 +34,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {createPlaceholder} from '../query-params.helper';
 
-import 'rxjs/add/observable/combineLatest';
-
 export const REPORTING_BETWEEN_PARAM_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ReportingBetweenParamComponent),
