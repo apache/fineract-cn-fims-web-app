@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+export interface FimsDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
 export function todayAsISOString(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -57,3 +63,31 @@ export function parseDate(dateString: string): Date {
 
   return date;
 }
+
+/**
+ * Converts '2017-01-20' to FimsDate
+ * @param dateString
+ */
+export function toFimsDate(dateString: string): FimsDate {
+  const chunks: string[] = dateString ? dateString.split('-') : [];
+
+  return {
+    year: chunks.length ? Number(chunks[0]) : undefined,
+    month: chunks.length ? Number(chunks[1]) : undefined,
+    day: chunks.length ? Number(chunks[2]) : undefined,
+  };
+}
+
+export function toISOString(fimsDate: FimsDate): string {
+  return formatDate(fimsDate.year, fimsDate.month, fimsDate.day);
+}
+
+function formatDate(year: number, month: number, day: number): string {
+  return `${year}-${addZero(month)}-${addZero(day)}`;
+}
+
+function addZero(value: number): string {
+  return ('0' + value).slice(-2);
+}
+
+
