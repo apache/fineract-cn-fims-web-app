@@ -16,11 +16,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
-import {todayAsISOString, toShortISOString} from '../../../../services/domain/date.converter';
+import {todayAsISOString, toFimsDate} from '../../../../services/domain/date.converter';
 
 export interface DistributeDividendFormData {
   productDefinitionId: string;
-  dueDate: string;
+  dueDate: {
+    year?: number;
+    month?: number;
+    day?: number;
+  };
   dividendRate: string;
 }
 
@@ -50,7 +54,7 @@ export class DividendFormComponent implements OnInit {
   save(): void {
     this.onSave.emit({
       productDefinitionId: this.productDefinitionId,
-      dueDate: toShortISOString(this.form.get('dueDate').value),
+      dueDate: toFimsDate(this.form.get('dueDate').value),
       dividendRate: this.form.get('dividendRate').value
     });
   }

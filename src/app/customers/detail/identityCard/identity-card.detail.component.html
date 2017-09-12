@@ -37,7 +37,7 @@
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Expiration date</h3>
-        <p md-line>{{identificationCard?.expirationDate?.year}}-{{identificationCard?.expirationDate?.month}}-{{identificationCard?.expirationDate?.day}}</p>
+        <p md-line>{{identificationCard?.expirationDate | displayFimsDate}}</p>
       </md-list-item>
     </md-list>
     <fims-identification-card-scan-list
