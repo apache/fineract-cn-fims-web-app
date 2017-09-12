@@ -39,19 +39,19 @@ export const CHANGE_PASSWORD = type('[Security] Change Password');
 export const CHANGE_PASSWORD_SUCCESS = type('[Security] Change Password Success');
 export const CHANGE_PASSWORD_FAIL = type('[Security] Change Password Fail');
 
-export interface LoginPayload{
+export interface LoginPayload {
   username: string;
   password: string;
   tenant: string;
 }
 
-export interface LoginSuccessPayload{
+export interface LoginSuccessPayload {
   username: string;
   tenant: string;
   authentication: Authentication;
 }
 
-export interface ChangePasswordPayload{
+export interface ChangePasswordPayload {
   username: string;
   password: string;
 }

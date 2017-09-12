@@ -45,7 +45,7 @@ export function reducer(state = initialState, action: task.Actions): State {
       const commands = state.commands.map(command => {
         return Object.assign({}, command, {
           tasks: entities.filter(instance => instance.taskDefinition.actions.indexOf(command.action) > -1)
-        })
+        });
       });
 
       return {
@@ -57,23 +57,27 @@ export function reducer(state = initialState, action: task.Actions): State {
       const payload = action.payload;
 
       const commands = state.commands.map(command => {
-        if(command.action !== payload.action) return command;
+        if (command.action !== payload.action) {
+          return command;
+        }
 
         return Object.assign({}, command, {
           tasks: command.tasks.map(task => {
-            if(task.taskDefinition.identifier !== payload.taskIdentifier) return task;
+            if (task.taskDefinition.identifier !== payload.taskIdentifier) {
+              return task;
+            }
 
             return Object.assign({}, task, {
               executedOn: payload.executed ? new Date().toISOString() : undefined,
               executedBy: payload.executedBy
-            })
+            });
           })
-        })
+        });
       });
 
       return {
         commands
-      }
+      };
     }
 
     default: {

@@ -16,7 +16,7 @@
 
 import {TranslateService} from '@ngx-translate/core';
 
-export const TRANSLATE_STORAGE_KEY: string = 'fims-translate-lang';
+export const TRANSLATE_STORAGE_KEY = 'fims-translate-lang';
 
 export function getSelectedLanguage(translateService: TranslateService): string {
   const storedLanguage: string = sessionStorage.getItem(TRANSLATE_STORAGE_KEY);

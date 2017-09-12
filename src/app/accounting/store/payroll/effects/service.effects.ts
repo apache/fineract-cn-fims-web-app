@@ -28,8 +28,6 @@ import {emptySearchResult} from '../../../../common/store/search.reducer';
 @Injectable()
 export class PayrollCollectionApiEffects {
 
-  constructor(private actions$: Actions, private accountingService: AccountingService) {}
-
   @Effect()
   loadAllCollections$: Observable<Action> = this.actions$
     .ofType(payrollActions.LOAD_ALL_COLLECTIONS)
@@ -70,6 +68,8 @@ export class PayrollCollectionApiEffects {
         createdOn: new Date().toISOString()
       },
       activatedRoute: payload.activatedRoute
-    }
+    };
   }
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) {}
 }

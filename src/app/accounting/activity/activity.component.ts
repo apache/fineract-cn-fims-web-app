@@ -21,11 +21,11 @@ import {AccountCommand} from '../../services/accounting/domain/account-command.m
 @Component({
   templateUrl: './activity.component.html'
 })
-export class AccountActivityComponent implements OnInit{
+export class AccountActivityComponent implements OnInit {
 
   commands: AccountCommand[];
 
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(( data: { commands: AccountCommand[]}) => this.commands = data.commands );

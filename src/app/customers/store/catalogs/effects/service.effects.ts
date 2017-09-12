@@ -25,8 +25,6 @@ import {CatalogService} from '../../../../services/catalog/catalog.service';
 @Injectable()
 export class CatalogApiEffects {
 
-  constructor(private actions$: Actions, private catalogService: CatalogService) { }
-
   @Effect()
   loadCatalogs$: Observable<Action> = this.actions$
     .ofType(catalogActions.LOAD_ALL)
@@ -35,5 +33,7 @@ export class CatalogApiEffects {
         .map(catalogs => new catalogActions.LoadAllCompleteAction(catalogs))
         .catch((error) => of(new catalogActions.LoadAllCompleteAction([])))
     );
+
+  constructor(private actions$: Actions, private catalogService: CatalogService) { }
 
 }

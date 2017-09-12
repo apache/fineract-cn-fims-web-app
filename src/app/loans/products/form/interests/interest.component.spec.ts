@@ -84,7 +84,7 @@ describe('Test product interest component', () => {
     component.formData = invalidFormData;
     fixture.detectChanges();
     expect(component.form.valid).toBeFalsy();
-  })
+  });
 
 });
 

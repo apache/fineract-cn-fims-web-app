@@ -21,7 +21,7 @@ import {Action} from '@ngrx/store';
 export const SEARCH = type('[Case Payments] Search');
 export const SEARCH_COMPLETE = type('[Case Payments] Search Complete');
 
-export interface SearchPaymentsPayload{
+export interface SearchPaymentsPayload {
   productIdentifier: string;
   caseIdentifier: string;
   initialDisbursalDate?: string;

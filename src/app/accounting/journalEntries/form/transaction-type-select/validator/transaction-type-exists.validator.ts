@@ -15,15 +15,17 @@
  */
 
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
 
 export function transactionTypeExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
-    if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
+    if (!control.dirty || !control.value || control.value.length === 0) {
+      return Observable.of(null);
+    }
 
-    let fetchRequest: FetchRequest = {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 1
@@ -32,15 +34,15 @@ export function transactionTypeExists(accountingService: AccountingService): Asy
     };
 
     return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => accountingService.fetchTransactionTypes(fetchRequest))
+      .switchMap(request => accountingService.fetchTransactionTypes(request))
       .map(transactionTypePage => transactionTypePage.transactionTypes)
       .map(transactionTypes => {
-        if(transactionTypes.length === 1 && transactionTypes[0].code === control.value){
+        if (transactionTypes.length === 1 && transactionTypes[0].code === control.value) {
           return null;
         }
         return {
           invalidTransactionType: true
-        }
+        };
       });
-  }
+  };
 }

@@ -23,8 +23,6 @@ import * as identificationCardScanActions from '../scans.actions';
 @Injectable()
 export class CustomerIdentificationCardScanNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   createIdentificationCardScanSuccess$: Observable<Action> = this.actions$
     .ofType(identificationCardScanActions.CREATE_SUCCESS)
@@ -40,5 +38,7 @@ export class CustomerIdentificationCardScanNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Scan is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }

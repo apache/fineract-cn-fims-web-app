@@ -19,7 +19,7 @@ import {FimsTaskInstance} from './fims-task-instance.model';
 
 export interface StatusCommand {
   action: WorkflowAction;
-  preStates: CaseState[],
-  tasks: FimsTaskInstance[],
-  note?: string
+  preStates: CaseState[];
+  tasks: FimsTaskInstance[];
+  note?: string;
 }

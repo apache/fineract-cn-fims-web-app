@@ -31,7 +31,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {PortfolioStore} from '../../store/index';

@@ -41,7 +41,7 @@ import {
 } from '../../../common/store/search.reducer';
 import {createFormReducer, getFormError} from '../../../common/store/form.reducer';
 
-export interface State extends fromCustomer.State{
+export interface State extends fromCustomer.State {
   cases: ResourceState;
   caseForm: fromCaseForm.State;
   caseSearch: SearchState;
@@ -59,9 +59,9 @@ const reducers = {
 
 export const caseModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class CasesStore extends Store<State>{}
+export class CasesStore extends Store<State> {}
 
-export function caseStoreFactory(appStore: Store<fromCustomer.State>){
+export function caseStoreFactory(appStore: Store<fromCustomer.State>) {
   appStore.replaceReducer(caseModuleReducer);
   return appStore;
 }
@@ -72,7 +72,8 @@ export const getSearchCases = createSelector(getCaseSearchState, getSearchEntiti
 export const getCaseSearchTotalElements = createSelector(getCaseSearchState, getSearchTotalElements);
 export const getCaseSearchTotalPages = createSelector(getCaseSearchState, getSearchTotalPages);
 
-export const getCaseSearchResults = createSelector(getSearchCases, getCaseSearchTotalPages, getCaseSearchTotalElements, (cases, totalPages, totalElements) => {
+export const getCaseSearchResults = createSelector(getSearchCases, getCaseSearchTotalPages, getCaseSearchTotalElements,
+  (cases, totalPages, totalElements) => {
   return {
     cases: cases,
     totalPages: totalPages,

@@ -19,8 +19,8 @@ import {FormArray, FormGroup} from '@angular/forms';
 export class JournalEntryValidators {
 
   static minItems(min: number = 1) {
-    return (formArray: FormArray): {[key: string]: any} => {
-      const minLength = min -1;
+    return (formArray: FormArray): { [key: string]: any } => {
+      const minLength = min - 1;
       if (formArray.length <= minLength) {
         return {
           minItemsInvalid: true
@@ -28,11 +28,11 @@ export class JournalEntryValidators {
       }
 
       return null;
-    }
+    };
   }
 
   static equalSum(firstValue: string, secondValue: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): { [key: string]: any } => {
       const firstSum: number = this.sum(group.get(firstValue).value);
 
       const secondSum: number = this.sum(group.get(secondValue).value);
@@ -44,13 +44,13 @@ export class JournalEntryValidators {
       }
 
       return null;
-    }
+    };
   }
 
   private static sum(accounts: any[]): number {
     let sum = 0;
 
-    for(let account of accounts){
+    for (const account of accounts) {
       sum += account.amount;
     }
 

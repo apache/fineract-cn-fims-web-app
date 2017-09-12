@@ -75,7 +75,9 @@ describe('Test ledger form', () => {
 });
 
 @Component({
-  template: '<fims-ledger-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [ledger]="ledger" [editMode]="true"></fims-ledger-form-component>'
+  template: `
+    <fims-ledger-form-component (onSave)="onSave($event)" (onCancel)="onCancel($event)" [ledger]="ledger" [editMode]="true">
+    </fims-ledger-form-component>`
 })
 class TestComponent {
 

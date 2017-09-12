@@ -34,7 +34,7 @@ import {TellerTransactionService} from '../services/transaction.service';
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateDepositTransactionForm implements OnInit, OnDestroy {
+export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy {
 
   private authenticatedTellerSubscription: Subscription;
 
@@ -69,7 +69,7 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .filter(teller => !!teller)
       .subscribe(teller => {
-        this.teller = teller
+        this.teller = teller;
       });
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
@@ -124,6 +124,6 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['../../'], {relativeTo: this.route})
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 }

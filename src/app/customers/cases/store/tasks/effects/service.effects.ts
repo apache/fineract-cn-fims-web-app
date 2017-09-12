@@ -17,7 +17,7 @@
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as taskActions from '../task.actions';
 import {of} from 'rxjs/observable/of';
 import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
@@ -27,8 +27,6 @@ import {FimsTaskInstance} from '../../model/fims-task-instance.model';
 
 @Injectable()
 export class CaseTasksApiEffects {
-
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
@@ -51,7 +49,8 @@ export class CaseTasksApiEffects {
   executeTask$: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_TASK)
     .map((action: taskActions.ExecuteTaskAction) => action.payload)
-    .mergeMap(payload => this.portfolioService.taskForCaseExecuted(payload.productIdentifier, payload.caseIdentifier, payload.taskIdentifier, payload.executed)
+    .mergeMap(payload => this.portfolioService.taskForCaseExecuted(payload.productIdentifier, payload.caseIdentifier,
+      payload.taskIdentifier, payload.executed)
       .map(() => new taskActions.ExecuteTaskActionSuccess(payload))
       .catch(error => of(new taskActions.ExecuteTaskActionFail(error))));
 
@@ -61,6 +60,8 @@ export class CaseTasksApiEffects {
       comment: instance.comment,
       executedOn: instance.executedOn,
       executedBy: instance.executedBy
-    }))
+    }));
   }
+
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
 }

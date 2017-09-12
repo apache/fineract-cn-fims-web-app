@@ -23,7 +23,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {IdentityService} from '../../services/identity/identity.service';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
-import {FormPermission} from '../model/form-permission.model';
 import {Observable} from 'rxjs/Observable';
 import {FormPermissionService} from '../helper/form-permission.service';
 import {TdDialogService} from '@covalent/core';
@@ -40,7 +39,8 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
 
   permissionGroup$: Observable<FormPermissionGroup[]>;
 
-  constructor(private route: ActivatedRoute, private identityService: IdentityService, private store: RolesStore, private formPermissionService: FormPermissionService, private dialogService: TdDialogService) {}
+  constructor(private route: ActivatedRoute, private identityService: IdentityService, private store: RolesStore,
+              private formPermissionService: FormPermissionService, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -72,7 +72,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
         this.store.dispatch({ type: DELETE, payload: {
           role,
           activatedRoute: this.route
-        } })
+        } });
       });
   }
 

@@ -29,17 +29,23 @@ export abstract class FormComponent<T> {
   abstract set formData(data: T)
 
   get pristine(): boolean {
-    if(!this.form) return true;
+    if (!this.form) {
+      return true;
+    }
     return this.form.pristine;
   }
 
   get valid(): boolean {
-    if(!this.form) return true;
+    if (!this.form) {
+      return true;
+    }
     return this.form.valid;
   }
 
   get dirty(): boolean {
-    if(!this.form) return true;
+    if (!this.form) {
+      return true;
+    }
     return this.form.dirty;
   }
 
@@ -48,9 +54,9 @@ export abstract class FormComponent<T> {
    * @returns {boolean}
    */
   get validWhenOptional(): boolean {
-    if(!this.pristine && this.valid){
+    if (!this.pristine && this.valid) {
       return true;
-    }else if(!this.pristine && !this.valid){
+    }else if (!this.pristine && !this.valid) {
       return false;
     }
     return true;
@@ -58,7 +64,7 @@ export abstract class FormComponent<T> {
 
   setError(field: string, error: string, value: any): void {
     const control: AbstractControl = this.form.get(field);
-    let errors = control.errors || {};
+    const errors = control.errors || {};
     errors[error] = value;
     control.setErrors(errors);
   }

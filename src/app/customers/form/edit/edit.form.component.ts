@@ -17,14 +17,14 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCustomers from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CustomersStore} from '../../store/index';
 import {UPDATE} from '../../store/customer.actions';
 
 @Component({
   templateUrl: './edit.form.component.html'
 })
-export class EditCustomerFormComponent implements OnInit, OnDestroy{
+export class EditCustomerFormComponent implements OnInit, OnDestroy {
 
   private customerSubscription: Subscription;
 
@@ -52,7 +52,7 @@ export class EditCustomerFormComponent implements OnInit, OnDestroy{
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

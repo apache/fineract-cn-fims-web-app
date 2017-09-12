@@ -21,5 +21,5 @@ export interface StatusCommand {
   action: CommandAction;
   comment?: string;
   tasks: TaskDefinition[];
-  preStates: CustomerState[]
+  preStates: CustomerState[];
 }

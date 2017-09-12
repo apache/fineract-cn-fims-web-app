@@ -24,8 +24,6 @@ import * as tellerActions from '../teller.actions';
 @Injectable()
 export class TellerNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({ dispatch: false })
   unlockDrawerSuccess$: Observable<Action> = this.actions$
     .ofType(tellerActions.UNLOCK_DRAWER_SUCCESS)
@@ -51,7 +49,8 @@ export class TellerNotificationEffects {
       this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: `Transaction successfully ${action}`
-      })
+      });
     });
 
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

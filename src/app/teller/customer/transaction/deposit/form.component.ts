@@ -43,11 +43,11 @@ export class DepositTransactionFormComponent implements OnInit {
 
   private _transactionType: TransactionType;
 
-  chargesIncluded: boolean = true;
+  chargesIncluded = true;
 
   enableTargetAccount: boolean;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   checkCashdrawLimit: boolean;
 
@@ -146,7 +146,7 @@ export class DepositTransactionFormComponent implements OnInit {
   }
 
   private hasType(types: TransactionType[], type: TransactionType): boolean {
-    return types.indexOf(type) > -1
+    return types.indexOf(type) > -1;
   }
 
   cancel(): void {
@@ -181,7 +181,7 @@ export class DepositTransactionFormComponent implements OnInit {
   }
 
   get createTransactionDisabled(): boolean {
-    return this.form.invalid || this.transactionCreated
+    return this.form.invalid || this.transactionCreated;
   }
 
 }

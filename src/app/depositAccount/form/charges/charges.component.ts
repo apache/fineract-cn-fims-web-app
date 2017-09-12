@@ -66,7 +66,7 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
       description: [charge ? charge.description : '', Validators.maxLength(2048)],
       proportional: [charge ? charge.proportional : false ],
       amount: [amount.toFixed(2), [ FimsValidators.minValue(0)] ]
-    })
+    });
   }
 
   addCharge(): void {

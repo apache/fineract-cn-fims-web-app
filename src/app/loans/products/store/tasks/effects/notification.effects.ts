@@ -16,15 +16,13 @@
 
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as taskActions from '../task.actions';
 
 @Injectable()
 export class ProductTasksNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({dispatch: false})
   createUpdateCustomerTaskSuccess$: Observable<Action> = this.actions$
@@ -41,5 +39,7 @@ export class ProductTasksNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Task is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

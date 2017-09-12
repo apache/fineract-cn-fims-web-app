@@ -42,7 +42,7 @@ describe('Validators', () => {
       it(`should return error when when it contains ${char}`, () => {
         const result = FimsValidators.urlSafe(new FormControl(`${char}`));
         expect(result).toEqual({ urlSafe: true });
-      })
+      });
     });
 
   });
@@ -90,7 +90,7 @@ describe('Validators', () => {
           value: 0
         }
       });
-    })
+    });
 
   });
 
@@ -108,7 +108,7 @@ describe('Validators', () => {
           value: 10
         }
       });
-    })
+    });
 
   });
 
@@ -137,7 +137,7 @@ describe('Validators', () => {
           value: 0
         }
       });
-    })
+    });
 
   });
 
@@ -157,7 +157,7 @@ describe('Validators', () => {
       expect(validator(group)).toEqual({
         rangeInvalid: true
       });
-    })
+    });
   });
 
   describe('email', () => {
@@ -171,7 +171,7 @@ describe('Validators', () => {
       expect(result).toEqual({
         email: true
       });
-    })
+    });
   });
 
   describe('requiredNotEmpty', () => {
@@ -205,7 +205,7 @@ describe('Validators', () => {
 
       const result = validator(group);
 
-      expect(result).toBeNull()
+      expect(result).toBeNull();
     });
 
     it('should return error when min = max', () => {
@@ -219,7 +219,7 @@ describe('Validators', () => {
 
       expect(result).toEqual({
         greaterThan: true
-      })
+      });
     });
 
     it('should return error when min > max', () => {
@@ -233,8 +233,8 @@ describe('Validators', () => {
 
       expect(result).toEqual({
         greaterThan: true
-      })
-    })
+      });
+    });
   });
 
   describe('greaterThanEquals', () => {
@@ -247,7 +247,7 @@ describe('Validators', () => {
 
       const result = validator(group);
 
-      expect(result).toBeNull()
+      expect(result).toBeNull();
     });
 
     it('should return null when min = max', () => {
@@ -259,7 +259,7 @@ describe('Validators', () => {
 
       const result = validator(group);
 
-      expect(result).toBeNull()
+      expect(result).toBeNull();
     });
 
     it('should return error when min > max', () => {
@@ -273,7 +273,7 @@ describe('Validators', () => {
 
       expect(result).toEqual({
         greaterThanEquals: true
-      })
-    })
+      });
+    });
   });
 });

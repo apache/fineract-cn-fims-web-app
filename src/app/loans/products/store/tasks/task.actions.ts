@@ -47,7 +47,7 @@ export const DELETE_FAIL = type('[Product Task] Delete Fail');
 
 export const RESET_FORM = type('[Product Task] Reset Form');
 
-export interface TaskRoutePayload extends RoutePayload{
+export interface TaskRoutePayload extends RoutePayload {
   productId: string;
   task: TaskDefinition;
 }

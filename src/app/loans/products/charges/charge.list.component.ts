@@ -22,14 +22,15 @@ import {ITdDataTableColumn} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../common/domain/action-option.model';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {LOAD_ALL} from '../store/charges/charge.actions';
 import {FimsProduct} from '../store/model/fims-product.model';
 
 @Component({
   templateUrl: './charge.list.component.html'
 })
-export class ProductChargeListComponent implements OnInit, OnDestroy{
+export class ProductChargeListComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
@@ -43,7 +44,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
     { name: 'amount', label: 'Amount', numeric: true, format: value => value.toFixed(2) },
     { name: 'chargeAction', label: 'Applied when', format: value => {
       const result: ActionOption = ActionOptions.find((option) => {
-        return option.type === value
+        return option.type === value;
       });
       return result.label;
     } }
@@ -67,7 +68,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
           totalElements: data.length,
           totalPages: 1,
           data
-        }
+        };
       });
   }
 
@@ -80,6 +81,6 @@ export class ProductChargeListComponent implements OnInit, OnDestroy{
   }
 
   rowSelect(chargeDefinition: ChargeDefinition): void {
-    this.router.navigate(['detail', chargeDefinition.identifier], { relativeTo: this.route })
+    this.router.navigate(['detail', chargeDefinition.identifier], { relativeTo: this.route });
   }
 }

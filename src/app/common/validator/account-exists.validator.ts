@@ -15,7 +15,7 @@
  */
 
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {isEmptyInputValue, isString} from './validators';
 
@@ -25,13 +25,17 @@ const invalid = Observable.of({
 
 export function accountExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
-    if (!control.dirty || isEmptyInputValue(control.value)) return Observable.of(null);
+    if (!control.dirty || isEmptyInputValue(control.value)) {
+      return Observable.of(null);
+    }
 
-    if(isString(control.value) && control.value.trim().length === 0) return invalid;
+    if (isString(control.value) && control.value.trim().length === 0) {
+      return invalid;
+    }
 
     return accountingService.findAccount(control.value, true)
       .map(account => null)
       .catch(() => invalid);
-  }
+  };
 
 }

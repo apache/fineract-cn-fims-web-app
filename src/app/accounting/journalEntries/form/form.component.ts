@@ -19,16 +19,13 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TdStepComponent} from '@covalent/core';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Account} from '../../../services/accounting/domain/account.model';
-import {Observable, Subscription} from 'rxjs';
-import {addCurrentTime, parseDate, todayAsISOString, toLongISOString} from '../../../services/domain/date.converter';
+import {Subscription} from 'rxjs/Subscription';
+import {addCurrentTime, parseDate, todayAsISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
 import * as fromRoot from '../../../store';
 import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';
 import {Error} from '../../../services/domain/error.model';
-import {SEARCH} from '../../../store/account/account.actions';
 import {AccountingStore} from '../../store/index';
 import {JournalEntryValidators} from './journal-entry.validator';
 import {AccountingService} from '../../../services/accounting/accounting.service';
@@ -89,7 +86,7 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     this.formStateSubscription.unsubscribe();
     this.userNameSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   save(): void {
@@ -155,14 +152,14 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     return this.formBuilder.group({
       accountNumber: ['', [Validators.required], accountExists(this.accountingService)],
       amount: [0, [Validators.required]]
-    })
+    });
   }
 
   private initDebtor(): FormGroup {
     return this.formBuilder.group({
       accountNumber: ['', [Validators.required], accountExists(this.accountingService)],
       amount: [0, [Validators.required]]
-    })
+    });
   }
 
 }

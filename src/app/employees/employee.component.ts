@@ -20,14 +20,14 @@ import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData} from '../common/data-table/data-table.component';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {SEARCH} from '../store/employee/employee.actions';
 
 @Component({
   selector: 'fims-employee',
   templateUrl: './employee.component.html'
 })
-export class EmployeeComponent implements OnInit{
+export class EmployeeComponent implements OnInit {
 
   employeeData$: Observable<TableData>;
 
@@ -43,7 +43,7 @@ export class EmployeeComponent implements OnInit{
 
   private lastFetchRequest: FetchRequest = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromRoot.State>){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: Store<fromRoot.State>) {}
 
   ngOnInit(): void {
 
@@ -61,22 +61,22 @@ export class EmployeeComponent implements OnInit{
     });
   }
 
-  search(searchTerm: string): void{
+  search(searchTerm: string): void {
     this.searchTerm = searchTerm;
     this.fetchEmployees();
   }
 
-  rowSelect(row: Employee): void{
+  rowSelect(row: Employee): void {
     this.router.navigate(['detail', row.identifier], { relativeTo: this.route });
   }
 
-  fetchEmployees(fetchRequest?: FetchRequest){
-    if(fetchRequest){
+  fetchEmployees(fetchRequest?: FetchRequest) {
+    if (fetchRequest) {
       this.lastFetchRequest = fetchRequest;
     }
 
     this.lastFetchRequest.searchTerm = this.searchTerm;
 
-    this.store.dispatch({ type: SEARCH, payload: this.lastFetchRequest })
+    this.store.dispatch({ type: SEARCH, payload: this.lastFetchRequest });
   }
 }

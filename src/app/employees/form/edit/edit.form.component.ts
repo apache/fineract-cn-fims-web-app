@@ -20,7 +20,7 @@ import {mapContactDetails, mapEmployee} from '../form.mapper';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {User} from '../../../services/identity/domain/user.model';
 import {UPDATE} from '../../store/employee.actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {EmployeesStore, getSelectedEmployee} from '../../store/index';
 
 @Component({
@@ -46,13 +46,13 @@ export class EditEmployeeFormComponent implements OnInit {
         return {
           user: data.user,
           employee: employee
-        }
+        };
       }
     );
   }
 
   onSave(event: EmployeeSaveEvent) {
-    let employee: Employee = mapEmployee(event);
+    const employee: Employee = mapEmployee(event);
 
     this.store.dispatch({ type: UPDATE, payload: {
       employee: employee,

@@ -84,11 +84,11 @@ export class CustomerFormComponent implements OnInit {
     this.openDetailStep();
   }
 
-  openDetailStep(): void{
+  openDetailStep(): void {
     this.step.open();
   }
 
-  showIdentifierValidationError(): void{
+  showIdentifierValidationError(): void {
     this.detailForm.setError('identifier', 'unique', true);
     this.openDetailStep();
   }
@@ -102,7 +102,9 @@ export class CustomerFormComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return (this.detailForm.valid && this.addressForm.valid) && this.contactForm.validWhenOptional && this.customFieldsForm.validWhenOptional
+    return (this.detailForm.valid && this.addressForm.valid)
+      && this.contactForm.validWhenOptional
+      && this.customFieldsForm.validWhenOptional;
   }
 
   get customer(): Customer {

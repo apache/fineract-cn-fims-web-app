@@ -22,7 +22,7 @@ import {EmployeeFormComponent, EmployeeSaveEvent} from '../form.component';
 import {SelectListComponent} from '../../../common/select-list/select-list.component';
 import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {CreateEmployeeFormComponent} from './create.form.component';
 import {mapEmployee, mapUser} from '../form.mapper';
 import {EmployeesStore} from '../../store/index';
@@ -34,8 +34,7 @@ import {FormFinalActionComponent} from '../../../common/forms/form-final-action.
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
-
-let eventMock: EmployeeSaveEvent = {
+const eventMock: EmployeeSaveEvent = {
   detailForm: {
     identifier: 'test',
     firstName: 'test',
@@ -55,7 +54,6 @@ let eventMock: EmployeeSaveEvent = {
 };
 
 let router: Router;
-let activatedRoute: ActivatedRoute;
 
 describe('Test employee form component', () => {
 
@@ -87,16 +85,16 @@ describe('Test employee form component', () => {
       ],
       providers: [
         { provide: Router, useValue: router},
-        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: ActivatedRoute, useValue: {} },
         {
           provide: Store, useClass: class {
           dispatch = jasmine.createSpy('dispatch');
-          select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+          select = jasmine.createSpy('select').and.returnValue(Observable.empty());
         }},
         {
           provide: EmployeesStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         }
       ],
@@ -113,15 +111,15 @@ describe('Test employee form component', () => {
     testComponent.onSave(eventMock);
 
     fixture.whenStable().then(() => {
-      let employee = mapEmployee(eventMock);
-      let user = mapUser(eventMock);
+      const employee = mapEmployee(eventMock);
+      const user = mapUser(eventMock);
 
       expect(store.dispatch).toHaveBeenCalledWith({ type: CREATE, payload: {
         employee: employee,
         user: user,
-        activatedRoute: activatedRoute
+        activatedRoute: {}
       }});
-    })
+    });
   })));
 
   xit('should test if error is set on 409', async(() => {
@@ -130,6 +128,6 @@ describe('Test employee form component', () => {
     fixture.whenStable().then(() => {
       expect(testComponent.formComponent.detailForm.get('identifier').errors).toBeDefined();
       expect(testComponent.formComponent.detailForm.get('identifier').errors['unique']).toBeTruthy();
-    })
+    });
   }));
 });

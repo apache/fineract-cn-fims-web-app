@@ -17,7 +17,7 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {OfficeSearchApiEffects} from './service.effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {OfficeService} from '../../../services/office/office.service';
 import {SearchAction, SearchCompleteAction} from '../office.actions';
 import {OfficePage} from '../../../services/office/domain/office-page.model';
@@ -37,7 +37,7 @@ describe('Office Search Api Effects', () => {
           useValue: jasmine.createSpyObj('officeService', ['listOffices'])
         }
       ]
-    })
+    });
 
   });
 

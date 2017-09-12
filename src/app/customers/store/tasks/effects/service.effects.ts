@@ -24,8 +24,6 @@ import {of} from 'rxjs/observable/of';
 @Injectable()
 export class TasksApiEffects {
 
-  constructor(private actions$: Actions, private customerService: CustomerService) {}
-
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(taskActions.LOAD_ALL)
@@ -65,4 +63,6 @@ export class TasksApiEffects {
         }))
         .catch((error) => of(new taskActions.UpdateTaskFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) {}
 }

@@ -33,7 +33,7 @@ describe('exists validator', () => {
       control.markAsDirty();
 
       return validator(service)(control) as Observable<ValidationErrors>;
-    }
+    };
   }
 
   interface TestCase {
@@ -117,7 +117,7 @@ describe('exists validator', () => {
       tick();
 
       expect(expectedResult).toEqual(test.expectedResult);
-    }))
+    }));
   });
 
 

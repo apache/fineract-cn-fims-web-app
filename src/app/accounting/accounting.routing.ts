@@ -85,23 +85,73 @@ export const AccountingRoutes: Routes = [
       }
     ]
   },
-  {path: 'create', component: CreateLedgerFormComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'CHANGE' }}},
+  {
+    path: 'create',
+    component: CreateLedgerFormComponent,
+    data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'CHANGE'}}
+  },
+  {
+    path: 'accounts/detail/:id',
+    component: AccountDetailComponent,
+    canActivate: [AccountExistsGuard],
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}
+  },
+  {
+    path: 'accounts/detail/:id/edit',
+    component: EditAccountFormComponent,
+    canActivate: [AccountExistsGuard],
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'CHANGE'}}
+  },
+  {
+    path: 'accounts/detail/:id/tasks',
+    component: AccountStatusComponent,
+    canActivate: [AccountExistsGuard],
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}
+  },
+  {
+    path: 'accounts/detail/:id/activities',
+    component: AccountActivityComponent,
+    canActivate: [AccountExistsGuard],
+    resolve: {commands: CommandsResolver},
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}
+  },
+  {
+    path: 'accounts/detail/:id/entries',
+    component: AccountEntryListComponent,
+    canActivate: [AccountExistsGuard],
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}
+  },
 
-  {path: 'accounts/detail/:id', component: AccountDetailComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
-  {path: 'accounts/detail/:id/edit', component: EditAccountFormComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'CHANGE' }}},
-  {path: 'accounts/detail/:id/tasks', component: AccountStatusComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
-  {path: 'accounts/detail/:id/activities', component: AccountActivityComponent, canActivate: [AccountExistsGuard], resolve: {commands: CommandsResolver}, data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
-  {path: 'accounts/detail/:id/entries', component: AccountEntryListComponent, canActivate: [AccountExistsGuard], data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
-
-  {path: 'trialBalance', component: TrailBalanceComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
-  {path: 'transactiontypes', component: TransactionTypeListComponent, data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'READ' }}},
-  {path: 'transactiontypes/create', component: CreateTransactionTypeFormComponent, data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'CHANGE' }}},
-  {path: 'transactiontypes/edit/:code', component: EditTransactionTypeFormComponent, canActivate: [TransactionTypeExistsGuard], data: { hasPermission: { id: 'accounting_tx_types', accessLevel: 'CHANGE' }}},
-  {path: 'chartOfAccounts', component: ChartOfAccountComponent, data: { hasPermission: { id: 'accounting_ledgers', accessLevel: 'READ' }}},
-  {path: 'journalEntries', component: JournalEntryListComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'READ' }}},
-  {path: 'journalEntries/create', component: JournalEntryFormComponent, data: { hasPermission: { id: 'accounting_journals', accessLevel: 'CHANGE' }}},
-  {path: 'cheques', component: ChequesListComponent, data: { hasPermission: { id: 'cheque_management', accessLevel: 'READ' } }},
-  {path: 'payrolls', component: PayrollListComponent, data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}},
-  {path: 'payrolls/create', component: CreatePayrollFormComponent, data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'CHANGE' }}},
-  {path: 'payrolls/payments/:id', component: PaymentsListComponent, data: { hasPermission: { id: 'accounting_accounts', accessLevel: 'READ' }}}
+  {path: 'trialBalance', component: TrailBalanceComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
+  {
+    path: 'transactiontypes',
+    component: TransactionTypeListComponent,
+    data: {hasPermission: {id: 'accounting_tx_types', accessLevel: 'READ'}}
+  },
+  {
+    path: 'transactiontypes/create',
+    component: CreateTransactionTypeFormComponent,
+    data: {hasPermission: {id: 'accounting_tx_types', accessLevel: 'CHANGE'}}
+  },
+  {
+    path: 'transactiontypes/edit/:code',
+    component: EditTransactionTypeFormComponent,
+    canActivate: [TransactionTypeExistsGuard],
+    data: {hasPermission: {id: 'accounting_tx_types', accessLevel: 'CHANGE'}}
+  },
+  {path: 'chartOfAccounts', component: ChartOfAccountComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
+  {path: 'journalEntries', component: JournalEntryListComponent, data: {hasPermission: {id: 'accounting_journals', accessLevel: 'READ'}}},
+  {
+    path: 'journalEntries/create',
+    component: JournalEntryFormComponent,
+    data: {hasPermission: {id: 'accounting_journals', accessLevel: 'CHANGE'}}
+  },
+  {path: 'cheques', component: ChequesListComponent, data: {hasPermission: {id: 'cheque_management', accessLevel: 'READ'}}},
+  {path: 'payrolls', component: PayrollListComponent, data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}},
+  {
+    path: 'payrolls/create',
+    component: CreatePayrollFormComponent,
+    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'CHANGE'}}
+  },
+  {path: 'payrolls/payments/:id', component: PaymentsListComponent, data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}}
 ];

@@ -24,9 +24,6 @@ import * as tellerActions from '../../store/teller.actions';
 @Injectable()
 export class TellerRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) {
-  }
-
   @Effect({dispatch: false})
   unlockDrawerSuccess$: Observable<Action> = this.actions$
     .ofType(tellerActions.UNLOCK_DRAWER_SUCCESS)
@@ -42,4 +39,7 @@ export class TellerRouteEffects {
     .ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS)
     .map(action => action.payload)
     .do((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) {
+  }
 }

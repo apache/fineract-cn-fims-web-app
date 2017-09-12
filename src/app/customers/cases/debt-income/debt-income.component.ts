@@ -26,11 +26,11 @@ import {TableData} from '../../../common/data-table/data-table.component';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
 interface IncomeDebtOverview {
-  debtTableData: TableData,
-  incomeTableData: TableData,
-  ratio: number,
-  debtTotal: number,
-  incomeTotal: number
+  debtTableData: TableData;
+  incomeTableData: TableData;
+  ratio: number;
+  debtTotal: number;
+  incomeTotal: number;
 }
 
 @Component({
@@ -38,7 +38,7 @@ interface IncomeDebtOverview {
 })
 export class CaseDebtIncomeComponent implements OnInit {
 
-  numberFormat: string = '2.2-2';
+  numberFormat = '2.2-2';
 
   columns: any[] = [
     { name: 'description', label: 'Description' },
@@ -79,7 +79,7 @@ export class CaseDebtIncomeComponent implements OnInit {
       incomeSources: [],
       debts: [],
       assets: []
-    }
+    };
   }
 
   private mapToOverview(snapshot: CreditWorthinessSnapshot): IncomeDebtOverview {
@@ -92,7 +92,7 @@ export class CaseDebtIncomeComponent implements OnInit {
       debtTotal,
       incomeTotal,
       ratio
-    }
+    };
   }
 
   mapToTableData(data: CreditWorthinessFactor[]): TableData {
@@ -100,7 +100,7 @@ export class CaseDebtIncomeComponent implements OnInit {
       data,
       totalPages: 1,
       totalElements: data.length
-    }
+    };
   }
 
   divideIfNotZero(numerator, denominator): number {

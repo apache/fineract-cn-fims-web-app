@@ -37,7 +37,7 @@ import {TellerTransactionService} from '../services/transaction.service';
 @Component({
   templateUrl: './create.component.html'
 })
-export class CreateChequeTransactionForm implements OnInit, OnDestroy {
+export class CreateChequeTransactionFormComponent implements OnInit, OnDestroy {
 
   private authenticatedTellerSubscription: Subscription;
 
@@ -78,7 +78,7 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .filter(teller => !!teller)
-      .subscribe(teller => { this.teller = teller } );
+      .subscribe(teller => { this.teller = teller; } );
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
@@ -145,6 +145,6 @@ export class CreateChequeTransactionForm implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['../../'], { relativeTo: this.route })
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 }

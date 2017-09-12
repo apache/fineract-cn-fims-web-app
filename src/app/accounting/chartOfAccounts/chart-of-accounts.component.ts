@@ -24,13 +24,13 @@ import {LOAD_CHART_OF_ACCOUNTS} from '../store/ledger/ledger.actions';
 @Component({
   templateUrl: './chart-of-accounts.component.html'
 })
-export class ChartOfAccountComponent implements OnInit{
+export class ChartOfAccountComponent implements OnInit {
 
   chartOfAccountEntries$: Observable<ChartOfAccountEntry[]>;
 
   loading$: Observable<boolean>;
 
-  constructor(private store: AccountingStore){}
+  constructor(private store: AccountingStore) {}
 
   ngOnInit(): void {
     this.chartOfAccountEntries$ = this.store.select(fromAccounting.getChartOfAccountEntries);

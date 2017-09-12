@@ -31,10 +31,10 @@ export class DepositDetailComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositsStore) {}
 
   ngOnInit(): void {
-    this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance)
+    this.depositInstance$ = this.store.select(fromDeposits.getSelectedDepositInstance);
   }
 
   issueCheques(): void {
-    this.router.navigate(['cheques'], { relativeTo: this.route })
+    this.router.navigate(['cheques'], { relativeTo: this.route });
   }
 }

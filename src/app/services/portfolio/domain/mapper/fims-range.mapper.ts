@@ -38,7 +38,7 @@ export function mapToFimsRange(balanceSegmentSet: BalanceSegmentSet): FimsRange 
       start: segment,
       end: hasNextIndex(array, index) ? array[index + 1] : undefined
     }))
-  }
+  };
 }
 
 function hasNextIndex(array: number[], index: number): boolean {

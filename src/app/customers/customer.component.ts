@@ -18,7 +18,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData, TableFetchRequest} from '../common/data-table/data-table.component';
 import {Customer} from '../services/customer/domain/customer.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../store';
 import {SEARCH} from '../store/customer/customer.actions';
 import {CustomersStore} from './store/index';
@@ -26,7 +26,7 @@ import {CustomersStore} from './store/index';
 @Component({
   templateUrl: './customer.component.html'
 })
-export class CustomerComponent implements OnInit{
+export class CustomerComponent implements OnInit {
 
   customerData$: Observable<TableData>;
 
@@ -43,7 +43,7 @@ export class CustomerComponent implements OnInit{
 
   private lastFetchRequest: FetchRequest = {};
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit(): void {
     this.customerData$ = this.store.select(fromRoot.getCustomerSearchResults)
@@ -56,21 +56,21 @@ export class CustomerComponent implements OnInit{
     this.loading$ = this.store.select(fromRoot.getCustomerSearchLoading);
 
     this.route.queryParams.subscribe((params: Params) => {
-      this.search(params['term'])
+      this.search(params['term']);
     });
   }
 
-  search(searchTerm: string): void{
+  search(searchTerm: string): void {
     this.searchTerm = searchTerm;
     this.fetchCustomers();
   }
 
-  rowSelect(customer: Customer): void{
+  rowSelect(customer: Customer): void {
     this.router.navigate(['detail', customer.identifier], { relativeTo: this.route });
   }
 
-  fetchCustomers(fetchRequest?: TableFetchRequest): void{
-    if(fetchRequest){
+  fetchCustomers(fetchRequest?: TableFetchRequest): void {
+    if (fetchRequest) {
       this.lastFetchRequest = fetchRequest;
     }
 
@@ -80,6 +80,6 @@ export class CustomerComponent implements OnInit{
   }
 
   goToTasks(): void {
-    this.router.navigate(['tasks'], { relativeTo: this.route })
+    this.router.navigate(['tasks'], { relativeTo: this.route });
   }
 }

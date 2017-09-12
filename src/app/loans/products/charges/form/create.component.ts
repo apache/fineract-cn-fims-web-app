@@ -19,7 +19,7 @@ import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-def
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromPortfolio from '../../store/index';
 import {PortfolioStore} from '../../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CREATE} from '../../store/charges/charge.actions';
 import {FimsProduct} from '../../store/model/fims-product.model';
 import {Observable} from 'rxjs/Observable';
@@ -29,7 +29,7 @@ import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 @Component({
   templateUrl: './create.component.html'
 })
-export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
+export class ProductChargeCreateFormComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
@@ -72,11 +72,11 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy{
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

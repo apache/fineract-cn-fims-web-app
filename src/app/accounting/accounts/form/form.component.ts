@@ -19,7 +19,7 @@ import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators} from '@angular/forms';
 import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountTypeOption, accountTypes} from '../../account-types.model';
 import {FimsValidators} from '../../../common/validator/validators';
 
@@ -50,11 +50,12 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
   ngOnInit() {
     this.openDetailStep();
     this.form = this.formBuilder.group({
-      'identifier': [ this.account.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(34), FimsValidators.urlSafe] ],
-      'name': [ this.account.name, [Validators.required, Validators.maxLength(256)] ],
-      'type': [ { value: this.account.type, disabled: true }, [Validators.required] ],
-      'ledger': [ this.account.ledger, [Validators.required] ],
-      'balance': [ { value: this.account.balance, disabled: this.editMode }, [Validators.required] ],
+      'identifier': [this.account.identifier, [Validators.required, Validators.minLength(3),
+        Validators.maxLength(34), FimsValidators.urlSafe]],
+      'name': [this.account.name, [Validators.required, Validators.maxLength(256)]],
+      'type': [{value: this.account.type, disabled: true}, [Validators.required]],
+      'ledger': [this.account.ledger, [Validators.required]],
+      'balance': [{value: this.account.balance, disabled: this.editMode}, [Validators.required]],
     });
   }
 
@@ -72,7 +73,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     return;
   }
 
-  save(): void{
+  save(): void {
     const account: Account = {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
@@ -84,7 +85,7 @@ export class AccountFormComponent extends FormComponent<Account> implements OnIn
     this.onSave.emit(account);
   }
 
-  cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
   }
 

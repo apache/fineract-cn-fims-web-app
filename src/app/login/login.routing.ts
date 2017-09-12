@@ -19,8 +19,8 @@ import {LoginComponent} from './login.component';
 
 export const LoginRoutes: Routes = [
   {
-    path: "",
+    path: '',
     component: LoginComponent,
-    pathMatch: "full"
+    pathMatch: 'full'
   }
 ];

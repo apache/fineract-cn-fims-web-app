@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as productActions from '../product.actions';
 import {Router} from '@angular/router';
 
 @Injectable()
 export class ProductRouteEffects {
-
-  constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
   createProductSuccess$: Observable<Action> = this.actions$
@@ -37,5 +35,7 @@ export class ProductRouteEffects {
     .ofType(productActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute} ));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

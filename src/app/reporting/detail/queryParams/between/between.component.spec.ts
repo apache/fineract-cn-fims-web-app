@@ -83,7 +83,9 @@ describe('Test between component', () => {
 });
 
 @Component({
-  template: '<fims-reporting-between-param #paramComponent [formControl]="formControl" [required]="true" type="DATE"></fims-reporting-between-param>'
+  template: `
+    <fims-reporting-between-param #paramComponent [formControl]="formControl" [required]="true" type="DATE">
+    </fims-reporting-between-param>`
 })
 class DateTestComponent {
 

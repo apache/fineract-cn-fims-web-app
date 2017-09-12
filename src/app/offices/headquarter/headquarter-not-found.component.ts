@@ -19,4 +19,4 @@ import {Component} from '@angular/core';
 @Component({
     templateUrl: './headquarter-not-found.component.html'
 })
-export class HeadquarterNotFoundComponent{}
+export class HeadquarterNotFoundComponent {}

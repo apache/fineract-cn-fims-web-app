@@ -16,7 +16,7 @@
 
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Product} from './domain/product.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TaskDefinition} from './domain/task-definition.model';
@@ -43,10 +43,11 @@ import {FimsRange} from './domain/range-model';
 @Injectable()
 export class PortfolioService {
 
-  constructor(private http: HttpClient, @Inject('portfolioBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('portfolioBaseUrl') private baseUrl: string) {
+  }
 
-  findAllPatterns(): Observable<void>{
-    return this.http.get(`${this.baseUrl}/patterns/`)
+  findAllPatterns(): Observable<void> {
+    return this.http.get(`${this.baseUrl}/patterns/`);
   }
 
   findAllProducts(includeDisabled?: boolean, fetchRequest?: FetchRequest): Observable<ProductPage> {
@@ -56,138 +57,139 @@ export class PortfolioService {
     const requestOptions: RequestOptionsArgs = {
       search: params
     };
-    return this.http.get(`${this.baseUrl}/products/`, requestOptions)
+    return this.http.get(`${this.baseUrl}/products/`, requestOptions);
   }
 
-  createProduct(product: Product): Observable<void>{
-    return this.http.post(`${this.baseUrl}/products`, product)
+  createProduct(product: Product): Observable<void> {
+    return this.http.post(`${this.baseUrl}/products`, product);
   }
 
-  getProduct(identifier: string): Observable<Product>{
-    return this.http.get(`${this.baseUrl}/products/${identifier}`)
+  getProduct(identifier: string): Observable<Product> {
+    return this.http.get(`${this.baseUrl}/products/${identifier}`);
   }
 
-  changeProduct(product: Product): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${product.identifier}`, product)
+  changeProduct(product: Product): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${product.identifier}`, product);
   }
 
   deleteProduct(identifier: string): Observable<void> {
-    return this.http.delete(`${this.baseUrl}/products/${identifier}`)
+    return this.http.delete(`${this.baseUrl}/products/${identifier}`);
   }
 
-  enableProduct(identifier: string, enabled: boolean): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${identifier}/enabled`, enabled)
+  enableProduct(identifier: string, enabled: boolean): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${identifier}/enabled`, enabled);
   }
 
-  getProductEnabled(identifier: string): Observable<boolean>{
-    return this.http.get(`${this.baseUrl}/products/${identifier}/enabled`)
+  getProductEnabled(identifier: string): Observable<boolean> {
+    return this.http.get(`${this.baseUrl}/products/${identifier}/enabled`);
   }
 
   incompleteaccountassignments(identifier: string): Observable<AccountAssignment[]> {
-    return this.http.get(`${this.baseUrl}/products/${identifier}/incompleteaccountassignments`)
+    return this.http.get(`${this.baseUrl}/products/${identifier}/incompleteaccountassignments`);
   }
 
-  findAllTaskDefinitionsForProduct(identifier: string): Observable<TaskDefinition[]>{
-    return this.http.get(`${this.baseUrl}/products/${identifier}/tasks/`)
+  findAllTaskDefinitionsForProduct(identifier: string): Observable<TaskDefinition[]> {
+    return this.http.get(`${this.baseUrl}/products/${identifier}/tasks/`);
   }
 
-  createTaskDefinition(productIdentifier: string, taskDefinition: TaskDefinition): Observable<void>{
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/tasks/`, taskDefinition)
+  createTaskDefinition(productIdentifier: string, taskDefinition: TaskDefinition): Observable<void> {
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/tasks/`, taskDefinition);
   }
 
-  getTaskDefinition(productIdentifier: string, taskDefinitionIdentifier: string): Observable<TaskDefinition>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinitionIdentifier}`)
+  getTaskDefinition(productIdentifier: string, taskDefinitionIdentifier: string): Observable<TaskDefinition> {
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinitionIdentifier}`);
   }
 
-  changeTaskDefinition(productIdentifier: string, taskDefinition: TaskDefinition): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinition.identifier}`, taskDefinition)
+  changeTaskDefinition(productIdentifier: string, taskDefinition: TaskDefinition): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinition.identifier}`, taskDefinition);
   }
 
-  deleteTaskDefinition(productIdentifier: string, taskDefinitionIdentifier: string): Observable<void>{
-    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinitionIdentifier}`)
+  deleteTaskDefinition(productIdentifier: string, taskDefinitionIdentifier: string): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/tasks/${taskDefinitionIdentifier}`);
   }
 
-  findAllChargeDefinitionsForProduct(identifier: string): Observable<ChargeDefinition[]>{
-    return this.http.get(`${this.baseUrl}/products/${identifier}/charges/`)
+  findAllChargeDefinitionsForProduct(identifier: string): Observable<ChargeDefinition[]> {
+    return this.http.get(`${this.baseUrl}/products/${identifier}/charges/`);
   }
 
-  createChargeDefinition(productIdentifier: string, chargeDefinition: ChargeDefinition): Observable<void>{
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/charges/`, chargeDefinition)
+  createChargeDefinition(productIdentifier: string, chargeDefinition: ChargeDefinition): Observable<void> {
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/charges/`, chargeDefinition);
   }
 
-  getChargeDefinition(productIdentifier: string, chargeDefinitionIdentifier: string): Observable<ChargeDefinition>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinitionIdentifier}`)
+  getChargeDefinition(productIdentifier: string, chargeDefinitionIdentifier: string): Observable<ChargeDefinition> {
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinitionIdentifier}`);
   }
 
-  changeChargeDefinition(productIdentifier: string, chargeDefinition: ChargeDefinition): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinition.identifier}`, chargeDefinition)
+  changeChargeDefinition(productIdentifier: string, chargeDefinition: ChargeDefinition): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinition.identifier}`, chargeDefinition);
   }
 
-  deleteChargeDefinition(productIdentifier: string, chargeDefinitionIdentifier: string): Observable<void>{
+  deleteChargeDefinition(productIdentifier: string, chargeDefinitionIdentifier: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/charges/${chargeDefinitionIdentifier}`);
   }
 
-  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean): Observable<FimsCasePage>{
+  getAllCasesForProduct(productIdentifier: string, fetchRequest?: FetchRequest, includeClosed?: boolean): Observable<FimsCasePage> {
     const params: URLSearchParams = buildSearchParams(fetchRequest);
 
     params.append('includeClosed', includeClosed ? 'true' : 'false');
-    params.append('pageIndex', "1");
-    params.append('size', "10");
+    params.append('pageIndex', '1');
+    params.append('size', '10');
 
     const requestOptions: RequestOptionsArgs = {
       search: params
     };
 
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/`, requestOptions)
-      .map((casePage: CasePage) => mapToFimsCasePage(casePage))
+      .map((casePage: CasePage) => mapToFimsCasePage(casePage));
   }
 
   createCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
     const caseInstance: Case = mapToCase(fimsCase);
 
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/`, caseInstance)
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/`, caseInstance);
   }
 
-  getCase(productIdentifier: string, caseIdentifier: string): Observable<FimsCase>{
+  getCase(productIdentifier: string, caseIdentifier: string): Observable<FimsCase> {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}`)
       .map((caseInstance: Case) => mapToFimsCase(caseInstance));
   }
 
   changeCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
     const caseInstance: Case = mapToCase(fimsCase);
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseInstance.identifier}`, caseInstance)
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseInstance.identifier}`, caseInstance);
   }
 
-  getAllActionsForCase(productIdentifier: string, caseIdentifier: string): Observable<WorkflowAction[]>{
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`)
+  getAllActionsForCase(productIdentifier: string, caseIdentifier: string): Observable<WorkflowAction[]> {
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`);
   }
 
   getCostComponentsForAction(productIdentifier: string, caseIdentifier: string, action: string): Observable<CostComponent[]> {
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/${action}/costcomponents`)
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/${action}/costcomponents`);
   }
 
-  executeCaseCommand(productIdentifier: string, caseIdentifier: string, action: string, command: CaseCommand): Observable<void>{
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/${action}`, command)
+  executeCaseCommand(productIdentifier: string, caseIdentifier: string, action: string, command: CaseCommand): Observable<void> {
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/commands/${action}`, command);
   }
 
   findAllTasksForCase(productIdentifier: string, caseIdentifier: string, includeExcluded?: boolean): Observable<TaskInstance[]> {
     const params: URLSearchParams = new URLSearchParams();
 
-    params.append("includeExecuted", String(includeExcluded));
+    params.append('includeExecuted', String(includeExcluded));
 
     const requestOptions: RequestOptionsArgs = {
       search: params
     };
 
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/`, requestOptions)
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/`, requestOptions);
   }
 
   getTaskForCase(productIdentifier: string, caseIdentifier: string, taskIdentifier: string): Observable<TaskInstance> {
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`)
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}`);
   }
 
-  taskForCaseExecuted(productIdentifier: string, caseIdentifier: string, taskIdentifier: string, executed: boolean): Observable<void>{
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}/executed`, executed)
+  taskForCaseExecuted(productIdentifier: string, caseIdentifier: string, taskIdentifier: string, executed: boolean): Observable<void> {
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/tasks/${taskIdentifier}/executed`,
+      executed);
   }
 
   findAllCases(fetchRequest?: FetchRequest): Observable<FimsCase[]> {
@@ -198,21 +200,23 @@ export class PortfolioService {
     };
 
     return this.http.get(`${this.baseUrl}/cases/`, requestOptions)
-      .map((caseInstances: Case[]) => mapToFimsCases(caseInstances))
+      .map((caseInstances: Case[]) => mapToFimsCases(caseInstances));
   }
 
-  getPaymentScheduleForCase(productIdentifier: string, caseIdentifier: string, initialDisbursalDate?: string): Observable<PlannedPaymentPage>{
-    let params: URLSearchParams = new URLSearchParams();
+  getPaymentScheduleForCase(productIdentifier: string, caseIdentifier: string,
+                            initialDisbursalDate?: string): Observable<PlannedPaymentPage> {
+    const params: URLSearchParams = new URLSearchParams();
     params.append('initialDisbursalDate', initialDisbursalDate ? new Date(initialDisbursalDate).toISOString() : undefined);
 
-    let requestOptions: RequestOptionsArgs = {
+    const requestOptions: RequestOptionsArgs = {
       search: params
     };
 
-    return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/cases/${caseIdentifier}/plannedpayments`, requestOptions)
+    return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/cases/${caseIdentifier}/plannedpayments`,
+      requestOptions);
   }
 
-  getAllCasesForCustomer(customerIdentifier: string, fetchRequest?: FetchRequest): Observable<FimsCasePage>{
+  getAllCasesForCustomer(customerIdentifier: string, fetchRequest?: FetchRequest): Observable<FimsCasePage> {
     const search: URLSearchParams = buildSearchParams(fetchRequest);
 
     const requestOptions: RequestOptionsArgs = {
@@ -230,21 +234,22 @@ export class PortfolioService {
 
   createRange(productIdentifier: string, range: FimsRange): Observable<void> {
     const balanceSegmentSet = mapToBalanceSegmentSet(range);
-    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`, balanceSegmentSet)
+    return this.http.post(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`, balanceSegmentSet);
   }
 
   getRange(productIdentifier: string, rangeIdentifier: string): Observable<FimsRange> {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
-      .map(segments => mapToFimsRange(segments))
+      .map(segments => mapToFimsRange(segments));
   }
 
   changeRange(productIdentifier: string, range: FimsRange): Observable<void> {
     const balanceSegmentSet = mapToBalanceSegmentSet(range);
-    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSet.identifier}`, balanceSegmentSet)
+    return this.http.put(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${balanceSegmentSet.identifier}`,
+      balanceSegmentSet);
   }
 
   deleteRange(productIdentifier: string, rangeIdentifier: string): Observable<void> {
-    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
+    return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`);
   }
 
 }

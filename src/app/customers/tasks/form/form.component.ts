@@ -60,7 +60,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.task) {
+    if (changes.task) {
       this.form.reset({
         identifier: this.task.identifier,
         type: this.task.type,
@@ -104,15 +104,15 @@ export class TaskFormComponent implements OnInit, OnChanges {
   private initCommand(value?: TaskDefinitionCommand): FormGroup {
     return this.formBuilder.group({
       command: [value ? value : '', Validators.required]
-    })
+    });
   }
 
-  addCommand(value?: TaskDefinitionCommand): void{
+  addCommand(value?: TaskDefinitionCommand): void {
     const commands: FormArray = this.form.get('commands') as FormArray;
     commands.push(this.initCommand(value));
   }
 
-  removeCommand(index: number): void{
+  removeCommand(index: number): void {
     const commands: FormArray = this.form.get('commands') as FormArray;
     commands.removeAt(index);
   }

@@ -15,5 +15,5 @@
  */
 
 export class ReportingPermittableGroupIds {
-  public static readonly REPORT_MANAGEMENT: string = 'reporting__v1__general';
+  public static readonly REPORT_MANAGEMENT = 'reporting__v1__general';
 }

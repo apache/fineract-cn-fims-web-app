@@ -23,8 +23,28 @@ import {UserResolver} from './user.resolver';
 import {EmployeeExistsGuard} from './employee-exists.guard';
 
 export const EmployeeRoutes: Routes = [
-  { path: '', component: EmployeeComponent, data: { title: 'Manage Employees', hasPermission: { id: 'office_employees', accessLevel: 'READ' } } },
-  { path: 'create', component: CreateEmployeeFormComponent, data: { title: 'Create Employee', hasPermission: { id: 'office_employees', accessLevel: 'CHANGE' } } },
-  { path: 'detail/:id/edit', component: EditEmployeeFormComponent, canActivate: [EmployeeExistsGuard], resolve: { user: UserResolver }, data: { title: 'Edit Employee', hasPermission: { id: 'office_employees', accessLevel: 'CHANGE' } } },
-  { path: 'detail/:id', component: EmployeeDetailComponent, canActivate: [EmployeeExistsGuard], resolve: { user: UserResolver }, data: { title: 'View Employee', hasPermission: { id: 'office_employees', accessLevel: 'READ' } } }
+  {
+    path: '',
+    component: EmployeeComponent,
+    data: {title: 'Manage Employees', hasPermission: {id: 'office_employees', accessLevel: 'READ'}}
+  },
+  {
+    path: 'create',
+    component: CreateEmployeeFormComponent,
+    data: {title: 'Create Employee', hasPermission: {id: 'office_employees', accessLevel: 'CHANGE'}}
+  },
+  {
+    path: 'detail/:id/edit',
+    component: EditEmployeeFormComponent,
+    canActivate: [EmployeeExistsGuard],
+    resolve: {user: UserResolver},
+    data: {title: 'Edit Employee', hasPermission: {id: 'office_employees', accessLevel: 'CHANGE'}}
+  },
+  {
+    path: 'detail/:id',
+    component: EmployeeDetailComponent,
+    canActivate: [EmployeeExistsGuard],
+    resolve: {user: UserResolver},
+    data: {title: 'View Employee', hasPermission: {id: 'office_employees', accessLevel: 'READ'}}
+  }
 ];

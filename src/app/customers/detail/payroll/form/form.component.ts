@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {PayrollDistribution} from '../../../../services/customer/domain/payroll-distribution.model';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
@@ -25,7 +25,7 @@ import {PayrollAllocation} from '../../../../services/customer/domain/payroll-al
   selector: 'fims-customer-payroll-form',
   templateUrl: './form.component.html'
 })
-export class CustomerPayrollFormComponent implements OnChanges {
+export class CustomerPayrollFormComponent implements OnInit, OnChanges {
 
   form: FormGroup;
 
@@ -51,7 +51,7 @@ export class CustomerPayrollFormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.distribution) {
+    if (changes.distribution) {
       this.form.reset({
         mainAccountNumber: this.distribution.mainAccountNumber
       });
@@ -84,7 +84,7 @@ export class CustomerPayrollFormComponent implements OnChanges {
       accountNumber: [allocation ? allocation.accountNumber : '', [Validators.required]],
       amount: [allocation ? allocation.amount : '', [Validators.required, FimsValidators.minValue(0)]],
       proportional: [allocation ? allocation.proportional : false]
-    })
+    });
   }
 
   addAllocation(allocation?: PayrollAllocation): void {

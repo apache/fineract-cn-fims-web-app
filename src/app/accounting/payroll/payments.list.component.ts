@@ -66,7 +66,7 @@ export class PaymentsListComponent implements OnDestroy {
     this.store.dispatch({
       type: SEARCH,
       payload
-    })
+    });
   }
 
 }

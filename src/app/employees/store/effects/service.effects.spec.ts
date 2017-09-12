@@ -19,7 +19,7 @@ import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {EmployeeApiEffects} from './service.effects';
 import {OfficeService} from '../../../services/office/office.service';
 import {IdentityService} from '../../../services/identity/identity.service';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {UpdateEmployeeAction, UpdateEmployeeSuccessAction} from '../employee.actions';
 import {Employee} from '../../../services/office/domain/employee.model';
 
@@ -41,14 +41,14 @@ describe('Account Search Api Effects', () => {
           useValue: jasmine.createSpyObj('identityService', ['createUser', 'changeUserRole', 'changePassword'])
         }
       ]
-    })
+    });
 
   });
 
   describe('updateEmployee$', () => {
 
     function setup() {
-      let officeService = TestBed.get(OfficeService);
+      const officeService = TestBed.get(OfficeService);
 
       officeService.updateEmployee.and.returnValue(Observable.of({}));
 
@@ -195,5 +195,5 @@ describe('Account Search Api Effects', () => {
 
       expect(identityService.changeUserRole).toHaveBeenCalled();
     }));
-  })
+  });
 });

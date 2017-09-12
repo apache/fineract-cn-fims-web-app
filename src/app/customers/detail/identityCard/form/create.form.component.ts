@@ -61,7 +61,7 @@ export class CreateCustomerIdentificationCardFormComponent implements OnInit, On
     this.formStateSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(identificationCard: IdentificationCard) {
@@ -77,7 +77,7 @@ export class CreateCustomerIdentificationCardFormComponent implements OnInit, On
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

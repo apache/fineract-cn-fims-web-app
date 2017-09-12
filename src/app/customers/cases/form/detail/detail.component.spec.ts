@@ -194,7 +194,9 @@ describe('Test case detail form component', () => {
 });
 
 @Component({
-  template: '<fims-case-detail-form #form [formData]="formData" [products]="products" [productInstances]="productInstances"></fims-case-detail-form>'
+  template: `
+    <fims-case-detail-form #form [formData]="formData" [products]="products" [productInstances]="productInstances">
+    </fims-case-detail-form>`
 })
 class TestComponent {
 

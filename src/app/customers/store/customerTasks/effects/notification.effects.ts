@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../customer-task.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class CustomerTasksNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   executeCustomerTaskSuccess$: Observable<Action> = this.actions$
@@ -57,6 +55,8 @@ export class CustomerTasksNotificationEffects {
       type: NotificationType.ALERT,
       message: 'Sorry, there was a problem executing your command'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
 

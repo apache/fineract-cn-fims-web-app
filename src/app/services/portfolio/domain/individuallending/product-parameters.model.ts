@@ -16,7 +16,7 @@
 
 import {Moratorium} from './moratorium.model';
 
-export class ProductParameters{
+export class ProductParameters {
   moratoriums: Moratorium[];
   maximumDispersalCount: number;
   maximumDispersalAmount: number;

@@ -19,7 +19,7 @@ import {ActivatedRoute} from '@angular/router';
 import * as fromCases from './store/index';
 import {CasesStore} from './store/index';
 import * as fromRoot from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {SelectAction} from './store/case.actions';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
@@ -32,7 +32,7 @@ export class CaseDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   caseInstance$: Observable<FimsCase>;
 
@@ -61,7 +61,7 @@ export class CaseDetailComponent implements OnInit, OnDestroy {
     return permissions.filter(permission =>
         permission.id === 'portfolio_cases' &&
         permission.accessLevel === 'CHANGE'
-      ).length > 0
+      ).length > 0;
   }
 
   ngOnDestroy(): void {

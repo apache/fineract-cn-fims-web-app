@@ -23,8 +23,6 @@ import {RangeActions} from '../range.actions';
 @Injectable()
 export class ProductChargeRangesNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) { }
-
   @Effect({ dispatch: false })
   createRangeSuccess$: Observable<Action> = this.actions$
     .ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS)
@@ -40,4 +38,6 @@ export class ProductChargeRangesNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Range is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 }

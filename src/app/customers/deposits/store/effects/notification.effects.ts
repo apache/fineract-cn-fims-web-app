@@ -24,8 +24,6 @@ import * as instanceActions from '../deposit.actions';
 @Injectable()
 export class DepositProductInstanceNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({dispatch: false})
   createProductInstanceSuccess$: Observable<Action> = this.actions$
     .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
@@ -49,4 +47,6 @@ export class DepositProductInstanceNotificationEffects {
       type: NotificationType.ALERT,
       message: 'There was an issue issuing cheques'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

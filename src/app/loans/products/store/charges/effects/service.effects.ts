@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as chargeActions from '../charge.actions';
@@ -24,8 +24,6 @@ import {PortfolioService} from '../../../../../services/portfolio/portfolio.serv
 
 @Injectable()
 export class ProductChargesApiEffects {
-
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
@@ -79,4 +77,6 @@ export class ProductChargesApiEffects {
         }))
         .catch((error) => of(new chargeActions.DeleteChargeFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 }

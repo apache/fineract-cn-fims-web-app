@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as transactionTypeActions from '../transaction-type.actions';
@@ -25,8 +25,6 @@ import {emptySearchResult} from '../../../../../common/store/search.reducer';
 
 @Injectable()
 export class TransactionTypeApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   searchTransactionTypes$: Observable<Action> = this.actions$
@@ -67,4 +65,6 @@ export class TransactionTypeApiEffects {
         }))
         .catch((error) => of(new transactionTypeActions.UpdateTransactionTypeFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

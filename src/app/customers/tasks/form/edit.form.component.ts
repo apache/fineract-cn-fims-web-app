@@ -29,7 +29,7 @@ export class TaskEditFormComponent {
   task$: Observable<TaskDefinition>;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {
-    this.task$ = this.store.select(fromCustomer.getSelectedTask)
+    this.task$ = this.store.select(fromCustomer.getSelectedTask);
   }
 
   onSave(task: TaskDefinition): void {
@@ -39,11 +39,11 @@ export class TaskEditFormComponent {
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

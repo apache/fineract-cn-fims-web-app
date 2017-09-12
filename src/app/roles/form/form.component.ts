@@ -15,7 +15,7 @@
  */
 
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Form, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Role} from '../../services/identity/domain/role.model';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
 import {IdentityService} from '../../services/identity/identity.service';
@@ -53,7 +53,8 @@ export class RoleFormComponent implements OnInit, OnDestroy {
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private identityService: IdentityService, private formPermissionService: FormPermissionService) {}
+  constructor(private formBuilder: FormBuilder, private identityService: IdentityService,
+              private formPermissionService: FormPermissionService) {}
 
   ngOnInit(): void {
     this.permittableGroupSubscription = this.identityService.getPermittableGroups()
@@ -61,7 +62,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
         this.permissionGroups = this.formPermissionService.mapToFormPermissions(groups, this._role.permissions);
 
         this.permissionGroups.forEach(group => {
-          this.formPermissions.push(...group.formPermissions)
+          this.formPermissions.push(...group.formPermissions);
         });
       });
   }
@@ -86,19 +87,19 @@ export class RoleFormComponent implements OnInit, OnDestroy {
   }
 
   set allRead(checked: boolean) {
-    for(let formPermission of this.formPermissions) {
+    for (const formPermission of this.formPermissions) {
       formPermission.read = checked;
     }
   }
 
   set allChange(checked: boolean) {
-    for(let formPermission of this.formPermissions) {
+    for (const formPermission of this.formPermissions) {
       formPermission.change = checked;
     }
   }
 
   set allRemove(checked: boolean) {
-    for(let formPermission of this.formPermissions) {
+    for (const formPermission of this.formPermissions) {
       formPermission.remove = checked;
     }
   }

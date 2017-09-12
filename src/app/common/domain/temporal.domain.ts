@@ -18,7 +18,7 @@ import {ChronoUnit} from '../../services/portfolio/domain/chrono-unit.model';
 
 export interface TemporalOption {
   label: string;
-  type: ChronoUnit
+  type: ChronoUnit;
 }
 
 export const temporalOptionList: TemporalOption[] = [

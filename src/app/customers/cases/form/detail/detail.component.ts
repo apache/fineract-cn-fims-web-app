@@ -27,18 +27,18 @@ import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 
 export interface DetailFormData {
-  identifier: string,
-  productIdentifier: string,
+  identifier: string;
+  productIdentifier: string;
   interest: string;
-  principalAmount: string,
-  term: number,
-  termTemporalUnit: ChronoUnit,
-  paymentTemporalUnit: ChronoUnit,
-  paymentPeriod: number,
-  paymentAlignmentDay: number,
-  paymentAlignmentWeek: number,
-  paymentAlignmentMonth: number,
-  depositAccountIdentifier: string
+  principalAmount: string;
+  term: number;
+  termTemporalUnit: ChronoUnit;
+  paymentTemporalUnit: ChronoUnit;
+  paymentPeriod: number;
+  paymentAlignmentDay: number;
+  paymentAlignmentWeek: number;
+  paymentAlignmentMonth: number;
+  depositAccountIdentifier: string;
 }
 
 type MonthSetting = 'DAY' | 'WEEK_AND_DAY';
@@ -51,7 +51,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
   private _formData: DetailFormData;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   @Input() editMode: boolean;
 
@@ -120,15 +120,15 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   }
 
   ngOnInit(): void {
-    for(let i = 0; i < 30; i++) {
+    for (let i = 0; i < 30; i++) {
       this.monthDays.push({
-        type: i, label: `${i+1}.`
-      })
+        type: i, label: `${i + 1}.`
+      });
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.formData) {
+    if (changes.formData) {
       this.form.reset({
         identifier: this._formData.identifier,
         productIdentifier: this._formData.productIdentifier,
@@ -156,9 +156,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       });
     }
 
-    if(changes.products && changes.products.currentValue && this._formData.productIdentifier) {
-      const product = this.products.find(product => product.identifier === this._formData.productIdentifier);
-      this.toggleProduct(product);
+    if (changes.products && changes.products.currentValue && this._formData.productIdentifier) {
+      const foundProduct = this.products.find(product => product.identifier === this._formData.productIdentifier);
+      this.toggleProduct(foundProduct);
     }
   }
 
@@ -179,7 +179,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
   private toggleDisabledState(formControl: FormControl, minimum: number, maximum: number): void {
     const hasRange: boolean = minimum !== maximum;
 
-    if(hasRange) {
+    if (hasRange) {
       formControl.enable();
       formControl.setValidators([
         Validators.required,
@@ -198,14 +198,14 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     const dayInWeek = this.form.get('dayInWeek');
     const month = this.form.get('month');
 
-    if(chronoUnit === 'WEEKS') {
+    if (chronoUnit === 'WEEKS') {
       this.enableMonthSetting(false);
       dayInWeek.enable();
       month.disable();
 
       this.displayDaysInWeek = true;
       this.displayMonths = false;
-    } else if(chronoUnit === 'MONTHS') {
+    } else if (chronoUnit === 'MONTHS') {
       this.enableMonthSetting(true);
       dayInWeek.disable();
       month.disable();
@@ -228,7 +228,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     const monthSettingDayInWeek = this.form.get('monthSettingDayInWeek');
     const monthSettingWeek = this.form.get('monthSettingWeek');
 
-    if(enable) {
+    if (enable) {
       this.displayMonthSetting = true;
       monthSetting.enable();
     } else {
@@ -245,7 +245,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     const monthSettingDayInWeek = this.form.get('monthSettingDayInWeek');
     const monthSettingWeek = this.form.get('monthSettingWeek');
 
-    if(setting === 'DAY') {
+    if (setting === 'DAY') {
       monthSettingDay.enable();
       monthSettingDayInWeek.disable();
       monthSettingWeek.disable();
@@ -270,12 +270,12 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     let paymentAlignmentWeek: number;
     let paymentAlignmentMonth: number;
 
-    if(paymentTemporalUnit === 'WEEKS') {
+    if (paymentTemporalUnit === 'WEEKS') {
       paymentAlignmentDay = dayInWeek;
     }
 
-    if(paymentTemporalUnit === 'MONTHS' || paymentTemporalUnit === 'YEARS') {
-      if(monthSetting === 'DAY') {
+    if (paymentTemporalUnit === 'MONTHS' || paymentTemporalUnit === 'YEARS') {
+      if (monthSetting === 'DAY') {
         paymentAlignmentDay = monthSettingDay;
       } else {
         paymentAlignmentDay = monthSettingDayInWeek;
@@ -283,7 +283,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       }
     }
 
-    if(paymentTemporalUnit === 'YEARS') {
+    if (paymentTemporalUnit === 'YEARS') {
       paymentAlignmentMonth = month;
     }
 

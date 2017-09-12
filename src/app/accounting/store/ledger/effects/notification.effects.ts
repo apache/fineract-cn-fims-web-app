@@ -16,15 +16,13 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class LedgerNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
@@ -50,5 +48,7 @@ export class LedgerNotificationEffects {
       title: 'Ledger can\'t be deleted',
       message: 'Ledger has accounts or sub ledgers'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

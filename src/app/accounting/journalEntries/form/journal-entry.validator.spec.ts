@@ -30,20 +30,20 @@ describe('JournalEntryValidators', () => {
     }
 
     it('should not return error when array contains items', () => {
-      let validator = JournalEntryValidators.minItems(1);
+      const validator = JournalEntryValidators.minItems(1);
 
-      let formArray = setup();
+      const formArray = setup();
 
       expect(validator(formArray)).toBeNull();
     });
 
     it('should return error when array contains less items as specified', () => {
-      let validator = JournalEntryValidators.minItems(2);
+      const validator = JournalEntryValidators.minItems(2);
 
-      let formArray = setup();
+      const formArray = setup();
 
       expect(validator(formArray)).toEqual({minItemsInvalid: true});
-    })
+    });
 
   });
 
@@ -67,7 +67,7 @@ describe('JournalEntryValidators', () => {
     });
 
     it('should return error when sum not equal', () => {
-      let validator = JournalEntryValidators.equalSum('valOne', 'valTwo');
+      const validator = JournalEntryValidators.equalSum('valOne', 'valTwo');
 
       const formGroup = formBuilder.group({
         valOne: formBuilder.array([
@@ -80,7 +80,7 @@ describe('JournalEntryValidators', () => {
       });
 
       expect(validator(formGroup)).toEqual({sumInvalid: true});
-    })
+    });
 
   });
 

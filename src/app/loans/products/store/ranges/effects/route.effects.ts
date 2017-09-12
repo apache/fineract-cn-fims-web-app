@@ -23,8 +23,6 @@ import {RangeActions} from '../range.actions';
 @Injectable()
 export class ProductChargeRangesRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createRangeSuccess$: Observable<Action> = this.actions$
     .ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS)
@@ -36,4 +34,6 @@ export class ProductChargeRangesRouteEffects {
     .ofType(RangeActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../../../../../../'], { relativeTo: payload.data.activatedRoute} ));
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

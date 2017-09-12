@@ -29,7 +29,7 @@ export interface DebtToIncomeFormData {
 })
 export class CaseDebtToIncomeFormComponent {
 
-  numberFormat: string = '2.2-2';
+  numberFormat = '2.2-2';
 
   @ViewChild('incomeForm') incomeFactorComponent: CaseCreditFactorFormComponent;
   incomeSources: CreditWorthinessFactor[] = [];

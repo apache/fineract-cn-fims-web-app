@@ -177,4 +177,4 @@ import {PaymentsListComponent} from './payroll/payments.list.component';
     { provide: AccountingStore, useFactory: accountingStoreFactory, deps: [Store]}
   ]
 })
-export class AccountingModule{}
+export class AccountingModule {}

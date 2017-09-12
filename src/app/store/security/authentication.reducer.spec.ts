@@ -23,25 +23,25 @@ describe('Authentication Reducer', () => {
 
   function mockInitialState(authentication: Authentication) {
     return {
-    username: 'test',
-    tenant: 'test',
-    authentication: authentication,
-    loading: false,
-    error: null,
-    passwordError: null
-    }
+      username: 'test',
+      tenant: 'test',
+      authentication: authentication,
+      loading: false,
+      error: null,
+      passwordError: null
+    };
   }
 
   describe('LOGIN_SUCCESS', () => {
     it('should set authentication, username and tenant', () => {
-      let authentication = mockAuthentication();
-      let loginPayload: LoginSuccessPayload = {
+      const authentication = mockAuthentication();
+      const loginPayload: LoginSuccessPayload = {
         username: 'test',
         tenant: 'test',
         authentication: authentication
       };
 
-      let expectedResult = {
+      const expectedResult = {
         username: 'test',
         tenant: 'test',
         authentication: authentication,
@@ -57,9 +57,9 @@ describe('Authentication Reducer', () => {
 
   describe('REFRESH_ACCESS_TOKEN_SUCCESS', () => {
     it('should update authentication', () => {
-      let authentication = mockAuthentication();
+      const authentication = mockAuthentication();
 
-      let updatedAuthentication = Object.assign({}, authentication, {
+      const updatedAuthentication = Object.assign({}, authentication, {
         accessToken: 'iamupdated'
       });
 

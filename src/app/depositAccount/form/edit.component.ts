@@ -30,7 +30,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   templateUrl: './edit.component.html'
 })
-export class DepositProductEditComponent implements OnInit, OnDestroy{
+export class DepositProductEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('form') formComponent: DepositProductFormComponent;
 
@@ -50,7 +50,7 @@ export class DepositProductEditComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.depositStore.dispatch({ type: RESET_FORM })
+    this.depositStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(productDefinition: ProductDefinition): void {
@@ -64,7 +64,7 @@ export class DepositProductEditComponent implements OnInit, OnDestroy{
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

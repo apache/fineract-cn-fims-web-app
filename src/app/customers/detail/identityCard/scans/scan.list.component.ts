@@ -18,8 +18,8 @@ import {IdentificationCardScan} from '../../../../services/customer/domain/ident
 import {FormGroup} from '@angular/forms';
 
 export interface UploadIdentificationCardScanEvent {
-  scan: IdentificationCardScan,
-  file: File
+  scan: IdentificationCardScan;
+  file: File;
 }
 
 @Component({

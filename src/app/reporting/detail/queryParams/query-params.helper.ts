@@ -16,5 +16,5 @@
 
 export function createPlaceholder(label: string, required: boolean): string {
   const asterisk = required ? '' : '*';
-  return `${label}${asterisk}`
+  return `${label}${asterisk}`;
 }

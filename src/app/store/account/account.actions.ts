@@ -25,7 +25,7 @@ export const SEARCH_COMPLETE = type('[Account] Search Complete');
 
 export interface SearchByLedgerPayload {
   ledgerId: string;
-  fetchRequest: FetchRequest
+  fetchRequest: FetchRequest;
 }
 
 export class SearchAction implements Action {

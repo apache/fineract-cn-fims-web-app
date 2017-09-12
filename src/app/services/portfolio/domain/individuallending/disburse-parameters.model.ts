@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export class DisburseParameters{}
+export class DisburseParameters {
+}

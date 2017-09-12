@@ -24,8 +24,6 @@ import * as definitionActions from '../product.actions';
 @Injectable()
 export class DepositProductDefinitionRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createProductDefinitionSuccess$: Observable<Action> = this.actions$
     .ofType(definitionActions.CREATE_SUCCESS, definitionActions.UPDATE_SUCCESS)
@@ -37,5 +35,7 @@ export class DepositProductDefinitionRouteEffects {
     .ofType(definitionActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

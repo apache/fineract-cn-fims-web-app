@@ -73,7 +73,9 @@ describe('Test transaction type form', () => {
 });
 
 @Component({
-  template: '<fims-transaction-type-form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [transactionType]="type" [editMode]="true"></fims-transaction-type-form>'
+  template: `
+    <fims-transaction-type-form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [transactionType]="type" [editMode]="true">
+    </fims-transaction-type-form>`
 })
 class TestComponent {
 

@@ -24,8 +24,6 @@ import * as tellerActions from '../teller.actions';
 @Injectable()
 export class TellerRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
     .ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS)
@@ -41,4 +39,6 @@ export class TellerRouteEffects {
     .do(payload => {
       this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
     });
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

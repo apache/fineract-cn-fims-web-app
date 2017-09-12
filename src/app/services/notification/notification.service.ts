@@ -17,14 +17,14 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
-export enum NotificationType{
+export enum NotificationType {
   MESSAGE, ALERT
 }
 
-export interface NotificationEvent{
-  type: NotificationType,
-  title?: string,
-  message: string
+export interface NotificationEvent {
+  type: NotificationType;
+  title?: string;
+  message: string;
 }
 
 @Injectable()

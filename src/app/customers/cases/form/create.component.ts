@@ -21,7 +21,7 @@ import {CaseFormComponent} from './form.component';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../services/domain/error.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
@@ -34,7 +34,7 @@ import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 @Component({
   templateUrl: './create.component.html'
 })
-export class CaseCreateComponent implements OnInit, OnDestroy{
+export class CaseCreateComponent implements OnInit, OnDestroy {
 
   private customerSubscription: Subscription;
 
@@ -72,7 +72,8 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     depositAccountIdentifier: ''
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore,
+              private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
 
   ngOnInit(): void {
     const selectedCustomer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
@@ -83,8 +84,8 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.form.get('identifier').errors || {};
+        const detailForm = this.formComponent.detailForm;
+        const errors = detailForm.form.get('identifier').errors || {};
         errors['unique'] = true;
         detailForm.form.get('identifier').setErrors(errors);
         this.formComponent.detailsStep.open();
@@ -101,7 +102,7 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     this.customerSubscription.unsubscribe();
     this.formStateSubscription.unsubscribe();
 
-    this.casesStore.dispatch({ type: RESET_FORM })
+    this.casesStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(caseToSave: FimsCase): void {
@@ -112,11 +113,11 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

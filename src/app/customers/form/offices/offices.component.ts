@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Office} from '../../../services/office/domain/office.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {Store} from '@ngrx/store';
@@ -25,7 +25,7 @@ import {SEARCH} from '../../../store/office/office.actions';
   selector: 'fims-customer-offices-form',
   templateUrl: './offices.component.html'
 })
-export class CustomerOfficesComponent implements OnInit{
+export class CustomerOfficesComponent implements OnInit {
 
   offices: Observable<Office[]>;
 
@@ -40,15 +40,15 @@ export class CustomerOfficesComponent implements OnInit{
       .map(officePage => officePage.offices);
   }
 
-  search(term){
-    let fetchRequest: FetchRequest = {
-      searchTerm: term
+  search(searchTerm) {
+    const fetchRequest: FetchRequest = {
+      searchTerm
     };
 
     this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
-  select(selections: string[]): void{
+  select(selections: string[]): void {
     this.onSelectionChange.emit(selections);
   }
 

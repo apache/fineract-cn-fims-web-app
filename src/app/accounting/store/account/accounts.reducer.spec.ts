@@ -30,7 +30,7 @@ describe('Accounts Reducer', () => {
         comment: 'test'
       },
       activatedRoute: null
-    }
+    };
   }
 
   function mockState(state: AccountState): ResourceState {
@@ -45,7 +45,7 @@ describe('Accounts Reducer', () => {
       },
       selectedId: null,
       loadedAt: null
-    }
+    };
   }
 
   it('should open the account when reopened', () => {

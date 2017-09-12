@@ -15,7 +15,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {CustomersStore} from '../../store/index';
 import {SelectAction} from '../../store/identityCards/identity-cards.actions';
@@ -23,7 +23,7 @@ import {SelectAction} from '../../store/identityCards/identity-cards.actions';
 @Component({
   templateUrl: './identity-card.index.component.html'
 })
-export class CustomerIdentityCardIndexComponent implements OnInit, OnDestroy{
+export class CustomerIdentityCardIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 

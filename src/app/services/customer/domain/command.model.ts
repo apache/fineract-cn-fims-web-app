@@ -16,7 +16,7 @@
 
 export type CommandAction = 'ACTIVATE' | 'LOCK' | 'UNLOCK' | 'CLOSE' | 'REOPEN';
 
-export interface Command{
+export interface Command {
   action: CommandAction;
   comment?: string;
   createdOn?: string;

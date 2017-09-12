@@ -20,7 +20,9 @@ import {Observable} from 'rxjs/Observable';
 
 export function countryExists(countryService: CountryService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
-    if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
+    if (!control.dirty || !control.value || control.value.length === 0) {
+      return Observable.of(null);
+    }
 
     const country = control.value;
     const displayName: string = country && typeof country === 'object' ? country.displayName : country;
@@ -28,12 +30,12 @@ export function countryExists(countryService: CountryService): AsyncValidatorFn 
     return Observable.of(displayName)
       .map(searchTerm => countryService.fetchCountries(displayName))
       .map(countries => {
-        if(countries.length === 1 && countries[0].displayName === displayName) {
+        if (countries.length === 1 && countries[0].displayName === displayName) {
           return null;
         }
         return {
           invalidCountry: true
-        }
+        };
       });
-  }
+  };
 }

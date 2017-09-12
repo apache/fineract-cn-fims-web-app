@@ -35,7 +35,9 @@ export class ReportingDisplayableFieldsComponent implements OnInit {
   optionalFields: DisplayableField[];
 
   @Input() set displayableFields(displayableFields: DisplayableField[]) {
-    if(!displayableFields) return;
+    if (!displayableFields) {
+      return;
+    }
 
     this._displayableFields = displayableFields;
 

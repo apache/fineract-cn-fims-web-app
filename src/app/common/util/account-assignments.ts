@@ -23,14 +23,14 @@ export function createAccountAssignment(identifier: string, designator: string):
   return {
     accountIdentifier: identifier,
     designator: designator
-  }
+  };
 }
 
 export function createLedgerAssignment(identifier: string, designator: string): AccountAssignment {
   return {
     ledgerIdentifier: identifier,
     designator: designator
-  }
+  };
 }
 
 export function accountIdentifier(assignment: AccountAssignment): string {

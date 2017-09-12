@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {Observable} from 'rxjs/Observable';
 import {getAllTellerEntities, getSelectedOffice, OfficesStore} from '../../store/index';
@@ -26,7 +26,7 @@ import {LoadTellerAction} from '../../store/teller/teller.actions';
 @Component({
   templateUrl: './teller.list.component.html'
 })
-export class OfficeTellerListComponent implements OnInit {
+export class OfficeTellerListComponent implements OnInit, OnDestroy {
 
   private loadTellerSubscription: Subscription;
 
@@ -52,7 +52,7 @@ export class OfficeTellerListComponent implements OnInit {
         data: tellers,
         totalElements: tellers.length,
         totalPages: 1
-      }))
+      }));
   }
 
   ngOnDestroy(): void {

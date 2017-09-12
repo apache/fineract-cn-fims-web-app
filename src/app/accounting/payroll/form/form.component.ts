@@ -72,7 +72,7 @@ export class PayrollFormComponent implements OnInit {
       customerIdentifier: ['', [Validators.required], customerExists(this.customerService)],
       employer: ['', [Validators.required]],
       salary: ['', [Validators.required, FimsValidators.minValue(0)]]
-    })
+    });
   }
 
   addPayment(): void {

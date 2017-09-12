@@ -17,14 +17,7 @@
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../common/forms/form.component';
 import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
-import {
-  BUSINESS,
-  ContactDetail,
-  ContactDetailType,
-  EMAIL,
-  MOBILE,
-  PHONE
-} from '../../../services/domain/contact/contact-detail.model';
+import {BUSINESS, ContactDetail, ContactDetailType, EMAIL, MOBILE, PHONE} from '../../../services/domain/contact/contact-detail.model';
 import {getContactDetailValueByType} from '../../contact.helper';
 import {FimsValidators} from '../../../common/validator/validators';
 
@@ -35,13 +28,15 @@ import {FimsValidators} from '../../../common/validator/validators';
 export class CustomerContactFormComponent extends FormComponent<ContactDetail[]> {
 
   @Input() set formData(contactDetails: ContactDetail[]) {
-    if (!contactDetails) throw new Error('contact details must be defined');
+    if (!contactDetails) {
+      throw new Error('contact details must be defined');
+    }
 
-    let phone: string = '';
-    let mobile: string = '';
-    let email: string = '';
+    let phone = '';
+    let mobile = '';
+    let email = '';
 
-    let businessContacts: ContactDetail[] = contactDetails.filter(contactDetail => contactDetail.group === BUSINESS);
+    const businessContacts: ContactDetail[] = contactDetails.filter(contactDetail => contactDetail.group === BUSINESS);
 
     if (businessContacts.length) {
       phone = getContactDetailValueByType(businessContacts, PHONE);

@@ -24,14 +24,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
 import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {SelectListComponent} from '../../common/select-list/select-list.component';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
 import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {MdIconModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 
-let employeeTemplate: Employee = {
+const employeeTemplate: Employee = {
   identifier: 'test',
   givenName: 'test',
   middleName: 'test',
@@ -45,7 +45,7 @@ let employeeTemplate: Employee = {
   assignedOffice: 'test'
 };
 
-let userTemplate: User = {
+const userTemplate: User = {
   identifier: 'test',
   role: 'test'
 };
@@ -80,7 +80,7 @@ describe('Test employee form component', () => {
         {
           provide: Store, useClass: class {
           dispatch = jasmine.createSpy('dispatch');
-          select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+          select = jasmine.createSpy('select').and.returnValue(Observable.empty());
         }}
       ]
     });
@@ -113,9 +113,11 @@ describe('Test employee form component', () => {
 });
 
 @Component({
-  template: '<fims-employee-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [formData]="employeeFormData"></fims-employee-form-component>'
+  template: `
+    <fims-employee-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [formData]="employeeFormData">
+    </fims-employee-form-component>`
 })
-class TestComponent{
+class TestComponent {
 
   saveEmitter = new EventEmitter<EmployeeSaveEvent>();
 
@@ -126,11 +128,11 @@ class TestComponent{
     user: userTemplate
   };
 
-  triggerSave(): void{
+  triggerSave(): void {
     this.formComponent.save();
   }
 
-  onSave(event: EmployeeSaveEvent): void{
+  onSave(event: EmployeeSaveEvent): void {
     this.saveEmitter.emit(event);
   }
 
