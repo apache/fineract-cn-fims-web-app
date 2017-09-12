@@ -86,7 +86,7 @@
       <h3 md-subheader translate>Birthday</h3>
       <md-list-item>
         <md-icon md-list-avatar>cake</md-icon>
-        <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
+        <h3 md-line>{{customer.dateOfBirth | displayFimsDate}}</h3>
       </md-list-item>
       <md-list-item>
         <h3 md-line translate>Created by</h3>
