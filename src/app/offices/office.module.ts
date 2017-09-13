@@ -34,21 +34,8 @@ import {EffectsModule} from '@ngrx/effects';
 import {OfficeRouteEffects} from './store/effects/route.effects';
 import {OfficeApiEffects} from './store/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
-import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdRadioModule,
-  MdToolbarModule
-} from '@angular/material';
-import {
-  CovalentDataTableModule,
-  CovalentMessageModule,
-  CovalentSearchModule,
-  CovalentStepsModule
-} from '@covalent/core';
+import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule, MdToolbarModule} from '@angular/material';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {CommonModule} from '@angular/common';
 import {TellerApiEffects} from './store/teller/effects/service.effects';
 import {OfficeTellerListComponent} from './detail/teller/teller.list.component';
@@ -65,6 +52,7 @@ import {OfficeTellerDetailComponent} from './detail/teller/detail/teller.detail.
 import {OpenOfficeTellerFormComponent} from './detail/teller/detail/command/open.component';
 import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/close.component';
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
+import {AdjustmentComponent} from './detail/teller/detail/command/components/adjustment.component';
 
 @NgModule({
   imports: [
@@ -110,6 +98,7 @@ import {OfficeTellerCommandComponent} from './detail/teller/detail/command/comma
     OpenOfficeTellerFormComponent,
     CloseOfficeTellerFormComponent,
     TellerBalanceComponent,
+    AdjustmentComponent
   ],
   providers: [
     HeadquarterGuard,
