@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import {Injectable} from '@angular/core';
-import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
-import {TellerService} from '../../../../services/teller/teller-service';
-import {TellerTransaction} from '../../../../services/teller/domain/teller-transaction.model';
+import {NotificationService, NotificationType} from '../../services/notification/notification.service';
+import {TellerService} from '../../services/teller/teller-service';
+import {TellerTransaction} from '../../services/teller/domain/teller-transaction.model';
 import {Observable} from 'rxjs/Observable';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
+import {TellerTransactionCosts} from '../../services/teller/domain/teller-transaction-costs.model';
 
 @Injectable()
 export class TellerTransactionService {
@@ -34,7 +34,7 @@ export class TellerTransactionService {
           title: 'Invalid transaction',
           message: error.message
         });
-        return Observable.of([]);
+        return Observable.empty();
       });
   }
 }

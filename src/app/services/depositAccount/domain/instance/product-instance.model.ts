@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-import {State} from './state.model';
-
 export interface ProductInstance {
   customerIdentifier: string;
   productIdentifier: string;
   accountIdentifier?: string;
   beneficiaries?: string[];
-  state?: State;
+  state?: string;
   balance?: number;
 }

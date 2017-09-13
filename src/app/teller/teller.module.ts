@@ -53,7 +53,8 @@ import {TransactionCostComponent} from './customer/transaction/components/cost.c
 import {CreateDepositTransactionFormComponent} from './customer/transaction/deposit/create.form.component';
 import {ChequeTransactionFormComponent} from './customer/transaction/cheque/form.component';
 import {CreateChequeTransactionFormComponent} from './customer/transaction/cheque/create.component';
-import {TellerTransactionService} from './customer/transaction/services/transaction.service';
+import {TellerTransactionService} from './services/transaction.service';
+import {AvailableActionService} from './services/available-actions.service';
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import {TellerTransactionService} from './customer/transaction/services/transact
     TellerLoginGuard,
     TellerCustomerExistsGuard,
     TellerTransactionService,
+    AvailableActionService,
     { provide: TellerStore, useFactory: tellerStoreFactory, deps: [Store]}
   ]
 })
