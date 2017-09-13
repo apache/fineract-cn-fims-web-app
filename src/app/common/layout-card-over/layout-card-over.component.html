@@ -16,12 +16,10 @@
 
 <div layout="column" layout-fill>
   <md-toolbar>
-    <div layout="row" layout-align="start center" flex>
-      <a md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
-        <md-icon>keyboard_arrow_left</md-icon>
-      </a>
-      {{fullTitle}}
-    </div>
+    <a md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </a>
+    <span class="truncate">{{fullTitle}}</span>
     <span flex></span>
     <ng-content select="fims-layout-card-over-header-menu"></ng-content>
   </md-toolbar>
