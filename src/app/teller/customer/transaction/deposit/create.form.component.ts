@@ -29,7 +29,7 @@ import {DepositTransactionFormComponent} from './form.component';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {TransactionForm} from '../domain/transaction-form.model';
-import {TellerTransactionService} from '../services/transaction.service';
+import {TellerTransactionService} from '../../../services/transaction.service';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -61,10 +61,18 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
+    const transactionType$ = this.route.queryParams
+      .map(params => params['transactionType'])
+      .do(transactionType => this.transactionType = transactionType);
 
-    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+    const allProductInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+
+    this.productInstances$ = Observable.combineLatest(
+      transactionType$,
+      allProductInstances$,
+      (type, productInstances) => this.filterProductInstances(type, productInstances)
+    );
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .filter(teller => !!teller)
@@ -74,6 +82,13 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
+  }
+
+  filterProductInstances(transactionType: string, productInstances: ProductInstance[]): ProductInstance[] {
+    // If open account only show pending accounts otherwise only active
+    const filterByState = transactionType === 'ACCO' ? 'PENDING' : 'ACTIVE';
+    return productInstances
+      .filter(instance => instance.state === filterByState);
   }
 
   ngOnDestroy(): void {

@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-export interface StateChange {
-  state: string;
-  note?: string;
-  createdBy?: string;
-  createdOn?: string;
+export interface AvailableTransactionType {
+  transactionType: string;
 }

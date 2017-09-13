@@ -22,16 +22,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {LoadAllDepositProductsAction, LoadAllLoanProductsAction} from '../store/teller.actions';
 import {CustomerService} from '../../services/customer/customer.service';
-import {TransactionType} from '../../services/teller/domain/teller-transaction.model';
-
-interface Action {
-  transactionType: TransactionType;
-  color: string;
-  icon: string;
-  title: string;
-  description: string;
-  disabled?: boolean;
-}
+import {Action, AvailableActionService} from '../services/available-actions.service';
 
 @Component({
   templateUrl: './customer-detail.component.html'
@@ -50,23 +41,9 @@ export class TellerCustomerDetailComponent implements OnDestroy {
 
   hasLoanProducts$: Observable<boolean>;
 
-  depositActions: Action[] = [
-    { transactionType: 'ACCO', color: 'indigo-A400', icon: 'create', title: 'Open account', description: '' },
-    { transactionType: 'ACCC', color: 'indigo-A400', icon: 'close', title: 'Close account', description: ''},
-    { transactionType: 'ACCT', color: 'indigo-A400', icon: 'swap_horiz', title: 'Account transfer', description: ''},
-    { transactionType: 'CDPT', color: 'indigo-A400', icon: 'arrow_forward', title: 'Cash deposit', description: ''},
-    { transactionType: 'CWDL', color: 'indigo-A400', icon: 'arrow_back', title: 'Cash withdrawal', description: ''},
-  ];
+  availableActions$: Observable<Action[]>;
 
-  loanActions: Action[] = [
-    { transactionType: 'PPAY', color: 'indigo-A400', icon: 'arrow_forward', title: 'Repay loan', description: '' }
-  ];
-
-  chequeActions: Action[] = [
-    { transactionType: 'CCHQ', color: 'indigo-A400', icon: 'import_contacts', title: 'Cash cheque', description: ''}
-  ];
-
-  constructor(private store: TellerStore, private customerService: CustomerService) {
+  constructor(private store: TellerStore, private customerService: CustomerService, private actionService: AvailableActionService) {
     this.customer$ = store.select(fromTeller.getTellerSelectedCustomer)
       .filter(customer => !!customer);
 
@@ -84,6 +61,9 @@ export class TellerCustomerDetailComponent implements OnDestroy {
     this.loadLoanProductsSubscription = this.customer$
       .map(customer => new LoadAllLoanProductsAction(customer.identifier))
       .subscribe(this.store);
+
+    this.availableActions$ = this.customer$
+      .mergeMap(customer => this.actionService.getAvailableActions(customer.identifier));
   }
 
   ngOnDestroy(): void {

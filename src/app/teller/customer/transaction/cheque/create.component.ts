@@ -32,7 +32,7 @@ import {ChequeTransactionFormComponent} from './form.component';
 import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
 import {Error} from '../../../../services/domain/error.model';
-import {TellerTransactionService} from '../services/transaction.service';
+import {TellerTransactionService} from '../../../services/transaction.service';
 
 @Component({
   templateUrl: './create.component.html'
@@ -74,7 +74,8 @@ export class CreateChequeTransactionFormComponent implements OnInit, OnDestroy {
       .filter(customer => !!customer);
 
     this.productInstances$ = selectedCustomer$
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
+      .map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE'));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
       .filter(teller => !!teller)
