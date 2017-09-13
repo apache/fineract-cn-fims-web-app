@@ -34,7 +34,7 @@ export class TellerTransactionService {
           title: 'Invalid transaction',
           message: error.message
         });
-        return Observable.of([]);
+        return Observable.empty();
       });
   }
 }
