@@ -21,6 +21,8 @@ import {TellerManagementCommand} from '../../../../../services/teller/domain/tel
 import {FormComponent} from '../../../../../common/forms/form.component';
 import {OfficeService} from '../../../../../services/office/office.service';
 import {employeeExists} from '../../../../../common/validator/employee-exists.validator';
+import {AdjustmentOption} from './model/adjustment-option.model';
+import {FimsValidators} from '../../../../../common/validator/validators';
 
 @Component({
   selector: 'fims-teller-open-command',
@@ -34,12 +36,19 @@ export class OpenOfficeTellerFormComponent extends FormComponent<TellerManagemen
 
   @Output() onCancel = new EventEmitter<void>();
 
+  adjustmentOptions: AdjustmentOption[] = [
+    { key: 'NONE', label: 'None' },
+    { key: 'DEBIT', label: 'Cash in' },
+  ];
+
   constructor(private formBuilder: FormBuilder, private officeService: OfficeService) {
     super();
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      adjustment: ['NONE'],
+      amount: [0, [Validators.required, FimsValidators.minValue(0)]],
       assignedEmployeeIdentifier: ['', [Validators.required], employeeExists(this.officeService)]
     });
 
@@ -59,7 +68,8 @@ export class OpenOfficeTellerFormComponent extends FormComponent<TellerManagemen
     const command: TellerManagementCommand = {
       action: 'OPEN',
       assignedEmployeeIdentifier: this.form.get('assignedEmployeeIdentifier').value,
-      adjustment: 'NONE'
+      adjustment: this.form.get('adjustment').value,
+      amount: this.form.get('amount').value,
     };
 
     this.onOpen.emit(command);
