@@ -13,12 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Inject, LOCALE_ID, Pipe, PipeTransform} from '@angular/core';
+import {FimsDate, toISOString} from '../../services/domain/date.converter';
+import {DatePipe} from '@angular/common';
 
-export interface DividendDistribution {
-  dueDate: {
-    year?: number;
-    month?: number;
-    day?: number;
-  };
-  dividendRate: string;
+@Pipe({
+  name: 'displayFimsDate',
+  pure: true
+})
+export class DisplayFimsDate extends DatePipe implements PipeTransform {
+
+  constructor(@Inject(LOCALE_ID) private locale: string) {
+    super(locale);
+  }
+
+  transform(fimsDate: FimsDate, format = 'shortDate'): string {
+    return super.transform(toISOString(fimsDate), format);
+  }
 }

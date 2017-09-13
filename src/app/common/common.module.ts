@@ -56,6 +56,7 @@ import {ImageComponent} from './image/image.component';
 import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.component';
 import {FimsFabButtonComponent} from './fab-button/fab-button.component';
 import {RouterModule} from '@angular/router';
+import {DisplayFimsDate} from './date/fims-date.pipe';
 
 @NgModule({
   imports: [
@@ -104,7 +105,8 @@ import {RouterModule} from '@angular/router';
     PortraitComponent,
     NumberInputComponent,
     ImageComponent,
-    FimsFabButtonComponent
+    FimsFabButtonComponent,
+    DisplayFimsDate
   ],
   exports: [
     LayoutCardOverComponent,
@@ -130,7 +132,8 @@ import {RouterModule} from '@angular/router';
     PortraitComponent,
     NumberInputComponent,
     ImageComponent,
-    FimsFabButtonComponent
+    FimsFabButtonComponent,
+    DisplayFimsDate
   ],
   entryComponents: [
     ImageComponent
