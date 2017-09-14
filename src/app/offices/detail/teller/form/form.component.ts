@@ -52,7 +52,7 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
     this.form = this.formBuilder.group({
       code: [teller.code, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       password: [teller.password, [Validators.required, Validators.minLength(8), Validators.maxLength(4096)]],
-      cashdrawLimit: [teller.cashdrawLimit, [FimsValidators.minValue(0)]],
+      cashdrawLimit: [teller.cashdrawLimit, [Validators.required, FimsValidators.greaterThanValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],
       vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)],
       chequesReceivableAccount: [teller.chequesReceivableAccount, [Validators.required], accountExists(this.accountService)]
