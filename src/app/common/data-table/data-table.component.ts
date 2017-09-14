@@ -70,11 +70,16 @@ export class DataTableComponent {
 
   @Input() sortable = false;
 
+  @Input() set sortBy(sortBy: string) {
+    this.currentSort.sortColumn = sortBy;
+  }
+
   @Input() pageable = false;
 
   @Input() actionColumn = true;
 
   @Input() actionColumnLabel = 'SHOW';
+
   @Input() loading = false;
 
   @Output() onFetch: EventEmitter<TableFetchRequest> = new EventEmitter<TableFetchRequest>();
