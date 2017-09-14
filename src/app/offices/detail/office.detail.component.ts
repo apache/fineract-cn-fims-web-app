@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OfficeService} from '../../services/office/office.service';
 import {Office} from '../../services/office/domain/office.model';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {OfficePage} from '../../services/office/domain/office-page.model';
 import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
 import {TdDialogService} from '@covalent/core';
 import {TableData} from '../../common/data-table/data-table.component';
 import {DELETE} from '../store/office.actions';
 import {getSelectedOffice, OfficesStore} from '../store/index';
+import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+import * as fromRoot from '../../store/index';
 
 @Component({
-  templateUrl: './office.detail.component.html',
-  styleUrls: ['./office.detail.component.scss'],
+  templateUrl: './office.detail.component.html'
 })
-export class OfficeDetailComponent implements OnInit, OnDestroy {
+export class OfficeDetailComponent implements OnInit {
 
-  private officeSubscription: Subscription;
+  office$: Observable<Office>;
 
-  office: Office;
+  canDelete$: Observable<boolean>;
 
   branchData: TableData = {
     totalElements: 0,
@@ -53,26 +54,29 @@ export class OfficeDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.officeSubscription = this.store.select(getSelectedOffice)
+    this.office$ = this.store.select(getSelectedOffice)
       .filter(office => !!office)
-      .subscribe((office: Office) => {
-        this.office = office;
-        this.fetchBranches();
+      .do(office => this.fetchBranches(office.identifier));
+
+    this.canDelete$ = Observable.combineLatest(
+      this.store.select(fromRoot.getPermissions),
+      this.office$,
+      (permissions, office: Office) => ({
+        hasPermission: this.hasDeletePermission(permissions),
+        noExternalReferences: !office.externalReferences
+      }))
+      .map(result => result.hasPermission && result.noExternalReferences);
+  }
+
+  fetchBranches(identifier: string, fetchRequest?: FetchRequest): void {
+    this.officeService.listBranches(identifier, fetchRequest)
+      .subscribe((officePage: OfficePage) => {
+        this.branchData = {
+          data: officePage.offices,
+          totalElements: officePage.totalElements,
+          totalPages: officePage.totalPages
+        };
       });
-  }
-
-  ngOnDestroy(): void {
-    this.officeSubscription.unsubscribe();
-  }
-
-  fetchBranches(fetchRequest?: FetchRequest): void {
-    this.officeService.listBranches(this.office.identifier, fetchRequest).subscribe((officePage: OfficePage) => {
-      this.branchData = {
-        data: officePage.offices,
-        totalElements: officePage.totalElements,
-        totalPages: officePage.totalPages
-      };
-    });
   }
 
   rowSelect(office: Office): void {
@@ -91,15 +95,22 @@ export class OfficeDetailComponent implements OnInit, OnDestroy {
     }).afterClosed();
   }
 
-  deleteOffice(): void {
+  deleteOffice(office: Office): void {
     this.confirmDeletion()
       .filter(accept => accept)
       .subscribe(() => this.store.dispatch({
         type: DELETE, payload: {
-          office: this.office,
+          office,
           activatedRoute: this.route
         }
       }));
+  }
+
+  private hasDeletePermission(permissions: FimsPermission[]): boolean {
+    return permissions.filter(permission =>
+      permission.id === 'office_offices' &&
+      permission.accessLevel === 'DELETE'
+    ).length > 0;
   }
 
 }

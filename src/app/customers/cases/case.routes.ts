@@ -24,6 +24,7 @@ import {CaseExistsGuard} from './case-exists.guard';
 import {CaseStatusComponent} from './status/status.component';
 import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 import {CaseCommandConfirmationComponent} from './status/confirmation/confirmation.component';
+import {CaseIndexComponent} from './case.index.component';
 
 export const CaseRoutes: Routes = [
   {
@@ -42,6 +43,7 @@ export const CaseRoutes: Routes = [
   },
   {
     path: 'products/:productId/detail/:caseId',
+    component: CaseIndexComponent,
     canActivate: [CaseExistsGuard],
     data: {
       hasPermission: {id: 'portfolio_cases', accessLevel: 'READ'}
@@ -49,6 +51,13 @@ export const CaseRoutes: Routes = [
     children: [
       {
         path: '', component: CaseDetailComponent
+      },
+      {
+        path: 'edit',
+        component: CaseEditComponent,
+        data: {
+          hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
+        }
       },
       {
         path: 'payments', component: CasePaymentsComponent
@@ -72,13 +81,6 @@ export const CaseRoutes: Routes = [
         component: CaseDebtIncomeComponent
       }
     ]
-  },
-  {
-    path: 'products/:productId/detail/:caseId/edit',
-    component: CaseEditComponent,
-    canActivate: [CaseExistsGuard],
-    data: {
-      hasPermission: {id: 'portfolio_cases', accessLevel: 'CHANGE'}
-    }
   }
+
 ];

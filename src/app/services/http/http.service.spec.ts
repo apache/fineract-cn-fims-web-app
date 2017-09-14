@@ -33,8 +33,6 @@ describe('Test http client', () => {
 
   const tenant = 'Reynholm Industries';
 
-  const baseUrl = 'baseUrl';
-
   const authenticationState = {
     username: 'test',
     tenant: tenant,

@@ -305,4 +305,8 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     return formData;
   }
 
+  showIdentifierValidationError(): void {
+    this.setError('identifier', 'unique', true);
+  }
+
 }

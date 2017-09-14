@@ -37,9 +37,9 @@ describe('Test data table component', () => {
 
   let columns: DebugElement[];
 
-  function click(element: DebugElement) {
-    element.triggerEventHandler('click', new Event('click'));
-  }
+  // function click(element: DebugElement) {
+  //  element.triggerEventHandler('click', new Event('click'));
+  // }
 
   beforeEach(() => {
     TestBed.configureTestingModule({

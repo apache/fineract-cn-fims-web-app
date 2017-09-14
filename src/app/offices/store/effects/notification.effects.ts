@@ -46,7 +46,7 @@ export class OfficeNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Office can\'t be deleted',
-      message: 'Office has either branch offices or employees assigned to it.'
+      message: 'Office has either branch offices, employees or teller assigned to it.'
     }));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {

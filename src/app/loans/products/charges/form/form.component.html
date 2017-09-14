@@ -15,7 +15,7 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Charge details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
+  <td-step #detailsStep label="{{'Fee details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
     <form [formGroup]="detailForm">
       <div layout="row">
         <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
@@ -78,7 +78,7 @@
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action
-        [resourceName]="'CHARGE'"
+        [resourceName]="'FEE'"
         [editMode]="editMode"
         [disabled]="!detailForm.valid"
         (onCancel)="cancel()"

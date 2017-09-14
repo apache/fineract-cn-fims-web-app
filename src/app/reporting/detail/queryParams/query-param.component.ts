@@ -33,10 +33,6 @@ import {ReportingInputParamComponent} from './input/input.component';
 import {ReportingInParamComponent} from './in/in.component';
 import {ReportingBetweenParamComponent} from './between/between.component';
 
-const noop: any = () => {
-  // empty method
-};
-
 export const ELEMENT_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ReportingQueryParamComponent),

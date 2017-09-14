@@ -129,7 +129,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #chargesStep label="{{'Charges' | translate}}" [state]="chargesForm.valid ? 'complete' : chargesForm.pristine ? 'none' : 'required'">
+  <td-step #chargesStep label="{{'Fees' | translate}}" [state]="chargesForm.valid ? 'complete' : chargesForm.pristine ? 'none' : 'required'">
     <fims-deposit-product-charges-form #chargesForm [actions]="actions" [formData]="charges"></fims-deposit-product-charges-form>
   </td-step>
 
