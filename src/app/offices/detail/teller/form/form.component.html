@@ -38,7 +38,7 @@
           <input mdInput type="number" placeholder="{{'Cash withdrawal limit' | translate}}" formControlName="cashdrawLimit" tdAutoTrim/>
           <md-error *ngIf="form.get('cashdrawLimit').hasError('required')" translate>Required</md-error>
           <md-error *ngIf="form.get('cashdrawLimit').getError('greaterThanValue')">
-            {{ 'Value must be greater than or equal to' | translate:{ value: form.get('cashdrawLimit').getError('greaterThanValue').value} }}
+            {{ 'Value must be greater than' | translate:{ value: form.get('cashdrawLimit').getError('greaterThanValue').value} }}
           </md-error>
         </md-input-container>
       </div>
