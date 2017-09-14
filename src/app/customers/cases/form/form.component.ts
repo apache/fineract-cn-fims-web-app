@@ -199,4 +199,9 @@ export class CaseFormComponent implements OnInit {
   get documentsFormState(): string {
     return this.documentsForm.valid ? 'complete' : this.documentsForm.pristine ? 'none' : 'required';
   }
+
+  showIdentifierValidationError(): void {
+    this.detailForm.showIdentifierValidationError();
+    this.detailsStep.open();
+  }
 }
