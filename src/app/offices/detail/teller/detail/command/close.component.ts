@@ -15,16 +15,12 @@
  */
 
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {Adjustment, TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
+import {TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
 import {FormComponent} from '../../../../../common/forms/form.component';
 import {FimsValidators} from '../../../../../common/validator/validators';
-
-interface AdjustmentOption {
-  key: string | Adjustment;
-  label: string;
-}
+import {AdjustmentOption} from './model/adjustment-option.model';
 
 @Component({
   selector: 'fims-teller-close-command',
@@ -40,8 +36,7 @@ export class CloseOfficeTellerFormComponent extends FormComponent<TellerManageme
 
   adjustmentOptions: AdjustmentOption[] = [
     { key: 'NONE', label: 'None' },
-    { key: 'DEBIT', label: 'Debit' },
-    { key: 'CREDIT', label: 'Credit' }
+    { key: 'CREDIT', label: 'Cash out' }
   ];
 
   constructor(private formBuilder: FormBuilder) {
@@ -51,7 +46,7 @@ export class CloseOfficeTellerFormComponent extends FormComponent<TellerManageme
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       adjustment: ['NONE'],
-      amount: [0, FimsValidators.minValue(0)],
+      amount: [0, [Validators.required, FimsValidators.minValue(0)]],
     });
 
     this.step.open();

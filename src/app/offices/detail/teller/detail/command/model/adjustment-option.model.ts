@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Adjustment} from '../../../../../../services/teller/domain/teller-management-command.model';
 
-export type Value = 'PENDING' | 'OPEN' | 'LOCKED' | 'CLOSED';
-
-export interface State {
-  value: Value;
-  note?: string;
-  createdBy?: string;
-  createdOn?: string;
+export interface AdjustmentOption {
+  key: string | Adjustment;
+  label: string;
 }

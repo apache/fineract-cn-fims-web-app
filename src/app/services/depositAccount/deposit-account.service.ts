@@ -23,6 +23,7 @@ import {ProductInstance} from './domain/instance/product-instance.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Action} from './domain/definition/action.model';
 import {DividendDistribution} from './domain/definition/dividend-distribution.model';
+import {AvailableTransactionType} from './domain/instance/available-transaction-type.model';
 
 @Injectable()
 export class DepositAccountService {
@@ -75,13 +76,13 @@ export class DepositAccountService {
   }
 
   fetchProductInstances(customerIdentifier: string, productIdentifier?: string): Observable<ProductInstance[]> {
-    const params = new URLSearchParams();
+    const search = new URLSearchParams();
 
-    params.append('customer', customerIdentifier);
-    params.append('product', productIdentifier);
+    search.append('customer', customerIdentifier);
+    search.append('product', productIdentifier);
 
     const requestOptions: RequestOptionsArgs = {
-      search: params
+      search
     };
 
     return this.http.get(`${this.baseUrl}/instances`, requestOptions);
@@ -89,6 +90,18 @@ export class DepositAccountService {
 
   fetchActions(): Observable<Action[]> {
     return this.http.get(`${this.baseUrl}/actions`);
+  }
+
+  fetchPossibleTransactionTypes(customerIdentifier: string): Observable<AvailableTransactionType[]> {
+    const search = new URLSearchParams();
+
+    search.append('customer', customerIdentifier);
+
+    const requestOptions: RequestOptionsArgs = {
+      search
+    };
+
+    return this.http.get(`${this.baseUrl}/instances/transactiontypes`, requestOptions);
   }
 
 

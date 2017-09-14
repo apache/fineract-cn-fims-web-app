@@ -29,7 +29,7 @@ import {Teller} from '../../../../services/teller/domain/teller.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {TransactionForm} from '../domain/transaction-form.model';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
-import {TellerTransactionService} from '../services/transaction.service';
+import {TellerTransactionService} from '../../../services/transaction.service';
 
 @Component({
   templateUrl: './create.form.component.html'
