@@ -167,8 +167,8 @@ export class AccountingService {
     return this.http.get(`${this.baseUrl}/chartofaccounts`);
   }
 
-  public findTransactionType(code: string): Observable<Account> {
-    return this.http.get(`${this.baseUrl}/transactiontypes/${code}`);
+  public findTransactionType(code: string, silent?: boolean): Observable<Account> {
+    return this.http.get(`${this.baseUrl}/transactiontypes/${code}`, {}, silent);
   }
 
   public createTransactionType(transactionType: TransactionType): Observable<void> {

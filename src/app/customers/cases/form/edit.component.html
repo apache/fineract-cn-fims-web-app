@@ -14,14 +14,14 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit loan for member ' | translate:{value: customer.givenName + ' ' + customer.surname} }}">
+<fims-layout-card-over title="{{'Edit loan for member' | translate:{value: fullName} }}">
   <fims-case-form-component #form
                               (onSave)="onSave($event)"
                               (onCancel)="onCancel()"
                               [products]="products$ | async"
                               [productInstances]="productsInstances$ | async"
-                              [case]="caseInstance"
-                              [customerId]="customer.identifier"
+                              [case]="caseInstance$ | async"
+                              [customerId]="(customer$ | async).identifier"
                               [editMode]="true">
   </fims-case-form-component>
 </fims-layout-card-over>

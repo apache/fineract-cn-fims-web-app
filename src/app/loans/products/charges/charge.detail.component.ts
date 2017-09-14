@@ -64,9 +64,9 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy {
 
   confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
-      message: 'Do you want to delete charge "' + this.charge.identifier + '"?',
+      message: 'Do you want to delete fee "' + this.charge.identifier + '"?',
       title: 'Confirm deletion',
-      acceptButton: 'DELETE CHARGE',
+      acceptButton: 'DELETE FEE',
     }).afterClosed();
   }
 

@@ -20,7 +20,7 @@
       <md-card-content>
         <div layout="row">
           <md-input-container layout-margin flex>
-            <input mdInput type="text" placeholder="{{'Charge name' | translate}}" formControlName="name"/>
+            <input mdInput type="text" placeholder="{{'Fee name' | translate}}" formControlName="name"/>
             <md-error *ngIf="charge.get('name').hasError('required')" translate>
               Required
             </md-error>
@@ -56,12 +56,12 @@
         </fims-account-select>
       </md-card-content>
       <md-card-actions>
-        <button md-button (click)="removeCharge(i)">{{'REMOVE CHARGE' | translate}}</button>
+        <button md-button (click)="removeCharge(i)">{{'REMOVE FEE' | translate}}</button>
       </md-card-actions>
     </md-card>
 
     <div layout="row">
-      <button flex md-button md-raised-button (click)="addCharge()">{{'ADD CHARGE' | translate}}</button>
+      <button flex md-button md-raised-button (click)="addCharge()">{{'ADD FEE' | translate}}</button>
     </div>
   </div>
 </form>

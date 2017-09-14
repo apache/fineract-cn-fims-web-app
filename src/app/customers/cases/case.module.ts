@@ -73,6 +73,7 @@ import {CaseTasksNotificationEffects} from './store/tasks/effects/notification.e
 import {CaseCommandConfirmationComponent} from './status/confirmation/confirmation.component';
 import {CaseCommandConfirmationFormComponent} from './status/confirmation/form.component';
 import {CaseTaskComponent} from './status/task.component';
+import {CaseIndexComponent} from './case.index.component';
 
 @NgModule({
   imports: [
@@ -111,6 +112,7 @@ import {CaseTaskComponent} from './status/task.component';
   ],
   declarations: [
     CaseListComponent,
+    CaseIndexComponent,
     CaseFormComponent,
     CaseCreateComponent,
     CaseEditComponent,

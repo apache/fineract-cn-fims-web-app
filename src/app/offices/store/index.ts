@@ -61,7 +61,6 @@ export const getOfficeEntities = createSelector(getOfficesState, getResourceEnti
 export const getOfficesLoadedAt = createSelector(getOfficesState, getResourceLoadedAt);
 export const getSelectedOffice = createSelector(getOfficesState, getResourceSelected);
 
-
 export const getTellerState = (state: State) => state.tellers;
 
 export const getTellerFormState = (state: State) => state.tellerForm;

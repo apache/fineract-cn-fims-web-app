@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import {createResourceActions} from '../../../common/store/action-creator/action-creator';
-import {Cheque} from '../../../services/cheque/domain/cheque.model';
 import {type} from '../../../store/util';
 import {Action} from '@ngrx/store';
 import {ChequeProcessingCommand} from '../../../services/cheque/domain/cheque-processing-command';

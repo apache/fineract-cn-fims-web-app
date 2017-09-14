@@ -79,7 +79,7 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
     return this._catalogs;
   }
 
-  private getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl {
+  getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl {
     const formGroup: FormGroup = this.form.controls[catalogIdentifier] as FormGroup;
     return formGroup.controls[fieldIdentifier] as FormControl;
   }
