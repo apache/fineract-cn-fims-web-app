@@ -29,7 +29,7 @@ export class ProductChargesNotificationEffects {
     .ofType(chargeActions.CREATE_SUCCESS, chargeActions.UPDATE)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Charge is going to be saved'
+      message: 'Fee is going to be saved'
     }));
 
   @Effect({dispatch: false})
@@ -37,7 +37,7 @@ export class ProductChargesNotificationEffects {
     .ofType(chargeActions.DELETE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Charge is going to be deleted'
+      message: 'Fee is going to be deleted'
     }));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
