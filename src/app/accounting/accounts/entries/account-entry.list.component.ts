@@ -27,6 +27,7 @@ import {AccountingStore} from '../../store/index';
 import {SEARCH} from '../../store/account/entries/entries.actions';
 import {SelectAction} from '../../store/account/account.actions';
 import {DatePipe} from '@angular/common';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 
 @Component({
   templateUrl: './account-entry.list.component.html',
@@ -36,18 +37,18 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  private accountSubscription: Subscription;
+  private lastFetchRequest: FetchRequest = {};
 
   form: FormGroup;
 
-  account: Account;
+  account$: Observable<Account>;
 
   accountEntryData$: Observable<TableData>;
 
   columns: any[] = [
     {
       name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format: (v: any) => {
-      return this.datePipe.transform(v, 'short');
+        return this.datePipe.transform(v, 'short');
     }
     },
     {name: 'type', label: 'Type', tooltip: 'Type'},
@@ -70,12 +71,9 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
       .map(params => new SelectAction(params['id']))
       .subscribe(this.store);
 
-    this.accountSubscription = this.store.select(fromAccounting.getSelectedAccount)
+    this.account$ = this.store.select(fromAccounting.getSelectedAccount)
       .filter(account => !!account)
-      .subscribe(account => {
-        this.account = account;
-        this.fetchAccountsEntries();
-      });
+      .do(account => this.fetchAccountsEntries(account.identifier));
 
     this.accountEntryData$ = this.store.select(fromAccounting.getAccountEntrySearchResults)
       .map(accountEntryPage => ({
@@ -87,19 +85,22 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.accountSubscription.unsubscribe();
   }
 
-  fetchAccountsEntries(fetchRequest?: TableFetchRequest): void {
+  fetchAccountsEntries(accountId: string, fetchRequest?: TableFetchRequest): void {
+    if (fetchRequest) {
+      this.lastFetchRequest = fetchRequest;
+    }
+
     const startDate = toShortISOString(this.form.get('startDate').value);
     const endDate = toShortISOString(this.form.get('endDate').value);
 
     this.store.dispatch({
       type: SEARCH, payload: {
-        accountId: this.account.identifier,
-        startDate: startDate,
-        endDate: endDate,
-        fetchRequest: fetchRequest
+        accountId,
+        startDate,
+        endDate,
+        fetchRequest: this.lastFetchRequest
       }
     });
 

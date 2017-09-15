@@ -15,6 +15,7 @@
  */
 
 import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {todayAsISOString} from '../../services/domain/date.converter';
 
 // tslint:disable-next-line:max-line-length
 const EMAIL_REGEXP =
@@ -238,5 +239,31 @@ export class FimsValidators {
 
   static requiredNotEmpty(control: AbstractControl): ValidationErrors | null {
     return isEmptyInputValue(control.value) || (isString(control.value) && control.value.trim() === '') ? {'required': true} : null;
+  }
+
+  static beforeToday(control: AbstractControl): ValidationErrors | null {
+    const date = new Date(Date.parse(control.value));
+
+    const today = new Date(Date.parse(todayAsISOString()));
+
+    if (date >= today) {
+      return {
+        beforeToday: true
+      };
+    }
+    return null;
+  }
+
+  static afterToday(control: AbstractControl): ValidationErrors | null {
+    const date = new Date(Date.parse(control.value));
+
+    const today = new Date(Date.parse(todayAsISOString()));
+
+    if (date <= today) {
+      return {
+        afterToday: true
+      };
+    }
+    return null;
   }
 }

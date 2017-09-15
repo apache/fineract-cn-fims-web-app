@@ -27,6 +27,8 @@ import {Component, DebugElement} from '@angular/core';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {DateInputComponent} from '../../../../common/date-input/date-input.component';
+import {dateAsISOString, toFimsDate} from '../../../../services/domain/date.converter';
 
 describe('Test identity card form component', () => {
 
@@ -34,11 +36,14 @@ describe('Test identity card form component', () => {
 
   let formComponent: TestComponent;
 
+  let oneDayAhead: string;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestComponent,
         IdInputComponent,
+        DateInputComponent,
         FormFinalActionComponent,
         IdentityCardFormComponent
       ],
@@ -61,10 +66,16 @@ describe('Test identity card form component', () => {
     fixture.detectChanges();
   }));
 
+  beforeEach(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    oneDayAhead = dateAsISOString(today);
+  });
+
   function setValidValues(): void {
     setValueByCssSelector(fixture, 'input[placeholder="Number"]', 'test');
     setValueByFormControlName(fixture, 'type', 'test');
-    setValueByFormControlName(fixture, 'expirationDate', '2012-01-02');
+    setValueByCssSelector(fixture, '#expirationDate', oneDayAhead);
     setValueByFormControlName(fixture, 'issuer', 'test');
   }
 
@@ -92,11 +103,7 @@ describe('Test identity card form component', () => {
     const expectedResult: IdentificationCard = {
       type: 'test',
       issuer: 'test',
-      expirationDate: {
-        day: 2,
-        month: 1,
-        year: 2012
-      },
+      expirationDate: toFimsDate(oneDayAhead),
       number: 'test'
     };
 

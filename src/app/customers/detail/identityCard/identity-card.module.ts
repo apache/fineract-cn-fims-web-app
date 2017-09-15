@@ -31,7 +31,7 @@ import {CustomerIdentificationCardApiEffects} from '../../store/identityCards/ef
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdToolbarModule} from '@angular/material';
+import {MdButtonModule, MdDatepickerModule, MdIconModule, MdInputModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {IdentityCardFormComponent} from './form/identity-card-form.component';
 import {CustomerIdentityCardScanListComponent} from './scans/scan.list.component';
@@ -54,6 +54,7 @@ import {CustomerIdentificationCardScanRouteEffects} from '../../store/identityCa
     MdToolbarModule,
     MdInputModule,
     MdButtonModule,
+    MdDatepickerModule,
     CovalentStepsModule,
     CovalentFileModule,
 

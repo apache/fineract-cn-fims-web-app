@@ -177,6 +177,8 @@
   "Cycle": "Ciclo",
   "Dashboard": "Tablero",
   "Date": "Fecha",
+  "Date must be before today": "",
+  "Date must be after today": "",
   "Day of birth": "Fecha de nacimiento",
   "Debit": "Débito",
   "Debitor": "Deudor",

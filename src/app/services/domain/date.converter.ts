@@ -20,6 +20,10 @@ export interface FimsDate {
   day: number;
 }
 
+export function dateAsISOString(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
 export function todayAsISOString(): string {
   return new Date().toISOString().slice(0, 10);
 }
