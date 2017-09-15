@@ -30,10 +30,7 @@
         </md-input-container>
       </div>
       <div layout="row">
-        <md-input-container layout-margin>
-          <input mdInput type="date" placeholder="{{'Expiration date' | translate}}" formControlName="expirationDate"/>
-          <md-error *ngIf="form.get('expirationDate').hasError('required')" translate>Required</md-error>
-        </md-input-container>
+        <fims-date-input [form]="form" controlName="expirationDate" placeholder="{{'Expiration date' | translate}}"></fims-date-input>
       </div>
       <div layout="row">
         <md-input-container layout-margin flex>

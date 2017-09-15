@@ -46,7 +46,8 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       firstName: [formData.firstName, [Validators.required, Validators.maxLength(256)]],
       middleName: [formData.middleName, Validators.maxLength(256)],
       lastName: [formData.lastName, [Validators.required, Validators.maxLength(256)]],
-      dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined, Validators.required],
+      dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined,
+        [Validators.required, FimsValidators.beforeToday]],
       member: [formData.member],
     });
   };

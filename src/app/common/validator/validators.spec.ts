@@ -16,6 +16,7 @@
 
 import {FimsValidators} from './validators';
 import {FormControl, FormGroup} from '@angular/forms';
+import {dateAsISOString} from '../../services/domain/date.converter';
 
 describe('Validators', () => {
   describe('urlSafe', () => {
@@ -273,6 +274,38 @@ describe('Validators', () => {
 
       expect(result).toEqual({
         greaterThanEquals: true
+      });
+    });
+  });
+
+  describe('beforeToday', () => {
+    it('should return null when date before today', () => {
+      const date = new Date();
+      date.setDate(date.getDate() - 1);
+
+      const result = FimsValidators.beforeToday(new FormControl(dateAsISOString(date)));
+
+      expect(result).toBeNull();
+    });
+
+    it('should return error when date after today', () => {
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+
+      const result = FimsValidators.beforeToday(new FormControl(dateAsISOString(date)));
+
+      expect(result).toEqual({
+        beforeToday: true
+      });
+    });
+
+    it('should return error when date equals today', () => {
+      const date = new Date();
+
+      const result = FimsValidators.beforeToday(new FormControl(dateAsISOString(date)));
+
+      expect(result).toEqual({
+        beforeToday: true
       });
     });
   });

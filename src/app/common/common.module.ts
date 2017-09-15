@@ -57,6 +57,7 @@ import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.componen
 import {FimsFabButtonComponent} from './fab-button/fab-button.component';
 import {RouterModule} from '@angular/router';
 import {DisplayFimsDate} from './date/fims-date.pipe';
+import {DateInputComponent} from './date-input/date-input.component';
 
 @NgModule({
   imports: [
@@ -104,6 +105,7 @@ import {DisplayFimsDate} from './date/fims-date.pipe';
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
+    DateInputComponent,
     ImageComponent,
     FimsFabButtonComponent,
     DisplayFimsDate
@@ -131,6 +133,7 @@ import {DisplayFimsDate} from './date/fims-date.pipe';
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
+    DateInputComponent,
     ImageComponent,
     FimsFabButtonComponent,
     DisplayFimsDate
