@@ -39,7 +39,7 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
   teller: Teller = {
     code: '',
     password: '',
-    cashdrawLimit: 0,
+    cashdrawLimit: undefined,
     tellerAccountIdentifier: '',
     vaultAccountIdentifier: '',
     chequesReceivableAccount: ''
