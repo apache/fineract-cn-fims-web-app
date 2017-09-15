@@ -38,6 +38,7 @@ import {FormContinueActionComponent} from '../../common/forms/form-continue-acti
 import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {CountryService} from '../../services/country/country.service';
 import {Country} from '../../services/country/model/country.model';
+import {DateInputComponent} from '../../common/date-input/date-input.component';
 
 const customerTemplate: Customer = {
   identifier: 'test',
@@ -97,6 +98,7 @@ describe('Test customer form', () => {
       declarations: [
         TestComponent,
         IdInputComponent,
+        DateInputComponent,
         FormContinueActionComponent,
         FormFinalActionComponent,
         SelectListComponent,

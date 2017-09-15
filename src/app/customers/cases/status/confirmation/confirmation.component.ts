@@ -47,15 +47,26 @@ export class CaseCommandConfirmationComponent implements OnInit {
               private portfolioService: PortfolioService) {}
 
   ngOnInit() {
+    const parentParams$ = this.route.parent.params
+      .map(params => ({
+        caseId: params['caseId'],
+        productId: params['productId']
+      }));
+
     this.params$ = this.route.params
       .map(params => ({
-        productId: params['productId'],
-        caseId: params['caseId'],
         action: params['action']
       }));
 
-    this.costComponents$ = this.params$
-      .flatMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action));
+    this.costComponents$ = Observable.combineLatest(
+      parentParams$,
+      this.params$,
+      (parentParams, params) => ({
+        productId: parentParams.productId,
+        caseId: parentParams.caseId,
+        action: params.action
+      }))
+      .switchMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action));
 
     this.fimsCase$ = this.casesStore.select(fromCases.getSelectedCase);
   }

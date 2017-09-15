@@ -47,7 +47,7 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
       number: [this.identificationCard.number, [Validators.required, Validators.minLength(3), Validators.maxLength(32),
         FimsValidators.urlSafe]],
       type: [this.identificationCard.type, [Validators.required, Validators.maxLength(128)]],
-      expirationDate: [this.formatDate(this.identificationCard.expirationDate), Validators.required],
+      expirationDate: [this.formatDate(this.identificationCard.expirationDate), [Validators.required, FimsValidators.afterToday]],
       issuer: [this.identificationCard.issuer, [Validators.required, Validators.maxLength(256)]]
     });
 

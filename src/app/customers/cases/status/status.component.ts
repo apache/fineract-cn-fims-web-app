@@ -45,7 +45,7 @@ export class CaseStatusComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.productId$ = this.route.params
+    this.productId$ = this.route.parent.params
       .map(params => params['productId']);
 
     this.currentUser$ = this.casesStore.select(fromRoot.getUsername);
