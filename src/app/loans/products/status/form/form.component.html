@@ -16,30 +16,18 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Task details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="detailForm">
-      <div layout="row">
-        <fims-id-input flex [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-checkbox formControlName="mandatory" layout-margin translate>
-          Mandatory
-        </md-checkbox>
-      </div>
-      <div layout="row">
-        <md-checkbox formControlName="fourEyes" layout-margin translate>
-          Four eyes
-        </md-checkbox>
-      </div>
+    <form [formGroup]="detailForm" layout="column">
+      <fims-id-input flex [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="detailForm" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <md-input-container layout-margin flex>
+        <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+      </md-input-container>
+      <md-checkbox formControlName="mandatory" layout-margin translate>
+        Mandatory
+      </md-checkbox>
+      <md-checkbox formControlName="fourEyes" layout-margin translate>
+        Four eyes
+      </md-checkbox>
       <div layout-gt-xs="column" layout-margin formArrayName="actions">
         <h4 translate>Task needs to be executed, before loan</h4>
         <div *ngFor="let address of actions; let i=index" layout="row" [formGroupName]="i">
@@ -53,7 +41,6 @@
         <button md-button (click)="addAction()">{{'Add action' | translate}}</button>
       </div>
     </form>
-
     <ng-template td-step-actions>
       <fims-form-final-action
         [resourceName]="'TASK'"

@@ -14,45 +14,11 @@
  limitations under the License.
 -->
 
-<form [formGroup]="form">
-  <div layout="row">
-    <fims-id-input [form]="form" placeholder="Account" controlName="identifier" [readonly]="editMode"></fims-id-input>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
-      <md-error *ngIf="form.get('firstName').hasError('required')" translate>
-        Required
-      </md-error>
-      <md-error *ngIf="form.get('firstName').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('firstName').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Middle name(optional)' | translate}}" formControlName="middleName"
-             tdAutoTrim/>
-      <md-error *ngIf="form.get('middleName').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('middleName').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
-      <md-error *ngIf="form.get('lastName').hasError('required')" translate>
-        Required
-      </md-error>
-      <md-error *ngIf="form.get('lastName').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('lastName').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <fims-date-input [form]="form" controlName="dayOfBirth" placeholder="{{'Day of birth' | translate}}"></fims-date-input>
-  </div>
-  <div layout="row" layout-margin>
-    <md-checkbox formControlName="member" translate>Is member?</md-checkbox>
-  </div>
+<form [formGroup]="form" layout="column">
+  <fims-id-input [form]="form" placeholder="Account" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <fims-text-input [form]="form" controlName="firstName" placeholder="{{'First name' | translate}}"></fims-text-input>
+  <fims-text-input [form]="form" controlName="middleName" placeholder="{{'Middle name(optional)' | translate}}"></fims-text-input>
+  <fims-text-input [form]="form" controlName="lastName" placeholder="{{'Last name' | translate}}"></fims-text-input>
+  <fims-date-input [form]="form" controlName="dayOfBirth" placeholder="{{'Day of birth' | translate}}"></fims-date-input>
+  <md-checkbox formControlName="member" layout-margin translate>Is member?</md-checkbox>
 </form>

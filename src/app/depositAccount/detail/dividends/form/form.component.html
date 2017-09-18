@@ -17,14 +17,8 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Distribute dividend' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [active]="true">
     <form [formGroup]="form" layout="column">
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="date" placeholder="{{'Due date' | translate}}" formControlName="dueDate"/>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <fims-number-input [form]="form" controlName="dividendRate" placeholder="{{'Dividend rate' | translate}}"></fims-number-input>
-      </div>
+      <fims-date-input [form]="form" controlName="dueDate" placeholder="{{'Due date' | translate}}"></fims-date-input>
+      <fims-number-input [form]="form" controlName="dividendRate" placeholder="{{'Dividend rate' | translate}}"></fims-number-input>
     </form>
   </td-step>
 

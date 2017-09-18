@@ -17,35 +17,21 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Ledger details' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
-    <form [formGroup]="form">
+    <form [formGroup]="form" layout="column">
       <fims-id-input flex [form]="form" placeholder="Ledger Number" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      <div layout="row">
-        <md-radio-group formControlName="type">
-          <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
-            {{type.label}}
-          </md-radio-button>
-        </md-radio-group>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-          <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('name').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('name').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
-          <md-error *ngIf="form.get('description').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row" layout-margin>
-        <md-checkbox formControlName="showAccountsInChart" translate>Show accounts when displayed in chart?</md-checkbox>
-      </div>
+      <md-radio-group formControlName="type">
+        <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
+          {{type.label}}
+        </md-radio-button>
+      </md-radio-group>
+      <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <md-input-container layout-margin flex>
+        <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+        <md-error *ngIf="form.get('description').hasError('maxlength')">
+          {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
+        </md-error>
+      </md-input-container>
+      <md-checkbox formControlName="showAccountsInChart" layout-margin translate>Show accounts when displayed in chart?</md-checkbox>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

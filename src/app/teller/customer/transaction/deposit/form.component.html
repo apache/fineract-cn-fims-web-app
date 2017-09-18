@@ -33,21 +33,7 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
-          <md-error *ngIf="form.get('amount').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('amount').hasError('minValue')">
-            {{ 'Value must be greater than or equal to' | translate:{ value: form.get('amount').getError('minValue').value} }}
-          </md-error>
-          <md-error *ngIf="form.get('amount').hasError('maxValue')">
-            {{ 'Value must be smaller than or equal to' | translate:{ value: form.get('amount').getError('maxValue').value} }}
-          </md-error>
-          <md-error *ngIf="form.get('amount').hasError('greaterThanValue')">
-            {{ 'Value must be greater than' | translate:{ value: form.get('amount').getError('greaterThanValue').value} }}
-          </md-error>
-        </md-input-container>
-      </div>
+      <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
       <span *ngIf="checkCashdrawLimit" class="text-md" translate>Cashdraw limit is: {{cashdrawLimit | number:numberFormat}}</span>
       <span *ngIf="checkBalanceLimit" class="text-md" translate>Balance limit is: {{balanceLimit | number:numberFormat}}</span>
     </form>

@@ -19,18 +19,8 @@
     <md-card *ngFor="let factor of factorControls; let i=index" [formGroupName]="i">
       <md-card-content>
         <div layout="row">
-          <md-input-container layout-margin flex>
-            <input mdInput type="text" placeholder="{{'Description' | translate}}" formControlName="description"/>
-          </md-input-container>
-          <md-input-container layout-margin>
-            <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
-            <md-error *ngIf="factor.get('amount').hasError('required')" translate>
-              Required
-            </md-error>
-            <md-error *ngIf="factor.get('amount').getError('minValue')">
-              {{ 'Value must be greater than' | translate:{ value: factor.get('amount').getError('minValue').value} }}
-            </md-error>
-          </md-input-container>
+          <fims-text-input [form]="factor" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
+          <fims-text-input type="number" [form]="factor" controlName="amount"></fims-text-input>
           <button md-button (click)="removeFactor(i)">{{'REMOVE ' + factorName | translate}}</button>
         </div>
       </md-card-content>

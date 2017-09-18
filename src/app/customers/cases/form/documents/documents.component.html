@@ -19,10 +19,7 @@
     <md-card *ngFor="let document of documentControls; let i=index" [formGroupName]="i">
       <md-card-content>
         <div layout="row">
-          <md-input-container flex>
-            <input mdInput type="text" placeholder="{{'Description' | translate}}" formControlName="description"/>
-            <md-error *ngIf="document.get('description').hasError('required')" translate>Required</md-error>
-          </md-input-container>
+          <fims-text-input [form]="form" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
           <div layout="row">
             <md-input-container tdFileDrop
                                 (click)="fileInput.inputElement.click()"
@@ -45,7 +42,6 @@
           </div>
           <button md-button (click)="removeDocument(i)">{{'REMOVE DOCUMENT' | translate}}</button>
         </div>
-
       </md-card-content>
     </md-card>
     <div layout="row">

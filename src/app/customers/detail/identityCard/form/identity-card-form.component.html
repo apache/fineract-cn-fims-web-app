@@ -16,31 +16,11 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Identification card' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
-    <form [formGroup]="form">
-      <div layout="row">
-        <fims-id-input [form]="form" controlName="number" [placeholder]="'Number'" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Type' | translate}}" formControlName="type" tdAutoTrim/>
-          <md-error *ngIf="form.get('type').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('type').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('type').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <fims-date-input [form]="form" controlName="expirationDate" placeholder="{{'Expiration date' | translate}}"></fims-date-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Issuer' | translate}}" formControlName="issuer" tdAutoTrim/>
-          <md-error *ngIf="form.get('issuer').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('issuer').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('issuer').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
+    <form [formGroup]="form" layout="column">
+      <fims-id-input [form]="form" controlName="number" [placeholder]="'Number'" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="form" controlName="type" placeholder="{{'Type' | translate}}"></fims-text-input>
+      <fims-date-input [form]="form" controlName="expirationDate" placeholder="{{'Expiration date' | translate}}"></fims-date-input>
+      <fims-text-input [form]="form" controlName="issuer" placeholder="{{'Issuer' | translate}}"></fims-text-input>
     </form>
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">

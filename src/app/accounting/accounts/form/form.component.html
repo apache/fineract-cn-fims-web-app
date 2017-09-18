@@ -16,29 +16,15 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Account details' | translate}}" [state]="">
-    <form [formGroup]="form">
-      <div layout="row">
-        <md-radio-group formControlName="type">
-          <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
-            {{type.label}}
-          </md-radio-button>
-        </md-radio-group>
-      </div>
+    <form [formGroup]="form" layout="column">
+      <md-radio-group formControlName="type">
+        <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
+          {{type.label}}
+        </md-radio-button>
+      </md-radio-group>
       <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-          <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('name').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('name').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="number" formControlName="balance" placeholder="{{'Balance' | translate}}"/>
-        </md-input-container>
-      </div>
+      <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <fims-text-input type="number" [form]="form" controlName="balance" placeholder="{{'Balance' | translate}}"></fims-text-input>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

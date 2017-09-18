@@ -17,9 +17,7 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Range details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [active]="true">
     <form [formGroup]="form">
-      <div layout="row">
-        <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
+      <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <ng-container formArrayName="rangeSegments">
         <div layout="row" *ngFor="let range of rangeSegmentControls; let i=index" [formGroupName]="i">
           <fims-id-input [form]="getFormGroup(i)" controlName="identifier" [readonly]="editMode"></fims-id-input>
@@ -27,7 +25,7 @@
             <input mdInput type="number" formControlName="start" placeholder="Range start"/>
           </md-input-container>
           <md-input-container layout-margin>
-            <input mdInput placeholder="Range end" formControlName="end" [value]="getNextSegmentValue(i)"/>
+            <input mdInput formControlName="end" placeholder="Range end" [value]="getNextSegmentValue(i)"/>
           </md-input-container>
           <button md-button (click)="removeRangeSegment(i)" *ngIf="i > 0">{{'REMOVE RANGE' | translate}}</button>
         </div>
