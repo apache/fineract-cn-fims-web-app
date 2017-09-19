@@ -20,7 +20,7 @@ import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
 import {PaymentSearchPayload, SEARCH} from '../store/payroll/payment.actions';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {PayrollCollectionHistory} from '../../services/accounting/domain/payroll-collection-history.model';
+import {PayrollCollectionHistory} from '../../services/payroll/domain/payroll-collection-history.model';
 import {SelectAction} from '../store/payroll/payroll-collection.actions';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';

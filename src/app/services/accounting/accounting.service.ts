@@ -32,9 +32,6 @@ import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 import {TransactionType} from './domain/transaction-type.model';
 import {TransactionTypePage} from './domain/transaction-type-page.model';
 import {AccountType} from './domain/account-type.model';
-import {PayrollCollectionSheet} from './domain/payroll-collection-sheet.model';
-import {PayrollCollectionHistory} from './domain/payroll-collection-history.model';
-import {PayrollPaymentPage} from './domain/payroll-payment-page.model';
 
 @Injectable()
 export class AccountingService {
@@ -189,20 +186,4 @@ export class AccountingService {
     return this.http.put(`${this.baseUrl}/transactiontypes/${transactionType.code}`, transactionType);
   }
 
-  public postPayrollPayments(sheet: PayrollCollectionSheet): Observable<void> {
-    return this.http.post(`${this.baseUrl}/payroll`, sheet);
-  }
-
-  public getPayrollCollectionHistory(): Observable<PayrollCollectionHistory[]> {
-    return this.http.get(`${this.baseUrl}/payroll`);
-  }
-
-  public getPayrollPaymentHistory(identifier: string, fetchRequest?: FetchRequest): Observable<PayrollPaymentPage> {
-    const params: URLSearchParams = buildSearchParams(fetchRequest);
-
-    const requestOptions: RequestOptionsArgs = {
-      params
-    };
-    return this.http.get(`${this.baseUrl}/payroll/${identifier}/payments`, requestOptions);
-  }
 }

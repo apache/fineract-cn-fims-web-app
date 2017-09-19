@@ -16,8 +16,8 @@
 import {type} from '../../../store/util';
 import {Action} from '@ngrx/store';
 import {RoutePayload} from '../../../common/store/route-payload';
-import {PayrollCollectionSheet} from '../../../services/accounting/domain/payroll-collection-sheet.model';
-import {PayrollCollectionHistory} from '../../../services/accounting/domain/payroll-collection-history.model';
+import {PayrollCollectionSheet} from '../../../services/payroll/domain/payroll-collection-sheet.model';
+import {PayrollCollectionHistory} from '../../../services/payroll/domain/payroll-collection-history.model';
 import {CreateResourceSuccessPayload} from '../../../common/store/resource.reducer';
 
 export const LOAD_ALL_COLLECTIONS = type('[Payroll Collection] Load All');

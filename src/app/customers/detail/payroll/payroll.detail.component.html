@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="Payroll allocations" [navigateBackTo]="['../']">
+<fims-layout-card-over title="{{'Payroll allocations' | translate }}" [navigateBackTo]="['../../../../']">
   <div class="md-content inset" flex *ngIf="(distribution$ | async) as distribution">
     <div layout="row">
       <md-list>

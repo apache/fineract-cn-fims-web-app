@@ -15,7 +15,7 @@
  */
 
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {PayrollCollectionSheet} from '../../../services/accounting/domain/payroll-collection-sheet.model';
+import {PayrollCollectionSheet} from '../../../services/payroll/domain/payroll-collection-sheet.model';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {accountExists} from '../../../common/validator/account-exists.validator';
 import {AccountingService} from '../../../services/accounting/accounting.service';

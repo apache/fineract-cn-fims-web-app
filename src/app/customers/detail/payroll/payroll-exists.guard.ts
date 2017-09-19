@@ -20,16 +20,15 @@ import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import {CustomerService} from '../../../services/customer/customer.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {LoadAction} from '../../store/payroll/payroll.actions';
-import {PayrollDistribution} from '../../../services/customer/domain/payroll-distribution.model';
+import {PayrollService} from '../../../services/payroll/payroll.service';
 
 @Injectable()
 export class PayrollExistsGuard implements CanActivate {
 
   constructor(private store: CustomersStore,
-              private customerService: CustomerService,
+              private payrollService: PayrollService,
               private existsGuardService: ExistsGuardService) {}
 
   hasPayrollInStore(): Observable<boolean> {
@@ -38,24 +37,18 @@ export class PayrollExistsGuard implements CanActivate {
   }
 
   loadPayrollFromApi(id: string): Observable<boolean> {
-    const getEmployee$ = this.customerService.getPayrollDistribution(id)
-      .map(distribution => this.emptyIfNull(distribution))
+    const getPayroll$ = this.payrollService.findPayrollConfiguration(id, true)
+      .catch(() => {
+        return Observable.of({
+          mainAccountNumber: '',
+          payrollAllocations: []
+        });
+      })
       .map(distribution => new LoadAction(distribution))
       .do((action: LoadAction) => this.store.dispatch(action))
       .map(distribution => !!distribution);
 
-    return this.existsGuardService.routeTo404OnError(getEmployee$);
-  }
-
-  private emptyIfNull(distribution: PayrollDistribution): PayrollDistribution {
-    if (!distribution) {
-      return {
-        mainAccountNumber: '',
-        payrollAllocations: []
-      };
-    }
-
-    return distribution;
+    return this.existsGuardService.routeTo404OnError(getPayroll$);
   }
 
   hasPayroll(id: string): Observable<boolean> {

@@ -15,7 +15,7 @@
  */
 
 import {Component} from '@angular/core';
-import {PayrollDistribution} from '../../../services/customer/domain/payroll-distribution.model';
+import {PayrollConfiguration} from '../../../services/payroll/domain/payroll-configuration.model';
 import {Observable} from 'rxjs/Observable';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
@@ -26,7 +26,7 @@ import {TableData} from '../../../common/data-table/data-table.component';
 })
 export class CustomerPayrollDetailComponent {
 
-  distribution$: Observable<PayrollDistribution>;
+  distribution$: Observable<PayrollConfiguration>;
 
   allocationData: TableData;
 
