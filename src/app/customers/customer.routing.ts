@@ -87,13 +87,23 @@ export const CustomerRoutes: Routes = [
       {path: 'deposits', loadChildren: './deposits/deposits.module#DepositsModule'},
       {
         path: 'payroll',
-        component: CustomerPayrollDetailComponent,
-        canActivate: [ PayrollExistsGuard ]
-      },
-      {
-        path: 'payroll/edit',
-        component: CreateCustomerPayrollFormComponent,
-        canActivate: [ PayrollExistsGuard ]
+        canActivate: [ PayrollExistsGuard ],
+        data: {
+          hasPermission: { id: 'payroll_configuration', accessLevel: 'READ' }
+        },
+        children: [
+          {
+            path: '',
+            component: CustomerPayrollDetailComponent
+          },
+          {
+            path: 'edit',
+            component: CreateCustomerPayrollFormComponent,
+            data: {
+              hasPermission: { id: 'payroll_configuration', accessLevel: 'CHANGE' }
+            }
+          }
+        ]
       }
     ]
   },

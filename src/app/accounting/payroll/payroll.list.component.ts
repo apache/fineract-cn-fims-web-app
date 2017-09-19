@@ -19,7 +19,7 @@ import * as fromAccouting from '../store/index';
 import {AccountingStore} from '../store/index';
 import {Observable} from 'rxjs/Observable';
 import {TableData} from '../../common/data-table/data-table.component';
-import {PayrollCollectionHistory} from '../../services/accounting/domain/payroll-collection-history.model';
+import {PayrollCollectionHistory} from '../../services/payroll/domain/payroll-collection-history.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {LOAD_ALL_COLLECTIONS} from '../store/payroll/payroll-collection.actions';

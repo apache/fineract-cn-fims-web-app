@@ -54,6 +54,7 @@ import {ReportingService} from './services/reporting/reporting.service';
 import {getSelectedLanguage} from './common/i18n/translate';
 import {environment} from '../environments/environment';
 import {ChequeService} from './services/cheque/cheque.service';
+import {PayrollService} from './services/payroll/payroll.service';
 
 export function HttpLoaderFactory(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -107,6 +108,7 @@ export function HttpLoaderFactory(http: Http) {
     TellerService,
     ReportingService,
     ChequeService,
+    PayrollService,
     CountryService,
     CurrencyService,
     NotificationService,

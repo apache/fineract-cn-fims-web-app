@@ -15,11 +15,11 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {CustomerService} from '../../../../services/customer/customer.service';
 import {Observable} from 'rxjs/Observable';
 import * as payrollActions from '../payroll.actions';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
+import {PayrollService} from '../../../../services/payroll/payroll.service';
 
 @Injectable()
 export class CustomerPayrollApiEffects {
@@ -29,11 +29,11 @@ export class CustomerPayrollApiEffects {
     .ofType(payrollActions.UPDATE)
     .map((action: payrollActions.UpdatePayrollDistributionAction) => action.payload)
     .mergeMap(payload =>
-      this.customerService.setPayrollDistribution(payload.customerId, payload.distribution)
+      this.payrollService.setPayrollConfiguration(payload.customerId, payload.distribution)
         .map(() => new payrollActions.UpdatePayrollDistributionSuccessAction(payload))
         .catch((error) => of(new payrollActions.UpdatePayrollDistributionFailAction(error)))
     );
 
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
+  constructor(private actions$: Actions, private payrollService: PayrollService) { }
 
 }

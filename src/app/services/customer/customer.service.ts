@@ -28,7 +28,6 @@ import {ImageService} from '../image/image.service';
 import {IdentificationCard} from './domain/identification-card.model';
 import {IdentificationCardScan} from './domain/identification-card-scan.model';
 import {ProcessStep} from './domain/process-step.model';
-import {PayrollDistribution} from './domain/payroll-distribution.model';
 
 @Injectable()
 export class CustomerService {
@@ -161,11 +160,4 @@ export class CustomerService {
     return this.http.delete(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans/${scanId}`);
   }
 
-  setPayrollDistribution(customerId: string, distribution: PayrollDistribution): Observable<void> {
-    return this.http.put(`${this.baseUrl}/customers/${customerId}/payroll`, distribution);
-  }
-
-  getPayrollDistribution(customerId: string): Observable<PayrollDistribution> {
-    return this.http.get(`${this.baseUrl}/customers/${customerId}/payroll`);
-  }
 }

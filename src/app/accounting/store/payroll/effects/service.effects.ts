@@ -15,7 +15,6 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {Observable} from 'rxjs/Observable';
 import * as payrollActions from '../payroll-collection.actions';
 import {CreateSheetPayload} from '../payroll-collection.actions';
@@ -24,6 +23,7 @@ import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import {CreateResourceSuccessPayload} from '../../../../common/store/resource.reducer';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
+import {PayrollService} from '../../../../services/payroll/payroll.service';
 
 @Injectable()
 export class PayrollCollectionApiEffects {
@@ -31,7 +31,7 @@ export class PayrollCollectionApiEffects {
   @Effect()
   loadAllCollections$: Observable<Action> = this.actions$
     .ofType(payrollActions.LOAD_ALL_COLLECTIONS)
-    .switchMap(() => this.accountingService.getPayrollCollectionHistory()
+    .switchMap(() => this.payrollService.fetchDistributionHistory()
       .map(payrolls => new payrollActions.LoadAllCompleteAction(payrolls))
       .catch(() => of(new payrollActions.LoadAllCompleteAction([])))
     );
@@ -40,7 +40,7 @@ export class PayrollCollectionApiEffects {
   createSheet$: Observable<Action> = this.actions$
     .ofType(payrollActions.CREATE)
     .map((action: payrollActions.CreateAction) => action.payload)
-    .switchMap(payload => this.accountingService.postPayrollPayments(payload.sheet)
+    .switchMap(payload => this.payrollService.distribute(payload.sheet)
       .map(() => new payrollActions.CreateSuccessAction(this.map(payload)))
       .catch(error => of(new payrollActions.CreateFailAction(error)))
     );
@@ -50,7 +50,7 @@ export class PayrollCollectionApiEffects {
     .ofType(paymentActions.SEARCH)
     .map((action: paymentActions.SearchAction) => action.payload)
     .mergeMap(payload =>
-      this.accountingService.getPayrollPaymentHistory(payload.payrollIdentifier, payload.fetchRequest)
+      this.payrollService.fetchPayments(payload.payrollIdentifier, payload.fetchRequest)
         .map(payrollPaymentPage => new paymentActions.SearchCompleteAction({
           elements: payrollPaymentPage.payrollPayments,
           totalElements: payrollPaymentPage.totalElements,
@@ -71,5 +71,5 @@ export class PayrollCollectionApiEffects {
     };
   }
 
-  constructor(private actions$: Actions, private accountingService: AccountingService) {}
+  constructor(private actions$: Actions, private payrollService: PayrollService) {}
 }

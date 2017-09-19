@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component} from '@angular/core';
-import {PayrollDistribution} from '../../../../services/customer/domain/payroll-distribution.model';
+import {PayrollConfiguration} from '../../../../services/payroll/domain/payroll-configuration.model';
 import {Observable} from 'rxjs/Observable';
 import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
@@ -30,7 +30,7 @@ export class CreateCustomerPayrollFormComponent {
 
   private customerId: string;
 
-  distribution$: Observable<PayrollDistribution>;
+  distribution$: Observable<PayrollConfiguration>;
 
   productInstances$: Observable<ProductInstance[]>;
 
@@ -43,7 +43,7 @@ export class CreateCustomerPayrollFormComponent {
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
   }
 
-  onSave(distribution: PayrollDistribution): void {
+  onSave(distribution: PayrollConfiguration): void {
     this.store.dispatch({
       type: UPDATE,
       payload: {

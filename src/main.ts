@@ -37,5 +37,6 @@ platformBrowserDynamic([
   { provide: 'depositAccountBaseUrl', useValue: '/api/deposit/v1' },
   { provide: 'tellerBaseUrl', useValue: '/api/teller/v1' },
   { provide: 'reportingBaseUrl', useValue: '/api/reporting/v1' },
-  { provide: 'chequeBaseUrl', useValue: '/api/cheques/v1' }
+  { provide: 'chequeBaseUrl', useValue: '/api/cheques/v1' },
+  { provide: 'payrollBaseUrl', useValue: '/api/payroll/v1' }
 ]).bootstrapModule(AppModule);

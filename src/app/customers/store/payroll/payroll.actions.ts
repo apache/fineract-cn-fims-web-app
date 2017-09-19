@@ -16,7 +16,7 @@
 import {type} from '../../../store/util';
 import {Action} from '@ngrx/store';
 import {RoutePayload} from '../../../common/store/route-payload';
-import {PayrollDistribution} from '../../../services/customer/domain/payroll-distribution.model';
+import {PayrollConfiguration} from '../../../services/payroll/domain/payroll-configuration.model';
 
 export const LOAD = type('[Customer Payroll] Load');
 
@@ -26,13 +26,13 @@ export const UPDATE_FAIL = type('[Customer Payroll] Update Fail');
 
 export interface PayrollDistributionRoutePayload extends RoutePayload {
   customerId: string;
-  distribution: PayrollDistribution;
+  distribution: PayrollConfiguration;
 }
 
 export class LoadAction implements Action {
   readonly type = LOAD;
 
-  constructor(public payload: PayrollDistribution) { }
+  constructor(public payload: PayrollConfiguration) { }
 }
 
 export class UpdatePayrollDistributionAction implements Action {

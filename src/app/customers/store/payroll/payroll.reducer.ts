@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import {PayrollDistribution} from '../../../services/customer/domain/payroll-distribution.model';
+import {PayrollConfiguration} from '../../../services/payroll/domain/payroll-configuration.model';
 import * as payrollActions from './payroll.actions';
 import {PayrollDistributionRoutePayload} from './payroll.actions';
 
 export interface State {
-  distribution: PayrollDistribution;
+  distribution: PayrollConfiguration;
   loadedAt: number;
 }
 
@@ -33,7 +33,7 @@ export function reducer(state: State = initialState, action: payrollActions.Acti
   switch (action.type) {
 
     case payrollActions.LOAD: {
-      const distribution: PayrollDistribution = action.payload;
+      const distribution: PayrollConfiguration = action.payload;
 
       return {
         distribution,

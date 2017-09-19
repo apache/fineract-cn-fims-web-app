@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {PayrollDistribution} from '../../../../services/customer/domain/payroll-distribution.model';
+import {PayrollConfiguration} from '../../../../services/payroll/domain/payroll-configuration.model';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {PayrollAllocation} from '../../../../services/customer/domain/payroll-allocation.model';
+import {PayrollAllocation} from '../../../../services/payroll/domain/payroll-allocation.model';
 
 @Component({
   selector: 'fims-customer-payroll-form',
@@ -33,9 +33,9 @@ export class CustomerPayrollFormComponent implements OnInit, OnChanges {
 
   @Input('productInstances') productInstances: ProductInstance[];
 
-  @Input('distribution') distribution: PayrollDistribution;
+  @Input('distribution') distribution: PayrollConfiguration;
 
-  @Output('onSave') onSave = new EventEmitter<PayrollDistribution>();
+  @Output('onSave') onSave = new EventEmitter<PayrollConfiguration>();
 
   @Output('onCancel') onCancel = new EventEmitter<void>();
 
@@ -61,7 +61,7 @@ export class CustomerPayrollFormComponent implements OnInit, OnChanges {
   }
 
   save(): void {
-    const distribution: PayrollDistribution = {
+    const distribution: PayrollConfiguration = {
       mainAccountNumber: this.form.get('mainAccountNumber').value,
       payrollAllocations: this.form.get('payrollAllocations').value
     };

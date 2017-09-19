@@ -21,4 +21,4 @@
                    [data]="payrollData$ | async">
   </fims-data-table>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create payroll' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'accounting_accounts', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Create payroll' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'payroll_distribution', accessLevel: 'CHANGE'}"></fims-fab-button>
