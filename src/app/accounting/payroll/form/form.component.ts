@@ -20,9 +20,10 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@a
 import {accountExists} from '../../../common/validator/account-exists.validator';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {CustomerService} from '../../../services/customer/customer.service';
-import {customerExists} from '../../../common/validator/customer-exists.validator';
 import {FimsValidators} from '../../../common/validator/validators';
 import {TdStepComponent} from '@covalent/core';
+import {customerWithConfigExists} from './validator/customer-payroll-exists.validator';
+import {PayrollService} from '../../../services/payroll/payroll.service';
 
 @Component({
   selector: 'fims-payroll-form',
@@ -38,7 +39,8 @@ export class PayrollFormComponent implements OnInit {
 
   @Output() onCancel = new EventEmitter<void>();
 
-  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService, private customerService: CustomerService) {
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService, private customerService: CustomerService,
+              private payrollService: PayrollService) {
     this.form = this.formBuilder.group({
       sourceAccountNumber: ['', [Validators.required], accountExists(accountingService)],
       payments: this.initPayments()
@@ -47,6 +49,8 @@ export class PayrollFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.detailsStep.open();
+
+    this.addPayment();
   }
 
   save(): void {
@@ -69,9 +73,9 @@ export class PayrollFormComponent implements OnInit {
 
   private initPayment(): FormGroup {
     return this.formBuilder.group({
-      customerIdentifier: ['', [Validators.required], customerExists(this.customerService)],
+      customerIdentifier: ['', [Validators.required], customerWithConfigExists(this.customerService, this.payrollService)],
       employer: ['', [Validators.required]],
-      salary: ['', [Validators.required, FimsValidators.minValue(0)]]
+      salary: ['', [Validators.required, FimsValidators.minValue(0.001), FimsValidators.maxValue(9999999999.99999)]]
     });
   }
 

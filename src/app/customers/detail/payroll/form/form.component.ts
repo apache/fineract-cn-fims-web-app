@@ -20,6 +20,7 @@ import {TdStepComponent} from '@covalent/core';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {PayrollAllocation} from '../../../../services/payroll/domain/payroll-allocation.model';
+import {accountUnique} from './validator/account-unique.validator';
 
 @Component({
   selector: 'fims-customer-payroll-form',
@@ -43,7 +44,7 @@ export class CustomerPayrollFormComponent implements OnInit, OnChanges {
     this.form = this.formBuilder.group({
       mainAccountNumber: ['', [Validators.required]],
       payrollAllocations: this.initAllocations([])
-    });
+    }, { validator: accountUnique });
   }
 
   ngOnInit(): void {
@@ -61,10 +62,10 @@ export class CustomerPayrollFormComponent implements OnInit, OnChanges {
   }
 
   save(): void {
-    const distribution: PayrollConfiguration = {
+    const distribution = Object.assign({}, this.distribution, {
       mainAccountNumber: this.form.get('mainAccountNumber').value,
       payrollAllocations: this.form.get('payrollAllocations').value
-    };
+    });
 
     this.onSave.emit(distribution);
   }
@@ -82,7 +83,11 @@ export class CustomerPayrollFormComponent implements OnInit, OnChanges {
   private initAllocation(allocation?: PayrollAllocation): FormGroup {
     return this.formBuilder.group({
       accountNumber: [allocation ? allocation.accountNumber : '', [Validators.required]],
-      amount: [allocation ? allocation.amount : '', [Validators.required, FimsValidators.minValue(0)]],
+      amount: [allocation ? allocation.amount : '', [
+        Validators.required,
+        FimsValidators.minValue(0.001),
+        FimsValidators.maxValue(9999999999.99999)]
+      ],
       proportional: [allocation ? allocation.proportional : false]
     });
   }
