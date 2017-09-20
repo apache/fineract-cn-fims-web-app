@@ -25,4 +25,5 @@ export type PermissionId = 'identity_self' | 'identity_identities' | 'identity_r
   'deposit_definitions' | 'deposit_instances' |
   'teller_management' | 'teller_operations' |
   'reporting_management' |
-  'cheque_management' | 'cheque_transaction';
+  'cheque_management' | 'cheque_transaction' |
+  'payroll_configuration' | 'payroll_distribution';

@@ -57,7 +57,7 @@
           <h3 md-line translate>Activities</h3>
           <p md-line translate>Recent activities</p>
         </a>
-        <a md-list-item [routerLink]="['payroll']">
+        <a md-list-item [routerLink]="['payroll']" *hasPermission="{ id: 'payroll_configuration', accessLevel: 'READ'}">
           <md-icon md-list-avatar>receipt</md-icon>
           <h3 md-line translate>Payroll</h3>
           <p md-line translate>Manage payroll distributions</p>

@@ -25,6 +25,9 @@
   <md-error *ngIf="hasMaxValueError" translate>
     {{ 'Value must be smaller than or equal to' | translate:{value: form.get(controlName).errors.maxValue.value} }}
   </md-error>
+  <md-error *ngIf="hasGreaterThanValueError" translate>
+    {{ 'Value must be greater than' | translate:{value: form.get(controlName).errors.greaterThanValue.value} }}
+  </md-error>
   <md-error *ngIf="hasScaleError">
     {{ 'Must have decimal places' | translate:{value: form.get(controlName).errors.scale.value} }}
   </md-error>

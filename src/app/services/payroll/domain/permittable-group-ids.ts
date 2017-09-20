@@ -13,13 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {PayrollAllocation} from './payroll-allocation.model';
 
-export interface PayrollDistribution {
-  mainAccountNumber: string;
-  payrollAllocations: PayrollAllocation[];
-  createdBy?: string;
-  createdOn?: string;
-  lastModifiedBy?: string;
-  lastModifiedOn?: string;
+export class PayrollPermittableGroupIds {
+  public static readonly CONFIGURATION = 'payroll__v1__configuration';
+  public static readonly DISTRIBUTION = 'payroll__v1__distribution';
 }

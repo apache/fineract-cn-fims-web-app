@@ -61,5 +61,12 @@
     "pathRewrite": {
       "^/api/cheques": "/cheques"
     }
+  },
+  "/api/payroll": {
+    "target": "http://localhost:2031",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/payroll": "/payroll"
+    }
   }
 }

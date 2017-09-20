@@ -16,7 +16,7 @@
 import {ResourceState} from '../../../common/store/resource.reducer';
 import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
 import * as payroll from './payroll-collection.actions';
-import {PayrollCollectionHistory} from '../../../services/accounting/domain/payroll-collection-history.model';
+import {PayrollCollectionHistory} from '../../../services/payroll/domain/payroll-collection-history.model';
 
 export const initialState: ResourceState = {
   ids: [],

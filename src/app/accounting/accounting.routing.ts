@@ -147,11 +147,15 @@ export const AccountingRoutes: Routes = [
     data: {hasPermission: {id: 'accounting_journals', accessLevel: 'CHANGE'}}
   },
   {path: 'cheques', component: ChequesListComponent, data: {hasPermission: {id: 'cheque_management', accessLevel: 'READ'}}},
-  {path: 'payrolls', component: PayrollListComponent, data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}},
+  {path: 'payrolls', component: PayrollListComponent, data: {hasPermission: {id: 'payroll_distribution', accessLevel: 'READ'}}},
   {
     path: 'payrolls/create',
     component: CreatePayrollFormComponent,
-    data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'CHANGE'}}
+    data: {hasPermission: {id: 'payroll_distribution', accessLevel: 'CHANGE'}}
   },
-  {path: 'payrolls/payments/:id', component: PaymentsListComponent, data: {hasPermission: {id: 'accounting_accounts', accessLevel: 'READ'}}}
+  {
+    path: 'payrolls/payments/:id',
+    component: PaymentsListComponent,
+    data: {hasPermission: {id: 'payroll_distribution', accessLevel: 'READ'}}
+  }
 ];
