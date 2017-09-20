@@ -33,7 +33,7 @@
               Required
             </ng-container>
             <ng-container *ngIf="payment.get('customerIdentifier').hasError('invalidCustomer')" translate>
-              Invalid member
+              Invalid member or has no payroll created
             </ng-container>
           </fims-customer-select>
           <md-input-container layout-margin>

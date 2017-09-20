@@ -15,9 +15,6 @@
 -->
 
 <fims-layout-card-over title="{{'Teller balance' | translate}}" [navigateBackTo]="['../']">
-  <div layout="row" layout-margin>
-
-  </div>
   <div layout="row">
     <table td-data-table>
       <th td-data-table-column>
@@ -40,11 +37,20 @@
           {{row['message'] }}
         </td>
         <td td-data-table-cell>
-          {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
+          {{row['type'] == 'DEBIT' ? (row['amount'] | number) : '-'}}
         </td>
         <td td-data-table-cell>
-          {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
+          {{row['type'] == 'CREDIT' ? (row['amount'] | number): '-'}}
         </td>
+      </tr>
+      <tr td-data-table-row>
+        <td td-data-table-cell colspan="2" translate>
+          Current balance
+        </td>
+        <td td-data-table-cell>
+          {{(balance$ | async)?.balance | number}}
+        </td>
+        <td td-data-table-cell></td>
       </tr>
     </table>
   </div>

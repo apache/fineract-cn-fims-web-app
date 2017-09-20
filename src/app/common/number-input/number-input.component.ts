@@ -58,6 +58,10 @@ export class NumberInputComponent {
     return this.hasError('minValue');
   }
 
+  get hasGreaterThanValueError(): boolean {
+    return this.hasError('greaterThanValue');
+  }
+
   get hasMaxValueError(): boolean {
     return this.hasError('maxValue');
   }

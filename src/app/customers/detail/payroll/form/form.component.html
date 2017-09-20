@@ -27,15 +27,18 @@
       <div layout-gt-xs="column" layout-margin formArrayName="payrollAllocations">
         <h4 translate>Allocations</h4>
         <div *ngFor="let allocation of allocations; let i=index" [formGroupName]="i">
-          <md-select formControlName="accountNumber" layout-margin placeholder="{{ 'Select account' | translate }}">
+          <md-select formControlName="accountNumber" layout-margin placeholder="{{ 'Select account' | translate }}" flex="15">
             <md-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
               {{instance.accountIdentifier}}({{instance.productIdentifier}})
             </md-option>
           </md-select>
           <fims-number-input placeholder="Amount" [form]="allocation" controlName="amount"></fims-number-input>
           <md-checkbox formControlName="proportional" translate>Proportional?</md-checkbox>
-          <button md-button (click)="removeAllocation(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
+          <button md-button (click)="removeAllocation(i)">{{'Remove' | translate}}</button>
         </div>
+        <p *ngIf="form.hasError('accountUnique')" class="tc-red-600" translate>
+          Allocation accounts can't use main account or overlap with other allocation accounts.
+        </p>
         <button md-button (click)="addAllocation()">{{'Add allocation' | translate}}</button>
       </div>
     </form>
