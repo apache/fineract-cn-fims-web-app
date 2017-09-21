@@ -15,7 +15,7 @@
 -->
 
 <md-input-container layout-margin flex [formGroup]="form">
-  <input mdInput [placeholder]="placeholder" [formControlName]="controlName" [attr.type]="type" step="any" tdAutoTrim flex/>
+  <input mdInput [id]="controlName" [placeholder]="placeholder" [formControlName]="controlName" [attr.type]="type" step="any" tdAutoTrim flex/>
   <md-error *ngIf="hasRequiredError" translate>
     Required
   </md-error>

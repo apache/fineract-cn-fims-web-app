@@ -21,14 +21,11 @@ import {OfficeFormComponent} from './form.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
-import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
 import {MdAutocompleteModule, MdInputModule} from '@angular/material';
-import {AddressFormComponent} from '../../common/address/address.component';
 import {CountryService} from '../../services/country/country.service';
 import {Country} from '../../services/country/model/country.model';
+import {FimsSharedModule} from '../../common/common.module';
 
 const officeTemplate: Office = {
   identifier: 'test',
@@ -61,6 +58,7 @@ describe('Test office form', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        FimsSharedModule,
         MdInputModule,
         MdAutocompleteModule,
         CovalentStepsModule,
@@ -77,11 +75,7 @@ describe('Test office form', () => {
         }
       ],
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
         OfficeFormComponent,
-        AddressFormComponent,
         TestComponent
       ]
     });

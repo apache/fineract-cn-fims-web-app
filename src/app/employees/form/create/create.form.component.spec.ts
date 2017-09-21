@@ -19,8 +19,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
 import {EmployeeFormComponent, EmployeeSaveEvent} from '../form.component';
-import {SelectListComponent} from '../../../common/select-list/select-list.component';
-import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {CreateEmployeeFormComponent} from './create.form.component';
@@ -29,10 +27,9 @@ import {EmployeesStore} from '../../store/index';
 import {CREATE} from '../../store/employee.actions';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
-import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FimsSharedModule} from '../../../common/common.module';
 
 const eventMock: EmployeeSaveEvent = {
   detailForm: {
@@ -66,15 +63,12 @@ describe('Test employee form component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
-        SelectListComponent,
         EmployeeFormComponent,
         CreateEmployeeFormComponent,
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
         MdInputModule,
         MdCardModule,

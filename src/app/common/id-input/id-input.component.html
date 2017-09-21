@@ -15,7 +15,7 @@
 -->
 
 <md-input-container [formGroup]="form" flex layout-margin>
-  <input mdInput placeholder="{{placeholder | translate}}" [formControlName]="controlName"
+  <input mdInput [id]="controlName" placeholder="{{placeholder | translate}}" [formControlName]="controlName"
           [readonly]="readonly"
           tdAutoTrim/>
   <md-error *ngIf="form.controls[controlName].hasError('required')" translate>
