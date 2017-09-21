@@ -23,15 +23,8 @@
             unlock drawer
           </md-card-title>
           <form [formGroup]="form" (ngSubmit)="auth()">
-            <md-card-content>
-              <div layout="row">
-                <md-input-container layout-margin flex>
-                  <input mdInput placeholder="{{'Teller number' | translate}}" type="text" formControlName="tellerCode"/>
-                  <md-error *ngIf="form.get('tellerCode').hasError('required')" translate>
-                    Required
-                  </md-error>
-                </md-input-container>
-              </div>
+            <md-card-content layout="column">
+              <fims-text-input [form]="form" controlName="tellerCode" placeholder="{{'Teller number' | translate}}"></fims-text-input>
               <div layout="row">
                 <md-input-container layout-margin flex>
                   <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password"/>
@@ -40,9 +33,7 @@
                   </md-error>
                 </md-input-container>
               </div>
-              <div layout="row" *ngIf="error$ | async">
-                <p class="md-caption tc-red-700">{{'Sorry, that login did not work.' | translate}}</p>
-              </div>
+              <p class="md-caption tc-red-700" *ngIf="error$ | async">{{'Sorry, that login did not work.' | translate}}</p>
             </md-card-content>
             <md-card-actions>
               <button type="submit" md-raised-button color="primary" [disabled]="form.invalid">{{'UNLOCK' | translate}}</button>

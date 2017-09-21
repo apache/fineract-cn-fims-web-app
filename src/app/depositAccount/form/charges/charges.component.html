@@ -17,26 +17,14 @@
 <form [formGroup]="form">
   <div layout-gt-xs="column" layout-margin formArrayName="charges">
     <md-card *ngFor="let charge of charges; let i=index" [formGroupName]="i">
-      <md-card-content>
-        <div layout="row">
-          <md-input-container layout-margin flex>
-            <input mdInput type="text" placeholder="{{'Fee name' | translate}}" formControlName="name"/>
-            <md-error *ngIf="charge.get('name').hasError('required')" translate>
-              Required
-            </md-error>
-            <md-error *ngIf="charge.get('name').hasError('maxlength')">
-              {{ 'Only characters allowed.' | translate:{ value: charge.get('name').getError('maxlength')['requiredLength']} }}
-            </md-error>
-          </md-input-container>
-        </div>
-        <div layout="row">
-          <md-input-container layout-margin flex>
-            <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-            <md-error *ngIf="charge.get('description').hasError('maxlength')">
-              {{ 'Only characters allowed.' | translate:{ value: charge.get('description').getError('maxlength')['requiredLength']} }}
-            </md-error>
-          </md-input-container>
-        </div>
+      <md-card-content layout="column">
+        <fims-text-input [form]="charge" controlName="name" placeholder="{{'Fee name' | translate}}"></fims-text-input>
+        <md-input-container layout-margin flex>
+          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          <md-error *ngIf="charge.get('description').hasError('maxlength')">
+            {{ 'Only characters allowed.' | translate:{ value: charge.get('description').getError('maxlength')['requiredLength']} }}
+          </md-error>
+        </md-input-container>
         <div layout="row">
           <fims-number-input [form]="getFormGroup(i)" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-number-input>
           <md-select formControlName="actionIdentifier" layout-margin placeholder="{{'Applied on' | translate}}" flex="15">

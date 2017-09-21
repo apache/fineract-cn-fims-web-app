@@ -26,7 +26,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {setValueByFormControlName} from '../../../../common/testing/input-fields';
+import {setValueByCssSelector} from '../../../../common/testing/input-fields';
 import {TransactionCostComponent} from '../components/cost.component';
 import {clickOption} from '../../../../common/testing/select-fields';
 
@@ -91,7 +91,7 @@ describe('Test transaction form', () => {
   }
 
   function setAmount(value: string): void {
-    setValueByFormControlName(fixture, 'amount', value);
+    setValueByCssSelector(fixture, '#amount', value);
   }
 
   describe('test if create transaction is enabled', () => {

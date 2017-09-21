@@ -13,20 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<ng-container [formGroup]="form">
-  <div layout="row">
-    <md-radio-group formControlName="adjustment">
-      <md-radio-button *ngFor="let adjustment of adjustmentOptions" [value]="adjustment.key" layout-margin>
-        {{adjustment.label}}
-      </md-radio-button>
-    </md-radio-group>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
-      <md-error *ngIf="form.get('amount').getError('minValue')">
-        {{ 'Value must be greater than' | translate:{ value: form.get('amount').getError('minValue').value} }}
-      </md-error>
-    </md-input-container>
-  </div>
+<ng-container [formGroup]="form" layout="column">
+  <md-radio-group formControlName="adjustment">
+    <md-radio-button *ngFor="let adjustment of adjustmentOptions" [value]="adjustment.key" layout-margin>
+      {{adjustment.label}}
+    </md-radio-button>
+  </md-radio-group>
+  <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
 </ng-container>

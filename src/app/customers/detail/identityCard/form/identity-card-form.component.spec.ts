@@ -19,16 +19,14 @@ import {IdentityCardFormComponent} from './identity-card-form.component';
 import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FormFinalActionComponent} from '../../../../common/forms/form-final-action.component';
-import {IdInputComponent} from '../../../../common/id-input/id-input.component';
-import {setValueByCssSelector, setValueByFormControlName} from '../../../../common/testing/input-fields';
+import {setValueByCssSelector} from '../../../../common/testing/input-fields';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {DateInputComponent} from '../../../../common/date-input/date-input.component';
 import {dateAsISOString, toFimsDate} from '../../../../services/domain/date.converter';
+import {FimsSharedModule} from '../../../../common/common.module';
 
 describe('Test identity card form component', () => {
 
@@ -42,13 +40,11 @@ describe('Test identity card form component', () => {
     TestBed.configureTestingModule({
       declarations: [
         TestComponent,
-        IdInputComponent,
-        DateInputComponent,
-        FormFinalActionComponent,
         IdentityCardFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
         MdInputModule,
         MdIconModule,
@@ -73,10 +69,10 @@ describe('Test identity card form component', () => {
   });
 
   function setValidValues(): void {
-    setValueByCssSelector(fixture, 'input[placeholder="Number"]', 'test');
-    setValueByFormControlName(fixture, 'type', 'test');
+    setValueByCssSelector(fixture, '#number', 'test');
+    setValueByCssSelector(fixture, '#type', 'test');
     setValueByCssSelector(fixture, '#expirationDate', oneDayAhead);
-    setValueByFormControlName(fixture, 'issuer', 'test');
+    setValueByCssSelector(fixture, '#issuer', 'test');
   }
 
   it('should disable/enable save button', () => {

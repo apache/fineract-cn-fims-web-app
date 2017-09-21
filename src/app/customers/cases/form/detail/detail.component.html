@@ -40,12 +40,7 @@
     </fims-number-input>
   </div>
   <div layout="row" layout-margin>
-    <md-input-container>
-      <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
-      <md-error *ngIf="form.get('term').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('term').hasError('minValue')" translate>Value must be greater than or equal to {{form.get('term').getError('minValue').value}}</md-error>
-      <md-error *ngIf="form.get('term').hasError('maxValue')" translate>Value must be lower than or equal to {{form.get('term').getError('maxValue').value}}</md-error>
-    </md-input-container>
+    <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Term' | translate}}"></fims-text-input>
     <md-select formControlName="termTemporalUnit" layout-margin>
       <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
         {{basis.label | translate}}
@@ -53,11 +48,7 @@
     </md-select>
   </div>
   <div layout="row" layout-margin>
-    <md-input-container>
-      <input mdInput type="number" placeholder="{{'Repay every' | translate}}" formControlName="paymentPeriod"/>
-      <md-error *ngIf="form.get('paymentPeriod').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('paymentPeriod').hasError('minValue')" translate>Value must be greater than or equal to {{form.get('paymentPeriod').getError('minValue').value}}</md-error>
-    </md-input-container>
+    <fims-text-input type="number" [form]="form" controlName="paymentPeriod" placeholder="{{'Repay every' | translate}}"></fims-text-input>
     <md-select formControlName="paymentTemporalUnit" layout-margin>
       <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
         {{alignment.label | translate}}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 @Component({
@@ -22,6 +22,9 @@ import {FormGroup} from '@angular/forms';
     templateUrl: './id-input.component.html'
 })
 export class IdInputComponent implements OnInit {
+
+  @HostBinding('attr.layout')
+  @Input() layout = 'row';
 
   @Input() controlName: string;
 

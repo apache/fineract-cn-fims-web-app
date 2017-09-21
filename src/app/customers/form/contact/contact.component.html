@@ -14,32 +14,8 @@
  limitations under the License.
 -->
 
-<form [formGroup]="form">
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Email(optional)' | translate}}" type="email" formControlName="email" tdAutoTrim/>
-      <md-error *ngIf="form.get('email').hasError('email')" translate>
-        Invalid email
-      </md-error>
-      <md-error *ngIf="form.get('email').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('email').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Phone(optional)' | translate}}" type="tel" formControlName="phone" tdAutoTrim/>
-      <md-error *ngIf="form.get('phone').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('phone').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Mobile(optional)' | translate}}" type="tel" formControlName="mobile" tdAutoTrim/>
-      <md-error *ngIf="form.get('mobile').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('mobile').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
+<form [formGroup]="form" layout="column">
+  <fims-text-input [form]="form" controlName="email" placeholder="{{'Email(optional)' | translate}}" type="email"></fims-text-input>
+  <fims-text-input [form]="form" controlName="phone" placeholder="{{'Phone(optional)' | translate}}" type="tel"></fims-text-input>
+  <fims-text-input [form]="form" controlName="mobile" placeholder="{{'Mobile(optional)' | translate}}" type="tel"></fims-text-input>
 </form>

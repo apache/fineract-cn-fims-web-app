@@ -20,8 +20,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
 import {EditEmployeeFormComponent} from './edit.form.component';
 import {EmployeeFormComponent} from '../form.component';
-import {SelectListComponent} from '../../../common/select-list/select-list.component';
-import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../services/identity/domain/user.model';
 import {Employee} from '../../../services/office/domain/employee.model';
@@ -31,10 +29,9 @@ import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
-import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
 import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FimsSharedModule} from '../../../common/common.module';
 
 const userMock: User = {
   identifier: 'test',
@@ -75,15 +72,12 @@ describe('Test employee form component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
-        SelectListComponent,
         EmployeeFormComponent,
         EditEmployeeFormComponent,
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
         MdInputModule,
         MdCardModule,

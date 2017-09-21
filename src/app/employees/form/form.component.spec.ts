@@ -22,14 +22,11 @@ import {User} from '../../services/identity/domain/user.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
-import {IdInputComponent} from '../../common/id-input/id-input.component';
-import {SelectListComponent} from '../../common/select-list/select-list.component';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
-import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {MdIconModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {FimsSharedModule} from '../../common/common.module';
 
 const employeeTemplate: Employee = {
   identifier: 'test',
@@ -59,15 +56,12 @@ describe('Test employee form component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
-        SelectListComponent,
         TestComponent,
         EmployeeFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
         MdSelectModule,
         MdOptionModule,

@@ -36,12 +36,7 @@
               Invalid member or has no payroll created
             </ng-container>
           </fims-customer-select>
-          <md-input-container layout-margin>
-            <input mdInput placeholder="{{'Employer' | translate}}" formControlName="employer"/>
-            <md-error *ngIf="payment.get('employer').hasError('required')" translate>
-              Required
-            </md-error>
-          </md-input-container>
+          <fims-text-input [form]="payment" controlName="employer" placeholder="{{'Employer' | translate}}"></fims-text-input>
           <fims-number-input placeholder="Salary" [form]="payment" controlName="salary"></fims-number-input>
           <button md-button (click)="removePayment(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
         </div>

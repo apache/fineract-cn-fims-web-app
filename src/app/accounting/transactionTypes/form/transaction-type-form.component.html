@@ -16,27 +16,10 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Transaction type' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
-    <form [formGroup]="form">
-      <div layout="row">
-        <fims-id-input [form]="form" controlName="code" [placeholder]="'Code'" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Name' | translate}}" formControlName="name" tdAutoTrim/>
-          <md-error *ngIf="form.get('name').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('name').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('name').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description" tdAutoTrim/>
-          <md-error *ngIf="form.get('description').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('type').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
+    <form [formGroup]="form" layout="column">
+      <fims-id-input [form]="form" controlName="code" [placeholder]="'Code'" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <fims-text-input [form]="form" controlName="description" placeholder="{{'Description(optional)' | translate}}"></fims-text-input>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

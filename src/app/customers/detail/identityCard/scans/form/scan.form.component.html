@@ -17,21 +17,9 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Upload new identification card scan' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
-    <form [formGroup]="form">
-      <div layout="row">
-        <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Description' | translate }}" formControlName="description"/>
-          <md-error *ngIf="form.get('description').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="form.get('description').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
+    <form [formGroup]="form" layout="column">
+      <fims-id-input [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="form" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
       <div layout="row">
         <md-input-container tdFileDrop
                             [disabled]="true"
