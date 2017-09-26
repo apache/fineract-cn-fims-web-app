@@ -15,7 +15,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 export enum NotificationType {
   MESSAGE, ALERT
@@ -30,7 +30,7 @@ export interface NotificationEvent {
 @Injectable()
 export class NotificationService {
 
-  private notificationSource = new Subject<NotificationEvent>();
+  private notificationSource = new BehaviorSubject<NotificationEvent>(null);
 
   notifications$ = this.notificationSource.asObservable();
 

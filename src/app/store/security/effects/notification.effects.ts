@@ -19,10 +19,19 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as securityActions from '../security.actions';
+import {LoginSuccessAction} from '../security.actions';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class SecurityNotificationEffects {
+
+  @Effect({ dispatch: false })
+  loginSuccess$: Observable<Action> = this.actions$
+    .ofType(securityActions.LOGIN_SUCCESS)
+    .do((action: LoginSuccessAction) => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: `You are logged in with user '${action.payload.username}'`
+    }));
 
   @Effect({ dispatch: false })
   changePasswordSuccess$: Observable<Action> = this.actions$
