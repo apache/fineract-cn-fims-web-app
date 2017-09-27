@@ -51,7 +51,7 @@ export class JournalEntryValidators {
     let sum = 0;
 
     for (const account of accounts) {
-      sum += account.amount;
+      sum += parseInt(account.amount, 10);
     }
 
     return sum;

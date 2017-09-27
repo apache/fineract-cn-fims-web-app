@@ -14,14 +14,11 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Create new journal entry' | translate}}">
   <form [formGroup]="form">
     <td-steps mode="'vertical'">
       <td-step #detailsStep label="{{'Journal Entry details' | translate}}" layout="column">
         <fims-id-input [form]="form" controlName="transactionIdentifier" [readonly]="false"></fims-id-input>
-        <md-input-container layout-margin flex>
-          <input mdInput type="date" placeholder="{{'Transaction date' | translate}}" formControlName="transactionDate"/>
-        </md-input-container>
+        <fims-date-input placeholder="{{'Transaction date' | translate}}" [form]="form" controlName="transactionDate"></fims-date-input>
         <fims-transaction-type-select title="{{'Transaction type' | translate}}" formControlName="transactionType">
           <ng-container *ngIf="!form.get('transactionType').pristine && form.get('transactionType').hasError('required')" translate>
             Required
@@ -113,13 +110,11 @@
           <fims-form-final-action
             [resourceName]="'JOURNAL ENTRY'"
             [editMode]="false"
-            [disabled]="!valid"
-            (onCancel)="onCancel()"
+            [disabled]="!form.valid"
+            (onCancel)="cancel()"
             (onSave)="save()">
           </fims-form-final-action>
         </ng-template>
       </td-step>
     </td-steps>
   </form>
-
-</fims-layout-card-over>

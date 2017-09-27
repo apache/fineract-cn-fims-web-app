@@ -90,6 +90,7 @@ import {PayrollFormComponent} from './payroll/form/form.component';
 import {PayrollCollectionRouteEffects} from './store/payroll/effects/route.effects';
 import {PayrollCollectionNotificationEffects} from './store/payroll/effects/notification.effects';
 import {PaymentsListComponent} from './payroll/payments.list.component';
+import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form.component';
 
 @NgModule({
   imports: [
@@ -157,6 +158,7 @@ import {PaymentsListComponent} from './payroll/payments.list.component';
     CreateAccountFormComponent,
     EditAccountFormComponent,
     JournalEntryListComponent,
+    CreateJournalEntryFormComponent,
     JournalEntryFormComponent,
     TransactionTypeListComponent,
     TransactionTypeFormComponent,

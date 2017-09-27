@@ -26,7 +26,6 @@ import {CreateAccountFormComponent} from './accounts/form/create/create.form.com
 import {SubLedgerComponent} from './subLedger/sub-ledger.component';
 import {EditAccountFormComponent} from './accounts/form/edit/edit.form.component';
 import {JournalEntryListComponent} from './journalEntries/journal-entry.list.component';
-import {JournalEntryFormComponent} from './journalEntries/form/form.component';
 import {AccountEntryListComponent} from './accounts/entries/account-entry.list.component';
 import {CreateLedgerFormComponent} from './form/create/create.form.component';
 import {EditLedgerFormComponent} from './form/edit/edit.form.component';
@@ -42,6 +41,7 @@ import {ChequesListComponent} from './cheques/cheques.list.component';
 import {PayrollListComponent} from './payroll/payroll.list.component';
 import {CreatePayrollFormComponent} from './payroll/form/create.form.component';
 import {PaymentsListComponent} from './payroll/payments.list.component';
+import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form.component';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -143,7 +143,7 @@ export const AccountingRoutes: Routes = [
   {path: 'journalEntries', component: JournalEntryListComponent, data: {hasPermission: {id: 'accounting_journals', accessLevel: 'READ'}}},
   {
     path: 'journalEntries/create',
-    component: JournalEntryFormComponent,
+    component: CreateJournalEntryFormComponent,
     data: {hasPermission: {id: 'accounting_journals', accessLevel: 'CHANGE'}}
   },
   {path: 'cheques', component: ChequesListComponent, data: {hasPermission: {id: 'cheque_management', accessLevel: 'READ'}}},
