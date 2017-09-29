@@ -18,6 +18,7 @@
   <fims-customer-form-component #form
                                   (onSave)="onSave($event)"
                                   (onCancel)="onCancel()"
+                                  [catalog]="catalog$ | async"
                                   [customer]="customer">
   </fims-customer-form-component>
 </fims-layout-card-over>

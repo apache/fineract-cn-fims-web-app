@@ -33,12 +33,20 @@ import {TaskDetailComponent} from './tasks/task.detail.component';
 import {PayrollExistsGuard} from './detail/payroll/payroll-exists.guard';
 import {CustomerPayrollDetailComponent} from './detail/payroll/payroll.detail.component';
 import {CreateCustomerPayrollFormComponent} from './detail/payroll/form/create.form.component';
+import {CatalogDetailComponent} from './customFields/catalog.detail.component';
+import {CatalogExistsGuard} from './customFields/catalog-exists.guard';
+import {CreateCustomerCatalogFormComponent} from './customFields/form/create.form.component';
+import {FieldIndexComponent} from './customFields/fields/field.index.component';
+import {FieldExistsGuard} from './customFields/fields/field-exists.guard';
+import {FieldDetailComponent} from './customFields/fields/field.detail.component';
+import {EditCatalogFieldFormComponent} from './customFields/fields/form/edit.form.component';
 
 export const CustomerRoutes: Routes = [
   {
     path: '',
     component: CustomerComponent,
-    data: {title: 'Manage Customers', hasPermission: {id: 'customer_customers', accessLevel: 'READ'}}
+    data: {title: 'Manage Customers', hasPermission: {id: 'customer_customers', accessLevel: 'READ'}},
+    canActivate: [ CatalogExistsGuard ]
   },
   {
     path: 'create',
@@ -141,5 +149,42 @@ export const CustomerRoutes: Routes = [
     data: {
       hasPermission: { id: 'customer_tasks', accessLevel: 'CHANGE' }
     }
+  },
+  {
+    path: 'catalog/detail',
+    data: {
+      hasPermission: { id: 'catalog_catalogs', accessLevel: 'READ' }
+    },
+    children: [
+      {
+        path: '',
+        component: CatalogDetailComponent
+      },
+      {
+        path: 'edit',
+        component: CreateCustomerCatalogFormComponent,
+        data: {
+          hasPermission: { id: 'catalog_catalogs', accessLevel: 'CHANGE' }
+        }
+      },
+      {
+        path: 'field/detail/:fieldId',
+        component: FieldIndexComponent,
+        canActivate: [ FieldExistsGuard ],
+        children: [
+          {
+            path: '',
+            component: FieldDetailComponent
+          },
+          {
+            path: 'edit',
+            component: EditCatalogFieldFormComponent,
+            data: {
+              hasPermission: { id: 'catalog_catalogs', accessLevel: 'CHANGE' }
+            }
+          }
+        ]
+      }
+    ]
   }
 ];

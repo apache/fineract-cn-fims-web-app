@@ -13,28 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {FieldDataType} from '../../../services/catalog/domain/field.model';
 
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-
-export enum NotificationType {
-  MESSAGE, ALERT
+export interface DataTypeOption {
+  type: FieldDataType;
+  label: string;
 }
 
-export interface NotificationEvent {
-  type: NotificationType;
-  title?: string;
-  message: string;
-}
-
-@Injectable()
-export class NotificationService {
-
-  private notificationSource = new BehaviorSubject<NotificationEvent>(null);
-
-  notifications$ = this.notificationSource.asObservable();
-
-  send(notification: NotificationEvent) {
-    this.notificationSource.next(notification);
-  }
-}
+export const dataTypes: DataTypeOption[] = [
+  { type: 'TEXT', label: 'Text' },
+  { type: 'NUMBER', label: 'Number' },
+  { type: 'DATE', label: 'Date' },
+  { type: 'SINGLE_SELECTION', label: 'Single selection' },
+  { type: 'MULTI_SELECTION', label: 'Multi selection' }
+];

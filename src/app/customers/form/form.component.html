@@ -65,7 +65,11 @@
   </td-step>
 
   <td-step #customFieldsStep label="{{'Custom fields(optional)' | translate}}" [state]="customFieldsForm.pristine ? 'none' : customFieldsForm.valid ? 'completed' : 'required'">
-    <fims-custom-fields-component #customFieldsForm [formData]="customFieldsFormData"></fims-custom-fields-component>
+    <fims-custom-fields-component
+      #customFieldsForm
+      [catalog]="catalog"
+      [formData]="customFieldsFormData">
+    </fims-custom-fields-component>
   </td-step>
 
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">

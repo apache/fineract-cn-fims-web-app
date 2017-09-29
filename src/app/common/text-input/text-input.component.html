@@ -14,8 +14,16 @@
  limitations under the License.
 -->
 
-<md-input-container layout-margin flex [formGroup]="form">
-  <input mdInput [id]="controlName" [placeholder]="placeholder" [formControlName]="controlName" [attr.type]="type" step="any" tdAutoTrim flex/>
+<md-input-container layout-margin flex [formGroup]="form" *ngIf="show">
+  <input mdInput
+         [id]="controlName"
+         [placeholder]="placeholder"
+         [formControlName]="controlName"
+         [attr.type]="type"
+         [attr.title]="title"
+         step="any"
+         tdAutoTrim
+         flex/>
   <md-error *ngIf="hasRequiredError" translate>
     Required
   </md-error>
@@ -39,5 +47,8 @@
   </md-error>
   <md-error *ngIf="hasGreaterThanValueError">
     {{ 'Value must be greater than' | translate:{ value: form.get(controlName).getError('greaterThanValue').value} }}
+  </md-error>
+  <md-error *ngIf="hasMaxScaleError">
+    {{ 'Value scale must be smaller or equals' | translate:{ value: form.get(controlName).getError('maxScale').value } }}
   </md-error>
 </md-input-container>

@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {FormArray, FormGroup, ValidationErrors} from '@angular/forms';
 
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+export function optionValueUnique(array: FormArray): ValidationErrors | null {
+  const options: FormGroup[] = array.controls as FormGroup[];
 
-export enum NotificationType {
-  MESSAGE, ALERT
-}
+  const values = options
+    .map(optionGroup => parseInt(optionGroup.get('value').value, 10));
 
-export interface NotificationEvent {
-  type: NotificationType;
-  title?: string;
-  message: string;
-}
+  const set = new Set();
 
-@Injectable()
-export class NotificationService {
+  values.forEach(number => set.add(number));
 
-  private notificationSource = new BehaviorSubject<NotificationEvent>(null);
-
-  notifications$ = this.notificationSource.asObservable();
-
-  send(notification: NotificationEvent) {
-    this.notificationSource.next(notification);
+  if (set.size !== values.length) {
+    return {
+      optionValueUnique: true
+    };
   }
+
+  return null;
 }

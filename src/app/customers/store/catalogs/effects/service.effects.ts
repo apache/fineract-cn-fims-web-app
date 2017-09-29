@@ -26,12 +26,43 @@ import {CatalogService} from '../../../../services/catalog/catalog.service';
 export class CatalogApiEffects {
 
   @Effect()
-  loadCatalogs$: Observable<Action> = this.actions$
-    .ofType(catalogActions.LOAD_ALL)
-    .mergeMap(() =>
-      this.catalogService.fetchCatalogs()
-        .map(catalogs => new catalogActions.LoadAllCompleteAction(catalogs))
-        .catch((error) => of(new catalogActions.LoadAllCompleteAction([])))
+  createCatalog$: Observable<Action> = this.actions$
+    .ofType(catalogActions.CREATE)
+    .map((action: catalogActions.CreateCatalogAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.createCatalog(payload.catalog)
+        .map(() => new catalogActions.CreateCatalogSuccessAction(payload))
+        .catch((error) => of(new catalogActions.CreateCatalogFailAction(error)))
+    );
+
+  @Effect()
+  deleteCatalog$: Observable<Action> = this.actions$
+    .ofType(catalogActions.DELETE)
+    .map((action: catalogActions.DeleteCatalogAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.deleteCatalog(payload.catalog)
+        .map(() => new catalogActions.DeleteCatalogSuccessAction(payload))
+        .catch((error) => of(new catalogActions.DeleteCatalogFailAction(error)))
+    );
+
+  @Effect()
+  updateField$: Observable<Action> = this.actions$
+    .ofType(catalogActions.UPDATE_FIELD)
+    .map((action: catalogActions.UpdateFieldAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.updateField(payload.catalogIdentifier, payload.field)
+        .map(() => new catalogActions.UpdateFieldSuccessAction(payload))
+        .catch((error) => of(new catalogActions.UpdateFieldFailAction(error)))
+    );
+
+  @Effect()
+  deleteField$: Observable<Action> = this.actions$
+    .ofType(catalogActions.DELETE_FIELD)
+    .map((action: catalogActions.DeleteFieldAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.deleteField(payload.catalogIdentifier, payload.field)
+        .map(() => new catalogActions.DeleteFieldSuccessAction(payload))
+        .catch((error) => of(new catalogActions.DeleteFieldFailAction(error)))
     );
 
   constructor(private actions$: Actions, private catalogService: CatalogService) { }

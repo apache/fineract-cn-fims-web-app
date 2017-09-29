@@ -34,6 +34,10 @@ export class TextInputComponent {
 
   @Input() type: string;
 
+  @Input() hideIfDisabled = false;
+
+  @Input() title: string;
+
   get hasRequiredError(): boolean {
     return this.hasError('required');
   }
@@ -47,7 +51,7 @@ export class TextInputComponent {
   }
 
   get hasEmailError(): boolean {
-    return this.hasError('maxlength');
+    return this.hasError('email');
   }
 
   get hasIsNumberError(): boolean {
@@ -66,7 +70,19 @@ export class TextInputComponent {
     return this.hasError('greaterThanValue');
   }
 
+  get hasMaxScaleError(): boolean {
+    return this.hasError('maxScale');
+  }
+
   hasError(key: string): boolean {
     return this.form.get(this.controlName).hasError(key);
+  }
+
+  get show(): boolean {
+    if (this.hideIfDisabled) {
+      return this.form.get(this.controlName).status !== 'DISABLED';
+    }
+
+    return true;
   }
 }

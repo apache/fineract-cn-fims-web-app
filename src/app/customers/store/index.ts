@@ -18,7 +18,7 @@ import * as fromRoot from '../../store';
 import * as fromCustomers from './customers.reducer';
 import * as fromCustomerTasks from './customerTasks/customer-tasks.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
-import * as fromCatalogs from './catalogs/catalogs.reducer';
+import * as fromCatalogs from './catalogs/catalog.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import * as fromScans from './identityCards/scans/scans.reducer';
 import * as fromTasks from './tasks/tasks.reducer';
@@ -42,7 +42,7 @@ export interface State extends fromRoot.State {
   tasks: ResourceState;
   taskForm: FormState;
   customerTasks: fromCustomerTasks.State;
-  customerCatalogs: fromCatalogs.State;
+  customerCatalog: fromCatalogs.State;
   customerCommands: fromCommands.State;
   customerIdentificationCards: ResourceState;
   customerIdentificationCardForm: FormState;
@@ -57,7 +57,7 @@ const reducers = {
   tasks: createResourceReducer('Task', fromTasks.reducer),
   taskForm: createFormReducer('Task'),
   customerTasks: fromCustomerTasks.reducer,
-  customerCatalogs: fromCatalogs.reducer,
+  customerCatalog: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer,
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
   customerIdentificationCardForm: createFormReducer('Customer Identity Card'),
@@ -102,14 +102,6 @@ export const getCustomerTaskProcessSteps = createSelector(getCustomerTaskCommand
 
 
 /**
- * Customer Catalog Selectors
- */
-
-export const getCustomerCatalogsState = (state: State) => state.customerCatalogs;
-
-export const getAllCustomerCatalogEntities = createSelector(getCustomerCatalogsState, fromCatalogs.getAll);
-
-/**
  * Customer Command Selectors
  */
 
@@ -148,3 +140,12 @@ export const getPayrollDistributionState = (state: State) => state.customerPayro
 export const getPayrollDistribution = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistribution);
 export const getPayrollDistributionLoadedAt = createSelector(getPayrollDistributionState,
   fromPayrollDistribution.getPayrollDistributionLoadedAt);
+
+/**
+ * Customer Catalog Selectors
+ */
+export const getCustomerCatalogState = (state: State) => state.customerCatalog;
+
+export const getCustomerCatalog = createSelector(getCustomerCatalogState, fromCatalogs.getCustomerCatalog);
+export const getCustomerCatalogLoadedAt = createSelector(getCustomerCatalogState, fromCatalogs.getCustomerCatalogLoadedAt);
+export const getSelectedField = createSelector(getCustomerCatalogState, fromCatalogs.getSelectedField);

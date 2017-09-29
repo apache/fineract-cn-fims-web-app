@@ -14,40 +14,40 @@
  * limitations under the License.
  */
 import {Component} from '@angular/core';
+import * as fromCustomers from '../../../store/index';
+import {CustomersStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Customer} from '../../../services/customer/domain/customer.model';
-import * as fromCustomers from '../../store';
-import {CustomersStore} from '../../store/index';
-import {UPDATE} from '../../store/customer.actions';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {Observable} from 'rxjs/Observable';
+import {Field} from '../../../../services/catalog/domain/field.model';
+import {UPDATE_FIELD} from '../../../store/catalogs/catalog.actions';
+import {Catalog} from '../../../../services/catalog/domain/catalog.model';
 
 @Component({
   templateUrl: './edit.form.component.html'
 })
-export class EditCustomerFormComponent {
-
-  customer$: Observable<Customer>;
+export class EditCatalogFieldFormComponent {
 
   catalog$: Observable<Catalog>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {
+  field$: Observable<Field>;
+
+  constructor(private store: CustomersStore, private router: Router, private route: ActivatedRoute) {
     this.catalog$ = store.select(fromCustomers.getCustomerCatalog);
-    this.customer$ = store.select(fromCustomers.getSelectedCustomer);
+    this.field$ = store.select(fromCustomers.getSelectedField);
   }
 
-  onSave(customer: Customer) {
-    this.store.dispatch({ type: UPDATE, payload: {
-      customer,
-      activatedRoute: this.route
-    } });
+  onSave(catalogIdentifier: string, field: Field): void {
+    this.store.dispatch({
+      type: UPDATE_FIELD,
+      payload: {
+        catalogIdentifier,
+        field,
+        activatedRoute: this.route
+      }
+    });
   }
 
-  onCancel() {
-    this.navigateAway();
-  }
-
-  navigateAway(): void {
+  onCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

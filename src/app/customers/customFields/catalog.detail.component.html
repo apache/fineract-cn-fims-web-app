@@ -1,0 +1,62 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<fims-layout-card-over title="{{'Custom fields' | translate }}" [navigateBackTo]="['../../../']">
+  <fims-layout-card-over-header-menu *ngIf="(catalog$ | async) as catalog">
+    <button md-icon-button (click)="deleteCatalog(catalog)" title="{{'Delete this catalog' | translate}}">
+      <md-icon>delete</md-icon>
+    </button>
+  </fims-layout-card-over-header-menu>
+  <ng-container *ngIf="(catalog$ | async) as catalog; else elseBlock">
+    <div class="md-content inset" flex>
+      <div layout="row">
+        <md-list>
+          <md-list-item>
+            <h3 md-line translate>Name</h3>
+            <p md-line>{{catalog.name}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Description</h3>
+            <p md-line>{{catalog.description}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Created by</h3>
+            <p md-line>{{catalog.createdBy}} - {{catalog.createdOn | date:'medium'}}</p>
+          </md-list-item>
+          <md-list-item>
+            <h3 md-line translate>Last modified by</h3>
+            <p md-line>{{catalog.lastModifiedBy}} - {{catalog.lastModifiedOn | date:'medium'}}</p>
+          </md-list-item>
+        </md-list>
+      </div>
+      <fims-data-table flex
+                       [columns]="columns"
+                       [data]="fieldData$ | async"
+                       (onActionCellClick)="rowSelect($event)">
+      </fims-data-table>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <td-message label="{{'No custom fields found' | translate }}"
+                color="warn" icon="error">
+      <button td-message-actions md-button [routerLink]="['edit']"
+              *hasPermission="{ id: 'catalog_catalogs', accessLevel: 'CHANGE'}" translate>CREATE CUSTOM FIELDS
+      </button>
+    </td-message>
+  </ng-template>
+</fims-layout-card-over>
+
+

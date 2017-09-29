@@ -88,6 +88,10 @@
         <md-icon md-list-avatar>cake</md-icon>
         <h3 md-line>{{customer.dateOfBirth | displayFimsDate}}</h3>
       </md-list-item>
+      <fims-customer-custom-values
+        [catalog]="catalog$ | async"
+        [values]="customer.customValues">
+      </fims-customer-custom-values>
       <md-list-item>
         <h3 md-line translate>Created by</h3>
         <p md-line>{{customer.createdBy}} - {{customer.createdOn | date:'medium'}}</p>
