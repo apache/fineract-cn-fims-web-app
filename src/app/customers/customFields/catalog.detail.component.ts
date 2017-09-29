@@ -43,7 +43,8 @@ export class CatalogDetailComponent {
     { name: 'mandatory', label: 'Mandatory' }
   ];
 
-  constructor(private store: CustomersStore, private dialogService: TdDialogService, private route: ActivatedRoute, private router: Router) {
+  constructor(private store: CustomersStore, private dialogService: TdDialogService, private route: ActivatedRoute,
+              private router: Router) {
     this.catalog$ = store.select(fromCustomers.getCustomerCatalog)
       .filter(catalog => !!catalog);
 
