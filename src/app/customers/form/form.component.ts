@@ -24,6 +24,7 @@ import {CustomerContactFormComponent} from './contact/contact.component';
 import {ContactDetail} from '../../services/domain/contact/contact-detail.model';
 import {Value} from '../../services/catalog/domain/value.model';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
+import {Catalog} from '../../services/catalog/domain/catalog.model';
 
 @Component({
   selector: 'fims-customer-form-component',
@@ -55,6 +56,8 @@ export class CustomerFormComponent implements OnInit {
 
     this.customFieldsFormData = customer.customValues;
   };
+
+  @Input('catalog') catalog: Catalog;
 
   @Input('editMode') editMode: boolean;
 

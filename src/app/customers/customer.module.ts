@@ -48,6 +48,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   MdButtonModule,
+  MdCardModule,
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
@@ -57,7 +58,7 @@ import {
   MdSelectModule,
   MdToolbarModule
 } from '@angular/material';
-import {CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {TaskListComponent} from './tasks/task.list.component';
 import {TasksApiEffects} from './store/tasks/effects/service.effects';
 import {TasksRouteEffects} from './store/tasks/effects/route.effects';
@@ -76,6 +77,21 @@ import {PayrollExistsGuard} from './detail/payroll/payroll-exists.guard';
 import {CustomerPayrollApiEffects} from './store/payroll/effects/service.effects';
 import {CustomerPayrollRouteEffects} from './store/payroll/effects/route.effects';
 import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notification.effects';
+import {CatalogExistsGuard} from './customFields/catalog-exists.guard';
+import {CreateCustomerCatalogFormComponent} from './customFields/form/create.form.component';
+import {CatalogDetailComponent} from './customFields/catalog.detail.component';
+import {CustomerCatalogFormComponent} from './customFields/form/form.component';
+import {FieldFormComponent} from './customFields/components/field.component';
+import {CatalogApiEffects} from './store/catalogs/effects/service.effects';
+import {CatalogRouteEffects} from './store/catalogs/effects/route.effects';
+import {CatalogNotificationEffects} from './store/catalogs/effects/notification.effects';
+import {FieldFormService} from './customFields/services/field-form.service';
+import {EditCatalogFieldFormComponent} from './customFields/fields/form/edit.form.component';
+import {FieldDetailComponent} from './customFields/fields/field.detail.component';
+import {FieldIndexComponent} from './customFields/fields/field.index.component';
+import {CatalogFieldFormComponent} from './customFields/fields/form/form.component';
+import {FieldExistsGuard} from './customFields/fields/field-exists.guard';
+import {CustomerCustomValuesComponent} from './customFields/components/value.component';
 
 @NgModule({
   imports: [
@@ -85,6 +101,7 @@ import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notifi
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MdCardModule,
     MdIconModule,
     MdListModule,
     MdToolbarModule,
@@ -98,13 +115,16 @@ import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notifi
     CovalentStepsModule,
     CovalentFileModule,
     CovalentMessageModule,
+    CovalentChipsModule,
 
     EffectsModule.run(CustomerApiEffects),
     EffectsModule.run(CustomerRouteEffects),
     EffectsModule.run(CustomerNotificationEffects),
+
     EffectsModule.run(TasksApiEffects),
     EffectsModule.run(TasksRouteEffects),
     EffectsModule.run(TasksNotificationEffects),
+
     EffectsModule.run(CustomerTasksApiEffects),
     EffectsModule.run(CustomerTasksRouteEffects),
     EffectsModule.run(CustomerTasksNotificationEffects),
@@ -114,6 +134,9 @@ import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notifi
     EffectsModule.run(CustomerPayrollRouteEffects),
     EffectsModule.run(CustomerPayrollNotificationEffects),
 
+    EffectsModule.run(CatalogApiEffects),
+    EffectsModule.run(CatalogRouteEffects),
+    EffectsModule.run(CatalogNotificationEffects),
   ],
   declarations: [
     CustomerComponent,
@@ -142,11 +165,23 @@ import {CustomerPayrollNotificationEffects} from './store/payroll/effects/notifi
     CreateCustomerPayrollFormComponent,
     CustomerPayrollFormComponent,
 
+    CatalogDetailComponent,
+    CreateCustomerCatalogFormComponent,
+    CustomerCatalogFormComponent,
+    CatalogFieldFormComponent,
+    FieldFormComponent,
+    EditCatalogFieldFormComponent,
+    FieldIndexComponent,
+    FieldDetailComponent,
+    CustomerCustomValuesComponent
   ],
   providers: [
+    FieldFormService,
     CustomerExistsGuard,
     TaskExistsGuard,
     PayrollExistsGuard,
+    CatalogExistsGuard,
+    FieldExistsGuard,
     { provide: CustomersStore, useFactory: customerStoreFactory, deps: [Store]}
   ]
 })

@@ -14,12 +14,11 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit member ' | translate}}">
-  <fims-customer-form-component #form
-                                  (onSave)="onSave($event)"
-                                  (onCancel)="onCancel()"
-                                  [catalog]="catalog$ | async"
-                                  [customer]="customer$ | async"
-                                  [editMode]="true">
-  </fims-customer-form-component>
-</fims-layout-card-over>
+<md-list-item *ngFor="let field of customCatalog?.fields" [ngSwitch]="field.dataType">
+  <h3 md-line translate>{{field.label}}</h3>
+  <p md-line *ngSwitchCase="'TEXT'">{{field.value}}</p>
+  <p md-line *ngSwitchCase="'NUMBER'">{{field.value | number}}</p>
+  <p md-line *ngSwitchCase="'DATE'">{{field.value | date:'medium'}}</p>
+  <p md-line *ngSwitchCase="'SINGLE_SELECTION'">{{field.value}}</p>
+  <p md-line *ngSwitchCase="'MULTI_SELECTION'">{{field.value}}</p>
+</md-list-item>

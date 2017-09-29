@@ -20,7 +20,7 @@ import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentStepsModule} from '@covalent/core';
+import {CovalentChipsModule, CovalentStepsModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {TranslateModule} from '@ngx-translate/core';
@@ -109,6 +109,7 @@ describe('Test customer form', () => {
         MdAutocompleteModule,
         MdCheckboxModule,
         CovalentStepsModule,
+        CovalentChipsModule,
         NoopAnimationsModule
       ],
       providers: [

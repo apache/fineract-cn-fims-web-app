@@ -1,0 +1,72 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<fims-layout-card-over title="{{'Custom field' | translate }}" [navigateBackTo]="['../../../../../../']" *ngIf="(field$ | async) as field">
+  <fims-layout-card-over-header-menu *ngIf="(catalog$ | async) as catalog">
+    <button md-icon-button (click)="deleteField(catalog.identifier, field)" title="{{'Delete this field' | translate}}">
+      <md-icon>delete</md-icon>
+    </button>
+  </fims-layout-card-over-header-menu>
+  <div class="md-content inset" flex>
+    <div layout="row">
+      <md-list>
+        <md-list-item>
+          <h3 md-line translate>Data type</h3>
+          <p md-line>{{field.dataType}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Label</h3>
+          <p md-line>{{field.label}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Hint</h3>
+          <p md-line>{{field.hint}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Description</h3>
+          <p md-line>{{field.description}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Mandatory</h3>
+          <p md-line>{{field.mandatory}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Length</h3>
+          <p md-line>{{field.length}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Max digits</h3>
+          <p md-line>{{field.precision}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Min value</h3>
+          <p md-line>{{field.minValue}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Max value</h3>
+          <p md-line>{{field.maxValue}}</p>
+        </md-list-item>
+        <md-list-item>
+          <h3 md-line translate>Created by</h3>
+          <p md-line>{{field.createdBy}} - {{field.createdOn | date:'medium'}}</p>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+</fims-layout-card-over>
+<fims-fab-button title="{{'Edit field' | translate}}" icon="mode_edit" [link]="['edit']"
+                 [permission]="{ id: 'catalog_catalogs', accessLevel: 'CHANGE'}">
+</fims-fab-button>

@@ -13,13 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
-<fims-layout-card-over title="{{'Edit member ' | translate}}">
-  <fims-customer-form-component #form
-                                  (onSave)="onSave($event)"
-                                  (onCancel)="onCancel()"
-                                  [catalog]="catalog$ | async"
-                                  [customer]="customer$ | async"
-                                  [editMode]="true">
-  </fims-customer-form-component>
+<fims-layout-card-over title="{{'Change custom field' | translate}}" [navigateBackTo]="['../']" *ngIf="(catalog$ | async) as catalog">
+  <fims-catalog-custom-field-form
+    [field]="field$ | async"
+    (onSave)="onSave(catalog.identifier, $event)"
+    (onCancel)="onCancel()">
+  </fims-catalog-custom-field-form>
 </fims-layout-card-over>

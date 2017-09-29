@@ -14,12 +14,10 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit member ' | translate}}">
-  <fims-customer-form-component #form
-                                  (onSave)="onSave($event)"
-                                  (onCancel)="onCancel()"
-                                  [catalog]="catalog$ | async"
-                                  [customer]="customer$ | async"
-                                  [editMode]="true">
-  </fims-customer-form-component>
+<fims-layout-card-over title="{{'Create custom fields' | translate}}" [navigateBackTo]="['../']">
+  <fims-customer-catalog-form
+    [catalog]="catalog"
+    (onSave)="onSave($event)"
+    (onCancel)="onCancel()">
+  </fims-customer-catalog-form>
 </fims-layout-card-over>

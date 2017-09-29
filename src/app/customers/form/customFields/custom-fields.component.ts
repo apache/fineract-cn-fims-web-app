@@ -14,133 +14,164 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {Field} from '../../../services/catalog/domain/field.model';
 import {Value} from '../../../services/catalog/domain/value.model';
 import {FormComponent} from '../../../common/forms/form.component';
 import {FimsValidators} from '../../../common/validator/validators';
-import * as fromCustomers from '../../store';
-import {CustomersStore} from '../../store/index';
-import {LOAD_ALL} from '../../store/catalogs/catalog.actions';
-
+import {addCurrentTime} from '../../../services/domain/date.converter';
+import {Option} from '../../../services/catalog/domain/option.model';
 
 @Component({
   selector: 'fims-custom-fields-component',
   templateUrl: './custom-fields.component.html'
 })
-export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implements OnInit {
+export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implements OnChanges {
 
   private _formData: Value[];
 
-  private _catalogs: Catalog[];
+  @Input('catalog') catalog: Catalog;
 
-  @Input() set formData(formData: Value[]){
+  @Input('formData') set formData(formData: Value[]) {
     this._formData = formData;
   };
 
+  constructor(private formBuilder: FormBuilder) {
+    super();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.catalog || changes.formData) {
+      this.form = this.buildFormGroup();
+    }
+  }
+
+  private findValue(fieldIdentifier: string): Value {
+    return this._formData.find((value: Value) =>
+      value.fieldIdentifier === fieldIdentifier
+    );
+  }
+
+  private findField(fieldIdentifier: string): Field {
+    return this.catalog.fields.find((field: Field) => field.identifier === fieldIdentifier);
+  }
+
+  private buildFormGroup(): FormGroup {
+    const group: FormGroup = this.formBuilder.group({});
+
+    if (!this._formData || !this.catalog) {
+      return group;
+    }
+
+    for (const field of this.catalog.fields) {
+      const value = this.findValue(field.identifier);
+
+      const valueString: string = value && value.value ? value.value : '';
+
+      const formControl: FormControl = new FormControl({value: valueString, disabled: false});
+
+      const validators: ValidatorFn[] = [];
+
+      switch (field.dataType) {
+        case 'TEXT': {
+          validators.push(...this.buildTextValidators(field));
+          break;
+        }
+
+        case 'NUMBER': {
+          formControl.setValue(Number(valueString));
+          validators.push(...this.buildNumberValidators(field));
+          break;
+        }
+
+        case 'DATE': {
+          formControl.setValue(valueString.length ? valueString.substring(0, 10) : '');
+          break;
+        }
+
+        case 'SINGLE_SELECTION': {
+          formControl.setValue(Number(valueString));
+          break;
+        }
+
+        case 'MULTI_SELECTION': {
+          const optionValues = valueString.length ? valueString.split(',').map(optionValue => Number(optionValue)) : [];
+          const foundOptions = field.options
+            .filter((option: Option) => optionValues.indexOf(option.value) > -1);
+          formControl.setValue(foundOptions);
+          break;
+        }
+
+        default:
+          break;
+      }
+
+      if (field.mandatory) {
+        validators.push(Validators.required);
+      }
+
+      formControl.setValidators(validators);
+
+      group.addControl(field.identifier, formControl);
+    }
+
+    return group;
+  }
+
   get formData(): Value[] {
-    const raw: any = this.form.getRawValue();
+    const fields: any = this.form.getRawValue();
+
     const values: Value[] = [];
-    for (const catalogIdentifier in raw) {
-      if (raw.hasOwnProperty(catalogIdentifier)) {
-        const fields = raw[catalogIdentifier];
-        for (const fieldIdentifier in fields) {
-          if (fields.hasOwnProperty(fieldIdentifier)) {
-            let fieldValue = fields[fieldIdentifier];
 
-            const field: Field = this.findField(catalogIdentifier, fieldIdentifier);
+    for (const fieldIdentifier in fields) {
+      if (fields.hasOwnProperty(fieldIdentifier)) {
+        let value = fields[fieldIdentifier];
 
-            if (field.dataType === 'DATE') {
-              fieldValue = fieldValue && fieldValue.length ? new Date(fieldValue).toISOString() : '';
-            }
+        const field: Field = this.findField(fieldIdentifier);
 
-            values.push({
-              catalogIdentifier: catalogIdentifier,
-              fieldIdentifier: fieldIdentifier,
-              value: fieldValue
-            });
+        if (value == null) {
+          continue;
+        }
+
+        switch (field.dataType) {
+          case 'NUMBER': {
+            value = value.toString();
+            break;
+          }
+
+          case 'DATE': {
+            const date = new Date(value);
+            value = addCurrentTime(date).toISOString();
+            break;
+          }
+
+          case 'SINGLE_SELECTION': {
+            value = value.toString();
+            break;
+          }
+
+          case 'MULTI_SELECTION': {
+            value = value.map(fieldValue => fieldValue.value).join(',');
+            break;
           }
         }
+
+        values.push({
+          catalogIdentifier: this.catalog.identifier,
+          fieldIdentifier,
+          value
+        });
       }
     }
     return values;
   }
 
-  set catalogs(catalogs: Catalog[]){
-    for (const catalog of catalogs){
-      this.form.setControl(catalog.identifier, this.buildFormGroup(catalog));
-    }
-    this._catalogs = catalogs;
-  }
-
-  get catalogs(): Catalog[] {
-    return this._catalogs;
-  }
-
-  getControlForCatalog(catalogIdentifier: string, fieldIdentifier: string): FormControl {
-    const formGroup: FormGroup = this.form.controls[catalogIdentifier] as FormGroup;
-    return formGroup.controls[fieldIdentifier] as FormControl;
-  }
-
-  constructor(private store: CustomersStore, private formBuilder: FormBuilder) {
-    super();
-  }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({});
-    this.store.select(fromCustomers.getAllCustomerCatalogEntities)
-      .subscribe(catalogs => this.catalogs = catalogs);
-
-    this.store.dispatch({ type: LOAD_ALL });
-  }
-
-  private findValue(catalogIdentifier: string, fieldIdentifier: string): Value {
-    return this._formData.find((value: Value) =>
-      value.catalogIdentifier === catalogIdentifier && value.fieldIdentifier === fieldIdentifier);
-  }
-
-  private findField(catalogIdentifier: string, fieldIdentifier: string): Field {
-    const foundCatalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === catalogIdentifier);
-
-    return foundCatalog.fields.find((field: Field) => field.identifier === fieldIdentifier);
-  }
-
-  private buildFormGroup(catalog: Catalog): FormGroup {
-    const group: any = {};
-
-    for (const field of catalog.fields) {
-      const value = this.findValue(catalog.identifier, field.identifier);
-      const valueString: string = value ? value.value : '';
-
-      const formControl: FormControl = new FormControl({value: valueString, disabled: false});
-
-      switch (field.dataType) {
-        case 'NUMBER':
-          formControl.setValidators(this.buildNumberValidators(field));
-          break;
-        case 'TEXT':
-          formControl.setValidators(this.buildTextValidators(field));
-          break;
-        case 'DATE':
-          formControl.setValue(valueString ? valueString.substring(0, 10) : '');
-          break;
-        case 'SINGLE_SELECTION':
-          formControl.setValue(valueString ? Number(valueString) : '');
-          break;
-      }
-
-      group[field.identifier] = formControl;
-    }
-
-    return this.formBuilder.group(group);
-  }
-
   private buildTextValidators(field: Field): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
 
-    if (field.length) {
+    if (field.length != null) {
       validators.push(Validators.maxLength(field.length));
     }
 
@@ -150,19 +181,15 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
   private buildNumberValidators(field: Field): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
 
-    if (field.mandatory) {
-      validators.push(Validators.required);
-    }
-
-    if (field.minValue) {
+    if (field.minValue != null) {
       validators.push(FimsValidators.minValue(field.minValue));
     }
 
-    if (field.maxValue) {
+    if (field.maxValue != null) {
       validators.push(FimsValidators.maxValue(field.maxValue));
     }
 
-    if (field.precision) {
+    if (field.precision != null) {
       validators.push(FimsValidators.maxScale(field.precision));
     }
 
