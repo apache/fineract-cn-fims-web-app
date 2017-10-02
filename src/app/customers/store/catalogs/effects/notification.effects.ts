@@ -19,6 +19,7 @@ import {Observable} from 'rxjs/Observable';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
 import * as catalogActions from '../catalog.actions';
+import {DeleteCatalogFailAction, DeleteFieldFailAction, UpdateFieldFailAction} from '../catalog.actions';
 
 @Injectable()
 export class CatalogNotificationEffects {
@@ -42,10 +43,10 @@ export class CatalogNotificationEffects {
   @Effect({ dispatch: false })
   deleteCatalogFail$: Observable<Action> = this.actions$
     .ofType(catalogActions.DELETE_FAIL)
-    .do((error: Error) => this.notificationService.send({
+    .do((action: DeleteCatalogFailAction) => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Catalog can\'t be deleted',
-      message: error.message
+      message: action.payload.message
     }));
 
   @Effect({ dispatch: false })
@@ -59,10 +60,10 @@ export class CatalogNotificationEffects {
   @Effect({ dispatch: false })
   updateFieldFail$: Observable<Action> = this.actions$
     .ofType(catalogActions.UPDATE_FIELD_FAIL)
-    .do((error: Error) => this.notificationService.send({
+    .do((action: UpdateFieldFailAction) => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Field can\'t be updated',
-      message: error.message
+      message: action.payload.message
     }));
 
   @Effect({ dispatch: false })
@@ -76,10 +77,10 @@ export class CatalogNotificationEffects {
   @Effect({ dispatch: false })
   deleteFieldFail$: Observable<Action> = this.actions$
     .ofType(catalogActions.DELETE_FIELD_FAIL)
-    .do((error: Error) => this.notificationService.send({
+    .do((action: DeleteFieldFailAction) => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Field can\'t be deleted',
-      message: error.message
+      message: action.payload.message
     }));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
