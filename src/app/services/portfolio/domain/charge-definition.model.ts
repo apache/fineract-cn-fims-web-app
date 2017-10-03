@@ -35,4 +35,5 @@ export interface ChargeDefinition {
   forSegmentSet?: string;
   fromSegment?: string;
   toSegment?: string;
+  chargeOnTop?: boolean;
 }

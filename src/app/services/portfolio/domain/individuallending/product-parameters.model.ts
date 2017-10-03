@@ -20,4 +20,5 @@ export class ProductParameters {
   moratoriums: Moratorium[];
   maximumDispersalCount: number;
   maximumDispersalAmount: number;
+  minimumDispersalAmount: number;
 }

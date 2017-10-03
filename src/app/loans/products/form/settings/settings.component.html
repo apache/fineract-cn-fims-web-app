@@ -23,14 +23,6 @@
       Invalid account
     </ng-container>
   </fims-account-select>
-  <fims-ledger-select title="{{'Loans in process ledger(Liability ledgers only)' | translate}}" formControlName="loansPayableLedger" [type]="'LIABILITY'">
-    <ng-container *ngIf="!form.get('loansPayableLedger').pristine && form.get('loansPayableLedger').hasError('required')" translate>
-      Required
-    </ng-container>
-    <ng-container *ngIf="form.get('loansPayableLedger').hasError('invalidLedger')" translate>
-      Invalid ledger
-    </ng-container>
-  </fims-ledger-select>
   <fims-ledger-select title="{{'Member loan ledger(Asset ledgers only)' | translate}}" formControlName="customerLoanLedger" [type]="'ASSET'">
     <ng-container *ngIf="!form.get('customerLoanLedger').pristine && form.get('customerLoanLedger').hasError('required')" translate>
       Required
@@ -41,16 +33,5 @@
   </fims-ledger-select>
   <span layout-margin class="text-md" translate>
     Ledger used to create member loan account.
-  </span>
-  <fims-account-select title="{{'Pending disbursal account(Asset accounts only)' | translate}}" formControlName="pendingDisbursal" [type]="'ASSET'">
-    <ng-container *ngIf="!form.get('pendingDisbursal').pristine && form.get('pendingDisbursal').hasError('required')" translate>
-      Required
-    </ng-container>
-    <ng-container *ngIf="form.get('pendingDisbursal').hasError('invalidAccount')" translate>
-      Invalid account
-    </ng-container>
-  </fims-account-select>
-  <span layout-margin class="text-md" translate>
-    Cash account for loans approved but not yet disbursed.
   </span>
 </form>

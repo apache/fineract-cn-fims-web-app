@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {RequiredAccountAssignment} from './required-account-assignment.model';
 
 export interface Pattern {
   parameterPackage: string;
-  accountAssignmentsRequired: string[];
+  accountAssignmentGroups: string[];
+  accountAssignmentsRequired: RequiredAccountAssignment[];
 }

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
-export class AcceptPaymentParameters {
-
+export interface RequiredAccountAssignment {
+  accountDesignator: string;
+  accountType: string;
+  group?: string;
 }

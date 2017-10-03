@@ -21,7 +21,15 @@ export class ChargeProportionalDesignators {
 
   public static readonly RUNNING_BALANCE_DESIGNATOR = '{runningbalance}';
 
-  public static readonly PRINCIPAL_ADJUSTMENT_DESIGNATOR = '{principaladjustment}';
+  public static readonly PRINCIPAL_DESIGNATOR = '{principal}';
 
-  public static readonly REPAYMENT_DESIGNATOR = '{repayment}';
+  public static readonly REQUESTED_DISBURSEMENT_DESIGNATOR = '{requesteddisbursement}';
+
+  public static readonly TO_ACCOUNT_DESIGNATOR = '{toAccount}';
+
+  public static readonly FROM_ACCOUNT_DESIGNATOR = '{fromAccount}';
+
+  public static readonly REQUESTED_REPAYMENT_DESIGNATOR = '{requestedrepayment}';
+
+  public static readonly CONTRACTUAL_REPAYMENT_DESIGNATOR = '{contractualrepayment}';
 }

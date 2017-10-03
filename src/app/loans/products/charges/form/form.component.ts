@@ -43,7 +43,7 @@ export class ProductChargeFormComponent implements OnChanges {
 
   proportionalToOptions: any[] = [
     { label: 'Maximum balance', designator: ChargeProportionalDesignators.MAXIMUM_BALANCE_DESIGNATOR },
-    { label: 'Repayment', designator: ChargeProportionalDesignators.REPAYMENT_DESIGNATOR },
+    { label: 'Repayment', designator: ChargeProportionalDesignators.REQUESTED_DISBURSEMENT_DESIGNATOR },
     { label: 'Running balance', designator: ChargeProportionalDesignators.RUNNING_BALANCE_DESIGNATOR }
   ];
 

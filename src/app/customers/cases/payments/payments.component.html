@@ -25,17 +25,42 @@
   </div>
   <div layout="row" class="md-content">
     <table td-data-table>
-      <th td-data-table-column [active]="true" translate>Date</th>
-      <th td-data-table-column [active]="true" [numeric]="true" *ngFor="let col of (columns | async)" translate>{{col.name}}</th>
-      <th td-data-table-column [active]="true" [numeric]="true" translate>Remaining principal</th>
-
+      <thead>
+      <th td-data-table-column [active]="true" translate>
+        Date
+      </th>
+      <th td-data-table-column [active]="true" [numeric]="true" translate>
+        Payment
+      </th>
+      <th td-data-table-column [active]="true" [numeric]="true" translate>
+        Interest
+      </th>
+      <th td-data-table-column [active]="true" [numeric]="true" translate>
+        Principal
+      </th>
+      <th td-data-table-column [active]="true" [numeric]="true" translate>
+        Balance
+      </th>
+      </thead>
+      <tbody>
       <tr td-data-table-row *ngFor="let row of (rows | async)">
-        <td td-data-table-cell>{{row.date | date}}</td>
-        <td td-data-table-cell [numeric]="true" *ngFor="let col of (columns | async)">
-          {{row.costComponents[col.identifier]?.amount | number}}
+        <td td-data-table-cell>
+          {{row.date | date}}
         </td>
-        <td td-data-table-cell [numeric]="true">{{row.remainingPrincipal | number}}</td>
+        <td td-data-table-cell [numeric]="true">
+          {{row.payment | number}}
+        </td>
+        <td td-data-table-cell [numeric]="true">
+          {{row.interest | number}}
+        </td>
+        <td td-data-table-cell [numeric]="true">
+          {{row.principal | number}}
+        </td>
+        <td td-data-table-cell [numeric]="true">
+          {{row.balance | number}}
+        </td>
       </tr>
+      </tbody>
     </table>
   </div>
 </fims-layout-card-over>

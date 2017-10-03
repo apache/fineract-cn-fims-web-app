@@ -22,7 +22,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {SEARCH} from '../store/payments/payment.actions';
 import {PlannedPayment} from '../../../services/portfolio/domain/individuallending/planned-payment.model';
-import {CostComponent} from '../../../services/portfolio/domain/individuallending/cost-component.model';
+import {CostComponent} from '../../../services/portfolio/domain/cost-component.model';
 import {ChargeName} from '../../../services/portfolio/domain/individuallending/charge-name.model';
 import {todayAsISOString} from '../../../services/domain/date.converter';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
@@ -32,10 +32,11 @@ interface CostComponents {
 }
 
 interface PaymentRow {
-  interestRate: number;
-  remainingPrincipal: number;
-  date: string;
-  costComponents: CostComponents;
+  date?: string;
+  payment?: number;
+  interest?: number;
+  principal?: number;
+  balance: number;
 }
 
 @Component({
@@ -55,27 +56,44 @@ export class CasePaymentsComponent implements OnInit, OnDestroy {
 
   constructor(private casesStore: CasesStore) {}
 
-  private createRows(payments: PlannedPayment[]): PaymentRow[] {
+  private createRows(plannedPayments: PlannedPayment[]): PaymentRow[] {
     const rows: PaymentRow[] = [];
 
-    for (const payment of payments) {
-      const costComponents: CostComponents = payment.costComponents
-        .reduce((entities: { [id: string]: CostComponent }, costComponent: CostComponent) => {
-          return Object.assign(entities, {
-            [costComponent.chargeIdentifier]: costComponent
-          });
-        }, {});
+    plannedPayments.forEach((plannedPayment, index) => {
+      const interest = this.getChargeAmount(plannedPayment.payment.costComponents, 'repay-interest');
+      const principal = this.getChargeAmount(plannedPayment.payment.costComponents, 'repay-principal');
+      const payment = plannedPayment.payment.balanceAdjustments.ey * -1;
+      const balance = plannedPayment.balances.clp;
+
+      if (index === 0) {
+        rows.push({
+          balance
+        });
+
+        return;
+      }
 
       rows.push({
-        date: payment.date,
-        interestRate: payment.interestRate,
-        remainingPrincipal: payment.remainingPrincipal,
-        costComponents
+        date: plannedPayment.payment.date,
+        payment,
+        interest,
+        principal,
+        balance
       });
-    }
+    });
 
     return rows;
   }
+
+  private getChargeAmount(costComponents: CostComponent[], chargeIdentifier: string): number {
+    const foundComponent = costComponents.find(component => component.chargeIdentifier === chargeIdentifier);
+
+    if (foundComponent) {
+      return foundComponent.amount;
+    }
+
+    return 0;
+  };
 
   ngOnInit(): void {
     this.columns = this.casesStore.select(fromCases.getSearchCasePaymentPage)
