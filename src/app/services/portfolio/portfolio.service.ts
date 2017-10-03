@@ -30,7 +30,6 @@ import {CasePage} from './domain/case-page.model';
 import {AccountAssignment} from './domain/account-assignment.model';
 import {WorkflowAction} from './domain/individuallending/workflow-action.model';
 import {ProductPage} from './domain/product-page.model';
-import {CostComponent} from './domain/individuallending/cost-component.model';
 import {FimsCase} from './domain/fims-case.model';
 import {FimsCasePage} from './domain/fims-case-page.model';
 import {Case} from './domain/case.model';
@@ -39,6 +38,7 @@ import {mapToFimsCasePage} from './domain/mapper/fims-case-page.mapper';
 import {BalanceSegmentSet} from './domain/balance-segment-set.model';
 import {mapToBalanceSegmentSet, mapToFimsRange, mapToFimsRanges} from './domain/mapper/fims-range.mapper';
 import {FimsRange} from './domain/range-model';
+import {Payment} from './domain/payment.model';
 
 @Injectable()
 export class PortfolioService {
@@ -163,7 +163,15 @@ export class PortfolioService {
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/`);
   }
 
-  getCostComponentsForAction(productIdentifier: string, caseIdentifier: string, action: string): Observable<CostComponent[]> {
+  getCostComponentsForAction(productIdentifier: string, caseIdentifier: string, action: string,
+                             touchingAccounts: string[] = [], forPaymentSize?: string, forDateTime?: string): Observable<Payment> {
+
+    const params: URLSearchParams = new URLSearchParams();
+
+    params.append('touchingaccounts', touchingAccounts.join(','));
+    params.append('forpaymentsize', forPaymentSize);
+    params.append('fordatetime', forDateTime);
+
     return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}/actions/${action}/costcomponents`);
   }
 

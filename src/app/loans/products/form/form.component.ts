@@ -100,6 +100,7 @@ export class ProductFormComponent implements OnInit {
 
   save(): void {
     const parameters: ProductParameters = {
+      minimumDispersalAmount: 0,
       maximumDispersalAmount: 0,
       maximumDispersalCount: 0,
       moratoriums: []
@@ -126,7 +127,7 @@ export class ProductFormComponent implements OnInit {
         minimum: parseFloat(this.detailForm.formData.minimumBalance),
         maximum: parseFloat(this.detailForm.formData.maximumBalance)
       },
-      parameters: parameters,
+      parameters,
       patternPackage: 'io.mifos.individuallending.api.v1',
       accountAssignments: this.collectAccountAssignments()
     };
@@ -139,9 +140,9 @@ export class ProductFormComponent implements OnInit {
 
     assignments.push(createAccountAssignment(this.settingsForm.formData.loanFundAccount, AccountDesignators.LOAN_FUNDS_SOURCE));
 
-    assignments.push(createLedgerAssignment(this.settingsForm.formData.loansPayableLedger, AccountDesignators.LOANS_PAYABLE));
-    assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN));
-    assignments.push(createAccountAssignment(this.settingsForm.formData.pendingDisbursal, AccountDesignators.PENDING_DISBURSAL));
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_PRINCIPAL));
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_INTEREST));
+    assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_FEES));
 
     assignments.push(createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
     assignments.push(createAccountAssignment(this.feeForm.formData.disbursementFeeAccount, AccountDesignators.DISBURSEMENT_FEE_INCOME));
@@ -176,15 +177,11 @@ export class ProductFormComponent implements OnInit {
 
   prepareSettingsForm(product: FimsProduct) {
     const loanFoundAccount = findAccountDesignator(product.accountAssignments, AccountDesignators.LOAN_FUNDS_SOURCE);
-    const loansPayableLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.LOANS_PAYABLE);
-    const customerLoanLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
-    const pendingDisbursal = findAccountDesignator(product.accountAssignments, AccountDesignators.PENDING_DISBURSAL);
+    const customerLoanLedger = findAccountDesignator(product.accountAssignments, AccountDesignators.CUSTOMER_LOAN_PRINCIPAL);
 
     this.settingsFormData = {
       loanFundAccount: accountIdentifier(loanFoundAccount),
-      loansPayableLedger: ledgerIdentifier(loansPayableLedger),
       customerLoanLedger: ledgerIdentifier(customerLoanLedger),
-      pendingDisbursal: accountIdentifier(pendingDisbursal)
     };
   }
 

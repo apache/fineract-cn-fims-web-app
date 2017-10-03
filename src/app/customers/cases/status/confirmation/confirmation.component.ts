@@ -15,7 +15,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
+import {CostComponent} from '../../../../services/portfolio/domain/cost-component.model';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCases from '../../store/index';
@@ -66,7 +66,8 @@ export class CaseCommandConfirmationComponent implements OnInit {
         caseId: parentParams.caseId,
         action: params.action
       }))
-      .switchMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action));
+      .switchMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action))
+      .map(payment => payment.costComponents);
 
     this.fimsCase$ = this.casesStore.select(fromCases.getSelectedCase);
   }

@@ -74,6 +74,7 @@ describe('Test product list component', () => {
       accountAssignments: [],
       parameters: {
         moratoriums: [],
+        minimumDispersalAmount: 0,
         maximumDispersalAmount: 1,
         maximumDispersalCount: 1
       },

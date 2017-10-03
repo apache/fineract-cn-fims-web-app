@@ -14,14 +14,16 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="Teller transaction">
+<fims-layout-card-over title="{{'Teller transaction' | translate}}">
   <fims-loan-transaction-form
     [transactionCreated]="transactionCreated"
     [caseInstances]="caseInstances$ | async"
     [transactionCosts]="transactionCosts$ | async"
+    [paymentHint]="paymentHint"
     (onCreateTransaction)="createTransaction($event)"
     (onConfirmTransaction)="confirmTransaction($event)"
     (onCancelTransaction)="cancelTransaction()"
+    (onCaseSelected)="caseSelected($event)"
     (onCancel)="cancel()">
   </fims-loan-transaction-form>
 </fims-layout-card-over>

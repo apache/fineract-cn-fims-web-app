@@ -25,7 +25,8 @@
           </md-option>
         </md-select>
       </div>
-      <fims-text-input type="number" [form]="form" controlName="amount"></fims-text-input>
+      <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Repayment amount' | translate}}"></fims-text-input>
+      <p>Expected payment: {{paymentHint}}</p>
     </form>
     <ng-template td-step-actions>
       <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>

@@ -23,7 +23,6 @@ export interface FimsCase {
   parameters: CaseParameters;
   depositAccountIdentifier: string;
   customerLoanAccountIdentifier?: string;
-  loansPayableAccountIdentifier?: string;
   currentState?: CaseState;
   createdOn?: string;
   createdBy?: string;

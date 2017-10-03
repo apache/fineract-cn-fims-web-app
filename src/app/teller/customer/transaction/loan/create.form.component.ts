@@ -52,6 +52,8 @@ export class CreateLoanTransactionFormComponent implements OnInit, OnDestroy {
 
   transactionCosts$: Observable<TellerTransactionCosts>;
 
+  paymentHint: string;
+
   teller: Teller;
 
   transactionCreated: boolean;
@@ -122,6 +124,12 @@ export class CreateLoanTransactionFormComponent implements OnInit, OnDestroy {
         activatedRoute: this.route
       }
     });
+  }
+
+  caseSelected(caseInstance: FimsCase): void {
+    this.portfolioService.getCostComponentsForAction(caseInstance.productIdentifier, caseInstance.identifier, 'ACCEPT_PAYMENT')
+      .map(payment => payment.balanceAdjustments.ey * -1)
+      .subscribe(paymentHint => this.paymentHint = paymentHint.toString());
   }
 
   cancel(): void {

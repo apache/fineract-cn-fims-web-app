@@ -60,6 +60,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
     minorCurrencyUnitDigits: 2,
     enabled: false,
     parameters: {
+      minimumDispersalAmount: 0,
       maximumDispersalAmount: 0,
       maximumDispersalCount: 0,
       moratoriums: []
