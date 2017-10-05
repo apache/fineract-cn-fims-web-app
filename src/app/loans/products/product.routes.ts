@@ -37,6 +37,9 @@ import {EditProductChargeRangeFormComponent} from './charges/ranges/form/edit.co
 import {ProductChargeRangeExistsGuard} from './charges/ranges/range-exists.guard';
 import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.component';
 import {ProductChargeRangeDetailComponent} from './charges/ranges/range.detail.component';
+import {LoanLossProvisionExistsGuard} from './lossProvision/loss-provision-exists.guard';
+import {CreateProductLossProvisionFormComponent} from './lossProvision/form/create.component';
+import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detail.component';
 
 export const ProductRoutes: Routes = [
   {path: '', component: ProductListComponent, data: {hasPermission: {id: 'portfolio_products', accessLevel: 'READ'}} /* List */},
@@ -124,6 +127,22 @@ export const ProductRoutes: Routes = [
         component: ProductStatusEditFormComponent,
         canActivate: [ProductTaskExistsGuard],
         data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+      },
+      {
+        path: 'lossProvision',
+        canActivate: [LoanLossProvisionExistsGuard],
+        data: { hasPermission: { id: 'portfolio_loss_provision', accessLevel: 'READ' } },
+        children: [
+          {
+            path: '',
+            component: LossProvisionDetailComponent
+          },
+          {
+            path: 'edit',
+            component: CreateProductLossProvisionFormComponent,
+            data: { hasPermission: { id: 'portfolio_loss_provision', accessLevel: 'CHANGE' } },
+          }
+        ]
       }
     ]
   }

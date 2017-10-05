@@ -73,6 +73,9 @@ export class PermittableGroupIdMapper {
       id: 'portfolio_product_operations',
       label: 'Loan product operations'
     };
+    this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_LOSS_PROVISIONING_MANAGEMENT] = {
+      id: 'portfolio_loss_provision', label: 'Loan loss provision'
+    };
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_MANAGEMENT] = {id: 'portfolio_products', label: 'Loan products'};
     this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = {id: 'portfolio_cases', label: 'Member loans'};
 

@@ -25,6 +25,7 @@ import {monthOptions} from '../../../../common/domain/months.model';
 import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {maxPayment, maxTerm} from './validator/max-term.validators';
 
 export interface DetailFormData {
   identifier: string;
@@ -135,10 +136,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         interest: this._formData.interest,
         principalAmount: this._formData.principalAmount,
         term: this._formData.term,
-        termTemporalUnit: {
-          value: this._formData.termTemporalUnit,
-          disabled: true
-        },
+        termTemporalUnit: this._formData.termTemporalUnit,
         paymentTemporalUnit: this._formData.paymentTemporalUnit,
         paymentPeriod: this._formData.paymentPeriod,
 
@@ -170,10 +168,16 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     this.toggleDisabledState(principalAmount, product.balanceRange.minimum, product.balanceRange.maximum);
 
     const term: FormControl = this.form.get('term') as FormControl;
-    this.toggleDisabledState(term, 1, product.termRange.maximum);
+    term.enable();
+    term.setValidators([
+      Validators.required,
+      FimsValidators.minValue(1)
+    ]);
 
     const interest: FormControl = this.form.get('interest') as FormControl;
     this.toggleDisabledState(interest, product.interestRange.minimum, product.interestRange.maximum);
+
+    this.form.setValidators([maxTerm(product.termRange), maxPayment(product.termRange)]);
   }
 
   private toggleDisabledState(formControl: FormControl, minimum: number, maximum: number): void {

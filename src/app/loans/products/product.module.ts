@@ -81,6 +81,13 @@ import {ProductChargeRangesApiEffects} from './store/ranges/effects/service.effe
 import {ProductChargeRangeExistsGuard} from './charges/ranges/range-exists.guard';
 import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.component';
 import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/notification.effects';
+import {ProductLossProvisionApiEffects} from './store/lossProvision/effects/service.effects';
+import {ProductLossProvisionRouteEffects} from './store/lossProvision/effects/route.effects';
+import {ProductLossProvisionNotificationEffects} from './store/lossProvision/effects/notification.effects';
+import {LoanLossProvisionExistsGuard} from './lossProvision/loss-provision-exists.guard';
+import {CreateProductLossProvisionFormComponent} from './lossProvision/form/create.component';
+import {ProductLossProvisionFormComponent} from './lossProvision/form/form.component';
+import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detail.component';
 
 @NgModule({
   imports: [
@@ -117,7 +124,11 @@ import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/not
 
     EffectsModule.run(ProductChargeRangesApiEffects),
     EffectsModule.run(ProductChargeRangesRouteEffects),
-    EffectsModule.run(ProductChargeRangesNotificationEffects)
+    EffectsModule.run(ProductChargeRangesNotificationEffects),
+
+    EffectsModule.run(ProductLossProvisionApiEffects),
+    EffectsModule.run(ProductLossProvisionRouteEffects),
+    EffectsModule.run(ProductLossProvisionNotificationEffects),
   ],
   declarations: [
     // product
@@ -156,12 +167,18 @@ import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/not
     ProductStatusEditFormComponent,
     ProductStatusDetailComponent,
 
+    // Loss provision
+    LossProvisionDetailComponent,
+    ProductLossProvisionFormComponent,
+    CreateProductLossProvisionFormComponent,
+    ProductChargeDetailComponent
   ],
   providers: [
     ProductExistsGuard,
     ProductTaskExistsGuard,
     ProductChargeExistsGuard,
     ProductChargeRangeExistsGuard,
+    LoanLossProvisionExistsGuard,
     { provide: PortfolioStore, useFactory: portfolioStoreFactory, deps: [Store]}
   ]
 })

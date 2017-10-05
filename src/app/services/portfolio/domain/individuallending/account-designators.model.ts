@@ -47,7 +47,11 @@ export class AccountDesignators {
 
   public static readonly LATE_FEE_ACCRUAL = 'lfa';
 
-  public static readonly ARREARS_ALLOWANCE = 'aa';
+  public static readonly PRODUCT_LOSS_ALLOWANCE = 'pa';
+
+  public static readonly GENERAL_LOSS_ALLOWANCE = 'aa';
+
+  public static readonly GENERAL_EXPENSE = 'ge';
 
   public static readonly ENTRY = 'ey';
 
