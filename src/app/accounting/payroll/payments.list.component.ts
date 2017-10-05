@@ -37,7 +37,7 @@ export class PaymentsListComponent implements OnDestroy {
   paymentData$: Observable<TableData>;
 
   columns: any[] = [
-    { name: 'customerIdentifier', label: 'Customer ID' },
+    { name: 'customerIdentifier', label: 'Member ID' },
     { name: 'employer', label: 'Employer' },
     { name: 'salary', label: 'Salary' }
   ];
