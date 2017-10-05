@@ -47,6 +47,9 @@
       </md-option>
     </md-select>
   </div>
+  <p *ngIf="form.hasError('maxTerm')" class="tc-red-600" translate>
+    Invalid term. Maximum allowed are {{form.getError('maxTerm').maxWeeks}} weeks, {{form.getError('maxTerm').maxMonths}} months or {{form.getError('maxTerm').maxYears}} years.
+  </p>
   <div layout="row" layout-margin>
     <fims-text-input type="number" [form]="form" controlName="paymentPeriod" placeholder="{{'Repay every' | translate}}"></fims-text-input>
     <md-select formControlName="paymentTemporalUnit" layout-margin>
@@ -55,6 +58,9 @@
       </md-option>
     </md-select>
   </div>
+  <p *ngIf="form.hasError('maxPayment')" class="tc-red-600" translate>
+    Invalid payment period. Maximum allowed are {{form.getError('maxPayment').maxWeeks}} weeks, {{form.getError('maxPayment').maxMonths}} months or {{form.getError('maxPayment').maxYears}} years.
+  </p>
   <!-- Days in weeks -->
   <div layout="row" *ngIf="displayDaysInWeek">
     <md-select formControlName="dayInWeek" layout-margin placeholder="{{'on' | translate}}">
