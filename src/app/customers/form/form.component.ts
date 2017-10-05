@@ -107,7 +107,7 @@ export class CustomerFormComponent implements OnInit {
   get isValid(): boolean {
     return (this.detailForm.valid && this.addressForm.valid)
       && this.contactForm.validWhenOptional
-      && this.customFieldsForm.validWhenOptional;
+      && this.customFieldsForm.valid;
   }
 
   get customer(): Customer {

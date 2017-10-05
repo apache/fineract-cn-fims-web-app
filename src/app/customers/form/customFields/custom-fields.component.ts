@@ -81,7 +81,7 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
         }
 
         case 'NUMBER': {
-          formControl.setValue(Number(valueString));
+          formControl.setValue(valueString.length ? Number(valueString) : undefined);
           validators.push(...this.buildNumberValidators(field));
           break;
         }
