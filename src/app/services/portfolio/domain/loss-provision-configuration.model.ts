@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {LossProvisionStep} from './loss-provision-step.model';
 
-export class PortfolioPermittableGroupIds {
-  public static readonly PRODUCT_OPERATIONS_MANAGEMENT = 'portfolio__v1__products__enable';
-  public static readonly PRODUCT_LOSS_PROVISIONING_MANAGEMENT = 'portfolio__v1__products__lossprv';
-  public static readonly PRODUCT_MANAGEMENT = 'portfolio__v1__products';
-  public static readonly CASE_MANAGEMENT = 'portfolio__v1__case';
+export interface LossProvisionConfiguration {
+  lossProvisionSteps: LossProvisionStep[];
 }

@@ -37,6 +37,10 @@
         <h3 md-line translate>Tasks</h3>
         <p md-line translate>Manage tasks of this product</p>
       </a>
+      <a md-list-item [routerLink]="['./lossProvision']" *hasPermission="{ id: 'portfolio_loss_provision', accessLevel: 'READ' }">
+        <md-icon md-list-avatar>trending_down</md-icon>
+        <h3 md-line translate>Loss provision configuration</h3>
+      </a>
     </md-nav-list>
     <md-list right>
       <md-list-item>

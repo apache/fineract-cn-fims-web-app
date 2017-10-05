@@ -153,7 +153,7 @@ export class ProductFormComponent implements OnInit {
     assignments.push(createAccountAssignment(this.interestForm.formData.incomeAccount, AccountDesignators.INTEREST_INCOME));
     assignments.push(createAccountAssignment(this.interestForm.formData.accrualAccount, AccountDesignators.INTEREST_ACCRUAL));
 
-    assignments.push(createAccountAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.ARREARS_ALLOWANCE));
+    assignments.push(createAccountAssignment(this.arrearsAllowanceForm.get('account').value, AccountDesignators.GENERAL_LOSS_ALLOWANCE));
 
     return assignments;
   }
@@ -215,7 +215,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   private prepareAllowanceForm(product: FimsProduct) {
-    const allowanceDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.ARREARS_ALLOWANCE);
+    const allowanceDesignator = findAccountDesignator(product.accountAssignments, AccountDesignators.GENERAL_LOSS_ALLOWANCE);
     this.arrearsAllowanceForm = this.formBuilder.group({
       account: [accountIdentifier(allowanceDesignator), [Validators.required], accountExists(this.accountingService)],
     });

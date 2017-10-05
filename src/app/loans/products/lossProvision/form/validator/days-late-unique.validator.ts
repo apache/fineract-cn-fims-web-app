@@ -13,10 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {FormArray, FormGroup, ValidationErrors} from '@angular/forms';
 
-export class PortfolioPermittableGroupIds {
-  public static readonly PRODUCT_OPERATIONS_MANAGEMENT = 'portfolio__v1__products__enable';
-  public static readonly PRODUCT_LOSS_PROVISIONING_MANAGEMENT = 'portfolio__v1__products__lossprv';
-  public static readonly PRODUCT_MANAGEMENT = 'portfolio__v1__products';
-  public static readonly CASE_MANAGEMENT = 'portfolio__v1__case';
+export function daysLateUnique(array: FormArray): ValidationErrors | null {
+  const steps: FormGroup[] = array.controls as FormGroup[];
+
+  const values = steps
+    .map(optionGroup => parseInt(optionGroup.get('daysLate').value, 10));
+
+  const set = new Set();
+
+  values.forEach(daysLate => set.add(daysLate));
+
+  if (set.size !== values.length) {
+    return {
+      daysLateUnique: true
+    };
+  }
+
+  return null;
 }

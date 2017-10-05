@@ -1,0 +1,44 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Loss provision' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [active]="true">
+    <form [formGroup]="form">
+      <ng-container formArrayName="steps">
+        <div layout="row" *ngFor="let step of steps; let i=index" [formGroupName]="i">
+          <fims-text-input type="number" [form]="step" controlName="daysLate" placeholder="{{'Days late' | translate}}"></fims-text-input>
+          <fims-text-input type="number" [form]="step" controlName="percentProvision" placeholder="{{'Percent provision' | translate}}"></fims-text-input>
+          <button md-button (click)="removeStep(i)" *ngIf="i > 0">{{'REMOVE STEP' | translate}}</button>
+        </div>
+      </ng-container>
+      <p *ngIf="form.get('steps').hasError('daysLateUnique')" class="tc-red-600" translate>
+        Days late can't overlap with other days late.
+      </p>
+      <div layout="row">
+        <button flex md-button md-raised-button (click)="addStep()">{{'ADD STEP' | translate}}</button>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'LOSS PROVISION'"
+        [editMode]="editMode"
+        [disabled]="!form.valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

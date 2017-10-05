@@ -59,7 +59,7 @@ export const reducers = {
 
 export function createReducer(asyncReducers = {}): ActionReducer<any> {
   const actionReducer = compose(localStorageSync({
-    keys: [],
+    keys: ['authentication'],
     rehydrate: true
   }), combineReducers)(Object.assign(reducers, asyncReducers));
 

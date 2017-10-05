@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translate.addLangs(['en', 'es']);
     this.translate.setDefaultLang('en');
     this.translate.use(getSelectedLanguage(this.translate));
+    this.relogin();
   }
 
   relogin(): void {

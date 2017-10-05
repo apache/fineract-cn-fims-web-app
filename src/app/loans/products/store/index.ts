@@ -22,6 +22,8 @@ import * as fromProducts from './products.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
 import * as fromProductChargeRanges from './ranges/ranges.reducer';
+import * as fromProductLossProvision from './lossProvision/loss-provision.reducer';
+import {getLossProvisionConfiguration, getLossProvisionConfigurationLoadedAt} from './lossProvision/loss-provision.reducer';
 
 import {
   createResourceReducer,
@@ -48,6 +50,7 @@ export interface State extends fromRoot.State {
   productCharges: ResourceState;
   productChargeForm: FormState;
   productChargeRanges: ResourceState;
+  productLossProvision: fromProductLossProvision.State;
 }
 
 const reducers = {
@@ -58,7 +61,8 @@ const reducers = {
   productTaskForm: createFormReducer('Product Task'),
   productCharges: createResourceReducer('Product Charge', fromProductCharges.reducer),
   productChargeForm: createFormReducer('Product Charge'),
-  productChargeRanges: createResourceReducer('Product Charge Range', fromProductChargeRanges.reducer)
+  productChargeRanges: createResourceReducer('Product Charge Range', fromProductChargeRanges.reducer),
+  productLossProvision: fromProductLossProvision.reducer
 };
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -132,3 +136,14 @@ export const getProductChargeRangesLoadedAt = createSelector(getProductChargeRan
 export const getSelectedProductChargeRange = createSelector(getProductChargeRangesState, getResourceSelected);
 
 export const getAllProductChargeRangeEntities = createSelector(getProductChargeRangesState, getResourceAll);
+
+/**
+ * Product Loss Configuration Selectors
+ */
+
+export const getProductLossProvisionState = (state: State) => state.productLossProvision;
+
+export const getProductLossProvisionConfigurationLoadedAt = createSelector(
+  getProductLossProvisionState, getLossProvisionConfigurationLoadedAt
+);
+export const getProductLossProvisionConfiguration = createSelector(getProductLossProvisionState, getLossProvisionConfiguration);

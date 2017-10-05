@@ -39,6 +39,7 @@ import {BalanceSegmentSet} from './domain/balance-segment-set.model';
 import {mapToBalanceSegmentSet, mapToFimsRange, mapToFimsRanges} from './domain/mapper/fims-range.mapper';
 import {FimsRange} from './domain/range-model';
 import {Payment} from './domain/payment.model';
+import {LossProvisionConfiguration} from './domain/loss-provision-configuration.model';
 
 @Injectable()
 export class PortfolioService {
@@ -258,6 +259,16 @@ export class PortfolioService {
 
   deleteRange(productIdentifier: string, rangeIdentifier: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`);
+  }
+
+  changeLossProvisionConfiguration(productIdentifier: string, lossProvisionConfiguration: LossProvisionConfiguration): Observable<void> {
+    return this.http.put(
+      `${this.baseUrl}/individuallending/products/${productIdentifier}/lossprovisionconfiguration`, lossProvisionConfiguration
+    );
+  }
+
+  getLossProvisionConfiguration(productIdentifier: string): Observable<LossProvisionConfiguration> {
+    return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/lossprovisionconfiguration`);
   }
 
 }
