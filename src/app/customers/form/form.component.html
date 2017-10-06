@@ -64,7 +64,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #customFieldsStep label="{{'Custom fields(optional)' | translate}}" [state]="customFieldsForm.pristine ? 'none' : customFieldsForm.valid ? 'completed' : 'required'">
+  <td-step #customFieldsStep label="{{'Custom fields' | translate}}" [state]="customFieldsForm.pristine ? 'none' : customFieldsForm.valid ? 'completed' : 'required'">
     <fims-custom-fields-component
       #customFieldsForm
       [catalog]="catalog"

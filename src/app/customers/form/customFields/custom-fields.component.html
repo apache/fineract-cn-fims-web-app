@@ -23,6 +23,9 @@
       <div class="pad-bottom-xs" *ngSwitchCase="'SINGLE_SELECTION'">
         <div class="md-body-1">{{field.label}}</div>
         <md-radio-group [formControlName]="field.identifier">
+          <md-radio-button [value]="" layout-margin *ngIf="!field.mandatory" translate>
+            None
+          </md-radio-button>
           <md-radio-button *ngFor="let option of field.options" [value]="option.value" title="{{field.hint}}" layout-margin>
             {{option.label}}
           </md-radio-button>

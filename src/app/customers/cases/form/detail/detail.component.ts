@@ -90,10 +90,10 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
       productIdentifier: ['', [Validators.required]],
       interest: ['', [Validators.required]],
       principalAmount: [''],
-      term: [''],
+      term: ['', [ Validators.required, FimsValidators.minValue(1), FimsValidators.maxScale(0)]],
       termTemporalUnit: ['', Validators.required],
-      paymentTemporalUnit: ['', [ Validators.required, FimsValidators.minValue(1) ]],
-      paymentPeriod: ['', [ Validators.required, FimsValidators.minValue(1)]],
+      paymentTemporalUnit: ['', [ Validators.required ]],
+      paymentPeriod: ['', [ Validators.required, FimsValidators.minValue(1), FimsValidators.maxScale(0)]],
 
       dayInWeek: ['', Validators.required],
 
@@ -165,22 +165,15 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
 
     // Override validator with product constraints
     const principalAmount = this.form.get('principalAmount') as FormControl;
-    this.toggleDisabledState(principalAmount, product.balanceRange.minimum, product.balanceRange.maximum);
-
-    const term: FormControl = this.form.get('term') as FormControl;
-    term.enable();
-    term.setValidators([
-      Validators.required,
-      FimsValidators.minValue(1)
-    ]);
+    this.toggleDisabledState(principalAmount, product.balanceRange.minimum, product.balanceRange.maximum, product.minorCurrencyUnitDigits);
 
     const interest: FormControl = this.form.get('interest') as FormControl;
-    this.toggleDisabledState(interest, product.interestRange.minimum, product.interestRange.maximum);
+    this.toggleDisabledState(interest, product.interestRange.minimum, product.interestRange.maximum, product.minorCurrencyUnitDigits);
 
-    this.form.setValidators([maxTerm(product.termRange), maxPayment(product.termRange)]);
+    this.form.setValidators([maxTerm(product.termRange), maxPayment()]);
   }
 
-  private toggleDisabledState(formControl: FormControl, minimum: number, maximum: number): void {
+  private toggleDisabledState(formControl: FormControl, minimum: number, maximum: number, maxScale: number): void {
     const hasRange: boolean = minimum !== maximum;
 
     if (hasRange) {
@@ -191,7 +184,7 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
         FimsValidators.maxValue(maximum)
       ]);
     } else {
-      formControl.setValue(minimum.toFixed(2));
+      formControl.setValue(minimum.toFixed(maxScale));
       formControl.disable();
     }
 

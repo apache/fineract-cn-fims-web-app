@@ -92,7 +92,7 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
         }
 
         case 'SINGLE_SELECTION': {
-          formControl.setValue(Number(valueString));
+          formControl.setValue(valueString.length ? Number(valueString) : undefined);
           break;
         }
 
@@ -131,7 +131,7 @@ export class CustomerCustomFieldsComponent extends FormComponent<Value[]> implem
 
         const field: Field = this.findField(fieldIdentifier);
 
-        if (value == null) {
+        if (value == null || value.length === 0) {
           continue;
         }
 

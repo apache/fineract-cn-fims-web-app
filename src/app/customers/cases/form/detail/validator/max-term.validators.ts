@@ -29,10 +29,10 @@ export function maxTerm(termRange: TermRange): ValidatorFn {
     const term: number = parseInt(group.get('term').value, 10);
 
     if (isEmptyInputValue(term)) {
-      return;
+      return null;
     }
 
-    const maxValues = getMaxValues(termRange);
+    const maxValues = getMaxValues(termRange.temporalUnit, termRange.maximum);
 
     const termTemporalUnit = group.get('termTemporalUnit').value;
 
@@ -50,17 +50,19 @@ export function maxTerm(termRange: TermRange): ValidatorFn {
   };
 }
 
-export function maxPayment(termRange: TermRange): ValidatorFn {
+export function maxPayment(): ValidatorFn {
   return (group: FormGroup): ValidationErrors | null => {
-    const paymentPeriod: number = parseInt(group.get('paymentPeriod').value, 10);
+    const term: number = parseInt(group.get('term').value, 10);
+    const termTemporalUnit = group.get('termTemporalUnit').value;
 
-    if (isEmptyInputValue(paymentPeriod)) {
-      return;
+    const paymentPeriod: number = parseInt(group.get('paymentPeriod').value, 10);
+    const paymentTemporalUnit = group.get('paymentTemporalUnit').value;
+
+    if (isEmptyInputValue(term) || isEmptyInputValue(paymentPeriod)) {
+      return null;
     }
 
-    const maxValues = getMaxValues(termRange);
-
-    const paymentTemporalUnit = group.get('paymentTemporalUnit').value;
+    const maxValues = getMaxValues(termTemporalUnit, term);
 
     if (!isValid(paymentPeriod, paymentTemporalUnit, maxValues)) {
       return {
@@ -103,33 +105,34 @@ function isValid(term: number, temporalUnit: ChronoUnit, maxValues: MaxValues): 
   return valid;
 }
 
-function getMaxValues(termRange: TermRange): MaxValues {
+function getMaxValues(temporalUnit: ChronoUnit, maximum: number): MaxValues {
 
   const weekBase = 52;
+  const monthBase = 12;
 
   let maxWeeks = 0;
   let maxMonths = 0;
   let maxYears = 0;
 
-  switch (termRange.temporalUnit) {
+  switch (temporalUnit) {
     case 'WEEKS': {
-      maxWeeks = termRange.maximum;
-      maxMonths = (termRange.maximum * 12) / weekBase;
-      maxYears = termRange.maximum / weekBase;
+      maxWeeks = maximum;
+      maxMonths = (maximum * monthBase) / weekBase;
+      maxYears = maximum / weekBase;
       break;
     }
 
     case 'MONTHS': {
-      maxWeeks = (termRange.maximum * weekBase) / 12;
-      maxMonths = termRange.maximum;
-      maxYears = termRange.maximum / 12;
+      maxWeeks = (maximum * weekBase) / monthBase;
+      maxMonths = maximum;
+      maxYears = maximum / monthBase;
       break;
     }
 
     case 'YEARS': {
-      maxWeeks = termRange.maximum * weekBase;
-      maxMonths = termRange.maximum * 12;
-      maxYears = termRange.maximum;
+      maxWeeks = maximum * weekBase;
+      maxMonths = maximum * monthBase;
+      maxYears = maximum;
       break;
     }
 

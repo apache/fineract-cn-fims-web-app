@@ -45,6 +45,8 @@ export class DepositTransactionFormComponent implements OnInit {
 
   chargesIncluded = true;
 
+  chargesIncludedDisabled = false;
+
   enableTargetAccount: boolean;
 
   numberFormat = '1.2-2';
@@ -79,6 +81,10 @@ export class DepositTransactionFormComponent implements OnInit {
 
     if (transactionType === 'ACCT') {
       this.enableTargetAccount = true;
+    }
+
+    if (transactionType === 'ACCO') {
+      this.chargesIncludedDisabled = true;
     }
 
     this.checkCashdrawLimit = this.hasType(withdrawalCheckTypes, transactionType);
