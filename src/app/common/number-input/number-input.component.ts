@@ -67,7 +67,7 @@ export class NumberInputComponent {
   }
 
   get hasScaleError(): boolean {
-    return this.hasError('scale');
+    return this.hasError('maxScale');
   }
 
   hasError(key: string): boolean {

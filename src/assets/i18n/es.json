@@ -625,7 +625,7 @@
   "Value must be greater than": "El valor debe ser mayor",
   "Value must be smaller than or equal to": "El valor debe ser menor o igual",
   "Value must be smaller than": "El valor debe ser menor",
-  "Value scale must be smaller or equals": "",
+  "Value scale must be smaller than or equal to": "{{value}}",
   "Values can't overlap with other values.": "",
   "View": "",
   "View accounts for this ledger": "Ver cuentas para este libro principal",

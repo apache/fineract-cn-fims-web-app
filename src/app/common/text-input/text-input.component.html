@@ -49,6 +49,6 @@
     {{ 'Value must be greater than' | translate:{ value: form.get(controlName).getError('greaterThanValue').value} }}
   </md-error>
   <md-error *ngIf="hasMaxScaleError">
-    {{ 'Value scale must be smaller or equals' | translate:{ value: form.get(controlName).getError('maxScale').value } }}
+    {{ 'Value scale must be smaller than or equal to' | translate:{ value: form.get(controlName).getError('maxScale').value} }}
   </md-error>
 </md-input-container>

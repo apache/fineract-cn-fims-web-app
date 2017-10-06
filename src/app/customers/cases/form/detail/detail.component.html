@@ -28,6 +28,7 @@
       [form]="form"
       controlName="principalAmount"
       placeholder="{{'Principal amount' | translate}}"
+      [decimalLimit]="product?.minorCurrencyUnitDigits"
       hint="{{product?.balanceRange.minimum | number:numberFormat}} - {{product?.balanceRange.maximum | number:numberFormat}}">
     </fims-number-input>
   </div>
@@ -36,31 +37,36 @@
       [form]="form"
       controlName="interest"
       placeholder="{{'Interest rate' | translate}}"
+      [decimalLimit]="product?.minorCurrencyUnitDigits"
       hint="{{product?.interestRange.minimum | number:numberFormat}} - {{product?.interestRange.maximum | number:numberFormat}}">
     </fims-number-input>
   </div>
-  <div layout="row" layout-margin>
-    <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Term' | translate}}"></fims-text-input>
-    <md-select formControlName="termTemporalUnit" layout-margin>
-      <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
-        {{basis.label | translate}}
-      </md-option>
-    </md-select>
+  <div layout="column" layout-margin>
+    <div layout="row" layout-align="start center">
+      <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Term' | translate}}"></fims-text-input>
+      <md-select formControlName="termTemporalUnit">
+        <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
+          {{basis.label | translate}}
+        </md-option>
+      </md-select>
+    </div>
+    <p *ngIf="form.hasError('maxTerm')" class="tc-red-600 text-sm" layout-margin translate>
+      Invalid term. Maximum allowed are {{form.getError('maxTerm').maxWeeks}} week(s), {{form.getError('maxTerm').maxMonths}} month(s) or {{form.getError('maxTerm').maxYears}} year(s).
+    </p>
   </div>
-  <p *ngIf="form.hasError('maxTerm')" class="tc-red-600" translate>
-    Invalid term. Maximum allowed are {{form.getError('maxTerm').maxWeeks}} weeks, {{form.getError('maxTerm').maxMonths}} months or {{form.getError('maxTerm').maxYears}} years.
-  </p>
-  <div layout="row" layout-margin>
-    <fims-text-input type="number" [form]="form" controlName="paymentPeriod" placeholder="{{'Repay every' | translate}}"></fims-text-input>
-    <md-select formControlName="paymentTemporalUnit" layout-margin>
-      <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
-        {{alignment.label | translate}}
-      </md-option>
-    </md-select>
+  <div layout="column" layout-margin>
+    <div layout="row" layout-align="start center">
+      <fims-text-input type="number" [form]="form" controlName="paymentPeriod" placeholder="{{'Repay every' | translate}}"></fims-text-input>
+      <md-select formControlName="paymentTemporalUnit">
+        <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
+          {{alignment.label | translate}}
+        </md-option>
+      </md-select>
+    </div>
+    <p *ngIf="form.hasError('maxPayment')" class="tc-red-600 text-sm" layout-margin translate>
+      Invalid payment period. Maximum allowed are {{form.getError('maxPayment').maxWeeks}} week(s), {{form.getError('maxPayment').maxMonths}} month(s) or {{form.getError('maxPayment').maxYears}} year(s).
+    </p>
   </div>
-  <p *ngIf="form.hasError('maxPayment')" class="tc-red-600" translate>
-    Invalid payment period. Maximum allowed are {{form.getError('maxPayment').maxWeeks}} weeks, {{form.getError('maxPayment').maxMonths}} months or {{form.getError('maxPayment').maxYears}} years.
-  </p>
   <!-- Days in weeks -->
   <div layout="row" *ngIf="displayDaysInWeek">
     <md-select formControlName="dayInWeek" layout-margin placeholder="{{'on' | translate}}">

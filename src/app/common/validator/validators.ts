@@ -94,7 +94,10 @@ export class FimsValidators {
 
         if (valueChunks.length === 2 && valueChunks[1].length > scale) {
           return {
-            maxScale: true
+            maxScale: {
+              valid: false,
+              value: scale
+            }
           };
         }
       }

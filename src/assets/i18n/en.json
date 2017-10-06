@@ -14,6 +14,7 @@
   "Value must be smaller than or equal to": "Value must be smaller than or equal to {{value}}",
   "Value must be greater than": "Value must be greater than {{value}}",
   "Value must be smaller than": "Value must be smaller than {{value}}",
+  "Value scale must be smaller than or equal to": "Value scale must be smaller than or equal to {{value}}",
   "Max file size": "File can't exceed size of {{value}}KB",
   "Must have at least characters.": "Must have at least {{value}} characters.",
   "Must have decimal places": "Must have {{value}} decimal places",
