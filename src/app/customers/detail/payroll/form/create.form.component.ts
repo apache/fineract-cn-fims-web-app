@@ -40,7 +40,8 @@ export class CreateCustomerPayrollFormComponent {
 
     this.productInstances$ = this.store.select(fromCustomers.getSelectedCustomer)
       .do(customer => this.customerId = customer.identifier)
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
+      .map(instances => instances.filter(instance => instance.state === 'ACTIVE'));
   }
 
   onSave(distribution: PayrollConfiguration): void {
