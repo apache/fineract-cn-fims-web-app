@@ -20,7 +20,7 @@
       <md-card-content>
         <div layout="row">
           <fims-text-input [form]="factor" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
-          <fims-text-input type="number" [form]="factor" controlName="amount"></fims-text-input>
+          <fims-text-input type="number" [form]="factor" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
           <button md-button (click)="removeFactor(i)">{{'REMOVE ' + factorName | translate}}</button>
         </div>
       </md-card-content>

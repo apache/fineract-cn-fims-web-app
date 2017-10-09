@@ -16,5 +16,5 @@
 
 export interface CreditWorthinessFactor {
   description?: string;
-  amount: number;
+  amount: string;
 }
