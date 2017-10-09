@@ -112,7 +112,7 @@ export class CaseDebtIncomeComponent implements OnInit {
   }
 
   sum(factors: CreditWorthinessFactor[]): number {
-    return factors.reduce((acc, val) => acc + val.amount, 0);
+    return factors.reduce((acc, val) => acc + parseFloat(val.amount), 0);
   }
 
 }
