@@ -144,11 +144,6 @@ export class ProductFormComponent implements OnInit {
     assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_INTEREST));
     assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_FEES));
 
-    // TODO: Remove this mapping as soon as general loss allowance is created by the service itself
-    assignments.push(createAccountAssignment(
-      `${this.settingsForm.formData.customerLoanLedger}.9999`, AccountDesignators.PRODUCT_LOSS_ALLOWANCE)
-    );
-
     assignments.push(createLedgerAssignment(this.settingsForm.formData.customerLoanLedger, AccountDesignators.CUSTOMER_LOAN_FEES));
 
     assignments.push(createAccountAssignment(this.feeForm.formData.processingFeeAccount, AccountDesignators.PROCESSING_FEE_INCOME));
