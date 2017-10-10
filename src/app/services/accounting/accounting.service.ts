@@ -32,6 +32,7 @@ import {ChartOfAccountEntry} from './domain/chart-of-account-entry.model';
 import {TransactionType} from './domain/transaction-type.model';
 import {TransactionTypePage} from './domain/transaction-type-page.model';
 import {AccountType} from './domain/account-type.model';
+import {IncomeStatement} from './domain/income-statement.model';
 
 @Injectable()
 export class AccountingService {
@@ -184,6 +185,10 @@ export class AccountingService {
 
   public changeTransactionType(transactionType: TransactionType): Observable<void> {
     return this.http.put(`${this.baseUrl}/transactiontypes/${transactionType.code}`, transactionType);
+  }
+
+  public getIncomeStatement(): Observable<IncomeStatement> {
+    return this.http.get(`${this.baseUrl}/incomestatement`);
   }
 
 }
