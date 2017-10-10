@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {TellerEntry} from '../../../../../../services/teller/domain/teller-entry.model';
 
-export type Type = 'DEBIT' | 'CREDIT' | 'CHEQUE';
-
-export interface TellerEntry {
-  type?: Type;
-  transactionDate: string;
-  message: string;
-  amount: number;
-  balance: number;
+export interface TellerBalance {
+  day?: string;
+  cashOnHand: string;
+  cashReceivedTotal: string;
+  cashDisbursedTotal: string;
+  chequesReceivedTotal: string;
+  entries: TellerEntry[];
 }

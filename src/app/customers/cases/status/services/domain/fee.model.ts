@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-export type Type = 'DEBIT' | 'CREDIT' | 'CHEQUE';
-
-export interface TellerEntry {
-  type?: Type;
-  transactionDate: string;
-  message: string;
+export interface Fee {
+  name: string;
+  description: string;
   amount: number;
-  balance: number;
 }
