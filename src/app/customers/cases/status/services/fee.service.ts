@@ -41,7 +41,11 @@ export class FeeService {
       const foundDefinition = chargeDefinitions.find(definition => definition.identifier === component.chargeIdentifier);
 
       if (foundDefinition) {
-        return fees.concat(foundDefinition);
+        return fees.concat({
+          name: foundDefinition.name,
+          description: foundDefinition.description,
+          amount: component.amount
+        });
       }
 
       return fees;
