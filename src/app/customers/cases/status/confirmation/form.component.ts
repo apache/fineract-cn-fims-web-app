@@ -15,10 +15,10 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CostComponent} from '../../../../services/portfolio/domain/cost-component.model';
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {Fee} from '../services/domain/fee.model';
 
 export interface ExecuteCommandEvent {
   productId: string;
@@ -39,7 +39,7 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  @Input() costComponents: CostComponent[];
+  @Input() fees: Fee[];
 
   @Input() action: WorkflowAction;
 
@@ -58,10 +58,10 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
   }
 
   get totalAmount(): number {
-    if (!this.costComponents) {
+    if (!this.fees) {
       return 0;
     }
-    return this.costComponents.reduce((acc, val) => acc + val.amount, 0);
+    return this.fees.reduce((acc, val) => acc + val.amount, 0);
   }
 
   executeCommand(): void {

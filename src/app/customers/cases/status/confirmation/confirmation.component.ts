@@ -15,7 +15,6 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {CostComponent} from '../../../../services/portfolio/domain/cost-component.model';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCases from '../../store/index';
@@ -23,8 +22,9 @@ import {CasesStore} from '../../store/index';
 import {EXECUTE_COMMAND} from '../../store/case.actions';
 import {ExecuteCommandEvent} from './form.component';
 import {CaseCommand} from '../../../../services/portfolio/domain/case-command.model';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {Fee} from '../services/domain/fee.model';
+import {FeeService} from '../services/fee.service';
 
 interface Parameter {
   productId: string;
@@ -39,12 +39,12 @@ export class CaseCommandConfirmationComponent implements OnInit {
 
   fimsCase$: Observable<FimsCase>;
 
-  costComponents$: Observable<CostComponent[]>;
+  fees$: Observable<Fee[]>;
 
   params$: Observable<Parameter>;
 
   constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore,
-              private portfolioService: PortfolioService) {}
+              private feeService: FeeService) {}
 
   ngOnInit() {
     const parentParams$ = this.route.parent.params
@@ -58,7 +58,7 @@ export class CaseCommandConfirmationComponent implements OnInit {
         action: params['action']
       }));
 
-    this.costComponents$ = Observable.combineLatest(
+    this.fees$ = Observable.combineLatest(
       parentParams$,
       this.params$,
       (parentParams, params) => ({
@@ -66,8 +66,7 @@ export class CaseCommandConfirmationComponent implements OnInit {
         caseId: parentParams.caseId,
         action: params.action
       }))
-      .switchMap(params => this.portfolioService.getCostComponentsForAction(params.productId, params.caseId, params.action))
-      .map(payment => payment.costComponents);
+      .switchMap(params => this.feeService.getFees(params.productId, params.caseId, params.action));
 
     this.fimsCase$ = this.casesStore.select(fromCases.getSelectedCase);
   }

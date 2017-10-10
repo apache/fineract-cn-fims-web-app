@@ -74,6 +74,7 @@ import {CaseCommandConfirmationComponent} from './status/confirmation/confirmati
 import {CaseCommandConfirmationFormComponent} from './status/confirmation/form.component';
 import {CaseTaskComponent} from './status/task.component';
 import {CaseIndexComponent} from './case.index.component';
+import {FeeService} from './status/services/fee.service';
 
 @NgModule({
   imports: [
@@ -134,6 +135,7 @@ import {CaseIndexComponent} from './case.index.component';
   ],
   providers: [
     CaseExistsGuard,
+    FeeService,
     { provide: CasesStore, useFactory: caseStoreFactory, deps: [Store]}
   ]
 })
