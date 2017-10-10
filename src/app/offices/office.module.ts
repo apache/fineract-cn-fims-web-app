@@ -53,6 +53,7 @@ import {OpenOfficeTellerFormComponent} from './detail/teller/detail/command/open
 import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/close.component';
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
 import {AdjustmentComponent} from './detail/teller/detail/command/components/adjustment.component';
+import {BalanceSheetService} from './detail/teller/detail/balance/services/balance-sheet.service';
 
 @NgModule({
   imports: [
@@ -104,6 +105,7 @@ import {AdjustmentComponent} from './detail/teller/detail/command/components/adj
     HeadquarterGuard,
     OfficeExistsGuard,
     TellerExistsGuard,
+    BalanceSheetService,
     { provide: OfficesStore, useFactory: officeStoreFactory, deps: [Store]}
   ],
   entryComponents: []

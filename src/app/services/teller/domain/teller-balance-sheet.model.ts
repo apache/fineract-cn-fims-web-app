@@ -34,6 +34,10 @@ import {TellerEntry} from './teller-entry.model';
 
 export interface TellerBalanceSheet {
   day?: string;
-  balance?: string;
-  entries?: TellerEntry[];
+  cashOnHand: string;
+  cashReceivedTotal: string;
+  cashDisbursedTotal: string;
+  chequesReceivedTotal: string;
+  cashEntries: TellerEntry[];
+  chequeEntries: TellerEntry[];
 }
