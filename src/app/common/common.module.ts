@@ -59,6 +59,8 @@ import {RouterModule} from '@angular/router';
 import {DisplayFimsDate} from './date/fims-date.pipe';
 import {DateInputComponent} from './date-input/date-input.component';
 import {TextInputComponent} from './text-input/text-input.component';
+import {DisplayFimsNumber} from './number/fims-number.pipe';
+import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
 
 @NgModule({
   imports: [
@@ -110,7 +112,9 @@ import {TextInputComponent} from './text-input/text-input.component';
     TextInputComponent,
     ImageComponent,
     FimsFabButtonComponent,
-    DisplayFimsDate
+    DisplayFimsDate,
+    DisplayFimsNumber,
+    DisplayFimsFinancialNumber
   ],
   exports: [
     LayoutCardOverComponent,
@@ -139,7 +143,9 @@ import {TextInputComponent} from './text-input/text-input.component';
     TextInputComponent,
     ImageComponent,
     FimsFabButtonComponent,
-    DisplayFimsDate
+    DisplayFimsDate,
+    DisplayFimsNumber,
+    DisplayFimsFinancialNumber
   ],
   entryComponents: [
     ImageComponent

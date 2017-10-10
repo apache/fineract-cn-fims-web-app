@@ -42,6 +42,7 @@ import {PayrollListComponent} from './payroll/payroll.list.component';
 import {CreatePayrollFormComponent} from './payroll/form/create.form.component';
 import {PaymentsListComponent} from './payroll/payments.list.component';
 import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form.component';
+import {IncomeStatementComponent} from './incomeStatement/income-statement.component';
 
 export const AccountingRoutes: Routes = [
   {path: '', component: GeneralLedgerComponent},
@@ -123,6 +124,7 @@ export const AccountingRoutes: Routes = [
   },
 
   {path: 'trialBalance', component: TrailBalanceComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
+  {path: 'incomeStatement', component: IncomeStatementComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
   {
     path: 'transactiontypes',
     component: TransactionTypeListComponent,

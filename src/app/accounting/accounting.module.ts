@@ -91,6 +91,7 @@ import {PayrollCollectionRouteEffects} from './store/payroll/effects/route.effec
 import {PayrollCollectionNotificationEffects} from './store/payroll/effects/notification.effects';
 import {PaymentsListComponent} from './payroll/payments.list.component';
 import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form.component';
+import {IncomeStatementComponent} from './incomeStatement/income-statement.component';
 
 @NgModule({
   imports: [
@@ -169,7 +170,8 @@ import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form
     PayrollListComponent,
     CreatePayrollFormComponent,
     PayrollFormComponent,
-    PaymentsListComponent
+    PaymentsListComponent,
+    IncomeStatementComponent
   ],
   providers: [
     CommandsResolver,

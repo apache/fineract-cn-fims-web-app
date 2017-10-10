@@ -43,6 +43,11 @@
         <h3 md-line translate>Trial balance</h3>
         <p md-line translate>View trial balance</p>
       </a>
+      <a md-list-item [routerLink]="['./incomeStatement']">
+        <md-icon md-list-avatar>timeline</md-icon>
+        <h3 md-line translate>Income statement</h3>
+        <p md-line translate>View income statement</p>
+      </a>
       <a md-list-item [routerLink]="['./payrolls']" *hasPermission="{ id: 'payroll_distribution', accessLevel: 'READ' }">
         <md-icon md-list-avatar>receipt</md-icon>
         <h3 md-line translate>Payrolls</h3>
