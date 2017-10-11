@@ -19,4 +19,5 @@ export class AccountingPermittableGroupIds {
   public static readonly JOURNAL_MANAGEMENT = 'accounting__v1__journal';
   public static readonly LEDGER_MANAGEMENT = 'accounting__v1__ledger';
   public static readonly TRANSACTION_TYPES = 'accounting__v1__tx_types';
+  public static readonly THOTH_INCOME_STMT = 'accounting__v1__income_stmt';
 }

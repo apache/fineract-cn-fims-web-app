@@ -124,7 +124,11 @@ export const AccountingRoutes: Routes = [
   },
 
   {path: 'trialBalance', component: TrailBalanceComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
-  {path: 'incomeStatement', component: IncomeStatementComponent, data: {hasPermission: {id: 'accounting_ledgers', accessLevel: 'READ'}}},
+  {
+    path: 'incomeStatement',
+    component: IncomeStatementComponent,
+    data: {hasPermission: {id: 'accounting_income_statement', accessLevel: 'READ'}}
+  },
   {
     path: 'transactiontypes',
     component: TransactionTypeListComponent,

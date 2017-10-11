@@ -68,6 +68,10 @@ export class PermittableGroupIdMapper {
     this._permittableGroupMap[AccountingPermittableGroupIds.JOURNAL_MANAGEMENT] = {id: 'accounting_journals', label: 'Journal'};
     this._permittableGroupMap[AccountingPermittableGroupIds.LEDGER_MANAGEMENT] = {id: 'accounting_ledgers', label: 'Ledger'};
     this._permittableGroupMap[AccountingPermittableGroupIds.TRANSACTION_TYPES] = {id: 'accounting_tx_types', label: 'Transaction types'};
+    this._permittableGroupMap[AccountingPermittableGroupIds.THOTH_INCOME_STMT] = {
+      id: 'accounting_income_statement',
+      label: 'Income statement'
+    };
 
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_OPERATIONS_MANAGEMENT] = {
       id: 'portfolio_product_operations',
