@@ -33,6 +33,7 @@ import {TransactionType} from './domain/transaction-type.model';
 import {TransactionTypePage} from './domain/transaction-type-page.model';
 import {AccountType} from './domain/account-type.model';
 import {IncomeStatement} from './domain/income-statement.model';
+import {FinancialCondition} from './domain/financial-condition.model';
 
 @Injectable()
 export class AccountingService {
@@ -189,6 +190,10 @@ export class AccountingService {
 
   public getIncomeStatement(): Observable<IncomeStatement> {
     return this.http.get(`${this.baseUrl}/incomestatement`);
+  }
+
+  public getFinancialCondition(): Observable<FinancialCondition> {
+    return this.http.get(`${this.baseUrl}/financialcondition`);
   }
 
 }

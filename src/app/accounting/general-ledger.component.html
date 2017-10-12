@@ -48,6 +48,11 @@
         <h3 md-line translate>Income statement</h3>
         <p md-line translate>View income statement</p>
       </a>
+      <a md-list-item [routerLink]="['./financialCondition']" *hasPermission="{ id: 'accounting_fin_condition', accessLevel: 'READ'}">
+        <md-icon md-list-avatar>timeline</md-icon>
+        <h3 md-line translate>Financial condition</h3>
+        <p md-line translate>View financial condition</p>
+      </a>
       <a md-list-item [routerLink]="['./payrolls']" *hasPermission="{ id: 'payroll_distribution', accessLevel: 'READ' }">
         <md-icon md-list-avatar>receipt</md-icon>
         <h3 md-line translate>Payrolls</h3>
