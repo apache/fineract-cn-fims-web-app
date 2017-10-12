@@ -29,7 +29,7 @@ export class DateInputComponent {
 
   @Input() form: FormGroup;
 
-  @Input() title: string;
+  @Input() title = '';
 
   get hasRequiredError(): boolean {
     return this.hasError('required');

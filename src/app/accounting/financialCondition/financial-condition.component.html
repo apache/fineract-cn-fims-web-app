@@ -1,0 +1,135 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<fims-layout-card-over title="{{'Financial condition' | translate}}" [navigateBackTo]="['../']">
+  <div layout="row">
+    <table td-data-table *ngIf="financialCondition$ | async as financialCondition">
+      <ng-container *ngIf="assets$ | async as assets">
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <b translate>Assets</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell></td>
+        </tr>
+        <tr td-data-table-row *ngFor="let entry of assets.financialConditionEntries">
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            {{entry.description}}
+          </td>
+          <td td-data-table-cell>
+            {{entry.value | displayFimsFinancialNumber}}
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <i translate>Subtotal</i>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <i class="double-underline">
+              {{assets.subtotal | displayFimsFinancialNumber}}
+            </i>
+          </td>
+        </tr>
+        <tr td-data-table-row></tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <b translate>Total Assets</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <b class="double-underline">
+              {{financialCondition.totalAssets | displayFimsFinancialNumber}}
+            </b>
+          </td>
+        </tr>
+        <tr td-data-table-row></tr>
+      </ng-container>
+      <ng-container *ngIf="equities$ | async as equities">
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <b translate>Equities</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell></td>
+        </tr>
+        <tr td-data-table-row *ngFor="let entry of equities.financialConditionEntries">
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            {{entry.description}}
+          </td>
+          <td td-data-table-cell>
+            {{entry.value | displayFimsFinancialNumber}}
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <i translate>Subtotal</i>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <i class="double-underline">
+              {{equities.subtotal | displayFimsFinancialNumber}}
+            </i>
+          </td>
+        </tr>
+        <tr td-data-table-row></tr>
+      </ng-container>
+      <ng-container *ngIf="liabilities$ | async as liabilities">
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <b translate>Liabilities</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell></td>
+        </tr>
+        <tr td-data-table-row *ngFor="let entry of liabilities.financialConditionEntries">
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            {{entry.description}}
+          </td>
+          <td td-data-table-cell>
+            {{entry.value | displayFimsFinancialNumber}}
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <i translate>Subtotal</i>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <i class="double-underline">
+              {{liabilities.subtotal | displayFimsFinancialNumber}}
+            </i>
+          </td>
+        </tr>
+        <tr td-data-table-row></tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell>
+            <b translate>Total Equities and Liabilities</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <b class="double-underline">
+              {{financialCondition.totalEquitiesAndLiabilities | displayFimsFinancialNumber}}
+            </b>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</fims-layout-card-over>

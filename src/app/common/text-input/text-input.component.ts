@@ -36,7 +36,7 @@ export class TextInputComponent {
 
   @Input() hideIfDisabled = false;
 
-  @Input() title: string;
+  @Input() title = '';
 
   get hasRequiredError(): boolean {
     return this.hasError('required');

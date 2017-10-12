@@ -92,6 +92,7 @@ import {PayrollCollectionNotificationEffects} from './store/payroll/effects/noti
 import {PaymentsListComponent} from './payroll/payments.list.component';
 import {CreateJournalEntryFormComponent} from './journalEntries/form/create.form.component';
 import {IncomeStatementComponent} from './incomeStatement/income-statement.component';
+import {FinancialConditionComponent} from './financialCondition/financial-condition.component';
 
 @NgModule({
   imports: [
@@ -171,7 +172,8 @@ import {IncomeStatementComponent} from './incomeStatement/income-statement.compo
     CreatePayrollFormComponent,
     PayrollFormComponent,
     PaymentsListComponent,
-    IncomeStatementComponent
+    IncomeStatementComponent,
+    FinancialConditionComponent
   ],
   providers: [
     CommandsResolver,

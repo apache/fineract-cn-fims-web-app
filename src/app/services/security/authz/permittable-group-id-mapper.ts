@@ -72,6 +72,10 @@ export class PermittableGroupIdMapper {
       id: 'accounting_income_statement',
       label: 'Income statement'
     };
+    this._permittableGroupMap[AccountingPermittableGroupIds.THOTH_FIN_CONDITION] = {
+      id: 'accounting_fin_condition',
+      label: 'Financial condition'
+    };
 
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_OPERATIONS_MANAGEMENT] = {
       id: 'portfolio_product_operations',
