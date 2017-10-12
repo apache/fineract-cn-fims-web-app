@@ -24,29 +24,29 @@
         <span translate>Ledger</span>
       </th>
       <th td-data-table-column>
-        <span translate>Credit</span>
+        <span translate>Debit</span>
       </th>
       <th td-data-table-column>
-        <span translate>Debit</span>
+        <span translate>Credit</span>
       </th>
       <tr td-data-table-row *ngFor="let row of (trialBalance$ | async)?.trialBalanceEntries">
         <td td-data-table-cell>
           <a [routerLink]="['../ledgers/detail', row['ledger'].identifier]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">{{row['ledger'].identifier }} - {{row['ledger'].name }}</a>
         </td>
         <td td-data-table-cell>
-          {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
+          {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
         </td>
         <td td-data-table-cell>
-          {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
+          {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
         </td>
       </tr>
       <tr td-data-table-row>
         <td td-data-table-cell translate>Total</td>
         <td td-data-table-cell>
-          {{(trialBalance$ | async)?.creditTotal | number}}
+          {{(trialBalance$ | async)?.debitTotal | number}}
         </td>
         <td td-data-table-cell>
-          {{(trialBalance$ | async)?.debitTotal | number}}
+          {{(trialBalance$ | async)?.creditTotal | number}}
         </td>
       </tr>
     </table>
