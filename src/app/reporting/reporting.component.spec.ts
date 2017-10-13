@@ -64,14 +64,14 @@ describe('Test reporting component', () => {
     fixture.detectChanges();
   });
 
-  it('should render md-list-items on the page', () => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-list-item]'));
+  it('should render mat-list-items on the page', () => {
+    const listItems = fixture.debugElement.queryAll(By.css('a[mat-list-item]'));
 
     expect(listItems.length).toBe(2);
   });
 
   it('should navigate to report definitions page', () => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-list-item]'));
+    const listItems = fixture.debugElement.queryAll(By.css('a[mat-list-item]'));
 
     listItems[0].nativeElement.click();
 

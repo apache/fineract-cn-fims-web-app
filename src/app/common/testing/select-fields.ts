@@ -23,7 +23,7 @@ export function clickOption(fixture: ComponentFixture<any>, optionIndex: number)
 
   fixture.detectChanges();
 
-  const options = fixture.debugElement.queryAll(By.css('md-option'));
+  const options = fixture.debugElement.queryAll(By.css('mat-option'));
 
   options[optionIndex].nativeElement.click();
 

@@ -27,7 +27,8 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material';
+import {MatIconModule, MatOptionModule, MatSelectModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 describe('Test data table component', () => {
 
@@ -50,6 +51,9 @@ describe('Test data table component', () => {
       imports: [
         TranslateModule.forRoot(),
         NoopAnimationsModule,
+        FormsModule,
+        MatSelectModule,
+        MatOptionModule,
         MatIconModule,
         CovalentDataTableModule,
         CovalentPagingModule

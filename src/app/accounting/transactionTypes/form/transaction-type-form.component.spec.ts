@@ -55,7 +55,7 @@ describe('Test transaction type form', () => {
   });
 
   it('should trigger save event', () => {
-    const button: DebugElement = fixture.debugElement.query(By.css('button[md-raised-button]'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button[mat-raised-button]'));
 
     button.nativeElement.click();
 
@@ -63,7 +63,7 @@ describe('Test transaction type form', () => {
   });
 
   it('should trigger cancel event', () => {
-    const button: DebugElement = fixture.debugElement.query(By.css('button[md-button]'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button[mat-button]'));
 
     button.nativeElement.click();
 
