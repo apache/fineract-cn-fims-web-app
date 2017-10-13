@@ -25,9 +25,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../store/security/security.actions';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdCardModule, MdIconModule, MdInputModule, MdOptionModule, MdSelectModule, MdTooltipModule} from '@angular/material';
 import {CovalentLoadingModule} from '@covalent/core';
 import {setValueByFormControlName} from '../common/testing/input-fields';
+import {MatCardModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule, MatTooltipModule} from '@angular/material';
 
 describe('Test Login Component', () => {
 
@@ -46,12 +46,12 @@ describe('Test Login Component', () => {
         ReactiveFormsModule,
         FormsModule,
         TranslateModule.forRoot(),
-        MdIconModule,
-        MdCardModule,
-        MdInputModule,
-        MdSelectModule,
-        MdOptionModule,
-        MdTooltipModule,
+        MatIconModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTooltipModule,
         NoopAnimationsModule,
         CovalentLoadingModule
       ],

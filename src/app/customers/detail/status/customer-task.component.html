@@ -14,18 +14,18 @@
  limitations under the License.
 -->
 
-<md-list>
-  <md-list-item>
-    <md-icon md-list-avatar>playlist_add_check</md-icon>
-    <h3 md-line>{{task.name}}</h3>
-    <h4 md-line>{{task.description}}</h4>
-    <p md-line>
+<mat-list>
+  <mat-list-item>
+    <mat-icon matListAvatar>playlist_add_check</mat-icon>
+    <h3 matLine>{{task.name}}</h3>
+    <h4 matLine>{{task.description}}</h4>
+    <p matLine>
       <span translate>Mandatory:</span>{{task.mandatory}}
     </p>
-    <p md-line>
+    <p matLine>
       <span translate>Type:</span>{{formatType(task.type)}}
     </p>
-    <md-checkbox labelPosition="after" title="{{'Execute task' | translate}}"
-                 (click)="selectTask($event)"></md-checkbox>
-  </md-list-item>
-</md-list>
+    <mat-checkbox labelPosition="after" title="{{'Execute task' | translate}}"
+                 (click)="selectTask($event)"></mat-checkbox>
+  </mat-list-item>
+</mat-list>

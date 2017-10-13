@@ -16,34 +16,34 @@
 
 <fims-layout-card-over title="{{'Deposit account' | translate}}" [navigateBackTo]="['../../../../../../']">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="issueCheques()" title="{{'Issue cheques' | translate}}"
+    <button mat-icon-button (click)="issueCheques()" title="{{'Issue cheques' | translate}}"
             *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE'}">
-      <md-icon>import_contacts</md-icon>
+      <mat-icon>import_contacts</mat-icon>
     </button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content inset" flex>
+  <div class="mat-content inset" flex>
     <div layout="row">
-      <md-list *ngIf="(depositInstance$ | async) as instance">
-        <h3 md-subheader translate>Current status</h3>
+      <mat-list *ngIf="(depositInstance$ | async) as instance">
+        <h3 mat-subheader translate>Current status</h3>
         <fims-state-display [state]="instance.state"></fims-state-display>
-        <h3 md-subheader translate>Details</h3>
-        <md-list-item>
-          <h3 md-line translate>Account</h3>
-          <p md-line>
+        <h3 mat-subheader translate>Details</h3>
+        <mat-list-item>
+          <h3 matLine translate>Account</h3>
+          <p matLine>
             <a [routerLink]="['/accounting/accounts/detail', instance.accountIdentifier, 'entries']">
               {{instance.accountIdentifier}}
             </a>
           </p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Balance</h3>
-          <p md-line>{{instance.balance | number:'1.2-2'}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Beneficiaries</h3>
-          <p md-line>{{instance.beneficiaries?.join(', ')}}</p>
-        </md-list-item>
-      </md-list>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Balance</h3>
+          <p matLine>{{instance.balance | number:'1.2-2'}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Beneficiaries</h3>
+          <p matLine>{{instance.beneficiaries?.join(', ')}}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </fims-layout-card-over>

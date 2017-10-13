@@ -19,9 +19,9 @@ import {InterestFormData, ProductInterestFormComponent} from './interests.compon
 import {Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {MdInputModule, MdRadioModule, MdSlideToggleModule} from '@angular/material';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule, MatRadioModule, MatSlideToggleModule} from '@angular/material';
 
 describe('Test product interest component', () => {
 
@@ -47,9 +47,9 @@ describe('Test product interest component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        MdInputModule,
-        MdRadioModule,
-        MdSlideToggleModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSlideToggleModule,
         FimsSharedModule,
         NoopAnimationsModule
       ],

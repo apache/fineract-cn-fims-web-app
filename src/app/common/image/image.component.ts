@@ -15,7 +15,7 @@
  */
 
 import {Component, Inject, OnDestroy} from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA} from '@angular/material';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
@@ -25,7 +25,7 @@ export class ImageComponent implements OnDestroy {
 
   private objectUrl: string;
 
-  constructor(private domSanitizer: DomSanitizer, @Inject(MD_DIALOG_DATA) public blob: Blob) {
+  constructor(private domSanitizer: DomSanitizer, @Inject(MAT_DIALOG_DATA) public blob: Blob) {
     this.objectUrl = URL.createObjectURL(blob);
   }
 

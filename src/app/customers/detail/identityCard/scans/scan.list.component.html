@@ -14,16 +14,16 @@
  limitations under the License.
 -->
 
-<md-list>
-  <h3 md-subheader translate *ngIf="scans && scans.length > 0" translate>Scans uploaded</h3>
-  <md-list-item *ngFor="let scan of scans">
-    <md-icon md-list-icon>photo_camera</md-icon>
-    <h4 md-line>{{scan.description}}</h4>
-    <button md-button color="warn" (click)="deleteScan(scan)" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }" translate>
+<mat-list>
+  <h3 mat-subheader translate *ngIf="scans && scans.length > 0" translate>Scans uploaded</h3>
+  <mat-list-item *ngFor="let scan of scans">
+    <mat-icon mat-list-icon>photo_camera</mat-icon>
+    <h4 matLine>{{scan.description}}</h4>
+    <button mat-button color="warn" (click)="deleteScan(scan)" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }" translate>
       Delete
     </button>
-    <button md-raised-button (click)="viewScan(scan.identifier)" translate>
+    <button mat-raised-button (click)="viewScan(scan.identifier)" translate>
       View
     </button>
-  </md-list-item>
-</md-list>
+  </mat-list-item>
+</mat-list>

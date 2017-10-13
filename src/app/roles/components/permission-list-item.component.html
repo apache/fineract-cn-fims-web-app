@@ -14,12 +14,12 @@
  limitations under the License.
 -->
 
-<md-list-item>
-  <md-icon md-list-avatar>lock</md-icon>
-  <h3 md-line>{{formPermission.label}}</h3>
-  <h4 md-line></h4>
-  <p md-line></p>
-  <md-checkbox [(ngModel)]="formPermission.read" class="list-checkbox" [disabled]="readOnly" translate>Read</md-checkbox>
-  <md-checkbox [(ngModel)]="formPermission.change" class="list-checkbox" [disabled]="readOnly" translate>Change</md-checkbox>
-  <md-checkbox [(ngModel)]="formPermission.remove" class="list-checkbox" [disabled]="readOnly" translate>Delete</md-checkbox>
-</md-list-item>
+<mat-list-item>
+  <mat-icon matListAvatar>lock</mat-icon>
+  <h3 matLine>{{formPermission.label}}</h3>
+  <h4 matLine></h4>
+  <p matLine></p>
+  <mat-checkbox [(ngModel)]="formPermission.read" class="list-checkbox" [disabled]="readOnly" translate>Read</mat-checkbox>
+  <mat-checkbox [(ngModel)]="formPermission.change" class="list-checkbox" [disabled]="readOnly" translate>Change</mat-checkbox>
+  <mat-checkbox [(ngModel)]="formPermission.remove" class="list-checkbox" [disabled]="readOnly" translate>Delete</mat-checkbox>
+</mat-list-item>

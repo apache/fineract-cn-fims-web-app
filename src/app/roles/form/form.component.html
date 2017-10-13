@@ -23,25 +23,25 @@
     </form>
   </div>
   <div layout="row" layout-margin>
-    <md-list>
-      <md-list-item>
-        <h3 md-line></h3>
-        <h4 md-line></h4>
-        <p md-line></p>
-        <md-checkbox [(ngModel)]="allRead" class="list-checkbox" translate>Read</md-checkbox>
-        <md-checkbox [(ngModel)]="allChange" class="list-checkbox" translate>Change</md-checkbox>
-        <md-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</md-checkbox>
-      </md-list-item>
-      <md-divider></md-divider>
+    <mat-list>
+      <mat-list-item>
+        <h3 matLine></h3>
+        <h4 matLine></h4>
+        <p matLine></p>
+        <mat-checkbox [(ngModel)]="allRead" class="list-checkbox" translate>Read</mat-checkbox>
+        <mat-checkbox [(ngModel)]="allChange" class="list-checkbox" translate>Change</mat-checkbox>
+        <mat-checkbox [(ngModel)]="allRemove" class="list-checkbox" translate>Delete</mat-checkbox>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <ng-container *ngFor="let group of permissionGroups">
-        <h3 md-subheader translate>{{group.groupId}}</h3>
+        <h3 mat-subheader translate>{{group.groupId}}</h3>
         <fims-permission-list-item *ngFor="let permission of group.formPermissions" [formPermission]="permission" [readOnly]="false"></fims-permission-list-item>
-        <md-divider></md-divider>
+        <mat-divider></mat-divider>
       </ng-container>
-    </md-list>
+    </mat-list>
   </div>
   <div layout="row" layout-margin>
-    <button type="submit" md-raised-button color="primary" [disabled]="detailForm.invalid" (click)="save()">{{'SAVE ROLE' | translate}}</button>
-    <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="detailForm.invalid" (click)="save()">{{'SAVE ROLE' | translate}}</button>
+    <button (click)="cancel()" mat-button>{{'CANCEL' | translate}}</button>
   </div>
 </div>

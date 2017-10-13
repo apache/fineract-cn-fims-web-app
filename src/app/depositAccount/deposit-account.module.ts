@@ -22,16 +22,16 @@ import {DepositProductDefinitionApiEffects} from './store/effects/service.effect
 import {EffectsModule} from '@ngrx/effects';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdSlideToggleModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
@@ -63,16 +63,16 @@ import {CreateDividendFormComponent} from './detail/dividends/form/create.compon
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSelectModule,
-    MdRadioModule,
-    MdCheckboxModule,
-    MdSlideToggleModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
 
     CovalentStepsModule,
     CovalentMessageModule,

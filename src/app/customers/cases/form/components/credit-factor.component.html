@@ -16,17 +16,17 @@
 
 <form [formGroup]="form">
   <div layout-gt-xs="column" layout-margin formArrayName="factors">
-    <md-card *ngFor="let factor of factorControls; let i=index" [formGroupName]="i">
-      <md-card-content>
+    <mat-card *ngFor="let factor of factorControls; let i=index" [formGroupName]="i">
+      <mat-card-content>
         <div layout="row">
           <fims-text-input [form]="factor" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
           <fims-text-input type="number" [form]="factor" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
-          <button md-button (click)="removeFactor(i)">{{'REMOVE ' + factorName | translate}}</button>
+          <button mat-button (click)="removeFactor(i)">{{'REMOVE ' + factorName | translate}}</button>
         </div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
     <div layout="row">
-      <button flex md-button md-raised-button (click)="addFactor()">{{'ADD ' + factorName | translate}}</button>
+      <button flex mat-button mat-raised-button (click)="addFactor()">{{'ADD ' + factorName | translate}}</button>
     </div>
   </div>
 </form>

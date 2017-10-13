@@ -21,15 +21,15 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentCommonModule, CovalentStepsModule} from '@covalent/core';
 import {DepositCreateComponent} from './form/create.component';
@@ -56,15 +56,15 @@ import {IssueChequeComponent} from './detail/cheques/cheques.component';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdOptionModule,
-    MdSelectModule,
-    MdRadioModule,
-    MdCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentChipsModule,

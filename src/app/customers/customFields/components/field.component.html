@@ -21,16 +21,16 @@
   </div>
   <fims-text-input [form]="form" controlName="hint" placeholder="{{'Hint(Optional)' | translate}}"></fims-text-input>
   <div layout="row">
-    <md-input-container layout-margin flex>
-      <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
-    </md-input-container>
+    <mat-form-field layout-margin flex>
+      <textarea matInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+    </mat-form-field>
   </div>
-  <md-checkbox layout-margin formControlName="mandatory" translate>Mandatory?</md-checkbox>
-  <md-radio-group formControlName="dataType">
-    <md-radio-button *ngFor="let type of dataTypeOptions" [value]="type.type" layout-margin>
+  <mat-checkbox layout-margin formControlName="mandatory" translate>Mandatory?</mat-checkbox>
+  <mat-radio-group formControlName="dataType">
+    <mat-radio-button *ngFor="let type of dataTypeOptions" [value]="type.type" layout-margin>
       {{type.label}}
-    </md-radio-button>
-  </md-radio-group>
+    </mat-radio-button>
+  </mat-radio-group>
   <div layout="row">
     <fims-text-input [hideIfDisabled]="true" type="number" [form]="form" controlName="length" placeholder="{{'Length' | translate}}"></fims-text-input>
     <fims-text-input [hideIfDisabled]="true" type="number" [form]="form" controlName="precision" placeholder="{{'Max digits' | translate}}"></fims-text-input>
@@ -42,11 +42,11 @@
     <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i" layout="row">
       <fims-text-input [form]="option" controlName="label" placeholder="{{'Label' | translate}}"></fims-text-input>
       <fims-text-input type="number" [form]="option" controlName="value" placeholder="{{'Value' | translate}}"></fims-text-input>
-      <button md-button (click)="removeOption(i)">{{'Remove option' | translate}}</button>
+      <button mat-button (click)="removeOption(i)">{{'Remove option' | translate}}</button>
     </div>
     <p *ngIf="form.get('options').hasError('optionValueUnique')" class="tc-red-600" translate>
       Values can't overlap with other values.
     </p>
-    <button md-button (click)="addOption()">{{'Add option' | translate}}</button>
+    <button mat-button (click)="addOption()">{{'Add option' | translate}}</button>
   </div>
 </ng-container>

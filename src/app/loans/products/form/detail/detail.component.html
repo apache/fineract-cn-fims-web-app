@@ -17,20 +17,22 @@
 <form [formGroup]="form" layout="column">
   <fims-id-input [form]="form" [placeholder]="'Short name'" controlName="identifier" [readonly]="editMode"></fims-id-input>
   <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
-  <md-input-container layout-margin flex>
-    <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-    <md-error *ngIf="form.get('description').hasError('required')" translate>
+  <mat-form-field layout-margin flex>
+    <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+    <mat-error *ngIf="form.get('description').hasError('required')" translate>
       Required
-    </md-error>
-    <md-error *ngIf="form.get('description').hasError('maxlength')">
+    </mat-error>
+    <mat-error *ngIf="form.get('description').hasError('maxlength')">
       {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
-    </md-error>
-  </md-input-container>
-  <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
-    <md-option *ngFor="let currency of currencies" [value]="currency.code">
-      {{currency.code}}
-    </md-option>
-  </md-select>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field layout-margin>
+    <mat-select formControlName="currencyCode" placeholder="{{ 'Currency' | translate }}">
+      <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+        {{currency.code}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <fims-min-max flex
                 minPlaceholder="{{'Minimum principal amount' | translate}}"
                 maxPlaceholder="{{'Maximum principal amount' | translate}}"
@@ -42,10 +44,10 @@
   </fims-min-max>
   <div layout="row">
     <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Maximum Term' | translate}}"></fims-text-input>
-    <md-radio-group formControlName="temporalUnit">
-      <md-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
+    <mat-radio-group formControlName="temporalUnit">
+      <mat-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
         {{basis.label}}
-      </md-radio-button>
-    </md-radio-group>
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
 </form>

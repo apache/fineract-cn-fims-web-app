@@ -16,39 +16,45 @@
 
 <fims-layout-card-over title="{{'Trial Balance' | translate}}" [navigateBackTo]="['../']">
   <fims-layout-card-over-header-menu>
-    <md-checkbox [(ngModel)]="includeEmptyEntries" (change)="fetchTrialBalance($event)" translate>Include empty entries?</md-checkbox>
+    <mat-checkbox [(ngModel)]="includeEmptyEntries" (change)="fetchTrialBalance($event)" translate>Include empty entries?</mat-checkbox>
   </fims-layout-card-over-header-menu>
   <div layout="row">
     <table td-data-table>
-      <th td-data-table-column>
-        <span translate>Ledger</span>
-      </th>
-      <th td-data-table-column>
-        <span translate>Debit</span>
-      </th>
-      <th td-data-table-column>
-        <span translate>Credit</span>
-      </th>
-      <tr td-data-table-row *ngFor="let row of (trialBalance$ | async)?.trialBalanceEntries">
-        <td td-data-table-cell>
-          <a [routerLink]="['../ledgers/detail', row['ledger'].identifier]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">{{row['ledger'].identifier }} - {{row['ledger'].name }}</a>
-        </td>
-        <td td-data-table-cell>
-          {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
-        </td>
-        <td td-data-table-cell>
-          {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
-        </td>
-      </tr>
-      <tr td-data-table-row>
-        <td td-data-table-cell translate>Total</td>
-        <td td-data-table-cell>
-          {{(trialBalance$ | async)?.debitTotal | number}}
-        </td>
-        <td td-data-table-cell>
-          {{(trialBalance$ | async)?.creditTotal | number}}
-        </td>
-      </tr>
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column>
+            <span translate>Ledger</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Debit</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Credit</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let row of (trialBalance$ | async)?.trialBalanceEntries">
+          <td td-data-table-cell>
+            <a [routerLink]="['../ledgers/detail', row['ledger'].identifier]" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ' }">{{row['ledger'].identifier }} - {{row['ledger'].name }}</a>
+          </td>
+          <td td-data-table-cell>
+            {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
+          </td>
+          <td td-data-table-cell>
+            {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell translate>Total</td>
+          <td td-data-table-cell>
+            {{(trialBalance$ | async)?.debitTotal | number}}
+          </td>
+          <td td-data-table-cell>
+            {{(trialBalance$ | async)?.creditTotal | number}}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </fims-layout-card-over>

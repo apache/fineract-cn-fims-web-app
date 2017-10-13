@@ -16,70 +16,70 @@
 
 <fims-layout-card-over [title]="definition.name" [subTitle]="definition.description" [navigateBackTo]="['../../../']">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'DELETE'}"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'DELETE'}"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
   <td-message *ngIf="!definition.active" label="{{'Product not enabled' | translate }}"
               sublabel="{{'To assign this product to a member it needs to be enabled first' | translate }}"
               color="warn" icon="error">
-    <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
+    <button td-message-actions mat-button (click)="enableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
   <td-message *ngIf="definition.active" label="{{'Product enabled' | translate }}"
               sublabel="{{'This product can be assigned to a member ' | translate }}" color="accent" icon="check">
-    <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
+    <button td-message-actions mat-button (click)="disableProduct()" *hasPermission="{ id: 'deposit_definitions', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
   </td-message>
   <fims-two-column-layout>
-    <md-nav-list left *ngIf="canDistributeDividends$ | async">
-      <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['./dividends']">
-        <md-icon md-list-avatar>zoom_out_map</md-icon>
-        <h3 md-line translate>Dividends</h3>
-        <p md-line translate>View and distribute dividends</p>
+    <mat-nav-list left *ngIf="canDistributeDividends$ | async">
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['./dividends']">
+        <mat-icon matListAvatar>zoom_out_map</mat-icon>
+        <h3 matLine translate>Dividends</h3>
+        <p matLine translate>View and distribute dividends</p>
       </a>
-    </md-nav-list>
+    </mat-nav-list>
     <ng-container right>
       <div layout="row">
-        <md-list dense>
-          <md-list-item>
-            <h3 md-line translate>Type</h3>
-            <p md-line>{{definition.type}}</p>
-          </md-list-item>
-          <md-list-item *ngIf="hasTerm(definition)">
-            <h3 md-line translate>Term</h3>
-            <p md-line>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Interest payable</h3>
-            <p md-line>{{definition.term?.interestPayable}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Minimum balance</h3>
-            <p md-line>{{definition.minimumBalance | number:numberFormat}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Interest</h3>
-            <p md-line>{{definition.interest | number:numberFormat}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Currency</h3>
-            <p md-line>{{definition.currency.code}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Cash account</h3>
-            <p md-line>{{definition.cashAccountIdentifier}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Expense account</h3>
-            <p md-line>{{definition.expenseAccountIdentifier}}</p>
-          </md-list-item>
-          <md-list-item *ngIf="definition.accrueAccountIdentifier">
-            <h3 md-line translate>Accrue account</h3>
-            <p md-line>{{definition.accrueAccountIdentifier}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Equity ledger</h3>
-            <p md-line>{{definition.equityLedgerIdentifier}}</p>
-          </md-list-item>
-        </md-list>
+        <mat-list dense>
+          <mat-list-item>
+            <h3 matLine translate>Type</h3>
+            <p matLine>{{definition.type}}</p>
+          </mat-list-item>
+          <mat-list-item *ngIf="hasTerm(definition)">
+            <h3 matLine translate>Term</h3>
+            <p matLine>{{definition.term?.period + ' ' + definition.term?.timeUnit}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Interest payable</h3>
+            <p matLine>{{definition.term?.interestPayable}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Minimum balance</h3>
+            <p matLine>{{definition.minimumBalance | number:numberFormat}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Interest</h3>
+            <p matLine>{{definition.interest | number:numberFormat}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Currency</h3>
+            <p matLine>{{definition.currency.code}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Cash account</h3>
+            <p matLine>{{definition.cashAccountIdentifier}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Expense account</h3>
+            <p matLine>{{definition.expenseAccountIdentifier}}</p>
+          </mat-list-item>
+          <mat-list-item *ngIf="definition.accrueAccountIdentifier">
+            <h3 matLine translate>Accrue account</h3>
+            <p matLine>{{definition.accrueAccountIdentifier}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Equity ledger</h3>
+            <p matLine>{{definition.equityLedgerIdentifier}}</p>
+          </mat-list-item>
+        </mat-list>
       </div>
       <div layout="column">
         <h4>Fees</h4>

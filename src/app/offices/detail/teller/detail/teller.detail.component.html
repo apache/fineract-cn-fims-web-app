@@ -16,60 +16,60 @@
 
 <fims-layout-card-over title="{{ 'Teller' | translate }}" [navigateBackTo]="['../../../../../']">
   <td-message *ngIf="isClosed$ | async" label="{{'Teller can be opened' | translate }}" color="warn" icon="error">
-    <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'OPEN'}"
+    <a td-message-actions mat-button [routerLink]="['command']" [queryParams]="{ action: 'OPEN'}"
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>OPEN TELLER
     </a>
   </td-message>
   <td-message *ngIf="!(isClosed$ | async)" label="{{'Teller can be closed' | translate }}" color="accent" icon="check">
-    <a td-message-actions md-button [routerLink]="['command']" [queryParams]="{ action: 'CLOSE'}"
+    <a td-message-actions mat-button [routerLink]="['command']" [queryParams]="{ action: 'CLOSE'}"
             *hasPermission="{ id: 'teller_management', accessLevel: 'CHANGE'}" translate>CLOSE TELLER
     </a>
   </td-message>
   <fims-two-column-layout>
-    <md-nav-list left>
-      <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['balance']">
-        <md-icon md-list-avatar>account_balance</md-icon>
-        <h3 md-line translate>Teller balance</h3>
-        <p md-line translate>View current teller balance</p>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['balance']">
+        <mat-icon matListAvatar>account_balance</mat-icon>
+        <h3 matLine translate>Teller balance</h3>
+        <p matLine translate>View current teller balance</p>
       </a>
-    </md-nav-list>
-    <md-list *ngIf="teller$ | async as teller" right>
-      <h3 md-subheader translate>Current status</h3>
+    </mat-nav-list>
+    <mat-list *ngIf="teller$ | async as teller" right>
+      <h3 mat-subheader translate>Current status</h3>
       <fims-state-display [state]="teller.state"></fims-state-display>
-      <md-list-item>
-        <h3 md-line translate>Number</h3>
-        <p md-line>{{teller.code}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Cash withdrawal limit</h3>
-        <p md-line>{{teller.cashdrawLimit}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Teller account</h3>
-        <p md-line>{{teller.tellerAccountIdentifier}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Vault account</h3>
-        <p md-line>{{teller.vaultAccountIdentifier}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Cheques receivable account</h3>
-        <p md-line>{{teller.chequesReceivableAccount}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Assigned employee</h3>
-        <p md-line>{{teller.assignedEmployee}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Created by</h3>
-        <p md-line>{{teller.createdBy}} - {{teller.createdOn | date:'medium'}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Last modified by</h3>
-        <p md-line>{{teller.lastModifiedBy}} - {{teller.lastModifiedOn | date:'medium'}}</p>
-      </md-list-item>
-    </md-list>
+      <mat-list-item>
+        <h3 matLine translate>Number</h3>
+        <p matLine>{{teller.code}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Cash withdrawal limit</h3>
+        <p matLine>{{teller.cashdrawLimit}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Teller account</h3>
+        <p matLine>{{teller.tellerAccountIdentifier}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Vault account</h3>
+        <p matLine>{{teller.vaultAccountIdentifier}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Cheques receivable account</h3>
+        <p matLine>{{teller.chequesReceivableAccount}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Assigned employee</h3>
+        <p matLine>{{teller.assignedEmployee}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Created by</h3>
+        <p matLine>{{teller.createdBy}} - {{teller.createdOn | date:'medium'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Last modified by</h3>
+        <p matLine>{{teller.lastModifiedBy}} - {{teller.lastModifiedOn | date:'medium'}}</p>
+      </mat-list-item>
+    </mat-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
 <fims-fab-button title="{{'Edit teller' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'teller_management', accessLevel: 'CHANGE'}"></fims-fab-button>

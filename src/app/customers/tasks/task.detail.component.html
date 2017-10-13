@@ -15,26 +15,26 @@
 -->
 
 <fims-layout-card-over [title]="task.name" [subTitle]="task.description" *ngIf="task$ | async as task" [navigateBackTo]="['../../../']">
-  <div class="md-content inset" flex>
+  <div class="mat-content inset" flex>
     <div layout="row">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Type</h3>
-          <p md-line>{{formatType(task.type)}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Mandatory</h3>
-          <p md-line>{{task.mandatory}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Automatically assign this task when member is created</h3>
-          <p md-line>{{task.predefined}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Trigger</h3>
-          <p md-line>{{formatCommands(task.commands)}}</p>
-        </md-list-item>
-      </md-list>
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Type</h3>
+          <p matLine>{{formatType(task.type)}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Mandatory</h3>
+          <p matLine>{{task.mandatory}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Automatically assign this task when member is created</h3>
+          <p matLine>{{task.predefined}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Trigger</h3>
+          <p matLine>{{formatCommands(task.commands)}}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </fims-layout-card-over>

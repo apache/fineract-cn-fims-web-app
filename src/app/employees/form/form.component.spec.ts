@@ -25,8 +25,8 @@ import {CovalentStepsModule} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdIconModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
 import {FimsSharedModule} from '../../common/common.module';
+import {MatIconModule, MatInputModule, MatOptionModule, MatSelectModule} from '@angular/material';
 
 const employeeTemplate: Employee = {
   identifier: 'test',
@@ -63,10 +63,10 @@ describe('Test employee form component', () => {
         TranslateModule.forRoot(),
         FimsSharedModule,
         ReactiveFormsModule,
-        MdSelectModule,
-        MdOptionModule,
-        MdIconModule,
-        MdInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatIconModule,
+        MatInputModule,
         CovalentStepsModule,
         NoopAnimationsModule
       ],

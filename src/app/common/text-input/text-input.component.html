@@ -14,8 +14,8 @@
  limitations under the License.
 -->
 
-<md-input-container layout-margin flex [formGroup]="form" *ngIf="show">
-  <input mdInput
+<mat-form-field layout-margin flex [formGroup]="form" *ngIf="show">
+  <input matInput
          [id]="controlName"
          [placeholder]="placeholder"
          [formControlName]="controlName"
@@ -24,31 +24,31 @@
          step="any"
          tdAutoTrim
          flex/>
-  <md-error *ngIf="hasRequiredError" translate>
+  <mat-error *ngIf="hasRequiredError" translate>
     Required
-  </md-error>
-  <md-error *ngIf="hasMinLengthError">
+  </mat-error>
+  <mat-error *ngIf="hasMinLengthError">
     {{ 'Must have at least characters.' | translate:{ value: form.get(controlName).getError('minlength')['requiredLength']} }}
-  </md-error>
-  <md-error *ngIf="hasMaxLengthError">
+  </mat-error>
+  <mat-error *ngIf="hasMaxLengthError">
     {{ 'Only characters allowed.' | translate:{ value: form.get(controlName).getError('maxlength')['requiredLength']} }}
-  </md-error>
-  <md-error *ngIf="hasEmailError" translate>
+  </mat-error>
+  <mat-error *ngIf="hasEmailError" translate>
     Invalid email
-  </md-error>
-  <md-error *ngIf="hasIsNumberError" translate>
+  </mat-error>
+  <mat-error *ngIf="hasIsNumberError" translate>
     Must be a number
-  </md-error>
-  <md-error *ngIf="hasMinValueError">
+  </mat-error>
+  <mat-error *ngIf="hasMinValueError">
     {{ 'Value must be greater than or equal to' | translate:{ value: form.get(controlName).getError('minValue').value} }}
-  </md-error>
-  <md-error *ngIf="hasMaxValueError">
+  </mat-error>
+  <mat-error *ngIf="hasMaxValueError">
     {{ 'Value must be smaller than or equal to' | translate:{value: form.get(controlName).getError('maxValue').value} }}
-  </md-error>
-  <md-error *ngIf="hasGreaterThanValueError">
+  </mat-error>
+  <mat-error *ngIf="hasGreaterThanValueError">
     {{ 'Value must be greater than' | translate:{ value: form.get(controlName).getError('greaterThanValue').value} }}
-  </md-error>
-  <md-error *ngIf="hasMaxScaleError">
+  </mat-error>
+  <mat-error *ngIf="hasMaxScaleError">
     {{ 'Value scale must be smaller than or equal to' | translate:{ value: form.get(controlName).getError('maxScale').value} }}
-  </md-error>
-</md-input-container>
+  </mat-error>
+</mat-form-field>

@@ -19,19 +19,19 @@
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form" layout="column">
       <fims-id-input flex [form]="form" placeholder="Ledger Number" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      <md-radio-group formControlName="type">
-        <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
+      <mat-radio-group formControlName="type">
+        <mat-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
           {{type.label}}
-        </md-radio-button>
-      </md-radio-group>
+        </mat-radio-button>
+      </mat-radio-group>
       <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
-      <md-input-container layout-margin flex>
-        <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
-        <md-error *ngIf="form.get('description').hasError('maxlength')">
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="form.get('description').hasError('maxlength')">
           {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
-        </md-error>
-      </md-input-container>
-      <md-checkbox formControlName="showAccountsInChart" layout-margin translate>Show accounts when displayed in chart?</md-checkbox>
+        </mat-error>
+      </mat-form-field>
+      <mat-checkbox formControlName="showAccountsInChart" layout-margin translate>Show accounts when displayed in chart?</mat-checkbox>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

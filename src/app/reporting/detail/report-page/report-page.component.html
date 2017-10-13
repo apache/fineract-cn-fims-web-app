@@ -15,21 +15,27 @@
 -->
 
 <table td-data-table>
-  <th td-data-table-column *ngFor="let columnName of reportPage?.header?.columnNames">
-    <span>{{columnName}}</span>
-  </th>
-  <tr td-data-table-row *ngFor="let row of reportPage?.rows">
-    <td td-data-table-cell *ngFor="let value of row.values">
-      {{cellValue(value.values)}}
-    </td>
-  </tr>
-  <tr td-data-table-row>
-    <td td-data-table-cell *ngFor="let value of reportPage?.footer?.values">
-      {{cellValue(value.values)}}
-    </td>
-  </tr>
+  <thead>
+    <tr td-data-table-column-row>
+      <th td-data-table-column *ngFor="let columnName of reportPage?.header?.columnNames">
+        <span>{{columnName}}</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr td-data-table-row *ngFor="let row of reportPage?.rows">
+      <td td-data-table-cell *ngFor="let value of row.values">
+        {{cellValue(value.values)}}
+      </td>
+    </tr>
+    <tr td-data-table-row>
+      <td td-data-table-cell *ngFor="let value of reportPage?.footer?.values">
+        {{cellValue(value.values)}}
+      </td>
+    </tr>
+  </tbody>
 </table>
 
-<div class="md-padding" *ngIf="!reportPage || reportPage.rows?.length === 0" layout="row" layout-align="center center">
+<div class="mat-padding" *ngIf="!reportPage || reportPage.rows?.length === 0" layout="row" layout-align="center center">
   <h3 translate>No results to display.</h3>
 </div>

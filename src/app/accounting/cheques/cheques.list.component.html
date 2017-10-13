@@ -15,30 +15,36 @@
 -->
 
 <fims-layout-card-over title="{{'Cheque clearing' | translate}}" [navigateBackTo]="['../']">
-  <div class="md-content">
+  <div class="mat-content">
     <table td-data-table>
-      <th td-data-table-column
-          *ngFor="let column of columns"
-          [name]="column.name">
-        {{column.label}}
-      </th>
-      <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }" translate>APPROVE</th>
-      <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }" translate>CANCEL</th>
-      <tr td-data-table-row *ngFor="let row of cheques$ | async">
-        <td td-data-table-cell [numeric]="column.numeric" *ngFor="let column of columns">
-          {{column.format ? column.format(row[column.name]) : row[column.name]}}
-        </td>
-        <td td-data-table-cell *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
-          <button md-button md-raised-button color="primary" [disabled]="row.state !== 'PENDING'" (click)="approveCheque(row)">
-            {{ 'APPROVE' | translate}}
-          </button>
-        </td>
-        <td td-data-table-cell *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
-          <button md-button md-raised-button color="warn" [disabled]="row.state !== 'PENDING'" (click)="cancelCheque(row)">
-            {{ 'CANCEL' | translate}}
-          </button>
-        </td>
-      </tr>
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column
+              *ngFor="let column of columns"
+              [name]="column.name">
+            {{column.label}}
+          </th>
+          <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }" translate>APPROVE</th>
+          <th td-data-table-column *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }" translate>CANCEL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let row of cheques$ | async">
+          <td td-data-table-cell [numeric]="column.numeric" *ngFor="let column of columns">
+            {{column.format ? column.format(row[column.name]) : row[column.name]}}
+          </td>
+          <td td-data-table-cell *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
+            <button mat-button mat-raised-button color="primary" [disabled]="row.state !== 'PENDING'" (click)="approveCheque(row)">
+              {{ 'APPROVE' | translate}}
+            </button>
+          </td>
+          <td td-data-table-cell *hasPermission="{ id: 'cheque_management', accessLevel: 'CHANGE' }">
+            <button mat-button mat-raised-button color="warn" [disabled]="row.state !== 'PENDING'" (click)="cancelCheque(row)">
+              {{ 'CANCEL' | translate}}
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </fims-layout-card-over>

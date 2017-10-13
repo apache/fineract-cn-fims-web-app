@@ -15,22 +15,22 @@
 -->
 
 <fims-layout-card-over title="{{'Payroll allocations' | translate }}" [navigateBackTo]="['../../../../']">
-  <div class="md-content inset" flex *ngIf="(distribution$ | async) as distribution">
+  <div class="mat-content inset" flex *ngIf="(distribution$ | async) as distribution">
     <div layout="row">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Account number</h3>
-          <p md-line>{{distribution.mainAccountNumber}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Created by</h3>
-          <p md-line>{{distribution.createdBy}} - {{distribution.createdOn | date:'medium'}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Last modified by</h3>
-          <p md-line>{{distribution.lastModifiedBy}} - {{distribution.lastModifiedOn | date:'medium'}}</p>
-        </md-list-item>
-      </md-list>
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Account number</h3>
+          <p matLine>{{distribution.mainAccountNumber}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Created by</h3>
+          <p matLine>{{distribution.createdBy}} - {{distribution.createdOn | date:'medium'}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Last modified by</h3>
+          <p matLine>{{distribution.lastModifiedBy}} - {{distribution.lastModifiedOn | date:'medium'}}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
     <fims-data-table flex [columns]="columns" [data]="allocationData" [actionColumn]="false">
     </fims-data-table>

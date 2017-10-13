@@ -21,18 +21,18 @@
       <fims-text-input *ngSwitchCase="'NUMBER'" type="number" [form]="form" [controlName]="field.identifier" [placeholder]="field.label" [title]="field.hint"></fims-text-input>
       <fims-date-input *ngSwitchCase="'DATE'" [form]="form" [controlName]="field.identifier" [placeholder]="field.label" [title]="field.hint"></fims-date-input>
       <div class="pad-bottom-xs" *ngSwitchCase="'SINGLE_SELECTION'">
-        <div class="md-body-1">{{field.label}}</div>
-        <md-radio-group [formControlName]="field.identifier">
-          <md-radio-button [value]="" layout-margin *ngIf="!field.mandatory" translate>
+        <div class="mat-body-1">{{field.label}}</div>
+        <mat-radio-group [formControlName]="field.identifier">
+          <mat-radio-button [value]="" layout-margin *ngIf="!field.mandatory" translate>
             None
-          </md-radio-button>
-          <md-radio-button *ngFor="let option of field.options" [value]="option.value" title="{{field.hint}}" layout-margin>
+          </mat-radio-button>
+          <mat-radio-button *ngFor="let option of field.options" [value]="option.value" title="{{field.hint}}" layout-margin>
             {{option.label}}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
       <div class="pad-bottom-xs" *ngSwitchCase="'MULTI_SELECTION'">
-        <div class="md-body-1">{{field.label}}</div>
+        <div class="mat-body-1">{{field.label}}</div>
         <td-chips [items]="field.options"
                   [formControlName]="field.identifier"
                   placeholder="{{field.hint}}">

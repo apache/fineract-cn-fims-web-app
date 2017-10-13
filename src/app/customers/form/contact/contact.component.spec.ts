@@ -18,11 +18,11 @@ import {ContactDetail} from '../../../services/domain/contact/contact-detail.mod
 import {CustomerContactFormComponent} from './contact.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MdInputModule} from '@angular/material';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {setValueByCssSelector} from '../../../common/testing/input-fields';
 import {TranslateModule} from '@ngx-translate/core';
 import {FimsSharedModule} from '../../../common/common.module';
+import {MatInputModule} from '@angular/material';
 
 const contactDetails: ContactDetail[] = [
   { group: 'BUSINESS', type: 'EMAIL', value: 'test@test.de', preferenceLevel: 1 },
@@ -46,7 +46,7 @@ describe('Test contact form', () => {
         TranslateModule.forRoot(),
         FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
+        MatInputModule,
         NoopAnimationsModule
       ]
     });

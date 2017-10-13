@@ -21,14 +21,14 @@
         <div layout="row" *ngFor="let step of steps; let i=index" [formGroupName]="i">
           <fims-text-input type="number" [form]="step" controlName="daysLate" placeholder="{{'Days late' | translate}}"></fims-text-input>
           <fims-text-input type="number" [form]="step" controlName="percentProvision" placeholder="{{'Percent provision' | translate}}"></fims-text-input>
-          <button md-button (click)="removeStep(i)" *ngIf="i > 0">{{'REMOVE STEP' | translate}}</button>
+          <button mat-button (click)="removeStep(i)" *ngIf="i > 0">{{'REMOVE STEP' | translate}}</button>
         </div>
       </ng-container>
       <p *ngIf="form.get('steps').hasError('daysLateUnique')" class="tc-red-600" translate>
         Days late can't overlap with other days late.
       </p>
       <div layout="row">
-        <button flex md-button md-raised-button (click)="addStep()">{{'ADD STEP' | translate}}</button>
+        <button flex mat-button mat-raised-button (click)="addStep()">{{'ADD STEP' | translate}}</button>
       </div>
     </form>
     <ng-template td-step-actions>

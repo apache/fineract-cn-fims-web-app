@@ -17,29 +17,31 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Update payroll allocations' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form">
-      <div layout="row" class="pad-top">
-        <md-select formControlName="mainAccountNumber" layout-margin placeholder="{{ 'Select main account' | translate }}">
-          <md-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
+      <mat-form-field layout-margin>
+        <mat-select formControlName="mainAccountNumber" placeholder="{{ 'Select main account' | translate }}">
+          <mat-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
             {{instance.accountIdentifier}}({{instance.productIdentifier}})
-          </md-option>
-        </md-select>
-      </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div layout-gt-xs="column" layout-margin formArrayName="payrollAllocations">
         <h4 translate>Allocations</h4>
         <div *ngFor="let allocation of allocations; let i=index" [formGroupName]="i">
-          <md-select formControlName="accountNumber" layout-margin placeholder="{{ 'Select account' | translate }}" flex="15">
-            <md-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
-              {{instance.accountIdentifier}}({{instance.productIdentifier}})
-            </md-option>
-          </md-select>
+          <mat-form-field layout-margin>
+            <mat-select formControlName="accountNumber" placeholder="{{ 'Select account' | translate }}">
+              <mat-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
+                {{instance.accountIdentifier}}({{instance.productIdentifier}})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <fims-number-input placeholder="Amount" [form]="allocation" controlName="amount"></fims-number-input>
-          <md-checkbox formControlName="proportional" translate>Proportional?</md-checkbox>
-          <button md-button (click)="removeAllocation(i)">{{'Remove' | translate}}</button>
+          <mat-checkbox formControlName="proportional" translate>Proportional?</mat-checkbox>
+          <button mat-button (click)="removeAllocation(i)">{{'Remove' | translate}}</button>
         </div>
         <p *ngIf="form.hasError('accountUnique')" class="tc-red-600" translate>
           Allocation accounts can't use main account or overlap with other allocation accounts.
         </p>
-        <button md-button (click)="addAllocation()">{{'Add allocation' | translate}}</button>
+        <button mat-button (click)="addAllocation()">{{'Add allocation' | translate}}</button>
       </div>
     </form>
     <ng-template td-step-actions>

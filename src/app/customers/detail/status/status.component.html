@@ -26,11 +26,11 @@
             (onSelectTask)="executeTask($event)">
           </fims-customer-task>
           <div layout="row" layout-align="start center">
-            <md-input-container layout-margin flex>
-              <textarea mdInput placeholder="{{'Enter your comment here...' | translate}}"
+            <mat-form-field layout-margin flex>
+              <textarea matInput placeholder="{{'Enter your comment here...' | translate}}"
                         [(ngModel)]="step.command.comment"></textarea>
-            </md-input-container>
-            <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(step.command)">
+            </mat-form-field>
+            <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(step.command)">
               {{step.command.action}}
             </button>
           </div>

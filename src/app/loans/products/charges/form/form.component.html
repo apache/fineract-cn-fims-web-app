@@ -19,39 +19,45 @@
     <form [formGroup]="detailForm" layout="column">
       <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <fims-text-input [form]="detailForm" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
-      <md-input-container layout-margin flex>
-        <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-        <md-error *ngIf="detailForm.get('description').hasError('required')" translate>
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="detailForm.get('description').hasError('required')" translate>
           Required
-        </md-error>
-      </md-input-container>
+        </mat-error>
+      </mat-form-field>
       <div layout="row">
         <fims-text-input type="number" [form]="detailForm" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
-        <md-radio-group formControlName="chargeMethod">
-          <md-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
+        <mat-radio-group formControlName="chargeMethod">
+          <mat-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
             {{basis.label}}
-          </md-radio-button>
-        </md-radio-group>
-        <md-select formControlName="proportionalTo" layout-margin placeholder="{{ 'Proportional to' | translate }}" flex="15">
-          <md-option *ngFor="let proportionalTo of proportionalToOptions" [value]="proportionalTo.designator">
-            {{proportionalTo.label}}
-          </md-option>
-        </md-select>
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="proportionalTo" placeholder="{{ 'Proportional to' | translate }}">
+            <mat-option *ngFor="let proportionalTo of proportionalToOptions" [value]="proportionalTo.designator">
+              {{proportionalTo.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <md-slide-toggle formControlName="rangeEnabled" layout-margin translate layout-margin>
+      <mat-slide-toggle formControlName="rangeEnabled" layout-margin translate layout-margin>
         Apply amount only within range?
-      </md-slide-toggle>
+      </mat-slide-toggle>
       <ng-container *ngIf="detailForm.get('rangeEnabled').value === true">
-        <md-select formControlName="rangeIdentifier" layout-margin placeholder="{{ 'Select range' | translate }}" layout-margin>
-          <md-option *ngFor="let range of ranges" [value]="range.identifier">
-            {{range.identifier}}
-          </md-option>
-        </md-select>
-        <md-select formControlName="rangeSegmentIdentifier" layout-margin placeholder="{{ 'Select range segment' | translate }}" layout-margin>
-          <md-option *ngFor="let segment of selectedRange?.segments" [value]="segment.identifier">
-            {{segment.identifier}}({{segment.start | number:numberFormat}} - {{segment.end | number:numberFormat}})
-          </md-option>
-        </md-select>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="rangeIdentifier" placeholder="{{ 'Select range' | translate }}">
+            <mat-option *ngFor="let range of ranges" [value]="range.identifier">
+              {{range.identifier}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="rangeSegmentIdentifier" placeholder="{{ 'Select range segment' | translate }}">
+            <mat-option *ngFor="let segment of selectedRange?.segments" [value]="segment.identifier">
+              {{segment.identifier}}({{segment.start | number:numberFormat}} - {{segment.end | number:numberFormat}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </ng-container>
     </form>
     <ng-template td-step-actions>

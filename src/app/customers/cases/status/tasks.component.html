@@ -14,14 +14,14 @@
  limitations under the License.
 -->
 
-<md-list *ngIf="tasks?.length > 0">
+<mat-list *ngIf="tasks?.length > 0">
   <ng-container *ngIf="mandatoryTasks && mandatoryTasks.length > 0">
-    <h3 md-subheader>Mandatory tasks(These tasks must be executed)</h3>
+    <h3 mat-subheader>Mandatory tasks(These tasks must be executed)</h3>
     <fims-case-task *ngFor="let task of mandatoryTasks" [task]="task" [disabled]="taskDisabled(task)" (onSelectTask)="executeTask($event)"></fims-case-task>
   </ng-container>
 
   <ng-container *ngIf="optionalTasks && optionalTasks.length > 0">
-    <h3 md-subheader translate>Optional tasks</h3>
+    <h3 mat-subheader translate>Optional tasks</h3>
     <fims-case-task *ngFor="let task of optionalTasks" [task]="task" [disabled]="taskDisabled(task)" (onSelectTask)="executeTask($event)"></fims-case-task>
   </ng-container>
-</md-list>
+</mat-list>

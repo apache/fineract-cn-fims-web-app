@@ -19,8 +19,8 @@ import {Component, ViewChild} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {DetailFormData, ProductDetailFormComponent} from './detail.component';
-import {MdInputModule, MdRadioModule, MdSelectModule} from '@angular/material';
 import {FimsSharedModule} from '../../../../common/common.module';
+import {MatInputModule, MatRadioModule, MatSelectModule} from '@angular/material';
 
 describe('Test product detail component', () => {
 
@@ -54,9 +54,9 @@ describe('Test product detail component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        MdRadioModule,
-        MdInputModule,
-        MdSelectModule,
+        MatRadioModule,
+        MatInputModule,
+        MatSelectModule,
         FimsSharedModule,
         NoopAnimationsModule
       ],

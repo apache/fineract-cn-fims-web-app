@@ -16,49 +16,49 @@
 
 <fims-layout-card-over title="{{'General Ledger' | translate}}">
   <fims-two-column-layout>
-    <md-nav-list left>
-      <h3 md-subheader translate>Details</h3>
-      <a md-list-item [routerLink]="['./chartOfAccounts']">
-        <md-icon md-list-avatar>list</md-icon>
-        <h3 md-line translate>Chart of accounts</h3>
-        <p md-line translate>View chart of accounts</p>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Details</h3>
+      <a mat-list-item [routerLink]="['./chartOfAccounts']">
+        <mat-icon matListAvatar>list</mat-icon>
+        <h3 matLine translate>Chart of accounts</h3>
+        <p matLine translate>View chart of accounts</p>
       </a>
-      <a md-list-item [routerLink]="['./journalEntries']" *hasPermission="{ id: 'accounting_journals', accessLevel: 'READ' }">
-        <md-icon md-list-avatar>assignment</md-icon>
-        <h3 md-line translate>Journal entries</h3>
-        <p md-line translate>View journal entries</p>
+      <a mat-list-item [routerLink]="['./journalEntries']" *hasPermission="{ id: 'accounting_journals', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>assignment</mat-icon>
+        <h3 matLine translate>Journal entries</h3>
+        <p matLine translate>View journal entries</p>
       </a>
-      <a md-list-item [routerLink]="['./transactiontypes']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'READ' }">
-        <md-icon md-list-avatar>swap_horiz</md-icon>
-        <h3 md-line translate>Transaction types</h3>
-        <p md-line translate>View transaction types</p>
+      <a mat-list-item [routerLink]="['./transactiontypes']" *hasPermission="{ id: 'accounting_tx_types', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>swap_horiz</mat-icon>
+        <h3 matLine translate>Transaction types</h3>
+        <p matLine translate>View transaction types</p>
       </a>
-      <a md-list-item [routerLink]="['./cheques']" *hasPermission="{ id: 'cheque_management', accessLevel: 'READ' }">
-        <md-icon md-list-avatar>import_contacts</md-icon>
-        <h3 md-line translate>Cheque clearing</h3>
-        <p md-line translate>View and clear cheques</p>
+      <a mat-list-item [routerLink]="['./cheques']" *hasPermission="{ id: 'cheque_management', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>import_contacts</mat-icon>
+        <h3 matLine translate>Cheque clearing</h3>
+        <p matLine translate>View and clear cheques</p>
       </a>
-      <a md-list-item [routerLink]="['./trialBalance']">
-        <md-icon md-list-avatar>account_balance</md-icon>
-        <h3 md-line translate>Trial balance</h3>
-        <p md-line translate>View trial balance</p>
+      <a mat-list-item [routerLink]="['./trialBalance']">
+        <mat-icon matListAvatar>account_balance</mat-icon>
+        <h3 matLine translate>Trial balance</h3>
+        <p matLine translate>View trial balance</p>
       </a>
-      <a md-list-item [routerLink]="['./incomeStatement']" *hasPermission="{ id: 'accounting_income_statement', accessLevel: 'READ'}">
-        <md-icon md-list-avatar>timeline</md-icon>
-        <h3 md-line translate>Income statement</h3>
-        <p md-line translate>View income statement</p>
+      <a mat-list-item [routerLink]="['./incomeStatement']" *hasPermission="{ id: 'accounting_income_statement', accessLevel: 'READ'}">
+        <mat-icon matListAvatar>timeline</mat-icon>
+        <h3 matLine translate>Income statement</h3>
+        <p matLine translate>View income statement</p>
       </a>
-      <a md-list-item [routerLink]="['./financialCondition']" *hasPermission="{ id: 'accounting_fin_condition', accessLevel: 'READ'}">
-        <md-icon md-list-avatar>timeline</md-icon>
-        <h3 md-line translate>Financial condition</h3>
-        <p md-line translate>View financial condition</p>
+      <a mat-list-item [routerLink]="['./financialCondition']" *hasPermission="{ id: 'accounting_fin_condition', accessLevel: 'READ'}">
+        <mat-icon matListAvatar>timeline</mat-icon>
+        <h3 matLine translate>Financial condition</h3>
+        <p matLine translate>View financial condition</p>
       </a>
-      <a md-list-item [routerLink]="['./payrolls']" *hasPermission="{ id: 'payroll_distribution', accessLevel: 'READ' }">
-        <md-icon md-list-avatar>receipt</md-icon>
-        <h3 md-line translate>Payrolls</h3>
-        <p md-line translate>Manage payrolls</p>
+      <a mat-list-item [routerLink]="['./payrolls']" *hasPermission="{ id: 'payroll_distribution', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>receipt</mat-icon>
+        <h3 matLine translate>Payrolls</h3>
+        <p matLine translate>Manage payrolls</p>
       </a>
-    </md-nav-list>
+    </mat-nav-list>
     <div layout="column" flex-gt-md="100" right>
       <h3 translate>Ledger</h3>
       <fims-data-table flex (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="ledgerData | async"></fims-data-table>

@@ -16,9 +16,9 @@
 
 <form [formGroup]="form">
   <div layout="row">
-    <md-slide-toggle formControlName="interestRangeEnabled" layout-margin translate>
+    <mat-slide-toggle formControlName="interestRangeEnabled" layout-margin translate>
       Interest range?
-    </md-slide-toggle>
+    </mat-slide-toggle>
   </div>
   <div layout="row" *ngIf="form.get('interestRangeEnabled').value === false">
     <fims-number-input [form]="form" controlName="minimum" placeholder="{{'Interest rate' | translate}}"></fims-number-input>

@@ -26,15 +26,15 @@ import {TellerAuthComponent} from './auth/teller-auth.component';
 import {EffectsModule} from '@ngrx/effects';
 import {TellerApiEffects} from './store/effects/service.effects';
 import {
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdSelectModule,
-  MdToolbarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
@@ -64,15 +64,15 @@ import {AvailableActionService} from './services/available-actions.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdButtonModule,
-    MdInputModule,
-    MdCardModule,
-    MdListModule,
-    MdToolbarModule,
-    MdAutocompleteModule,
-    MdSelectModule,
-    MdCheckboxModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatCheckboxModule,
     CovalentMessageModule,
     CovalentStepsModule,
     CovalentSearchModule,

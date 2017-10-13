@@ -16,32 +16,32 @@
 
 <fims-layout-card-over [title]="charge.name" [subTitle]="charge.description" [navigateBackTo]="['../../']">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="deleteCharge()" title="{{'Delete this fee' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteCharge()" title="{{'Delete this fee' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content inset" flex>
+  <div class="mat-content inset" flex>
     <div layout="row">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Action</h3>
-          <p md-line>{{charge.chargeAction}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Amount</h3>
-          <p md-line>{{charge.amount | number}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Charge method</h3>
-          <p md-line>{{charge.chargeMethod}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Proportional to</h3>
-          <p md-line>{{charge.proportionalTo}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Cycle</h3>
-          <p md-line>{{charge.forCycleSizeUnit}}</p>
-        </md-list-item>
-      </md-list>
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Action</h3>
+          <p matLine>{{charge.chargeAction}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Amount</h3>
+          <p matLine>{{charge.amount | number}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Charge method</h3>
+          <p matLine>{{charge.chargeMethod}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Proportional to</h3>
+          <p matLine>{{charge.proportionalTo}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Cycle</h3>
+          <p matLine>{{charge.forCycleSizeUnit}}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </fims-layout-card-over>

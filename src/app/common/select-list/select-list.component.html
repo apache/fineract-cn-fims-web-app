@@ -15,44 +15,44 @@
 -->
 
 <h4>{{title}}</h4>
-<md-input-container layout-gt-xs="row" layout-margin>
-  <input mdInput flex placeholder="{{'Search...' | translate}}" tdAutoTrim [formControl]="term"/>
-</md-input-container>
-<md-card flex>
-  <md-list flex>
-    <h3 md-subheader translate>Results</h3>
-    <md-list-item *ngFor="let row of data | async">
+<mat-form-field layout-gt-xs="row" layout-margin>
+  <input matInput flex placeholder="{{'Search...' | translate}}" tdAutoTrim [formControl]="term"/>
+</mat-form-field>
+<mat-card flex>
+  <mat-list flex>
+    <h3 mat-subheader translate>Results</h3>
+    <mat-list-item *ngFor="let row of data | async">
       <div layout="row" layout-align="start center" style="width: 100%;">
-        <md-icon md-list-avatar>{{listIcon}}</md-icon>
+        <mat-icon matListAvatar>{{listIcon}}</mat-icon>
         <div flex>
           {{ row[id] }}
         </div>
         <div>
-          <button md-raised-button color="accent" title="{{'Assign' | translate}}" (click)="doSelect(row[id])">{{'Select' | translate}}</button>
+          <button mat-raised-button color="accent" title="{{'Assign' | translate}}" (click)="doSelect(row[id])">{{'Select' | translate}}</button>
         </div>
       </div>
-    </md-list-item>
-    <md-list-item *ngIf="(data | async)?.length == 0">
+    </mat-list-item>
+    <mat-list-item *ngIf="(data | async)?.length == 0">
       {{noResultsMessage}}
-    </md-list-item>
-    <h3 md-subheader translate>Current selection</h3>
-    <md-list-item *ngFor="let selection of selections" class="active">
+    </mat-list-item>
+    <h3 mat-subheader translate>Current selection</h3>
+    <mat-list-item *ngFor="let selection of selections" class="active">
       <div layout="row" layout-align="start center" style="width: 100%;">
-        <md-icon md-list-avatar>{{listIcon}}</md-icon>
+        <mat-icon matListAvatar>{{listIcon}}</mat-icon>
         <div flex>
           {{selection}}
         </div>
         <div>
-          <button md-raised-button color="warn" title="{{'Unassign' | translate}}" (click)="doDeselect(selection)">{{'Deselect' | translate}}</button>
+          <button mat-raised-button color="warn" title="{{'Unassign' | translate}}" (click)="doDeselect(selection)">{{'Deselect' | translate}}</button>
         </div>
       </div>
-    </md-list-item>
-    <md-list-item *ngIf="!selections || selections.length === 0">
+    </mat-list-item>
+    <mat-list-item *ngIf="!selections || selections.length === 0">
       <div layout="row" layout-align="start center" style="width: 100%;">
         <div flex>
           {{noSelectionMessage}}
         </div>
       </div>
-    </md-list-item>
-  </md-list>
-</md-card>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

@@ -15,9 +15,9 @@
 -->
 
 <fims-layout-card-over title="{{'View debt income ratio' | translate}}" [navigateBackTo]="['../']">
-  <md-tab-group>
-    <md-tab label="Member(Ratio: {{customerOverview.ratio ? (customerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="customerOverview$ | async as customerOverview">
-      <div class="md-content inset" flex>
+  <mat-tab-group>
+    <mat-tab label="Member(Ratio: {{customerOverview.ratio ? (customerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="customerOverview$ | async as customerOverview">
+      <div class="mat-content inset" flex>
         <h5>Debts(Total: {{customerOverview.debtTotal | number:numberFormat}})</h5>
         <fims-data-table flex
                          [columns]="columns"
@@ -31,9 +31,9 @@
                          [actionColumn]="false">
         </fims-data-table>
       </div>
-    </md-tab>
-    <md-tab label="Co-signer(Ratio: {{cosignerOverview.ratio ? (cosignerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="cosignerOverview$ | async as cosignerOverview">
-      <div class="md-content inset" flex>
+    </mat-tab>
+    <mat-tab label="Co-signer(Ratio: {{cosignerOverview.ratio ? (cosignerOverview.ratio | number:numberFormat) : '-'}})" *ngIf="cosignerOverview$ | async as cosignerOverview">
+      <div class="mat-content inset" flex>
         <h5>Debts(Total: {{cosignerOverview.debtTotal | number:numberFormat}})</h5>
         <fims-data-table flex
                          [columns]="columns"
@@ -47,6 +47,6 @@
                          [actionColumn]="false">
         </fims-data-table>
       </div>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 </fims-layout-card-over>

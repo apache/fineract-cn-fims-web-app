@@ -28,6 +28,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/skip';
 
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/empty';

@@ -16,7 +16,7 @@
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IdentityCardFormComponent} from './identity-card-form.component';
-import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {setValueByCssSelector} from '../../../../common/testing/input-fields';
@@ -46,10 +46,10 @@ describe('Test identity card form component', () => {
         TranslateModule.forRoot(),
         FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdIconModule,
-        MdButtonModule,
-        MdCardModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
         CovalentStepsModule,
         CovalentFileModule,
         NoopAnimationsModule

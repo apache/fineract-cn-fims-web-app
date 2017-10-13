@@ -17,11 +17,11 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Account details' | translate}}" [state]="">
     <form [formGroup]="form" layout="column">
-      <md-radio-group formControlName="type">
-        <md-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
+      <mat-radio-group formControlName="type">
+        <mat-radio-button *ngFor="let type of accountTypeOptions" [value]="type.type" layout-margin>
           {{type.label}}
-        </md-radio-button>
-      </md-radio-group>
+        </mat-radio-button>
+      </mat-radio-group>
       <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
       <fims-text-input type="number" [form]="form" controlName="balance" placeholder="{{'Balance' | translate}}"></fims-text-input>

@@ -16,11 +16,11 @@
 
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {NotificationEvent, NotificationService, NotificationType} from '../services/notification/notification.service';
-import {MdSnackBar, MdSnackBarConfig, MdSnackBarRef} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
 import {Subscription} from 'rxjs/Subscription';
+import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material';
 
 @Component({
   selector: 'fims-notification',
@@ -32,10 +32,10 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   private errorSubscription: Subscription;
 
   constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient,
-              private snackBar: MdSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
+              private snackBar: MatSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    const config: MdSnackBarConfig = new MdSnackBarConfig();
+    const config: MatSnackBarConfig = new MatSnackBarConfig();
     config.viewContainerRef = this.viewContainerRef;
     this.notificationSubscription = this.notificationService.notifications$
       .subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
@@ -50,7 +50,7 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.errorSubscription = this.httpClient.error.subscribe((error: any) => this.showError(error));
   }
 
-  private showNotification(notification: NotificationEvent, config: MdSnackBarConfig): void {
+  private showNotification(notification: NotificationEvent, config: MatSnackBarConfig): void {
     switch (notification.type) {
       case NotificationType.MESSAGE:
         this.showMessage(notification.message, config);
@@ -86,11 +86,11 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private showMessage(message: string, config: MdSnackBarConfig): void {
+  private showMessage(message: string, config: MatSnackBarConfig): void {
     this.translate.get(message)
       .take(1)
       .subscribe((result) => {
-        const snackBarRef: MdSnackBarRef<any> = this.snackBar.open(result, '', config);
+        const snackBarRef: MatSnackBarRef<any> = this.snackBar.open(result, '', config);
         setTimeout(() => snackBarRef.dismiss(), 3000);
       });
   }

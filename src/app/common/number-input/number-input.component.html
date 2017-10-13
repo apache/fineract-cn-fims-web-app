@@ -14,24 +14,24 @@
  limitations under the License.
 -->
 
-<md-input-container layout-margin flex [formGroup]="form">
-  <input mdInput type="text" [textMask]="{mask: mask}" [placeholder]="placeholder" [formControlName]="controlName"/>
-  <md-error *ngIf="hasRequiredError" translate>
+<mat-form-field layout-margin flex [formGroup]="form">
+  <input matInput type="text" [textMask]="{mask: mask}" [placeholder]="placeholder" [formControlName]="controlName"/>
+  <mat-error *ngIf="hasRequiredError" translate>
     Required
-  </md-error>
-  <md-error *ngIf="hasMinValueError" translate>
+  </mat-error>
+  <mat-error *ngIf="hasMinValueError" translate>
     {{ 'Value must be greater than or equal to' | translate:{value: form.get(controlName).errors.minValue.value} }}
-  </md-error>
-  <md-error *ngIf="hasMaxValueError" translate>
+  </mat-error>
+  <mat-error *ngIf="hasMaxValueError" translate>
     {{ 'Value must be smaller than or equal to' | translate:{value: form.get(controlName).errors.maxValue.value} }}
-  </md-error>
-  <md-error *ngIf="hasGreaterThanValueError" translate>
+  </mat-error>
+  <mat-error *ngIf="hasGreaterThanValueError" translate>
     {{ 'Value must be greater than' | translate:{value: form.get(controlName).errors.greaterThanValue.value} }}
-  </md-error>
-  <md-error *ngIf="hasScaleError">
+  </mat-error>
+  <mat-error *ngIf="hasScaleError">
     {{ 'Must have decimal places' | translate:{value: form.get(controlName).errors.scale.value} }}
-  </md-error>
-  <md-hint align="end" *ngIf="form.get(controlName).enabled">
+  </mat-error>
+  <mat-hint align="end" *ngIf="form.get(controlName).enabled">
     {{hint}}
-  </md-hint>
-</md-input-container>
+  </mat-hint>
+</mat-form-field>

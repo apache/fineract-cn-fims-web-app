@@ -15,11 +15,11 @@
 -->
 
 <fims-layout-card-over title="{{'Activities' | translate}}" [navigateBackTo]="['../']">
-  <md-list>
-    <h3 md-subheader translate>Latest activity</h3>
+  <mat-list>
+    <h3 mat-subheader translate>Latest activity</h3>
     <ng-template let-item let-last="last" ngFor [ngForOf]="commands">
       <fims-command-display [command]="item"></fims-command-display>
-      <md-divider *ngIf="!last" md-inset></md-divider>
+      <mat-divider *ngIf="!last" mat-inset></mat-divider>
     </ng-template>
-  </md-list>
+  </mat-list>
 </fims-layout-card-over>

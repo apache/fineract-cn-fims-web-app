@@ -18,38 +18,38 @@
   <fims-two-column-layout>
     <ng-container left>
       <fims-portrait [blob]="portrait$ | async"></fims-portrait>
-      <md-nav-list>
-        <h3 md-subheader translate>Transactions</h3>
+      <mat-nav-list>
+        <h3 mat-subheader translate>Transactions</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="availableActions$ | async">
-          <a md-list-item [routerLink]="[item.relativeLink]" [queryParams]="{ transactionType: item.transactionType }">
-            <md-icon md-list-avatar>{{item.icon}}</md-icon>
-            <h3 md-line translate>{{item.title}}</h3>
+          <a mat-list-item [routerLink]="[item.relativeLink]" [queryParams]="{ transactionType: item.transactionType }">
+            <mat-icon matListAvatar>{{item.icon}}</mat-icon>
+            <h3 matLine translate>{{item.title}}</h3>
           </a>
         </ng-template>
-      </md-nav-list>
+      </mat-nav-list>
     </ng-container>
-    <md-list right>
-      <h3 md-subheader translate>Address</h3>
-      <md-list-item>
-        <md-icon md-list-avatar>location_on</md-icon>
-        <h3 md-line>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
+    <mat-list right>
+      <h3 mat-subheader translate>Address</h3>
+      <mat-list-item>
+        <mat-icon matListAvatar>location_on</mat-icon>
+        <h3 matLine>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
           {{customer.address?.country}}</h3>
-      </md-list-item>
-      <h3 md-subheader translate>Contact information</h3>
-      <md-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
-        <md-icon *ngSwitchCase="'EMAIL'" md-list-avatar>email</md-icon>
-        <md-icon *ngSwitchCase="'PHONE'" md-list-avatar>phone</md-icon>
-        <md-icon *ngSwitchCase="'MOBILE'" md-list-avatar>smartphone</md-icon>
-        <h3 md-line>{{detail.value}}</h3>
-      </md-list-item>
-      <md-list-item *ngIf="!customer.contactDetails?.length">
-        <h3 md-line translate>No contact details available</h3>
-      </md-list-item>
-      <h3 md-subheader translate>Birthday</h3>
-      <md-list-item>
-        <md-icon md-list-avatar>cake</md-icon>
-        <h3 md-line>{{customer.dateOfBirth | displayFimsDate}}</h3>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+      <h3 mat-subheader translate>Contact information</h3>
+      <mat-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
+        <mat-icon *ngSwitchCase="'EMAIL'" matListAvatar>email</mat-icon>
+        <mat-icon *ngSwitchCase="'PHONE'" matListAvatar>phone</mat-icon>
+        <mat-icon *ngSwitchCase="'MOBILE'" matListAvatar>smartphone</mat-icon>
+        <h3 matLine>{{detail.value}}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="!customer.contactDetails?.length">
+        <h3 matLine translate>No contact details available</h3>
+      </mat-list-item>
+      <h3 mat-subheader translate>Birthday</h3>
+      <mat-list-item>
+        <mat-icon matListAvatar>cake</mat-icon>
+        <h3 matLine>{{customer.dateOfBirth | displayFimsDate}}</h3>
+      </mat-list-item>
+    </mat-list>
   </fims-two-column-layout>
 </fims-layout-card-over>

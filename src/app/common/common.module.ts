@@ -38,16 +38,17 @@ import {AddressFormComponent} from './address/address.component';
 import {PortraitComponent} from './portrait/portrait.component';
 import {CommonModule} from '@angular/common';
 import {
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdSnackBarModule,
-  MdToolbarModule,
-  MdTooltipModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-auto-complete.component';
 import {TextMaskModule} from 'angular2-text-mask';
@@ -71,16 +72,17 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     CovalentDialogsModule,
     CovalentPagingModule,
     FormsModule,
-    MdAutocompleteModule,
-    MdButtonModule,
-    MdCardModule,
-    MdIconModule,
-    MdInputModule,
-    MdListModule,
-    MdOptionModule,
-    MdSnackBarModule,
-    MdToolbarModule,
-    MdTooltipModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     TextMaskModule,
     TranslateModule

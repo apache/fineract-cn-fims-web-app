@@ -34,7 +34,15 @@ import {EffectsModule} from '@ngrx/effects';
 import {OfficeRouteEffects} from './store/effects/route.effects';
 import {OfficeApiEffects} from './store/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
-import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule, MdToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatRadioModule,
+  MatToolbarModule
+} from '@angular/material';
 import {CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {CommonModule} from '@angular/common';
 import {TellerApiEffects} from './store/teller/effects/service.effects';
@@ -62,13 +70,13 @@ import {BalanceSheetService} from './detail/teller/detail/balance/services/balan
     ReactiveFormsModule,
     TranslateModule,
     CommonModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdRadioModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentDataTableModule,

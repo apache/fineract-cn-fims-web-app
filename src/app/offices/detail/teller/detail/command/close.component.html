@@ -23,9 +23,9 @@
       </fims-teller-adjustment-form>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="close()" [disabled]="form.invalid">{{'CLOSE TELLER' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="close()" [disabled]="form.invalid">{{'CLOSE TELLER' | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

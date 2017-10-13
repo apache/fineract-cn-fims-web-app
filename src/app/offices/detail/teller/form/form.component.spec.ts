@@ -19,13 +19,13 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MdCheckboxModule, MdInputModule, MdRadioModule} from '@angular/material';
 import {CovalentStepsModule} from '@covalent/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {OfficeTellerFormComponent} from './form.component';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
+import {MatCheckboxModule, MatInputModule, MatRadioModule} from '@angular/material';
 
 describe('Test teller form', () => {
 
@@ -37,9 +37,9 @@ describe('Test teller form', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
-        MdCheckboxModule,
-        MdRadioModule,
-        MdInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatInputModule,
         CovalentStepsModule,
         FimsSharedModule,
         ReactiveFormsModule,
@@ -67,7 +67,7 @@ describe('Test teller form', () => {
   });
 
   it('should trigger save event', () => {
-    const button: DebugElement = fixture.debugElement.query(By.css('button[md-raised-button]'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button[mat-raised-button]'));
 
     button.nativeElement.click();
 
@@ -75,7 +75,7 @@ describe('Test teller form', () => {
   });
 
   it('should trigger cancel event', () => {
-    const button: DebugElement = fixture.debugElement.query(By.css('button[md-button]'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button[mat-button]'));
 
     button.nativeElement.click();
 

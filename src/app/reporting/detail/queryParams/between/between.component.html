@@ -16,25 +16,25 @@
 
 <div layout="column" [formGroup]="formGroup">
   <div class="pad-bottom-xs">
-    <div class="md-body-1">{{placeholder}}</div>
+    <div class="mat-body-1">{{placeholder}}</div>
     <div layout="row">
-      <md-input-container floatPlaceholder="always">
-        <input mdInput
+      <mat-form-field floatPlaceholder="always">
+        <input matInput
                formControlName="start"
                placeholder="Start"
                [attr.type]="type"
                flex>
-        <md-error *ngIf="formGroup.get('start').hasError('required')" translate>Required</md-error>
-      </md-input-container>
-      <md-input-container floatPlaceholder="always">
-        <input mdInput
+        <mat-error *ngIf="formGroup.get('start').hasError('required')" translate>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field floatPlaceholder="always">
+        <input matInput
                formControlName="end"
                placeholder="End"
                [attr.type]="type"
                flex>
-        <md-error *ngIf="formGroup.get('end').hasError('required')" translate>Required</md-error>
-        <md-hint class="tc-red-500" *ngIf="formGroup.hasError('rangeInvalid') || formGroup.hasError('greaterThan')" translate>Invalid range</md-hint>
-      </md-input-container>
+        <mat-error *ngIf="formGroup.get('end').hasError('required')" translate>Required</mat-error>
+        <mat-hint class="tc-red-500" *ngIf="formGroup.hasError('rangeInvalid') || formGroup.hasError('greaterThan')" translate>Invalid range</mat-hint>
+      </mat-form-field>
     </div>
   </div>
 </div>
