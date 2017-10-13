@@ -16,37 +16,37 @@
 
 <form [formGroup]="form">
   <div layout-gt-xs="column" layout-margin formArrayName="documents">
-    <md-card *ngFor="let document of documentControls; let i=index" [formGroupName]="i">
-      <md-card-content>
+    <mat-card *ngFor="let document of documentControls; let i=index" [formGroupName]="i">
+      <mat-card-content>
         <div layout="row" layout-align="start center">
           <fims-text-input [form]="document" controlName="description" placeholder="{{'Description' | translate}}"></fims-text-input>
           <div layout="row">
-            <md-input-container tdFileDrop
+            <mat-form-field tdFileDrop
                                 (click)="fileInput.inputElement.click()"
                                 (keyup.enter)="fileInput.inputElement.click()"
                                 (keyup.delete)="fileInput.clear()"
                                 (keyup.backspace)="fileInput.clear()"
                                 flex
                                 layout-margin>
-              <input mdInput
+              <input matInput
                      placeholder="select document"
                      [value]="document.get('file').value ? document.get('file').value.name : ''"
                      readonly/>
-            </md-input-container>
-            <button md-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
-              <md-icon>cancel</md-icon>
+            </mat-form-field>
+            <button mat-icon-button *ngIf="files" (click)="fileInput.clear()" (keyup.enter)="fileInput.clear()">
+              <mat-icon>cancel</mat-icon>
             </button>
             <td-file-input class="push-left-sm push-right-sm" #fileInput formControlName="file">
-              <md-icon>folder</md-icon>
+              <mat-icon>folder</mat-icon>
               <span class="text-upper" translate>Browse...</span>
             </td-file-input>
           </div>
-          <button md-button (click)="removeDocument(i)">{{'REMOVE DOCUMENT' | translate}}</button>
+          <button mat-button (click)="removeDocument(i)">{{'REMOVE DOCUMENT' | translate}}</button>
         </div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
     <div layout="row">
-      <button flex md-button md-raised-button (click)="addDocument()">{{'ADD DOCUMENT' | translate}}</button>
+      <button flex mat-button mat-raised-button (click)="addDocument()">{{'ADD DOCUMENT' | translate}}</button>
     </div>
   </div>
 </form>

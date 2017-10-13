@@ -16,59 +16,59 @@
 
 <fims-layout-card-over [title]="product.name" [subTitle]="product.description" [navigateBackTo]="['../../../']">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *ngIf="canDelete$ | async"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *ngIf="canDelete$ | async"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
   <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}" color="warn" icon="error">
-    <button td-message-actions md-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
+    <button td-message-actions mat-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
   <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a member ' | translate }}" color="accent" icon="check">
-    <button td-message-actions md-button (click)="disableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
+    <button td-message-actions mat-button (click)="disableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>DISABLE PRODUCT</button>
   </td-message>
   <fims-two-column-layout>
-    <md-nav-list left>
-      <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['./charges']">
-        <md-icon md-list-avatar>assignment</md-icon>
-        <h3 md-line translate>Fees</h3>
-        <p md-line translate>Manage fees</p>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['./charges']">
+        <mat-icon matListAvatar>assignment</mat-icon>
+        <h3 matLine translate>Fees</h3>
+        <p matLine translate>Manage fees</p>
       </a>
-      <a md-list-item [routerLink]="['./tasks']">
-        <md-icon md-list-avatar>playlist_add_check</md-icon>
-        <h3 md-line translate>Tasks</h3>
-        <p md-line translate>Manage tasks of this product</p>
+      <a mat-list-item [routerLink]="['./tasks']">
+        <mat-icon matListAvatar>playlist_add_check</mat-icon>
+        <h3 matLine translate>Tasks</h3>
+        <p matLine translate>Manage tasks of this product</p>
       </a>
-      <a md-list-item [routerLink]="['./lossProvision']" *hasPermission="{ id: 'portfolio_loss_provision', accessLevel: 'READ' }">
-        <md-icon md-list-avatar>trending_down</md-icon>
-        <h3 md-line translate>Loss provision configuration</h3>
+      <a mat-list-item [routerLink]="['./lossProvision']" *hasPermission="{ id: 'portfolio_loss_provision', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>trending_down</mat-icon>
+        <h3 matLine translate>Loss provision configuration</h3>
       </a>
-    </md-nav-list>
-    <md-list right>
-      <md-list-item>
-        <h3 md-line translate>Balance range</h3>
-        <p md-line>{{product.balanceRange?.minimum | number:numberFormat}} - {{product.balanceRange?.maximum | number:numberFormat}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Interest range</h3>
-        <p md-line>{{product.interestBasis | translate}}</p>
-        <p md-line>{{product.interestRange?.minimum | number:numberFormat}} - {{product.interestRange?.maximum | number:numberFormat}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Term</h3>
-        <p md-line>{{product.termRange?.maximum | number}} {{product.termRange?.temporalUnit | translate}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Currency</h3>
-        <p md-line>{{product.currencyCode}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Created by</h3>
-        <p md-line>{{product.createdBy}} - {{product.createdOn | date:'medium'}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Last modified by</h3>
-        <p md-line>{{product.lastModifiedBy}} - {{product.lastModifiedOn | date:'medium'}}</p>
-      </md-list-item>
-    </md-list>
+    </mat-nav-list>
+    <mat-list right>
+      <mat-list-item>
+        <h3 matLine translate>Balance range</h3>
+        <p matLine>{{product.balanceRange?.minimum | number:numberFormat}} - {{product.balanceRange?.maximum | number:numberFormat}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Interest range</h3>
+        <p matLine>{{product.interestBasis | translate}}</p>
+        <p matLine>{{product.interestRange?.minimum | number:numberFormat}} - {{product.interestRange?.maximum | number:numberFormat}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Term</h3>
+        <p matLine>{{product.termRange?.maximum | number}} {{product.termRange?.temporalUnit | translate}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Currency</h3>
+        <p matLine>{{product.currencyCode}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Created by</h3>
+        <p matLine>{{product.createdBy}} - {{product.createdOn | date:'medium'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Last modified by</h3>
+        <p matLine>{{product.lastModifiedBy}} - {{product.lastModifiedOn | date:'medium'}}</p>
+      </mat-list-item>
+    </mat-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
 <fims-fab-button title="{{'Edit product' | translate}}" icon="mode_edit" [link]="['edit']" *ngIf="canEdit$ | async"></fims-fab-button>

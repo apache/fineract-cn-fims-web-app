@@ -19,14 +19,7 @@ import {LoginComponent} from './login.component';
 import {LoginRoutes} from './login.routing';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdSelectModule,
-  MdTooltipModule
-} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSelectModule, MatTooltipModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {CovalentLoadingModule} from '@covalent/core';
@@ -38,12 +31,12 @@ import {CovalentLoadingModule} from '@covalent/core';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdCardModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSelectModule,
-    MdTooltipModule,
+    MatIconModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatTooltipModule,
     CovalentLoadingModule
   ],
   declarations: [

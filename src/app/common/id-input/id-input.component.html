@@ -14,23 +14,23 @@
  limitations under the License.
 -->
 
-<md-input-container [formGroup]="form" flex layout-margin>
-  <input mdInput [id]="controlName" placeholder="{{placeholder | translate}}" [formControlName]="controlName"
+<mat-form-field [formGroup]="form" flex layout-margin>
+  <input matInput [id]="controlName" placeholder="{{placeholder | translate}}" [formControlName]="controlName"
           [readonly]="readonly"
           tdAutoTrim/>
-  <md-error *ngIf="form.controls[controlName].hasError('required')" translate>
+  <mat-error *ngIf="form.controls[controlName].hasError('required')" translate>
     Unique, Required.
-  </md-error>
-  <md-error *ngIf="form.controls[controlName].hasError('minlength')">
+  </mat-error>
+  <mat-error *ngIf="form.controls[controlName].hasError('minlength')">
     {{ 'Must have at least characters.' | translate:{ value: form.controls[controlName].getError('minlength')['requiredLength']} }}
-  </md-error>
-  <md-error *ngIf="form.controls[controlName].hasError('maxlength')">
+  </mat-error>
+  <mat-error *ngIf="form.controls[controlName].hasError('maxlength')">
     {{ 'Only characters allowed.' | translate:{ value: form.controls[controlName].getError('maxlength')['requiredLength']} }}
-  </md-error>
-  <md-error *ngIf="form.controls[controlName].hasError('unique')" translate>
+  </mat-error>
+  <mat-error *ngIf="form.controls[controlName].hasError('unique')" translate>
     Please enter a different identifier.
-  </md-error>
-  <md-error *ngIf="form.controls[controlName].hasError('urlSafe')" translate>
+  </mat-error>
+  <mat-error *ngIf="form.controls[controlName].hasError('urlSafe')" translate>
     Only alphabetic, decimal digits, - _ . * characters allowed
-  </md-error>
-</md-input-container>
+  </mat-error>
+</mat-form-field>

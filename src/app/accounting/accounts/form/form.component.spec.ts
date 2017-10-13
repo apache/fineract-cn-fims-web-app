@@ -21,7 +21,7 @@ import {Account} from '../../../services/accounting/domain/account.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FimsSharedModule} from '../../../common/common.module';
-import {MdCheckboxModule, MdInputModule, MdRadioModule} from '@angular/material';
+import {MatCheckboxModule, MatInputModule, MatRadioModule} from '@angular/material';
 import {CovalentStepsModule} from '@covalent/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -35,9 +35,9 @@ describe('Test account form', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
-        MdCheckboxModule,
-        MdRadioModule,
-        MdInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatInputModule,
         CovalentStepsModule,
         FimsSharedModule,
         ReactiveFormsModule,
@@ -76,7 +76,7 @@ describe('Test account form', () => {
 
 @Component({
   template: `
-    <fims-account-form-component 
+    <fims-account-form-component
       (onSave)="onSave($event)"
       (onCancel)="onCancel($event)"
       [account]="account"

@@ -20,7 +20,6 @@ import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
 import {Observable} from 'rxjs/Observable';
 import {IdentityService} from '../../services/identity/identity.service';
-import {MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
 import {Role} from '../../services/identity/domain/role.model';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../common/id-input/id-input.component';
@@ -28,6 +27,7 @@ import {PermittableGroupIdMapper} from '../../services/security/authz/permittabl
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormPermissionService} from '../helper/form-permission.service';
 import {PermissionListItemComponent} from '../components/permission-list-item.component';
+import {MatCheckboxModule, MatIconModule, MatInputModule} from '@angular/material';
 
 class FakeLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -66,9 +66,9 @@ describe('Test roles form', () => {
       imports: [
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        MdInputModule,
-        MdIconModule,
-        MdCheckboxModule,
+        MatInputModule,
+        MatIconModule,
+        MatCheckboxModule,
         FormsModule,
         ReactiveFormsModule
       ],

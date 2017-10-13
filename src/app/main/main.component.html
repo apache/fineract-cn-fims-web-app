@@ -14,58 +14,58 @@
  limitations under the License.
 -->
 <div layout="column" layout-fill>
-  <md-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></md-progress-bar>
-  <md-toolbar color="primary" class="md-whiteframe-z1">
-    <button md-icon-button (click)="toggleSideNav()">
-      <md-icon>menu</md-icon>
+  <mat-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-bar>
+  <mat-toolbar color="primary" class="mat-whiteframe-z1">
+    <button mat-icon-button (click)="toggleSideNav()">
+      <mat-icon>menu</mat-icon>
     </button>
     <span flex></span>
-    <md-menu #menu="mdMenu" x-position="before">
-      <button md-menu-item [disabled]="true">
-        <md-icon>account_circle</md-icon>
+    <mat-menu #menu="matMenu" x-position="before">
+      <button mat-menu-item [disabled]="true">
+        <mat-icon>account_circle</mat-icon>
         <span>{{username$ | async}}</span>
       </button>
       <hr>
-      <button md-menu-item (click)="goToSettings()">
-        <md-icon>settings</md-icon>
+      <button mat-menu-item (click)="goToSettings()">
+        <mat-icon>settings</mat-icon>
         <span>{{'Settings' | translate}}</span>
       </button>
-      <button md-menu-item (click)="logout()">
-        <md-icon>exit_to_app</md-icon>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
         <span>{{'Sign Out' | translate}}</span>
       </button>
-    </md-menu>
+    </mat-menu>
     <span flex></span>
-    <button md-icon-button [md-menu-trigger-for]="menu">
-      <md-icon>account_circle</md-icon>
+    <button mat-icon-button [mat-menu-trigger-for]="menu">
+      <mat-icon>account_circle</mat-icon>
     </button>
-  </md-toolbar>
-  <md-sidenav-container>
-    <md-sidenav
+  </mat-toolbar>
+  <mat-sidenav-container>
+    <mat-sidenav
       [mode]="'side'"
       [opened]="isOpened$ | async">
-      <md-toolbar>
+      <mat-toolbar>
         <div layout="column">
           <span layout="row" layout-align="start center">
-            <span class="md-subhead" mdTooltip="{{ 'Tenant' | translate }}" mdTooltipPosition="right">{{tenant$ | async}}</span>
+            <span class="mat-subhead" matTooltip="{{ 'Tenant' | translate }}" matTooltipPosition="right">{{tenant$ | async}}</span>
           </span>
         </div>
-      </md-toolbar>
-      <md-nav-list>
+      </mat-toolbar>
+      <mat-nav-list>
         <ng-container *ngFor="let menuItem of menuItems; let i = index">
-          <a md-list-item [routerLink]="[menuItem.routerLink]" routerLinkActive="active" *hasPermission="menuItem.permission">
-            <md-icon md-list-avatar>{{menuItem.icon}}</md-icon>
-            <h3 md-line>{{menuItem.title | translate}}</h3>
-            <p md-line>{{menuItem.description | translate}}</p>
+          <a mat-list-item [routerLink]="[menuItem.routerLink]" routerLinkActive="active" *hasPermission="menuItem.permission">
+            <mat-icon matListAvatar>{{menuItem.icon}}</mat-icon>
+            <h3 matLine>{{menuItem.title | translate}}</h3>
+            <p matLine>{{menuItem.description | translate}}</p>
           </a>
-          <md-divider *ngIf="i === 0"></md-divider>
+          <mat-divider *ngIf="i === 0"></mat-divider>
         </ng-container>
-      </md-nav-list>
-    </md-sidenav>
+      </mat-nav-list>
+    </mat-sidenav>
     <!-- Main content -->
     <div layout-fill>
       <router-outlet></router-outlet>
     </div>
-  </md-sidenav-container>
+  </mat-sidenav-container>
   <fims-notification></fims-notification>
 </div>

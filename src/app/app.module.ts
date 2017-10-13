@@ -32,7 +32,6 @@ import {PermittableGroupIdMapper} from './services/security/authz/permittable-gr
 import {reducer} from './store';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {NotificationService} from './services/notification/notification.service';
 import {OfficeSearchApiEffects} from './store/office/effects/service.effects';
 import {EmployeeSearchApiEffects} from './store/employee/effects/service.effects';
@@ -52,7 +51,6 @@ import {CurrencyService} from './services/currency/currency.service';
 import {TellerService} from './services/teller/teller-service';
 import {ReportingService} from './services/reporting/reporting.service';
 import {getSelectedLanguage} from './common/i18n/translate';
-import {environment} from '../environments/environment';
 import {ChequeService} from './services/cheque/cheque.service';
 import {PayrollService} from './services/payroll/payroll.service';
 
@@ -77,8 +75,6 @@ export function HttpLoaderFactory(http: Http) {
     }),
     appRoutes,
     StoreModule.provideStore(reducer),
-
-    !environment.production ? StoreDevtoolsModule.instrumentOnlyWithExtension({ maxAge: 5 }) : [],
 
     /**
      * Root effects

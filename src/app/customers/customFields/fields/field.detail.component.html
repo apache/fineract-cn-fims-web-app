@@ -16,54 +16,54 @@
 
 <fims-layout-card-over title="{{'Custom field' | translate }}" [navigateBackTo]="['../../../../../../']" *ngIf="(field$ | async) as field">
   <fims-layout-card-over-header-menu *ngIf="(catalog$ | async) as catalog">
-    <button md-icon-button (click)="deleteField(catalog.identifier, field)" title="{{'Delete this field' | translate}}">
-      <md-icon>delete</md-icon>
+    <button mat-icon-button (click)="deleteField(catalog.identifier, field)" title="{{'Delete this field' | translate}}">
+      <mat-icon>delete</mat-icon>
     </button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content inset" flex>
+  <div class="mat-content inset" flex>
     <div layout="row">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Data type</h3>
-          <p md-line>{{field.dataType}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Label</h3>
-          <p md-line>{{field.label}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Hint</h3>
-          <p md-line>{{field.hint}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Description</h3>
-          <p md-line>{{field.description}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Mandatory</h3>
-          <p md-line>{{field.mandatory}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Length</h3>
-          <p md-line>{{field.length}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Max digits</h3>
-          <p md-line>{{field.precision}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Min value</h3>
-          <p md-line>{{field.minValue}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Max value</h3>
-          <p md-line>{{field.maxValue}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Created by</h3>
-          <p md-line>{{field.createdBy}} - {{field.createdOn | date:'medium'}}</p>
-        </md-list-item>
-      </md-list>
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Data type</h3>
+          <p matLine>{{field.dataType}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Label</h3>
+          <p matLine>{{field.label}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Hint</h3>
+          <p matLine>{{field.hint}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Description</h3>
+          <p matLine>{{field.description}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Mandatory</h3>
+          <p matLine>{{field.mandatory}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Length</h3>
+          <p matLine>{{field.length}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Max digits</h3>
+          <p matLine>{{field.precision}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Min value</h3>
+          <p matLine>{{field.minValue}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Max value</h3>
+          <p matLine>{{field.maxValue}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Created by</h3>
+          <p matLine>{{field.createdBy}} - {{field.createdOn | date:'medium'}}</p>
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </fims-layout-card-over>

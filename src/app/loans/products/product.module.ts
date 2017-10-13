@@ -57,16 +57,16 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdSlideToggleModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CovalentDataTableModule, CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
@@ -96,16 +96,16 @@ import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detai
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSlideToggleModule,
-    MdRadioModule,
-    MdOptionModule,
-    MdSelectModule,
-    MdCheckboxModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule,
     CovalentDataTableModule,
     CovalentStepsModule,
     CovalentMessageModule,

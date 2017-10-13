@@ -38,9 +38,9 @@
           </fims-customer-select>
           <fims-text-input [form]="payment" controlName="employer" placeholder="{{'Employer' | translate}}"></fims-text-input>
           <fims-number-input placeholder="Salary" [form]="payment" controlName="salary"></fims-number-input>
-          <button md-button (click)="removePayment(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
+          <button mat-button (click)="removePayment(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
         </div>
-        <button md-button (click)="addPayment()">{{'Add payment' | translate}}</button>
+        <button mat-button (click)="addPayment()">{{'Add payment' | translate}}</button>
       </div>
     </form>
     <ng-template td-step-actions>

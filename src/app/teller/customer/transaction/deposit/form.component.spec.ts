@@ -17,7 +17,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
-import {MdButtonModule, MdCheckboxModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatInputModule, MatOptionModule, MatSelectModule} from '@angular/material';
 import {Component, DebugElement, ViewChild} from '@angular/core';
 import {DepositTransactionFormComponent} from './form.component';
 import {By} from '@angular/platform-browser';
@@ -50,11 +50,11 @@ describe('Test transaction form', () => {
         FimsSharedModule,
         FormsModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdButtonModule,
-        MdSelectModule,
-        MdOptionModule,
-        MdCheckboxModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatCheckboxModule,
         CovalentStepsModule,
         CovalentDataTableModule
       ],
@@ -197,8 +197,8 @@ describe('Test transaction form', () => {
 
 @Component({
   template: `<fims-teller-transaction-form #form
-                                           [productInstances]="productInstances" 
-                                           [cashdrawLimit]="cashdrawLimit" 
+                                           [productInstances]="productInstances"
+                                           [cashdrawLimit]="cashdrawLimit"
                                            [transactionType]="transactionType">
             </fims-teller-transaction-form>`
 })

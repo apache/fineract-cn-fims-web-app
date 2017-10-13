@@ -16,9 +16,9 @@
 
 <fims-layout-card-over [title]="range.identifier" [navigateBackTo]="['../../../../../../../']" *ngIf="(range$ | async) as range">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="deleteRange(range)" title="{{'Delete this range' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteRange(range)" title="{{'Delete this range' | translate}}" *hasPermission="{ id: 'portfolio_products', accessLevel: 'CHANGE'}"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content inset" flex>
+  <div class="mat-content inset" flex>
     <div layout="row">
       <td-data-table
         flex

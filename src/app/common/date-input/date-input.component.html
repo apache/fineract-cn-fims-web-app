@@ -14,9 +14,9 @@
  limitations under the License.
 -->
 
-<md-input-container layout-margin [formGroup]="form">
-  <input mdInput type="date" [id]="controlName" [placeholder]="placeholder" [formControlName]="controlName" [title]="title"/>
-  <md-error *ngIf="hasRequiredError" translate>Required</md-error>
-  <md-error *ngIf="hasBeforeTodayError" translate>Date must be before today</md-error>
-  <md-error *ngIf="hasAfterTodayError" translate>Date must be after today</md-error>
-</md-input-container>
+<mat-form-field layout-margin [formGroup]="form">
+  <input matInput type="date" [id]="controlName" [placeholder]="placeholder" [formControlName]="controlName" [title]="title"/>
+  <mat-error *ngIf="hasRequiredError" translate>Required</mat-error>
+  <mat-error *ngIf="hasBeforeTodayError" translate>Date must be before today</mat-error>
+  <mat-error *ngIf="hasAfterTodayError" translate>Date must be after today</mat-error>
+</mat-form-field>

@@ -19,6 +19,6 @@
 </div>
 <div layout="column">
   <fims-number-input [form]="form" [controlName]="maxControlName" [placeholder]="maxPlaceholder" [requireDecimal]="requireDecimal" [decimalLimit]="decimalLimit"></fims-number-input>
-  <md-error *ngIf="form.touched && form.hasError('greaterThan')" layout-margin translate>Must be greater than minimum</md-error>
-  <md-error *ngIf="form.touched && form.hasError('greaterThanEquals')" layout-margin translate>Must be greater than or equal minimum</md-error>
+  <mat-error *ngIf="form.touched && form.hasError('greaterThan')" layout-margin translate>Must be greater than minimum</mat-error>
+  <mat-error *ngIf="form.touched && form.hasError('greaterThanEquals')" layout-margin translate>Must be greater than or equal minimum</mat-error>
 </div>

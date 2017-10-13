@@ -17,7 +17,6 @@ import {Component, ViewChild} from '@angular/core';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MdAutocompleteModule, MdInputModule} from '@angular/material';
 import {CovalentStepsModule} from '@covalent/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {AddressFormComponent} from './address.component';
@@ -25,6 +24,7 @@ import {Address} from '../../services/domain/address/address.model';
 import {CountryService} from '../../services/country/country.service';
 import {Country} from '../../services/country/model/country.model';
 import {FimsSharedModule} from '../common.module';
+import {MatAutocompleteModule, MatInputModule} from '@angular/material';
 
 const country: Country = {
   displayName: 'country',
@@ -44,8 +44,8 @@ describe('Test address form', () => {
       imports: [
         TranslateModule.forRoot(),
         FimsSharedModule,
-        MdInputModule,
-        MdAutocompleteModule,
+        MatInputModule,
+        MatAutocompleteModule,
         CovalentStepsModule,
         ReactiveFormsModule,
         NoopAnimationsModule

@@ -15,16 +15,16 @@
 -->
 
 <div layout="row">
-  <md-input-container layout-margin flex>
-    <input mdInput [placeholder]="title" [mdAutocomplete]="auto" [formControl]="formControl">
-    <md-hint class="tc-red-600">
+  <mat-form-field layout-margin flex>
+    <input matInput [placeholder]="title" [matAutocomplete]="auto" [formControl]="formControl">
+    <mat-hint class="tc-red-600">
       <ng-content></ng-content>
-    </md-hint>
-  </md-input-container>
+    </mat-hint>
+  </mat-form-field>
 </div>
 
-<md-autocomplete #auto="mdAutocomplete">
-  <md-option *ngFor="let transactionType of transactionTypes | async" [value]="transactionType.code">
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let transactionType of transactionTypes | async" [value]="transactionType.code">
     {{ transactionType.code }}({{ transactionType.name }})
-  </md-option>
-</md-autocomplete>
+  </mat-option>
+</mat-autocomplete>

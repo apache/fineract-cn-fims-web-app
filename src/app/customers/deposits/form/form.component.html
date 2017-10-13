@@ -17,13 +17,13 @@
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Assign product' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
     <form [formGroup]="detailForm" layout="column">
-      <div layout="row" class="pad-top" *ngIf="!editMode">
-        <md-select formControlName="productIdentifier" layout-margin placeholder="{{ 'Select product' | translate }}">
-          <md-option *ngFor="let definition of productDefinitions" [value]="definition.identifier">
+      <mat-form-field layout-margin *ngIf="!editMode">
+        <mat-select formControlName="productIdentifier" placeholder="{{ 'Select product' | translate }}">
+          <mat-option *ngFor="let definition of productDefinitions" [value]="definition.identifier">
             {{definition.name}}
-          </md-option>
-        </md-select>
-      </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div layout="row">
         <td-chips [items]="filteredCustomers | async"
                   [debounce]="500"

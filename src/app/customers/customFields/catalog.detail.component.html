@@ -16,31 +16,31 @@
 
 <fims-layout-card-over title="{{'Custom fields' | translate }}" [navigateBackTo]="['../../../']">
   <fims-layout-card-over-header-menu *ngIf="(catalog$ | async) as catalog">
-    <button md-icon-button (click)="deleteCatalog(catalog)" title="{{'Delete this catalog' | translate}}">
-      <md-icon>delete</md-icon>
+    <button mat-icon-button (click)="deleteCatalog(catalog)" title="{{'Delete this catalog' | translate}}">
+      <mat-icon>delete</mat-icon>
     </button>
   </fims-layout-card-over-header-menu>
   <ng-container *ngIf="(catalog$ | async) as catalog; else elseBlock">
-    <div class="md-content inset" flex>
+    <div class="mat-content inset" flex>
       <div layout="row">
-        <md-list>
-          <md-list-item>
-            <h3 md-line translate>Name</h3>
-            <p md-line>{{catalog.name}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Description</h3>
-            <p md-line>{{catalog.description}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Created by</h3>
-            <p md-line>{{catalog.createdBy}} - {{catalog.createdOn | date:'medium'}}</p>
-          </md-list-item>
-          <md-list-item>
-            <h3 md-line translate>Last modified by</h3>
-            <p md-line>{{catalog.lastModifiedBy}} - {{catalog.lastModifiedOn | date:'medium'}}</p>
-          </md-list-item>
-        </md-list>
+        <mat-list>
+          <mat-list-item>
+            <h3 matLine translate>Name</h3>
+            <p matLine>{{catalog.name}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Description</h3>
+            <p matLine>{{catalog.description}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Created by</h3>
+            <p matLine>{{catalog.createdBy}} - {{catalog.createdOn | date:'medium'}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 matLine translate>Last modified by</h3>
+            <p matLine>{{catalog.lastModifiedBy}} - {{catalog.lastModifiedOn | date:'medium'}}</p>
+          </mat-list-item>
+        </mat-list>
       </div>
       <fims-data-table flex
                        [columns]="columns"
@@ -52,7 +52,7 @@
   <ng-template #elseBlock>
     <td-message label="{{'No custom fields found' | translate }}"
                 color="warn" icon="error">
-      <button td-message-actions md-button [routerLink]="['edit']"
+      <button td-message-actions mat-button [routerLink]="['edit']"
               *hasPermission="{ id: 'catalog_catalogs', accessLevel: 'CHANGE'}" translate>CREATE CUSTOM FIELDS
       </button>
     </td-message>

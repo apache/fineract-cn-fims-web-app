@@ -58,16 +58,16 @@ import {ChartOfAccountTableComponent} from './chartOfAccounts/chart-of-account-t
 import {SubLedgerListComponent} from './subLedger/sub-ledger.list.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule,
-  MdToolbarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {CovalentDataTableModule, CovalentStepsModule} from '@covalent/core';
@@ -102,16 +102,16 @@ import {FinancialConditionComponent} from './financialCondition/financial-condit
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdRadioModule,
-    MdCheckboxModule,
-    MdAutocompleteModule,
-    MdOptionModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatAutocompleteModule,
+    MatOptionModule,
     CovalentDataTableModule,
     CovalentStepsModule,
 

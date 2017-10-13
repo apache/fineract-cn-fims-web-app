@@ -21,9 +21,9 @@
       <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Cheque amount' | translate}}"></fims-text-input>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="save()" [disabled]="form.invalid">{{'ISSUE CHEQUES' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">{{'ISSUE CHEQUES' | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

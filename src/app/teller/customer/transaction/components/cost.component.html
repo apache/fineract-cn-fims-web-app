@@ -15,36 +15,40 @@
 -->
 
 <table td-data-table>
-  <tr>
-    <th td-data-table-column>
-      <span translate>Name</span>
-    </th>
-    <th td-data-table-column>
-      <span translate>Description</span>
-    </th>
-    <th td-data-table-column>
-      <span translate>Amount</span>
-    </th>
-  </tr>
-  <tr td-data-table-row>
-    <td td-data-table-cell translate>Transaction amount</td>
-    <td td-data-table-cell></td>
-    <td td-data-table-cell>{{transactionAmount}}</td>
-  </tr>
-  <tr td-data-table-row *ngFor="let row of transactionCosts?.charges">
-    <td td-data-table-cell>
-      {{row['name']}}
-    </td>
-    <td td-data-table-cell>
-      {{row['description'] }}
-    </td>
-    <td td-data-table-cell>
-      {{row['amount']}}
-    </td>
-  </tr>
-  <tr td-data-table-row>
-    <td td-data-table-cell translate>Total</td>
-    <td td-data-table-cell></td>
-    <td td-data-table-cell>{{transactionCosts?.totalAmount}}</td>
-  </tr>
+  <thead>
+    <tr td-data-table-column-row>
+      <th td-data-table-column>
+        <span translate>Name</span>
+      </th>
+      <th td-data-table-column>
+        <span translate>Description</span>
+      </th>
+      <th td-data-table-column>
+        <span translate>Amount</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr td-data-table-row>
+      <td td-data-table-cell translate>Transaction amount</td>
+      <td td-data-table-cell></td>
+      <td td-data-table-cell>{{transactionAmount}}</td>
+    </tr>
+    <tr td-data-table-row *ngFor="let row of transactionCosts?.charges">
+      <td td-data-table-cell>
+        {{row['name']}}
+      </td>
+      <td td-data-table-cell>
+        {{row['description'] }}
+      </td>
+      <td td-data-table-cell>
+        {{row['amount']}}
+      </td>
+    </tr>
+    <tr td-data-table-row>
+      <td td-data-table-cell translate>Total</td>
+      <td td-data-table-cell></td>
+      <td td-data-table-cell>{{transactionCosts?.totalAmount}}</td>
+    </tr>
+  </tbody>
 </table>

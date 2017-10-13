@@ -19,38 +19,38 @@
     <fims-layout-card-over-header-menu layout="row" layout-align="end center">
       <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchOffice($event)"
                      [alwaysVisible]="false"></td-search-box>
-      <a md-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }">
-        <md-icon>mode_edit</md-icon>
+      <a mat-icon-button [routerLink]="['edit']" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }">
+        <mat-icon>mode_edit</mat-icon>
       </a>
-      <button md-icon-button (click)="deleteOffice(office)" title="{{'Delete this office' | translate}}"
+      <button mat-icon-button (click)="deleteOffice(office)" title="{{'Delete this office' | translate}}"
               *ngIf="canDelete$ | async">
-        <md-icon>delete</md-icon>
+        <mat-icon>delete</mat-icon>
       </button>
     </fims-layout-card-over-header-menu>
     <fims-two-column-layout>
-      <md-nav-list left>
-        <h3 md-subheader translate>Management</h3>
-        <a md-list-item [routerLink]="['tellers']" *hasPermission="{ id: 'teller_management', accessLevel: 'READ'}">
-          <md-icon md-list-avatar>person</md-icon>
-          <h3 md-line translate>Tellers</h3>
-          <p md-line translate>Manage tellers</p>
+      <mat-nav-list left>
+        <h3 mat-subheader translate>Management</h3>
+        <a mat-list-item [routerLink]="['tellers']" *hasPermission="{ id: 'teller_management', accessLevel: 'READ'}">
+          <mat-icon matListAvatar>person</mat-icon>
+          <h3 matLine translate>Tellers</h3>
+          <p matLine translate>Manage tellers</p>
         </a>
-      </md-nav-list>
+      </mat-nav-list>
       <ng-container right>
-        <md-list>
-          <h3 md-subheader translate>Address</h3>
-          <md-list-item *ngIf="office.address">
-            <md-icon md-list-avatar>location_on</md-icon>
-            <h3 md-line>{{office.address.street}}, {{office.address.postalCode}}, {{office.address.city}}<span *ngIf="office.address.region">({{office.address.region}})</span>
+        <mat-list>
+          <h3 mat-subheader translate>Address</h3>
+          <mat-list-item *ngIf="office.address">
+            <mat-icon matListAvatar>location_on</mat-icon>
+            <h3 matLine>{{office.address.street}}, {{office.address.postalCode}}, {{office.address.city}}<span *ngIf="office.address.region">({{office.address.region}})</span>
             </h3>
-            <p md-line>{{office.address.country}}</p>
-          </md-list-item>
-          <md-list-item *ngIf="!office.address">
-            <md-icon md-list-avatar>location_on</md-icon>
-            <h3 md-line translate>No address available</h3>
-          </md-list-item>
-          <h3 md-subheader translate>Branch offices</h3>
-        </md-list>
+            <p matLine>{{office.address.country}}</p>
+          </mat-list-item>
+          <mat-list-item *ngIf="!office.address">
+            <mat-icon matListAvatar>location_on</mat-icon>
+            <h3 matLine translate>No address available</h3>
+          </mat-list-item>
+          <h3 mat-subheader translate>Branch offices</h3>
+        </mat-list>
 
         <fims-data-table flex
                          (onFetch)="fetchBranches(office.identifier, $event)"
@@ -63,9 +63,9 @@
       </ng-container>
     </fims-two-column-layout>
   </fims-layout-card-over>
-  <a md-fab color="accent" title="{{'Create branch office' | translate}}" class="md-fab-position-bottom-right"
+  <a mat-fab color="accent" title="{{'Create branch office' | translate}}" class="mat-fab-position-bottom-right"
      [routerLink]="['../../../create']"
      [queryParams]="{ parentId: office.identifier }" *hasPermission="{ id: 'office_offices', accessLevel: 'CHANGE' }">
-    <md-icon>add</md-icon>
+    <mat-icon>add</mat-icon>
   </a>
 </ng-container>

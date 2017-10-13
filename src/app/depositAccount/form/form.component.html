@@ -18,11 +18,11 @@
   <td-step #detailsStep label="{{'Product details' | translate}}" [state]="formGroup.valid ? 'complete' : formGroup.pristine ? 'none' : 'required'">
     <form [formGroup]="formGroup" layout="column">
       <div layout="row">
-        <md-radio-group formControlName="type">
-          <md-radio-button *ngFor="let basis of typeOptions" [value]="basis.type" layout-margin>
+        <mat-radio-group formControlName="type">
+          <mat-radio-button *ngFor="let basis of typeOptions" [value]="basis.type" layout-margin>
             {{ basis.label | translate }}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
       <div layout="row">
         <fims-id-input placeholder="Short name" [form]="formGroup" controlName="identifier" [readonly]="editMode"></fims-id-input>
@@ -31,49 +31,51 @@
         <fims-text-input [form]="formGroup" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
       </div>
       <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description(optional)' | translate}}" formControlName="description"></textarea>
-          <md-error *ngIf="formGroup.get('description').hasError('maxlength')">
+        <mat-form-field layout-margin flex>
+          <textarea matInput placeholder="{{'Description(optional)' | translate}}" formControlName="description"></textarea>
+          <mat-error *ngIf="formGroup.get('description').hasError('maxlength')">
             {{ 'Only characters allowed.' | translate:{ value: formGroup.get('description').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
+          </mat-error>
+        </mat-form-field>
       </div>
       <div layout="row">
-        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
-          <md-option *ngFor="let currency of currencies" [value]="currency.code">
-            {{currency.code}}
-          </md-option>
-        </md-select>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="currencyCode" placeholder="{{ 'Currency' | translate }}">
+            <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+              {{currency.code}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div layout="row">
         <fims-number-input [form]="formGroup" controlName="minimumBalance" placeholder="{{'Minimum balance' | translate}}"></fims-number-input>
       </div>
       <div layout="column">
         <span translate>Interest payable:</span>
-        <md-radio-group formControlName="termInterestPayable">
-          <md-radio-button *ngFor="let basis of interestPayableOptions" [value]="basis.type" layout-margin>
+        <mat-radio-group formControlName="termInterestPayable">
+          <mat-radio-button *ngFor="let basis of interestPayableOptions" [value]="basis.type" layout-margin>
             {{ basis.label | translate }}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
       <div layout="row" layout-margin>
-        <md-checkbox formControlName="flexible" [disabled]="editMode" translate>Flexible interest during the term?</md-checkbox>
+        <mat-checkbox formControlName="flexible" [disabled]="editMode" translate>Flexible interest during the term?</mat-checkbox>
       </div>
       <div layout="row">
         <fims-number-input [form]="formGroup" controlName="interest" placeholder="{{'Interest' | translate}}"></fims-number-input>
       </div>
       <div layout="row">
-        <md-slide-toggle formControlName="fixedTermEnabled" layout-margin translate>
+        <mat-slide-toggle formControlName="fixedTermEnabled" layout-margin translate>
           Fixed term?
-        </md-slide-toggle>
+        </mat-slide-toggle>
       </div>
       <div layout="row">
         <fims-text-input type="number" [form]="formGroup" controlName="termPeriod" placeholder="{{'Term period' | translate}}"></fims-text-input>
-        <md-radio-group formControlName="termTimeUnit">
-          <md-radio-button *ngFor="let basis of timeUnitOptions" [value]="basis.type" layout-margin>
+        <mat-radio-group formControlName="termTimeUnit">
+          <mat-radio-button *ngFor="let basis of timeUnitOptions" [value]="basis.type" layout-margin>
             {{ basis.label | translate }}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
       <fims-account-select title="{{'Cash account(Asset accounts only)' | translate}}" formControlName="cashAccountIdentifier" [type]="'ASSET'">
         <ng-container *ngIf="!formGroup.get('cashAccountIdentifier').pristine && formGroup.get('cashAccountIdentifier').hasError('required')" translate>

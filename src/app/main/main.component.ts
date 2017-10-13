@@ -24,8 +24,8 @@ import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../services/security/authz/fims-permission.model';
 import {CountryService} from '../services/country/country.service';
 import {TdMediaService} from '@covalent/core';
-import {MdSidenav} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
+import {MatSidenav} from '@angular/material';
 
 interface MenuItem {
   permission?: FimsPermission;
@@ -44,7 +44,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private routerEventSubscription: Subscription;
 
-  @ViewChild(MdSidenav) sidenav: MdSidenav;
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   menuItems: MenuItem[] = [
     {title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess'},

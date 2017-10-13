@@ -17,7 +17,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReportingComponent} from './reporting.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportingService} from '../services/reporting/reporting.service';
@@ -25,6 +24,7 @@ import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {FimsSharedModule} from '../common/common.module';
 import {RouterLinkStubDirective, RouterOutletStubComponent} from '../common/testing/router-stubs';
+import {MatListModule, MatToolbarModule} from '@angular/material';
 
 describe('Test reporting component', () => {
 
@@ -44,8 +44,8 @@ describe('Test reporting component', () => {
       imports: [
         TranslateModule.forRoot(),
         FimsSharedModule,
-        MdListModule,
-        MdToolbarModule,
+        MatListModule,
+        MatToolbarModule,
         NoopAnimationsModule
       ],
       providers: [

@@ -19,34 +19,36 @@
     <form [formGroup]="form" layout="column">
       <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
       <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
-      <md-input-container layout-margin flex>
-        <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-        <md-error *ngIf="form.get('description').hasError('required')" translate>
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="form.get('description').hasError('required')" translate>
           Required
-        </md-error>
-      </md-input-container>
-      <md-radio-group formControlName="type">
-        <md-radio-button *ngFor="let type of typeOptions" [value]="type.type" layout-margin>
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group formControlName="type">
+        <mat-radio-button *ngFor="let type of typeOptions" [value]="type.type" layout-margin>
           {{type.label}}
-        </md-radio-button>
-      </md-radio-group>
-      <md-checkbox formControlName="mandatory" layout-margin translate>
+        </mat-radio-button>
+      </mat-radio-group>
+      <mat-checkbox formControlName="mandatory" layout-margin translate>
         Mandatory
-      </md-checkbox>
-      <md-checkbox formControlName="predefined" layout-margin translate>
+      </mat-checkbox>
+      <mat-checkbox formControlName="predefined" layout-margin translate>
         Automatically assign this task when member is created
-      </md-checkbox>
+      </mat-checkbox>
       <div layout-gt-xs="column" layout-margin formArrayName="commands">
         <h4 translate>Task needs to be executed, before member </h4>
         <div *ngFor="let test of commands; let i=index" layout="row" [formGroupName]="i">
-          <md-select formControlName="command" flex-gt-xs="15">
-            <md-option *ngFor="let commandOption of commandOptions" [value]="commandOption.command">
-              {{commandOption.label}}
-            </md-option>
-          </md-select>
-          <button md-button (click)="removeCommand(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
+          <mat-form-field>
+            <mat-select formControlName="command">
+              <mat-option *ngFor="let commandOption of commandOptions" [value]="commandOption.command">
+                {{commandOption.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button (click)="removeCommand(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
         </div>
-        <button md-button (click)="addCommand()">{{'Add trigger' | translate}}</button>
+        <button mat-button (click)="addCommand()">{{'Add trigger' | translate}}</button>
       </div>
     </form>
     <ng-template td-step-actions>

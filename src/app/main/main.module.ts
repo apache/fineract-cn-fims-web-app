@@ -23,15 +23,15 @@ import {FimsSharedModule} from '../common/common.module';
 import {NotificationComponent} from './notification.component';
 import {QuickAccessComponent} from '../quickAccess/quick-access.component';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdListModule,
-  MdMenuModule,
-  MdProgressBarModule,
-  MdSidenavModule,
-  MdToolbarModule,
-  MdTooltipModule
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatListModule,
+  MatMenuModule,
+  MatProgressBarModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -43,15 +43,15 @@ import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
     FimsSharedModule,
     TranslateModule,
     CommonModule,
-    MdButtonModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdListModule,
-    MdProgressBarModule,
-    MdIconModule,
-    MdMenuModule,
-    MdTooltipModule,
-    MdCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatProgressBarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatCardModule,
     CovalentLayoutModule,
     CovalentMediaModule
   ],

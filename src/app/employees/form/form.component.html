@@ -21,24 +21,24 @@
       <fims-text-input [form]="detailForm" controlName="firstName" placeholder="{{'First name' | translate}}"></fims-text-input>
       <fims-text-input [form]="detailForm" controlName="middleName" placeholder="{{'Middle name(optional)' | translate}}"></fims-text-input>
       <fims-text-input [form]="detailForm" controlName="lastName" placeholder="{{'Last name' | translate}}"></fims-text-input>
-      <div layout="column">
-        <md-select formControlName="role" layout-margin placeholder="{{ 'Role' | translate }}" flex="15">
-          <md-option *ngFor="let role of roles | async" [value]="role.identifier">
+      <mat-form-field layout-margin>
+        <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
+          <mat-option *ngFor="let role of roles | async" [value]="role.identifier">
             {{ role.identifier }}
-          </md-option>
-        </md-select>
-        <span layout-margin class="tc-red-600" *ngIf="detailForm.get('role').hasError('required')" translate>Required</span>
-      </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="detailForm.get('role').hasError('required')" translate>Required</mat-error>
+      </mat-form-field>
       <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password" tdAutoTrim/>
-          <md-error *ngIf="detailForm.get('password').hasError('required')" translate>
+        <mat-form-field layout-margin flex>
+          <input matInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password" tdAutoTrim/>
+          <mat-error *ngIf="detailForm.get('password').hasError('required')" translate>
             Required
-          </md-error>
-          <md-error *ngIf="detailForm.get('password').hasError('minlength')">
+          </mat-error>
+          <mat-error *ngIf="detailForm.get('password').hasError('minlength')">
             {{ 'Must have at least characters.' | translate:{ value: detailForm.get('password').getError('minlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
+          </mat-error>
+        </mat-form-field>
       </div>
     </form>
     <ng-template td-step-actions>

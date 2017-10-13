@@ -19,8 +19,8 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ReportingBetweenParamComponent} from './between.component';
 import {Component, ViewChild} from '@angular/core';
-import {MdInputModule} from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
+import {MatInputModule} from '@angular/material';
 
 describe('Test between component', () => {
 
@@ -33,7 +33,7 @@ describe('Test between component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        MdInputModule,
+        MatInputModule,
         NoopAnimationsModule
       ],
       declarations: [

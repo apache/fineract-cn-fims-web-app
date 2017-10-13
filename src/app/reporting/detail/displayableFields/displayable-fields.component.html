@@ -14,17 +14,17 @@
  limitations under the License.
 -->
 
-<div class="md-body-1">Locked</div>
+<div class="mat-body-1">Locked</div>
 <td-chips [items]="[]"
           [ngModel]="mandatoryFields"
           [readOnly]="true"
           stacked>
 
   <ng-template td-chip let-chip="chip">
-    <md-icon>lock_outline</md-icon> {{chip.name}}
+    <mat-icon>lock_outline</mat-icon> {{chip.name}}
   </ng-template>
 </td-chips>
-<div class="md-body-1">Additional fields</div>
+<div class="mat-body-1">Additional fields</div>
 <td-chips [items]="filteredOptionalFields"
           [formControl]="optionalFormControl"
           (inputChange)="filterOptionalFields($event)"

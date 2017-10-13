@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<button md-raised-button color="primary" *ngIf="!editMode" (click)="save()" [disabled]="disabled">{{'CREATE ' + resourceName | translate}}</button>
-<button md-raised-button color="primary" *ngIf="editMode" (click)="save()" [disabled]="disabled">{{'UPDATE ' + resourceName | translate}}</button>
+<button mat-raised-button color="primary" *ngIf="!editMode" (click)="save()" [disabled]="disabled">{{'CREATE ' + resourceName | translate}}</button>
+<button mat-raised-button color="primary" *ngIf="editMode" (click)="save()" [disabled]="disabled">{{'UPDATE ' + resourceName | translate}}</button>
 <span flex></span>
-<button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+<button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>

@@ -14,15 +14,15 @@
  limitations under the License.
 -->
 
-<md-list-item [ngSwitch]="command.action">
-  <md-icon md-list-avatar color="primary" *ngSwitchCase="'ACTIVATE'">check_circle</md-icon>
-  <md-icon md-list-avatar color="primary" *ngSwitchCase="'LOCK'">lock</md-icon>
-  <md-icon md-list-avatar color="primary" *ngSwitchCase="'CLOSE'">close</md-icon>
-  <md-icon md-list-avatar color="primary" *ngSwitchCase="'UNLOCK'">lock_open</md-icon>
-  <h3 md-line *ngSwitchCase="'ACTIVATE'" translate>ACTIVATE</h3>
-  <h3 md-line *ngSwitchCase="'LOCK'" translate>LOCK</h3>
-  <h3 md-line *ngSwitchCase="'CLOSE'" translate>CLOSE</h3>
-  <h3 md-line *ngSwitchCase="'UNLOCK'" translate>UNLOCK</h3>
-  <h4 md-line>{{command.createdBy}}, {{command.createdOn | date:'medium'}}</h4>
-  <p md-line>{{command.comment}}</p>
-</md-list-item>
+<mat-list-item [ngSwitch]="command.action">
+  <mat-icon matListAvatar color="primary" *ngSwitchCase="'ACTIVATE'">check_circle</mat-icon>
+  <mat-icon matListAvatar color="primary" *ngSwitchCase="'LOCK'">lock</mat-icon>
+  <mat-icon matListAvatar color="primary" *ngSwitchCase="'CLOSE'">close</mat-icon>
+  <mat-icon matListAvatar color="primary" *ngSwitchCase="'UNLOCK'">lock_open</mat-icon>
+  <h3 matLine *ngSwitchCase="'ACTIVATE'" translate>ACTIVATE</h3>
+  <h3 matLine *ngSwitchCase="'LOCK'" translate>LOCK</h3>
+  <h3 matLine *ngSwitchCase="'CLOSE'" translate>CLOSE</h3>
+  <h3 matLine *ngSwitchCase="'UNLOCK'" translate>UNLOCK</h3>
+  <h4 matLine>{{command.createdBy}}, {{command.createdOn | date:'medium'}}</h4>
+  <p matLine>{{command.comment}}</p>
+</mat-list-item>

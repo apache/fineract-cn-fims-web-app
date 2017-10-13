@@ -19,26 +19,26 @@
     <form [formGroup]="form">
       <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
       <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
-        </md-input-container>
+        <mat-form-field layout-margin flex>
+          <textarea matInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+        </mat-form-field>
       </div>
       <div layout-gt-xs="column" layout-margin formArrayName="fields">
         <h4 translate>Fields</h4>
-        <md-card *ngFor="let field of fields; let i=index" [formGroupName]="i">
-          <md-card-content>
+        <mat-card *ngFor="let field of fields; let i=index" [formGroupName]="i">
+          <mat-card-content>
             <fims-custom-field-form
               [form]="field"
               (onAddOption)="addOption(field)"
               (onRemoveOption)="removeOption(field, $event)">
             </fims-custom-field-form>
-          </md-card-content>
-          <md-card-actions>
-            <button md-button (click)="removeField(i)">{{'Remove field' | translate}}</button>
-          </md-card-actions>
-        </md-card>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="removeField(i)">{{'Remove field' | translate}}</button>
+          </mat-card-actions>
+        </mat-card>
         <div layout="row">
-          <button md-button (click)="addField()">{{'Add field' | translate}}</button>
+          <button mat-button (click)="addField()">{{'Add field' | translate}}</button>
         </div>
       </div>
     </form>

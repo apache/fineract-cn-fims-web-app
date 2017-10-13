@@ -16,14 +16,14 @@
 
 <fims-layout-card-over title="{{'Manage loan product fees' | translate}}" [navigateBackTo]="['../']">
   <fims-two-column-layout>
-    <md-nav-list left>
-      <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['./ranges']">
-        <md-icon md-list-avatar>assignment</md-icon>
-        <h3 md-line translate>Ranges</h3>
-        <p md-line translate>Manage ranges</p>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['./ranges']">
+        <mat-icon matListAvatar>assignment</mat-icon>
+        <h3 matLine translate>Ranges</h3>
+        <p matLine translate>Manage ranges</p>
       </a>
-    </md-nav-list>
+    </mat-nav-list>
     <fims-data-table right flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
   </fims-two-column-layout>
 

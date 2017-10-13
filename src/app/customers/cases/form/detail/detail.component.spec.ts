@@ -20,10 +20,10 @@ import {Component, ViewChild} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CaseDetailFormComponent, DetailFormData} from './detail.component';
-import {MdInputModule, MdOptionModule, MdRadioModule, MdSelectModule, MdTooltipModule} from '@angular/material';
 import {FimsSharedModule} from '../../../../common/common.module';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import {MatInputModule, MatOptionModule, MatRadioModule, MatSelectModule, MatTooltipModule} from '@angular/material';
 
 describe('Test case detail form component', () => {
 
@@ -84,11 +84,11 @@ describe('Test case detail form component', () => {
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
-        MdRadioModule,
-        MdInputModule,
-        MdSelectModule,
-        MdOptionModule,
-        MdTooltipModule,
+        MatRadioModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTooltipModule,
         FimsSharedModule,
         NoopAnimationsModule
       ],

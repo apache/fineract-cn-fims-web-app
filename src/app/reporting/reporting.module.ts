@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
+import {CovalentChipsModule, CovalentDataTableModule, CovalentExpansionPanelModule, CovalentStepsModule} from '@covalent/core';
 import {
-  CovalentChipsModule,
-  CovalentDataTableModule,
-  CovalentExpansionPanelModule,
-  CovalentStepsModule
-} from '@covalent/core';
-import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdTabsModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatTabsModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
@@ -62,13 +57,13 @@ const QUERY_PARAM_COMPONENTS: Type<any>[] = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdIconModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdTabsModule,
-    MdListModule,
+    MatCardModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatListModule,
     CovalentStepsModule,
     CovalentDataTableModule,
     CovalentChipsModule,

@@ -28,7 +28,7 @@ import * as fromRoot from '../../store';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {FimsPermissionStubDirective} from '../../common/testing/permission-stubs';
-import {MdDialogModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
 
 describe('Test product list component', () => {
 
@@ -41,7 +41,7 @@ describe('Test product list component', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
-        MdDialogModule
+        MatDialogModule
       ],
       declarations: [
         FimsPermissionStubDirective,

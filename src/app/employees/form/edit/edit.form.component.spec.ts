@@ -29,7 +29,7 @@ import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {MatCardModule, MatInputModule, MatOptionModule, MatSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FimsSharedModule} from '../../../common/common.module';
 
@@ -79,10 +79,10 @@ describe('Test employee form component', () => {
         TranslateModule.forRoot(),
         FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdCardModule,
-        MdSelectModule,
-        MdOptionModule,
+        MatInputModule,
+        MatCardModule,
+        MatSelectModule,
+        MatOptionModule,
         CovalentStepsModule,
         NoopAnimationsModule
       ],

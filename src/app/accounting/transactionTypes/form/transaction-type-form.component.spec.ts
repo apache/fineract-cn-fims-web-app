@@ -19,11 +19,11 @@ import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FimsSharedModule} from '../../../common/common.module';
-import {MdInputModule} from '@angular/material';
 import {CovalentStepsModule} from '@covalent/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {TransactionTypeFormComponent} from './transaction-type-form.component';
 import {TransactionType} from '../../../services/accounting/domain/transaction-type.model';
+import {MatInputModule} from '@angular/material';
 
 describe('Test transaction type form', () => {
 
@@ -35,7 +35,7 @@ describe('Test transaction type form', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
-        MdInputModule,
+        MatInputModule,
         CovalentStepsModule,
         FimsSharedModule,
         ReactiveFormsModule,

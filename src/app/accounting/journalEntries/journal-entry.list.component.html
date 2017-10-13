@@ -16,73 +16,79 @@
 
 <fims-layout-card-over title="{{'Journal entries' | translate}}" [navigateBackTo]="['../']">
   <form [formGroup]="form" layout="row">
-    <md-input-container layout-margin>
-      <input mdInput type="date" placeholder="{{'Start date' | translate}}" formControlName="startDate">
-    </md-input-container>
-    <md-input-container layout-margin>
-      <input mdInput type="date" placeholder="{{'End date' | translate}}" formControlName="endDate">
-      <md-error *ngIf="form.hasError('rangeInvalid')" translate>Invalid date range</md-error>
-    </md-input-container>
+    <mat-form-field layout-margin>
+      <input matInput type="date" placeholder="{{'Start date' | translate}}" formControlName="startDate">
+    </mat-form-field>
+    <mat-form-field layout-margin>
+      <input matInput type="date" placeholder="{{'End date' | translate}}" formControlName="endDate">
+      <mat-error *ngIf="form.hasError('rangeInvalid')" translate>Invalid date range</mat-error>
+    </mat-form-field>
     <fims-text-input [form]="form" controlName="account" placeholder="{{'Account' | translate}}"></fims-text-input>
     <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
     <span>
-      <button layout-margin md-button md-icon-button (click)="fetchJournalEntries()" [disabled]="!form.valid"><md-icon>search</md-icon></button>
+      <button layout-margin mat-button mat-icon-button (click)="fetchJournalEntries()" [disabled]="!form.valid"><mat-icon>search</mat-icon></button>
     </span>
   </form>
   <fims-two-column-layout>
-    <md-nav-list left>
-      <a md-list-item *ngFor="let entry of (journalEntries$ | async)" (click)="select(entry)" [ngClass]="journalEntry == entry ? 'active' : false">
-        <md-icon md-list-avatar>assignment</md-icon>
-        <h4 md-line translate>{{entry.transactionDate | date:'short'}}</h4>
-        <p md-line translate>{{entry.transactionType}}</p>
-        <p md-line translate>Amount: {{sumDebtors(entry.debtors) | number:numberFormat}}</p>
+    <mat-nav-list left>
+      <a mat-list-item *ngFor="let entry of (journalEntries$ | async)" (click)="select(entry)" [ngClass]="journalEntry == entry ? 'active' : false">
+        <mat-icon matListAvatar>assignment</mat-icon>
+        <h4 matLine translate>{{entry.transactionDate | date:'short'}}</h4>
+        <p matLine translate>{{entry.transactionType}}</p>
+        <p matLine translate>Amount: {{sumDebtors(entry.debtors) | number:numberFormat}}</p>
         <ng-container [ngSwitch]="entry.state">
-          <md-icon class="tc-amber-800" *ngSwitchCase="'PENDING'">more_horiz</md-icon>
-          <md-icon class="tc-green-800" *ngSwitchCase="'PROCESSED'">done</md-icon>
+          <mat-icon class="tc-amber-800" *ngSwitchCase="'PENDING'">more_horiz</mat-icon>
+          <mat-icon class="tc-green-800" *ngSwitchCase="'PROCESSED'">done</mat-icon>
         </ng-container>
       </a>
-    </md-nav-list>
-    <md-card right *ngIf="journalEntry">
-      <md-list>
-        <md-list-item>
-          <h3 md-line translate>Clerk</h3>
-          <p md-line>{{journalEntry?.clerk}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Message</h3>
-          <p md-line>{{journalEntry?.message}}</p>
-        </md-list-item>
-        <md-list-item>
-          <h3 md-line translate>Note</h3>
-          <p md-line>{{journalEntry?.note}}</p>
-        </md-list-item>
-      </md-list>
-      <div class="md-content">
+    </mat-nav-list>
+    <mat-card right *ngIf="journalEntry">
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Clerk</h3>
+          <p matLine>{{journalEntry?.clerk}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Message</h3>
+          <p matLine>{{journalEntry?.message}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Note</h3>
+          <p matLine>{{journalEntry?.note}}</p>
+        </mat-list-item>
+      </mat-list>
+      <div class="mat-content">
         <table td-data-table>
-          <th td-data-table-column translate>
-            Debit
-          </th>
-          <th td-data-table-column translate>
-            Credit
-          </th>
-          <th td-data-table-column translate>
-            Amount
-          </th>
-          <tr td-data-table-row *ngFor="let debit of journalEntry?.debtors">
-            <td td-data-table-cell>
-              {{debit.accountNumber}}
-            </td>
-            <td td-data-table-cell></td>
-            <td td-data-table-cell>{{debit.amount | number:numberFormat}}</td>
-          </tr>
-          <tr td-data-table-row *ngFor="let credit of journalEntry?.creditors">
-            <td td-data-table-cell></td>
-            <td td-data-table-cell>{{credit.accountNumber}}</td>
-            <td td-data-table-cell>{{credit.amount | number:numberFormat}}</td>
-          </tr>
+          <thead>
+            <tr td-data-table-column-row>
+              <th td-data-table-column translate>
+                Debit
+              </th>
+              <th td-data-table-column translate>
+                Credit
+              </th>
+              <th td-data-table-column translate>
+                Amount
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr td-data-table-row *ngFor="let debit of journalEntry?.debtors">
+              <td td-data-table-cell>
+                {{debit.accountNumber}}
+              </td>
+              <td td-data-table-cell></td>
+              <td td-data-table-cell>{{debit.amount | number:numberFormat}}</td>
+            </tr>
+            <tr td-data-table-row *ngFor="let credit of journalEntry?.creditors">
+              <td td-data-table-cell></td>
+              <td td-data-table-cell>{{credit.accountNumber}}</td>
+              <td td-data-table-cell>{{credit.amount | number:numberFormat}}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
-    </md-card>
+    </mat-card>
   </fims-two-column-layout>
 
 </fims-layout-card-over>

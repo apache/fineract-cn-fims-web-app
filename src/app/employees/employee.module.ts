@@ -32,13 +32,13 @@ import {EffectsModule} from '@ngrx/effects';
 import {EmployeeApiEffects} from './store/effects/service.effects';
 import {EmployeeRouteEffects} from './store/effects/route.effects';
 import {
-  MdButtonModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdSelectModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {TranslateModule} from '@ngx-translate/core';
@@ -52,13 +52,13 @@ import {ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule,
     CommonModule,
     TranslateModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdOptionModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSelectModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatOptionModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
     CovalentSearchModule,
     CovalentStepsModule,
 

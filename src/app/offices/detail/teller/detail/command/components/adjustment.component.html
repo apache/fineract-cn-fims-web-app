@@ -14,10 +14,10 @@
  limitations under the License.
 -->
 <ng-container [formGroup]="form" layout="column">
-  <md-radio-group formControlName="adjustment">
-    <md-radio-button *ngFor="let adjustment of adjustmentOptions" [value]="adjustment.key" layout-margin>
+  <mat-radio-group formControlName="adjustment">
+    <mat-radio-button *ngFor="let adjustment of adjustmentOptions" [value]="adjustment.key" layout-margin>
       {{adjustment.label}}
-    </md-radio-button>
-  </md-radio-group>
+    </mat-radio-button>
+  </mat-radio-group>
   <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
 </ng-container>

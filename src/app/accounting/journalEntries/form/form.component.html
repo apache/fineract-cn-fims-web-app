@@ -28,14 +28,14 @@
           </ng-container>
         </fims-transaction-type-select>
         <div layout="row">
-          <md-input-container layout-margin flex>
-            <textarea mdInput placeholder="{{'Note(Optional)' | translate}}" formControlName="note"></textarea>
-          </md-input-container>
+          <mat-form-field layout-margin flex>
+            <textarea matInput placeholder="{{'Note(Optional)' | translate}}" formControlName="note"></textarea>
+          </mat-form-field>
         </div>
         <div layout="row">
-          <md-input-container layout-margin flex>
-            <textarea mdInput flex placeholder="{{'Message(Optional)' | translate}}" formControlName="message"></textarea>
-          </md-input-container>
+          <mat-form-field layout-margin flex>
+            <textarea matInput flex placeholder="{{'Message(Optional)' | translate}}" formControlName="message"></textarea>
+          </mat-form-field>
         </div>
         <ng-template td-step-actions>
           <fims-form-continue-action (onContinue)="accountsStep.open()"></fims-form-continue-action>
@@ -44,9 +44,9 @@
       <td-step #accountsStep label="{{'Affected Accounts' | translate}}">
         <div layout-gt-xs="column">
           <div layout="row">
-            <md-card flex formArrayName="debtors">
-              <md-card-title>Debit</md-card-title>
-              <md-card-content>
+            <mat-card flex formArrayName="debtors">
+              <mat-card-title>Debit</mat-card-title>
+              <mat-card-content>
                 <div layout="row" layout-align="start center" [formGroupName]="i" *ngFor="let debtor of debtors; let i = index;">
                   <fims-account-select formControlName="accountNumber" [title]="'Account' | translate" flex="50">
                     <ng-container *ngIf="!debtor.get('accountNumber').pristine && debtor.get('accountNumber').hasError('required')"
@@ -59,21 +59,21 @@
                   </fims-account-select>
                   <fims-text-input type="number" [form]="debtor" controlName="amount"
                                    placeholder="{{'Amount' | translate}}"></fims-text-input>
-                  <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeDebtor(i)">{{'Remove' |
+                  <button mat-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeDebtor(i)">{{'Remove' |
                     translate}}
                   </button>
                 </div>
                 <p *ngIf="form.get('debtors').hasError('minItemsInvalid')" class="tc-red-600" translate>
                   Please add at least one debit.
                 </p>
-              </md-card-content>
-              <md-card-actions>
-                <button md-button md-raised-button (click)="addDebtor()">{{'ADD DEBIT' | translate}}</button>
-              </md-card-actions>
-            </md-card>
-            <md-card flex formArrayName="creditors">
-              <md-card-title>Credit</md-card-title>
-              <md-card-content>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button mat-raised-button (click)="addDebtor()">{{'ADD DEBIT' | translate}}</button>
+              </mat-card-actions>
+            </mat-card>
+            <mat-card flex formArrayName="creditors">
+              <mat-card-title>Credit</mat-card-title>
+              <mat-card-content>
                 <div layout="row" layout-align="start center" [formGroupName]="i" *ngFor="let creditor of creditors; let i = index;">
                   <fims-account-select formControlName="accountNumber" [title]="'Account' | translate" flex="50">
                     <ng-container *ngIf="!creditor.get('accountNumber').pristine && creditor.get('accountNumber').hasError('required')"
@@ -86,18 +86,18 @@
                   </fims-account-select>
                   <fims-text-input type="number" [form]="creditor" controlName="amount"
                                    placeholder="{{'Amount' | translate}}"></fims-text-input>
-                  <button md-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeCreditor(i)">{{'Remove' |
+                  <button mat-raised-button color="warn" title="{{'Remove' | translate}}" (click)="removeCreditor(i)">{{'Remove' |
                     translate}}
                   </button>
                 </div>
                 <p *ngIf="form.get('creditors').hasError('minItemsInvalid')" class="tc-red-600" translate>
                   Please add at least one credit.
                 </p>
-              </md-card-content>
-              <md-card-actions>
-                <button md-button md-raised-button (click)="addCreditor()">{{'ADD CREDIT' | translate}}</button>
-              </md-card-actions>
-            </md-card>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button mat-raised-button (click)="addCreditor()">{{'ADD CREDIT' | translate}}</button>
+              </mat-card-actions>
+            </mat-card>
 
           </div>
           <p *ngIf="!form.pristine && form.hasError('sumInvalid')" class="tc-red-600" translate>

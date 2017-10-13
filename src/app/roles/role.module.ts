@@ -33,14 +33,7 @@ import {RoleApiEffects} from './store/effects/service.effects';
 import {RoleDetailComponent} from './detail/role.detail.component';
 import {FormPermissionService} from './helper/form-permission.service';
 import {PermissionListItemComponent} from './components/permission-list-item.component';
-import {
-  MdButtonModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdToolbarModule
-} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 
@@ -52,12 +45,12 @@ import {TranslateModule} from '@ngx-translate/core';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    MdCheckboxModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
 
     EffectsModule.run(RoleApiEffects),
     EffectsModule.run(RoleRouteEffects),

@@ -24,9 +24,9 @@
 
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" (click)="save()" [disabled]="form.invalid">{{'DISTRIBUTE DIVIDEND'}}</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">{{'DISTRIBUTE DIVIDEND'}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

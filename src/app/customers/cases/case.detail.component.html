@@ -16,57 +16,57 @@
 
 <fims-layout-card-over [title]="caseInstance.identifier" *ngIf="caseInstance$ | async as caseInstance" [navigateBackTo]="['../../../../../../../../']">
   <td-message *ngIf="caseInstance.currentState === 'APPROVED'" label="{{'Member loan approved' | translate }}" sublabel="{{'To activate this loan you need to disburse' | translate }}" color="accent" icon="error">
-    <button td-message-actions md-button *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}" [routerLink]="['tasks']" translate>GO TO TASKS</button>
+    <button td-message-actions mat-button *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}" [routerLink]="['tasks']" translate>GO TO TASKS</button>
   </td-message>
   <fims-two-column-layout>
-    <md-nav-list left>
-      <h3 md-subheader translate>Management</h3>
-      <a md-list-item [routerLink]="['./payments']">
-        <md-icon md-list-avatar>payment</md-icon>
-        <h3 md-line translate>Planned Payments</h3>
-        <p md-line translate>View payments</p>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['./payments']">
+        <mat-icon matListAvatar>payment</mat-icon>
+        <h3 matLine translate>Planned Payments</h3>
+        <p matLine translate>View payments</p>
       </a>
-      <a md-list-item [routerLink]="['./tasks']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
-        <md-icon md-list-avatar>playlist_add_check</md-icon>
-        <h3 md-line translate>Tasks</h3>
-        <p md-line translate>Change the status of the member loan</p>
+      <a mat-list-item [routerLink]="['./tasks']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'CHANGE'}">
+        <mat-icon matListAvatar>playlist_add_check</mat-icon>
+        <h3 matLine translate>Tasks</h3>
+        <p matLine translate>Change the status of the member loan</p>
       </a>
-      <a md-list-item [routerLink]="['./debtIncome']">
-        <md-icon md-list-avatar>show_chart</md-icon>
-        <h3 md-line translate>Debt Income Report</h3>
-        <p md-line translate>View debt income report</p>
+      <a mat-list-item [routerLink]="['./debtIncome']">
+        <mat-icon matListAvatar>show_chart</mat-icon>
+        <h3 matLine translate>Debt Income Report</h3>
+        <p matLine translate>View debt income report</p>
       </a>
-    </md-nav-list>
-    <md-list right>
-      <h3 md-subheader translate>Current status</h3>
+    </mat-nav-list>
+    <mat-list right>
+      <h3 mat-subheader translate>Current status</h3>
       <fims-state-display [state]="caseInstance.currentState"></fims-state-display>
-      <h3 md-subheader translate>Details</h3>
-      <md-list-item>
-        <h3 md-line translate>Principal amount</h3>
-        <p md-line>{{caseInstance.parameters.maximumBalance | number:numberFormat}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Interest</h3>
-        <p md-line>{{caseInstance.interest | number:numberFormat}}</p>
-      </md-list-item>
+      <h3 mat-subheader translate>Details</h3>
+      <mat-list-item>
+        <h3 matLine translate>Principal amount</h3>
+        <p matLine>{{caseInstance.parameters.maximumBalance | number:numberFormat}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Interest</h3>
+        <p matLine>{{caseInstance.interest | number:numberFormat}}</p>
+      </mat-list-item>
       <fims-case-detail-payment-cycle [paymentCycle]="caseInstance.parameters.paymentCycle"></fims-case-detail-payment-cycle>
-      <md-list-item>
-        <h3 md-line translate>Term</h3>
-        <p md-line>{{caseInstance.parameters.termRange.maximum | number}} {{caseInstance.parameters.termRange.temporalUnit}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Member deposit account</h3>
-        <p md-line>{{caseInstance.depositAccountIdentifier}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Created by</h3>
-        <p md-line>{{caseInstance.createdBy}} - {{caseInstance.createdOn | date:'medium'}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Last modified by</h3>
-        <p md-line>{{caseInstance.lastModifiedBy}} - {{caseInstance.lastModifiedOn | date:'medium'}}</p>
-      </md-list-item>
-    </md-list>
+      <mat-list-item>
+        <h3 matLine translate>Term</h3>
+        <p matLine>{{caseInstance.parameters.termRange.maximum | number}} {{caseInstance.parameters.termRange.temporalUnit}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Member deposit account</h3>
+        <p matLine>{{caseInstance.depositAccountIdentifier}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Created by</h3>
+        <p matLine>{{caseInstance.createdBy}} - {{caseInstance.createdOn | date:'medium'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Last modified by</h3>
+        <p matLine>{{caseInstance.lastModifiedBy}} - {{caseInstance.lastModifiedOn | date:'medium'}}</p>
+      </mat-list-item>
+    </mat-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
 <fims-fab-button title="{{'Edit member loan' | translate}}" icon="mode_edit" [link]="['edit']" *ngIf="canEdit$ | async"></fims-fab-button>

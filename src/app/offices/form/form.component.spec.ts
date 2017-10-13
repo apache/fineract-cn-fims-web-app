@@ -22,7 +22,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdAutocompleteModule, MdInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatInputModule} from '@angular/material';
 import {CountryService} from '../../services/country/country.service';
 import {Country} from '../../services/country/model/country.model';
 import {FimsSharedModule} from '../../common/common.module';
@@ -59,8 +59,8 @@ describe('Test office form', () => {
       imports: [
         ReactiveFormsModule,
         FimsSharedModule,
-        MdInputModule,
-        MdAutocompleteModule,
+        MatInputModule,
+        MatAutocompleteModule,
         CovalentStepsModule,
         TranslateModule.forRoot(),
         NoopAnimationsModule

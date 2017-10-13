@@ -15,12 +15,12 @@
 -->
 
 
-<md-nav-list>
-  <h3 md-subheader>Reports</h3>
-  <md-list-item *ngFor="let definition of reportDefinitions$ | async">
-    <a md-line (click)="goToReport(definition.identifier)">{{ definition.name }}</a>
-    <md-icon>chevron_right</md-icon>
-  </md-list-item>
-</md-nav-list>
+<mat-nav-list>
+  <h3 mat-subheader>Reports</h3>
+  <mat-list-item *ngFor="let definition of reportDefinitions$ | async">
+    <a matLine (click)="goToReport(definition.identifier)">{{ definition.name }}</a>
+    <mat-icon>chevron_right</mat-icon>
+  </mat-list-item>
+</mat-nav-list>
 
 

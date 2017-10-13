@@ -17,10 +17,10 @@
 <form [formGroup]="form">
   <div layout-gt-xs="row">
     <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Term' | translate}}"></fims-text-input>
-    <md-radio-group formControlName="temporalUnit">
-      <md-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
+    <mat-radio-group formControlName="temporalUnit">
+      <mat-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
         {{basis.label}}
-      </md-radio-button>
-    </md-radio-group>
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
 </form>

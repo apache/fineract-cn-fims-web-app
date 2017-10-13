@@ -17,13 +17,13 @@
 <fims-layout-card-over title="{{ 'Report categories' | translate}}">
   <div layout-gt-xs="row" flex layout-align="center center">
     <div flex-gt-xs="50">
-      <md-nav-list>
-        <h3 md-subheader>Categories</h3>
-        <a md-list-item *ngFor="let category of categories$ | async" [routerLink]="['categories', category]" routerLinkActive="active">
-          <h3 md-line>{{ category }}</h3>
-          <md-icon>chevron_right</md-icon>
+      <mat-nav-list>
+        <h3 mat-subheader>Categories</h3>
+        <a mat-list-item *ngFor="let category of categories$ | async" [routerLink]="['categories', category]" routerLinkActive="active">
+          <h3 matLine>{{ category }}</h3>
+          <mat-icon>chevron_right</mat-icon>
         </a>
-      </md-nav-list>
+      </mat-nav-list>
     </div>
     <div flex-gt-xs="50">
       <router-outlet></router-outlet>

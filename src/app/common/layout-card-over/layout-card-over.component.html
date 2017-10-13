@@ -15,17 +15,17 @@
 -->
 
 <div layout="column" layout-fill>
-  <md-toolbar>
-    <a md-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
-      <md-icon>keyboard_arrow_left</md-icon>
+  <mat-toolbar>
+    <a mat-icon-button *ngIf="navigateBackTo" [routerLink]="navigateBackTo">
+      <mat-icon>keyboard_arrow_left</mat-icon>
     </a>
     <span class="truncate">{{fullTitle}}</span>
     <span flex></span>
     <ng-content select="fims-layout-card-over-header-menu"></ng-content>
-  </md-toolbar>
-  <div class="md-content">
-    <md-card>
+  </mat-toolbar>
+  <div class="mat-content">
+    <mat-card>
       <ng-content></ng-content>
-    </md-card>
+    </mat-card>
   </div>
 </div>

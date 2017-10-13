@@ -18,13 +18,13 @@
   <td-step #step1 label="Criteria" sublabel="Filter your report based on criteria." [active]="true" [disabled]="false">
     <fims-reporting-query-params #mandatoryComponent [queryParams]="mandatoryParams"></fims-reporting-query-params>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="step2.open()" class="text-upper">Next</button>
+      <button mat-raised-button color="primary" (click)="step2.open()" class="text-upper">Next</button>
     </ng-template>
   </td-step>
   <td-step #step2 label="Optional criteria" sublabel="Extend your criteria." [disabled]="false">
     <fims-reporting-query-params #optionalComponent [queryParams]="optionalParams"></fims-reporting-query-params>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="step3.open()" class="text-upper">Next</button>
+      <button mat-raised-button color="primary" (click)="step3.open()" class="text-upper">Next</button>
     </ng-template>
   </td-step>
   <td-step #step3 label="Field selection" sublabel="Add or remove fields for your report" [disabled]="false">
@@ -33,7 +33,7 @@
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" class="text-upper" [disabled]="!valid" (click)="generateReport()">Generate report</button>
+      <button mat-raised-button color="primary" class="text-upper" [disabled]="!valid" (click)="generateReport()">Generate report</button>
     </ng-template>
   </td-step>
 </td-steps>

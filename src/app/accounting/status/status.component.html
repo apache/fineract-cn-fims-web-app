@@ -20,10 +20,10 @@
       <div layout="row" layout-align="start start" *ngFor="let command of statusCommands">
           <div layout="column" flex="100">
             <div layout="row" layout-align="start center">
-              <md-input-container flex>
-                <textarea mdInput placeholder="{{'Enter your comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
-              </md-input-container>
-              <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
+              <mat-form-field flex>
+                <textarea matInput placeholder="{{'Enter your comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
+              </mat-form-field>
+              <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
             </div>
           </div>
       </div>

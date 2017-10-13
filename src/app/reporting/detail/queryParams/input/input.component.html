@@ -14,12 +14,12 @@
  limitations under the License.
 -->
 
-<md-input-container>
-  <span mdPrefix class="pad-right-xs">{{prefix}}</span>
-  <input mdInput
+<mat-form-field>
+  <span matPrefix class="pad-right-xs">{{prefix}}</span>
+  <input matInput
          [formControl]="formControl"
          [placeholder]="placeholder"
          [attr.type]="type"
          flex>
-  <md-error *ngIf="formControl.hasError('required')" translate>Required</md-error>
-</md-input-container>
+  <mat-error *ngIf="formControl.hasError('required')" translate>Required</mat-error>
+</mat-form-field>

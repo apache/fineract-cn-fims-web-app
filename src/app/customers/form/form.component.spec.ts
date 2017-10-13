@@ -30,10 +30,10 @@ import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdAutocompleteModule, MdCheckboxModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
 import {CountryService} from '../../services/country/country.service';
 import {Country} from '../../services/country/model/country.model';
 import {FimsSharedModule} from '../../common/common.module';
+import {MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule, MatRadioModule} from '@angular/material';
 
 const customerTemplate: Customer = {
   identifier: 'test',
@@ -103,11 +103,11 @@ describe('Test customer form', () => {
         TranslateModule.forRoot(),
         FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdIconModule,
-        MdRadioModule,
-        MdAutocompleteModule,
-        MdCheckboxModule,
+        MatInputModule,
+        MatIconModule,
+        MatRadioModule,
+        MatAutocompleteModule,
+        MatCheckboxModule,
         CovalentStepsModule,
         CovalentChipsModule,
         NoopAnimationsModule

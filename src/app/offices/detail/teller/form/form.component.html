@@ -19,16 +19,16 @@
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form" layout="column">
       <fims-id-input [form]="form" [placeholder]="'Number'" controlName="code" [readonly]="editMode"></fims-id-input>
-      <md-input-container layout-margin flex>
-        <input mdInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" tdAutoTrim autocomplete="new-password"/>
-        <md-error *ngIf="form.get('password').hasError('required')" translate>Required</md-error>
-        <md-error *ngIf="form.get('password').hasError('minlength')">
+      <mat-form-field layout-margin flex>
+        <input matInput type="password" placeholder="{{'Password' | translate}}" formControlName="password" tdAutoTrim autocomplete="new-password"/>
+        <mat-error *ngIf="form.get('password').hasError('required')" translate>Required</mat-error>
+        <mat-error *ngIf="form.get('password').hasError('minlength')">
           {{ 'Must have at least characters.' | translate:{ value: form.get('password').getError('minlength')['requiredLength']} }}
-        </md-error>
-        <md-error *ngIf="form.get('password').hasError('maxlength')">
+        </mat-error>
+        <mat-error *ngIf="form.get('password').hasError('maxlength')">
           {{ 'Only characters allowed.' | translate:{ value: form.get('password').getError('maxlength')['requiredLength']} }}
-        </md-error>
-      </md-input-container>
+        </mat-error>
+      </mat-form-field>
       <fims-text-input type="number" [form]="form" controlName="cashdrawLimit" placeholder="{{'Cash withdrawal limit' | translate}}"></fims-text-input>
       <fims-account-select title="{{'Teller account(Asset accounts only)' | translate}}" formControlName="tellerAccountIdentifier" [type]="'ASSET'">
         <ng-container *ngIf="!form.get('tellerAccountIdentifier').pristine && form.get('tellerAccountIdentifier').hasError('required')" translate>

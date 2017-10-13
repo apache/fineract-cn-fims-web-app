@@ -19,7 +19,7 @@ import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PasswordComponent} from './password.component';
 import {UserRoutes} from './user.routing';
-import {MdButtonModule, MdCardModule, MdInputModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatInputModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 
@@ -29,9 +29,9 @@ import {TranslateModule} from '@ngx-translate/core';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdInputModule,
-    MdButtonModule
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule
   ],
   declarations: [
     PasswordComponent

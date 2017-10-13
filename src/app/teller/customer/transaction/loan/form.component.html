@@ -18,20 +18,20 @@
   <td-step #transactionStep label="{{'Transaction' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [disabled]="transactionCreated">
     <form [formGroup]="form" layout="column">
-      <div layout="row" class="pad-top">
-        <md-select formControlName="caseInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
-          <md-option *ngFor="let instance of caseInstances" [value]="instance">
+      <mat-form-field layout-margin>
+        <mat-select formControlName="caseInstance" placeholder="{{ 'Select account' | translate }}">
+          <mat-option *ngFor="let instance of caseInstances" [value]="instance">
             {{instance.customerLoanAccountIdentifier}}({{instance.productIdentifier}})
-          </md-option>
-        </md-select>
-      </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Repayment amount' | translate}}"></fims-text-input>
       <p>Expected payment: {{paymentHint}}</p>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
   <td-step #confirmationStep label="{{'Confirmation' | translate}}">
@@ -45,7 +45,7 @@
             [transactionCosts]="transactionCosts">
           </fims-teller-transaction-cost>
           <div layout="row" layout-margin>
-            <md-checkbox [(ngModel)]="chargesIncluded" [disabled]="true" translate>Fees are paid in cash</md-checkbox>
+            <mat-checkbox [(ngModel)]="chargesIncluded" [disabled]="true" translate>Fees are paid in cash</mat-checkbox>
           </div>
         </div>
       </div>
@@ -53,9 +53,9 @@
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
+      <button mat-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
       <span flex></span>
-      <button md-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
+      <button mat-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

@@ -47,16 +47,16 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {TaskListComponent} from './tasks/task.list.component';
@@ -101,16 +101,16 @@ import {CustomerCustomValuesComponent} from './customFields/components/value.com
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdRadioModule,
-    MdCheckboxModule,
-    MdOptionModule,
-    MdSelectModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule,
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentFileModule,

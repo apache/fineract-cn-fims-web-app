@@ -15,7 +15,7 @@
  */
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TaskDefinition, TaskDefinitionType} from '../../../services/customer/domain/task-definition.model';
-import {MdCheckboxChange} from '@angular/material';
+import {MatCheckboxChange} from '@angular/material';
 import {defaultTypeOptions} from '../../tasks/domain/type-options.model';
 
 export interface SelectTaskEvent {
@@ -37,7 +37,7 @@ export class CustomerTaskComponent {
 
   constructor() {}
 
-  selectTask(change: MdCheckboxChange): void {
+  selectTask(change: MatCheckboxChange): void {
     this.onSelectTask.emit({
       taskIdentifier: this.task.identifier,
       checked: change.checked
