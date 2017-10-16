@@ -13,8 +13,8 @@
     "karma": "karma start ./karma.conf.js --single-run",
     "devTest": "ng test",
     "dev": "ng serve --verbose --proxy-config proxy.conf.json",
-    "runProd": "ng serve --proxy-config proxy.conf.json --prod --aot --build-optimizer",
-    "build": "ng build --prod --aot",
+    "runProd": "ng serve --proxy-config proxy.conf.json --prod",
+    "build": "ng build --prod",
     "checkLicenses": "license-to-fail ./license.config.js",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
@@ -63,7 +63,7 @@
     "zone.js": "0.8.17"
   },
   "devDependencies": {
-    "@angular/cli": "1.4.2",
+    "@angular/cli": "1.4.7",
     "@angular/compiler-cli": "4.4.5",
     "@types/hammerjs": "2.0.30",
     "@types/jasmine": "2.5.38",
