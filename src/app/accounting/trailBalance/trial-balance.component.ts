@@ -26,7 +26,7 @@ import {MatCheckboxChange} from '@angular/material';
 })
 export class TrailBalanceComponent implements OnInit {
 
-  includeEmptyEntries = true;
+  includeEmptyEntries = false;
 
   trialBalance$: Observable<TrialBalance>;
 

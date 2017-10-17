@@ -42,7 +42,9 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
     cashdrawLimit: undefined,
     tellerAccountIdentifier: '',
     vaultAccountIdentifier: '',
-    chequesReceivableAccount: ''
+    chequesReceivableAccount: '',
+    cashOverShortAccount: '',
+    denominationRequired: false
   };
 
   @ViewChild('form') formComponent: OfficeTellerFormComponent;

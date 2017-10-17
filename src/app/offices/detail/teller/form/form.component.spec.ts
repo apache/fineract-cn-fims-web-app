@@ -98,6 +98,8 @@ class TestComponent {
     tellerAccountIdentifier: 'tellerAccountIdentifier',
     vaultAccountIdentifier: 'vaultAccountIdentifier',
     chequesReceivableAccount: 'chequesReceivableAccount',
+    cashOverShortAccount: 'cashOverShortAccount',
+    denominationRequired: false,
     assignedEmployee: 'assignedEmployee',
     createdBy: 'createdBy',
     createdOn: 'createdOn',

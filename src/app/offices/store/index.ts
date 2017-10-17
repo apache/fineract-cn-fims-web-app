@@ -16,6 +16,7 @@
 
 import * as fromRoot from '../../store';
 import * as fromTellers from '../store/teller/tellers.reducer';
+import * as fromDenominations from '../store/teller/denomination/denominations.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -34,6 +35,7 @@ export interface State extends fromRoot.State {
   officeForm: FormState;
   tellers: ResourceState;
   tellerForm: FormState;
+  denominations: fromDenominations.State;
 }
 
 const reducers = {
@@ -41,6 +43,7 @@ const reducers = {
   officeForm: createFormReducer('Office'),
   tellers: createResourceReducer('Office Teller', fromTellers.reducer, 'code'),
   tellerForm: createFormReducer('Office Teller'),
+  denominations: fromDenominations.reducer
 };
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -70,3 +73,6 @@ export const getAllTellerEntities = createSelector(getTellerState, getResourceAl
 
 export const getTellersLoadedAt = createSelector(getTellerState, getResourceLoadedAt);
 export const getSelectedTeller = createSelector(getTellerState, getResourceSelected);
+
+export const getDenominationState = (state: State) => state.denominations;
+export const getDenominationsEntities = createSelector(getDenominationState, fromDenominations.getDenominationEntities);

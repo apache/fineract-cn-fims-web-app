@@ -1,0 +1,78 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Denomination details' | translate}}"
+           [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [active]="true">
+    <form [formGroup]="form" layout="column">
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Note(Optional)' | translate}}" formControlName="note"></textarea>
+        <mat-error *ngIf="form.get('note').hasError('required')" translate>
+          Required
+        </mat-error>
+      </mat-form-field>
+      <div layout-gt-xs="column" layout-margin formArrayName="details">
+        <h4 translate>Details</h4>
+        <div *ngFor="let detail of details; let i=index" [formGroupName]="i" layout="row">
+          <fims-text-input type="number" [form]="detail" controlName="value" placeholder="{{'Note value' | translate}}"></fims-text-input>
+          <fims-text-input type="number" [form]="detail" controlName="count" placeholder="{{'Count' | translate}}"></fims-text-input>
+          <mat-form-field layout-margin>
+            <input matInput
+                   placeholder="{{'Subtotal' | translate}}"
+                   [disabled]="true"
+                   [value]="getTotalValue(detail) | displayFimsNumber"
+                   flex/>
+          </mat-form-field>
+          <button mat-button (click)="removeDetail(i)" *ngIf="i > 0">{{'Remove detail' | translate}}</button>
+        </div>
+        <button mat-button (click)="addDetail()">{{'Add detail' | translate}}</button>
+        <table td-data-table>
+          <tbody>
+            <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b translate>Total</b>
+              </td>
+              <td td-data-table-cell>
+                <b>{{overallTotal | displayFimsNumber}}</b>
+              </td>
+              <td td-data-table-cell></td>
+              <td td-data-table-cell></td>
+            </tr>
+            <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b translate>Cash on hand</b>
+              </td>
+              <td td-data-table-cell>
+                <b>{{balanceSheet?.cashOnHand | displayFimsNumber}}</b>
+              </td>
+              <td td-data-table-cell></td>
+              <td td-data-table-cell></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'DENOMINATION'"
+        [editMode]="false"
+        [disabled]="form.invalid"
+        (onCancel)="cancel()"
+        (onSave)="save()" flex>
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

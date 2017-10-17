@@ -33,6 +33,11 @@
         <h3 matLine translate>Teller balance</h3>
         <p matLine translate>View current teller balance</p>
       </a>
+      <a mat-list-item [routerLink]="['denominations']">
+        <mat-icon matListAvatar>attach_money</mat-icon>
+        <h3 matLine translate>Denominations</h3>
+        <p matLine translate>Manage denominations</p>
+      </a>
     </mat-nav-list>
     <mat-list *ngIf="teller$ | async as teller" right>
       <h3 mat-subheader translate>Current status</h3>
@@ -58,6 +63,14 @@
         <p matLine>{{teller.chequesReceivableAccount}}</p>
       </mat-list-item>
       <mat-list-item>
+        <h3 matLine translate>Cash over short account</h3>
+        <p matLine>{{teller.cashOverShortAccount}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Denomination required?</h3>
+        <p matLine>{{teller.denominationRequired}}</p>
+      </mat-list-item>
+      <mat-list-item>
         <h3 matLine translate>Assigned employee</h3>
         <p matLine>{{teller.assignedEmployee}}</p>
       </mat-list-item>
@@ -68,6 +81,10 @@
       <mat-list-item>
         <h3 matLine translate>Last modified by</h3>
         <p matLine>{{teller.lastModifiedBy}} - {{teller.lastModifiedOn | date:'medium'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Last opened by</h3>
+        <p matLine>{{teller.lastOpenedBy}} - {{teller.lastOpenedOn | date:'medium'}}</p>
       </mat-list-item>
     </mat-list>
   </fims-two-column-layout>
