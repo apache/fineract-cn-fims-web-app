@@ -36,7 +36,7 @@ import {OfficeApiEffects} from './store/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatCheckboxModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -62,6 +62,12 @@ import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/clo
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
 import {AdjustmentComponent} from './detail/teller/detail/command/components/adjustment.component';
 import {BalanceSheetService} from './detail/teller/detail/balance/services/balance-sheet.service';
+import {TellerDenominationApiEffects} from './store/teller/denomination/effects/service.effects';
+import {TellerDenominationRouteEffects} from './store/teller/denomination/effects/route.effects';
+import {TellerDenominationNotificationEffects} from './store/teller/denomination/effects/notification.effects';
+import {TellerDenominationListComponent} from './detail/teller/detail/denomination/denomination.list.component';
+import {CreateDenominationFormComponent} from './detail/teller/detail/denomination/form/create.form.component';
+import {DenominationFormComponent} from './detail/teller/detail/denomination/form/form.component';
 
 @NgModule({
   imports: [
@@ -77,6 +83,7 @@ import {BalanceSheetService} from './detail/teller/detail/balance/services/balan
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
+    MatCheckboxModule,
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentDataTableModule,
@@ -88,6 +95,10 @@ import {BalanceSheetService} from './detail/teller/detail/balance/services/balan
     EffectsModule.run(TellerApiEffects),
     EffectsModule.run(TellerRouteEffects),
     EffectsModule.run(TellerNotificationEffects),
+
+    EffectsModule.run(TellerDenominationApiEffects),
+    EffectsModule.run(TellerDenominationRouteEffects),
+    EffectsModule.run(TellerDenominationNotificationEffects),
   ],
   declarations: [
     OfficeComponent,
@@ -107,7 +118,10 @@ import {BalanceSheetService} from './detail/teller/detail/balance/services/balan
     OpenOfficeTellerFormComponent,
     CloseOfficeTellerFormComponent,
     TellerBalanceComponent,
-    AdjustmentComponent
+    AdjustmentComponent,
+    TellerDenominationListComponent,
+    CreateDenominationFormComponent,
+    DenominationFormComponent
   ],
   providers: [
     HeadquarterGuard,

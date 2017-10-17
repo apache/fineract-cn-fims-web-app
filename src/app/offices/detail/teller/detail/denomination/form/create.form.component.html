@@ -14,6 +14,10 @@
  limitations under the License.
 -->
 
-<a mat-fab color="accent" class="fims-fab-button" title="{{title}}" [routerLink]="link" [disabled]="disabled" *hasPermission="permission">
-  <mat-icon>{{icon}}</mat-icon>
-</a>
+<fims-layout-card-over title="{{'Create new denomination' | translate}}" *ngIf="currentSelection$ | async as selection">
+  <fims-denomination-form-component #form
+                                    [balanceSheet]="balanceSheet$ | async"
+                                    (onSave)="onSave(selection.officeId, selection.tellerId, $event)"
+                                    (onCancel)="onCancel()">
+  </fims-denomination-form-component>
+</fims-layout-card-over>

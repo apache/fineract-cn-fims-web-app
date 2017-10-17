@@ -24,6 +24,7 @@ import {TellerAuthentication} from './domain/teller-authentication.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TellerTransactionCosts} from './domain/teller-transaction-costs.model';
 import {TellerTransaction} from './domain/teller-transaction.model';
+import {TellerDenomination} from './domain/teller-denomination.model';
 
 @Injectable()
 export class TellerService {
@@ -89,6 +90,14 @@ export class TellerService {
 
   getTransactions(tellerCode: string): Observable<TellerTransaction[]> {
     return this.http.get(`${this.baseUrl}/teller/${tellerCode}/transactions`);
+  }
+
+  saveTellerDenomination(officeIdentifier: string, tellerCode: string, tellerDenomination: TellerDenomination): Observable<void> {
+    return this.http.post(`${this.baseUrl}/offices/${officeIdentifier}/teller/${tellerCode}/denominations`, tellerDenomination);
+  }
+
+  fetchTellerDenominations(officeIdentifier: string, tellerCode: string): Observable<TellerDenomination[]> {
+    return this.http.get(`${this.baseUrl}/offices/${officeIdentifier}/teller/${tellerCode}/denominations`);
   }
 
 }

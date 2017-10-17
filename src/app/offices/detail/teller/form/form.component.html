@@ -54,6 +54,15 @@
           Invalid account
         </ng-container>
       </fims-account-select>
+      <fims-account-select title="{{'Cash over short account(Expense accounts only)' | translate}}" formControlName="cashOverShortAccount" [type]="'EXPENSE'">
+        <ng-container *ngIf="!form.get('cashOverShortAccount').pristine && form.get('cashOverShortAccount').hasError('required')" translate>
+          Required
+        </ng-container>
+        <ng-container *ngIf="form.get('cashOverShortAccount').hasError('invalidAccount')" translate>
+          Invalid account
+        </ng-container>
+      </fims-account-select>
+      <mat-checkbox formControlName="denominationRequired" layout-margin translate>Denomination required?</mat-checkbox>
     </form>
     <ng-template td-step-actions>
       <fims-form-final-action

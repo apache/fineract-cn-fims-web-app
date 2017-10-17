@@ -14,13 +14,25 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{ 'Manage teller' | translate}}" [navigateBackTo]="['../']">
+<fims-layout-card-over title="{{ 'Manage denominations' | translate}}" [navigateBackTo]="['../../../../../../../']">
+  <td-message
+    *ngIf="isTellerNotPaused$ | async"
+    label="{{'Teller is not paused' | translate }}"
+    sublabel="{{'Teller must be paused to create denominations' | translate }}"
+    color="warn"
+    icon="error">
+  </td-message>
   <fims-data-table flex
-                   (onActionCellClick)="rowSelect($event)"
                    [columns]="columns"
-                   [data]="tellerData$ | async"
+                   [data]="denominationData$ | async"
                    [sortable]="false"
-                   [pageable]="false">
+                   [pageable]="false"
+                   [actionColumn]="false">
   </fims-data-table>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create teller' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'teller_management', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button
+  title="{{'Create denomination' | translate}}"
+  icon="attach_money" [link]="['create']"
+  [permission]="{ id: 'teller_management', accessLevel: 'CHANGE'}"
+  [disabled]="isTellerNotPaused$ | async">
+</fims-fab-button>

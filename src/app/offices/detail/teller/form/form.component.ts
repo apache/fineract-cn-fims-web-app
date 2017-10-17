@@ -55,7 +55,9 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
       cashdrawLimit: [teller.cashdrawLimit, [Validators.required, FimsValidators.greaterThanValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],
       vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)],
-      chequesReceivableAccount: [teller.chequesReceivableAccount, [Validators.required], accountExists(this.accountService)]
+      chequesReceivableAccount: [teller.chequesReceivableAccount, [Validators.required], accountExists(this.accountService)],
+      cashOverShortAccount: [teller.cashOverShortAccount, [Validators.required], accountExists(this.accountService)],
+      denominationRequired: [teller.denominationRequired]
     });
 
     this.step.open();
@@ -68,7 +70,9 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
       cashdrawLimit: this.form.get('cashdrawLimit').value,
       tellerAccountIdentifier: this.form.get('tellerAccountIdentifier').value,
       vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value,
-      chequesReceivableAccount: this.form.get('chequesReceivableAccount').value
+      chequesReceivableAccount: this.form.get('chequesReceivableAccount').value,
+      cashOverShortAccount: this.form.get('cashOverShortAccount').value,
+      denominationRequired: this.form.get('denominationRequired').value
     });
 
     this.onSave.emit(teller);

@@ -30,6 +30,8 @@ import {CreateOfficeTellerFormComponent} from './detail/teller/form/create.form.
 import {OfficeTellerDetailComponent} from './detail/teller/detail/teller.detail.component';
 import {TellerBalanceComponent} from './detail/teller/detail/balance/balance.component';
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
+import {TellerDenominationListComponent} from './detail/teller/detail/denomination/denomination.list.component';
+import {CreateDenominationFormComponent} from './detail/teller/detail/denomination/form/create.form.component';
 
 export const OfficeRoutes: Routes = [
   {
@@ -94,7 +96,22 @@ export const OfficeRoutes: Routes = [
             path: 'balance',
             component: TellerBalanceComponent,
             data: { title: 'View balance'}
-          }
+          },
+          {
+            path: 'denominations',
+            children: [
+              {
+                path: '',
+                component: TellerDenominationListComponent,
+                data: { title: 'View denominations'}
+              },
+              {
+                path: 'create',
+                component: CreateDenominationFormComponent,
+                data: { title: 'Create denomination'}
+              }
+            ]
+          },
         ]
       },
       {

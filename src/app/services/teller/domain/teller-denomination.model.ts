@@ -14,30 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
-import {FimsPermission} from '../../services/security/authz/fims-permission.model';
-
-@Component({
-  selector: 'fims-fab-button',
-  templateUrl: './fab-button.component.html',
-  styleUrls: ['./fab-button.component.scss']
-})
-
-export class FimsFabButtonComponent implements OnInit {
-
-  @Input() title: string;
-
-  @Input() icon: string;
-
-  @Input() link: any[];
-
-  @Input() permission: FimsPermission;
-
-  @Input() disabled = false;
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+export interface TellerDenomination {
+  countedTotal: string;
+  note: string;
+  adjustingJournalEntry?: string;
+  createdOn?: string;
+  createdBy?: string;
 }
