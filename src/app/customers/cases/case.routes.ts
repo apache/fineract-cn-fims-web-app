@@ -25,6 +25,13 @@ import {CaseStatusComponent} from './status/status.component';
 import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 import {CaseCommandConfirmationComponent} from './status/confirmation/confirmation.component';
 import {CaseIndexComponent} from './case.index.component';
+import {CaseDocumentComponent} from './documents/documents.component';
+import {CaseDocumentIndexComponent} from './documents/document.index.component';
+import {CaseDocumentDetailComponent} from './documents/document.detail.component';
+import {CaseDocumentCreateComponent} from './documents/form/create.component';
+import {CaseDocumentEditComponent} from './documents/form/edit.component';
+import {DocumentExistsGuard} from './documents/document-exists.guard';
+import {CreateDocumentPageComponent} from './documents/form/upload/create.form.component';
 
 export const CaseRoutes: Routes = [
   {
@@ -79,6 +86,48 @@ export const CaseRoutes: Routes = [
       {
         path: 'debtIncome',
         component: CaseDebtIncomeComponent
+      },
+      {
+        path: 'documents',
+        component: CaseDocumentComponent,
+        data: {
+          hasPermission: {id: 'portfolio_documents', accessLevel: 'READ'}
+        }
+      },
+      {
+        path: 'documents/detail/:documentId',
+        component: CaseDocumentIndexComponent,
+        canActivate: [DocumentExistsGuard],
+        data: {
+          hasPermission: {id: 'portfolio_documents', accessLevel: 'READ'}
+        },
+        children: [
+          {
+            path: '',
+            component: CaseDocumentDetailComponent
+          },
+          {
+            path: 'edit',
+            component: CaseDocumentEditComponent,
+            data: {
+              hasPermission: {id: 'portfolio_documents', accessLevel: 'CHANGE'}
+            }
+          },
+          {
+            path: 'upload',
+            component: CreateDocumentPageComponent,
+            data: {
+              hasPermission: {id: 'portfolio_documents', accessLevel: 'CHANGE'}
+            }
+          }
+        ]
+      },
+      {
+        path: 'documents/create',
+        component: CaseDocumentCreateComponent,
+        data: {
+          hasPermission: {id: 'portfolio_documents', accessLevel: 'CHANGE'}
+        }
       }
     ]
   }

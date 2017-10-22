@@ -19,12 +19,15 @@ import * as fromCases from './cases.reducer';
 import * as fromCaseForm from './form.reducer';
 import * as fromCaseTasks from './tasks/tasks.reducer';
 import * as fromCasePayments from './payments/search.reducer';
+import * as fromCaseDocuments from './documents/documents.reducer'
+import * as fromCaseDocumentPages from './documents/pageNumber.reducer'
 
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../store/index';
 import {createSelector} from 'reselect';
 import {
   createResourceReducer,
+  getResourceAll,
   getResourceEntities,
   getResourceIds,
   getResourceLoadedAt,
@@ -47,6 +50,8 @@ export interface State extends fromCustomer.State {
   caseSearch: SearchState;
   caseTasks: fromCaseTasks.State;
   casePayments: fromCasePayments.State;
+  caseDocuments: ResourceState;
+  caseDocumentPages: fromCaseDocumentPages.State;
 }
 
 const reducers = {
@@ -54,7 +59,9 @@ const reducers = {
   caseForm: createFormReducer('Case', fromCaseForm.reducer),
   caseSearch: createSearchReducer('Case'),
   caseTasks: fromCaseTasks.reducer,
-  casePayments: fromCasePayments.reducer
+  casePayments: fromCasePayments.reducer,
+  caseDocuments: createResourceReducer('Case Document', fromCaseDocuments.reducer),
+  caseDocumentPages: fromCaseDocumentPages.reducer
 };
 
 export const caseModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -102,3 +109,28 @@ export const getCaseFormState = (state: State) => state.caseForm;
 export const getCaseFormError = createSelector(getCaseFormState, getFormError);
 
 export const getCaseFormProduct = createSelector(getCaseFormState, fromCaseForm.getFormProduct);
+
+export const getCaseSelection = createSelector(getSelectedCase, fromCustomer.getSelectedCustomer, (caseInstance, customer) => {
+  return {
+    customerId: customer.identifier,
+    productId: caseInstance.productIdentifier,
+    caseId: caseInstance.identifier
+  }
+});
+
+/**
+ * Case Document Selectors
+ */
+export const getCaseDocumentsState = (state: State) => state.caseDocuments;
+
+export const getAllCaseDocumentEntities = createSelector(getCaseDocumentsState, getResourceAll);
+
+export const getCaseDocumentLoadedAt = createSelector(getCaseDocumentsState, getResourceLoadedAt);
+export const getSelectedCaseDocument = createSelector(getCaseDocumentsState, getResourceSelected);
+
+/**
+ * Case Document Selectors
+ */
+export const getDocumentPagesState = (state: State) => state.caseDocumentPages;
+
+export const getAllDocumentPages = createSelector(getDocumentPagesState, fromCaseDocumentPages.getPageNumbers);

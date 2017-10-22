@@ -15,21 +15,22 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Loan details' | translate}}" [state]="detailFormState">
-    <fims-case-detail-form #detailForm [formData]="detailFormData" [products]="products" [productInstances]="productInstances"></fims-case-detail-form>
-  </td-step>
-  <td-step #debtToIncomeStep label="{{'Debt to income ratio' | translate}}" [state]="debtToIncomeFormState">
-    <fims-case-debt-to-income-form #debtToIncomeForm [formData]="debtToIncomeFormData"></fims-case-debt-to-income-form>
-  </td-step>
-  <td-step #coSignerStep label="{{'Co-signer' | translate}}" [state]="coSignerFormState">
-    <fims-case-co-signer-form #coSignerForm [formData]="coSignerFormData"></fims-case-co-signer-form>
+  <td-step #detailsStep label="{{'Details' | translate}}" [active]="true">
+    <div layout="row" [formGroup]="form">
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description(Optional)' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="form.get('description').hasError('maxlength')">
+          {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
+        </mat-error>
+      </mat-form-field>
+    </div>
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
       <fims-form-final-action
-        [resourceName]="'MEMBER LOAN'"
+        [resourceName]="'DOCUMENT'"
         [editMode]="editMode"
-        [disabled]="!isValid"
+        [disabled]="form.invalid"
         (onCancel)="cancel()"
         (onSave)="save()">
       </fims-form-final-action>
