@@ -28,6 +28,7 @@ import {ImageService} from '../image/image.service';
 import {IdentificationCard} from './domain/identification-card.model';
 import {IdentificationCardScan} from './domain/identification-card-scan.model';
 import {ProcessStep} from './domain/process-step.model';
+import {CustomerDocument} from './domain/customer-document.model';
 
 @Injectable()
 export class CustomerService {
@@ -158,6 +159,49 @@ export class CustomerService {
 
   deleteIdentificationCardScan(customerId: string, number: string, scanId: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}/customers/${customerId}/identifications/${number}/scans/${scanId}`);
+  }
+
+  getDocuments(customerId: string): Observable<CustomerDocument[]> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/documents`);
+  }
+
+  getDocument(customerId: string, documentId: string): Observable<CustomerDocument> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/documents/${documentId}`);
+  }
+
+  createDocument(customerId: string, document: CustomerDocument): Observable<void> {
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/documents/${document.identifier}`, document);
+  }
+
+  updateDocument(customerId: string, document: CustomerDocument): Observable<void> {
+    return this.http.put(`${this.baseUrl}/customers/${customerId}/documents/${document.identifier}`, document);
+  }
+
+  deleteDocument(customerId: string, document: CustomerDocument): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/customers/${customerId}/documents/${document.identifier}`);
+  }
+
+  completeDocument(customerId: string, documentId: string, silent: boolean = false): Observable<void> {
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/documents/${documentId}/completed`, true, {}, silent);
+  }
+
+  getDocumentPageNumbers(customerId: string, documentId: string): Observable<number[]> {
+    return this.http.get(`${this.baseUrl}/customers/${customerId}/documents/${documentId}/pages`);
+  }
+
+  getDocumentPage(customerId: string, documentId: string, pageNumber: number): Observable<Blob> {
+    return this.imageService.getImage(`${this.baseUrl}/customers/${customerId}/documents/${documentId}/pages/${pageNumber}`);
+  }
+
+  createDocumentPage(customerId: string, documentId: string, pageNumber: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('page', file, file.name);
+
+    return this.http.post(`${this.baseUrl}/customers/${customerId}/documents/${documentId}/pages/${pageNumber}`, formData);
+  }
+
+  deleteDocumentPage(customerId: string, documentId: string, pageNumber: number): Observable<void> {
+    return this.http.delete(`${this.baseUrl}/customers/${customerId}/documents/${documentId}/pages/${pageNumber}`);
   }
 
 }

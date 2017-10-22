@@ -65,7 +65,6 @@ import {CaseStatusComponent} from './status/status.component';
 import {CaseCreditFactorFormComponent} from './form/components/credit-factor.component';
 import {CaseCoSignerFormComponent} from './form/co-signer/co-signer.component';
 import {CaseDebtToIncomeFormComponent} from './form/debt-to-income/debt-to-income.component';
-import {CaseDocumentsFormComponent} from './form/documents/documents.component';
 import {CaseDebtIncomeComponent} from './debt-income/debt-income.component';
 import {CaseTasksComponent} from './status/tasks.component';
 import {CaseCommandComponent} from './status/command.component';
@@ -75,6 +74,19 @@ import {CaseCommandConfirmationFormComponent} from './status/confirmation/form.c
 import {CaseTaskComponent} from './status/task.component';
 import {CaseIndexComponent} from './case.index.component';
 import {FeeService} from './status/services/fee.service';
+import {CaseDocumentComponent} from './documents/documents.component';
+import {CaseDocumentFormComponent} from './documents/form/form.component';
+import {CaseDocumentEditComponent} from './documents/form/edit.component';
+import {CaseDocumentCreateComponent} from './documents/form/create.component';
+import {CaseDocumentIndexComponent} from './documents/document.index.component';
+import {CaseDocumentDetailComponent} from './documents/document.detail.component';
+import {DocumentExistsGuard} from './documents/document-exists.guard';
+import {DocumentsService} from './store/documents/effects/services/documents.service';
+import {CaseDocumentApiEffects} from './store/documents/effects/service.effects';
+import {CaseDocumentRouteEffects} from './store/documents/effects/route.effects';
+import {CaseDocumentNotificationEffects} from './store/documents/effects/notification.effects';
+import {UploadPageFormComponent} from './documents/form/upload/upload-page.form.component';
+import {CreateDocumentPageComponent} from './documents/form/upload/create.form.component';
 
 @NgModule({
   imports: [
@@ -109,7 +121,12 @@ import {FeeService} from './status/services/fee.service';
 
     EffectsModule.run(CaseTasksApiEffects),
     EffectsModule.run(CaseTasksNotificationEffects),
-    EffectsModule.run(CasePaymentsApiEffects)
+    EffectsModule.run(CasePaymentsApiEffects),
+
+    EffectsModule.run(CaseDocumentApiEffects),
+    EffectsModule.run(CaseDocumentRouteEffects),
+    EffectsModule.run(CaseDocumentNotificationEffects),
+
   ],
   declarations: [
     CaseListComponent,
@@ -130,12 +147,21 @@ import {FeeService} from './status/services/fee.service';
     CaseDebtToIncomeFormComponent,
     CaseCreditFactorFormComponent,
     CaseCoSignerFormComponent,
-    CaseDocumentsFormComponent,
-    CaseDebtIncomeComponent
+    CaseDebtIncomeComponent,
+    CaseDocumentComponent,
+    CaseDocumentIndexComponent,
+    CaseDocumentDetailComponent,
+    CaseDocumentFormComponent,
+    CaseDocumentCreateComponent,
+    CaseDocumentEditComponent,
+    CreateDocumentPageComponent,
+    UploadPageFormComponent
   ],
   providers: [
     CaseExistsGuard,
+    DocumentExistsGuard,
     FeeService,
+    DocumentsService,
     { provide: CasesStore, useFactory: caseStoreFactory, deps: [Store]}
   ]
 })

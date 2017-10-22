@@ -63,6 +63,7 @@ export class PermittableGroupIdMapper {
       label: 'Member identification cards'
     };
     this._permittableGroupMap[CustomerPermittableGroupIds.PORTRAIT_MANAGEMENT] = {id: 'customer_portrait', label: 'Member portrait'};
+    this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_DOCUMENT] = {id: 'customer_documents', label: 'Member documents'};
 
     this._permittableGroupMap[AccountingPermittableGroupIds.ACCOUNT_MANAGEMENT] = {id: 'accounting_accounts', label: 'Accounts'};
     this._permittableGroupMap[AccountingPermittableGroupIds.JOURNAL_MANAGEMENT] = {id: 'accounting_journals', label: 'Journal'};
@@ -86,6 +87,10 @@ export class PermittableGroupIdMapper {
     };
     this._permittableGroupMap[PortfolioPermittableGroupIds.PRODUCT_MANAGEMENT] = {id: 'portfolio_products', label: 'Loan products'};
     this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_MANAGEMENT] = {id: 'portfolio_cases', label: 'Member loans'};
+    this._permittableGroupMap[PortfolioPermittableGroupIds.CASE_DOCUMENT_MANAGEMENT] = {
+      id: 'portfolio_documents',
+      label: 'Member loan documents'
+    };
 
     this._permittableGroupMap[DepositAccountPermittableGroupIds.DEFINITION_MANAGEMENT] = {
       id: 'deposit_definitions',

@@ -22,7 +22,6 @@ import {CreditWorthinessSnapshot} from '../../../services/portfolio/domain/indiv
 import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
 import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
 import {Product} from '../../../services/portfolio/domain/product.model';
-import {CaseDocumentsFormComponent} from './documents/documents.component';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
@@ -44,8 +43,6 @@ export class CaseFormComponent implements OnInit {
 
   @ViewChild('coSignerForm') coSignerForm: CaseCoSignerFormComponent;
   coSignerFormData: CoSignerFormData;
-
-  @ViewChild('documentsForm') documentsForm: CaseDocumentsFormComponent;
 
   @Input('products') products: Product[];
 
@@ -194,10 +191,6 @@ export class CaseFormComponent implements OnInit {
 
   get coSignerFormState(): string {
     return this.coSignerForm.valid ? 'complete' : this.coSignerForm.pristine ? 'none' : 'required';
-  }
-
-  get documentsFormState(): string {
-    return this.documentsForm.valid ? 'complete' : this.documentsForm.pristine ? 'none' : 'required';
   }
 
   showIdentifierValidationError(): void {

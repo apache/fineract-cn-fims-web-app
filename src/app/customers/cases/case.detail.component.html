@@ -36,6 +36,11 @@
         <h3 matLine translate>Debt Income Report</h3>
         <p matLine translate>View debt income report</p>
       </a>
+      <a mat-list-item [routerLink]="['./documents']" *hasPermission="{ id: 'portfolio_documents', accessLevel: 'READ'}">
+        <mat-icon matListAvatar>content_paste</mat-icon>
+        <h3 matLine translate>Loan documents</h3>
+        <p matLine translate>Manage loan documents</p>
+      </a>
     </mat-nav-list>
     <mat-list right>
       <h3 mat-subheader translate>Current status</h3>

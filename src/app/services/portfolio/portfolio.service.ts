@@ -40,6 +40,7 @@ import {mapToBalanceSegmentSet, mapToFimsRange, mapToFimsRanges} from './domain/
 import {FimsRange} from './domain/range-model';
 import {Payment} from './domain/payment.model';
 import {LossProvisionConfiguration} from './domain/loss-provision-configuration.model';
+import {CaseCustomerDocuments} from './domain/case-customer-documents.model';
 
 @Injectable()
 export class PortfolioService {
@@ -269,6 +270,14 @@ export class PortfolioService {
 
   getLossProvisionConfiguration(productIdentifier: string): Observable<LossProvisionConfiguration> {
     return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/lossprovisionconfiguration`);
+  }
+
+  getCaseDocuments(productIdentifier: string, caseIdentifier: string): Observable<CaseCustomerDocuments> {
+    return this.http.get(`${this.baseUrl}/individuallending/products/${productIdentifier}/cases/${caseIdentifier}/documents`);
+  }
+
+  changeCaseDocuments(productIdentifier: string, caseIdentifier: string, documents: CaseCustomerDocuments): Observable<void> {
+    return this.http.put(`${this.baseUrl}/individuallending/products/${productIdentifier}/cases/${caseIdentifier}/documents`, documents);
   }
 
 }
