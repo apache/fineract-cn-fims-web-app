@@ -26,10 +26,12 @@ import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {SEARCH} from './store/deposit.actions';
 import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
 import * as fromCustomers from '../store';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
-  templateUrl: './deposits.list.component.html'
+  templateUrl: './deposits.list.component.html',
+  providers: [DatePipe]
 })
 export class DepositsListComponent implements OnInit, OnDestroy {
 
@@ -43,10 +45,20 @@ export class DepositsListComponent implements OnInit, OnDestroy {
     { name: 'productIdentifier', label: 'Deposit product' },
     { name: 'accountIdentifier', label: 'Account identifier' },
     { name: 'balance', label: 'Balance', numeric: true, format: v => v.toFixed(2) },
-    { name: 'state', label: 'State' }
+    { name: 'state', label: 'State' },
+    {
+      name: 'openedOn', label: 'Opened on', format: (v: any) => {
+        return this.datePipe.transform(v, 'shortDate');
+      }
+    },
+    {
+      name: 'lastTransactionDate', label: 'Last transaction', format: (v: any) => {
+      return this.datePipe.transform(v, 'short');
+    }
+    }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.productInstancesData$ = this.depositsStore.select(fromDeposits.getDepositSearchResults)

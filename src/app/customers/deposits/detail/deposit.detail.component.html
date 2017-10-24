@@ -43,6 +43,14 @@
           <h3 matLine translate>Beneficiaries</h3>
           <p matLine>{{instance.beneficiaries?.join(', ')}}</p>
         </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Opened on</h3>
+          <p matLine>{{instance.openedOn | date:'shortDate'}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Last transaction</h3>
+          <p matLine>{{instance.lastTransactionDate | date:'medium'}}</p>
+        </mat-list-item>
       </mat-list>
     </div>
   </div>

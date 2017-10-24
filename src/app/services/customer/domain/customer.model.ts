@@ -37,6 +37,7 @@ export interface Customer {
   address: Address;
   contactDetails?: ContactDetail[];
   currentState?: CustomerState;
+  applicationDate?: string;
   customValues: Value[];
   member: boolean;
   createdBy?: string;
