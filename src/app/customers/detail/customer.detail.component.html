@@ -88,6 +88,10 @@
         <mat-icon matListAvatar>cake</mat-icon>
         <h3 matLine>{{customer.dateOfBirth | displayFimsDate}}</h3>
       </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Application date</h3>
+        <h3 matLine>{{customer.applicationDate | date:'shortDate'}}</h3>
+      </mat-list-item>
       <fims-customer-custom-values
         [catalog]="catalog$ | async"
         [values]="customer.customValues">

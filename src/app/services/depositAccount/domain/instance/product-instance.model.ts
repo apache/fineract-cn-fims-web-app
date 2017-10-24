@@ -21,4 +21,6 @@ export interface ProductInstance {
   beneficiaries?: string[];
   state?: string;
   balance?: number;
+  openedOn?: string;
+  lastTransactionDate?: string;
 }
