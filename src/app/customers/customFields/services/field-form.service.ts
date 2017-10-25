@@ -34,8 +34,8 @@ export class FieldFormService {
       hint: ['', [Validators.maxLength(512)]],
       description: ['', [Validators.maxLength(4096)]],
       mandatory: [''],
-      length: ['', [FimsValidators.minValue(1)]],
-      precision: ['', [FimsValidators.minValue(0)]],
+      length: ['', [FimsValidators.minValue(1), FimsValidators.maxScale(0)]],
+      precision: ['', [FimsValidators.minValue(0), FimsValidators.maxScale(0)]],
       minValue: ['', [FimsValidators.minValue(0)]],
       maxValue: ['', [FimsValidators.minValue(1)]],
       options: this.formBuilder.array([], optionValueUnique)
