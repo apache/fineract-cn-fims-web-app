@@ -63,7 +63,7 @@ export class ProductDetailFormComponent extends FormComponent<DetailFormData> im
       currencyCode: ['', [Validators.required]],
       minimumBalance: ['', [Validators.required, FimsValidators.minValue(0)]],
       maximumBalance: ['', [Validators.required, FimsValidators.minValue(0)]],
-      term: ['', [ Validators.required, FimsValidators.minValue(0) ]],
+      term: ['', [ Validators.required, FimsValidators.minValue(1), FimsValidators.maxScale(0)]],
       temporalUnit: ['', Validators.required]
     }, { validator: FimsValidators.greaterThanEquals('minimumBalance', 'maximumBalance') });
   }

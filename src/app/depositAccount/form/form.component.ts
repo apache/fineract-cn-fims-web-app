@@ -137,7 +137,7 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
     const termTimeUnitControl: FormControl = this.formGroup.get('termTimeUnit') as FormControl;
 
     if (enabled) {
-      this.enable(termPeriodControl, [Validators.required, FimsValidators.minValue(1)]);
+      this.enable(termPeriodControl, [Validators.required, FimsValidators.minValue(1), FimsValidators.maxScale(0)]);
       this.enable(termTimeUnitControl, [Validators.required]);
     } else {
       this.disable(termPeriodControl);
