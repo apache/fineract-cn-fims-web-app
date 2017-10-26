@@ -18,7 +18,7 @@
   <fims-layout-card-over-header-menu>
     <button mat-icon-button (click)="deleteProduct()" title="{{'Delete this product' | translate}}" *ngIf="canDelete$ | async"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a customer it needs to be enabled first' | translate }}" color="warn" icon="error">
+  <td-message *ngIf="!product.enabled" label="{{'Product not enabled' | translate }}" sublabel="{{'To assign this product to a member it needs to be enabled first' | translate }}" color="warn" icon="error">
     <button td-message-actions mat-button (click)="enableProduct()" *hasPermission="{ id: 'portfolio_product_operations', accessLevel: 'CHANGE'}" translate>ENABLE PRODUCT</button>
   </td-message>
   <td-message *ngIf="product.enabled" label="{{'Product enabled' | translate }}" sublabel="{{'This product can be assigned to a member ' | translate }}" color="accent" icon="check">
