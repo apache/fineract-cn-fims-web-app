@@ -46,7 +46,7 @@ export class ProductNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Product can\'t be deleted',
-      message: 'Product is already assigned to a customer.'
+      message: 'Product is already assigned to a member.'
     }));
 
   @Effect({ dispatch: false })
