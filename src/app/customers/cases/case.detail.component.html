@@ -47,6 +47,10 @@
       <fims-state-display [state]="caseInstance.currentState"></fims-state-display>
       <h3 mat-subheader translate>Details</h3>
       <mat-list-item>
+        <h3 matLine translate>Loan product id</h3>
+        <p matLine>{{caseInstance.productIdentifier}}</p>
+      </mat-list-item>
+      <mat-list-item>
         <h3 matLine translate>Principal amount</h3>
         <p matLine>{{caseInstance.parameters.maximumBalance | number:numberFormat}}</p>
       </mat-list-item>
