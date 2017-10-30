@@ -45,7 +45,7 @@ export class DepositProductDefinitionNotificationEffects {
     .ofType(definitionActions.DELETE_FAIL)
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
-      message: 'Product is already assigned to a customer.'
+      message: 'Product is already assigned to a member.'
     }));
 
   @Effect({dispatch: false})
