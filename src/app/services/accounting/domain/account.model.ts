@@ -26,6 +26,7 @@ export interface Account {
   balance?: number;
   referenceAccount?: string;
   ledger: string;
+  alternativeAccountNumber?: string;
   state?: AccountState;
   createdOn?: string;
   createdBy?: string;
