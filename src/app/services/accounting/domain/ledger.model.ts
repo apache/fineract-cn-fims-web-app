@@ -24,6 +24,7 @@ export interface Ledger {
   description?: string;
   subLedgers: Ledger[];
   showAccountsInChart: boolean;
+  totalValue?: string;
   createdOn?: string;
   createdBy?: string;
   lastModifiedOn?: string;

@@ -44,7 +44,8 @@ export class SubLedgerListComponent implements OnInit, OnDestroy {
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
-    { name: 'description', label: 'Description' }
+    { name: 'description', label: 'Description' },
+    { name: 'totalValue', label: 'Balance', format: value => value ? value.toFixed(2) : '-' }
   ];
 
   constructor(private route: ActivatedRoute, private router: Router, private store: AccountingStore, private translate: TranslateService,

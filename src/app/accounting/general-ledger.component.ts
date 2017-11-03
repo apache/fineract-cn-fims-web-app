@@ -33,7 +33,8 @@ export class GeneralLedgerComponent implements OnInit {
   columns: any[] = [
     { name: 'identifier', label: 'Id', tooltip: 'Id' },
     { name: 'name', label: 'Name', tooltip: 'Name' },
-    { name: 'description', label: 'Description', tooltip: 'Description' }
+    { name: 'description', label: 'Description', tooltip: 'Description' },
+    { name: 'totalValue', label: 'Balance', tooltip: 'Balance', format: value => value ? value.toFixed(2) : '-' }
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}

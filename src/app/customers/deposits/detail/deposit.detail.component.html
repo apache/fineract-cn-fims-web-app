@@ -31,7 +31,7 @@
           <h3 matLine translate>Account</h3>
           <p matLine>
             <a [routerLink]="['/accounting/accounts/detail', instance.accountIdentifier, 'entries']">
-              {{instance.accountIdentifier}}
+              {{instance.alternativeAccountNumber ? instance.alternativeAccountNumber : instance.accountNumber}}
             </a>
           </p>
         </mat-list-item>
