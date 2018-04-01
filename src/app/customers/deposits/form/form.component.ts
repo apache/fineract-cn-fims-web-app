@@ -79,6 +79,6 @@ export class DepositFormComponent implements OnInit {
   filterAsync(searchTerm: string): void {
     this.filteredCustomers = this.customerService.fetchCustomers({
       searchTerm
-    }).map(customerPage => customerPage.customers.map(customer => customer.identifier))
+    }).map(customerPage => customerPage.customers.map(customer => customer.identifier));
   }
 }

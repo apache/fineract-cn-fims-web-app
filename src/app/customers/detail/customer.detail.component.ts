@@ -18,26 +18,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {Catalog} from '../../services/catalog/domain/catalog.model';
-import {Field} from '../../services/catalog/domain/field.model';
-import {Option} from '../../services/catalog/domain/option.model';
 import * as fromCustomers from '../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CustomersStore} from '../store/index';
-import {LOAD_ALL} from '../store/catalogs/catalog.actions';
 import {CustomerService} from '../../services/customer/customer.service';
+import {Observable} from 'rxjs/Observable';
 
-interface CatalogFieldPair{
-  catalog: Catalog;
-  field: Field;
-}
 
-interface CustomCatalog{
+interface CustomDetailField {
   label: string;
-  fields: CustomDetailField[]
-}
-
-interface CustomDetailField{
-  label: string,
   value: string;
 }
 
@@ -49,19 +38,16 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   portrait: Blob;
 
-  private catalogsSubscription: Subscription;
-
   private customerSubscription: Subscription;
 
-  private _customer: Customer;
+  customer: Customer;
 
-  private _catalogs: Catalog[];
-
-  customCatalogs: CustomCatalog[] = [];
+  catalog$: Observable<Catalog>;
 
   isCustomerActive: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore, private customerService: CustomerService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: CustomersStore,
+              private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
@@ -71,81 +57,25 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
       .flatMap(customer => this.customerService.getPortrait(customer.identifier))
       .subscribe(portrait => this.portrait = portrait);
 
-    this.catalogsSubscription = this.store.select(fromCustomers.getAllCustomerCatalogEntities)
-      .subscribe(catalogs => this.catalogs = catalogs);
-
-    this.store.dispatch({ type: LOAD_ALL });
+    this.catalog$ = this.store.select(fromCustomers.getCustomerCatalog);
   }
 
   ngOnDestroy(): void {
     this.customerSubscription.unsubscribe();
-    this.catalogsSubscription.unsubscribe();
   }
 
   searchCustomer(term): void {
-    if(term){
+    if (term) {
       this.router.navigate(['../../../'], { queryParams: { term: term }, relativeTo: this.route });
     }
   }
 
-  set customer(customer: Customer){
-    this._customer = customer;
-
-    let customCatalogs: CustomCatalog[] = [];
-
-    if(customer.customValues){
-      for(let value of customer.customValues){
-        let catalog: Catalog = this._catalogs.find((catalog: Catalog) => catalog.identifier === value.catalogIdentifier);
-        let field: Field = catalog.fields.find((field: Field) => field.identifier === value.fieldIdentifier);
-
-        let valueString: string = value.value;
-
-        switch(field.dataType){
-          case 'DATE':
-            valueString = valueString ? valueString.substr(0, 10) : '';
-            break;
-          case 'SINGLE_SELECTION':
-            let option = field.options.find((option: Option) => option.value === Number(valueString));
-            valueString = option.label;
-            break;
-        }
-
-        let customField: CustomDetailField = {
-          label: field.label,
-          value: valueString
-        };
-
-        // If catalog does not exists
-        if(!customCatalogs[value.catalogIdentifier]){
-          customCatalogs[value.catalogIdentifier] = {
-            label: catalog.name,
-            fields: []
-          }
-        }
-        customCatalogs[value.catalogIdentifier].fields.push(customField);
-      }
-    }
-
-    // change from associative array to array
-    for(let catalogIdentifier in customCatalogs){
-      this.customCatalogs.push(customCatalogs[catalogIdentifier]);
-    }
-  };
-
-  get customer(): Customer {
-    return this._customer;
-  }
-
-  set catalogs(catalogs: Catalog[]) {
-    this._catalogs = catalogs;
-  }
-
   changePortrait(): void {
-    this.router.navigate(['portrait'], { relativeTo: this.route })
+    this.router.navigate(['portrait'], { relativeTo: this.route });
   }
 
   goToTasks(): void {
-    this.router.navigate(['tasks'], { relativeTo: this.route })
+    this.router.navigate(['tasks'], { relativeTo: this.route });
   }
 
 }

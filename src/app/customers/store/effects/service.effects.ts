@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as customerActions from '../customer.actions';
@@ -24,8 +24,6 @@ import {CustomerService} from '../../../services/customer/customer.service';
 
 @Injectable()
 export class CustomerApiEffects {
-
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
   @Effect()
   createCustomer$: Observable<Action> = this.actions$
@@ -52,5 +50,7 @@ export class CustomerApiEffects {
         }))
         .catch((error) => of(new customerActions.UpdateCustomerFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
 }

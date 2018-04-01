@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../common/validator/validators';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
 import {CHANGE_PASSWORD} from '../store/security/security.actions';
@@ -26,7 +26,7 @@ import {CHANGE_PASSWORD} from '../store/security/security.actions';
   selector: 'fims-user-password',
   templateUrl: './password.component.html'
 })
-export class PasswordComponent implements OnInit, OnDestroy{
+export class PasswordComponent implements OnInit, OnDestroy {
 
   private usernameSubscription: Subscription;
 
@@ -42,7 +42,7 @@ export class PasswordComponent implements OnInit, OnDestroy{
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private store: Store<fromRoot.State>) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.forced = queryParams['forced'] === 'true';
     });
@@ -62,16 +62,15 @@ export class PasswordComponent implements OnInit, OnDestroy{
     this.passwordErrorSubscription.unsubscribe();
   }
 
-  private createFormGroup(): FormGroup{
+  private createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      currentPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', Validators.required]
     }, { validator: FimsValidators.matchValues('newPassword', 'confirmNewPassword')});
   }
 
   changePassword() {
-    let newPassword: string = this.passwordForm.get('newPassword').value;
+    const newPassword: string = this.passwordForm.get('newPassword').value;
 
     this.store.dispatch({ type: CHANGE_PASSWORD, payload: {
       username: this.currentUser,

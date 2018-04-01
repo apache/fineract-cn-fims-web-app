@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as taskActions from '../task.actions';
@@ -24,8 +24,6 @@ import {AccountingService} from '../../../../../services/accounting/accounting.s
 
 @Injectable()
 export class AccountCommandApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
@@ -36,5 +34,7 @@ export class AccountCommandApiEffects {
         .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
 }

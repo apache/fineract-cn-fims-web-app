@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as roleActions from '../role.actions';
-import {NotificationType, NotificationService} from '../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class RoleNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createRoleSuccess$: Observable<Action> = this.actions$
@@ -41,5 +39,7 @@ export class RoleNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Role is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

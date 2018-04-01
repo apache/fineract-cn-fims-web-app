@@ -30,9 +30,11 @@ export class NumberInputComponent {
 
   @Input() form: FormGroup;
 
-  @Input() requireDecimal: boolean = true;
+  @Input() requireDecimal = true;
 
-  @Input() decimalLimit: number = 2;
+  @Input() decimalLimit = 2;
+
+  @Input() hint: string;
 
   mask: any;
 
@@ -48,16 +50,24 @@ export class NumberInputComponent {
     });
   }
 
-  hasRequiredError(): boolean {
+  get hasRequiredError(): boolean {
     return this.hasError('required');
   }
 
-  hasMinValueError(): boolean {
+  get hasMinValueError(): boolean {
     return this.hasError('minValue');
   }
 
-  hasScaleError(): boolean {
-    return this.hasError('scale');
+  get hasGreaterThanValueError(): boolean {
+    return this.hasError('greaterThanValue');
+  }
+
+  get hasMaxValueError(): boolean {
+    return this.hasError('maxValue');
+  }
+
+  get hasScaleError(): boolean {
+    return this.hasError('maxScale');
   }
 
   hasError(key: string): boolean {

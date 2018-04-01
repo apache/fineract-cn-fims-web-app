@@ -22,7 +22,10 @@ import * as fromDepositProducts from './customer-deposit-products.reducer';
 import * as fromLoanProducts from './customer-loan-products.reducer';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceAll, getResourceLoadedAt, getResourceSelected,
+  createResourceReducer,
+  getResourceAll,
+  getResourceLoadedAt,
+  getResourceSelected,
   ResourceState
 } from '../../common/store/resource.reducer';
 
@@ -42,9 +45,9 @@ const reducers = {
 
 export const tellerModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class TellerStore extends Store<State>{}
+export class TellerStore extends Store<State> {}
 
-export function tellerStoreFactory(appStore: Store<fromRoot.State>){
+export function tellerStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(tellerModuleReducer);
   return appStore;
 }
@@ -64,11 +67,11 @@ export const getTellerSelectedCustomer = createSelector(getTellerCustomersState,
 export const getTellerCustomerDepositProductsState = (state: State) => state.tellerCustomerDepositProducts;
 export const getAllTellerCustomerDepositProducts = createSelector(getTellerCustomerDepositProductsState, getResourceAll);
 export const hasTellerCustomerDepositProducts = createSelector(getAllTellerCustomerDepositProducts, (products) => {
-  return products.length > 0
+  return products.length > 0;
 });
 
 export const getTellerCustomerLoanProductsState = (state: State) => state.tellerCustomerLoanProducts;
 export const getAllTellerCustomerLoanProducts = createSelector(getTellerCustomerLoanProductsState, getResourceAll);
 export const hasTellerCustomerLoanProducts = createSelector(getAllTellerCustomerLoanProducts, (products) => {
-  return products.length > 0
+  return products.length > 0;
 });

@@ -15,41 +15,59 @@
 -->
 
 <td-steps mode="'vertical'">
-  <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="detailForm">
+  <td-step #detailsStep label="{{'Fee details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'" [active]="true">
+    <form [formGroup]="detailForm" layout="column">
+      <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="detailForm" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="detailForm.get('description').hasError('required')" translate>
+          Required
+        </mat-error>
+      </mat-form-field>
       <div layout="row">
-        <fims-id-input [form]="detailForm" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-radio-group formControlName="chargeMethod">
-          <md-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
+        <fims-text-input type="number" [form]="detailForm" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
+        <mat-radio-group formControlName="chargeMethod">
+          <mat-radio-button *ngFor="let basis of chargeMethodOptions" [value]="basis.type" layout-margin>
             {{basis.label}}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="proportionalTo" placeholder="{{ 'Proportional to' | translate }}">
+            <mat-option *ngFor="let proportionalTo of proportionalToOptions" [value]="proportionalTo.designator">
+              {{proportionalTo.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <div layout="row">
-        <md-input-container>
-          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount"/>
-        </md-input-container>
-      </div>
-
+      <mat-slide-toggle formControlName="rangeEnabled" layout-margin translate layout-margin>
+        Apply amount only within range?
+      </mat-slide-toggle>
+      <ng-container *ngIf="detailForm.get('rangeEnabled').value === true">
+        <mat-form-field layout-margin>
+          <mat-select formControlName="rangeIdentifier" placeholder="{{ 'Select range' | translate }}">
+            <mat-option *ngFor="let range of ranges" [value]="range.identifier">
+              {{range.identifier}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="rangeSegmentIdentifier" placeholder="{{ 'Select range segment' | translate }}">
+            <mat-option *ngFor="let segment of selectedRange?.segments" [value]="segment.identifier">
+              {{segment.identifier}}({{segment.start | number:numberFormat}} - {{segment.end | number:numberFormat}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
     </form>
-
     <ng-template td-step-actions>
-      <button *ngIf="!editMode" (click)="save()" md-raised-button color="primary">{{'SAVE CHARGE' | translate}}</button>
-      <button *ngIf="editMode" (click)="save()" md-raised-button color="primary">{{'UPDATE CHARGE' | translate}}</button>
-      <span flex></span>
-      <button (click)="cancel()" md-button>{{'CANCEL' | translate}}</button>
+      <fims-form-final-action
+        [resourceName]="'FEE'"
+        [editMode]="editMode"
+        [disabled]="!detailForm.valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
     </ng-template>
   </td-step>
 </td-steps>

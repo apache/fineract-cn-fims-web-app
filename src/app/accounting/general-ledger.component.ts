@@ -13,29 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component} from '@angular/core';
-import {Params, ActivatedRoute, Router} from '@angular/router';
+
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Ledger} from '../services/accounting/domain/ledger.model';
 import {TableData} from '../common/data-table/data-table.component';
 import * as fromAccounting from './store';
 import {LOAD_ALL_TOP_LEVEL} from './store/ledger/ledger.actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingStore} from './store/index';
 
 @Component({
   templateUrl: './general-ledger.component.html'
 })
-export class GeneralLedgerComponent implements OnInit{
+export class GeneralLedgerComponent implements OnInit {
 
   ledgerData: Observable<TableData>;
 
   columns: any[] = [
     { name: 'identifier', label: 'Id', tooltip: 'Id' },
     { name: 'name', label: 'Name', tooltip: 'Name' },
-    { name: 'description', label: 'Description', tooltip: 'Description' }
+    { name: 'description', label: 'Description', tooltip: 'Description' },
+    { name: 'totalValue', label: 'Balance', tooltip: 'Balance', format: value => value ? value.toFixed(2) : '-' }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit(): void {
     this.ledgerData = this.store.select(fromAccounting.getAllTopLevelLedgerEntities)
@@ -50,7 +52,7 @@ export class GeneralLedgerComponent implements OnInit{
     });
   }
 
-  rowSelect(ledger: Ledger): void{
+  rowSelect(ledger: Ledger): void {
     this.router.navigate(['ledgers/detail', ledger.identifier, 'ledgers'], { relativeTo: this.route });
   }
 

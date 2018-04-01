@@ -16,7 +16,7 @@
 
 import {PermittableEndpoint} from './permittable-endpoint.model';
 
-export interface PermittableGroup{
+export interface PermittableGroup {
   identifier: string;
-  permittables: PermittableEndpoint[]
+  permittables: PermittableEndpoint[];
 }

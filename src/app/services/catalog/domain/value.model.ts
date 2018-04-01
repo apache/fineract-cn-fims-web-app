@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface Value{
+export interface Value {
   catalogIdentifier: string;
   fieldIdentifier: string;
   value: string;

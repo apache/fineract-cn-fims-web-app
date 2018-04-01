@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import * as fromRoot from '../../../store';
@@ -37,17 +37,17 @@ export class CustomerEmployeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.employees = this.store.select(fromRoot.getEmployeeSearchResults)
-      .map(employeePage => employeePage.employees)
+      .map(employeePage => employeePage.employees);
   }
 
-  search(term){
-    let fetchRequest: FetchRequest = {
-      searchTerm: term
+  search(searchTerm) {
+    const fetchRequest: FetchRequest = {
+      searchTerm
     };
     this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
-  selectionChange(selections: string[]): void{
+  selectionChange(selections: string[]): void {
     this.onSelectionChange.emit(selections);
   }
 

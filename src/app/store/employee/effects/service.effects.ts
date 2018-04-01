@@ -17,7 +17,7 @@
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as employeeActions from '../employee.actions';
@@ -25,8 +25,6 @@ import {emptySearchResult} from '../../../common/store/search.reducer';
 
 @Injectable()
 export class EmployeeSearchApiEffects {
-
-  constructor(private actions$: Actions, private officeService: OfficeService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -46,4 +44,5 @@ export class EmployeeSearchApiEffects {
         .catch(() => of(new employeeActions.SearchCompleteAction(emptySearchResult())));
     });
 
+  constructor(private actions$: Actions, private officeService: OfficeService) { }
 }

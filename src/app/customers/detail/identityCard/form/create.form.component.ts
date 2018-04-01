@@ -19,9 +19,9 @@ import {Subscription} from 'rxjs/Subscription';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {IdentityCardFormComponent} from './identity-card-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {CREATE, RESET_FORM} from '../../../store/identityCards/identity-cards.actions';
-import * as fromCustomers from '../../../store/index'
 import {Error} from '../../../../services/domain/error.model';
 import {Customer} from '../../../../services/customer/domain/customer.model';
 
@@ -61,7 +61,7 @@ export class CreateCustomerIdentificationCardFormComponent implements OnInit, On
     this.formStateSubscription.unsubscribe();
     this.customerSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(identificationCard: IdentificationCard) {
@@ -77,7 +77,7 @@ export class CreateCustomerIdentificationCardFormComponent implements OnInit, On
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

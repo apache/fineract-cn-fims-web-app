@@ -23,9 +23,6 @@ import * as taskActions from '../task.actions';
 @Injectable()
 export class CaseTasksNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {
-  }
-
   @Effect({dispatch: false})
   createTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_TASK_SUCCESS)
@@ -41,5 +38,8 @@ export class CaseTasksNotificationEffects {
       type: NotificationType.ALERT,
       message: 'Task execution failed'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {
+  }
 
 }

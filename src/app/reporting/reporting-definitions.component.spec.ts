@@ -15,12 +15,9 @@
  */
 
 import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {ReportingComponent} from './reporting.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {MdCardModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
 import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
@@ -28,6 +25,7 @@ import {ReportingDefinitionsComponent} from './reporting-definitions.component';
 import {ReportDefinition} from '../services/reporting/domain/report-definition.model';
 import {ActivatedRouteStub} from '../common/testing/router-stubs';
 import {FimsSharedModule} from '../common/common.module';
+import {MatLine, MatListModule, MatToolbarModule} from '@angular/material';
 
 const definitions: ReportDefinition[] = [
   { identifier: 'reportOne', name: '', description: '', displayableFields: [], queryParameters: [] },
@@ -54,8 +52,8 @@ describe('Test reporting definitions component', () => {
       imports: [
         TranslateModule.forRoot(),
         FimsSharedModule,
-        MdToolbarModule,
-        MdListModule,
+        MatToolbarModule,
+        MatListModule,
         NoopAnimationsModule
       ],
       providers: [
@@ -74,14 +72,14 @@ describe('Test reporting definitions component', () => {
     fixture.detectChanges();
   });
 
-  it('should render md-list-items on the page', () => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-line]'));
+  it('should render mat-list-items on the page', () => {
+    const listItems = fixture.debugElement.queryAll(By.directive(MatLine));
 
     expect(listItems.length).toBe(2);
   });
 
   it('should navigate to report definitions page', inject([Router, ActivatedRoute], (router: Router, route: ActivatedRoute) => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-line]'));
+    const listItems = fixture.debugElement.queryAll(By.directive(MatLine));
 
     listItems[1].nativeElement.click();
 
@@ -93,5 +91,5 @@ describe('Test reporting definitions component', () => {
 
   it('should call the service with the right param', inject([ReportingService], (service: ReportingService) => {
     expect(service.fetchReportDefinitions).toHaveBeenCalledWith('categoryOne');
-  }))
+  }));
 });

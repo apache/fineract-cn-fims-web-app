@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 
 @Injectable()
 export class AccountCommandNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   executeAccountCommandSuccess$: Observable<Action> = this.actions$
@@ -33,6 +31,8 @@ export class AccountCommandNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Command is going to be executed'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
 

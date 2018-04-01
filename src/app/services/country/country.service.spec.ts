@@ -32,7 +32,7 @@ describe('Test country service', () => {
     this.injector = ReflectiveInjector.resolveAndCreate([
       {provide: ConnectionBackend, useClass: MockBackend},
       {provide: RequestOptions, useClass: BaseRequestOptions},
-      {provide: TranslateService, useValue: translateService },
+      {provide: TranslateService, useValue: translateService},
       Http,
       CountryService
     ]);
@@ -46,8 +46,8 @@ describe('Test country service', () => {
     this.countryService.init();
 
     const mockResponse = [
-      { name: 'Country (A)', displayName: 'Country (A)', alpha2Code: '', translations: {} },
-      { name: 'Country (B)', displayName: 'Country (B)', alpha2Code: '', translations: {} }
+      {name: 'Country (A)', displayName: 'Country (A)', alpha2Code: '', translations: {}},
+      {name: 'Country (B)', displayName: 'Country (B)', alpha2Code: '', translations: {}}
     ];
 
     this.lastConnection.mockRespond(new Response(new ResponseOptions({

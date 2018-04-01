@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
 import {Customer} from '../../services/customer/domain/customer.model';
-import {CustomerDetailFormData, CustomerDetailFormComponent} from './detail/detail.component';
+import {CustomerDetailFormComponent, CustomerDetailFormData} from './detail/detail.component';
 import {AddressFormComponent} from '../../common/address/address.component';
 import {Address} from '../../services/domain/address/address.model';
 import {CustomerContactFormComponent} from './contact/contact.component';
 import {ContactDetail} from '../../services/domain/contact/contact-detail.model';
 import {Value} from '../../services/catalog/domain/value.model';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
+import {Catalog} from '../../services/catalog/domain/catalog.model';
 
 @Component({
   selector: 'fims-customer-form-component',
@@ -56,6 +57,8 @@ export class CustomerFormComponent implements OnInit {
     this.customFieldsFormData = customer.customValues;
   };
 
+  @Input('catalog') catalog: Catalog;
+
   @Input('editMode') editMode: boolean;
 
   @Output('onSave') onSave = new EventEmitter<Customer>();
@@ -84,11 +87,11 @@ export class CustomerFormComponent implements OnInit {
     this.openDetailStep();
   }
 
-  openDetailStep(): void{
+  openDetailStep(): void {
     this.step.open();
   }
 
-  showIdentifierValidationError(): void{
+  showIdentifierValidationError(): void {
     this.detailForm.setError('identifier', 'unique', true);
     this.openDetailStep();
   }
@@ -102,7 +105,9 @@ export class CustomerFormComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return (this.detailForm.valid && this.addressForm.valid) && this.contactForm.validWhenOptional && this.customFieldsForm.validWhenOptional
+    return (this.detailForm.valid && this.addressForm.valid)
+      && this.contactForm.validWhenOptional
+      && this.customFieldsForm.valid;
   }
 
   get customer(): Customer {

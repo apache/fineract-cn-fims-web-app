@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as accountActions from '../account.actions';
 import {Router} from '@angular/router';
 
 @Injectable()
 export class AccountRouteEffects {
-
-  constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
   createAccountSuccess$: Observable<Action> = this.actions$
@@ -43,4 +41,6 @@ export class AccountRouteEffects {
     .ofType(accountActions.DELETE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../../ledgers/detail', payload.resource.ledger], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

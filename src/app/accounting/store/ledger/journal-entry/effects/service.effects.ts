@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as journalEntryActions from '../journal-entry.actions';
@@ -25,14 +25,12 @@ import {AccountingService} from '../../../../../services/accounting/accounting.s
 @Injectable()
 export class JournalEntryApiEffects {
 
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
-
   @Effect()
   loadJournalEntries$: Observable<Action> = this.actions$
     .ofType(journalEntryActions.SEARCH)
     .map((action: journalEntryActions.SearchAction) => action.payload)
     .mergeMap(payload =>
-      this.accountingService.fetchJournalEntries(payload.startDate, payload.endDate)
+      this.accountingService.fetchJournalEntries(payload.startDate, payload.endDate, payload.account, payload.amount)
         .map(journalEntries => new journalEntryActions.SearchCompleteAction(journalEntries))
         .catch(() => of(new journalEntryActions.SearchCompleteAction([])))
     );
@@ -46,5 +44,7 @@ export class JournalEntryApiEffects {
         .map(() => new journalEntryActions.CreateJournalEntrySuccessAction(payload))
         .catch((error) => of(new journalEntryActions.CreateJournalEntryFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
 }

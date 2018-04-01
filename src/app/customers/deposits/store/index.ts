@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import {
-  createResourceReducer, getResourceLoadedAt, getResourceSelected,
-  ResourceState
-} from '../../../common/store/resource.reducer';
+import {createResourceReducer, getResourceLoadedAt, getResourceSelected, ResourceState} from '../../../common/store/resource.reducer';
 import * as fromCustomer from '../../store';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../../store/index';
@@ -42,9 +39,9 @@ const reducers = {
 
 export const depositModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class DepositsStore extends Store<State>{}
+export class DepositsStore extends Store<State> {}
 
-export function depositsStoreFactory(appStore: Store<fromCustomer.State>){
+export function depositsStoreFactory(appStore: Store<fromCustomer.State>) {
   appStore.replaceReducer(depositModuleReducer);
   return appStore;
 }
@@ -55,13 +52,14 @@ export const getSearchDeposits = createSelector(getDepositSearchState, getSearch
 export const getDepositSearchTotalElements = createSelector(getDepositSearchState, getSearchTotalElements);
 export const getDepositSearchTotalPages = createSelector(getDepositSearchState, getSearchTotalPages);
 
-export const getDepositSearchResults = createSelector(getSearchDeposits, getDepositSearchTotalPages, getDepositSearchTotalElements, (deposits, totalPages, totalElements) => {
-  return {
-    deposits,
-    totalPages,
-    totalElements
-  };
-});
+export const getDepositSearchResults = createSelector(getSearchDeposits, getDepositSearchTotalPages, getDepositSearchTotalElements,
+  (deposits, totalPages, totalElements) => {
+    return {
+      deposits,
+      totalPages,
+      totalElements
+    };
+  });
 
 export const getDepositsState = (state: State) => state.deposits;
 

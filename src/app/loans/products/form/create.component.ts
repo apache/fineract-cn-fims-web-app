@@ -15,13 +15,10 @@
  */
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Product} from '../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProductParameters} from '../../../services/portfolio/domain/individuallending/product-parameters.model';
 import {ProductFormComponent} from './form.component';
 import {PortfolioStore} from '../store/index';
 import {CREATE, RESET_FORM} from '../store/product.actions';
-import {Subscription} from 'rxjs';
 import * as fromPortfolio from '../store';
 import {Error} from '../../../services/domain/error.model';
 import {FimsProduct} from '../store/model/fims-product.model';
@@ -32,13 +29,13 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   templateUrl: './create.component.html'
 })
-export class ProductCreateComponent implements OnInit, OnDestroy{
-
-  private formStateSubscription: Subscription;
+export class ProductCreateComponent implements OnInit, OnDestroy {
 
   @ViewChild('form') formComponent: ProductFormComponent;
 
   currencies$: Observable<Currency[]>;
+
+  error$: Observable<Error>;
 
   product: FimsProduct = {
     identifier: '',
@@ -48,8 +45,12 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
       maximum: 1
     },
     balanceRange: {
-      minimum: 1000.00,
-      maximum: 2000.00
+      minimum: 0,
+      maximum: 0
+    },
+    interestRange: {
+      minimum: 0,
+      maximum: 0
     },
     interestBasis: 'CURRENT_BALANCE',
     patternPackage: 'io.mifos.portfolio.individuallending.v1',
@@ -59,32 +60,25 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     minorCurrencyUnitDigits: 2,
     enabled: false,
     parameters: {
+      minimumDispersalAmount: 0,
       maximumDispersalAmount: 0,
       maximumDispersalCount: 0,
       moratoriums: []
     }
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore, private currencyService: CurrencyService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore,
+              private currencyService: CurrencyService) {}
 
   ngOnInit(): void {
-    this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductFormError)
-      .filter((error: Error) => !!error)
-      .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.get('identifier').errors || {};
-        errors['unique'] = true;
-        detailForm.get('identifier').setErrors(errors);
-        this.formComponent.step.open();
-      });
+    this.error$ = this.portfolioStore.select(fromPortfolio.getProductFormError)
+      .filter(error => !!error);
 
     this.currencies$ = this.currencyService.fetchCurrencies();
   }
 
   ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-
-    this.portfolioStore.dispatch({ type: RESET_FORM })
+    this.portfolioStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(product: FimsProduct): void {
@@ -98,7 +92,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy{
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

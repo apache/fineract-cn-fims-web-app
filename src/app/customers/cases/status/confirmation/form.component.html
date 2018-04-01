@@ -17,42 +17,52 @@
 <td-steps mode="'vertical'">
   <td-step #confirmationStep label="{{'Confirmation' | translate}}" [active]="true">
     <div layout="row" [formGroup]="formGroup">
-      <md-input-container layout-margin flex>
-        <textarea mdInput placeholder="{{'Note(optional)' | translate}}" formControlName="note"></textarea>
-      </md-input-container>
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Note(optional)' | translate}}" formControlName="note"></textarea>
+      </mat-form-field>
     </div>
     <div layout-gt-xs="column">
-      <h3 translate>Costs</h3>
       <h4 translate>Principal amount: {{fimsCase?.parameters?.maximumBalance | number:numberFormat}}</h4>
+      <h3 translate>Costs</h3>
       <table td-data-table>
-        <tr>
-          <th td-data-table-column>
-            <span translate>Name</span>
-          </th>
-          <th td-data-table-column>
-            <span translate>Amount</span>
-          </th>
-        </tr>
-        <tr td-data-table-row *ngFor="let row of costComponents">
-          <td td-data-table-cell>
-            {{row['chargeIdentifier']}}
-          </td>
-          <td td-data-table-cell>
-            {{row['amount'] | number:numberFormat}}
-          </td>
-        </tr>
-        <tr td-data-table-row>
-          <td td-data-table-cell translate>Total</td>
-          <td td-data-table-cell>{{totalAmount | number:numberFormat}}</td>
-        </tr>
+        <thead>
+          <tr td-data-table-column-row>
+            <th td-data-table-column>
+              <span translate>Name</span>
+            </th>
+            <th td-data-table-column>
+              <span translate>Description</span>
+            </th>
+            <th td-data-table-column>
+              <span translate>Amount</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr td-data-table-row *ngFor="let row of fees">
+            <td td-data-table-cell>
+              {{row['name']}}
+            </td>
+            <td td-data-table-cell>
+              {{row['description']}}
+            </td>
+            <td td-data-table-cell>
+              {{row['amount'] | number:numberFormat}}
+            </td>
+          </tr>
+          <tr td-data-table-row>
+            <td td-data-table-cell translate colspan="2">Total</td>
+            <td td-data-table-cell>{{totalAmount | number:numberFormat}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" (click)="executeCommand()">{{action | translate}}</button>
+      <button mat-raised-button color="primary" (click)="executeCommand()">{{action | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

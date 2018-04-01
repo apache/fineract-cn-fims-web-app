@@ -14,56 +14,19 @@
  limitations under the License.
 -->
 
-<form [formGroup]="form">
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Street' | translate}}" formControlName="street" tdAutoTrim/>
-      <md-error *ngIf="form.get('street').hasError('required')" translate>
-        Required
-      </md-error>
-      <md-error *ngIf="form.get('street').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('street').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput flex placeholder="{{'City' | translate}}" formControlName="city" tdAutoTrim/>
-      <md-error *ngIf="form.get('city').hasError('required')" translate>
-        Required
-      </md-error>
-      <md-error *ngIf="form.get('city').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('city').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Postal code(optional)' | translate}}" formControlName="postalCode" tdAutoTrim/>
-      <md-error *ngIf="form.get('postalCode').hasError('maxlength')" translate>
-        Only 32 figures allowed
-      </md-error>
-    </md-input-container>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Country' | translate}}" formControlName="country" [mdAutocomplete]="auto">
-      <md-error *ngIf="form.get('country').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('country').hasError('invalidCountry')" translate>Invalid country</md-error>
-    </md-input-container>
-
-    <md-autocomplete #auto="mdAutocomplete" [displayWith]="countryDisplay">
-      <md-option *ngFor="let country of filteredCountries | async" [value]="country">
-        {{country.displayName}}
-      </md-option>
-    </md-autocomplete>
-  </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput placeholder="{{'Region(optional)' | translate}}" formControlName="region" tdAutoTrim/>
-      <md-error *ngIf="form.get('region').hasError('maxlength')">
-        {{ 'Only characters allowed.' | translate:{ value: form.get('region').getError('maxlength')['requiredLength']} }}
-      </md-error>
-    </md-input-container>
-  </div>
+<form [formGroup]="form" layout="column">
+  <fims-text-input [form]="form" controlName="street" placeholder="{{'Street' | translate}}"></fims-text-input>
+  <fims-text-input [form]="form" controlName="city" placeholder="{{'City' | translate}}"></fims-text-input>
+  <fims-text-input [form]="form" controlName="postalCode" placeholder="{{'Postal code(optional)' | translate}}"></fims-text-input>
+  <mat-form-field layout-margin flex>
+    <input matInput placeholder="{{'Country' | translate}}" formControlName="country" [matAutocomplete]="auto">
+    <mat-error *ngIf="form.get('country').hasError('required')" translate>Required</mat-error>
+    <mat-error *ngIf="form.get('country').hasError('invalidCountry')" translate>Invalid country</mat-error>
+  </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="countryDisplay">
+    <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+      {{country.displayName}}
+    </mat-option>
+  </mat-autocomplete>
+  <fims-text-input [form]="form" controlName="region" placeholder="{{'Region(optional)' | translate}}"></fims-text-input>
 </form>

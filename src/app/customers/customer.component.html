@@ -14,18 +14,35 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Manage customers' | translate}}">
+<fims-layout-card-over title="{{'Manage members' | translate}}">
   <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <fims-data-table
-    (onFetch)="fetchCustomers($event)"
-    (onActionCellClick)="rowSelect($event)"
-    [columns]="columns"
-    [data]="customerData$ | async"
-    [loading]="loading$ | async"
-    [sortable]="true"
-    [pageable]="true">
-  </fims-data-table>
+  <fims-two-column-layout>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['tasks']" *hasPermission="{ id: 'customer_tasks', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>playlist_add_check</mat-icon>
+        <h3 matLine translate>Tasks</h3>
+        <p matLine translate>Manage tasks</p>
+      </a>
+      <a mat-list-item [routerLink]="['catalog/detail']" *hasPermission="{ id: 'catalog_catalogs', accessLevel: 'READ' }">
+        <mat-icon matListAvatar>format_list_numbered</mat-icon>
+        <h3 matLine translate>Custom fields</h3>
+        <p matLine translate>Manage custom fields</p>
+      </a>
+    </mat-nav-list>
+    <fims-data-table
+      right
+      (onFetch)="fetchCustomers($event)"
+      (onActionCellClick)="rowSelect($event)"
+      [columns]="columns"
+      [data]="customerData$ | async"
+      [loading]="loading$ | async"
+      [sortable]="true"
+      [pageable]="true">
+    </fims-data-table>
+  </fims-two-column-layout>
+
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create new customer' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Create new member ' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>

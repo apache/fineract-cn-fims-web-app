@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export type Type = 'DEBIT' | 'CREDIT';
+export type Type = 'DEBIT' | 'CREDIT' | 'CHEQUE';
 
 export interface TellerEntry {
   type?: Type;

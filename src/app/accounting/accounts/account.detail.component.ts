@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {OnInit, Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Account} from '../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromAccounting from '../store';
 import * as fromRoot from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {AccountingStore} from '../store/index';
 import {DELETE, SelectAction} from '../store/account/account.actions';
 import {Observable} from 'rxjs/Observable';
@@ -29,7 +29,7 @@ import {TdDialogService} from '@covalent/core';
 @Component({
   templateUrl: './account.detail.component.html'
 })
-export class AccountDetailComponent implements OnInit, OnDestroy{
+export class AccountDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
@@ -39,7 +39,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy{
 
   account: Account;
 
-  constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private translate: TranslateService, private store: AccountingStore) {}
+  constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private translate: TranslateService,
+              private store: AccountingStore) {
+  }
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -64,9 +66,9 @@ export class AccountDetailComponent implements OnInit, OnDestroy{
 
   private hasDeletePermission(permissions: FimsPermission[]): boolean {
     return permissions.filter(permission =>
-        permission.id === 'accounting_accounts' &&
-        permission.accessLevel === 'DELETE'
-      ).length > 0
+      permission.id === 'accounting_accounts' &&
+      permission.accessLevel === 'DELETE'
+    ).length > 0;
   }
 
   ngOnDestroy(): void {
@@ -74,10 +76,10 @@ export class AccountDetailComponent implements OnInit, OnDestroy{
     this.accountSubscription.unsubscribe();
   }
 
-  confirmDeletion(): Observable<boolean>{
-    let message = 'Do you want to delete this account?';
-    let title = 'Confirm deletion';
-    let button = 'DELETE ACCOUNT';
+  confirmDeletion(): Observable<boolean> {
+    const message = 'Do you want to delete this account?';
+    const title = 'Confirm deletion';
+    const button = 'DELETE ACCOUNT';
 
     return this.translate.get([title, message, button])
       .flatMap(result =>
@@ -93,10 +95,12 @@ export class AccountDetailComponent implements OnInit, OnDestroy{
     this.confirmDeletion()
       .filter(accept => accept)
       .subscribe(() => {
-        this.store.dispatch({ type: DELETE, payload: {
-          account: this.account,
-          activatedRoute: this.route
-        }})
+        this.store.dispatch({
+          type: DELETE, payload: {
+            account: this.account,
+            activatedRoute: this.route
+          }
+        });
       });
   }
 

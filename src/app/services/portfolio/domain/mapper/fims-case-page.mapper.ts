@@ -18,15 +18,15 @@ import {FimsCasePage} from '../fims-case-page.model';
 import {CasePage} from '../case-page.model';
 
 export function mapToFimsCasePage(casePage: CasePage): FimsCasePage {
-  let elements = [];
-  
-  for(let caseInstance of casePage.elements) {
+  const elements = [];
+
+  for (const caseInstance of casePage.elements) {
     elements.push(mapToFimsCase(caseInstance));
   }
-  
+
   return {
     elements: elements,
     totalPages: casePage.totalPages,
     totalElements: casePage.totalElements
-  }
+  };
 }

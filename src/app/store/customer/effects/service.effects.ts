@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as customerActions from '../customer.actions';
@@ -25,8 +25,6 @@ import {emptySearchResult} from '../../../common/store/search.reducer';
 
 @Injectable()
 export class CustomerSearchApiEffects {
-
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -45,5 +43,7 @@ export class CustomerSearchApiEffects {
         }))
         .catch(() => of(new customerActions.SearchCompleteAction(emptySearchResult())));
     });
+
+  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
 }

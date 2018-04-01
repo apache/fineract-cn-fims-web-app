@@ -15,20 +15,21 @@
  */
 
 import {AuthGuard} from './auth-guard.service';
-import {Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {TestBed, inject} from '@angular/core/testing';
-import {Observable} from 'rxjs';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {inject, TestBed} from '@angular/core/testing';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
 
 describe('Test Auth Guard Service', () => {
 
-  let route: ActivatedRouteSnapshot;
+  const route: ActivatedRouteSnapshot = undefined;
 
-  let state: RouterStateSnapshot;
+  const state: RouterStateSnapshot = undefined;
 
-  let router = {
-    navigate(){}
+  const mockRouter = {
+    navigate() {
+    }
   };
 
   describe('when logged in', () => {
@@ -37,14 +38,18 @@ describe('Test Auth Guard Service', () => {
       TestBed.configureTestingModule({
         providers: [
           AuthGuard,
-          { provide: Router, useValue: router},
+          {provide: Router, useValue: mockRouter},
           {
             provide: Store, useClass: class {
-              select = jasmine.createSpy('select').and.callFake(selector => {
-                if(selector === fromRoot.getAuthenticationLoading) return Observable.of(false);
-                if(selector === fromRoot.getAuthentication) return Observable.of({});
-              })
-            }
+            select = jasmine.createSpy('select').and.callFake(selector => {
+              if (selector === fromRoot.getAuthenticationLoading) {
+                return Observable.of(false);
+              }
+              if (selector === fromRoot.getAuthentication) {
+                return Observable.of({});
+              }
+            });
+          }
           }
         ]
       });
@@ -56,7 +61,7 @@ describe('Test Auth Guard Service', () => {
           expect(canActivate).toBeTruthy();
           done();
         });
-      })()
+      })();
     });
   });
 
@@ -66,14 +71,18 @@ describe('Test Auth Guard Service', () => {
       TestBed.configureTestingModule({
         providers: [
           AuthGuard,
-          { provide: Router, useValue: router},
+          {provide: Router, useValue: mockRouter},
           {
             provide: Store, useClass: class {
-              select = jasmine.createSpy('select').and.callFake(selector => {
-                if(selector === fromRoot.getAuthenticationLoading) return Observable.of(false);
-                if(selector === fromRoot.getAuthentication) return Observable.of(null);
-              })
-            }
+            select = jasmine.createSpy('select').and.callFake(selector => {
+              if (selector === fromRoot.getAuthenticationLoading) {
+                return Observable.of(false);
+              }
+              if (selector === fromRoot.getAuthentication) {
+                return Observable.of(null);
+              }
+            });
+          }
           }
         ]
       });
@@ -95,7 +104,7 @@ describe('Test Auth Guard Service', () => {
           expect(router.navigate).toHaveBeenCalledWith(['/login']);
           done();
         });
-      })()
+      })();
     });
   });
 

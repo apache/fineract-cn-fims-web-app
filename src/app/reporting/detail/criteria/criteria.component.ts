@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnInit, Output, Query, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {QueryParameter} from '../../../services/reporting/domain/query-parameter.model';
 import {ReportingQueryParamsComponent} from '../queryParams/query-params.component';
 import {DisplayableField} from '../../../services/reporting/domain/displayable-field.model';
@@ -42,7 +42,9 @@ export class ReportingCriteriaComponent {
   @ViewChild('displayableFieldComponent') displayableFieldsComponent: ReportingDisplayableFieldsComponent;
 
   @Input() set queryParameter(queryParameter: QueryParameter[]) {
-    if(!queryParameter) return;
+    if (!queryParameter) {
+      return;
+    }
 
     this.mandatoryParams = queryParameter.filter(param => param.mandatory);
     this.optionalParams = queryParameter.filter(param => !param.mandatory);

@@ -29,7 +29,7 @@ import {TdDialogService} from '@covalent/core';
 @Component({
   templateUrl: './sub-ledger.list.component.html'
 })
-export class SubLedgerListComponent implements OnInit, OnDestroy{
+export class SubLedgerListComponent implements OnInit, OnDestroy {
 
   private selectionSubscription: Subscription;
 
@@ -44,10 +44,12 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
-    { name: 'description', label: 'Description' }
+    { name: 'description', label: 'Description' },
+    { name: 'totalValue', label: 'Balance', format: value => value ? value.toFixed(2) : '-' }
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: AccountingStore, private translate: TranslateService, private dialogService: TdDialogService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private store: AccountingStore, private translate: TranslateService,
+              private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.selectionSubscription = this.store.select(fromAccounting.getSelectedLedger)
@@ -66,7 +68,7 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
   set ledger(ledger: Ledger) {
     this._ledger = ledger;
 
-    if(ledger.subLedgers) {
+    if (ledger.subLedgers) {
       this.ledgerData.data = ledger.subLedgers;
       this.ledgerData.totalElements = ledger.subLedgers.length;
     }
@@ -76,10 +78,10 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
     return this._ledger;
   }
 
-  confirmDeletion(): Observable<boolean>{
-    let message = 'Do you want to delete this ledger?';
-    let title = 'Confirm deletion';
-    let button = 'DELETE LEDGER';
+  confirmDeletion(): Observable<boolean> {
+    const message = 'Do you want to delete this ledger?';
+    const title = 'Confirm deletion';
+    const button = 'DELETE LEDGER';
 
     return this.translate.get([title, message, button])
       .flatMap(result =>
@@ -98,7 +100,7 @@ export class SubLedgerListComponent implements OnInit, OnDestroy{
         this.store.dispatch({ type: DELETE, payload: {
           ledger: this.ledger,
           activatedRoute: this.route
-        }})
+        }});
       });
   }
 

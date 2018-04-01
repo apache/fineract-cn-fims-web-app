@@ -26,6 +26,6 @@ export class ReportingReportPageComponent {
   @Input() reportPage: ReportPage;
 
   cellValue(values: string[]): string {
-    return values.join(', ')
+    return values.join(', ');
   }
 }

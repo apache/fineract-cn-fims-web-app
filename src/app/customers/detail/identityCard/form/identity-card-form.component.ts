@@ -32,7 +32,7 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
 
   @Input() identificationCard: IdentificationCard;
 
-  @Input() editMode: boolean = false;
+  @Input() editMode = false;
 
   @Output('onSave') onSave = new EventEmitter<IdentificationCard>();
 
@@ -44,9 +44,10 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      number: [this.identificationCard.number, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
+      number: [this.identificationCard.number, [Validators.required, Validators.minLength(3), Validators.maxLength(32),
+        FimsValidators.urlSafe]],
       type: [this.identificationCard.type, [Validators.required, Validators.maxLength(128)]],
-      expirationDate: [this.formatDate(this.identificationCard.expirationDate), Validators.required],
+      expirationDate: [this.formatDate(this.identificationCard.expirationDate), [Validators.required, FimsValidators.afterToday]],
       issuer: [this.identificationCard.issuer, [Validators.required, Validators.maxLength(256)]]
     });
 
@@ -57,12 +58,14 @@ export class IdentityCardFormComponent extends FormComponent<IdentificationCard>
     this.setError('number', 'unique', true);
   }
 
-  private formatDate(expirationDate: ExpirationDate): string{
-    if(!expirationDate) return '';
+  private formatDate(expirationDate: ExpirationDate): string {
+    if (!expirationDate) {
+      return '';
+    }
     return `${expirationDate.year}-${this.addZero(expirationDate.month)}-${this.addZero(expirationDate.day)}`;
   }
 
-  private addZero(value: number): string{
+  private addZero(value: number): string {
     return ('0' + value).slice(-2);
   }
 

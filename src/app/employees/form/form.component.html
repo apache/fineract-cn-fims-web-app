@@ -16,56 +16,29 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Employee details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="detailForm">
-      <div layout="row">
-        <fims-id-input [form]="detailForm" placeholder="Username" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'First name' | translate}}" formControlName="firstName" tdAutoTrim/>
-          <md-error *ngIf="detailForm.get('firstName').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="detailForm.get('firstName').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('firstName').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Middle name(optional)' | translate}}" formControlName="middleName"
-                    tdAutoTrim/>
-          <md-error *ngIf="detailForm.get('middleName').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('middleName').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Last name' | translate}}" formControlName="lastName" tdAutoTrim/>
-          <md-error *ngIf="detailForm.get('lastName').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="detailForm.get('lastName').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('lastName').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="column">
-        <md-select formControlName="role" layout-margin placeholder="{{ 'Role' | translate }}" flex="15">
-          <md-option *ngFor="let role of roles | async" [value]="role.identifier">
+    <form [formGroup]="detailForm" layout="column">
+      <fims-id-input [form]="detailForm" placeholder="Username" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="detailForm" controlName="firstName" placeholder="{{'First name' | translate}}"></fims-text-input>
+      <fims-text-input [form]="detailForm" controlName="middleName" placeholder="{{'Middle name(optional)' | translate}}"></fims-text-input>
+      <fims-text-input [form]="detailForm" controlName="lastName" placeholder="{{'Last name' | translate}}"></fims-text-input>
+      <mat-form-field layout-margin>
+        <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
+          <mat-option *ngFor="let role of roles | async" [value]="role.identifier">
             {{ role.identifier }}
-          </md-option>
-        </md-select>
-        <span layout-margin class="tc-red-600" *ngIf="detailForm.get('role').hasError('required')" translate>Required</span>
-      </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="detailForm.get('role').hasError('required')" translate>Required</mat-error>
+      </mat-form-field>
       <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password" tdAutoTrim/>
-          <md-error *ngIf="detailForm.get('password').hasError('required')" translate>
+        <mat-form-field layout-margin flex>
+          <input matInput placeholder="{{'Password' | translate}}" type="password" formControlName="password" autocomplete="new-password" tdAutoTrim/>
+          <mat-error *ngIf="detailForm.get('password').hasError('required')" translate>
             Required
-          </md-error>
-        </md-input-container>
+          </mat-error>
+          <mat-error *ngIf="detailForm.get('password').hasError('minlength')">
+            {{ 'Must have at least characters.' | translate:{ value: detailForm.get('password').getError('minlength')['requiredLength']} }}
+          </mat-error>
+        </mat-form-field>
       </div>
     </form>
     <ng-template td-step-actions>
@@ -85,42 +58,18 @@
                         (onSelectionChange)="assignOffice($event)"
                         title="{{'Assigned Office' | translate}}"
                         noResultsMessage="{{'No office was found.' | translate}}"
-                        noSelectionMessage="{{'No office assigned to employee, yet.' | translate}}"
-    ></fims-select-list>
+                        noSelectionMessage="{{'No office assigned to employee, yet.' | translate}}">
+    </fims-select-list>
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="contactStep.open()"></fims-form-continue-action>
     </ng-template>
   </td-step>
 
   <td-step #contactStep label="{{'Employee contact(optional)' | translate}}" [state]="contactForm.valid && !contactForm.pristine ? 'complete' : contactForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="contactForm">
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput flex placeholder="{{'Email(optional)' | translate}}" formControlName="email" tdAutoTrim/>
-          <md-error *ngIf="contactForm.get('email').hasError('email')" translate>
-            Invalid email
-          </md-error>
-          <md-error *ngIf="contactForm.get('email').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: contactForm.get('email').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Phone(optional)' | translate}}" type="tel" formControlName="phone" tdAutoTrim/>
-          <md-error *ngIf="contactForm.get('phone').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: contactForm.get('phone').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput placeholder="{{'Mobile(optional)' | translate}}" type="tel" formControlName="mobile" tdAutoTrim/>
-          <md-error *ngIf="contactForm.get('mobile').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: contactForm.get('mobile').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
+    <form [formGroup]="contactForm" layout="column">
+      <fims-text-input [form]="contactForm" controlName="email" placeholder="{{'Email(optional)' | translate}}" type="email"></fims-text-input>
+      <fims-text-input [form]="contactForm" controlName="phone" placeholder="{{'Phone(optional)' | translate}}" type="tel"></fims-text-input>
+      <fims-text-input [form]="contactForm" controlName="mobile" placeholder="{{'Mobile(optional)' | translate}}" type="tel"></fims-text-input>
     </form>
   </td-step>
 

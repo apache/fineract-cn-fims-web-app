@@ -14,11 +14,11 @@
  limitations under the License.
 -->
 
-<md-list-item [mdTooltip]="disabled ? 'This is a four eyes task and must be executed by somebody else than you.' : ''" [mdTooltipPosition]="'after'">
-  <md-icon md-list-avatar *ngIf="task.taskDefinition.fourEyes">people</md-icon>
-  <md-icon md-list-avatar *ngIf="!task.taskDefinition.fourEyes">person</md-icon>
-  <h3 md-line>{{task.taskDefinition.name}}</h3>
-  <h4 md-line>{{task.taskDefinition.description}}</h4>
-  <p md-line>{{task.executedBy}}, {{task.executedOn | date:'medium'}}</p>
-  <md-checkbox class="list-checkbox" title="{{'Execute task' | translate}}" [checked]="!!task.executedOn" (change)="selectTask($event)" [disabled]="disabled"></md-checkbox>
-</md-list-item>
+<mat-list-item [matTooltip]="disabled ? 'This is a four eyes task and must be executed by somebody else than you.' : ''" [matTooltipPosition]="'after'">
+  <mat-icon matListAvatar *ngIf="task.taskDefinition.fourEyes">people</mat-icon>
+  <mat-icon matListAvatar *ngIf="!task.taskDefinition.fourEyes">person</mat-icon>
+  <h3 matLine>{{task.taskDefinition.name}}</h3>
+  <h4 matLine>{{task.taskDefinition.description}}</h4>
+  <p matLine>{{task.executedBy}}, {{task.executedOn | date:'medium'}}</p>
+  <mat-checkbox class="list-checkbox" title="{{'Execute task' | translate}}" [checked]="!!task.executedOn" (change)="selectTask($event)" [disabled]="disabled"></mat-checkbox>
+</mat-list-item>

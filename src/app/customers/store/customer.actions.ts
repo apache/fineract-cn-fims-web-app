@@ -20,8 +20,10 @@ import {Error} from '../../services/domain/error.model';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {RoutePayload} from '../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../common/store/resource.reducer';
 
 export const LOAD = type('[Customer] Load');
@@ -37,8 +39,8 @@ export const UPDATE_FAIL = type('[Customer] Update Fail');
 
 export const RESET_FORM = type('[Customer] Reset Form');
 
-export interface CustomerRoutePayload extends RoutePayload{
-  customer: Customer
+export interface CustomerRoutePayload extends RoutePayload {
+  customer: Customer;
 }
 
 export class LoadAction implements Action {

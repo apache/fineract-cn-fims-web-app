@@ -15,11 +15,12 @@
  */
 
 import {Component, Input} from '@angular/core';
+
 @Component({
   selector: 'fims-state-display',
   templateUrl: 'state-display.component.html'
 })
-export class StateDisplayComponent{
+export class StateDisplayComponent {
 
   @Input() state: string;
 }

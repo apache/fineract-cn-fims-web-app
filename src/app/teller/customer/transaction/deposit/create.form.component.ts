@@ -16,7 +16,6 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
-import {TellerService} from '../../../../services/teller/teller-service';
 import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
 import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
@@ -26,15 +25,16 @@ import {DepositAccountService} from '../../../../services/depositAccount/deposit
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
-import {TellerTransactionFormComponent} from './form.component';
+import {DepositTransactionFormComponent} from './form.component';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {TransactionForm} from '../domain/transaction-form.model';
+import {TellerTransactionService} from '../../../services/transaction.service';
 
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateDepositTransactionForm implements OnInit, OnDestroy {
+export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy {
 
   private authenticatedTellerSubscription: Subscription;
 
@@ -42,11 +42,11 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
 
   private tellerTransactionIdentifier: string;
 
-  transactionType: TransactionType;
-
   private clerk: string;
 
-  @ViewChild('form') form: TellerTransactionFormComponent;
+  @ViewChild('form') form: DepositTransactionFormComponent;
+
+  transactionType: TransactionType;
 
   productInstances$: Observable<ProductInstance[]>;
 
@@ -56,21 +56,39 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
 
   transactionCreated: boolean;
 
-  error: string;
-
-  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore, private tellerService: TellerService, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
+              private depositService: DepositAccountService, private tellerTransactionService: TellerTransactionService) {
+  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
+    const transactionType$ = this.route.queryParams
+      .map(params => params['transactionType'])
+      .do(transactionType => this.transactionType = transactionType);
 
-    this.productInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
+    const allProductInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
 
+    this.productInstances$ = Observable.combineLatest(
+      transactionType$,
+      allProductInstances$,
+      (type, productInstances) => this.filterProductInstances(type, productInstances)
+    );
+
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
-      .subscribe(teller => { this.teller = teller } );
+      .filter(teller => !!teller)
+      .subscribe(teller => {
+        this.teller = teller;
+      });
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
       .subscribe(username => this.clerk = username);
+  }
+
+  filterProductInstances(transactionType: string, productInstances: ProductInstance[]): ProductInstance[] {
+    // If open account only show pending accounts otherwise only active
+    const filterByState = transactionType === 'ACCO' ? 'PENDING' : 'ACTIVE';
+    return productInstances
+      .filter(instance => instance.state === filterByState);
   }
 
   ngOnDestroy(): void {
@@ -90,7 +108,7 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
       transactionType: this.transactionType
     };
 
-    this.transactionCosts$ = this.tellerService.createTransaction(this.teller.code, transaction)
+    this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
       .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
       .do(() => this.transactionCreated = true);
   }
@@ -121,6 +139,6 @@ export class CreateDepositTransactionForm implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.router.navigate(['../../'], { relativeTo: this.route })
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 }

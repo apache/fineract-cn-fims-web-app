@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, Input, forwardRef, OnInit, OnDestroy} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable, Subscription} from 'rxjs';
-import {AccountingService} from '../../services/accounting/accounting.service';
-import {Account} from '../../services/accounting/domain/account.model';
-import {AccountPage} from '../../services/accounting/domain/account-page.model';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {CustomerService} from '../../services/customer/customer.service';
 import {CustomerPage} from '../../services/customer/domain/customer-page.model';
@@ -46,6 +43,10 @@ export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
 
   customers: Observable<Customer[]>;
 
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
+
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
@@ -59,7 +60,7 @@ export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
       .switchMap(name => this.onSearch(name));
   }
 
-  changeValue(value: string): void{
+  changeValue(value: string): void {
     this._onChangeCallback(value);
   }
 
@@ -75,17 +76,13 @@ export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
     this._onTouchedCallback = fn;
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
-  onSearch(searchTerm?: string): Observable<Customer[]>{
-    let fetchRequest: FetchRequest = {
+  onSearch(searchTerm?: string): Observable<Customer[]> {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
       },
-      searchTerm: searchTerm
+      searchTerm
     };
 
     return this.customerService.fetchCustomers(fetchRequest)

@@ -35,7 +35,7 @@ describe('Tellers Reducer', () => {
         },
         selectedId: null,
         loadedAt: {}
-      }
+      };
     }
 
     it('should add assigned employee on open', () => {
@@ -75,7 +75,7 @@ describe('Tellers Reducer', () => {
       const result = reducer(initialState, new ExecuteCommandSuccessAction(payload));
 
       expect(result).toEqual(expectedResult);
-    })
+    });
   });
 
 });

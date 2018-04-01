@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import {Error} from '../domain/error.model';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import {HttpClient} from '../http/http.service';
 import {Password} from './domain/password.model';
 import {UserWithPassword} from './domain/user-with-password.model';
@@ -27,15 +24,15 @@ import {Role} from './domain/role.model';
 import {RoleIdentifier} from './domain/role-identifier.model';
 import {User} from './domain/user.model';
 import {PermittableGroup} from '../anubis/permittable-group.model';
-import {Permission} from './domain/permission.model';
 
 @Injectable()
 export class IdentityService {
 
-  constructor(private http: HttpClient, @Inject('identityBaseUrl') private baseUrl: string) {}
-
-  private static encodePassword(password: string): string{
+  private static encodePassword(password: string): string {
     return btoa(password);
+  }
+
+  constructor(private http: HttpClient, @Inject('identityBaseUrl') private baseUrl: string) {
   }
 
   changePassword(id: string, password: Password): Observable<any> {
@@ -55,7 +52,7 @@ export class IdentityService {
       .catch(Error.handleError);
   }
 
-  changeUserRole(user: string, roleIdentifier: RoleIdentifier): Observable<any>{
+  changeUserRole(user: string, roleIdentifier: RoleIdentifier): Observable<any> {
     return this.http.put(this.baseUrl + '/users/' + user + '/roleIdentifier', roleIdentifier)
       .catch(Error.handleError);
   }
@@ -85,17 +82,17 @@ export class IdentityService {
       .catch(Error.handleError);
   }
 
-  createPermittableGroup(permittableGroup: PermittableGroup): Observable<PermittableGroup>{
+  createPermittableGroup(permittableGroup: PermittableGroup): Observable<PermittableGroup> {
     return this.http.post(this.baseUrl + '/permittablegroups', permittableGroup)
       .catch(Error.handleError);
   }
 
-  getPermittableGroup(id: string): Observable<PermittableGroup>{
+  getPermittableGroup(id: string): Observable<PermittableGroup> {
     return this.http.get(this.baseUrl + '/permittablegroups/' + id)
       .catch(Error.handleError);
   }
 
-  getPermittableGroups(): Observable<PermittableGroup[]>{
+  getPermittableGroups(): Observable<PermittableGroup[]> {
     return this.http.get(this.baseUrl + '/permittablegroups')
       .catch(Error.handleError);
   }

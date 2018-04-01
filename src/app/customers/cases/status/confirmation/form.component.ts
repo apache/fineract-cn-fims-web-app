@@ -15,10 +15,10 @@
  */
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CostComponent} from '../../../../services/portfolio/domain/individuallending/cost-component.model';
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
+import {Fee} from '../services/domain/fee.model';
 
 export interface ExecuteCommandEvent {
   productId: string;
@@ -26,6 +26,7 @@ export interface ExecuteCommandEvent {
   action: WorkflowAction;
   note: string;
   paymentSize: number;
+  createdOn: string;
 }
 
 @Component({
@@ -34,11 +35,11 @@ export interface ExecuteCommandEvent {
 })
 export class CaseCommandConfirmationFormComponent implements OnInit {
 
-  numberFormat: string = '2.2-2';
+  numberFormat = '2.2-2';
 
   formGroup: FormGroup;
 
-  @Input() costComponents: CostComponent[];
+  @Input() fees: Fee[];
 
   @Input() action: WorkflowAction;
 
@@ -53,12 +54,14 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       note: ['']
-    })
+    });
   }
 
   get totalAmount(): number {
-    if(!this.costComponents) return 0;
-    return this.costComponents.reduce((acc, val) => acc + val.amount, 0);
+    if (!this.fees) {
+      return 0;
+    }
+    return this.fees.reduce((acc, val) => acc + val.amount, 0);
   }
 
   executeCommand(): void {
@@ -67,7 +70,8 @@ export class CaseCommandConfirmationFormComponent implements OnInit {
       productId: this.fimsCase.productIdentifier,
       note: this.formGroup.get('note').value,
       action: this.action,
-      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0
+      paymentSize: this.action === 'DISBURSE' ? this.fimsCase.parameters.maximumBalance : 0,
+      createdOn: new Date().toISOString()
     });
   }
 

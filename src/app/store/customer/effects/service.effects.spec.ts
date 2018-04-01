@@ -17,7 +17,7 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {CustomerSearchApiEffects} from './service.effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {SearchAction, SearchCompleteAction} from '../customer.actions';
 import {CustomerPage} from '../../../services/customer/domain/customer-page.model';
@@ -37,7 +37,7 @@ describe('Customer Search Api Effects', () => {
           useValue: jasmine.createSpyObj('customerService', ['fetchCustomers'])
         }
       ]
-    })
+    });
 
   });
 

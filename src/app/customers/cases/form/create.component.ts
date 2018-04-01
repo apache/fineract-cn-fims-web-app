@@ -16,13 +16,11 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Case} from '../../../services/portfolio/domain/case.model';
-import {Customer} from '../../../services/customer/domain/customer.model';
 import {CaseFormComponent} from './form.component';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../services/domain/error.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
@@ -31,15 +29,16 @@ import {Observable} from 'rxjs/Observable';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 
 @Component({
   templateUrl: './create.component.html'
 })
-export class CaseCreateComponent implements OnInit, OnDestroy{
-
-  private customerSubscription: Subscription;
+export class CaseCreateComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
+
+  fullName: string;
 
   @ViewChild('form') formComponent: CaseFormComponent;
 
@@ -47,7 +46,7 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
 
   productsInstances$: Observable<ProductInstance[]>;
 
-  customer: Customer;
+  customer$: Observable<Customer>;
 
   caseInstance: FimsCase = {
     currentState: 'CREATED',
@@ -69,54 +68,45 @@ export class CaseCreateComponent implements OnInit, OnDestroy{
       },
       creditWorthinessSnapshots: []
     },
+    interest: 0,
     depositAccountIdentifier: ''
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore, private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore,
+              private portfolioService: PortfolioService, private depositService: DepositAccountService) {}
 
   ngOnInit(): void {
-    const selectedCustomer$ = this.casesStore.select(fromCustomers.getSelectedCustomer);
-
-    this.customerSubscription = selectedCustomer$
-      .subscribe(customer => this.customer = customer);
+    this.customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
+      .filter(customer => !!customer)
+      .do(customer => this.fullName = `${customer.givenName} ${customer.surname}`);
 
     this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
       .filter((error: Error) => !!error)
-      .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.form.get('identifier').errors || {};
-        errors['unique'] = true;
-        detailForm.form.get('identifier').setErrors(errors);
-        this.formComponent.detailsStep.open();
-      });
+      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.products$ = this.portfolioService.findAllProducts(false)
       .map(productPage => productPage.elements);
 
-    this.productsInstances$ = selectedCustomer$
-      .flatMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+    this.productsInstances$ = this.customer$
+      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
+      .map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE'));
   }
 
   ngOnDestroy(): void {
-    this.customerSubscription.unsubscribe();
     this.formStateSubscription.unsubscribe();
 
-    this.casesStore.dispatch({ type: RESET_FORM })
+    this.casesStore.dispatch({ type: RESET_FORM });
   }
 
-  onSave(caseToSave: FimsCase): void {
+  onSave(caseInstance: FimsCase): void {
     this.casesStore.dispatch({ type: CREATE, payload: {
-      productId: caseToSave.productIdentifier,
-      caseInstance: caseToSave,
+      productId: caseInstance.productIdentifier,
+      caseInstance,
       activatedRoute: this.route
     }});
   }
 
-  onCancel(): void{
-    this.navigateAway();
-  }
-
-  navigateAway(): void{
+  onCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 

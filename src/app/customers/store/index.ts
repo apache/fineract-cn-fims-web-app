@@ -16,11 +16,14 @@
 
 import * as fromRoot from '../../store';
 import * as fromCustomers from './customers.reducer';
-import * as fromCustomerTasks from './tasks/tasks.reducer';
+import * as fromCustomerTasks from './customerTasks/customer-tasks.reducer';
 import * as fromCustomerIdentificationCards from './identityCards/identity-cards.reducer';
-import * as fromCatalogs from './catalogs/catalogs.reducer';
+import * as fromCatalogs from './catalogs/catalog.reducer';
 import * as fromCommands from './commands/commands.reducer';
 import * as fromScans from './identityCards/scans/scans.reducer';
+import * as fromTasks from './tasks/tasks.reducer';
+import * as fromPayrollDistribution from './payroll/payroll.reducer';
+
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
@@ -33,38 +36,44 @@ import {
 } from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   customers: ResourceState;
   customerForm: FormState;
-  customerTasks: ResourceState;
-  customerCatalogs: fromCatalogs.State;
+  tasks: ResourceState;
+  taskForm: FormState;
+  customerTasks: fromCustomerTasks.State;
+  customerCatalog: fromCatalogs.State;
   customerCommands: fromCommands.State;
   customerIdentificationCards: ResourceState;
   customerIdentificationCardForm: FormState;
   customerIdentificationCardScans: ResourceState;
   customerIdentificationCardScanForm: FormState;
+  customerPayrollDistribution: fromPayrollDistribution.State;
 }
 
 const reducers = {
   customers: createResourceReducer('Customer', fromCustomers.reducer),
   customerForm: createFormReducer('Customer'),
-  customerTasks: createResourceReducer('Customer Task', fromCustomerTasks.reducer),
-  customerCatalogs: fromCatalogs.reducer,
+  tasks: createResourceReducer('Task', fromTasks.reducer),
+  taskForm: createFormReducer('Task'),
+  customerTasks: fromCustomerTasks.reducer,
+  customerCatalog: fromCatalogs.reducer,
   customerCommands: fromCommands.reducer,
   customerIdentificationCards: createResourceReducer('Customer Identity Card', fromCustomerIdentificationCards.reducer, 'number'),
   customerIdentificationCardForm: createFormReducer('Customer Identity Card'),
   customerIdentificationCardScans: createResourceReducer('Customer Identity Card Scan', fromScans.reducer),
-  customerIdentificationCardScanForm: createFormReducer('Customer Identity Card Scan')
+  customerIdentificationCardScanForm: createFormReducer('Customer Identity Card Scan'),
+  customerPayrollDistribution: fromPayrollDistribution.reducer
 };
 
-export class CustomersStore extends Store<State>{}
+export class CustomersStore extends Store<State> {}
 
-export function customerStoreFactory(appStore: Store<fromRoot.State>){
+export const customerModuleReducer: ActionReducer<State> = createReducer(reducers);
+
+export function customerStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(customerModuleReducer);
   return appStore;
 }
-
-export const customerModuleReducer: ActionReducer<State> = createReducer(reducers);
 
 export const getCustomersState = (state: State) => state.customers;
 
@@ -75,19 +84,22 @@ export const getCustomerLoadedAt = createSelector(getCustomersState, getResource
 export const getSelectedCustomer = createSelector(getCustomersState, getResourceSelected);
 
 /**
- * Customer Task Selectors
+ * Task Selectors
  */
-export const getCustomerTasksState = (state: State) => state.customerTasks;
+export const getTasksState = (state: State) => state.tasks;
 
-export const getAllCustomerTaskEntities = createSelector(getCustomerTasksState, getResourceAll);
+export const getAllTaskEntities = createSelector(getTasksState, getResourceAll);
+
+export const getTaskLoadedAt = createSelector(getTasksState, getResourceLoadedAt);
+export const getSelectedTask = createSelector(getTasksState, getResourceSelected);
 
 /**
- * Customer Catalog Selectors
+ * Customer Task Selectors
  */
+export const getCustomerTaskCommandsState = (state: State) => state.customerTasks;
 
-export const getCustomerCatalogsState = (state: State) => state.customerCatalogs;
+export const getCustomerTaskProcessSteps = createSelector(getCustomerTaskCommandsState, fromCustomerTasks.getProcessSteps);
 
-export const getAllCustomerCatalogEntities = createSelector(getCustomerCatalogsState, fromCatalogs.getAll);
 
 /**
  * Customer Command Selectors
@@ -113,10 +125,27 @@ export const getSelectedIdentificationCard = createSelector(getCustomerIdentific
 /**
  * Customer Identification Card Scan Selectors
  */
-
 export const getIdentificationCardScansState = (state: State) => state.customerIdentificationCardScans;
 
 export const getAllIdentificationCardScanEntities = createSelector(getIdentificationCardScansState, getResourceAll);
 
 export const getCustomerIdentificationCardScanFormState = (state: State) => state.customerIdentificationCardScanForm;
 export const getCustomerIdentificationCardScanFormError = createSelector(getCustomerIdentificationCardScanFormState, getFormError);
+
+/**
+ * Customer Payroll Distribution Selectors
+ */
+export const getPayrollDistributionState = (state: State) => state.customerPayrollDistribution;
+
+export const getPayrollDistribution = createSelector(getPayrollDistributionState, fromPayrollDistribution.getPayrollDistribution);
+export const getPayrollDistributionLoadedAt = createSelector(getPayrollDistributionState,
+  fromPayrollDistribution.getPayrollDistributionLoadedAt);
+
+/**
+ * Customer Catalog Selectors
+ */
+export const getCustomerCatalogState = (state: State) => state.customerCatalog;
+
+export const getCustomerCatalog = createSelector(getCustomerCatalogState, fromCatalogs.getCustomerCatalog);
+export const getCustomerCatalogLoadedAt = createSelector(getCustomerCatalogState, fromCatalogs.getCustomerCatalogLoadedAt);
+export const getSelectedField = createSelector(getCustomerCatalogState, fromCatalogs.getSelectedField);

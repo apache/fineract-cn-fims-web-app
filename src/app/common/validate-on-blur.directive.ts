@@ -18,7 +18,9 @@ import {NgControl} from '@angular/forms';
 import {Directive} from '@angular/core';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[validate-onblur]',
+  // tslint:disable-next-line:use-host-property-decorator
   host: {
     '(focus)': 'onFocus($event)',
     '(blur)': 'onBlur($event)',
@@ -60,7 +62,8 @@ export class ValidateOnBlurDirective {
   onBlur($event) {
     this.formControl.control.setAsyncValidators(this.asyncValidators);
     this.formControl.control.setValidators(this.validators);
-    if (this.wasChanged)
+    if (this.wasChanged) {
       this.formControl.control.updateValueAndValidity();
+    }
   }
 }

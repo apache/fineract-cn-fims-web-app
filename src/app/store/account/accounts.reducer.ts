@@ -19,7 +19,7 @@ import {SearchState} from '../../common/store/search.reducer';
 
 export function reducer(state, action: accounts.Actions): SearchState {
 
-  switch(action.type) {
+  switch (action.type) {
 
     case accounts.SEARCH_BY_LEDGER: {
       return Object.assign({}, state, {

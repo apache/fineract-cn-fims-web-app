@@ -14,57 +14,32 @@
  * limitations under the License.
  */
 
+import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
+import {Observable} from 'rxjs/Observable';
+import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
-import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
-export class CustomerTasksNotificationEffects {
+export class TasksNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
-  @Effect({ dispatch: false })
-  createCustomerTaskSuccess$: Observable<Action> = this.actions$
+  @Effect({dispatch: false})
+  createTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.CREATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Task is going to be saved'
     }));
 
-  @Effect({ dispatch: false })
-  executeCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_SUCCESS)
+  @Effect({dispatch: false})
+  updateTaskSuccess$: Observable<Action> = this.actions$
+    .ofType(taskActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Task is going to be executed'
+      message: 'Task is going to be updated'
     }));
 
-  @Effect({ dispatch: false })
-  executeCustomerTaskFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_FAIL)
-    .do(() => this.notificationService.send({
-      type: NotificationType.ALERT,
-      message: 'Sorry, there was a problem executing your task'
-    }));
-
-  @Effect({ dispatch: false })
-  executeCustomerCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Command is going to be executed'
-    }));
-
-  @Effect({ dispatch: false })
-  executeCustomerCommandFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_FAIL)
-    .do(() => this.notificationService.send({
-      type: NotificationType.ALERT,
-      message: 'Sorry, there was a problem executing your command'
-    }));
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
-

@@ -19,7 +19,7 @@ import {ActivatedRoute} from '@angular/router';
 import {TaskDefinition} from '../../../services/portfolio/domain/task-definition.model';
 import {DELETE, SelectAction} from '../store/tasks/task.actions';
 import {PortfolioStore} from '../store/index';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromPortfolio from '../store';
 import {Observable} from 'rxjs/Observable';
 import {TdDialogService} from '@covalent/core';
@@ -37,7 +37,7 @@ export class ProductStatusDetailComponent implements OnInit, OnDestroy {
 
   product$: Observable<FimsProduct>;
 
-  constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore, private dialogService: TdDialogService){}
+  constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
@@ -52,7 +52,7 @@ export class ProductStatusDetailComponent implements OnInit, OnDestroy {
     this.actionsSubscription.unsubscribe();
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete this task?',
       title: 'Confirm deletion',
@@ -68,7 +68,7 @@ export class ProductStatusDetailComponent implements OnInit, OnDestroy {
           productId: product.identifier,
           task,
           activatedRoute: this.route
-        } })
+        } });
       });
   }
 }

@@ -26,29 +26,35 @@ import {TellerAuthComponent} from './auth/teller-auth.component';
 import {EffectsModule} from '@ngrx/effects';
 import {TellerApiEffects} from './store/effects/service.effects';
 import {
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdCardModule, MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule, MdSelectModule,
-  MdToolbarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {TellerRouteEffects} from './store/effects/route.effects';
-import {CovalentDataTableModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {TellerCustomerExistsGuard} from './customer/teller-customer-exists.guard';
 import {TellerCustomerDetailComponent} from './customer/customer-detail.component';
 import {TellerProductsApiEffects} from './store/effects/products.service.effects';
 import {TellerCustomerIndexComponent} from './customer/customer-index.component';
 import {FimsSharedModule} from '../common/common.module';
-import {TellerTransactionFormComponent} from './customer/transaction/deposit/form.component';
+import {DepositTransactionFormComponent} from './customer/transaction/deposit/form.component';
 import {TellerNotificationEffects} from './store/effects/notification.effects';
 import {LoanTransactionFormComponent} from './customer/transaction/loan/form.component';
-import {CreateLoanTransactionForm} from './customer/transaction/loan/create.form.component';
+import {CreateLoanTransactionFormComponent} from './customer/transaction/loan/create.form.component';
 import {TransactionCostComponent} from './customer/transaction/components/cost.component';
-import {CreateDepositTransactionForm} from './customer/transaction/deposit/create.form.component';
+import {CreateDepositTransactionFormComponent} from './customer/transaction/deposit/create.form.component';
+import {ChequeTransactionFormComponent} from './customer/transaction/cheque/form.component';
+import {CreateChequeTransactionFormComponent} from './customer/transaction/cheque/create.component';
+import {TellerTransactionService} from './services/transaction.service';
+import {AvailableActionService} from './services/available-actions.service';
 
 @NgModule({
   imports: [
@@ -58,15 +64,16 @@ import {CreateDepositTransactionForm} from './customer/transaction/deposit/creat
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdButtonModule,
-    MdInputModule,
-    MdCardModule,
-    MdListModule,
-    MdToolbarModule,
-    MdAutocompleteModule,
-    MdSelectModule,
-    MdCheckboxModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    CovalentMessageModule,
     CovalentStepsModule,
     CovalentSearchModule,
     CovalentDataTableModule,
@@ -80,15 +87,19 @@ import {CreateDepositTransactionForm} from './customer/transaction/deposit/creat
     TellerAuthComponent,
     TellerCustomerIndexComponent,
     TellerCustomerDetailComponent,
-    CreateDepositTransactionForm,
-    TellerTransactionFormComponent,
+    CreateDepositTransactionFormComponent,
+    DepositTransactionFormComponent,
     LoanTransactionFormComponent,
-    CreateLoanTransactionForm,
-    TransactionCostComponent
+    CreateLoanTransactionFormComponent,
+    TransactionCostComponent,
+    CreateChequeTransactionFormComponent,
+    ChequeTransactionFormComponent
   ],
   providers: [
     TellerLoginGuard,
     TellerCustomerExistsGuard,
+    TellerTransactionService,
+    AvailableActionService,
     { provide: TellerStore, useFactory: tellerStoreFactory, deps: [Store]}
   ]
 })

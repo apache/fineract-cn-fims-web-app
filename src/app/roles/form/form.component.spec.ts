@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-import {TestBed, ComponentFixture, async} from '@angular/core/testing';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleFormComponent} from './form.component';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {IdentityService} from '../../services/identity/identity.service';
-import {MaterialModule, MdCheckboxModule, MdIconModule, MdInputModule} from '@angular/material';
 import {Role} from '../../services/identity/domain/role.model';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {PermittableGroupIdMapper} from '../../services/security/authz/permittable-group-id-mapper';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {FormPermissionService} from '../helper/form-permission.service';
-import {CovalentStepsModule} from '@covalent/core';
 import {PermissionListItemComponent} from '../components/permission-list-item.component';
+import {MatCheckboxModule, MatIconModule, MatInputModule} from '@angular/material';
 
 class FakeLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
@@ -41,7 +40,7 @@ describe('Test roles form', () => {
   let fixture: ComponentFixture<RoleFormComponent>;
   let component: RoleFormComponent;
 
-  let officePermittable: PermittableGroup = {
+  const officePermittable: PermittableGroup = {
     identifier: 'office__v1__offices',
     permittables: [
       {path: '/offices', method: 'POST'},
@@ -49,9 +48,9 @@ describe('Test roles form', () => {
     ]
   };
 
-  let identityService = {
+  const identityService = {
     getPermittableGroups(): Observable<PermittableGroup[]> {
-      let permittableGroups: PermittableGroup[] = [];
+      const permittableGroups: PermittableGroup[] = [];
       permittableGroups.push(officePermittable);
       return Observable.of(permittableGroups);
     }
@@ -67,9 +66,9 @@ describe('Test roles form', () => {
       imports: [
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        MdInputModule,
-        MdIconModule,
-        MdCheckboxModule,
+        MatInputModule,
+        MatIconModule,
+        MatCheckboxModule,
         FormsModule,
         ReactiveFormsModule
       ],
@@ -98,7 +97,7 @@ describe('Test roles form', () => {
     // Wait for async service call
     fixture.whenStable().then(() => {
       component.onSave.subscribe((role: Role) => {
-        let expected: Role = {
+        const expected: Role = {
           identifier: 'test',
           permissions: [{
             permittableEndpointGroupIdentifier: officePermittable.identifier,
@@ -121,13 +120,13 @@ describe('Test roles form', () => {
 
     fixture.detectChanges();
 
-    //Wait for async service call
+    // Wait for async service call
     fixture.whenStable().then(() => {
-      let formPermission = component.formPermissions[0];
+      const formPermission = component.formPermissions[0];
       formPermission.change = false;
 
       component.onSave.subscribe((role: Role) => {
-        let expected: Role = {
+        const expected: Role = {
           identifier: 'test',
           permissions: [{
             permittableEndpointGroupIdentifier: officePermittable.identifier,
@@ -138,5 +137,5 @@ describe('Test roles form', () => {
       });
       component.save();
     });
-  }))
+  }));
 });

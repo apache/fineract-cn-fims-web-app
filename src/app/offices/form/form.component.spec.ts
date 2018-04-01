@@ -21,15 +21,11 @@ import {OfficeFormComponent} from './form.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {IdInputComponent} from '../../common/id-input/id-input.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
-import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
-import {MdAutocompleteModule, MdInputModule} from '@angular/material';
-import {AddressFormComponent} from '../../common/address/address.component';
+import {MatAutocompleteModule, MatInputModule} from '@angular/material';
 import {CountryService} from '../../services/country/country.service';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Country} from '../../services/country/model/country.model';
+import {FimsSharedModule} from '../../common/common.module';
 
 const officeTemplate: Office = {
   identifier: 'test',
@@ -42,7 +38,15 @@ const officeTemplate: Office = {
     postalCode: '12345',
     countryCode: 'CC',
     country: 'country'
-  }};
+  }
+};
+
+const country: Country = {
+  displayName: '',
+  name: officeTemplate.address.country,
+  alpha2Code: officeTemplate.address.countryCode,
+  translations: {}
+};
 
 describe('Test office form', () => {
 
@@ -54,8 +58,9 @@ describe('Test office form', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        MdInputModule,
-        MdAutocompleteModule,
+        FimsSharedModule,
+        MatInputModule,
+        MatAutocompleteModule,
         CovalentStepsModule,
         TranslateModule.forRoot(),
         NoopAnimationsModule
@@ -64,26 +69,13 @@ describe('Test office form', () => {
         {
           // Used by address component
           provide: CountryService, useClass: class {
-            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
-              displayName: '',
-              name: officeTemplate.address.country,
-              alpha2Code: officeTemplate.address.countryCode
-            })
-          }
-        },
-        {
-          provide: Store, useClass: class {
-            dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
           }
         }
       ],
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
         OfficeFormComponent,
-        AddressFormComponent,
         TestComponent
       ]
     });
@@ -117,9 +109,11 @@ describe('Test office form', () => {
 });
 
 @Component({
-  template: '<fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false"></fims-office-form-component>'
+  template: `
+    <fims-office-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [office]="office" [editMode]="false">
+    </fims-office-form-component>`
 })
-class TestComponent{
+class TestComponent {
 
   saveEmitter = new EventEmitter<Office>();
 

@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
 import {Router} from '@angular/router';
@@ -24,12 +24,12 @@ import {Router} from '@angular/router';
 @Injectable()
 export class JournalEntryRouteEffects {
 
-  constructor(private actions$: Actions, private router: Router) { }
-
   @Effect({ dispatch: false })
   createJournalEntrySuccess$: Observable<Action> = this.actions$
     .ofType(journalEntryActions.CREATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

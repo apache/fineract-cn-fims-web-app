@@ -15,7 +15,6 @@
  */
 
 import * as caseActions from './case.actions';
-import {Error} from '../../../services/domain/error.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {FormState} from '../../../common/store/form.reducer';
 

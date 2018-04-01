@@ -15,20 +15,22 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {TellerService} from '../../../../../services/teller/teller-service';
-import {TellerBalanceSheet} from '../../../../../services/teller/domain/teller-balance-sheet.model';
 import {Observable} from 'rxjs/Observable';
-import {OfficesStore} from '../../../../store/index';
 import * as fromOffices from '../../../../store/index';
+import {OfficesStore} from '../../../../store/index';
+import {TellerBalance} from './services/teller-balance.model';
+import {BalanceSheetService} from './services/balance-sheet.service';
 
 @Component({
   templateUrl: './balance.component.html'
 })
 export class TellerBalanceComponent implements OnInit {
 
-  balance$: Observable<TellerBalanceSheet>;
+  numberFormat = '1.2-2';
 
-  constructor(private tellerService: TellerService, private store: OfficesStore) {}
+  balance$: Observable<TellerBalance>;
+
+  constructor(private balanceSheetService: BalanceSheetService, private store: OfficesStore) {}
 
   ngOnInit(): void {
     this.balance$ = Observable.combineLatest(
@@ -38,7 +40,6 @@ export class TellerBalanceComponent implements OnInit {
         teller,
         office
       })
-    ).switchMap(result => this.tellerService.getBalance(result.office.identifier, result.teller.code));
-
+    ).switchMap(result => this.balanceSheetService.getBalance(result.office.identifier, result.teller.code));
   }
 }

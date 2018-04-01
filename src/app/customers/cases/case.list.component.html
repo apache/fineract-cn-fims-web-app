@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Manage customer loans' | translate}}" [navigateBackTo]="['../../../../']">
+<fims-layout-card-over title="{{'Manage member loans' | translate}}" [navigateBackTo]="['../../../../']">
   <fims-data-table flex
                    (onFetch)="fetchCases($event)"
                    (onActionCellClick)="rowSelect($event)"
@@ -23,4 +23,4 @@
                    [data]="casesData$ | async">
   </fims-data-table>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create new loan for customer' | translate}}" icon="add" [link]="['create']" *ngIf="canAdd$ | async"></fims-fab-button>
+<fims-fab-button title="{{'Create new loan for member ' | translate}}" icon="add" [link]="['create']" *ngIf="canAdd$ | async"></fims-fab-button>

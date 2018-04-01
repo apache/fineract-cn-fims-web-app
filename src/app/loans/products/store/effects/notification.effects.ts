@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions, toPayload} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as productActions from '../product.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
 export class ProductNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createProductSuccess$: Observable<Action> = this.actions$
@@ -48,7 +46,7 @@ export class ProductNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Product can\'t be deleted',
-      message: 'Product is already assigned to a customer.'
+      message: 'Product is already assigned to a member.'
     }));
 
   @Effect({ dispatch: false })
@@ -60,7 +58,7 @@ export class ProductNotificationEffects {
       this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: `Product is going to be ${action}`
-      })
+      });
     });
 
   @Effect({ dispatch: false })
@@ -71,4 +69,6 @@ export class ProductNotificationEffects {
       type: NotificationType.ALERT,
       message: 'Product could not be enabled'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

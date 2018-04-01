@@ -15,15 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 
 @Injectable()
 export class TransactionTypeNotificationEffects {
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
@@ -40,4 +39,6 @@ export class TransactionTypeNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Transaction type is going to be updated'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

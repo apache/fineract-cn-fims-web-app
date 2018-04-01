@@ -15,20 +15,21 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../store';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class ChangePasswordGuard implements CanActivateChild {
 
-  constructor(private store: Store<fromRoot.State>, private router: Router) {}
+  constructor(private store: Store<fromRoot.State>, private router: Router) {
+  }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.isPasswordChangeNeeded()
       .switchMap(passwordChangeNeeded => {
-        if(passwordChangeNeeded){
-          this.router.navigate(['/changePassword'], { queryParams: { forced: true } });
+        if (passwordChangeNeeded) {
+          this.router.navigate(['/changePassword'], {queryParams: {forced: true}});
           return Observable.of(false);
         }
 

@@ -57,18 +57,37 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule, MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule, MdSelectModule,
-  MdSlideToggleModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatToolbarModule
 } from '@angular/material';
-import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {ProductIndexComponent} from './product.index.component';
-import {TextMaskModule} from 'angular2-text-mask';
+import {ProductDetailFormComponent} from './form/detail/detail.component';
+import {ProductChargeRangeListComponent} from './charges/ranges/range.list.component';
+import {ProductChargeRangeDetailComponent} from './charges/ranges/range.detail.component';
+import {ProductChargeRangeFormComponent} from './charges/ranges/form/form.component';
+import {EditProductChargeRangeFormComponent} from './charges/ranges/form/edit.component';
+import {CreateProductChargeRangeFormComponent} from './charges/ranges/form/create.component';
+import {ProductChargeRangesRouteEffects} from './store/ranges/effects/route.effects';
+import {ProductChargeRangesApiEffects} from './store/ranges/effects/service.effects';
+import {ProductChargeRangeExistsGuard} from './charges/ranges/range-exists.guard';
+import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.component';
+import {ProductChargeRangesNotificationEffects} from './store/ranges/effects/notification.effects';
+import {ProductLossProvisionApiEffects} from './store/lossProvision/effects/service.effects';
+import {ProductLossProvisionRouteEffects} from './store/lossProvision/effects/route.effects';
+import {ProductLossProvisionNotificationEffects} from './store/lossProvision/effects/notification.effects';
+import {LoanLossProvisionExistsGuard} from './lossProvision/loss-provision-exists.guard';
+import {CreateProductLossProvisionFormComponent} from './lossProvision/form/create.component';
+import {ProductLossProvisionFormComponent} from './lossProvision/form/form.component';
+import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detail.component';
 
 @NgModule({
   imports: [
@@ -77,16 +96,17 @@ import {TextMaskModule} from 'angular2-text-mask';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSlideToggleModule,
-    MdRadioModule,
-    MdOptionModule,
-    MdSelectModule,
-    MdCheckboxModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatRadioModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    CovalentDataTableModule,
     CovalentStepsModule,
     CovalentMessageModule,
 
@@ -101,6 +121,14 @@ import {TextMaskModule} from 'angular2-text-mask';
     EffectsModule.run(ProductChargesApiEffects),
     EffectsModule.run(ProductChargesRouteEffects),
     EffectsModule.run(ProductChargesNotificationEffects),
+
+    EffectsModule.run(ProductChargeRangesApiEffects),
+    EffectsModule.run(ProductChargeRangesRouteEffects),
+    EffectsModule.run(ProductChargeRangesNotificationEffects),
+
+    EffectsModule.run(ProductLossProvisionApiEffects),
+    EffectsModule.run(ProductLossProvisionRouteEffects),
+    EffectsModule.run(ProductLossProvisionNotificationEffects),
   ],
   declarations: [
     // product
@@ -110,6 +138,7 @@ import {TextMaskModule} from 'angular2-text-mask';
     ProductFormComponent,
     ProductCreateComponent,
     ProductEditComponent,
+    ProductDetailFormComponent,
     ProductFeeFormComponent,
     ProductInterestFormComponent,
     ProductTermFormComponent,
@@ -123,6 +152,14 @@ import {TextMaskModule} from 'angular2-text-mask';
     ProductChargeCreateFormComponent,
     ProductChargeEditFormComponent,
 
+    // ranges
+    ProductChargeRangeListComponent,
+    ProductChargeRangeIndexComponent,
+    ProductChargeRangeDetailComponent,
+    ProductChargeRangeFormComponent,
+    CreateProductChargeRangeFormComponent,
+    EditProductChargeRangeFormComponent,
+
     // status
     ProductStatusComponent,
     ProductTaskFormComponent,
@@ -130,12 +167,19 @@ import {TextMaskModule} from 'angular2-text-mask';
     ProductStatusEditFormComponent,
     ProductStatusDetailComponent,
 
+    // Loss provision
+    LossProvisionDetailComponent,
+    ProductLossProvisionFormComponent,
+    CreateProductLossProvisionFormComponent,
+    ProductChargeDetailComponent
   ],
   providers: [
     ProductExistsGuard,
     ProductTaskExistsGuard,
     ProductChargeExistsGuard,
+    ProductChargeRangeExistsGuard,
+    LoanLossProvisionExistsGuard,
     { provide: PortfolioStore, useFactory: portfolioStoreFactory, deps: [Store]}
   ]
 })
-export class ProductModule{}
+export class ProductModule {}

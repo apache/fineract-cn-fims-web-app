@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as commandActions from '../commands.actions';
@@ -24,8 +24,6 @@ import {CustomerService} from '../../../../services/customer/customer.service';
 
 @Injectable()
 export class CustomerCommandApiEffects {
-
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
   @Effect()
   loadCommands$: Observable<Action> = this.actions$
@@ -36,5 +34,7 @@ export class CustomerCommandApiEffects {
         .map(commands => new commandActions.LoadAllCompleteAction(commands))
         .catch((error) => of(new commandActions.LoadAllCompleteAction([])))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) { }
 
 }

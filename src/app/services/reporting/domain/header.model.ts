@@ -15,5 +15,5 @@
  */
 
 export interface Header {
-  columnNames: string[]
+  columnNames: string[];
 }

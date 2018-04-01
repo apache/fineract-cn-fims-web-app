@@ -15,36 +15,36 @@
 -->
 
 <ng-container [ngSwitch]="state">
-  <md-list-item *ngSwitchCase="'PENDING'">
-    <md-icon md-list-avatar color="accent">hourglass_empty</md-icon>
-    <h3 md-line translate>PENDING</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'OPEN'">
-    <md-icon md-list-avatar color="accent">lock_open</md-icon>
-    <h3 md-line translate>OPEN</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'ACTIVE'">
-    <md-icon md-list-avatar color="primary">check_circle</md-icon>
-    <h3 md-line translate>ACTIVE</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'APPROVED'">
-    <md-icon md-list-avatar color="primary">done_all</md-icon>
-    <h3 md-line translate>APPROVED</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'LOCKED'">
-    <md-icon md-list-avatar color="warn">lock</md-icon>
-    <h3 md-line translate>LOCKED</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'CLOSED'">
-    <md-icon md-list-avatar color="warn">close</md-icon>
-    <h3 md-line translate>CLOSED</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'CREATED'">
-    <md-icon md-list-avatar color="accent">hourglass_empty</md-icon>
-    <h3 md-line translate>CREATED</h3>
-  </md-list-item>
-  <md-list-item *ngSwitchCase="'PAUSED'">
-    <md-icon md-list-avatar color="accent">hourglass_empty</md-icon>
-    <h3 md-line translate>CREATED</h3>
-  </md-list-item>
+  <mat-list-item *ngSwitchCase="'PENDING'">
+    <mat-icon matListAvatar color="accent">hourglass_empty</mat-icon>
+    <h3 matLine translate>PENDING</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'OPEN'">
+    <mat-icon matListAvatar color="accent">lock_open</mat-icon>
+    <h3 matLine translate>OPEN</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'ACTIVE'">
+    <mat-icon matListAvatar color="primary">check_circle</mat-icon>
+    <h3 matLine translate>ACTIVE</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'APPROVED'">
+    <mat-icon matListAvatar color="primary">done_all</mat-icon>
+    <h3 matLine translate>APPROVED</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'LOCKED'">
+    <mat-icon matListAvatar color="warn">lock</mat-icon>
+    <h3 matLine translate>LOCKED</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'CLOSED'">
+    <mat-icon matListAvatar color="warn">close</mat-icon>
+    <h3 matLine translate>CLOSED</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'CREATED'">
+    <mat-icon matListAvatar color="accent">hourglass_empty</mat-icon>
+    <h3 matLine translate>CREATED</h3>
+  </mat-list-item>
+  <mat-list-item *ngSwitchCase="'PAUSED'">
+    <mat-icon matListAvatar color="accent">hourglass_empty</mat-icon>
+    <h3 matLine translate>PAUSED</h3>
+  </mat-list-item>
 </ng-container>

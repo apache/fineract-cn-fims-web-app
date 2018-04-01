@@ -28,7 +28,7 @@ const initialState: State = {
 };
 
 export function reducer(state = initialState, action: security.Actions): State {
-  switch(action.type){
+  switch (action.type) {
 
     case security.LOGIN_SUCCESS: {
       return Object.assign({}, state, {
@@ -37,7 +37,7 @@ export function reducer(state = initialState, action: security.Actions): State {
     }
 
     case security.PERMISSIONS_UPDATE_SUCCESS: {
-      let permissions = action.payload;
+      const permissions = action.payload;
       return Object.assign({}, state, {
         loading: false,
         permissions

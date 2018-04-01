@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-import {AfterViewInit, OnInit, Component, ViewContainerRef, OnDestroy} from '@angular/core';
-import {
-  NotificationType, NotificationEvent,
-  NotificationService
-} from '../services/notification/notification.service';
-import {MdSnackBarConfig, MdSnackBarRef, MdSnackBar} from '@angular/material';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {NotificationEvent, NotificationService, NotificationType} from '../services/notification/notification.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
+import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material';
 
 @Component({
   selector: 'fims-notification',
@@ -34,12 +31,14 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   private notificationSubscription: Subscription;
   private errorSubscription: Subscription;
 
-  constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient, private snackBar: MdSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
+  constructor(private notificationService: NotificationService, private translate: TranslateService, private httpClient: HttpClient,
+              private snackBar: MatSnackBar, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    const config: MdSnackBarConfig = new MdSnackBarConfig();
+    const config: MatSnackBarConfig = new MatSnackBarConfig();
     config.viewContainerRef = this.viewContainerRef;
-    this.notificationSubscription = this.notificationService.notifications$.subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
+    this.notificationSubscription = this.notificationService.notifications$
+      .subscribe((notification: NotificationEvent) => this.showNotification(notification, config));
   }
 
   ngOnDestroy(): void {
@@ -51,7 +50,7 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.errorSubscription = this.httpClient.error.subscribe((error: any) => this.showError(error));
   }
 
-  private showNotification(notification: NotificationEvent, config: MdSnackBarConfig): void {
+  private showNotification(notification: NotificationEvent, config: MatSnackBarConfig): void {
     switch (notification.type) {
       case NotificationType.MESSAGE:
         this.showMessage(notification.message, config);
@@ -67,25 +66,31 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   private showError(error: any): void {
     switch (error.status) {
       case 400:
-        this.showAlert('Unexpected error', 'We are very sorry, it seems the request you sent could not be accepted by our servers.');
+        this.showAlert('Unexpected error',
+          'We are very sorry, it seems the request you sent could not be accepted by our servers.'
+        );
         break;
       case 404:
-        this.showAlert('Resource not available', 'It seems the resource you requested is either not available or you don\'t have the permission to access it.');
+        this.showAlert('Resource not available',
+          'It seems the resource you requested is either not available or you don\'t have the permission to access it.'
+        );
         break;
       case 504:
       case 500:
-        this.showAlert('Service not available', 'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.');
+        this.showAlert('Service not available',
+          'We are very sorry, it seems there is a problem with our servers. Please contact your administrator if the problem occurs.'
+        );
         break;
       default:
         break;
     }
   }
 
-  private showMessage(message: string, config: MdSnackBarConfig): void {
+  private showMessage(message: string, config: MatSnackBarConfig): void {
     this.translate.get(message)
       .take(1)
       .subscribe((result) => {
-        const snackBarRef: MdSnackBarRef<any> = this.snackBar.open(result, '', config);
+        const snackBarRef: MatSnackBarRef<any> = this.snackBar.open(result, '', config);
         setTimeout(() => snackBarRef.dismiss(), 3000);
       });
   }

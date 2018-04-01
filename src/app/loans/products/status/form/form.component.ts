@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {TdStepComponent} from '@covalent/core';
-import {FormGroup, FormBuilder, Validators, FormArray, AbstractControl} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActionOption} from '../../../../common/domain/action-option.model';
 import {WorkflowAction} from '../../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FimsValidators} from '../../../../common/validator/validators';
@@ -26,7 +26,7 @@ import {FimsValidators} from '../../../../common/validator/validators';
   selector: 'fims-product-task-form-component',
   templateUrl: './form.component.html'
 })
-export class ProductTaskFormComponent implements OnInit{
+export class ProductTaskFormComponent implements OnInit {
 
   @Input('task') set task(task: TaskDefinition){
     this.prepareDetailForm(task);
@@ -59,7 +59,7 @@ export class ProductTaskFormComponent implements OnInit{
     this.openDetailsStep();
   }
 
-  openDetailsStep(): void{
+  openDetailsStep(): void {
     this.detailsStep.open();
   }
 
@@ -74,25 +74,25 @@ export class ProductTaskFormComponent implements OnInit{
     });
   }
 
-  private initActions(values: string[]): FormArray{
-    let formControls: FormGroup[] = [];
+  private initActions(values: string[]): FormArray {
+    const formControls: FormGroup[] = [];
     values.forEach(value => formControls.push(this.initAction(value)));
     return this.formBuilder.array(formControls);
   }
 
-  private initAction(value?: string): FormGroup{
+  private initAction(value?: string): FormGroup {
     return this.formBuilder.group({
       action: [value ? value : '', Validators.required]
-    })
+    });
   }
 
-  addAction(): void{
-    let actions: FormArray = this.detailForm.get('actions') as FormArray;
+  addAction(): void {
+    const actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.push(this.initAction());
   }
 
-  removeAction(index: number): void{
-    let actions: FormArray = this.detailForm.get('actions') as FormArray;
+  removeAction(index: number): void {
+    const actions: FormArray = this.detailForm.get('actions') as FormArray;
     actions.removeAt(index);
   }
 
@@ -101,12 +101,12 @@ export class ProductTaskFormComponent implements OnInit{
     return actions.controls;
   }
 
-  save(): void{
-    let actions: any[] = this.detailForm.get('actions').value;
-    let rawActions: WorkflowAction[] = [];
+  save(): void {
+    const actions: any[] = this.detailForm.get('actions').value;
+    const rawActions: WorkflowAction[] = [];
     actions.forEach(action => rawActions.push(action.action));
 
-    let task: TaskDefinition = {
+    const task: TaskDefinition = {
       identifier: this.detailForm.get('identifier').value,
       name: this.detailForm.get('name').value,
       description: this.detailForm.get('description').value,
@@ -117,7 +117,7 @@ export class ProductTaskFormComponent implements OnInit{
     this.onSave.emit(task);
   }
 
-  cancel(): void{
+  cancel(): void {
     this.onCancel.emit();
   }
 

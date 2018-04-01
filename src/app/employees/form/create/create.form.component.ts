@@ -20,7 +20,7 @@ import {mapEmployee, mapUser} from '../form.mapper';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
 import * as fromEmployees from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {CREATE, RESET_FORM} from '../../store/employee.actions';
 import {Error} from '../../../services/domain/error.model';
 import {EmployeesStore} from '../../store/index';
@@ -28,7 +28,7 @@ import {EmployeesStore} from '../../store/index';
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
+export class CreateEmployeeFormComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
 
@@ -39,14 +39,14 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
     employee: { identifier: '', givenName: '', surname: '', contactDetails: [] }
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: EmployeesStore){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: EmployeesStore) {}
 
   ngOnInit(): void {
     this.formStateSubscription = this.store.select(fromEmployees.getEmployeeFormError)
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.get('identifier').errors || {};
+        const detailForm = this.formComponent.detailForm;
+        const errors = detailForm.get('identifier').errors || {};
         errors['unique'] = true;
         detailForm.get('identifier').setErrors(errors);
         this.formComponent.step.open();
@@ -56,12 +56,12 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(event: EmployeeSaveEvent): void {
-    let employee: Employee = mapEmployee(event);
-    let user: UserWithPassword = mapUser(event);
+    const employee: Employee = mapEmployee(event);
+    const user: UserWithPassword = mapUser(event);
 
     this.store.dispatch({ type: CREATE, payload: {
       employee: employee,
@@ -71,11 +71,11 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy{
 
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -35,17 +35,15 @@ import {OfficeRouteEffects} from './store/effects/route.effects';
 import {OfficeApiEffects} from './store/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule, MdRadioModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule, MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatRadioModule,
+  MatToolbarModule
 } from '@angular/material';
-import {
-  CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule,
-  CovalentStepsModule
-} from '@covalent/core';
+import {CovalentDataTableModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import {CommonModule} from '@angular/common';
 import {TellerApiEffects} from './store/teller/effects/service.effects';
 import {OfficeTellerListComponent} from './detail/teller/teller.list.component';
@@ -62,6 +60,14 @@ import {OfficeTellerDetailComponent} from './detail/teller/detail/teller.detail.
 import {OpenOfficeTellerFormComponent} from './detail/teller/detail/command/open.component';
 import {CloseOfficeTellerFormComponent} from './detail/teller/detail/command/close.component';
 import {OfficeTellerCommandComponent} from './detail/teller/detail/command/command.component';
+import {AdjustmentComponent} from './detail/teller/detail/command/components/adjustment.component';
+import {BalanceSheetService} from './detail/teller/detail/balance/services/balance-sheet.service';
+import {TellerDenominationApiEffects} from './store/teller/denomination/effects/service.effects';
+import {TellerDenominationRouteEffects} from './store/teller/denomination/effects/route.effects';
+import {TellerDenominationNotificationEffects} from './store/teller/denomination/effects/notification.effects';
+import {TellerDenominationListComponent} from './detail/teller/detail/denomination/denomination.list.component';
+import {CreateDenominationFormComponent} from './detail/teller/detail/denomination/form/create.form.component';
+import {DenominationFormComponent} from './detail/teller/detail/denomination/form/form.component';
 
 @NgModule({
   imports: [
@@ -70,13 +76,14 @@ import {OfficeTellerCommandComponent} from './detail/teller/detail/command/comma
     ReactiveFormsModule,
     TranslateModule,
     CommonModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdRadioModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatCheckboxModule,
     CovalentSearchModule,
     CovalentStepsModule,
     CovalentDataTableModule,
@@ -88,6 +95,10 @@ import {OfficeTellerCommandComponent} from './detail/teller/detail/command/comma
     EffectsModule.run(TellerApiEffects),
     EffectsModule.run(TellerRouteEffects),
     EffectsModule.run(TellerNotificationEffects),
+
+    EffectsModule.run(TellerDenominationApiEffects),
+    EffectsModule.run(TellerDenominationRouteEffects),
+    EffectsModule.run(TellerDenominationNotificationEffects),
   ],
   declarations: [
     OfficeComponent,
@@ -107,11 +118,16 @@ import {OfficeTellerCommandComponent} from './detail/teller/detail/command/comma
     OpenOfficeTellerFormComponent,
     CloseOfficeTellerFormComponent,
     TellerBalanceComponent,
+    AdjustmentComponent,
+    TellerDenominationListComponent,
+    CreateDenominationFormComponent,
+    DenominationFormComponent
   ],
   providers: [
     HeadquarterGuard,
     OfficeExistsGuard,
     TellerExistsGuard,
+    BalanceSheetService,
     { provide: OfficesStore, useFactory: officeStoreFactory, deps: [Store]}
   ],
   entryComponents: []

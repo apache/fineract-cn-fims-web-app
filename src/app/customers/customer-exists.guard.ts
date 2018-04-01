@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromCustomers from './store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {LoadAction} from './store/customer.actions';
 import {of} from 'rxjs/observable/of';
 import {CustomerService} from '../services/customer/customer.service';

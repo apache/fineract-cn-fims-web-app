@@ -15,8 +15,8 @@
  */
 
 import * as security from './security.actions';
-import {Authentication} from '../../services/identity/domain/authentication.model';
 import {LoginSuccessPayload} from './security.actions';
+import {Authentication} from '../../services/identity/domain/authentication.model';
 
 export interface State {
   username: string;
@@ -37,7 +37,7 @@ const initialState: State = {
 };
 
 export function reducer(state = initialState, action: security.Actions): State {
-  switch(action.type){
+  switch (action.type) {
 
     case security.LOGIN: {
       return Object.assign({}, state, {
@@ -46,7 +46,7 @@ export function reducer(state = initialState, action: security.Actions): State {
     }
 
     case security.LOGIN_SUCCESS: {
-      let payload: LoginSuccessPayload = action.payload;
+      const payload: LoginSuccessPayload = action.payload;
       return Object.assign({}, state, {
         loading: false,
         authentication: payload.authentication,
@@ -56,21 +56,21 @@ export function reducer(state = initialState, action: security.Actions): State {
     }
 
     case security.REFRESH_ACCESS_TOKEN_SUCCESS: {
-      let authentication = action.payload;
+      const authentication = action.payload;
       return Object.assign({}, state, {
         authentication
       });
     }
 
     case security.CHANGE_PASSWORD_FAIL: {
-      let error = action.payload;
+      const error = action.payload;
       return Object.assign({}, state, {
         passwordError: error
       });
     }
 
     case security.LOGIN_FAIL: {
-      let error = action.payload;
+      const error = action.payload;
       return Object.assign({}, state, {
         loading: false,
         error

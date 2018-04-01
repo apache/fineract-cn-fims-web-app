@@ -22,7 +22,9 @@ import {DebugElement} from '@angular/core';
 export function setValueByFormControlName(fixture: ComponentFixture<any>, formControlName: string, value: string): Observable<any> {
   const debugElement: DebugElement = fixture.debugElement.query(By.css(`input[formControlName="${formControlName}"]`));
 
-  if(!debugElement) throw new Error(`Could not find debug element for form control name: ${formControlName}`);
+  if (!debugElement) {
+    throw new Error(`Could not find debug element for form control name: ${formControlName}`);
+  }
 
   setValue(debugElement, value);
 
@@ -33,7 +35,9 @@ export function setValueByFormControlName(fixture: ComponentFixture<any>, formCo
 export function setValueByCssSelector(fixture: ComponentFixture<any>, selector: string, value: string): Observable<any> {
   const debugElement: DebugElement = fixture.debugElement.query(By.css(selector));
 
-  if(!debugElement) throw new Error(`Could not find debug element with selector: ${selector}`);
+  if (!debugElement) {
+    throw new Error(`Could not find debug element with selector: ${selector}`);
+  }
 
   setValue(debugElement, value);
 

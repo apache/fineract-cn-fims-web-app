@@ -16,7 +16,7 @@
 
 import {ContactDetail} from '../../domain/contact/contact-detail.model';
 
-export interface Employee{
+export interface Employee {
   identifier: string;
   givenName: string;
   middleName?: string;

@@ -17,8 +17,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../util';
 import {Authentication} from '../../services/identity/domain/authentication.model';
-import {Permission} from '../../services/identity/domain/permission.model';
-import {FimsPermissionDescriptor} from '../../services/security/authz/fims-permission-descriptor';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 export const LOGIN = type('[Security] Login');
@@ -41,19 +39,19 @@ export const CHANGE_PASSWORD = type('[Security] Change Password');
 export const CHANGE_PASSWORD_SUCCESS = type('[Security] Change Password Success');
 export const CHANGE_PASSWORD_FAIL = type('[Security] Change Password Fail');
 
-export interface LoginPayload{
+export interface LoginPayload {
   username: string;
   password: string;
   tenant: string;
 }
 
-export interface LoginSuccessPayload{
+export interface LoginSuccessPayload {
   username: string;
   tenant: string;
   authentication: Authentication;
 }
 
-export interface ChangePasswordPayload{
+export interface ChangePasswordPayload {
   username: string;
   password: string;
 }

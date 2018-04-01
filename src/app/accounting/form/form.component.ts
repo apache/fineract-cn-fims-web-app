@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import {accountTypes, AccountTypeOption} from '../account-types.model';
-import {OnInit, Component, ViewChild, Input, EventEmitter, Output} from '@angular/core';
+import {AccountTypeOption, accountTypes} from '../account-types.model';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormComponent} from '../../common/forms/form.component';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TdStepComponent} from '@covalent/core';
@@ -52,12 +52,19 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
 
   ngOnInit(): void {
     this.openDetailStep();
+
+    const typeValue = {
+      value: this.parentLedger ? this.parentLedger.type : this.ledger.type,
+      disabled: this.parentLedger || this.editMode
+    };
+
     this.form = this.formBuilder.group({
-      'identifier': [ this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe ] ],
-      'type': [ this.parentLedger ? this.parentLedger.type : this.ledger.type, [Validators.required] ],
-      'name': [ this.ledger.name, [Validators.required, Validators.maxLength(256)] ],
-      'showAccountsInChart': [ this.ledger.showAccountsInChart, [Validators.required]],
-      'description': [ this.ledger.description, Validators.maxLength(2048) ],
+      'identifier': [this.ledger.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32),
+        FimsValidators.urlSafe]],
+      'type': [typeValue, [Validators.required]],
+      'name': [this.ledger.name, [Validators.required, Validators.maxLength(256)]],
+      'showAccountsInChart': [this.ledger.showAccountsInChart, [Validators.required]],
+      'description': [this.ledger.description, Validators.maxLength(2048)],
     });
   }
 
@@ -71,7 +78,7 @@ export class LedgerFormComponent extends FormComponent<Ledger> implements OnInit
   }
 
   save(): void {
-    let ledger: Ledger = {
+    const ledger: Ledger = {
       identifier: this.form.get('identifier').value,
       type: this.form.get('type').value,
       name: this.form.get('name').value,

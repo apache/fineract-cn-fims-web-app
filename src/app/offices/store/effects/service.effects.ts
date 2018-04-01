@@ -16,16 +16,14 @@
 
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
 
 @Injectable()
 export class OfficeApiEffects {
-
-  constructor(private actions$: Actions, private officeService: OfficeService) {}
 
   @Effect()
   createOffice$: Observable<Action> = this.actions$
@@ -78,5 +76,7 @@ export class OfficeApiEffects {
         }))
         .catch((error) => of(new officeActions.DeleteOfficeFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private officeService: OfficeService) {}
 
 }

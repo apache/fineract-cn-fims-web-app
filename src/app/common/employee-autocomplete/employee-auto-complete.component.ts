@@ -29,13 +29,10 @@
  * limitations under the License.
  */
 
-import {Component, Input, forwardRef, OnInit, OnDestroy} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable, Subscription} from 'rxjs';
-import {AccountingService} from '../../services/accounting/accounting.service';
-import {Account} from '../../services/accounting/domain/account.model';
-import {AccountPage} from '../../services/accounting/domain/account-page.model';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';
@@ -51,7 +48,11 @@ const noop: () => void = () => {
   selector: 'fims-employee-auto-complete',
   templateUrl: './employee-auto-complete.component.html'
 })
-export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnInit{
+export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnInit {
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
 
   formControl: FormControl;
 
@@ -74,7 +75,7 @@ export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnIn
       .switchMap(name => this.onSearch(name));
   }
 
-  changeValue(value: string): void{
+  changeValue(value: string): void {
     this._onChangeCallback(value);
   }
 
@@ -90,17 +91,13 @@ export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnIn
     this._onTouchedCallback = fn;
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
-  onSearch(searchTerm?: string): Observable<Employee[]>{
-    let fetchRequest: FetchRequest = {
+  onSearch(searchTerm?: string): Observable<Employee[]> {
+    const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,
         size: 5
       },
-      searchTerm: searchTerm
+      searchTerm
     };
 
     return this.officeService.listEmployees(fetchRequest)

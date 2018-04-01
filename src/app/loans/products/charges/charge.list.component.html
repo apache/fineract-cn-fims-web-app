@@ -14,6 +14,17 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Manage loan product charges' | translate}}" [navigateBackTo]="['../']">
-  <fims-data-table flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
+<fims-layout-card-over title="{{'Manage loan product fees' | translate}}" [navigateBackTo]="['../']">
+  <fims-two-column-layout>
+    <mat-nav-list left>
+      <h3 mat-subheader translate>Management</h3>
+      <a mat-list-item [routerLink]="['./ranges']">
+        <mat-icon matListAvatar>assignment</mat-icon>
+        <h3 matLine translate>Ranges</h3>
+        <p matLine translate>Manage ranges</p>
+      </a>
+    </mat-nav-list>
+    <fims-data-table right flex (onFetch)="fetchCharges($event)" (onActionCellClick)="rowSelect($event)" [columns]="columns" [data]="chargesData$ | async" [sortable]="false"></fims-data-table>
+  </fims-two-column-layout>
+
 </fims-layout-card-over>

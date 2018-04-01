@@ -14,100 +14,113 @@
  limitations under the License.
 -->
 
-<form [formGroup]="form">
-  <div layout="row" class="pad-top">
-    <md-select placeholder="{{'Product' | translate}}" formControlName="productIdentifier" layout-margin>
-      <md-option *ngFor="let product of products" [value]="product.identifier">{{ product.name }}</md-option>
-    </md-select>
+<form [formGroup]="form" layout="column">
+  <mat-form-field layout-margin>
+    <mat-select placeholder="{{'Choose product' | translate}}" formControlName="productIdentifier">
+      <mat-option *ngFor="let product of products" [value]="product.identifier" matTooltip="{{product.description}}">{{ product.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <fims-id-input placeholder="{{'Short name' | translate}}" [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <fims-number-input
+    [form]="form"
+    controlName="principalAmount"
+    placeholder="{{'Principal amount' | translate}}"
+    [decimalLimit]="product?.minorCurrencyUnitDigits"
+    hint="{{product?.balanceRange.minimum | number:numberFormat}} - {{product?.balanceRange.maximum | number:numberFormat}}">
+  </fims-number-input>
+  <fims-number-input
+    [form]="form"
+    controlName="interest"
+    placeholder="{{'Interest rate' | translate}}"
+    [decimalLimit]="product?.minorCurrencyUnitDigits"
+    hint="{{product?.interestRange.minimum | number:numberFormat}} - {{product?.interestRange.maximum | number:numberFormat}}">
+  </fims-number-input>
+  <div layout="column" layout-margin>
+    <div layout="row" layout-align="start center">
+      <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Term' | translate}}"></fims-text-input>
+      <mat-form-field>
+        <mat-select formControlName="termTemporalUnit">
+          <mat-option *ngFor="let basis of temporalOptions" [value]="basis.type">
+            {{basis.label | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <p *ngIf="form.hasError('maxTerm')" class="tc-red-600 text-sm" layout-margin translate>
+      Invalid term. Maximum allowed are {{form.getError('maxTerm').maxWeeks}} week(s), {{form.getError('maxTerm').maxMonths}} month(s) or {{form.getError('maxTerm').maxYears}} year(s).
+    </p>
   </div>
-  <div layout="row">
-    <fims-id-input placeholder="{{'Short name' | translate}}" [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <div layout="column" layout-margin>
+    <div layout="row" layout-align="start center">
+      <fims-text-input type="number" [form]="form" controlName="paymentPeriod" placeholder="{{'Repay every' | translate}}"></fims-text-input>
+      <mat-form-field>
+        <mat-select formControlName="paymentTemporalUnit">
+          <mat-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
+            {{alignment.label | translate}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <p *ngIf="form.hasError('maxPayment')" class="tc-red-600 text-sm" layout-margin translate>
+      Invalid payment period. Maximum allowed are {{form.getError('maxPayment').maxWeeks}} week(s), {{form.getError('maxPayment').maxMonths}} month(s) or {{form.getError('maxPayment').maxYears}} year(s).
+    </p>
   </div>
-  <div layout="row">
-    <md-input-container layout-margin flex>
-      <input mdInput type="number" placeholder="{{'Principal Amount' | translate}}" formControlName="principalAmount" step="any"/>
-      <md-error *ngIf="form.get('principalAmount').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('principalAmount').hasError('minValue')" translate>Value must be greater than or equals {{form.get('principalAmount').getError('minValue').value}}</md-error>
-      <md-error *ngIf="form.get('principalAmount').hasError('maxValue')" translate>Value must be lower than or equals {{form.get('principalAmount').getError('maxValue').value}}</md-error>
-      <md-hint align="end">
-        {{product?.balanceRange.minimum}} - {{product?.balanceRange.maximum}}
-      </md-hint>
-    </md-input-container>
+  <!-- Days in weeks -->
+  <div layout="row" *ngIf="displayDaysInWeek">
+    <mat-form-field layout-margin>
+      <mat-select formControlName="dayInWeek" placeholder="{{'on' | translate}}">
+        <mat-option *ngFor="let day of weekDays" [value]="day.type">
+          {{day.label | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-
-  <div layout="row" layout-margin>
-    <md-input-container>
-      <input mdInput type="number" placeholder="{{'Term' | translate}}" formControlName="term" step="any"/>
-      <md-error *ngIf="form.get('term').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('term').hasError('minValue')" translate>Value must be greater than or equals {{form.get('term').getError('minValue').value}}</md-error>
-      <md-error *ngIf="form.get('term').hasError('maxValue')" translate>Value must be lower than or equals {{form.get('term').getError('maxValue').value}}</md-error>
-    </md-input-container>
-    <md-select formControlName="termTemporalUnit" layout-margin [disabled]="true">
-      <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
-        {{basis.label | translate}}
-      </md-option>
-    </md-select>
-  </div>
-  <div layout="row" layout-margin>
-    <md-input-container>
-      <input mdInput type="number" placeholder="{{'Repay every' | translate}}" formControlName="paymentPeriod"/>
-      <md-error *ngIf="form.get('paymentPeriod').hasError('required')" translate>Required</md-error>
-      <md-error *ngIf="form.get('paymentPeriod').hasError('minValue')" translate>Value must be greater than or equals {{form.get('paymentPeriod').getError('minValue').value}}</md-error>
-    </md-input-container>
-    <md-select formControlName="paymentTemporalUnit" layout-margin>
-      <md-option *ngFor="let alignment of temporalOptions" [value]="alignment.type">
-        {{alignment.label | translate}}
-      </md-option>
-    </md-select>
-  </div>
-  <div layout="row" *ngIf="form.get('paymentTemporalUnit').value === 'WEEKS'">
-    <md-select formControlName="alignmentDay" layout-margin placeholder="{{'on' | translate}}">
-      <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
-        {{alignment.label | translate}}
-      </md-option>
-    </md-select>
-  </div>
-  <div layout="column" *ngIf="form.get('paymentTemporalUnit').value !== 'WEEKS'">
-    <md-radio-group formControlName="alignmentDaySetting">
-      <div layout="row">
-        <md-radio-button layout-margin value="fixed"></md-radio-button>
-        <md-select formControlName="alignmentDay" placeholder="{{'on the' | translate}}" layout-margin
-                   [disabled]="form.get('alignmentDaySetting').value === 'relative'">
-          <md-option *ngFor="let alignment of monthDays" [value]="alignment.type">
-            {{alignment.label}}
-          </md-option>
-        </md-select>
+  <!-- Month setting -->
+  <div layout="column" *ngIf="displayMonthSetting">
+    <mat-radio-group formControlName="monthSetting">
+      <div layout="row" layout-align="start center">
+        <mat-radio-button layout-margin value="DAY"></mat-radio-button>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="monthSettingDay" placeholder="{{'on the' | translate}}">
+            <mat-option *ngFor="let day of monthDays" [value]="day.type">
+              {{day.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <p translate>Day</p>
       </div>
-      <div layout="row">
-        <ng-container>
-          <md-radio-button layout-margin value="relative"></md-radio-button>
-          <md-select formControlName="alignmentWeek" placeholder="{{'on the' | translate}}" layout-margin
-                     [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
-            <md-option *ngFor="let alignment of alignments" [value]="alignment.type">
+      <div layout="row" layout-align="start center">
+        <mat-radio-button layout-margin value="WEEK_AND_DAY"></mat-radio-button>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="monthSettingWeek" placeholder="{{'on the' | translate}}">
+            <mat-option *ngFor="let alignment of weekAlignments" [value]="alignment.type">
               {{alignment.label | translate}}
-            </md-option>
-          </md-select>
-        </ng-container>
-        <md-select formControlName="alignmentDay" layout-margin [disabled]="form.get('alignmentDaySetting').value === 'fixed'">
-          <md-option *ngFor="let alignment of weekDays" [value]="alignment.type">
-            {{alignment.label | translate}}
-          </md-option>
-        </md-select>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field layout-margin>
+          <mat-select formControlName="monthSettingDayInWeek">
+            <mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.type">
+              {{weekDay.label | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </md-radio-group>
+    </mat-radio-group>
   </div>
-  <md-select formControlName="alignmentMonth" placeholder="{{'in' | translate}}" *ngIf="form.get('paymentTemporalUnit').value === 'YEARS'"
-             layout-margin>
-    <md-option *ngFor="let alignment of months" [value]="alignment.type">
-      {{alignment.label | translate}}
-    </md-option>
-  </md-select>
-  <div layout="row" class="pad-top">
-    <md-select formControlName="depositAccountIdentifier" layout-margin placeholder="{{ 'Deposit account used for charges and disbursal' | translate }}">
-      <md-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
+  <!-- Months -->
+  <mat-form-field layout-margin *ngIf="displayMonths">
+    <mat-select formControlName="month" placeholder="{{'in' | translate}}">
+      <mat-option *ngFor="let month of months" [value]="month.type">
+        {{month.label | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field layout-margin>
+    <mat-select formControlName="depositAccountIdentifier" placeholder="{{ 'Deposit account used for fees and disbursal' | translate }}">
+      <mat-option *ngFor="let instance of productInstances" [value]="instance.accountIdentifier">
         {{instance.accountIdentifier}}({{instance.productIdentifier}})
-      </md-option>
-    </md-select>
-  </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </form>

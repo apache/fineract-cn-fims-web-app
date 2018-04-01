@@ -16,7 +16,7 @@
 
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {OfficeService} from '../../services/office/office.service';
 import {OfficePage} from '../../services/office/domain/office-page.model';
 import {Office} from '../../services/office/domain/office.model';
@@ -27,17 +27,17 @@ export class HeadquarterGuard implements CanActivate {
   constructor(private officeService: OfficeService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    let searchTerm = route.queryParams['term'];
+    const searchTerm = route.queryParams['term'];
 
-    if(searchTerm){
+    if (searchTerm) {
       return Observable.of(true);
     }
 
     return this.officeService.listOffices().map((officePage: OfficePage) => {
-      if(officePage.totalElements){
-        let firstOffice: Office = officePage.offices[0];
+      if (officePage.totalElements) {
+        const firstOffice: Office = officePage.offices[0];
         this.router.navigate(['offices/detail', firstOffice.identifier]);
-      }else{
+      } else {
         this.router.navigate(['offices/hqNotFound']);
       }
 

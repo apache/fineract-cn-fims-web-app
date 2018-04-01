@@ -1,4 +1,3 @@
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from './reducer.helper';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -14,6 +13,8 @@ import {idsToHashWithCurrentTimestamp, resourcesToHash} from './reducer.helper';
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from './reducer.helper';
 
 describe('Reducer Helper', () => {
 
@@ -62,6 +63,6 @@ describe('Reducer Helper', () => {
     const result = idsToHashWithCurrentTimestamp(ids);
 
     expect(result).toEqual(expectedResult);
-  })
+  });
 
 });

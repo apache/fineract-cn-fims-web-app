@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, ViewChild, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {Error} from '../../../services/domain/error.model';
 import {RolesStore} from '../../store/index';
 import {CREATE, RESET_FORM} from '../../store/role.actions';
@@ -25,7 +25,7 @@ import {CREATE, RESET_FORM} from '../../store/role.actions';
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateRoleFormComponent implements OnInit, OnDestroy{
+export class CreateRoleFormComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
 
@@ -39,8 +39,8 @@ export class CreateRoleFormComponent implements OnInit, OnDestroy{
     this.formStateSubscription = this.store.select(fromRoles.getRoleFormError)
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.get('identifier').errors || {};
+        const detailForm = this.formComponent.detailForm;
+        const errors = detailForm.get('identifier').errors || {};
         errors['unique'] = true;
         detailForm.get('identifier').setErrors(errors);
       });
@@ -49,14 +49,14 @@ export class CreateRoleFormComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
   onSave(role: Role): void {
     this.store.dispatch({ type: CREATE, payload: {
       role,
       activatedRoute: this.route
-    } })
+    } });
   }
 
   onCancel(): void {

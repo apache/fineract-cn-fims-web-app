@@ -20,7 +20,7 @@ import {AccountCommand} from '../../services/accounting/domain/account-command.m
 import {AccountingStore} from '../store/index';
 import {EXECUTE_COMMAND} from '../store/account/task/task.actions';
 
-interface StatusCommand{
+interface StatusCommand {
   action: AccountCommandAction;
   comment?: string;
 }
@@ -28,7 +28,7 @@ interface StatusCommand{
 @Component({
   templateUrl: './status.component.html'
 })
-export class AccountStatusComponent implements OnInit{
+export class AccountStatusComponent implements OnInit {
 
   private accountIdentifier: string;
 
@@ -45,8 +45,8 @@ export class AccountStatusComponent implements OnInit{
     this.route.params.subscribe((params: Params) => this.accountIdentifier = params['id']);
   }
 
-  executeCommand(statusCommand: StatusCommand): void{
-    let command: AccountCommand = {
+  executeCommand(statusCommand: StatusCommand): void {
+    const command: AccountCommand = {
       comment: statusCommand.comment,
       action: statusCommand.action
     };

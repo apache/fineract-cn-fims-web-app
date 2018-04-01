@@ -23,10 +23,10 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {IdentityService} from '../../services/identity/identity.service';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
-import {FormPermission} from '../model/form-permission.model';
 import {Observable} from 'rxjs/Observable';
 import {FormPermissionService} from '../helper/form-permission.service';
 import {TdDialogService} from '@covalent/core';
+import {FormPermissionGroup} from '../model/form-permission-group.model';
 
 @Component({
   templateUrl: './role.detail.component.html'
@@ -34,32 +34,30 @@ import {TdDialogService} from '@covalent/core';
 export class RoleDetailComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
-  private roleSubscription: Subscription;
 
-  role: Role;
+  role$: Observable<Role>;
 
-  formPermissions$: Observable<FormPermission[]>;
+  permissionGroup$: Observable<FormPermissionGroup[]>;
 
-  constructor(private route: ActivatedRoute, private identityService: IdentityService, private store: RolesStore, private formPermissionService: FormPermissionService, private dialogService: TdDialogService) {}
+  constructor(private route: ActivatedRoute, private identityService: IdentityService, private store: RolesStore,
+              private formPermissionService: FormPermissionService, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params
       .map(params => new SelectAction(params['id']))
       .subscribe(this.store);
 
-    const role$: Observable<Role> = this.store.select(fromRoles.getSelectedRole)
+    this.role$ = this.store.select(fromRoles.getSelectedRole)
       .filter(role => !!role);
 
-    this.roleSubscription = role$.subscribe(role => this.role = role);
-
-    this.formPermissions$ = Observable.combineLatest(
+    this.permissionGroup$ = Observable.combineLatest(
       this.identityService.getPermittableGroups(),
-      role$,
+      this.role$,
       (groups: PermittableGroup[], role: Role) => this.formPermissionService.mapToFormPermissions(groups, role.permissions)
     );
   }
 
-  confirmDeletion(): Observable<boolean>{
+  confirmDeletion(): Observable<boolean> {
     return this.dialogService.openConfirm({
       message: 'Do you want to delete this role?',
       title: 'Confirm deletion',
@@ -67,19 +65,18 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
     }).afterClosed();
   }
 
-  deleteRole(): void {
+  deleteRole(role: Role): void {
     this.confirmDeletion()
       .filter(accept => accept)
       .subscribe(() => {
         this.store.dispatch({ type: DELETE, payload: {
-          role: this.role,
+          role,
           activatedRoute: this.route
-        } })
+        } });
       });
   }
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.roleSubscription.unsubscribe();
   }
 }

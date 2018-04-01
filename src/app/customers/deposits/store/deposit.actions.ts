@@ -19,11 +19,14 @@ import {FetchRequest} from '../../../services/domain/paging/fetch-request.model'
 import {RoutePayload} from '../../../common/store/route-payload';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../../common/store/search.reducer';
+import {IssuingCount} from '../../../services/cheque/domain/issuing-count.model';
 
 export const SEARCH = type('[Deposit] Search');
 export const SEARCH_COMPLETE = type('[Deposit] Search Complete');
@@ -39,6 +42,11 @@ export const UPDATE = type('[Deposit] Update');
 export const UPDATE_SUCCESS = type('[Deposit] Update Success');
 export const UPDATE_FAIL = type('[Deposit] Update Fail');
 
+export const ISSUE_CHEQUES = type('[Deposit] Issue Cheques');
+export const ISSUE_CHEQUES_SUCCESS = type('[Deposit] Issue Cheques Success');
+export const ISSUE_CHEQUES_FAIL = type('[Deposit] Issue Cheques Fail');
+
+
 export interface SearchProductInstancePayload {
   customerId: string;
   fetchRequest: FetchRequest;
@@ -46,6 +54,10 @@ export interface SearchProductInstancePayload {
 
 export interface DepositRoutePayload extends RoutePayload {
   productInstance: ProductInstance;
+}
+
+export interface IssueChequePayload extends RoutePayload {
+  issuingCount: IssuingCount;
 }
 
 export class SearchAction implements Action {
@@ -108,6 +120,24 @@ export class UpdateProductInstanceFailAction implements Action {
   constructor(public payload: Error) { }
 }
 
+export class IssueChequesAction implements Action {
+  readonly type = ISSUE_CHEQUES;
+
+  constructor(public payload: IssueChequePayload) { }
+}
+
+export class IssueChequesSuccessAction implements Action {
+  readonly type = ISSUE_CHEQUES_SUCCESS;
+
+  constructor(public payload: IssueChequePayload) { }
+}
+
+export class IssueChequesFailAction implements Action {
+  readonly type = ISSUE_CHEQUES_FAIL;
+
+  constructor(public payload: Error) { }
+}
+
 export type Actions
   = SearchAction
   | SearchCompleteAction
@@ -118,4 +148,7 @@ export type Actions
   | CreateProductInstanceFailAction
   | UpdateProductInstanceAction
   | UpdateProductInstanceSuccessAction
-  | UpdateProductInstanceFailAction;
+  | UpdateProductInstanceFailAction
+  | IssueChequesAction
+  | IssueChequesSuccessAction
+  | IssueChequesFailAction;

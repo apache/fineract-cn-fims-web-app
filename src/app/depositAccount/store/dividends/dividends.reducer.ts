@@ -29,7 +29,7 @@ export function reducer(state = initialState, action: dividend.Actions): State {
   switch (action.type) {
 
     case dividend.LOAD_ALL: {
-      return initialState
+      return initialState;
     }
 
     case dividend.LOAD_ALL_COMPLETE: {
@@ -45,7 +45,7 @@ export function reducer(state = initialState, action: dividend.Actions): State {
 
       return {
         entities: [...state.entities, entity]
-      }
+      };
     }
 
     default: {

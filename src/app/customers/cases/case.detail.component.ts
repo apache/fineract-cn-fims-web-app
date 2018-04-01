@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import * as fromCases from './store/index';
-import * as fromRoot from '../../store';
 import {CasesStore} from './store/index';
-import {Subscription} from 'rxjs';
-import {SelectAction} from './store/case.actions';
+import * as fromRoot from '../../store';
 import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
@@ -28,23 +25,17 @@ import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
 @Component({
   templateUrl: './case.detail.component.html'
 })
-export class CaseDetailComponent implements OnInit, OnDestroy {
+export class CaseDetailComponent implements OnInit {
 
-  private actionsSubscription: Subscription;
-
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   caseInstance$: Observable<FimsCase>;
 
   canEdit$: Observable<boolean>;
 
-  constructor(private route: ActivatedRoute, private casesStore: CasesStore) {}
+  constructor(private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['caseId']))
-      .subscribe(this.casesStore);
-
     this.caseInstance$ = this.casesStore.select(fromCases.getSelectedCase);
 
     this.canEdit$ = Observable.combineLatest(
@@ -61,15 +52,7 @@ export class CaseDetailComponent implements OnInit, OnDestroy {
     return permissions.filter(permission =>
         permission.id === 'portfolio_cases' &&
         permission.accessLevel === 'CHANGE'
-      ).length > 0
-  }
-
-  ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
-  }
-
-  disburse(): void{
-    // TODO: Implement when API available
+      ).length > 0;
   }
 
 }

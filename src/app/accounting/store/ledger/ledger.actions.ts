@@ -20,7 +20,6 @@ import {Ledger} from '../../../services/accounting/domain/ledger.model';
 import {Error} from '../../../services/domain/error.model';
 import {TrialBalance} from '../../../services/accounting/domain/trial-balance.model';
 import {RoutePayload} from '../../../common/store/route-payload';
-import {LedgerPage} from '../../../services/accounting/domain/ledger-page.model';
 import {ChartOfAccountEntry} from '../../../services/accounting/domain/chart-of-account-entry.model';
 
 export const LOAD_ALL_TOP_LEVEL = type('[Ledger] Load All Top Level');
@@ -54,13 +53,13 @@ export const LOAD_CHART_OF_ACCOUNTS_COMPLETE = type('[Ledger] Load Chart Of Acco
 
 export const RESET_FORM = type('[Ledger] Reset Form');
 
-export interface CreateSubLedgerPayload extends RoutePayload{
+export interface CreateSubLedgerPayload extends RoutePayload {
   parentLedgerId: string;
   ledger: Ledger;
 }
 
-export interface LedgerRoutePayload extends RoutePayload{
-  ledger: Ledger
+export interface LedgerRoutePayload extends RoutePayload {
+  ledger: Ledger;
 }
 
 export class LoadAllTopLevel implements Action {

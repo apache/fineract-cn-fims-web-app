@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormComponent} from '../../../../common/forms/form.component';
-import {CreditWorthinessSnapshot} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
+import {Component, Input, ViewChild} from '@angular/core';
 import {CaseCreditFactorFormComponent} from '../components/credit-factor.component';
 import {CreditWorthinessFactor} from '../../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 
@@ -31,7 +29,7 @@ export interface DebtToIncomeFormData {
 })
 export class CaseDebtToIncomeFormComponent {
 
-  numberFormat: string = '2.2-2';
+  numberFormat = '2.2-2';
 
   @ViewChild('incomeForm') incomeFactorComponent: CaseCreditFactorFormComponent;
   incomeSources: CreditWorthinessFactor[] = [];
@@ -82,7 +80,7 @@ export class CaseDebtToIncomeFormComponent {
   }
 
   private sum(factors: CreditWorthinessFactor[]): number {
-    return factors.reduce((acc, val) => acc + val.amount, 0);
+    return factors.reduce((acc, val) => acc + parseFloat(val.amount), 0);
   }
 
 }

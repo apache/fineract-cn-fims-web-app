@@ -14,6 +14,12 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit charge' | translate}}">
-  <fims-product-charge-form-component (onSave)="onSave($event)" (onCancel)="onCancel()" [charge]="charge" [editMode]="true"></fims-product-charge-form-component>
+<fims-layout-card-over title="{{'Edit fee' | translate}}">
+  <fims-product-charge-form-component
+    (onSave)="onSave($event)"
+    (onCancel)="onCancel()"
+    [charge]="charge$ | async"
+    [ranges]="ranges$ | async"
+    [editMode]="true">
+  </fims-product-charge-form-component>
 </fims-layout-card-over>

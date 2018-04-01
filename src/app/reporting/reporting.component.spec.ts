@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReportingComponent} from './reporting.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {MdCardModule, MdListModule, MdToolbarModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
+import {ActivatedRoute, Router} from '@angular/router';
 import {ReportingService} from '../services/reporting/reporting.service';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {FimsSharedModule} from '../common/common.module';
 import {RouterLinkStubDirective, RouterOutletStubComponent} from '../common/testing/router-stubs';
+import {MatListModule, MatToolbarModule} from '@angular/material';
 
 describe('Test reporting component', () => {
 
-  let activatedRoute: ActivatedRoute;
+  const activatedRoute: ActivatedRoute = undefined;
 
   let fixture: ComponentFixture<ReportingComponent>;
 
@@ -45,8 +44,8 @@ describe('Test reporting component', () => {
       imports: [
         TranslateModule.forRoot(),
         FimsSharedModule,
-        MdListModule,
-        MdToolbarModule,
+        MatListModule,
+        MatToolbarModule,
         NoopAnimationsModule
       ],
       providers: [
@@ -65,14 +64,14 @@ describe('Test reporting component', () => {
     fixture.detectChanges();
   });
 
-  it('should render md-list-items on the page', () => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-list-item]'));
+  it('should render mat-list-items on the page', () => {
+    const listItems = fixture.debugElement.queryAll(By.css('a[mat-list-item]'));
 
     expect(listItems.length).toBe(2);
   });
 
   it('should navigate to report definitions page', () => {
-    const listItems = fixture.debugElement.queryAll(By.css('a[md-list-item]'));
+    const listItems = fixture.debugElement.queryAll(By.css('a[mat-list-item]'));
 
     listItems[0].nativeElement.click();
 
@@ -85,6 +84,6 @@ describe('Test reporting component', () => {
       .map(de => de.injector.get(RouterLinkStubDirective) as RouterLinkStubDirective);
 
     expect(links[0].navigatedTo).toEqual(['categories', 'categoryOne']);
-  })
+  });
 
 });

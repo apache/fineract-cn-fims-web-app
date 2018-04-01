@@ -22,7 +22,6 @@ import {CreditWorthinessSnapshot} from '../../../services/portfolio/domain/indiv
 import {CaseDebtToIncomeFormComponent, DebtToIncomeFormData} from './debt-to-income/debt-to-income.component';
 import {CaseCoSignerFormComponent, CoSignerFormData} from './co-signer/co-signer.component';
 import {Product} from '../../../services/portfolio/domain/product.model';
-import {CaseDocumentsFormComponent} from './documents/documents.component';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 
@@ -44,8 +43,6 @@ export class CaseFormComponent implements OnInit {
 
   @ViewChild('coSignerForm') coSignerForm: CaseCoSignerFormComponent;
   coSignerFormData: CoSignerFormData;
-
-  @ViewChild('documentsForm') documentsForm: CaseDocumentsFormComponent;
 
   @Input('products') products: Product[];
 
@@ -80,7 +77,8 @@ export class CaseFormComponent implements OnInit {
     this.detailFormData = {
       identifier: caseInstance.identifier,
       productIdentifier: caseInstance.productIdentifier,
-      principalAmount: caseInstance.parameters.maximumBalance,
+      interest: caseInstance.interest.toFixed(2),
+      principalAmount: caseInstance.parameters.maximumBalance.toFixed(2),
       term: caseInstance.parameters.termRange.maximum,
       termTemporalUnit: caseInstance.parameters.termRange.temporalUnit,
       paymentTemporalUnit: caseInstance.parameters.paymentCycle.temporalUnit,
@@ -93,34 +91,34 @@ export class CaseFormComponent implements OnInit {
   }
 
   private prepareDeptToIncomeForm(snapshots: CreditWorthinessSnapshot[]): void {
-    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
-    if(snapshot) {
+    const foundSnapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer === this.customerId);
+    if (foundSnapshot) {
       this.debtToIncomeFormData = {
-        incomeSources: snapshot.incomeSources,
-        debts: snapshot.debts
+        incomeSources: foundSnapshot.incomeSources,
+        debts: foundSnapshot.debts
       };
     } else {
       this.debtToIncomeFormData = {
         incomeSources: [],
         debts: []
-      }
+      };
     }
   }
 
   private prepareCosignerForm(snapshots: CreditWorthinessSnapshot[]): void {
-    const snapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer !== this.customerId);
-    if(snapshot) {
+    const foundSnapshot: CreditWorthinessSnapshot = snapshots.find(snapshot => snapshot.forCustomer !== this.customerId);
+    if (foundSnapshot) {
       this.coSignerFormData = {
-        customerId: snapshot.forCustomer,
-        incomeSources: snapshot.incomeSources,
-        debts: snapshot.debts
+        customerId: foundSnapshot.forCustomer,
+        incomeSources: foundSnapshot.incomeSources,
+        debts: foundSnapshot.debts
       };
     } else {
       this.coSignerFormData = {
         customerId: null,
         incomeSources: [],
         debts: []
-      }
+      };
     }
   }
 
@@ -146,13 +144,13 @@ export class CaseFormComponent implements OnInit {
     };
 
     const creditWorthinessSnapshots = [customerSnapshot];
-    if(cosignerSnapshot.forCustomer) {
+    if (cosignerSnapshot.forCustomer) {
       creditWorthinessSnapshots.push(cosignerSnapshot);
     }
 
     const caseParameters: CaseParameters = {
       customerIdentifier: this.customerId,
-      maximumBalance: this.detailForm.formData.principalAmount,
+      maximumBalance: parseFloat(this.detailForm.formData.principalAmount),
       paymentCycle: {
         alignmentDay: this.detailForm.formData.paymentAlignmentDay,
         alignmentMonth: this.detailForm.formData.paymentAlignmentMonth,
@@ -171,6 +169,7 @@ export class CaseFormComponent implements OnInit {
       currentState: this.caseInstance.currentState,
       identifier: this.detailForm.formData.identifier,
       productIdentifier: this.detailForm.formData.productIdentifier,
+      interest: parseFloat(this.detailForm.formData.interest),
       parameters: caseParameters,
       depositAccountIdentifier: this.detailForm.formData.depositAccountIdentifier
     };
@@ -194,7 +193,8 @@ export class CaseFormComponent implements OnInit {
     return this.coSignerForm.valid ? 'complete' : this.coSignerForm.pristine ? 'none' : 'required';
   }
 
-  get documentsFormState(): string {
-    return this.documentsForm.valid ? 'complete' : this.documentsForm.pristine ? 'none' : 'required';
+  showIdentifierValidationError(): void {
+    this.detailForm.showIdentifierValidationError();
+    this.detailsStep.open();
   }
 }

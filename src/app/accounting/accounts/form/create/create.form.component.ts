@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AccountFormComponent} from '../form.component';
 import {Account} from '../../../../services/accounting/domain/account.model';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 import * as fromAccounting from '../../../store';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {Error} from '../../../../services/domain/error.model';
 import {CREATE, RESET_FORM} from '../../../store/account/account.actions';
 

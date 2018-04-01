@@ -15,7 +15,7 @@
  */
 
 export function resourcesToHash(resources: any[], identifier: string = 'identifier') {
-  let hash = {};
+  const hash = {};
 
   resources.forEach(resource => hash[resource[identifier]] = resource);
 

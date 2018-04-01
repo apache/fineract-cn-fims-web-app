@@ -19,8 +19,11 @@ import {RoutePayload} from '../../../common/store/route-payload';
 import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {Action} from '@ngrx/store';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {Error} from '../../../services/domain/error.model';
 
@@ -45,8 +48,8 @@ export const DELETE_FAIL = type('[Customer Identity Card] Delete Fail');
 export const RESET_FORM = type('[Customer Identity Card] Reset Form');
 
 export interface IdentityCardPayload extends RoutePayload {
-  customerId: string,
-  identificationCard: IdentificationCard
+  customerId: string;
+  identificationCard: IdentificationCard;
 }
 
 export class LoadAllAction implements Action {
@@ -147,4 +150,4 @@ export type Actions
   | DeleteIdentityCardAction
   | DeleteIdentityCardSuccessAction
   | DeleteIdentityCardFailAction
-  | ResetIdentityCardForm
+  | ResetIdentityCardForm;

@@ -22,8 +22,11 @@ import {ContactDetail} from '../../services/domain/contact/contact-detail.model'
 import {UserWithPassword} from '../../services/identity/domain/user-with-password.model';
 import {RoutePayload} from '../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../common/store/resource.reducer';
 
 export const LOAD = type('[Employee] Load');
@@ -43,18 +46,18 @@ export const DELETE_FAIL = type('[Employee] Delete Fail');
 
 export const RESET_FORM = type('[Employee] Reset Form');
 
-export interface EmployeeRoutePayload extends RoutePayload{
-  employee: Employee
+export interface EmployeeRoutePayload extends RoutePayload {
+  employee: Employee;
 }
 
-export interface CreateEmployeePayload extends EmployeeRoutePayload{
-  user: UserWithPassword
+export interface CreateEmployeePayload extends EmployeeRoutePayload {
+  user: UserWithPassword;
 }
 
-export interface UpdateEmployeePayload extends EmployeeRoutePayload{
+export interface UpdateEmployeePayload extends EmployeeRoutePayload {
   contactDetails?: ContactDetail[];
   password?: string;
-  role?: string
+  role?: string;
 }
 
 export class LoadAction implements Action {

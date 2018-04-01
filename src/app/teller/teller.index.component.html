@@ -15,36 +15,36 @@
 -->
 
 <section>
-  <h2 class="md-display-1 text-upper text-center push-bottom">Search customer</h2>
+  <h2 class="mat-display-1 text-upper text-center push-bottom">Search member </h2>
   <div layout-gt-xs="row" layout-align="center center">
     <div layout-gt-xs="row" flex-gt-xs="90" layout-margin>
       <div flex-gt-xs="25"></div>
       <div flex-gt-xs="50">
-        <md-card>
-          <md-card-title>
+        <mat-card>
+          <mat-card-title>
             <td-search-input placeholder="Search here" [showUnderline]="false" [debounce]="500" (searchDebounce)="search($event)" (clear)="clearSearch()">
             </td-search-input>
-          </md-card-title>
-          <md-card-subtitle>Search results</md-card-subtitle>
-          <md-divider></md-divider>
-          <md-list>
+          </mat-card-title>
+          <mat-card-subtitle>Search results</mat-card-subtitle>
+          <mat-divider></mat-divider>
+          <mat-list>
             <ng-template let-item let-last="last" ngFor [ngForOf]="customer$ | async">
-              <md-list-item>
-                <md-icon md-list-icon class="fill-grey-700">face</md-icon>
-                <h4 md-line>{{item.surname}}, {{item.givenName}}</h4>
-                <button md-raised-button color="accent" title="{{'SHOW' | translate}}" (click)="showCustomer(item.identifier)">{{'SHOW' | translate}}</button>
-              </md-list-item>
-              <md-divider md-inset *ngIf="!last"></md-divider>
+              <mat-list-item>
+                <mat-icon mat-list-icon class="fill-grey-700">face</mat-icon>
+                <h4 matLine>{{item.surname}}, {{item.givenName}}</h4>
+                <button mat-raised-button color="accent" title="{{'SHOW' | translate}}" (click)="showCustomer(item.identifier)">{{'SHOW' | translate}}</button>
+              </mat-list-item>
+              <mat-divider mat-inset *ngIf="!last"></mat-divider>
             </ng-template>
-          </md-list>
-          <md-divider></md-divider>
-        </md-card>
+          </mat-list>
+          <mat-divider></mat-divider>
+        </mat-card>
       </div>
       <div flex-gt-xs="25"></div>
     </div>
   </div>
 </section>
 <router-outlet></router-outlet>
-<a md-fab color="accent" class="md-fab-position-bottom-right" (click)="logout()" title="{{'Pause' | translate}}">
-  <md-icon>pause</md-icon>
+<a mat-fab color="accent" class="mat-fab-position-bottom-right" (click)="logout()" title="{{'Pause' | translate}}">
+  <mat-icon>pause</mat-icon>
 </a>

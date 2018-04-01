@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
-import {Subscription} from 'rxjs';
-import {UPDATE, SelectAction} from '../../store/role.actions';
+import {Subscription} from 'rxjs/Subscription';
+import {SelectAction, UPDATE} from '../../store/role.actions';
 import {RolesStore} from '../../store/index';
 
 @Component({
   templateUrl: './edit.form.component.html'
 })
-export class EditRoleFormComponent implements OnInit, OnDestroy{
+export class EditRoleFormComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
   private roleSubscription: Subscription;
 
   role: Role;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore){}
+  constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params

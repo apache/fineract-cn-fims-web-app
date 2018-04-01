@@ -40,14 +40,14 @@ export interface LoadAllPayload {
 export interface IdentityCardScanPayload extends RoutePayload {
   customerIdentifier: string;
   identificationCardNumber: string;
-  scan: IdentificationCardScan,
-  file: File
+  scan: IdentificationCardScan;
+  file: File;
 }
 
 export interface DeleteIdentityCardScanPayload {
   customerIdentifier: string;
   identificationCardNumber: string;
-  scan: IdentificationCardScan,
+  scan: IdentificationCardScan;
 }
 
 export class LoadAllAction implements Action {

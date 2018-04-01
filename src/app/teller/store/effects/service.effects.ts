@@ -25,8 +25,6 @@ import {of} from 'rxjs/observable/of';
 @Injectable()
 export class TellerApiEffects {
 
-  constructor(private actions$: Actions, private tellerService: TellerService) {}
-
   @Effect()
   unlockDrawer$: Observable<Action> = this.actions$
     .ofType(tellerActions.UNLOCK_DRAWER)
@@ -52,8 +50,11 @@ export class TellerApiEffects {
     .ofType(tellerActions.CONFIRM_TRANSACTION)
     .map((action: tellerActions.ConfirmTransactionAction) => action.payload)
     .mergeMap(payload =>
-      this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command, payload.chargesIncluded)
+      this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command,
+        payload.chargesIncluded)
         .map(() => new tellerActions.ConfirmTransactionSuccessAction(payload))
         .catch((error) => of(new tellerActions.ConfirmTransactionFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private tellerService: TellerService) {}
 }

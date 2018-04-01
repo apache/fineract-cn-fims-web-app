@@ -18,6 +18,10 @@
   <td-step #detailsStep label="{{'Open teller' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
     <form [formGroup]="form">
+      <fims-teller-adjustment-form
+        [form]="form"
+        [adjustmentOptions]="adjustmentOptions">
+      </fims-teller-adjustment-form>
       <fims-employee-auto-complete title="{{'Assigned employee' | translate}}" formControlName="assignedEmployeeIdentifier">
         <ng-container *ngIf="!form.get('assignedEmployeeIdentifier').pristine && form.get('assignedEmployeeIdentifier').hasError('required')" translate>
           Required
@@ -28,9 +32,9 @@
       </fims-employee-auto-complete>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="open()" [disabled]="form.invalid">{{'OPEN TELLER' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="open()" [disabled]="form.invalid">{{'OPEN TELLER' | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

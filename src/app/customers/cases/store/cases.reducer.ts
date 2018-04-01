@@ -1,4 +1,3 @@
-import {ResourceState} from '../../../common/store/resource.reducer';
 /**
  * Copyright 2017 The Mifos Initiative.
  *
@@ -15,9 +14,25 @@ import {ResourceState} from '../../../common/store/resource.reducer';
  * limitations under the License.
  */
 
+import {ResourceState} from '../../../common/store/resource.reducer';
 import * as caseActions from './case.actions';
 import {CaseState} from '../../../services/portfolio/domain/case-state.model';
-import {CaseCommand} from '../../../services/portfolio/domain/case-command.model';
+
+/**
+ * Copyright 2017 The Mifos Initiative.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 export const initialState: ResourceState = {
   ids: [],
@@ -40,15 +55,15 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
 
       let caseState: CaseState = null;
 
-      if(commandAction === 'OPEN') {
+      if (commandAction === 'OPEN') {
         caseState = 'PENDING';
-      }else if(commandAction === 'APPROVE') {
+      }else if (commandAction === 'APPROVE') {
         caseState = 'APPROVED';
-      }else if(commandAction === 'DENY') {
+      }else if (commandAction === 'DENY') {
         caseState = 'CLOSED';
-      }else if(commandAction === 'CLOSE') {
+      }else if (commandAction === 'CLOSE') {
         caseState = 'CLOSED';
-      }else if(commandAction === 'DISBURSE') {
+      }else if (commandAction === 'DISBURSE') {
         caseState = 'ACTIVE';
       }
 
@@ -61,7 +76,7 @@ export function reducer(state = initialState, action: caseActions.Actions): Reso
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

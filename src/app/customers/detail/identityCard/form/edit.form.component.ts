@@ -18,11 +18,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {Observable} from 'rxjs/Observable';
+import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UPDATE} from '../../../store/identityCards/identity-cards.actions';
 import {Customer} from '../../../../services/customer/domain/customer.model';
-import * as fromCustomers from '../../../store/index';
 
 @Component({
   templateUrl: './edit.form.component.html'
@@ -62,7 +62,7 @@ export class EditCustomerIdentificationCardFormComponent implements OnInit, OnDe
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

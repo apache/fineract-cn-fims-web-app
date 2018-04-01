@@ -16,8 +16,8 @@
 
 import {Component, OnDestroy} from '@angular/core';
 import * as fromTeller from './store/index';
-import * as fromRoot from '../store/index';
 import {TellerStore} from './store/index';
+import * as fromRoot from '../store/index';
 import {LOCK_DRAWER} from './store/teller.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -54,11 +54,11 @@ export class TellerIndexComponent implements OnDestroy {
       payload: {
         tellerCode: this.teller.code
       }
-    })
+    });
   }
 
   showCustomer(identifier: string): void {
-    this.router.navigate(['customers/detail', identifier], { relativeTo: this.route })
+    this.router.navigate(['customers/detail', identifier], { relativeTo: this.route });
   }
 
   search(searchTerm: string): void {
@@ -67,7 +67,7 @@ export class TellerIndexComponent implements OnDestroy {
       payload: {
         searchTerm
       }
-    })
+    });
   }
 
   clearSearch(): void {}

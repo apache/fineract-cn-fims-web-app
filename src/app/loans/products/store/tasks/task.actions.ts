@@ -20,8 +20,11 @@ import {type} from '../../../../store/util';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Task] Load All');
@@ -44,7 +47,7 @@ export const DELETE_FAIL = type('[Product Task] Delete Fail');
 
 export const RESET_FORM = type('[Product Task] Reset Form');
 
-export interface TaskRoutePayload extends RoutePayload{
+export interface TaskRoutePayload extends RoutePayload {
   productId: string;
   task: TaskDefinition;
 }

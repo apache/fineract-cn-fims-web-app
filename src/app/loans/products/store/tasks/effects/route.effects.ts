@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
 import {Router} from '@angular/router';
 
 @Injectable()
 export class ProductTasksRouteEffects {
-
-  constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
   createUpdateProductTaskSuccess$: Observable<Action> = this.actions$
@@ -37,5 +35,7 @@ export class ProductTasksRouteEffects {
     .ofType(taskActions.DELETE)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

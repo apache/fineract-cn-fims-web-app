@@ -16,17 +16,17 @@
 
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IdentityCardFormComponent} from './identity-card-form.component';
-import {MdButtonModule, MdCardModule, MdIconModule, MdInputModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule} from '@angular/material';
 import {CovalentFileModule, CovalentStepsModule} from '@covalent/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FormFinalActionComponent} from '../../../../common/forms/form-final-action.component';
-import {IdInputComponent} from '../../../../common/id-input/id-input.component';
-import {setValueByCssSelector, setValueByFormControlName} from '../../../../common/testing/input-fields';
+import {setValueByCssSelector} from '../../../../common/testing/input-fields';
 import {By} from '@angular/platform-browser';
 import {Component, DebugElement} from '@angular/core';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {dateAsISOString, toFimsDate} from '../../../../services/domain/date.converter';
+import {FimsSharedModule} from '../../../../common/common.module';
 
 describe('Test identity card form component', () => {
 
@@ -34,21 +34,22 @@ describe('Test identity card form component', () => {
 
   let formComponent: TestComponent;
 
+  let oneDayAhead: string;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         TestComponent,
-        IdInputComponent,
-        FormFinalActionComponent,
         IdentityCardFormComponent
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdIconModule,
-        MdButtonModule,
-        MdCardModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
         CovalentStepsModule,
         CovalentFileModule,
         NoopAnimationsModule
@@ -61,11 +62,17 @@ describe('Test identity card form component', () => {
     fixture.detectChanges();
   }));
 
+  beforeEach(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    oneDayAhead = dateAsISOString(today);
+  });
+
   function setValidValues(): void {
-    setValueByCssSelector(fixture, 'input[placeholder="Number"]', 'test');
-    setValueByFormControlName(fixture, 'type', 'test');
-    setValueByFormControlName(fixture, 'expirationDate', '2012-01-02');
-    setValueByFormControlName(fixture, 'issuer', 'test');
+    setValueByCssSelector(fixture, '#number', 'test');
+    setValueByCssSelector(fixture, '#type', 'test');
+    setValueByCssSelector(fixture, '#expirationDate', oneDayAhead);
+    setValueByCssSelector(fixture, '#issuer', 'test');
   }
 
   it('should disable/enable save button', () => {
@@ -92,11 +99,7 @@ describe('Test identity card form component', () => {
     const expectedResult: IdentificationCard = {
       type: 'test',
       issuer: 'test',
-      expirationDate: {
-        day: 2,
-        month: 1,
-        year: 2012
-      },
+      expirationDate: toFimsDate(oneDayAhead),
       number: 'test'
     };
 

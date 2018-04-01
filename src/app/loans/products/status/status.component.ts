@@ -19,17 +19,16 @@ import {TaskDefinition} from '../../../services/portfolio/domain/task-definition
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
 import {PortfolioStore} from '../store/index';
-import {Observable, Subscription} from 'rxjs';
-import {SelectAction} from '../store/product.actions';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromPortfolio from '../store';
 import {LOAD_ALL} from '../store/tasks/task.actions';
 import {FimsProduct} from '../store/model/fims-product.model';
 
-
 @Component({
   templateUrl: './status.component.html'
 })
-export class ProductStatusComponent implements OnInit, OnDestroy{
+export class ProductStatusComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
@@ -69,6 +68,6 @@ export class ProductStatusComponent implements OnInit, OnDestroy{
   }
 
   rowSelect(taskDefinition: TaskDefinition): void {
-    this.router.navigate(['detail', taskDefinition.identifier], { relativeTo: this.route })
+    this.router.navigate(['detail', taskDefinition.identifier], { relativeTo: this.route });
   }
 }

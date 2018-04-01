@@ -16,7 +16,6 @@
 
 import {Action} from '@ngrx/store';
 import {type} from '../util';
-import {Role} from '../../services/identity/domain/role.model';
 import {SearchResult} from '../../common/store/search.reducer';
 
 export const SEARCH = type('[Role] Search');

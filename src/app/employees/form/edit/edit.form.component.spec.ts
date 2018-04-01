@@ -20,29 +20,25 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentStepsModule} from '@covalent/core';
 import {EditEmployeeFormComponent} from './edit.form.component';
 import {EmployeeFormComponent} from '../form.component';
-import {SelectListComponent} from '../../../common/select-list/select-list.component';
-import {IdInputComponent} from '../../../common/id-input/id-input.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LayoutCardOverComponent} from '../../../common/layout-card-over/layout-card-over.component';
 import {User} from '../../../services/identity/domain/user.model';
 import {Employee} from '../../../services/office/domain/employee.model';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {EmployeesStore} from '../../store/index';
 import {Store} from '@ngrx/store';
 import {UPDATE} from '../../store/employee.actions';
 import * as fromEmployees from '../../store';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormFinalActionComponent} from '../../../common/forms/form-final-action.component';
-import {FormContinueActionComponent} from '../../../common/forms/form-continue-action.component';
-import {MdCardModule, MdInputModule, MdOptionModule, MdSelectModule} from '@angular/material';
+import {MatCardModule, MatInputModule, MatOptionModule, MatSelectModule} from '@angular/material';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {FimsSharedModule} from '../../../common/common.module';
 
-let userMock: User = {
+const userMock: User = {
   identifier: 'test',
   role: 'test'
 };
 
-let employeeMock: Employee = {
+const employeeMock: Employee = {
   identifier: 'test',
   assignedOffice: 'test',
   givenName: 'test',
@@ -58,7 +54,7 @@ let employeeMock: Employee = {
   ]
 };
 
-let activatedRoute = {
+const activatedRoute = {
   data: Observable.of({
     user: userMock
   })
@@ -76,20 +72,17 @@ describe('Test employee form component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
-        SelectListComponent,
         EmployeeFormComponent,
         EditEmployeeFormComponent,
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdCardModule,
-        MdSelectModule,
-        MdOptionModule,
+        MatInputModule,
+        MatCardModule,
+        MatSelectModule,
+        MatOptionModule,
         CovalentStepsModule,
         NoopAnimationsModule
       ],
@@ -99,17 +92,19 @@ describe('Test employee form component', () => {
         {
           provide: Store, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         },
         {
           provide: EmployeesStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = jasmine.createSpy('select').and.callFake(selector => {
-              if(selector === fromEmployees.getSelectedEmployee) return Observable.of(employeeMock);
+              if (selector === fromEmployees.getSelectedEmployee) {
+                return Observable.of(employeeMock);
+              }
 
               return Observable.empty();
-            })
+            });
           }
         }
       ],
@@ -137,7 +132,7 @@ describe('Test employee form component', () => {
         password: 'newPassword',
         activatedRoute: activatedRoute
       }});
-    })
+    });
 
   })));
 });

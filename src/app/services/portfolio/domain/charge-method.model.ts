@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export type ChargeMethod = 'FIXED' | 'PROPORTIONAL';
+export type ChargeMethod = 'FIXED' | 'PROPORTIONAL' | 'INTEREST';

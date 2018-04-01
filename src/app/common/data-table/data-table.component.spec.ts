@@ -17,14 +17,18 @@
 import {Component, DebugElement, EventEmitter, ViewChild} from '@angular/core';
 import {DataTableComponent, TableData, TableFetchRequest} from './data-table.component';
 import {
-  CovalentDataTableModule, CovalentPagingModule, ITdDataTableColumn,
-  TdDataTableColumnComponent, TdDataTableComponent, TdDataTableSortingOrder
+  CovalentDataTableModule,
+  CovalentPagingModule,
+  ITdDataTableColumn,
+  TdDataTableColumnComponent,
+  TdDataTableSortingOrder
 } from '@covalent/core';
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {TranslateModule} from '@ngx-translate/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdIconModule} from '@angular/material';
+import {MatIconModule, MatOptionModule, MatSelectModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 describe('Test data table component', () => {
 
@@ -34,9 +38,9 @@ describe('Test data table component', () => {
 
   let columns: DebugElement[];
 
-  function click(element: DebugElement) {
-    element.triggerEventHandler('click', new Event('click'));
-  }
+  // function click(element: DebugElement) {
+  //  element.triggerEventHandler('click', new Event('click'));
+  // }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,7 +51,10 @@ describe('Test data table component', () => {
       imports: [
         TranslateModule.forRoot(),
         NoopAnimationsModule,
-        MdIconModule,
+        FormsModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatIconModule,
         CovalentDataTableModule,
         CovalentPagingModule
       ]
@@ -119,7 +126,9 @@ describe('Test data table component', () => {
 });
 
 @Component({
-  template: '<fims-data-table #datatable [data]="tableData" [columns]="columns" (onFetch)="onFetch($event)" [sortable]="true" [actionColumn]="false"></fims-data-table>'
+  template: `
+    <fims-data-table #datatable [data]="tableData" [columns]="columns" (onFetch)="onFetch($event)" [sortable]="true" [actionColumn]="false">
+    </fims-data-table>`
 })
 class TestComponent {
 

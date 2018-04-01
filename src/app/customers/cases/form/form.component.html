@@ -24,13 +24,10 @@
   <td-step #coSignerStep label="{{'Co-signer' | translate}}" [state]="coSignerFormState">
     <fims-case-co-signer-form #coSignerForm [formData]="coSignerFormData"></fims-case-co-signer-form>
   </td-step>
-  <td-step #documentsStep label="{{'Documents' | translate}}" [state]="documentsFormState">
-    <fims-case-documents-form #documentsForm></fims-case-documents-form>
-  </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
       <fims-form-final-action
-        [resourceName]="'CUSTOMER LOAN'"
+        [resourceName]="'MEMBER LOAN'"
         [editMode]="editMode"
         [disabled]="!isValid"
         (onCancel)="cancel()"

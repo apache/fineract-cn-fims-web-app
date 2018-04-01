@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Injectable, Inject} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action, Store} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as securityActions from '../security.actions';
@@ -32,11 +32,6 @@ import {Password} from '../../../services/identity/domain/password.model';
 @Injectable()
 export class SecurityApiEffects {
 
-
-  constructor(private actions$: Actions, private identityService: IdentityService, private authenticationService: AuthenticationService, private idMapper: PermittableGroupIdMapper,
-              @Inject('tokenExpiryBuffer') private tokenExpiryBuffer: number,
-              private store: Store<fromRoot.State>) {}
-
   @Effect()
   login$: Observable<Action> = this.actions$
     .ofType(securityActions.LOGIN)
@@ -48,7 +43,7 @@ export class SecurityApiEffects {
           tenant: payload.tenant,
           authentication: authentication
         }))
-        .map(payload => new securityActions.LoginSuccessAction(payload))
+        .map(successPayload => new securityActions.LoginSuccessAction(successPayload))
         .catch((error) => of(new securityActions.LoginFailAction(error)))
     );
 
@@ -69,31 +64,6 @@ export class SecurityApiEffects {
     .map(payload => new Date(payload.authentication.refreshTokenExpiration).getTime())
     .map(refreshTokenExpirationMillies => new Date(refreshTokenExpirationMillies - this.tokenExpiryBuffer))
     .map(delay => new securityActions.RefreshTokenStartTimerAction(delay));
-
-  private fetchPermissions(tenantId: string, username: string, accessToken: string): Observable<FimsPermission[]>{
-    return this.authenticationService.getUserPermissions(tenantId, username, accessToken)
-      .flatMap((permissions: Permission[]) => Observable.from(permissions))
-      .map((permission: Permission) => this.mapPermissions(permission))
-      .reduce((acc: FimsPermission[], permissions: FimsPermission[]) => acc.concat(permissions), []);
-  }
-
-  private mapPermissions(permission: Permission): FimsPermission[]{
-    let result: FimsPermission[] = [];
-    let descriptor = this.idMapper.map(permission.permittableEndpointGroupIdentifier);
-
-    if(descriptor){
-      let internalKey: PermissionId = descriptor.id;
-
-      for(let operation of permission.allowedOperations){
-        result.push({
-          id: internalKey,
-          accessLevel: operation
-        })
-      }
-    }
-
-    return result;
-  }
 
   @Effect()
   logout$: Observable<Action> = this.actions$
@@ -163,4 +133,33 @@ export class SecurityApiEffects {
   logoutOnPasswordChange$: Observable<Action> = this.actions$
     .ofType(securityActions.CHANGE_PASSWORD_SUCCESS)
     .mergeMap(() => Observable.of(new securityActions.LogoutAction()));
+
+  private fetchPermissions(tenantId: string, username: string, accessToken: string): Observable<FimsPermission[]> {
+    return this.authenticationService.getUserPermissions(tenantId, username, accessToken)
+      .flatMap((permissions: Permission[]) => Observable.from(permissions))
+      .map((permission: Permission) => this.mapPermissions(permission))
+      .reduce((acc: FimsPermission[], permissions: FimsPermission[]) => acc.concat(permissions), []);
+  }
+
+  private mapPermissions(permission: Permission): FimsPermission[] {
+    const result: FimsPermission[] = [];
+    const descriptor = this.idMapper.map(permission.permittableEndpointGroupIdentifier);
+
+    if (descriptor) {
+      const internalKey: PermissionId = descriptor.id;
+
+      for (const operation of permission.allowedOperations){
+        result.push({
+          id: internalKey,
+          accessLevel: operation
+        });
+      }
+    }
+
+    return result;
+  }
+
+  constructor(private actions$: Actions, private identityService: IdentityService, private authenticationService: AuthenticationService,
+              private idMapper: PermittableGroupIdMapper, @Inject('tokenExpiryBuffer') private tokenExpiryBuffer: number,
+              private store: Store<fromRoot.State>) {}
 }

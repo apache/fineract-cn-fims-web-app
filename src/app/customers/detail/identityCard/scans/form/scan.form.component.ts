@@ -39,11 +39,13 @@ export class IdentificationCardScanComponent implements OnInit {
   @Input() editMode: boolean;
 
   @Input() set error(error: Error) {
-    if(!error) return;
+    if (!error) {
+      return;
+    }
 
     this.form.get('identifier').setErrors({
       'unique': true
-    })
+    });
   }
 
   @Output() onSave = new EventEmitter<IdentityCardScanFormData>();

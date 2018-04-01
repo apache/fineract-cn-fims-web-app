@@ -15,8 +15,15 @@
  */
 
 import {
-  Component, ComponentFactoryResolver, ComponentRef, Directive, forwardRef, Input, OnInit,
-  ViewChild, ViewContainerRef
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  forwardRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import {Operator} from '../../../services/reporting/domain/query-parameter.model';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -25,10 +32,6 @@ import {AbstractControlValueAccessor} from './abstract-value-accessor';
 import {ReportingInputParamComponent} from './input/input.component';
 import {ReportingInParamComponent} from './in/in.component';
 import {ReportingBetweenParamComponent} from './between/between.component';
-
-const noop: any = () => {
-  // empty method
-};
 
 export const ELEMENT_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -89,7 +92,7 @@ export class ReportingQueryParamComponent extends AbstractControlValueAccessor i
   }
 
   private getComponentType(operator: Operator): any {
-    switch(operator) {
+    switch (operator) {
       case 'GREATER':
       case 'LESSER':
       case 'EQUALS':

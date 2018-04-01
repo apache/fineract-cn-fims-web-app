@@ -18,7 +18,7 @@ export type TaskDefinitionType = 'ID_CARD' | 'FOUR_EYES' | 'CUSTOM';
 
 export type TaskDefinitionCommand = 'ACTIVATE' | 'LOCK' | 'UNLOCK' | 'CLOSE' | 'REOPEN';
 
-export interface TaskDefinition{
+export interface TaskDefinition {
   identifier: string;
   type: TaskDefinitionType;
   commands: TaskDefinitionCommand[];

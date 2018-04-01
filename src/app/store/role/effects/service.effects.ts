@@ -15,8 +15,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
@@ -28,8 +28,6 @@ const SYSTEM_ROLES: string[] = ['pharaoh', 'scheduler'];
 
 @Injectable()
 export class RoleSearchApiEffects {
-
-  constructor(private actions$: Actions, private identityService: IdentityService) { }
 
   @Effect()
   search$: Observable<Action> = this.actions$
@@ -50,6 +48,8 @@ export class RoleSearchApiEffects {
     });
 
   private excludeSystemRoles(roles: Role[]): Role[] {
-    return roles.filter(role => SYSTEM_ROLES.indexOf(role.identifier) === -1)
+    return roles.filter(role => SYSTEM_ROLES.indexOf(role.identifier) === -1);
   }
+
+  constructor(private actions$: Actions, private identityService: IdentityService) { }
 }

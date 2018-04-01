@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'fims-select-list',
   templateUrl: './select-list.component.html'
 })
-export class SelectListComponent implements OnInit{
+export class SelectListComponent implements OnInit {
 
   selections: string[];
 
   term = new FormControl();
 
-  @Input('preSelection') set preSelection(preSelection: string | string[]){
+  @Input('preSelection') set preSelection(preSelection: string | string[]) {
     preSelection = preSelection || [];
-    let selections: string[] = Array.isArray(preSelection) ? preSelection : [preSelection];
+    const selections: string[] = Array.isArray(preSelection) ? preSelection : [preSelection];
     this.selections = selections;
   };
 
@@ -46,7 +46,7 @@ export class SelectListComponent implements OnInit{
 
   @Input('title') title: string;
 
-  @Input('multiple') multiple: boolean = false;
+  @Input('multiple') multiple = false;
 
   @Output() onSearch = new EventEmitter<string>();
 
@@ -57,25 +57,27 @@ export class SelectListComponent implements OnInit{
   ngOnInit(): void {
     this.term.valueChanges
       .debounceTime(500)
-      .subscribe((event) => this.onSearch.emit(event))
+      .subscribe((event) => this.onSearch.emit(event));
   }
 
   doSelect(id: any): void {
-    if(this.selections.indexOf(id) > -1) return;
+    if (this.selections.indexOf(id) > -1) {
+      return;
+    }
 
-    if(this.multiple){
+    if (this.multiple) {
       this.selections.push(id);
-    }else{
+    }else {
       this.selections = [id];
     }
 
     this.onSelectionChange.emit(this.selections);
   }
 
-  doDeselect(id: any): void{
-    let index = this.selections.indexOf(id);
+  doDeselect(id: any): void {
+    const index = this.selections.indexOf(id);
 
-    if(index > -1){
+    if (index > -1) {
       this.selections.splice(index, 1);
     }
 

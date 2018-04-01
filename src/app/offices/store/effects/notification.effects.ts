@@ -15,16 +15,14 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
-import {NotificationType, NotificationService} from '../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class OfficeNotificationEffects {
-  constructor(private actions$: Actions, private notificationService: NotificationService) {
-  }
 
   @Effect({ dispatch: false })
   createOfficeSuccess$: Observable<Action> = this.actions$
@@ -48,7 +46,10 @@ export class OfficeNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Office can\'t be deleted',
-      message: 'Office has either branch offices or employees assigned to it.'
+      message: 'Office has either branch offices, employees or teller assigned to it.'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {
+  }
 }
 

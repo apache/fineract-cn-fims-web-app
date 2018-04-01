@@ -24,7 +24,11 @@ import * as authenticationActions from './security/security.actions';
 import {compose} from '@ngrx/core/compose';
 import {localStorageSync} from 'ngrx-store-localstorage';
 import {
-  createSearchReducer, getSearchEntities, getSearchLoading, getSearchTotalElements, getSearchTotalPages,
+  createSearchReducer,
+  getSearchEntities,
+  getSearchLoading,
+  getSearchTotalElements,
+  getSearchTotalPages,
   SearchState
 } from '../common/store/search.reducer';
 
@@ -61,7 +65,7 @@ export function createReducer(asyncReducers = {}): ActionReducer<any> {
 
   return function(state: any, action: any) {
     // Reset state
-    if(action.type === authenticationActions.LOGOUT_SUCCESS) {
+    if (action.type === authenticationActions.LOGOUT_SUCCESS) {
       return actionReducer(undefined, action);
     }
     return actionReducer(state, action);
@@ -85,7 +89,8 @@ export const getOfficeSearchTotalElements = createSelector(getOfficeSearchState,
 export const getOfficeSearchTotalPages = createSelector(getOfficeSearchState, getSearchTotalPages);
 export const getOfficeSearchLoading = createSelector(getOfficeSearchState, getSearchLoading);
 
-export const getOfficeSearchResults = createSelector(getSearchOffices, getOfficeSearchTotalPages, getOfficeSearchTotalElements, (offices, totalPages, totalElements) => {
+export const getOfficeSearchResults = createSelector(getSearchOffices, getOfficeSearchTotalPages, getOfficeSearchTotalElements,
+  (offices, totalPages, totalElements) => {
   return {
     offices: offices,
     totalPages: totalPages,
@@ -111,7 +116,8 @@ export const getEmployeeSearchTotalElements = createSelector(getEmployeeSearchSt
 export const getEmployeeSearchTotalPages = createSelector(getEmployeeSearchState, getSearchTotalPages);
 export const getEmployeeSearchLoading = createSelector(getEmployeeSearchState, getSearchLoading);
 
-export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEmployeeSearchTotalPages, getEmployeeSearchTotalElements, (employees, totalPages, totalElements) => {
+export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEmployeeSearchTotalPages, getEmployeeSearchTotalElements,
+  (employees, totalPages, totalElements) => {
   return {
     employees: employees,
     totalPages: totalPages,
@@ -129,7 +135,8 @@ export const getRoleSearchTotalElements = createSelector(getRoleSearchState, get
 export const getRoleSearchTotalPages = createSelector(getRoleSearchState, getSearchTotalPages);
 export const getRoleSearchLoading = createSelector(getRoleSearchState, getSearchLoading);
 
-export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearchTotalPages, getRoleSearchTotalElements, (roles, totalPages, totalElements) => {
+export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearchTotalPages, getRoleSearchTotalElements,
+  (roles, totalPages, totalElements) => {
   return {
     roles: roles,
     totalPages: totalPages,
@@ -147,7 +154,8 @@ export const getCustomerSearchTotalElements = createSelector(getCustomerSearchSt
 export const getCustomerSearchTotalPages = createSelector(getCustomerSearchState, getSearchTotalPages);
 export const getCustomerSearchLoading = createSelector(getCustomerSearchState, getSearchLoading);
 
-export const getCustomerSearchResults = createSelector(getSearchCustomers, getCustomerSearchTotalPages, getCustomerSearchTotalElements, (customers, totalPages, totalElements) => {
+export const getCustomerSearchResults = createSelector(getSearchCustomers, getCustomerSearchTotalPages, getCustomerSearchTotalElements,
+  (customers, totalPages, totalElements) => {
   return {
     customers: customers,
     totalPages: totalPages,
@@ -165,7 +173,8 @@ export const getAccountSearchTotalElements = createSelector(getAccountSearchStat
 export const getAccountSearchTotalPages = createSelector(getAccountSearchState, getSearchTotalPages);
 export const getAccountSearchLoading = createSelector(getAccountSearchState, getSearchLoading);
 
-export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements, (accounts, totalPages, totalElements) => {
+export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements,
+  (accounts, totalPages, totalElements) => {
   return {
     accounts: accounts,
     totalPages: totalPages,
@@ -182,7 +191,8 @@ export const getSearchLedgers = createSelector(getLedgerSearchState, getSearchEn
 export const getLedgerSearchTotalElements = createSelector(getLedgerSearchState, getSearchTotalElements);
 export const getLedgerSearchTotalPages = createSelector(getLedgerSearchState, getSearchTotalPages);
 
-export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedgerSearchTotalElements, getLedgerSearchTotalPages, (ledgers, totalPages, totalElements) => {
+export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedgerSearchTotalElements, getLedgerSearchTotalPages,
+  (ledgers, totalPages, totalElements) => {
   return {
     ledgers: ledgers,
     totalPages: totalPages,

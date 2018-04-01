@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {Observable} from 'rxjs/Observable';
 import {getAllTellerEntities, getSelectedOffice, OfficesStore} from '../../store/index';
@@ -22,11 +22,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {Teller} from '../../../services/teller/domain/teller.model';
 import {LoadTellerAction} from '../../store/teller/teller.actions';
+import {DatePipe} from '@angular/common';
 
 @Component({
-  templateUrl: './teller.list.component.html'
+  templateUrl: './teller.list.component.html',
+  providers: [DatePipe]
 })
-export class OfficeTellerListComponent implements OnInit {
+export class OfficeTellerListComponent implements OnInit, OnDestroy {
 
   private loadTellerSubscription: Subscription;
 
@@ -36,10 +38,14 @@ export class OfficeTellerListComponent implements OnInit {
     {name: 'code', label: 'Number'},
     {name: 'cashdrawLimit', label: 'Cash withdrawal limit'},
     {name: 'assignedEmployee', label: 'Assigned employee'},
-    {name: 'state', label: 'Status'}
+    {name: 'state', label: 'Status'},
+    {
+      name: 'lastOpenedOn', label: 'Last opened on', format: (v: any) => {
+      return this.datePipe.transform(v, 'short');
+    }}
   ];
 
-  constructor(private store: OfficesStore, private route: ActivatedRoute, private router: Router) {}
+  constructor(private store: OfficesStore, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.loadTellerSubscription = this.store.select(getSelectedOffice)
@@ -52,7 +58,7 @@ export class OfficeTellerListComponent implements OnInit {
         data: tellers,
         totalElements: tellers.length,
         totalPages: 1
-      }))
+      }));
   }
 
   ngOnDestroy(): void {

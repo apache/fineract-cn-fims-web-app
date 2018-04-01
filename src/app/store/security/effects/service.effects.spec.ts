@@ -17,14 +17,19 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import {SecurityApiEffects} from './service.effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {AuthenticationService} from '../../../services/security/authn/authentication.service';
-import {Authentication} from '../../../services/identity/domain/authentication.model';
 import {
-  ChangePasswordAction, ChangePasswordSuccessAction,
-  LoginAction, LoginSuccessAction, LogoutAction, LogoutSuccessAction, PermissionUpdateSuccessAction,
-  RefreshAccessTokenAction, RefreshAccessTokenStartTimerAction,
+  ChangePasswordAction,
+  ChangePasswordSuccessAction,
+  LoginAction,
+  LoginSuccessAction,
+  LogoutAction,
+  LogoutSuccessAction,
+  PermissionUpdateSuccessAction,
+  RefreshAccessTokenAction,
+  RefreshAccessTokenStartTimerAction,
   RefreshAccessTokenSuccessAction,
   RefreshTokenStartTimerAction
 } from '../security.actions';
@@ -60,7 +65,7 @@ describe('Security Api Effects', () => {
           useValue: jasmine.createSpyObj('identityService', ['changePassword'])
         }
       ]
-    })
+    });
 
   });
 
@@ -179,12 +184,12 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('logout$', () => {
 
-    function setup(params? : { logoutReturnValue: any }) {
+    function setup(params?: { logoutReturnValue: any }) {
       const authenticationService = TestBed.get(AuthenticationService);
 
       if (params) {
@@ -230,11 +235,11 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('refreshToken$', () => {
-    function setup(params? : { refreshAccessTokenReturnValue: any }) {
+    function setup(params?: { refreshAccessTokenReturnValue: any }) {
       const authenticationService = TestBed.get(AuthenticationService);
 
       if (params) {
@@ -269,7 +274,7 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('startAccessTokenRefreshTimerAfterRefresh$', () => {
@@ -297,7 +302,7 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('startAccessTokenRefreshTimerAfterLogin$', () => {
@@ -329,7 +334,7 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('refreshAccessTokenStartTimer$', () => {
@@ -358,7 +363,7 @@ describe('Security Api Effects', () => {
 
       tick(500);
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('refreshTokenStartTimer$', () => {
@@ -388,14 +393,14 @@ describe('Security Api Effects', () => {
 
       tick(500);
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 
   describe('changePassword$', () => {
 
     function setup(params?: { changePasswordReturnValue: any }) {
       const identityService = TestBed.get(IdentityService);
-      if(params){
+      if (params) {
         identityService.changePassword.and.returnValue(params.changePasswordReturnValue);
       }
 
@@ -420,6 +425,6 @@ describe('Security Api Effects', () => {
 
       tick();
       expect(result).toEqual(expectedResult);
-    }))
+    }));
   });
 });

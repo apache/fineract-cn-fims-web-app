@@ -22,9 +22,16 @@ import {DepositProductDefinitionApiEffects} from './store/effects/service.effect
 import {EffectsModule} from '@ngrx/effects';
 import {CovalentMessageModule, CovalentStepsModule} from '@covalent/core';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdRadioModule,
-  MdSelectModule, MdSlideToggleModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
@@ -39,7 +46,6 @@ import {DepositProductCreateComponent} from './form/create.component';
 import {DepositProductFormComponent} from './form/form.component';
 import {DepositProductChargesFormComponent} from './form/charges/charges.component';
 import {DepositProductDetailComponent} from './detail/deposit-product.detail.component';
-import {DepositProductStatusComponent} from './detail/status/status.component';
 import {DepositProductIndexComponent} from './detail/deposit-product.index.component';
 import {DepositProductEditComponent} from './form/edit.component';
 import {DepositProductDividendsComponent} from './detail/dividends/dividends.component';
@@ -57,16 +63,16 @@ import {CreateDividendFormComponent} from './detail/dividends/form/create.compon
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSelectModule,
-    MdRadioModule,
-    MdCheckboxModule,
-    MdSlideToggleModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
 
     CovalentStepsModule,
     CovalentMessageModule,
@@ -87,7 +93,6 @@ import {CreateDividendFormComponent} from './detail/dividends/form/create.compon
     DepositProductChargesFormComponent,
     DepositProductIndexComponent,
     DepositProductDetailComponent,
-    DepositProductStatusComponent,
     DepositProductDividendsComponent,
     CreateDividendFormComponent,
     DividendFormComponent

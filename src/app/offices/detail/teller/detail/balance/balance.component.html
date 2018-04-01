@@ -15,37 +15,72 @@
 -->
 
 <fims-layout-card-over title="{{'Teller balance' | translate}}" [navigateBackTo]="['../']">
-  <div layout="row" layout-margin>
-
-  </div>
   <div layout="row">
-    <table td-data-table>
-      <th td-data-table-column>
-        <span translate>Transaction date</span>
-      </th>
-      <th td-data-table-column>
-        <span translate>Message</span>
-      </th>
-      <th td-data-table-column>
-        <span translate>Debit</span>
-      </th>
-      <th td-data-table-column>
-        <span translate>Credit</span>
-      </th>
-      <tr td-data-table-row *ngFor="let row of (balance$ | async)?.entries">
-        <td td-data-table-cell>
-          {{row['transactionDate'] | date:'short' }}
-        </td>
-        <td td-data-table-cell>
-          {{row['message'] }}
-        </td>
-        <td td-data-table-cell>
-          {{row['type'] == 'CREDIT' ? (row['amount'] | number) : '-'}}
-        </td>
-        <td td-data-table-cell>
-          {{row['type'] == 'DEBIT' ? (row['amount'] | number): '-'}}
-        </td>
-      </tr>
+    <table td-data-table *ngIf="balance$ | async as balance">
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column>
+            <span translate>Transaction date</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Message</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Cash Received</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Cash Disbursed</span>
+          </th>
+          <th td-data-table-column>
+            <span translate>Cheques Received</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let row of balance.entries">
+          <td td-data-table-cell>
+            {{row['transactionDate'] | date:'short' }}
+          </td>
+          <td td-data-table-cell>
+            {{row['message'] }}
+          </td>
+          <td td-data-table-cell>
+            {{row['type'] == 'DEBIT' ? (row['amount'] | number:numberFormat) : '-'}}
+          </td>
+          <td td-data-table-cell>
+            {{row['type'] == 'CREDIT' ? (row['amount'] | number:numberFormat): '-'}}
+          </td>
+          <td td-data-table-cell>
+            {{row['type'] == 'CHEQUE' ? (row['amount'] | number:numberFormat) : '-'}}
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <b translate>Subtotal</b>
+          </td>
+          <td td-data-table-cell>
+            <b>{{balance.cashReceivedTotal | number:numberFormat}}</b>
+          </td>
+          <td td-data-table-cell>
+            <b>{{balance.cashDisbursedTotal | number:numberFormat}}</b>
+          </td>
+          <td td-data-table-cell>
+            <b>{{balance.chequesReceivedTotal | number:numberFormat}}</b>
+          </td>
+        </tr>
+        <tr td-data-table-row>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell>
+            <b translate>Cash on hand</b>
+          </td>
+          <td td-data-table-cell>
+            <b>{{balance.cashOnHand | number:numberFormat}}</b>
+          </td>
+          <td td-data-table-cell></td>
+          <td td-data-table-cell></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </fims-layout-card-over>

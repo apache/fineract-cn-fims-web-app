@@ -17,30 +17,30 @@
 <fims-layout-card-over title="{{employee.givenName}} {{employee.surname}}" [navigateBackTo]="'/employees'">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
     <td-search-box placeholder="{{'Search' | translate}}" (search)="searchEmployee($event)" [alwaysVisible]="false"></td-search-box>
-    <button md-icon-button (click)="deleteEmployee()" title="{{'Delete this employee' | translate}}" *hasPermission="{ id: 'office_employees', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteEmployee()" title="{{'Delete this employee' | translate}}" *hasPermission="{ id: 'office_employees', accessLevel: 'DELETE' }"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <md-list>
-    <h3 md-subheader translate>Assigned office</h3>
-    <md-list-item>
-      <md-icon md-list-avatar>store</md-icon>
-      <h3 md-line *ngIf="employee.assignedOffice">{{employee.assignedOffice}}</h3>
-      <h3 md-line *ngIf="!employee.assignedOffice" translate>No office assigned</h3>
-    </md-list-item>
-    <h3 md-subheader translate>Assigned role</h3>
-    <md-list-item>
-      <md-icon md-list-avatar>lock</md-icon>
-      <h3 md-line>{{user.role}}</h3>
-    </md-list-item>
-    <h3 md-subheader translate>Contact Information</h3>
-    <md-list-item [ngSwitch]="detail.type" *ngFor="let detail of employee.contactDetails">
-      <md-icon *ngSwitchCase="'EMAIL'" md-list-avatar>email</md-icon>
-      <md-icon *ngSwitchCase="'PHONE'" md-list-avatar>phone</md-icon>
-      <md-icon *ngSwitchCase="'MOBILE'" md-list-avatar>smartphone</md-icon>
-      <h3 md-line>{{detail.value}}</h3>
-    </md-list-item>
-    <md-list-item *ngIf="!employee.contactDetails.length">
-      <h3 md-line translate>No contact details available</h3>
-    </md-list-item>
-  </md-list>
+  <mat-list>
+    <h3 mat-subheader translate>Assigned office</h3>
+    <mat-list-item>
+      <mat-icon matListAvatar>store</mat-icon>
+      <h3 matLine *ngIf="employee.assignedOffice">{{employee.assignedOffice}}</h3>
+      <h3 matLine *ngIf="!employee.assignedOffice" translate>No office assigned</h3>
+    </mat-list-item>
+    <h3 mat-subheader translate>Assigned role</h3>
+    <mat-list-item>
+      <mat-icon matListAvatar>lock</mat-icon>
+      <h3 matLine>{{user.role}}</h3>
+    </mat-list-item>
+    <h3 mat-subheader translate>Contact Information</h3>
+    <mat-list-item [ngSwitch]="detail.type" *ngFor="let detail of employee.contactDetails">
+      <mat-icon *ngSwitchCase="'EMAIL'" matListAvatar>email</mat-icon>
+      <mat-icon *ngSwitchCase="'PHONE'" matListAvatar>phone</mat-icon>
+      <mat-icon *ngSwitchCase="'MOBILE'" matListAvatar>smartphone</mat-icon>
+      <h3 matLine>{{detail.value}}</h3>
+    </mat-list-item>
+    <mat-list-item *ngIf="!employee.contactDetails.length">
+      <h3 matLine translate>No contact details available</h3>
+    </mat-list-item>
+  </mat-list>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit customer' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'office_employees', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Edit member ' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'office_employees', accessLevel: 'CHANGE'}"></fims-fab-button>

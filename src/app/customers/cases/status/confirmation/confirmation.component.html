@@ -17,7 +17,7 @@
 <fims-layout-card-over title="{{ 'Confirm action' | translate }}">
   <fims-case-command-confirmation-form
     [fimsCase]="fimsCase$ | async"
-    [costComponents]="costComponents$ | async"
+    [fees]="fees$ | async"
     [action]="(params$ | async)?.action"
     (onExecuteCommand)="executeCommand($event)"
     (onCancel)="cancel()">

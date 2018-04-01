@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Teller} from '../../../../services/teller/domain/teller.model';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../../common/validator/validators';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {accountExists} from '../../../../common/validator/account-exists.validator';
@@ -51,28 +51,29 @@ export class OfficeTellerFormComponent extends FormComponent<Teller> {
   prepareForm(teller: Teller): void {
     this.form = this.formBuilder.group({
       code: [teller.code, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-      password: [teller.password, [Validators.required, Validators.maxLength(4096)]],
-      cashdrawLimit: [teller.cashdrawLimit, [FimsValidators.minValue(0)]],
+      password: [teller.password, [Validators.required, Validators.minLength(8), Validators.maxLength(4096)]],
+      cashdrawLimit: [teller.cashdrawLimit, [Validators.required, FimsValidators.greaterThanValue(0)]],
       tellerAccountIdentifier: [teller.tellerAccountIdentifier, [Validators.required], accountExists(this.accountService)],
-      vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)]
+      vaultAccountIdentifier: [teller.vaultAccountIdentifier, [Validators.required], accountExists(this.accountService)],
+      chequesReceivableAccount: [teller.chequesReceivableAccount, [Validators.required], accountExists(this.accountService)],
+      cashOverShortAccount: [teller.cashOverShortAccount, [Validators.required], accountExists(this.accountService)],
+      denominationRequired: [teller.denominationRequired]
     });
 
     this.step.open();
   }
 
   save(): void {
-    const teller: Teller = {
+    const teller: Teller = Object.assign({}, this.teller, {
       code: this.form.get('code').value,
       password: this.form.get('password').value,
       cashdrawLimit: this.form.get('cashdrawLimit').value,
       tellerAccountIdentifier: this.form.get('tellerAccountIdentifier').value,
       vaultAccountIdentifier: this.form.get('vaultAccountIdentifier').value,
-      state: this.teller.state,
-      createdBy: this.teller.createdBy,
-      createdOn: this.teller.createdOn,
-      lastModifiedBy: this.teller.lastModifiedBy,
-      lastModifiedOn: this.teller.lastModifiedOn
-    };
+      chequesReceivableAccount: this.form.get('chequesReceivableAccount').value,
+      cashOverShortAccount: this.form.get('cashOverShortAccount').value,
+      denominationRequired: this.form.get('denominationRequired').value
+    });
 
     this.onSave.emit(teller);
   }

@@ -29,13 +29,15 @@ export const CREATE_FAIL = type('[Journal Entry] Create Fail');
 
 export const RESET_FORM = type('[Journal Entry] Reset Form');
 
-export interface SearchPayload{
+export interface SearchPayload {
   startDate: string;
   endDate: string;
+  account?: string;
+  amount?: string;
 }
 
-export interface JournalEntryRoutePayload extends RoutePayload{
-  journalEntry: JournalEntry
+export interface JournalEntryRoutePayload extends RoutePayload {
+  journalEntry: JournalEntry;
 }
 
 export class SearchAction implements Action {
@@ -79,4 +81,4 @@ export type Actions = SearchAction
   | CreateJournalEntryAction
   | CreateJournalEntrySuccessAction
   | CreateJournalEntryFailAction
-  | ResetJournalEntryFormAction
+  | ResetJournalEntryFormAction;

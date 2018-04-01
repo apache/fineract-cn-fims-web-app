@@ -15,12 +15,12 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import * as fromTeller from '../store/index';
 import {TellerStore} from '../store/index';
 import * as fromRoot from '../../store/index';
 import {UNLOCK_DRAWER} from '../store/teller.actions';
 import {Subscription} from 'rxjs/Subscription';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as fromTeller from '../store/index';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -66,7 +66,7 @@ export class TellerAuthComponent implements OnInit, OnDestroy {
         tellerCode,
         password
       }
-    })
+    });
   }
 
 }

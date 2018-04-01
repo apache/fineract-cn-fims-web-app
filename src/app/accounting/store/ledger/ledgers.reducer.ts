@@ -15,9 +15,8 @@
  */
 
 import * as ledger from './ledger.actions';
-import { createSelector } from 'reselect';
+import {createSelector} from 'reselect';
 import {Ledger} from '../../../services/accounting/domain/ledger.model';
-import {ResourceState} from '../../../common/store/resource.reducer';
 import {resourcesToHash} from '../../../common/store/reducer.helper';
 
 export interface State {
@@ -98,7 +97,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         }),
         selectedLedgerId: state.selectedLedgerId,
         loadedAt: state.loadedAt
-      }
+      };
     }
 
     case ledger.UPDATE_SUCCESS: {
@@ -112,7 +111,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         }),
         selectedLedgerId: state.selectedLedgerId,
         loadedAt: state.loadedAt
-      }
+      };
     }
 
     case ledger.CREATE_SUB_LEDGER_SUCCESS: {
@@ -131,7 +130,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         }),
         selectedLedgerId: state.selectedLedgerId,
         loadedAt: state.loadedAt
-      }
+      };
     }
 
     case ledger.DELETE_SUCCESS: {
@@ -144,10 +143,10 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         let ledger = state.entities[id];
 
         // Remove sub ledger from parent ledger
-        if(ledger.identifier === deletedLedger.parentLedgerIdentifier) {
+        if (ledger.identifier === deletedLedger.parentLedgerIdentifier) {
           ledger = Object.assign({}, ledger, {
-            subLedgers: ledger.subLedgers.filter(ledger => ledger.identifier !== deletedLedger.identifier)
-          })
+            subLedgers: ledger.subLedgers.filter(subLedger => subLedger.identifier !== deletedLedger.identifier)
+          });
         }
 
         return Object.assign(entities, {
@@ -168,7 +167,7 @@ export function reducer(state = initialState, action: ledger.Actions): State {
         entities: newEntities,
         loadedAt: newLoadedAt,
         selectedLedgerId: state.selectedLedgerId
-      }
+      };
     }
 
     default: {

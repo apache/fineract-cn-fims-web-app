@@ -23,22 +23,20 @@ export function mapToCase(caseInstance: FimsCase): Case {
   return Object.assign({}, caseInstance, {
     parameters: JSON.stringify(caseInstance.parameters),
     accountAssignments: [
-      { accountIdentifier: caseInstance.depositAccountIdentifier, designator: AccountDesignators.ENTRY }
+      {accountIdentifier: caseInstance.depositAccountIdentifier, designator: AccountDesignators.ENTRY}
     ]
-  })
+  });
 }
 
 export function mapToFimsCase(caseInstance: Case): FimsCase {
   const entryDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.ENTRY);
-  const customerLoanDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.CUSTOMER_LOAN);
-  const loansPayableDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.LOANS_PAYABLE);
+  const customerLoanDesignator = findAccountDesignator(caseInstance.accountAssignments, AccountDesignators.CUSTOMER_LOAN_PRINCIPAL);
 
   return Object.assign({}, caseInstance, {
     parameters: JSON.parse(caseInstance.parameters),
     depositAccountIdentifier: accountIdentifier(entryDesignator),
     customerLoanAccountIdentifier: accountIdentifier(customerLoanDesignator),
-    loansPayableAccountIdentifier: accountIdentifier(loansPayableDesignator),
-  })
+  });
 }
 
 export function mapToFimsCases(caseInstances: Case[]): FimsCase[] {

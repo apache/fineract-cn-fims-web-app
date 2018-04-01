@@ -16,7 +16,7 @@
 
 import {Address} from '../../domain/address/address.model';
 
-export interface Office{
+export interface Office {
   identifier: string;
   parentIdentifier?: string;
   name: string;
@@ -24,4 +24,5 @@ export interface Office{
   address?: Address;
   branches?: Office[];
   tellerIds?: string[];
+  externalReferences?: boolean;
 }

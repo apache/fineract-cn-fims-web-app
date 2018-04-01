@@ -18,7 +18,9 @@ import {type} from '../../../store/util';
 import {Teller} from '../../../services/teller/domain/teller.model';
 import {Action} from '@ngrx/store';
 import {
-  CreateResourceSuccessPayload, LoadResourcePayload, SelectResourcePayload,
+  CreateResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
   UpdateResourceSuccessPayload
 } from '../../../common/store/resource.reducer';
 import {RoutePayload} from '../../../common/store/route-payload';

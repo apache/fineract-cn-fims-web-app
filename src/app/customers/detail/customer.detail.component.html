@@ -18,72 +18,93 @@
   <fims-layout-card-over-header-menu>
     <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchCustomer($event)" [alwaysVisible]="false"></td-search-box>
   </fims-layout-card-over-header-menu>
-  <td-message *ngIf="!isCustomerActive" label="{{'Customer not active' | translate }}"
-              sublabel="{{'You can activate the customer under tasks' | translate }}"
+  <td-message *ngIf="!isCustomerActive" label="{{'Member not active' | translate }}"
+              sublabel="{{'You can activate the member under tasks' | translate }}"
               color="warn" icon="error">
-    <button td-message-actions md-button (click)="goToTasks()"
+    <button td-message-actions mat-button (click)="goToTasks()"
             *hasPermission="{ id: 'customer_customers', accessLevel: 'CHANGE'}" translate>GO TO TASKS
     </button>
   </td-message>
   <fims-two-column-layout>
     <ng-container left>
       <fims-portrait (onClick)="changePortrait()" [tooltip]="'Change portrait'" [blob]="portrait"></fims-portrait>
-      <md-nav-list>
-        <h3 md-subheader translate>Financial products</h3>
-        <a md-list-item [routerLink]="['loans']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'READ'}">
-          <md-icon md-list-avatar>credit_card</md-icon>
-          <h3 md-line translate>Loan accounts</h3>
-          <p md-line translate>Manage loan accounts</p>
+      <mat-nav-list>
+        <h3 mat-subheader translate>Financial products</h3>
+        <a mat-list-item [routerLink]="['loans']" *hasPermission="{ id: 'portfolio_cases', accessLevel: 'READ'}">
+          <mat-icon matListAvatar>credit_card</mat-icon>
+          <h3 matLine translate>Loan accounts</h3>
+          <p matLine translate>Manage loan accounts</p>
         </a>
-        <a md-list-item [routerLink]="['deposits']" *hasPermission="{ id: 'deposit_instances', accessLevel: 'READ'}">
-          <md-icon md-list-avatar>attach_money</md-icon>
-          <h3 md-line translate>Deposit accounts</h3>
-          <p md-line translate>Manage deposit accounts</p>
+        <a mat-list-item [routerLink]="['deposits']" *hasPermission="{ id: 'deposit_instances', accessLevel: 'READ'}">
+          <mat-icon matListAvatar>attach_money</mat-icon>
+          <h3 matLine translate>Deposit accounts</h3>
+          <p matLine translate>Manage deposit accounts</p>
         </a>
-        <md-divider></md-divider>
-        <h3 md-subheader translate>Management</h3>
-        <a md-list-item [routerLink]="['identifications']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'READ'}">
-          <md-icon md-list-avatar>perm_identity</md-icon>
-          <h3 md-line translate>Identification cards</h3>
-          <p md-line translate>View identification cards</p>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader translate>Management</h3>
+        <a mat-list-item [routerLink]="['identifications']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'READ'}">
+          <mat-icon matListAvatar>perm_identity</mat-icon>
+          <h3 matLine translate>Identification cards</h3>
+          <p matLine translate>View identification cards</p>
         </a>
-        <a md-list-item [routerLink]="['tasks']">
-          <md-icon md-list-avatar>playlist_add_check</md-icon>
-          <h3 md-line translate>Tasks</h3>
-          <p md-line translate>Change the status of the customer</p>
+        <a mat-list-item [routerLink]="['tasks']">
+          <mat-icon matListAvatar>playlist_add_check</mat-icon>
+          <h3 matLine translate>Tasks</h3>
+          <p matLine translate>Change the status of the member </p>
         </a>
-        <a md-list-item [routerLink]="['activities']">
-          <md-icon md-list-avatar>event</md-icon>
-          <h3 md-line translate>Activities</h3>
-          <p md-line translate>Recent activities</p>
+        <a mat-list-item [routerLink]="['activities']">
+          <mat-icon matListAvatar>event</mat-icon>
+          <h3 matLine translate>Activities</h3>
+          <p matLine translate>Recent activities</p>
         </a>
-      </md-nav-list>
+        <a mat-list-item [routerLink]="['payroll']" *hasPermission="{ id: 'payroll_configuration', accessLevel: 'READ'}">
+          <mat-icon matListAvatar>receipt</mat-icon>
+          <h3 matLine translate>Payroll</h3>
+          <p matLine translate>Manage payroll distributions</p>
+        </a>
+      </mat-nav-list>
     </ng-container>
-    <md-list right>
-      <h3 md-subheader translate>Current status</h3>
+    <mat-list right>
+      <h3 mat-subheader translate>Current status</h3>
       <fims-state-display [state]="customer.currentState"></fims-state-display>
-      <h3 md-subheader translate>Address</h3>
-      <md-list-item>
-        <md-icon md-list-avatar>location_on</md-icon>
-        <h3 md-line>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
+      <h3 mat-subheader translate>Address</h3>
+      <mat-list-item>
+        <mat-icon matListAvatar>location_on</mat-icon>
+        <h3 matLine>{{customer.address?.street}}, {{customer.address?.city}}, {{customer.address?.postalCode}},
           {{customer.address?.country}}</h3>
-      </md-list-item>
-      <h3 md-subheader translate>Contact information</h3>
-      <md-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
-        <md-icon *ngSwitchCase="'EMAIL'" md-list-avatar>email</md-icon>
-        <md-icon *ngSwitchCase="'PHONE'" md-list-avatar>phone</md-icon>
-        <md-icon *ngSwitchCase="'MOBILE'" md-list-avatar>smartphone</md-icon>
-        <h3 md-line>{{detail.value}}</h3>
-      </md-list-item>
-      <md-list-item *ngIf="!customer.contactDetails?.length">
-        <h3 md-line translate>No contact details available</h3>
-      </md-list-item>
-      <h3 md-subheader translate>Birthday</h3>
-      <md-list-item>
-        <md-icon md-list-avatar>cake</md-icon>
-        <h3 md-line>{{customer.dateOfBirth?.year}}-{{customer.dateOfBirth?.month}}-{{customer.dateOfBirth?.day}}</h3>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+      <h3 mat-subheader translate>Contact information</h3>
+      <mat-list-item [ngSwitch]="detail.type" *ngFor="let detail of customer.contactDetails">
+        <mat-icon *ngSwitchCase="'EMAIL'" matListAvatar>email</mat-icon>
+        <mat-icon *ngSwitchCase="'PHONE'" matListAvatar>phone</mat-icon>
+        <mat-icon *ngSwitchCase="'MOBILE'" matListAvatar>smartphone</mat-icon>
+        <h3 matLine>{{detail.value}}</h3>
+      </mat-list-item>
+      <mat-list-item *ngIf="!customer.contactDetails?.length">
+        <h3 matLine translate>No contact details available</h3>
+      </mat-list-item>
+      <h3 mat-subheader translate>Birthday</h3>
+      <mat-list-item>
+        <mat-icon matListAvatar>cake</mat-icon>
+        <h3 matLine>{{customer.dateOfBirth | displayFimsDate}}</h3>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Application date</h3>
+        <h3 matLine>{{customer.applicationDate | date:'shortDate'}}</h3>
+      </mat-list-item>
+      <fims-customer-custom-values
+        [catalog]="catalog$ | async"
+        [values]="customer.customValues">
+      </fims-customer-custom-values>
+      <mat-list-item>
+        <h3 matLine translate>Created by</h3>
+        <p matLine>{{customer.createdBy}} - {{customer.createdOn | date:'medium'}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Last modified by</h3>
+        <p matLine>{{customer.lastModifiedBy}} - {{customer.lastModifiedOn | date:'medium'}}</p>
+      </mat-list-item>
+    </mat-list>
   </fims-two-column-layout>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit customer' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>
+<fims-fab-button title="{{'Edit member ' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>

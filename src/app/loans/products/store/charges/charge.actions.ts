@@ -20,8 +20,11 @@ import {type} from '../../../../store/util';
 import {RoutePayload} from '../../../../common/store/route-payload';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../../../common/store/resource.reducer';
 
 export const LOAD_ALL = type('[Product Charge] Load All');
@@ -44,7 +47,7 @@ export const DELETE_FAIL = type('[Product Charge] Delete Fail');
 
 export const RESET_FORM = type('[Product Charge] Reset Form');
 
-export interface ChargeRoutePayload extends RoutePayload{
+export interface ChargeRoutePayload extends RoutePayload {
   productId: string;
   charge: ChargeDefinition;
 }

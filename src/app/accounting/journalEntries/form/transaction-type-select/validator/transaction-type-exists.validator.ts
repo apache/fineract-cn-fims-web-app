@@ -14,33 +14,27 @@
  * limitations under the License.
  */
 
-import {AsyncValidatorFn, AbstractControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
-import {FetchRequest} from '../../../../../services/domain/paging/fetch-request.model';
+import {isEmptyInputValue, isString} from '../../../../../common/validator/validators';
+
+const invalid = Observable.of({
+  invalidTransactionType: true
+});
 
 export function transactionTypeExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
-    if (!control.dirty || !control.value || control.value.length === 0) return Observable.of(null);
+    if (!control.dirty || isEmptyInputValue(control.value)) {
+      return Observable.of(null);
+    }
 
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 1
-      },
-      searchTerm: control.value
-    };
+    if (isString(control.value) && control.value.trim().length === 0) {
+      return invalid;
+    }
 
-    return Observable.of(fetchRequest)
-      .switchMap(fetchRequest => accountingService.fetchTransactionTypes(fetchRequest))
-      .map(transactionTypePage => transactionTypePage.transactionTypes)
-      .map(transactionTypes => {
-        if(transactionTypes.length === 1 && transactionTypes[0].code === control.value){
-          return null;
-        }
-        return {
-          invalidTransactionType: true
-        }
-      });
-  }
+    return accountingService.findTransactionType(control.value, true)
+      .map(account => null)
+      .catch(() => invalid);
+  };
 }

@@ -19,4 +19,4 @@ export interface Permission {
   allowedOperations: AllowedOperation[];
 }
 
-export type AllowedOperation = 'READ' | 'CHANGE' | 'DELETE'
+export type AllowedOperation = 'READ' | 'CHANGE' | 'DELETE';

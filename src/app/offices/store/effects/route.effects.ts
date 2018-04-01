@@ -15,25 +15,23 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
 import {Router} from '@angular/router';
-import {CreateOfficeSuccessAction} from '../office.actions';
 
 @Injectable()
 export class OfficeRouteEffects {
-  constructor(private actions$: Actions, private router: Router) { }
 
   @Effect({ dispatch: false })
   createOfficeSuccess$: Observable<Action> = this.actions$
     .ofType(officeActions.CREATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => {
-      if(payload.resource.parentIdentifier){
+      if (payload.resource.parentIdentifier) {
         this.router.navigate(['../detail', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute });
-      }else{
+      } else {
         this.router.navigate(['../detail', payload.resource.identifier], { relativeTo: payload.activatedRoute });
       }
     });
@@ -49,10 +47,12 @@ export class OfficeRouteEffects {
     .ofType(officeActions.DELETE_SUCCESS)
     .map((action) => action.payload)
     .do(payload => {
-      if(payload.resource.parentIdentifier){
-        this.router.navigate(['../../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute})
-      }else{
-        this.router.navigate(['../../'], { relativeTo: payload.activatedRoute})
+      if (payload.resource.parentIdentifier) {
+        this.router.navigate(['../../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute});
+      } else {
+        this.router.navigate(['../../'], { relativeTo: payload.activatedRoute});
       }
     });
+
+  constructor(private actions$: Actions, private router: Router) { }
 }

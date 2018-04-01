@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-import {OnInit, Component} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {AccountCommand} from '../../services/accounting/domain/account-command.model';
 
 @Component({
   templateUrl: './activity.component.html'
 })
-export class AccountActivityComponent implements OnInit{
+export class AccountActivityComponent implements OnInit {
 
   commands: AccountCommand[];
 
-  constructor(private route: ActivatedRoute){}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(( data: { commands: AccountCommand[]}) => this.commands = data.commands );

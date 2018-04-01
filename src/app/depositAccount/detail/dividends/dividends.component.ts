@@ -19,12 +19,12 @@ import * as fromDepositAccounts from '../../store/index';
 import {DepositAccountStore} from '../../store/index';
 import {Observable} from 'rxjs/Observable';
 import {TableData} from '../../../common/data-table/data-table.component';
-import {DatePipe} from '@angular/common';
 import {LOAD_ALL} from '../../store/dividends/dividend.actions';
 import {Subscription} from 'rxjs/Subscription';
+import {DisplayFimsDate} from '../../../common/date/fims-date.pipe';
 
 @Component({
-  providers: [DatePipe],
+  providers: [DisplayFimsDate],
   templateUrl: './dividends.component.html'
 })
 export class DepositProductDividendsComponent implements OnInit, OnDestroy {
@@ -36,11 +36,11 @@ export class DepositProductDividendsComponent implements OnInit, OnDestroy {
   dividendData$: Observable<TableData>;
 
   columns: any[] = [
-    { name: 'dueDate', label: 'Due date', format: value => this.datePipe.transform(value, 'shortDate') },
+    { name: 'dueDate', label: 'Due date', format: value => this.displayFimsDate.transform(value) },
     { name: 'dividendRate', label: 'Dividend rate' }
   ];
 
-  constructor(private store: DepositAccountStore, private datePipe: DatePipe) {}
+  constructor(private store: DepositAccountStore, private displayFimsDate: DisplayFimsDate) {}
 
   ngOnInit() {
     this.productSubscription = this.store.select(fromDepositAccounts.getSelectedProduct)
@@ -57,7 +57,7 @@ export class DepositProductDividendsComponent implements OnInit, OnDestroy {
     this.store.dispatch({
       type: LOAD_ALL,
       payload: this.productIdentifer
-    })
+    });
   }
 
   ngOnDestroy(): void {

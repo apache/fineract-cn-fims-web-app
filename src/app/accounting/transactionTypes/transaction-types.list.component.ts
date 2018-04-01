@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
 import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
@@ -58,11 +58,11 @@ export class TransactionTypeListComponent implements OnInit {
   }
 
   rowSelect(transactionType: TransactionType): void {
-    this.router.navigate(['edit', transactionType.code], { relativeTo: this.route })
+    this.router.navigate(['edit', transactionType.code], { relativeTo: this.route });
   }
 
   fetchTransactionTypes(fetchRequest?: TableFetchRequest): void {
-    if(fetchRequest) {
+    if (fetchRequest) {
       this.lastFetchRequest = fetchRequest;
     }
 

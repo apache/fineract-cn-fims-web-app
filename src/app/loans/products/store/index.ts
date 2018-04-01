@@ -21,6 +21,10 @@ import {createReducer} from '../../../store/index';
 import * as fromProducts from './products.reducer';
 import * as fromProductTasks from './tasks/tasks.reducer';
 import * as fromProductCharges from './charges/charges.reducer';
+import * as fromProductChargeRanges from './ranges/ranges.reducer';
+import * as fromProductLossProvision from './lossProvision/loss-provision.reducer';
+import {getLossProvisionConfiguration, getLossProvisionConfigurationLoadedAt} from './lossProvision/loss-provision.reducer';
+
 import {
   createResourceReducer,
   getResourceAll,
@@ -45,6 +49,8 @@ export interface State extends fromRoot.State {
   productTaskForm: FormState;
   productCharges: ResourceState;
   productChargeForm: FormState;
+  productChargeRanges: ResourceState;
+  productLossProvision: fromProductLossProvision.State;
 }
 
 const reducers = {
@@ -54,7 +60,9 @@ const reducers = {
   productTasks: createResourceReducer('Product Task', fromProductTasks.reducer),
   productTaskForm: createFormReducer('Product Task'),
   productCharges: createResourceReducer('Product Charge', fromProductCharges.reducer),
-  productChargeForm: createFormReducer('Product Charge')
+  productChargeForm: createFormReducer('Product Charge'),
+  productChargeRanges: createResourceReducer('Product Charge Range', fromProductChargeRanges.reducer),
+  productLossProvision: fromProductLossProvision.reducer
 };
 
 export const portfolioModuleReducer: ActionReducer<State> = createReducer(reducers);
@@ -86,7 +94,8 @@ export const getSearchProducts = createSelector(getProductSearchState, getSearch
 export const getProductSearchTotalElements = createSelector(getProductSearchState, getSearchTotalElements);
 export const getProductSearchTotalPages = createSelector(getProductSearchState, getSearchTotalPages);
 
-export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements, (products, totalPages, totalElements) => {
+export const getProductSearchResults = createSelector(getSearchProducts, getProductSearchTotalPages, getProductSearchTotalElements,
+  (products, totalPages, totalElements) => {
   return {
     products: products,
     totalPages: totalPages,
@@ -116,3 +125,25 @@ export const getProductChargesLoadedAt = createSelector(getProductChargesState, 
 export const getSelectedProductCharge = createSelector(getProductChargesState, getResourceSelected);
 
 export const getAllProductChargeEntities = createSelector(getProductChargesState, getResourceAll);
+
+/**
+ * Product Charge Range Selectors
+ */
+
+export const getProductChargeRangesState = (state: State) => state.productChargeRanges;
+
+export const getProductChargeRangesLoadedAt = createSelector(getProductChargeRangesState, getResourceLoadedAt);
+export const getSelectedProductChargeRange = createSelector(getProductChargeRangesState, getResourceSelected);
+
+export const getAllProductChargeRangeEntities = createSelector(getProductChargeRangesState, getResourceAll);
+
+/**
+ * Product Loss Configuration Selectors
+ */
+
+export const getProductLossProvisionState = (state: State) => state.productLossProvision;
+
+export const getProductLossProvisionConfigurationLoadedAt = createSelector(
+  getProductLossProvisionState, getLossProvisionConfigurationLoadedAt
+);
+export const getProductLossProvisionConfiguration = createSelector(getProductLossProvisionState, getLossProvisionConfiguration);

@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-export type WorkflowAction = 'OPEN' | 'DENY' | 'APPROVE' | 'ACCEPT_PAYMENT' | 'DISBURSE' | 'MARK_LATE' | 'APPLY_INTEREST' | 'WRITE_OFF' | 'CLOSE' | 'RECOVER';
+export type WorkflowAction =
+  'OPEN'
+  | 'DENY'
+  | 'APPROVE'
+  | 'ACCEPT_PAYMENT'
+  | 'DISBURSE'
+  | 'MARK_LATE'
+  | 'APPLY_INTEREST'
+  | 'WRITE_OFF'
+  | 'CLOSE'
+  | 'RECOVER';

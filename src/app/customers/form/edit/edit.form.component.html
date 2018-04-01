@@ -14,11 +14,12 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit customer' | translate}}">
+<fims-layout-card-over title="{{'Edit member ' | translate}}">
   <fims-customer-form-component #form
                                   (onSave)="onSave($event)"
                                   (onCancel)="onCancel()"
-                                  [customer]="customer"
+                                  [catalog]="catalog$ | async"
+                                  [customer]="customer$ | async"
                                   [editMode]="true">
   </fims-customer-form-component>
 </fims-layout-card-over>

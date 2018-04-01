@@ -1,0 +1,64 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #detailsStep label="{{'Task details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+    <form [formGroup]="form" layout="column">
+      <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+      <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+      <mat-form-field layout-margin flex>
+        <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+        <mat-error *ngIf="form.get('description').hasError('required')" translate>
+          Required
+        </mat-error>
+      </mat-form-field>
+      <mat-radio-group formControlName="type">
+        <mat-radio-button *ngFor="let type of typeOptions" [value]="type.type" layout-margin>
+          {{type.label}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <mat-checkbox formControlName="mandatory" layout-margin translate>
+        Mandatory
+      </mat-checkbox>
+      <mat-checkbox formControlName="predefined" layout-margin translate>
+        Automatically assign this task when member is created
+      </mat-checkbox>
+      <div layout-gt-xs="column" layout-margin formArrayName="commands">
+        <h4 translate>Task needs to be executed, before member </h4>
+        <div *ngFor="let test of commands; let i=index" layout="row" [formGroupName]="i">
+          <mat-form-field>
+            <mat-select formControlName="command">
+              <mat-option *ngFor="let commandOption of commandOptions" [value]="commandOption.command">
+                {{commandOption.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-button (click)="removeCommand(i)" [disabled]="i === 0">{{'Remove' | translate}}</button>
+        </div>
+        <button mat-button (click)="addCommand()">{{'Add trigger' | translate}}</button>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <fims-form-final-action
+        [resourceName]="'TASK'"
+        [editMode]="editMode"
+        [disabled]="!form.valid"
+        (onCancel)="cancel()"
+        (onSave)="save()">
+      </fims-form-final-action>
+    </ng-template>
+  </td-step>
+</td-steps>

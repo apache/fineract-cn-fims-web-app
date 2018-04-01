@@ -18,13 +18,13 @@
   <td-step #transactionStep label="{{'Transaction' | translate}}"
            [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'" [disabled]="transactionCreated">
     <form [formGroup]="form" layout="column">
-      <div layout="row" class="pad-top">
-        <md-select formControlName="productInstance" layout-margin placeholder="{{ 'Select account' | translate }}">
-          <md-option *ngFor="let instance of productInstances" [value]="instance">
+      <mat-form-field layout-margin>
+        <mat-select formControlName="productInstance" placeholder="{{ 'Select account' | translate }}">
+          <mat-option *ngFor="let instance of productInstances" [value]="instance">
             {{instance.accountIdentifier}}({{instance.productIdentifier}})
-          </md-option>
-        </md-select>
-      </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <fims-account-select title="{{'Target account' | translate}}" formControlName="targetAccountIdentifier" *ngIf="enableTargetAccount">
         <ng-container *ngIf="!form.get('targetAccountIdentifier').pristine && form.get('targetAccountIdentifier').hasError('required')" translate>
           Required
@@ -33,25 +33,14 @@
           Invalid account
         </ng-container>
       </fims-account-select>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="number" placeholder="{{'Amount' | translate}}" formControlName="amount" tdAutoTrim/>
-          <md-error *ngIf="form.get('amount').hasError('required')" translate>Required</md-error>
-          <md-error *ngIf="form.get('amount').hasError('minValue')">
-            {{ 'Value must be greater than or equals' | translate:{ value: form.get('amount').getError('minValue').value} }}
-          </md-error>
-          <md-error *ngIf="form.get('amount').hasError('maxValue')">
-            {{ 'Value must be smaller than or equals' | translate:{ value: form.get('amount').getError('maxValue').value} }}
-          </md-error>
-        </md-input-container>
-      </div>
+      <fims-text-input type="number" [form]="form" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
       <span *ngIf="checkCashdrawLimit" class="text-md" translate>Cashdraw limit is: {{cashdrawLimit | number:numberFormat}}</span>
       <span *ngIf="checkBalanceLimit" class="text-md" translate>Balance limit is: {{balanceLimit | number:numberFormat}}</span>
     </form>
     <ng-template td-step-actions>
-      <button md-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
       <span flex></span>
-      <button md-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
     </ng-template>
   </td-step>
   <td-step #confirmationStep label="{{'Confirmation' | translate}}">
@@ -65,7 +54,7 @@
             [transactionCosts]="transactionCosts">
           </fims-teller-transaction-cost>
           <div layout="row" layout-margin>
-            <md-checkbox [(ngModel)]="chargesIncluded" translate>Charges are payed in cash</md-checkbox>
+            <mat-checkbox [(ngModel)]="chargesIncluded" [disabled]="chargesIncludedDisabled" translate>Fees are paid in cash</mat-checkbox>
           </div>
         </div>
       </div>
@@ -73,9 +62,9 @@
   </td-step>
   <td-step label="{{'Final step' | translate}}" [state]="'complete'">
     <ng-template td-step-summary>
-      <button md-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
+      <button mat-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
       <span flex></span>
-      <button md-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
+      <button mat-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
     </ng-template>
   </td-step>
 </td-steps>

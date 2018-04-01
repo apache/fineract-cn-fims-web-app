@@ -17,48 +17,44 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {CREATE, SelectAction, UPDATE} from '../../store/charges/charge.actions';
+import {Subscription} from 'rxjs/Subscription';
+import {UPDATE} from '../../store/charges/charge.actions';
 import * as fromPortfolio from '../../store';
 import {PortfolioStore} from '../../store/index';
 import {FimsProduct} from '../../store/model/fims-product.model';
-import {RESET_FORM} from '../../store/product.actions';
+import {Observable} from 'rxjs/Observable';
+import {RangeActions} from '../../store/ranges/range.actions';
+import {FimsRange} from '../../../../services/portfolio/domain/range-model';
 
 @Component({
   templateUrl: './edit.component.html'
 })
-export class ProductChargeEditFormComponent implements OnInit, OnDestroy{
-
-  private actionsSubscription: Subscription;
+export class ProductChargeEditFormComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
-  private chargeSubscription: Subscription;
-
   private product: FimsProduct;
 
-  charge: ChargeDefinition;
+  charge$: Observable<ChargeDefinition>;
+
+  ranges$: Observable<FimsRange[]>;
 
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['chargeId']))
-      .subscribe(this.portfolioStore);
-
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
       .filter(product => !!product)
+      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
       .subscribe(product => this.product = product);
 
-    this.chargeSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
-      .filter(charge => !!charge)
-      .subscribe(charge => this.charge = charge);
+    this.charge$ = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
+      .filter(charge => !!charge);
+
+    this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
   }
 
   ngOnDestroy(): void {
-    this.actionsSubscription.unsubscribe();
     this.productSubscription.unsubscribe();
-    this.chargeSubscription.unsubscribe();
   }
 
   onSave(charge: ChargeDefinition): void {
@@ -69,11 +65,11 @@ export class ProductChargeEditFormComponent implements OnInit, OnDestroy{
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

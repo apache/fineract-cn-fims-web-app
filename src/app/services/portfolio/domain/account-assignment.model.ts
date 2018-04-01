@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export interface AccountAssignment{
+export interface AccountAssignment {
   designator: string;
   accountIdentifier?: string;
   ledgerIdentifier?: string;

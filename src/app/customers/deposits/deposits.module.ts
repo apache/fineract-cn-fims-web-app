@@ -21,15 +21,15 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdOptionModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdToolbarModule
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatToolbarModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentCommonModule, CovalentStepsModule} from '@covalent/core';
 import {DepositCreateComponent} from './form/create.component';
@@ -46,6 +46,8 @@ import {DepositIndexComponent} from './detail/deposit.index.component';
 import {DepositDetailComponent} from './detail/deposit.detail.component';
 import {DepositInstanceExistsGuard} from './deposit-instance-exists.guard';
 import {DepositEditComponent} from './form/edit.component';
+import {IssueChequesFormComponent} from './detail/cheques/form.component';
+import {IssueChequeComponent} from './detail/cheques/cheques.component';
 
 @NgModule({
   imports: [
@@ -54,15 +56,15 @@ import {DepositEditComponent} from './form/edit.component';
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    MdIconModule,
-    MdListModule,
-    MdToolbarModule,
-    MdInputModule,
-    MdButtonModule,
-    MdOptionModule,
-    MdSelectModule,
-    MdRadioModule,
-    MdCardModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
     CovalentCommonModule,
     CovalentStepsModule,
     CovalentChipsModule,
@@ -77,7 +79,9 @@ import {DepositEditComponent} from './form/edit.component';
     DepositIndexComponent,
     DepositCreateComponent,
     DepositEditComponent,
-    DepositDetailComponent
+    DepositDetailComponent,
+    IssueChequeComponent,
+    IssueChequesFormComponent,
   ],
   providers: [
     DepositInstanceExistsGuard,

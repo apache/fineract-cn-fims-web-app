@@ -17,7 +17,6 @@
 import {Type} from '../type.model';
 import {Currency} from './currency.model';
 import {Charge} from './charge.model';
-import {Action} from './action.model';
 import {Term} from './term.model';
 
 export interface ProductDefinition {

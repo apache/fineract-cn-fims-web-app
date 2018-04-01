@@ -22,7 +22,7 @@ import {Address} from '../../domain/address/address.model';
 import {ContactDetail} from '../../domain/contact/contact-detail.model';
 import {Value} from '../../catalog/domain/value.model';
 
-export interface Customer{
+export interface Customer {
   identifier: string;
   type: CustomerType;
   givenName: string;
@@ -37,6 +37,11 @@ export interface Customer{
   address: Address;
   contactDetails?: ContactDetail[];
   currentState?: CustomerState;
+  applicationDate?: string;
   customValues: Value[];
   member: boolean;
+  createdBy?: string;
+  createdOn?: string;
+  lastModifiedBy?: string;
+  lastModifiedOn?: string;
 }

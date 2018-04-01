@@ -20,8 +20,11 @@ import {ProductDefinition} from '../../services/depositAccount/domain/definition
 import {Action} from '@ngrx/store';
 import {SearchResult} from '../../common/store/search.reducer';
 import {
-  CreateResourceSuccessPayload, DeleteResourceSuccessPayload, LoadResourcePayload,
-  SelectResourcePayload, UpdateResourceSuccessPayload
+  CreateResourceSuccessPayload,
+  DeleteResourceSuccessPayload,
+  LoadResourcePayload,
+  SelectResourcePayload,
+  UpdateResourceSuccessPayload
 } from '../../common/store/resource.reducer';
 import {ProductDefinitionCommand} from '../../services/depositAccount/domain/definition/product-definition-command.model';
 
@@ -50,7 +53,7 @@ export const EXECUTE_COMMAND_SUCCESS = type('[Deposit Product Definition] Execut
 export const EXECUTE_COMMAND_FAIL = type('[Deposit Product Definition] Execute Command Fail');
 
 export interface ProductDefinitionRoutePayload extends RoutePayload {
-  productDefinition: ProductDefinition
+  productDefinition: ProductDefinition;
 }
 
 export interface ExecuteCommandPayload extends RoutePayload {

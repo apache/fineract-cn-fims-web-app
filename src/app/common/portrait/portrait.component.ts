@@ -31,7 +31,7 @@ export class PortraitComponent implements OnDestroy {
   private objectUrl: string;
 
   @Input() set blob(blob: Blob) {
-    if(blob) {
+    if (blob) {
       this.objectUrl = URL.createObjectURL(blob);
     } else {
       this.objectUrl = this.defaultUrl;
@@ -47,7 +47,7 @@ export class PortraitComponent implements OnDestroy {
   constructor(private domSanitizer: DomSanitizer) {}
 
   ngOnDestroy(): void {
-    if(this.objectUrl) {
+    if (this.objectUrl) {
       URL.revokeObjectURL(this.objectUrl);
     }
   }

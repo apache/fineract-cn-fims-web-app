@@ -17,30 +17,25 @@
 <fims-layout-card-over title="{{'Tasks' | translate}}" [navigateBackTo]="['../']">
   <div layout="row" layout-align="start start" layout-margin>
     <div layout="column" flex="100">
-      <div layout="row" layout-align="start start" *ngFor="let command of statusCommands">
-        <ng-container *ngIf="command.preStates.indexOf(customer.currentState) > -1">
-          <div layout="column" flex="100">
-            <h5 translate [translateParams]="{ value: command.action }">Please verify the following tasks before you can action this customer</h5>
-            <md-list>
-              <md-list-item *ngFor="let task of command.tasks">
-                <md-icon md-list-avatar>playlist_add_check</md-icon>
-                <h3 md-line>{{task.name}}</h3>
-                <h4 md-line>{{task.description}}</h4>
-                <h4 md-line><span translate>Mandatory:</span>{{task.mandatory}}</h4>
-                <md-checkbox labelPosition="after" title="{{'Execute task' | translate}}" (click)="executeTask(task.identifier)"></md-checkbox>
-              </md-list-item>
-            </md-list>
-            <div layout="row" layout-align="start center">
-              <md-input-container layout-margin flex>
-                <textarea mdInput placeholder="{{'Enter your comment here...' | translate}}" [(ngModel)]="command.comment"></textarea>
-              </md-input-container>
-              <button md-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(command)">{{command.action}}</button>
-            </div>
+      <div layout="row" layout-align="start start" *ngFor="let step of processSteps$ | async">
+        <div layout="column" flex="100">
+          <h5 translate [translateParams]="{ value: step.command.action }">Please verify the following tasks before you
+            can action this member </h5>
+          <fims-customer-task *ngFor="let task of step.taskDefinitions"
+            [task]="task"
+            (onSelectTask)="executeTask($event)">
+          </fims-customer-task>
+          <div layout="row" layout-align="start center">
+            <mat-form-field layout-margin flex>
+              <textarea matInput placeholder="{{'Enter your comment here...' | translate}}"
+                        [(ngModel)]="step.command.comment"></textarea>
+            </mat-form-field>
+            <button mat-raised-button style="margin-left: 10px;" color="accent" (click)="executeCommand(step.command)">
+              {{step.command.action}}
+            </button>
           </div>
-        </ng-container>
+        </div>
       </div>
     </div>
   </div>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Create new task for customer' | translate}}" icon="add" [link]="['create']" [permission]="{ id: 'customer_customers', accessLevel: 'CHANGE'}"></fims-fab-button>
-

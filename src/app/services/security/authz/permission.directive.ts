@@ -13,44 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Directive, Input, ViewContainerRef, TemplateRef, OnInit, OnDestroy} from '@angular/core';
+import {Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[hasPermission]'
 })
-export class PermissionDirective implements OnInit, OnDestroy{
+export class PermissionDirective implements OnInit, OnDestroy {
 
   private permissionSubscription: Subscription;
 
-  @Input('hasPermission') permission: FimsPermission;
+  @Input('hasPermission') hasPermission: FimsPermission;
 
-  constructor(private store: Store<fromRoot.State>, private viewContainer: ViewContainerRef, private template: TemplateRef<Object>) {}
+  constructor(private store: Store<fromRoot.State>, private viewContainer: ViewContainerRef, private template: TemplateRef<Object>) {
+  }
 
   ngOnInit(): void {
     this.viewContainer.clear();
 
-    if(!this.permission){
+    if (!this.hasPermission) {
       this.viewContainer.createEmbeddedView(this.template);
       return;
     }
 
     this.permissionSubscription = this.store.select(fromRoot.getPermissions)
-      .map(permissions => permissions.filter(permission => permission.id === this.permission.id && permission.accessLevel === this.permission.accessLevel))
+      .map(permissions => permissions.filter(permission => permission.id === this.hasPermission.id
+        && permission.accessLevel === this.hasPermission.accessLevel
+      ))
       .map(matches => matches.length > 0)
       .subscribe(hasPermission => {
         this.viewContainer.clear();
-        if(hasPermission){
-          this.viewContainer.createEmbeddedView(this.template)
+        if (hasPermission) {
+          this.viewContainer.createEmbeddedView(this.template);
         }
       });
   }
 
   ngOnDestroy(): void {
-    if(this.permissionSubscription) {
+    if (this.permissionSubscription) {
       this.permissionSubscription.unsubscribe();
     }
   }

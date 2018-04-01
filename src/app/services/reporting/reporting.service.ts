@@ -27,18 +27,19 @@ import {buildSearchParams} from '../domain/paging/search-param.builder';
 @Injectable()
 export class ReportingService {
 
-  constructor(private http: HttpClient, @Inject('reportingBaseUrl') private baseUrl: string) {}
+  constructor(private http: HttpClient, @Inject('reportingBaseUrl') private baseUrl: string) {
+  }
 
   fetchCategories(): Observable<string[]> {
-    return this.http.get(`${this.baseUrl}/categories`)
+    return this.http.get(`${this.baseUrl}/categories`);
   }
 
   fetchReportDefinitions(category: string): Observable<ReportDefinition[]> {
-    return this.http.get(`${this.baseUrl}/categories/${category}`)
+    return this.http.get(`${this.baseUrl}/categories/${category}`);
   }
 
   findReportDefinition(category: string, identifier: string): Observable<ReportDefinition> {
-    return this.http.get(`${this.baseUrl}/categories/${category}/definitions/${identifier}`)
+    return this.http.get(`${this.baseUrl}/categories/${category}/definitions/${identifier}`);
   }
 
   generateReport(category: string, identifier: string, reportRequest: ReportRequest, fetchRequest?: FetchRequest): Observable<ReportPage> {
@@ -48,7 +49,7 @@ export class ReportingService {
       search: params
     };
 
-    return this.http.post(`${this.baseUrl}/categories/${category}/reports/${identifier}`, reportRequest, requestOptions)
+    return this.http.post(`${this.baseUrl}/categories/${category}/reports/${identifier}`, reportRequest, requestOptions);
   }
 
 }

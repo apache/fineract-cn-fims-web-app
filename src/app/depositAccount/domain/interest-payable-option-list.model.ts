@@ -18,7 +18,7 @@ import {InterestPayable} from '../../services/depositAccount/domain/interest-pay
 
 export interface InterestPayableOption {
   label: string;
-  type: InterestPayable
+  type: InterestPayable;
 }
 
 export const interestPayableOptionList: InterestPayableOption[] = [

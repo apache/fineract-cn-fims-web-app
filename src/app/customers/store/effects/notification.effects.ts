@@ -15,24 +15,24 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as customerActions from '../customer.actions';
-import {NotificationType, NotificationService} from '../../../services/notification/notification.service';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class CustomerNotificationEffects {
-
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
   @Effect({ dispatch: false })
   createCustomerSuccess$: Observable<Action> = this.actions$
     .ofType(customerActions.CREATE_SUCCESS, customerActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Customer is going to be saved'
+      message: 'Member is going to be saved'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
 

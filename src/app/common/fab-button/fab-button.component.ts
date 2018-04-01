@@ -33,6 +33,8 @@ export class FimsFabButtonComponent implements OnInit {
 
   @Input() permission: FimsPermission;
 
+  @Input() disabled = false;
+
   constructor() {
   }
 

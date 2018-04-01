@@ -13,32 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import * as fromCustomers from '../../store';
-import {Subscription} from 'rxjs';
 import {CustomersStore} from '../../store/index';
 import {UPDATE} from '../../store/customer.actions';
+import {Catalog} from '../../../services/catalog/domain/catalog.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   templateUrl: './edit.form.component.html'
 })
-export class EditCustomerFormComponent implements OnInit, OnDestroy{
+export class EditCustomerFormComponent {
 
-  private customerSubscription: Subscription;
+  customer$: Observable<Customer>;
 
-  customer: Customer;
+  catalog$: Observable<Catalog>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {}
-
-  ngOnInit() {
-    this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
-      .subscribe(customer => this.customer = customer);
-  }
-
-  ngOnDestroy(): void {
-    this.customerSubscription.unsubscribe();
+  constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {
+    this.catalog$ = store.select(fromCustomers.getCustomerCatalog);
+    this.customer$ = store.select(fromCustomers.getSelectedCustomer);
   }
 
   onSave(customer: Customer) {
@@ -52,7 +47,7 @@ export class EditCustomerFormComponent implements OnInit, OnDestroy{
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

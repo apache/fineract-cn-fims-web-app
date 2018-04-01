@@ -17,21 +17,19 @@
 <form [formGroup]="form">
   <div layout-gt-xs="column" layout-margin formArrayName="moratoriums" flex="30">
     <div *ngFor="let moratorium of moratoriums; let i=index" layout="row" [formGroupName]="i">
-      <md-input-container flex="20">
-        <input mdInput type="number" placeholder="{{'Period' | translate}}" formControlName="period" step="any"/>
-      </md-input-container>
-      <md-select formControlName="temporalUnit" layout-margin>
-        <md-option *ngFor="let basis of temporalOptions" [value]="basis.type">
-          {{basis.label}}
-        </md-option>
-      </md-select>
-      <md-input-container>
-        <input mdInput type="text" placeholder="{{'Charge task' | translate}}" formControlName="chargeTask"/>
-      </md-input-container>
-      <button md-button md-raised-button (click)="removeMoratorium(i)">{{'Remove' | translate}}</button>
+      <fims-text-input flex="20" type="number" [form]="form" controlName="period" placeholder="{{'Period' | translate}}"></fims-text-input>
+      <mat-form-field layout-margin>
+        <mat-select formControlName="temporalUnit">
+          <mat-option *ngFor="let basis of temporalOptions" [value]="basis.type">
+            {{basis.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <fims-text-input [form]="moratorium" controlName="chargeTask" placeholder="{{'Fee task' | translate}}"></fims-text-input>
+      <button mat-button mat-raised-button (click)="removeMoratorium(i)">{{'Remove' | translate}}</button>
     </div>
     <div layout="row">
-      <button flex md-button md-raised-button (click)="addMoratorium()">{{'Add moratorium' | translate}}</button>
+      <button flex mat-button mat-raised-button (click)="addMoratorium()">{{'Add moratorium' | translate}}</button>
     </div>
   </div>
 </form>

@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-import {CostComponent} from './cost-component.model';
+import {Payment} from '../payment.model';
 
-export class PlannedPayment{
-  interestRate: number;
-  costComponents: CostComponent[];
-  remainingPrincipal: number;
-  date: string;
+export interface PlannedPayment {
+  payment: Payment;
+  balances: { [id: string]: number };
 }

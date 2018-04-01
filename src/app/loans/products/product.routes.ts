@@ -31,10 +31,23 @@ import {ProductExistsGuard} from './product-exists.guard';
 import {ProductTaskExistsGuard} from './status/task-exists.guard';
 import {ProductChargeExistsGuard} from './charges/charge-exists.guard';
 import {ProductIndexComponent} from './product.index.component';
+import {ProductChargeRangeListComponent} from './charges/ranges/range.list.component';
+import {CreateProductChargeRangeFormComponent} from './charges/ranges/form/create.component';
+import {EditProductChargeRangeFormComponent} from './charges/ranges/form/edit.component';
+import {ProductChargeRangeExistsGuard} from './charges/ranges/range-exists.guard';
+import {ProductChargeRangeIndexComponent} from './charges/ranges/range.index.component';
+import {ProductChargeRangeDetailComponent} from './charges/ranges/range.detail.component';
+import {LoanLossProvisionExistsGuard} from './lossProvision/loss-provision-exists.guard';
+import {CreateProductLossProvisionFormComponent} from './lossProvision/form/create.component';
+import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detail.component';
 
 export const ProductRoutes: Routes = [
-  {path: '', component: ProductListComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'READ' } } /* List */},
-  {path: 'create', component: ProductCreateComponent, data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Create */},
+  {path: '', component: ProductListComponent, data: {hasPermission: {id: 'portfolio_products', accessLevel: 'READ'}} /* List */},
+  {
+    path: 'create',
+    component: ProductCreateComponent,
+    data: {hasPermission: {id: 'portfolio_products', accessLevel: 'CHANGE'}} /* Create */
+  },
   {
     path: 'detail/:productId', /* Parent view to resolve product */
     component: ProductIndexComponent,
@@ -54,6 +67,34 @@ export const ProductRoutes: Routes = [
         component: ProductChargeListComponent /* Charges list view */
       },
       {
+        path: 'charges/ranges',
+        children: [
+          {
+            path: '',
+            component: ProductChargeRangeListComponent
+          },
+          {
+            path: 'create',
+            component: CreateProductChargeRangeFormComponent
+          },
+          {
+            path: 'detail/:rangeId',
+            component: ProductChargeRangeIndexComponent,
+            canActivate: [ProductChargeRangeExistsGuard],
+            children: [
+              {
+                path: '',
+                component: ProductChargeRangeDetailComponent
+              },
+              {
+                path: 'edit',
+                component: EditProductChargeRangeFormComponent
+              }
+            ]
+          }
+        ]
+      },
+      {
         path: 'charges/create',
         component: ProductChargeCreateFormComponent,
         data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } } /* Charges create view */},
@@ -66,8 +107,8 @@ export const ProductRoutes: Routes = [
         path: 'charges/detail/:chargeId/edit',
         component: ProductChargeEditFormComponent,
         canActivate: [ProductChargeExistsGuard],
-        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }/* Charges detail view */},
-
+        data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }/* Charges detail view */
+      },
       {
         path: 'tasks',
         component: ProductStatusComponent
@@ -86,6 +127,22 @@ export const ProductRoutes: Routes = [
         component: ProductStatusEditFormComponent,
         canActivate: [ProductTaskExistsGuard],
         data: { hasPermission: { id: 'portfolio_products', accessLevel: 'CHANGE' } }
+      },
+      {
+        path: 'lossProvision',
+        canActivate: [LoanLossProvisionExistsGuard],
+        data: { hasPermission: { id: 'portfolio_loss_provision', accessLevel: 'READ' } },
+        children: [
+          {
+            path: '',
+            component: LossProvisionDetailComponent
+          },
+          {
+            path: 'edit',
+            component: CreateProductLossProvisionFormComponent,
+            data: { hasPermission: { id: 'portfolio_loss_provision', accessLevel: 'CHANGE' } },
+          }
+        ]
       }
     ]
   }

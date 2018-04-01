@@ -18,25 +18,22 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CustomerDetailFormComponent} from './detail/detail.component';
 import {CustomerFormComponent} from './form.component';
 import {CustomerContactFormComponent} from './contact/contact.component';
-import {AddressFormComponent} from '../../common/address/address.component';
 import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentStepsModule} from '@covalent/core';
+import {CovalentChipsModule, CovalentStepsModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {TranslateModule} from '@ngx-translate/core';
 import {CustomerEmployeesComponent} from './employees/employees.component';
 import {CustomerOfficesComponent} from './offices/offices.component';
-import {IdInputComponent} from '../../common/id-input/id-input.component';
-import {SelectListComponent} from '../../common/select-list/select-list.component';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CustomersStore} from '../store/index';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MdAutocompleteModule, MdCheckboxModule, MdIconModule, MdInputModule, MdRadioModule} from '@angular/material';
-import {FormContinueActionComponent} from '../../common/forms/form-continue-action.component';
-import {FormFinalActionComponent} from '../../common/forms/form-final-action.component';
 import {CountryService} from '../../services/country/country.service';
+import {Country} from '../../services/country/model/country.model';
+import {FimsSharedModule} from '../../common/common.module';
+import {MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule, MatRadioModule} from '@angular/material';
 
 const customerTemplate: Customer = {
   identifier: 'test',
@@ -78,6 +75,13 @@ const customerTemplate: Customer = {
   customValues: []
 };
 
+const country: Country = {
+  displayName: '',
+  name: customerTemplate.address.country,
+  alpha2Code: customerTemplate.address.countryCode,
+  translations: {}
+};
+
 describe('Test customer form', () => {
 
   let fixture: ComponentFixture<TestComponent>;
@@ -88,50 +92,44 @@ describe('Test customer form', () => {
     TestBed.configureTestingModule({
       declarations: [
         TestComponent,
-        IdInputComponent,
-        FormContinueActionComponent,
-        FormFinalActionComponent,
-        SelectListComponent,
         CustomerFormComponent,
         CustomerDetailFormComponent,
         CustomerContactFormComponent,
-        AddressFormComponent,
         CustomerCustomFieldsComponent,
         CustomerEmployeesComponent,
         CustomerOfficesComponent
       ],
       imports: [
         TranslateModule.forRoot(),
+        FimsSharedModule,
         ReactiveFormsModule,
-        MdInputModule,
-        MdIconModule,
-        MdRadioModule,
-        MdAutocompleteModule,
-        MdCheckboxModule,
+        MatInputModule,
+        MatIconModule,
+        MatRadioModule,
+        MatAutocompleteModule,
+        MatCheckboxModule,
         CovalentStepsModule,
+        CovalentChipsModule,
         NoopAnimationsModule
       ],
       providers: [
         {
           // Used by address component
           provide: CountryService, useClass: class {
-            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue({
-              displayName: '',
-              name: customerTemplate.address.country,
-              alpha2Code: customerTemplate.address.countryCode
-            })
+            fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
+            fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
           }
         },
         {
           provide: CustomersStore, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         },
         {
           provide: Store, useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         }
       ]
@@ -172,12 +170,15 @@ describe('Test customer form', () => {
     });
 
     testComponent.triggerSave();
-  })
+  });
 
 });
 
 @Component({
-  template: '<fims-customer-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [customer]="customer"></fims-customer-form-component>'
+  template: `
+    <fims-customer-form-component #form (onSave)="onSave($event)" (onCancel)="onCancel($event)" [customer]="customer">
+    </fims-customer-form-component>
+  `
 })
 class TestComponent {
 

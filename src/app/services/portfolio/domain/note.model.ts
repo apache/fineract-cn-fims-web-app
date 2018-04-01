@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export interface Note{
+export interface Note {
   content: string;
 }

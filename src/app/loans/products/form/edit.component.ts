@@ -18,8 +18,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PortfolioStore} from '../store/index';
-import {RESET_FORM, SelectAction, UPDATE} from '../store/product.actions';
-import {Subscription} from 'rxjs';
+import {RESET_FORM, UPDATE} from '../store/product.actions';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromPortfolio from '../store';
 import {FimsProduct} from '../store/model/fims-product.model';
 import {Currency} from '../../../services/currency/domain/currency.model';
@@ -29,7 +29,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   templateUrl: './edit.component.html'
 })
-export class ProductEditComponent implements OnInit, OnDestroy{
+export class ProductEditComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
@@ -37,7 +37,8 @@ export class ProductEditComponent implements OnInit, OnDestroy{
 
   product: FimsProduct;
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore, private currencyService: CurrencyService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore,
+              private currencyService: CurrencyService) {}
 
   ngOnInit() {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
@@ -49,7 +50,7 @@ export class ProductEditComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.productSubscription.unsubscribe();
 
-    this.portfolioStore.dispatch({ type: RESET_FORM })
+    this.portfolioStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(product: Product) {

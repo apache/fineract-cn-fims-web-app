@@ -16,63 +16,7 @@
 
 <td-steps mode="'vertical'">
   <td-step #detailsStep label="{{'Product details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
-    <form [formGroup]="detailForm" layout="column">
-      <div layout="row">
-        <fims-id-input [form]="detailForm" [placeholder]="'Short name'" controlName="identifier" [readonly]="editMode"></fims-id-input>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <input mdInput type="text" placeholder="{{'Name' | translate}}" formControlName="name"/>
-          <md-error *ngIf="detailForm.get('name').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="detailForm.get('name').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('name').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin flex>
-          <textarea mdInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
-          <md-error *ngIf="detailForm.get('description').hasError('required')" translate>
-            Required
-          </md-error>
-          <md-error *ngIf="detailForm.get('description').hasError('maxlength')">
-            {{ 'Only characters allowed.' | translate:{ value: detailForm.get('description').getError('maxlength')['requiredLength']} }}
-          </md-error>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-select formControlName="currencyCode" layout-margin placeholder="{{ 'Currency' | translate }}">
-          <md-option *ngFor="let currency of currencies" [value]="currency.code">
-            {{currency.code}}
-          </md-option>
-        </md-select>
-      </div>
-      <div layout="row">
-        <fims-min-max flex
-                      minPlaceholder="{{'Minimum principal amount' | translate}}"
-                      maxPlaceholder="{{'Maximum principal amount' | translate}}"
-                      [form]="detailForm"
-                      minControlName="minimumBalance"
-                      maxControlName="maximumBalance"
-                      [requireDecimal]="false"
-                      [decimalLimit]="2">
-        </fims-min-max>
-      </div>
-      <div layout="row">
-        <md-input-container layout-margin>
-          <input mdInput type="number" placeholder="{{'Maximum Term' | translate}}" formControlName="term" step="any"/>
-          <md-error *ngIf="detailForm.get('term').getError('minValue')">{{ 'Value must be greater than' | translate:{ value: detailForm.get('term').getError('minValue').value} }}</md-error>
-        </md-input-container>
-        <md-radio-group formControlName="temporalUnit">
-          <md-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
-            {{basis.label}}
-          </md-radio-button>
-        </md-radio-group>
-      </div>
-    </form>
-
+    <fims-product-detail-form #detailForm [formData]="detailFormData" [currencies]="currencies" [temporalOptions]="temporalOptions" [error]="error" [editMode]="editMode"></fims-product-detail-form>
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="settingsStep.open()"></fims-form-continue-action>
     </ng-template>

@@ -32,7 +32,6 @@ import {PermittableGroupIdMapper} from './services/security/authz/permittable-gr
 import {reducer} from './store';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {NotificationService} from './services/notification/notification.service';
 import {OfficeSearchApiEffects} from './store/office/effects/service.effects';
 import {EmployeeSearchApiEffects} from './store/employee/effects/service.effects';
@@ -46,16 +45,16 @@ import {LedgerSearchApiEffects} from './store/ledger/effects/service.effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ExistsGuardService} from './common/guards/exists-guard';
 import {CountryService} from './services/country/country.service';
-import {CountrySearchApiEffects} from './store/country/service.effects';
 import {ImageService} from './services/image/image.service';
 import {DepositAccountService} from './services/depositAccount/deposit-account.service';
 import {CurrencyService} from './services/currency/currency.service';
 import {TellerService} from './services/teller/teller-service';
 import {ReportingService} from './services/reporting/reporting.service';
 import {getSelectedLanguage} from './common/i18n/translate';
-import {environment} from '../environments/environment';
+import {ChequeService} from './services/cheque/cheque.service';
+import {PayrollService} from './services/payroll/payroll.service';
 
-export function HttpLoaderFactory(http: Http){
+export function HttpLoaderFactory(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
@@ -77,8 +76,6 @@ export function HttpLoaderFactory(http: Http){
     appRoutes,
     StoreModule.provideStore(reducer),
 
-    !environment.production ? StoreDevtoolsModule.instrumentOnlyWithExtension({ maxAge: 5 }) : [],
-
     /**
      * Root effects
      */
@@ -87,7 +84,6 @@ export function HttpLoaderFactory(http: Http){
     EffectsModule.run(SecurityNotificationEffects),
 
     EffectsModule.run(OfficeSearchApiEffects),
-    EffectsModule.run(CountrySearchApiEffects),
     EffectsModule.run(EmployeeSearchApiEffects),
     EffectsModule.run(CustomerSearchApiEffects),
     EffectsModule.run(AccountSearchApiEffects),
@@ -107,6 +103,8 @@ export function HttpLoaderFactory(http: Http){
     DepositAccountService,
     TellerService,
     ReportingService,
+    ChequeService,
+    PayrollService,
     CountryService,
     CurrencyService,
     NotificationService,

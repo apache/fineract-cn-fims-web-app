@@ -16,11 +16,8 @@
 
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {
-  CovalentCommonModule, CovalentDataTableModule, CovalentDialogsModule,
-  CovalentPagingModule
-} from '@covalent/core';
-import {LayoutCardOverComponent, LayoutCardOverComponentTags} from './layout-card-over/layout-card-over.component';
+import {CovalentCommonModule, CovalentDataTableModule, CovalentDialogsModule, CovalentPagingModule} from '@covalent/core';
+import {LayoutCardOverComponent, LayoutCardOverComponentTagsDirective} from './layout-card-over/layout-card-over.component';
 import {IdInputComponent} from './id-input/id-input.component';
 import {PermissionDirective} from '../services/security/authz/permission.directive';
 import {DataTableComponent} from './data-table/data-table.component';
@@ -41,14 +38,17 @@ import {AddressFormComponent} from './address/address.component';
 import {PortraitComponent} from './portrait/portrait.component';
 import {CommonModule} from '@angular/common';
 import {
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdCardModule, MdIconModule,
-  MdInputModule, MdListModule,
-  MdOptionModule,
-  MdSnackBarModule,
-  MdToolbarModule,
-  MdTooltipModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {EmployeeAutoCompleteComponent} from './employee-autocomplete/employee-auto-complete.component';
 import {TextMaskModule} from 'angular2-text-mask';
@@ -57,6 +57,11 @@ import {ImageComponent} from './image/image.component';
 import {FimsTwoColumnLayoutComponent} from './layouts/two-column-layout.component';
 import {FimsFabButtonComponent} from './fab-button/fab-button.component';
 import {RouterModule} from '@angular/router';
+import {DisplayFimsDate} from './date/fims-date.pipe';
+import {DateInputComponent} from './date-input/date-input.component';
+import {TextInputComponent} from './text-input/text-input.component';
+import {DisplayFimsNumber} from './number/fims-number.pipe';
+import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
 
 @NgModule({
   imports: [
@@ -67,23 +72,24 @@ import {RouterModule} from '@angular/router';
     CovalentDialogsModule,
     CovalentPagingModule,
     FormsModule,
-    MdAutocompleteModule,
-    MdButtonModule,
-    MdCardModule,
-    MdIconModule,
-    MdInputModule,
-    MdListModule,
-    MdOptionModule,
-    MdSnackBarModule,
-    MdToolbarModule,
-    MdTooltipModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     TextMaskModule,
     TranslateModule
   ],
   declarations: [
     LayoutCardOverComponent,
-    LayoutCardOverComponentTags,
+    LayoutCardOverComponentTagsDirective,
     FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
@@ -104,12 +110,17 @@ import {RouterModule} from '@angular/router';
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
+    DateInputComponent,
+    TextInputComponent,
     ImageComponent,
-    FimsFabButtonComponent
+    FimsFabButtonComponent,
+    DisplayFimsDate,
+    DisplayFimsNumber,
+    DisplayFimsFinancialNumber
   ],
   exports: [
     LayoutCardOverComponent,
-    LayoutCardOverComponentTags,
+    LayoutCardOverComponentTagsDirective,
     FimsTwoColumnLayoutComponent,
     SelectListComponent,
     CustomerSelectComponent,
@@ -130,11 +141,16 @@ import {RouterModule} from '@angular/router';
     AddressFormComponent,
     PortraitComponent,
     NumberInputComponent,
+    DateInputComponent,
+    TextInputComponent,
     ImageComponent,
-    FimsFabButtonComponent
+    FimsFabButtonComponent,
+    DisplayFimsDate,
+    DisplayFimsNumber,
+    DisplayFimsFinancialNumber
   ],
   entryComponents: [
     ImageComponent
   ]
 })
-export class FimsSharedModule{}
+export class FimsSharedModule {}

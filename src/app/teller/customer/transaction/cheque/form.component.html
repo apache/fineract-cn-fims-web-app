@@ -1,0 +1,84 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+  <td-step #transactionStep label="{{'Transaction' | translate}}"
+           [state]="!invalid ? 'complete' : 'required'" [disabled]="transactionCreated">
+    <form [formGroup]="chequeForm" layout="row">
+      <fims-text-input [form]="chequeForm" controlName="chequeNumber" placeholder="{{'Cheque number' | translate}}"></fims-text-input>
+      <fims-text-input [form]="chequeForm" controlName="branchSortCode" placeholder="{{'Branch sort code' | translate}}"></fims-text-input>
+      <fims-text-input [form]="chequeForm" controlName="accountNumber" placeholder="{{'Account number' | translate}}"></fims-text-input>
+    </form>
+    <form [formGroup]="amountForm">
+      <div layout="row">
+        <fims-text-input [form]="amountForm" controlName="drawee" placeholder="{{'Issuing Bank' | translate}}"></fims-text-input>
+        <fims-text-input [form]="amountForm" controlName="drawer" placeholder="{{'Issuer' | translate}}"></fims-text-input>
+        <div>
+          <button mat-raised-button color="primary" (click)="validateCheque()" [disabled]="chequeForm.invalid">{{'DETERMINE FROM MICR' | translate}}</button>
+        </div>
+      </div>
+      <td-message *ngIf="!!micrResolutionError"
+                  label="Issuing Bank/Issuer could not be determined in our system from the MICR you entered."
+                  sublabel="Possible reasons: Cheque number has not been issued, Branch sort code is not known in system or account number does not exist in system"
+                  color="accent"
+                  icon="warning">
+      </td-message>
+      <fims-text-input [form]="amountForm" controlName="payee" placeholder="{{'Payee' | translate}}"></fims-text-input>
+      <fims-date-input [form]="amountForm" controlName="dateIssued" placeholder="{{'Date issued' | translate}}"></fims-date-input>
+      <mat-checkbox formControlName="openCheque" layout-margin translate>Is cheque open?</mat-checkbox>
+      <td-message *ngIf="!amountForm.get('openCheque').value" label="Please check identification card of member" color="accent" icon="warning"></td-message>
+      <fims-text-input type="number" [form]="amountForm" controlName="amount" placeholder="{{'Amount' | translate}}"></fims-text-input>
+      <div layout="row">
+        <mat-form-field layout-margin>
+          <mat-select formControlName="productInstance" placeholder="{{ 'Select account to transfer to' | translate }}">
+            <mat-option *ngFor="let instance of productInstances" [value]="instance">
+              {{instance.accountIdentifier}}({{instance.productIdentifier}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <ng-template td-step-actions>
+      <button mat-raised-button color="primary" (click)="createTransaction()" [disabled]="createTransactionDisabled">{{'CREATE TRANSACTION' | translate}}</button>
+      <span flex></span>
+      <button mat-button (click)="cancel()" [disabled]="transactionCreated">{{'CANCEL' | translate}}</button>
+    </ng-template>
+  </td-step>
+  <td-step #confirmationStep label="{{'Confirmation' | translate}}">
+    <div layout-gt-xs="row" layout-align="center center">
+      <div layout-gt-xs="row" flex-gt-xs="90" layout-margin>
+        <div flex-gt-xs="25"></div>
+        <div flex-gt-xs="50">
+          <h3 translate>Costs</h3>
+          <fims-teller-transaction-cost
+            [transactionAmount]="amountForm.get('amount').value"
+            [transactionCosts]="transactionCosts">
+          </fims-teller-transaction-cost>
+          <div layout="row" layout-margin>
+            <mat-checkbox [(ngModel)]="chargesIncluded" translate>Fees are paid in cash</mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td-step>
+  <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+    <ng-template td-step-summary>
+      <button mat-raised-button color="primary" [disabled]="!transactionCreated" (click)="confirmTransaction(chargesIncluded)">{{'CONFIRM TRANSACTION' | translate}}</button>
+      <span flex></span>
+      <button mat-button [disabled]="!transactionCreated" (click)="cancelTransaction()">{{'CANCEL TRANSACTION' | translate}}</button>
+    </ng-template>
+  </td-step>
+</td-steps>

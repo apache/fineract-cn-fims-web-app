@@ -18,7 +18,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ProductTaskFormComponent} from './form.component';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
 import {CREATE, RESET_FORM} from '../../store/tasks/task.actions';
@@ -28,7 +28,7 @@ import {FimsProduct} from '../../store/model/fims-product.model';
 @Component({
   templateUrl: './create.component.html'
 })
-export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
+export class ProductStatusCreateFormComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
@@ -56,8 +56,8 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
     this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductTaskFormError)
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-        let detailForm = this.formComponent.detailForm;
-        let errors = detailForm.get('identifier').errors || {};
+        const detailForm = this.formComponent.detailForm;
+        const errors = detailForm.get('identifier').errors || {};
         errors['unique'] = true;
         detailForm.get('identifier').setErrors(errors);
         this.formComponent.openDetailsStep();
@@ -68,7 +68,7 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
     this.productSubscription.unsubscribe();
     this.formStateSubscription.unsubscribe();
 
-    this.portfolioStore.dispatch({ type: RESET_FORM })
+    this.portfolioStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(task: TaskDefinition): void {
@@ -79,11 +79,11 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy{
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

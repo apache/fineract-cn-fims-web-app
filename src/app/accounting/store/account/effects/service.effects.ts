@@ -15,17 +15,15 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AccountApiEffects {
-
-  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
   @Effect()
   createAccount$: Observable<Action> = this.actions$
@@ -65,5 +63,7 @@ export class AccountApiEffects {
         }))
         .catch(error => of(new accountActions.DeleteAccountFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private accountingService: AccountingService) { }
 
 }

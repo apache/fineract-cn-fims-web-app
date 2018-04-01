@@ -20,7 +20,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import {PortfolioStore} from './store/index';
 import {CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
-import {CovalentDialogsModule, TdDialogService} from '@covalent/core';
+import {TdDialogService} from '@covalent/core';
 import {FimsProduct} from './store/model/fims-product.model';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import * as fromPortfolio from './store';
@@ -28,7 +28,7 @@ import * as fromRoot from '../../store';
 import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {FimsPermissionStubDirective} from '../../common/testing/permission-stubs';
-import {MdDialogModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
 
 describe('Test product list component', () => {
 
@@ -41,7 +41,7 @@ describe('Test product list component', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),
-        MdDialogModule
+        MatDialogModule
       ],
       declarations: [
         FimsPermissionStubDirective,
@@ -67,12 +67,14 @@ describe('Test product list component', () => {
       name: 'test',
       termRange: { temporalUnit: 'MONTHS', maximum: 1 },
       balanceRange: { minimum: 1, maximum: 2 },
+      interestRange: { minimum: 1, maximum: 2 },
       interestBasis: 'BEGINNING_BALANCE',
       patternPackage: 'test',
       description: '',
       accountAssignments: [],
       parameters: {
         moratoriums: [],
+        minimumDispersalAmount: 0,
         maximumDispersalAmount: 1,
         maximumDispersalCount: 1
       },
@@ -83,18 +85,22 @@ describe('Test product list component', () => {
 
     const permissions: FimsPermission[] = [];
 
-    if(hasChangePermission) {
+    if (hasChangePermission) {
       permissions.push({
         id: 'portfolio_products',
         accessLevel: 'CHANGE'
-      })
+      });
     }
 
     const portfolioStore = TestBed.get(PortfolioStore);
 
     portfolioStore.select.and.callFake(selector => {
-      if(selector === fromPortfolio.getSelectedProduct) return Observable.of(product);
-      if(selector === fromRoot.getPermissions) return Observable.of(permissions);
+      if (selector === fromPortfolio.getSelectedProduct) {
+        return Observable.of(product);
+      }
+      if (selector === fromRoot.getPermissions) {
+        return Observable.of(permissions);
+      }
     });
   }
 
@@ -130,6 +136,6 @@ describe('Test product list component', () => {
     const button = getCreateButton();
 
     expect(button).toBeNull();
-  })
+  });
 
 });

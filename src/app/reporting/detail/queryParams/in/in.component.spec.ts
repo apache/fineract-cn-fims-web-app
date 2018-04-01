@@ -70,7 +70,7 @@ describe('Test in component', () => {
     fixture.detectChanges();
 
     expect(testComponent.formControl.invalid).toBeTruthy();
-  })
+  });
 
 });
 

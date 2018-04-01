@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DepositFormComponent} from './form.component';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
@@ -43,14 +42,15 @@ export class DepositCreateComponent implements OnInit {
 
   productDefinitions$: Observable<ProductDefinition[]>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private depositService: DepositAccountService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore,
+              private depositService: DepositAccountService) {}
 
   ngOnInit(): void {
     this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer)
       .filter(customer => !!customer);
 
     this.productDefinitions$ = this.depositService.fetchProductDefinitions()
-      .map(productDefinitions => productDefinitions.filter(productDefinitions => productDefinitions.active));
+      .map(productDefinitions => productDefinitions.filter(definition => definition.active));
   }
 
   onSave(productInstance: ProductInstance): void {
@@ -60,11 +60,11 @@ export class DepositCreateComponent implements OnInit {
     }});
   }
 
-  onCancel(): void{
+  onCancel(): void {
     this.navigateAway();
   }
 
-  navigateAway(): void{
+  navigateAway(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

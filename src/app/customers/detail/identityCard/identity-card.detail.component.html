@@ -16,30 +16,30 @@
 
 <fims-layout-card-over title="{{ 'Identification card' | translate }}" [navigateBackTo]="['../../../../../../']">
   <fims-layout-card-over-header-menu layout="row" layout-align="end center">
-    <a md-icon-button title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
-      <md-icon>mode_edit</md-icon>
+    <a mat-icon-button title="{{'Edit identification card' | translate}}" [routerLink]="['edit']" *hasPermission="{ id: 'customer_identifications', accessLevel: 'CHANGE' }">
+      <mat-icon>mode_edit</mat-icon>
     </a>
-    <button md-icon-button (click)="deleteIdentificationCard()" title="{{'Delete this identification card' | translate}}" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteIdentificationCard()" title="{{'Delete this identification card' | translate}}" *hasPermission="{ id: 'customer_identifications', accessLevel: 'DELETE' }"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <div class="md-content inset" flex>
-    <md-list>
-      <md-list-item>
-        <h3 md-line translate>Number</h3>
-        <p md-line>{{identificationCard?.number}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Type</h3>
-        <p md-line>{{identificationCard?.type}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Issuer</h3>
-        <p md-line>{{identificationCard?.issuer}}</p>
-      </md-list-item>
-      <md-list-item>
-        <h3 md-line translate>Expiration date</h3>
-        <p md-line>{{identificationCard?.expirationDate?.year}}-{{identificationCard?.expirationDate?.month}}-{{identificationCard?.expirationDate?.day}}</p>
-      </md-list-item>
-    </md-list>
+  <div class="mat-content inset" flex>
+    <mat-list>
+      <mat-list-item>
+        <h3 matLine translate>Number</h3>
+        <p matLine>{{identificationCard?.number}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Type</h3>
+        <p matLine>{{identificationCard?.type}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Issuer</h3>
+        <p matLine>{{identificationCard?.issuer}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h3 matLine translate>Expiration date</h3>
+        <p matLine>{{identificationCard?.expirationDate | displayFimsDate}}</p>
+      </mat-list-item>
+    </mat-list>
     <fims-identification-card-scan-list
       [scans]="scans$ | async"
       (onView)="viewScan($event)"

@@ -32,13 +32,9 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as fromOffices from '../../../../store/index';
-import {Observable} from 'rxjs/Observable';
-import {
-  Action,
-  TellerManagementCommand
-} from '../../../../../services/teller/domain/teller-management-command.model';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
 import {OfficesStore} from '../../../../store/index';
+import {Action, TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
+import {Teller} from '../../../../../services/teller/domain/teller.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Office} from '../../../../../services/office/domain/office.model';
 import {Subscription} from 'rxjs/Subscription';
@@ -95,11 +91,15 @@ export class OfficeTellerCommandComponent implements OnInit, OnDestroy {
         activatedRoute: this.route,
         command
       }
-    })
+    });
   }
 
   onCancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  get title(): string {
+    return this.action === 'OPEN' ? 'Open teller' : 'Close teller';
   }
 
 }

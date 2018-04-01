@@ -1,0 +1,53 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<form [formGroup]="form" layout="column">
+  <fims-id-input [form]="form" [placeholder]="'Short name'" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
+  <mat-form-field layout-margin flex>
+    <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+    <mat-error *ngIf="form.get('description').hasError('required')" translate>
+      Required
+    </mat-error>
+    <mat-error *ngIf="form.get('description').hasError('maxlength')">
+      {{ 'Only characters allowed.' | translate:{ value: form.get('description').getError('maxlength')['requiredLength']} }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field layout-margin>
+    <mat-select formControlName="currencyCode" placeholder="{{ 'Currency' | translate }}">
+      <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+        {{currency.code}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <fims-min-max flex
+                minPlaceholder="{{'Minimum principal amount' | translate}}"
+                maxPlaceholder="{{'Maximum principal amount' | translate}}"
+                [form]="form"
+                minControlName="minimumBalance"
+                maxControlName="maximumBalance"
+                [requireDecimal]="false"
+                [decimalLimit]="2">
+  </fims-min-max>
+  <div layout="row">
+    <fims-text-input type="number" [form]="form" controlName="term" placeholder="{{'Maximum Term' | translate}}"></fims-text-input>
+    <mat-radio-group formControlName="temporalUnit">
+      <mat-radio-button *ngFor="let basis of temporalOptions" [value]="basis.type" layout-margin>
+        {{basis.label}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</form>

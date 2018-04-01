@@ -16,8 +16,8 @@
 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IdentificationCardScan} from '../../../../../services/customer/domain/identification-card-scan.model';
-import {CustomersStore} from '../../../../store/index';
 import * as fromCustomers from '../../../../store/index';
+import {CustomersStore} from '../../../../store/index';
 import {IdentificationCardScanComponent, IdentityCardScanFormData} from './scan.form.component';
 import {CREATE, RESET_FORM} from '../../../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -60,7 +60,7 @@ export class CreateIdentificationCardScanComponent implements OnInit, OnDestroy 
     this.customerSubscription.unsubscribe();
     this.identificationCardSubscription.unsubscribe();
 
-    this.customersStore.dispatch({ type: RESET_FORM })
+    this.customersStore.dispatch({ type: RESET_FORM });
   }
 
   onSave(formData: IdentityCardScanFormData): void {
@@ -78,11 +78,11 @@ export class CreateIdentificationCardScanComponent implements OnInit, OnDestroy 
         file: formData.file,
         activatedRoute: this.route
       }
-    })
+    });
   }
 
   onCancel(): void {
-    this.router.navigate(['../'], { relativeTo: this.route })
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

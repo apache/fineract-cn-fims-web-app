@@ -15,16 +15,23 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Effect, Actions} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import * as securityActions from '../security.actions';
-import {NotificationType, NotificationService} from '../../../services/notification/notification.service';
+import {LoginSuccessAction} from '../security.actions';
+import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 
 @Injectable()
 export class SecurityNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  @Effect({ dispatch: false })
+  loginSuccess$: Observable<Action> = this.actions$
+    .ofType(securityActions.LOGIN_SUCCESS)
+    .do((action: LoginSuccessAction) => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: `You are logged in with user '${action.payload.username}'`
+    }));
 
   @Effect({ dispatch: false })
   changePasswordSuccess$: Observable<Action> = this.actions$
@@ -32,6 +39,8 @@ export class SecurityNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Your password has been changed'
-    }))
+    }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

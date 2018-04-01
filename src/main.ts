@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {enableProdMode} from '@angular/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
-import { environment } from './environments/environment';
-import { AppModule } from './app/';
+import {environment} from './environments/environment';
+import {AppModule} from './app/';
+// tslint:disable-next-line:no-import-side-effect
+import './rxjs.imports';
 
 if (environment.production) {
   enableProdMode();
@@ -34,5 +36,7 @@ platformBrowserDynamic([
   { provide: 'portfolioBaseUrl', useValue: '/api/portfolio/v1' },
   { provide: 'depositAccountBaseUrl', useValue: '/api/deposit/v1' },
   { provide: 'tellerBaseUrl', useValue: '/api/teller/v1' },
-  { provide: 'reportingBaseUrl', useValue: '/api/reporting/v1' }
+  { provide: 'reportingBaseUrl', useValue: '/api/reporting/v1' },
+  { provide: 'chequeBaseUrl', useValue: '/api/cheques/v1' },
+  { provide: 'payrollBaseUrl', useValue: '/api/payroll/v1' }
 ]).bootstrapModule(AppModule);

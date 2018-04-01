@@ -14,13 +14,17 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{ role.identifier }}" [navigateBackTo]="'../../'">
+<fims-layout-card-over title="{{ role.identifier }}" [navigateBackTo]="'../../'" *ngIf="(role$ | async) as role">
   <fims-layout-card-over-header-menu>
-    <button md-icon-button (click)="deleteRole()" title="{{'Delete this role' | translate}}" *hasPermission="{ id: 'identity_roles', accessLevel: 'DELETE' }"><md-icon>delete</md-icon></button>
+    <button mat-icon-button (click)="deleteRole(role)" title="{{'Delete this role' | translate}}" *hasPermission="{ id: 'identity_roles', accessLevel: 'DELETE' }"><mat-icon>delete</mat-icon></button>
   </fims-layout-card-over-header-menu>
-  <md-list>
-    <h3 md-subheader translate>Permissions</h3>
-    <fims-permission-list-item *ngFor="let permission of (formPermissions$ | async)" [formPermission]="permission" [readOnly]="true"></fims-permission-list-item>
-  </md-list>
+  <mat-list>
+    <h3 mat-subheader translate>Permissions</h3>
+    <ng-container *ngFor="let group of permissionGroup$ | async">
+      <h3 mat-subheader translate>{{group.groupId}}</h3>
+      <fims-permission-list-item *ngFor="let permission of group.formPermissions" [formPermission]="permission" [readOnly]="true"></fims-permission-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
 </fims-layout-card-over>
 <fims-fab-button title="{{'Edit role' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'identity_roles', accessLevel: 'CHANGE'}"></fims-fab-button>

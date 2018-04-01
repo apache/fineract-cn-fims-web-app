@@ -17,10 +17,12 @@ import {Directive, Input} from '@angular/core';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[hasPermission]'
 })
 export class FimsPermissionStubDirective {
 
+  // tslint:disable-next-line:no-input-rename
   @Input('hasPermission') permission: FimsPermission;
 
 }

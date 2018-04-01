@@ -21,11 +21,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {todayAsISOString, toShortISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
 import {AccountingStore} from '../../store/index';
 import {SEARCH} from '../../store/account/entries/entries.actions';
 import {SelectAction} from '../../store/account/account.actions';
 import {DatePipe} from '@angular/common';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 
 @Component({
   templateUrl: './account-entry.list.component.html',
@@ -35,18 +37,20 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  private accountSubscription: Subscription;
+  private lastFetchRequest: FetchRequest = {};
 
   form: FormGroup;
 
-  account: Account;
+  account$: Observable<Account>;
 
   accountEntryData$: Observable<TableData>;
 
   columns: any[] = [
-    {name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format:  (v: any) => {
-      return this.datePipe.transform(v, 'short')
-    }},
+    {
+      name: 'transactionDate', label: 'Transaction date', tooltip: 'Transaction date', format: (v: any) => {
+        return this.datePipe.transform(v, 'short');
+    }
+    },
     {name: 'type', label: 'Type', tooltip: 'Type'},
     {name: 'message', label: 'Message', tooltip: 'Message'},
     {name: 'amount', label: 'Amount', tooltip: 'Amount'},
@@ -57,7 +61,7 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let today = todayAsISOString();
+    const today = todayAsISOString();
     this.form = this.formBuilder.group({
       'startDate': [today, [Validators.required]],
       'endDate': [today, [Validators.required]],
@@ -67,12 +71,9 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
       .map(params => new SelectAction(params['id']))
       .subscribe(this.store);
 
-    this.accountSubscription = this.store.select(fromAccounting.getSelectedAccount)
+    this.account$ = this.store.select(fromAccounting.getSelectedAccount)
       .filter(account => !!account)
-      .subscribe(account => {
-        this.account = account;
-        this.fetchAccountsEntries();
-      });
+      .do(account => this.fetchAccountsEntries(account.identifier));
 
     this.accountEntryData$ = this.store.select(fromAccounting.getAccountEntrySearchResults)
       .map(accountEntryPage => ({
@@ -84,19 +85,22 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.accountSubscription.unsubscribe();
   }
 
-  fetchAccountsEntries(fetchRequest?: TableFetchRequest): void{
+  fetchAccountsEntries(accountId: string, fetchRequest?: TableFetchRequest): void {
+    if (fetchRequest) {
+      this.lastFetchRequest = fetchRequest;
+    }
+
     const startDate = toShortISOString(this.form.get('startDate').value);
     const endDate = toShortISOString(this.form.get('endDate').value);
 
     this.store.dispatch({
       type: SEARCH, payload: {
-        accountId: this.account.identifier,
-        startDate: startDate,
-        endDate: endDate,
-        fetchRequest: fetchRequest
+        accountId,
+        startDate,
+        endDate,
+        fetchRequest: this.lastFetchRequest
       }
     });
 

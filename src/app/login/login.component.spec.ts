@@ -16,7 +16,7 @@
 
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -25,16 +25,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {LOGIN} from '../store/security/security.actions';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MdCardModule,
-  MdIconModule,
-  MdInputModule,
-  MdOptionModule,
-  MdSelectModule,
-  MdTooltipModule
-} from '@angular/material';
 import {CovalentLoadingModule} from '@covalent/core';
 import {setValueByFormControlName} from '../common/testing/input-fields';
+import {MatCardModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule, MatTooltipModule} from '@angular/material';
 
 describe('Test Login Component', () => {
 
@@ -53,12 +46,12 @@ describe('Test Login Component', () => {
         ReactiveFormsModule,
         FormsModule,
         TranslateModule.forRoot(),
-        MdIconModule,
-        MdCardModule,
-        MdInputModule,
-        MdSelectModule,
-        MdOptionModule,
-        MdTooltipModule,
+        MatIconModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatTooltipModule,
         NoopAnimationsModule,
         CovalentLoadingModule
       ],
@@ -72,7 +65,7 @@ describe('Test Login Component', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty())
+            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
           }
         }
       ]
@@ -85,7 +78,7 @@ describe('Test Login Component', () => {
   it('should disable/enable login button', () => {
     fixture.detectChanges();
 
-    let button: DebugElement = fixture.debugElement.query(By.css('button'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button'));
 
     expect(button.properties['disabled']).toBeTruthy('Button should be disabled');
 
@@ -113,13 +106,13 @@ describe('Test Login Component', () => {
 
     fixture.detectChanges();
 
-    let button: DebugElement = fixture.debugElement.query(By.css('button'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button'));
     button.nativeElement.click();
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
 
-      let error: DebugElement = fixture.debugElement.query(By.css('p'));
+      const error: DebugElement = fixture.debugElement.query(By.css('p'));
       expect(error).toBeDefined('Debug element should be defined');
       expect(error.nativeElement.textContent.length).toBeGreaterThan(0, 'Error message should not be empty');
     });
@@ -153,7 +146,7 @@ describe('Test Login Component', () => {
 
     fixture.detectChanges();
 
-    let button: DebugElement = fixture.debugElement.query(By.css('button'));
+    const button: DebugElement = fixture.debugElement.query(By.css('button'));
 
     button.nativeElement.click();
 
@@ -163,7 +156,7 @@ describe('Test Login Component', () => {
         username: 'test',
         password: 'test',
         tenant: 'tenantId'
-      }})
+      }});
     });
 
   })));

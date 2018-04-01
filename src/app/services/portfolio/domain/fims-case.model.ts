@@ -19,11 +19,11 @@ import {CaseState} from './case-state.model';
 export interface FimsCase {
   identifier: string;
   productIdentifier: string;
+  interest: number;
   parameters: CaseParameters;
   depositAccountIdentifier: string;
   customerLoanAccountIdentifier?: string;
-  loansPayableAccountIdentifier?: string;
-  currentState: CaseState;
+  currentState?: CaseState;
   createdOn?: string;
   createdBy?: string;
   lastModifiedOn?: string;

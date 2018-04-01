@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import {OnInit, Component, Input, Output, EventEmitter, Directive} from '@angular/core';
+import {Component, Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+// tslint:disable-next-line:directive-selector
 @Directive({selector: 'fims-layout-card-over-header-menu'})
-export class LayoutCardOverComponentTags{ }
+export class LayoutCardOverComponentTagsDirective { }
 
 @Component({
   selector: 'fims-layout-card-over',
@@ -40,12 +41,12 @@ export class LayoutCardOverComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSearch(searchTerm: string): void{
+  onSearch(searchTerm: string): void {
     this.search.emit(searchTerm);
   }
 
   get fullTitle(): string {
     const titles = [this.title, this.subTitle];
-    return titles.filter(title => !!title).join(' - ')
+    return titles.filter(title => !!title).join(' - ');
   }
 }

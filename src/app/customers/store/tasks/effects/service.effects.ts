@@ -13,29 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {CustomerService} from '../../../../services/customer/customer.service';
+import * as taskActions from '../task.actions';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
-import * as taskActions from '../task.actions';
-import {CustomerService} from '../../../../services/customer/customer.service';
 
 @Injectable()
-export class CustomerTasksApiEffects {
-
-  constructor(private actions$: Actions, private customerService: CustomerService) { }
+export class TasksApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(taskActions.LOAD_ALL)
     .debounceTime(300)
     .map((action: taskActions.LoadAllAction) => action.payload)
-    .switchMap(id => {
+    .switchMap(() => {
       const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).skip(1);
 
-      return this.customerService.fetchCustomerTasks(id)
+      return this.customerService.fetchTasks()
         .takeUntil(nextSearch$)
         .map(taskPage => new taskActions.LoadAllCompleteAction(taskPage))
         .catch(() => of(new taskActions.LoadAllCompleteAction([])));
@@ -55,32 +52,17 @@ export class CustomerTasksApiEffects {
     );
 
   @Effect()
-  executeTask: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK)
-    .map((action: taskActions.ExecuteTaskAction) => action.payload)
+  updateTask$: Observable<Action> = this.actions$
+    .ofType(taskActions.UPDATE)
+    .map((action: taskActions.CreateTaskAction) => action.payload)
     .mergeMap(payload =>
-      this.customerService.markTaskAsExecuted(payload.customerId, payload.taskId)
-        .map(() => new taskActions.ExecuteTaskSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteTaskFailAction(error)))
+      this.customerService.updateTask(payload.task)
+        .map(() => new taskActions.UpdateTaskSuccessAction({
+          resource: payload.task,
+          activatedRoute: payload.activatedRoute
+        }))
+        .catch((error) => of(new taskActions.UpdateTaskFailAction(error)))
     );
 
-  @Effect()
-  executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND)
-    .map((action: taskActions.ExecuteCommandAction) => action.payload)
-    .mergeMap(payload =>
-      this.customerService.executeCustomerCommand(payload.customerId, payload.command)
-        .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
-    );
-
-  @Effect()
-  addTask: Observable<Action> = this.actions$
-    .ofType(taskActions.ADD_TASK_TO_CUSTOMER)
-    .map((action: taskActions.AddCustomerTaskAction) => action.payload)
-    .mergeMap(payload =>
-      this.customerService.addTaskToCustomer(payload.customerId, payload.taskId)
-        .map(() => new taskActions.AddCustomerTaskSuccessAction(payload))
-        .catch((error) => of(new taskActions.AddCustomerTaskFailAction(error)))
-    );
+  constructor(private actions$: Actions, private customerService: CustomerService) {}
 }

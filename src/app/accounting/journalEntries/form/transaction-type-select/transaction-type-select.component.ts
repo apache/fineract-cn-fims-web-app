@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {Component, Input, forwardRef, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
@@ -28,12 +28,16 @@ const noop: () => void = () => {
 
 @Component({
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransactionTypeSelectComponent), multi: true }
+    {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransactionTypeSelectComponent), multi: true}
   ],
   selector: 'fims-transaction-type-select',
   templateUrl: './transaction-type-select.component.html'
 })
-export class TransactionTypeSelectComponent implements ControlValueAccessor, OnInit{
+export class TransactionTypeSelectComponent implements ControlValueAccessor, OnInit {
+
+  private _onTouchedCallback: () => void = noop;
+
+  private _onChangeCallback: (_: any) => void = noop;
 
   formControl: FormControl;
 
@@ -43,7 +47,8 @@ export class TransactionTypeSelectComponent implements ControlValueAccessor, OnI
 
   transactionTypes: Observable<TransactionType[]>;
 
-  constructor(private accountingService: AccountingService) {}
+  constructor(private accountingService: AccountingService) {
+  }
 
   ngOnInit(): void {
     this.formControl = new FormControl('');
@@ -56,7 +61,7 @@ export class TransactionTypeSelectComponent implements ControlValueAccessor, OnI
       .switchMap(name => this.onSearch(name));
   }
 
-  changeValue(value: string): void{
+  changeValue(value: string): void {
     this._onChangeCallback(value);
   }
 
@@ -72,11 +77,7 @@ export class TransactionTypeSelectComponent implements ControlValueAccessor, OnI
     this._onTouchedCallback = fn;
   }
 
-  private _onTouchedCallback: () => void = noop;
-
-  private _onChangeCallback: (_: any) => void = noop;
-
-  onSearch(searchTerm?: string): Observable<TransactionType[]>{
+  onSearch(searchTerm?: string): Observable<TransactionType[]> {
     const fetchRequest: FetchRequest = {
       page: {
         pageIndex: 0,

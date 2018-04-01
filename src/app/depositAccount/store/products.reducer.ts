@@ -37,9 +37,9 @@ export function reducer(state = initialState, action: productActions.Actions): R
 
       const definition = state.entities[definitionId];
 
-      let active: boolean = false;
+      let active = false;
 
-      if(command.action === 'ACTIVATE') {
+      if (command.action === 'ACTIVATE') {
         active = true;
       }
 
@@ -52,7 +52,7 @@ export function reducer(state = initialState, action: productActions.Actions): R
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

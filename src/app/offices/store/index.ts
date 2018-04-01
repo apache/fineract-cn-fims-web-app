@@ -16,11 +16,13 @@
 
 import * as fromRoot from '../../store';
 import * as fromTellers from '../store/teller/tellers.reducer';
+import * as fromDenominations from '../store/teller/denomination/denominations.reducer';
 import {ActionReducer, Store} from '@ngrx/store';
 import {createReducer} from '../../store/index';
 import {createSelector} from 'reselect';
 import {
-  createResourceReducer, getResourceAll,
+  createResourceReducer,
+  getResourceAll,
   getResourceEntities,
   getResourceLoadedAt,
   getResourceSelected,
@@ -28,11 +30,12 @@ import {
 } from '../../common/store/resource.reducer';
 import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
 
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.State {
   offices: ResourceState;
   officeForm: FormState;
   tellers: ResourceState;
   tellerForm: FormState;
+  denominations: fromDenominations.State;
 }
 
 const reducers = {
@@ -40,13 +43,14 @@ const reducers = {
   officeForm: createFormReducer('Office'),
   tellers: createResourceReducer('Office Teller', fromTellers.reducer, 'code'),
   tellerForm: createFormReducer('Office Teller'),
+  denominations: fromDenominations.reducer
 };
 
 export const officeModuleReducer: ActionReducer<State> = createReducer(reducers);
 
-export class OfficesStore extends Store<State>{}
+export class OfficesStore extends Store<State> {}
 
-export function officeStoreFactory(appStore: Store<fromRoot.State>){
+export function officeStoreFactory(appStore: Store<fromRoot.State>) {
   appStore.replaceReducer(officeModuleReducer);
   return appStore;
 }
@@ -60,7 +64,6 @@ export const getOfficeEntities = createSelector(getOfficesState, getResourceEnti
 export const getOfficesLoadedAt = createSelector(getOfficesState, getResourceLoadedAt);
 export const getSelectedOffice = createSelector(getOfficesState, getResourceSelected);
 
-
 export const getTellerState = (state: State) => state.tellers;
 
 export const getTellerFormState = (state: State) => state.tellerForm;
@@ -70,3 +73,6 @@ export const getAllTellerEntities = createSelector(getTellerState, getResourceAl
 
 export const getTellersLoadedAt = createSelector(getTellerState, getResourceLoadedAt);
 export const getSelectedTeller = createSelector(getTellerState, getResourceSelected);
+
+export const getDenominationState = (state: State) => state.denominations;
+export const getDenominationsEntities = createSelector(getDenominationState, fromDenominations.getDenominationEntities);

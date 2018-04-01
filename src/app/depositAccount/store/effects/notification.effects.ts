@@ -24,8 +24,6 @@ import * as definitionActions from '../product.actions';
 @Injectable()
 export class DepositProductDefinitionNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({dispatch: false})
   createProductDefinitionSuccess$: Observable<Action> = this.actions$
     .ofType(definitionActions.CREATE_SUCCESS, definitionActions.UPDATE_SUCCESS)
@@ -47,7 +45,7 @@ export class DepositProductDefinitionNotificationEffects {
     .ofType(definitionActions.DELETE_FAIL)
     .do(() => this.notificationService.send({
       type: NotificationType.ALERT,
-      message: 'Product is already assigned to a customer.'
+      message: 'Product is already assigned to a member.'
     }));
 
   @Effect({dispatch: false})
@@ -57,4 +55,6 @@ export class DepositProductDefinitionNotificationEffects {
       type: NotificationType.MESSAGE,
       message: 'Product is going to be updated'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

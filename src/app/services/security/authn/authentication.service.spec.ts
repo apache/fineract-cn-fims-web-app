@@ -15,7 +15,7 @@
  */
 
 import {AuthenticationService} from './authentication.service';
-import {Http, BaseRequestOptions, ResponseOptions, Response} from '@angular/http';
+import {BaseRequestOptions, Http, Response, ResponseOptions} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {Authentication} from '../../identity/domain/authentication.model';
 
@@ -23,7 +23,7 @@ describe('Test Authentication Service', () => {
 
   let authService: AuthenticationService;
 
-  let tenant: string = 'Reynholm Industries';
+  const tenant = 'Reynholm Industries';
 
   const mockAuthentication: Authentication = {
     tokenType: 'iDontCare',
@@ -34,13 +34,13 @@ describe('Test Authentication Service', () => {
   };
 
   beforeEach(() => {
-    let mockBackend: MockBackend = new MockBackend();
+    const mockBackend: MockBackend = new MockBackend();
 
     mockBackend.connections.subscribe((connection: MockConnection) =>
-      connection.mockRespond(new Response(new ResponseOptions({ body: mockAuthentication })))
+      connection.mockRespond(new Response(new ResponseOptions({body: mockAuthentication})))
     );
-    let requestOptions: BaseRequestOptions = new BaseRequestOptions();
-    let http: Http = new Http(mockBackend, requestOptions);
+    const requestOptions: BaseRequestOptions = new BaseRequestOptions();
+    const http: Http = new Http(mockBackend, requestOptions);
 
     authService = new AuthenticationService('/identity', http);
   });

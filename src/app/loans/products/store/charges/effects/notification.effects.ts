@@ -16,7 +16,7 @@
 
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as chargeActions from '../charge.actions';
@@ -24,14 +24,12 @@ import * as chargeActions from '../charge.actions';
 @Injectable()
 export class ProductChargesNotificationEffects {
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
-
   @Effect({dispatch: false})
   createUpdateCustomerChargeSuccess$: Observable<Action> = this.actions$
     .ofType(chargeActions.CREATE_SUCCESS, chargeActions.UPDATE)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Charge is going to be saved'
+      message: 'Fee is going to be saved'
     }));
 
   @Effect({dispatch: false})
@@ -39,7 +37,9 @@ export class ProductChargesNotificationEffects {
     .ofType(chargeActions.DELETE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Charge is going to be deleted'
+      message: 'Fee is going to be deleted'
     }));
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }
 

@@ -14,26 +14,57 @@
  * limitations under the License.
  */
 
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs/Observable";
-import {Action} from "@ngrx/store";
-import {of} from "rxjs/observable/of";
-import * as catalogActions from "../catalog.actions";
-import {CatalogService} from "../../../../services/catalog/catalog.service";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
+import {of} from 'rxjs/observable/of';
+import * as catalogActions from '../catalog.actions';
+import {CatalogService} from '../../../../services/catalog/catalog.service';
 
 @Injectable()
 export class CatalogApiEffects {
 
-  constructor(private actions$: Actions, private catalogService: CatalogService) { }
+  @Effect()
+  createCatalog$: Observable<Action> = this.actions$
+    .ofType(catalogActions.CREATE)
+    .map((action: catalogActions.CreateCatalogAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.createCatalog(payload.catalog)
+        .map(() => new catalogActions.CreateCatalogSuccessAction(payload))
+        .catch((error) => of(new catalogActions.CreateCatalogFailAction(error)))
+    );
 
   @Effect()
-  loadCatalogs$: Observable<Action> = this.actions$
-    .ofType(catalogActions.LOAD_ALL)
-    .mergeMap(() =>
-      this.catalogService.fetchCatalogs()
-        .map(catalogs => new catalogActions.LoadAllCompleteAction(catalogs))
-        .catch((error) => of(new catalogActions.LoadAllCompleteAction([])))
+  deleteCatalog$: Observable<Action> = this.actions$
+    .ofType(catalogActions.DELETE)
+    .map((action: catalogActions.DeleteCatalogAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.deleteCatalog(payload.catalog)
+        .map(() => new catalogActions.DeleteCatalogSuccessAction(payload))
+        .catch((error) => of(new catalogActions.DeleteCatalogFailAction(error)))
     );
+
+  @Effect()
+  updateField$: Observable<Action> = this.actions$
+    .ofType(catalogActions.UPDATE_FIELD)
+    .map((action: catalogActions.UpdateFieldAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.updateField(payload.catalogIdentifier, payload.field)
+        .map(() => new catalogActions.UpdateFieldSuccessAction(payload))
+        .catch((error) => of(new catalogActions.UpdateFieldFailAction(error)))
+    );
+
+  @Effect()
+  deleteField$: Observable<Action> = this.actions$
+    .ofType(catalogActions.DELETE_FIELD)
+    .map((action: catalogActions.DeleteFieldAction) => action.payload)
+    .mergeMap(payload =>
+      this.catalogService.deleteField(payload.catalogIdentifier, payload.field)
+        .map(() => new catalogActions.DeleteFieldSuccessAction(payload))
+        .catch((error) => of(new catalogActions.DeleteFieldFailAction(error)))
+    );
+
+  constructor(private actions$: Actions, private catalogService: CatalogService) { }
 
 }

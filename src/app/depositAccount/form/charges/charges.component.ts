@@ -15,7 +15,7 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {FormArray, FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Charge} from '../../../services/depositAccount/domain/definition/charge.model';
 import {FormComponent} from '../../../common/forms/form.component';
 import {Action} from '../../../services/depositAccount/domain/definition/action.model';
@@ -66,12 +66,12 @@ export class DepositProductChargesFormComponent extends FormComponent<Charge[]> 
       description: [charge ? charge.description : '', Validators.maxLength(2048)],
       proportional: [charge ? charge.proportional : false ],
       amount: [amount.toFixed(2), [ FimsValidators.minValue(0)] ]
-    })
+    });
   }
 
   addCharge(): void {
-    const moratoriums: FormArray = this.form.get('charges') as FormArray;
-    moratoriums.push(this.initCharge());
+    const charges: FormArray = this.form.get('charges') as FormArray;
+    charges.push(this.initCharge());
   }
 
   removeCharge(index: number): void {

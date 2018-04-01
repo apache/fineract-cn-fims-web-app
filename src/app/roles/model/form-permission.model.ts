@@ -17,12 +17,12 @@
 export class FormPermission {
 
   private _groupIdentifier: string;
-  private _read: boolean = false;
-  private _change: boolean = false;
-  private _remove: boolean = false;
+  private _read = false;
+  private _change = false;
+  private _remove = false;
 
-  private _label: string = '';
-  private _readOnly: boolean = true;
+  private _label = '';
+  private _readOnly = true;
 
   constructor(groupIdentifier: string) {
     this._groupIdentifier = groupIdentifier;
@@ -55,7 +55,7 @@ export class FormPermission {
   set read(value: boolean) {
     this._read = value;
 
-    if(!value) {
+    if (!value) {
       this.change = false;
       this.remove = false;
     }
@@ -68,7 +68,7 @@ export class FormPermission {
   set change(value: boolean) {
     this._change = value;
 
-    if(!value) {
+    if (!value) {
       this.remove = false;
     } else {
       this.read = true;
@@ -82,7 +82,7 @@ export class FormPermission {
   set remove(value: boolean) {
     this._remove = value;
 
-    if(value) {
+    if (value) {
       this.read = true;
       this.change = true;
     }

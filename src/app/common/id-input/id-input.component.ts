@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 @Component({
@@ -23,13 +23,16 @@ import {FormGroup} from '@angular/forms';
 })
 export class IdInputComponent implements OnInit {
 
+  @HostBinding('attr.layout')
+  @Input() layout = 'row';
+
   @Input() controlName: string;
 
   @Input() form: FormGroup;
 
   @Input() readonly: boolean;
 
-  @Input() placeholder: string = 'Identifier';
+  @Input() placeholder = 'Identifier';
 
   constructor() { }
 

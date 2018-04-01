@@ -15,6 +15,10 @@
  */
 
 export interface DividendDistribution {
-  dueDate: string;
+  dueDate: {
+    year?: number;
+    month?: number;
+    day?: number;
+  };
   dividendRate: string;
 }

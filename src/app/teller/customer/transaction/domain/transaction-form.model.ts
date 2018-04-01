@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Cheque} from '../../../../services/teller/domain/cheque.model';
 
 export interface TransactionForm {
   customerIdentifier: string;
@@ -21,4 +22,5 @@ export interface TransactionForm {
   accountIdentifier: string;
   targetAccountIdentifier?: string;
   amount: number;
+  cheque?: Cheque;
 }

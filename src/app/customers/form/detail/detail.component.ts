@@ -16,7 +16,7 @@
 
 import {Component, Input} from '@angular/core';
 import {FormComponent} from '../../../common/forms/form.component';
-import {Validators, FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
 
 export interface CustomerDetailFormData {
@@ -28,7 +28,7 @@ export interface CustomerDetailFormData {
     day?: number;
     month?: number;
     year?: number;
-  }
+  };
   member: boolean;
 }
 
@@ -46,18 +46,19 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
       firstName: [formData.firstName, [Validators.required, Validators.maxLength(256)]],
       middleName: [formData.middleName, Validators.maxLength(256)],
       lastName: [formData.lastName, [Validators.required, Validators.maxLength(256)]],
-      dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined, Validators.required],
+      dayOfBirth: [dateOfBirth ? this.formatDate(dateOfBirth.year, dateOfBirth.month, dateOfBirth.day) : undefined,
+        [Validators.required, FimsValidators.beforeToday]],
       member: [formData.member],
-    })
+    });
   };
 
   @Input() editMode: boolean;
 
-  private formatDate(year: number, month: number, day: number): string{
+  private formatDate(year: number, month: number, day: number): string {
     return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
   }
 
-  private addZero(value: number): string{
+  private addZero(value: number): string {
     return ('0' + value).slice(-2);
   }
 
@@ -81,7 +82,7 @@ export class CustomerDetailFormComponent extends FormComponent<CustomerDetailFor
         day: chunks.length ? Number(chunks[2]) : undefined,
       },
       member: this.form.get('member').value
-    }
+    };
   }
 
 }

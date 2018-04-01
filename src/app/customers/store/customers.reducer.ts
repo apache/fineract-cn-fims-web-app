@@ -15,7 +15,7 @@
  */
 
 import * as customer from './customer.actions';
-import * as customerTasks from './tasks/task.actions';
+import * as customerTasks from './customerTasks/customer-task.actions';
 import {Command} from '../../services/customer/domain/command.model';
 import {CustomerState} from '../../services/customer/domain/customer-state.model';
 import {ResourceState} from '../../common/store/resource.reducer';
@@ -32,25 +32,24 @@ export function reducer(state = initialState, action: customer.Actions | custome
   switch (action.type) {
 
     case customerTasks.EXECUTE_COMMAND_SUCCESS: {
-      let payload = action.payload;
+      const payload = action.payload;
 
-      let customerId = payload.customerId;
-      let command: Command = payload.command;
+      const customerId = payload.customerId;
+      const command: Command = payload.command;
 
-      let customer = state.entities[customerId];
+      const customer = state.entities[customerId];
 
       let customerState: CustomerState = null;
 
-      // TODO add mapping
-      if(command.action === 'ACTIVATE') {
+      if (command.action === 'ACTIVATE') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'LOCK') {
+      }else if (command.action === 'LOCK') {
         customerState = 'LOCKED';
-      }else if(command.action === 'UNLOCK') {
+      }else if (command.action === 'UNLOCK') {
         customerState = 'ACTIVE';
-      }else if(command.action === 'CLOSE') {
+      }else if (command.action === 'CLOSE') {
         customerState = 'CLOSED';
-      }else if(command.action === 'REOPEN') {
+      }else if (command.action === 'REOPEN') {
         customerState = 'ACTIVE';
       }
 
@@ -63,7 +62,7 @@ export function reducer(state = initialState, action: customer.Actions | custome
         }),
         loadedAt: state.loadedAt,
         selectedId: state.selectedId
-      }
+      };
     }
 
     default: {

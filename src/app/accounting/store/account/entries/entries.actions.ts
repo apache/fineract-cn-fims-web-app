@@ -22,7 +22,7 @@ import {AccountEntryPage} from '../../../../services/accounting/domain/account-e
 export const SEARCH = type('[Account Entry] Search');
 export const SEARCH_COMPLETE = type('[Account Entry] Search Complete');
 
-export interface SearchActionPayload{
+export interface SearchActionPayload {
   accountId: string;
   startDate: string;
   endDate: string;

@@ -15,18 +15,25 @@
  */
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {AUTHORIZATION_HEADER, HttpClient, TENANT_HEADER, USER_HEADER} from './http.service';
-import {BaseRequestOptions, ConnectionBackend, Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
+import {
+  BaseRequestOptions,
+  ConnectionBackend,
+  Headers,
+  Http,
+  RequestOptions,
+  RequestOptionsArgs,
+  Response,
+  ResponseOptions
+} from '@angular/http';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {ReflectiveInjector} from '@angular/core';
 
 describe('Test http client', () => {
 
-  let tenant: string = 'Reynholm Industries';
+  const tenant = 'Reynholm Industries';
 
-  let baseUrl: string = 'baseUrl';
-
-  let authenticationState = {
+  const authenticationState = {
     username: 'test',
     tenant: tenant,
     authentication: {
@@ -39,8 +46,9 @@ describe('Test http client', () => {
     }
   };
 
-  let doPostRequest = function (httpClient: HttpClient, options?: RequestOptionsArgs): void {
-    httpClient.post('/test', {}, options).subscribe(() => {});
+  const doPostRequest = function (httpClient: HttpClient, options?: RequestOptionsArgs): void {
+    httpClient.post('/test', {}, options).subscribe(() => {
+    });
   };
 
   describe('Test http header', () => {
@@ -51,8 +59,8 @@ describe('Test http client', () => {
         {provide: RequestOptions, useClass: BaseRequestOptions},
         {
           provide: Store, useClass: class {
-            select = jasmine.createSpy('select').and.returnValue(Observable.of(authenticationState))
-          }
+          select = jasmine.createSpy('select').and.returnValue(Observable.of(authenticationState));
+        }
         },
         Http,
         HttpClient,
@@ -80,15 +88,46 @@ describe('Test http client', () => {
 
     it('should send custom headers', (done: DoneFn) => {
       this.backend.connections.subscribe((connection: MockConnection) => {
-        expect(connection.request.headers.get("Content-Type")).toBe("multipart/form-data");
+        expect(connection.request.headers.get('Content-Type')).toBe('multipart/form-data');
         done();
       });
       doPostRequest(this.httpClient, {
         headers: new Headers({
-          "Content-Type": "multipart/form-data"
+          'Content-Type': 'multipart/form-data'
         })
       });
-    })
+    });
+
+    it('should return json if json', (done: DoneFn) => {
+      const expectedResponse: any = {
+        text: 'text'
+      };
+      this.backend.connections.subscribe((connection: MockConnection) => {
+        const response = new Response(new ResponseOptions({
+          body: JSON.stringify(expectedResponse)
+        }));
+        connection.mockRespond(response);
+      });
+
+      this.httpClient.post('/test', {}).subscribe(response => {
+        expect(response).toEqual(expectedResponse);
+        done();
+      });
+    });
+
+    it('should return text if no json', (done: DoneFn) => {
+      this.backend.connections.subscribe((connection: MockConnection) => {
+        const response = new Response(new ResponseOptions({
+          body: 'text'
+        }));
+        connection.mockRespond(response);
+      });
+
+      this.httpClient.post('/test', {}).subscribe(text => {
+        expect(text).toEqual('text');
+        done();
+      });
+    });
 
   });
 

@@ -21,13 +21,13 @@ import {Office} from '../../../services/office/domain/office.model';
 import * as fromOffice from '../../store';
 import {CREATE, CREATE_BRANCH, RESET_FORM} from '../../store/office.actions';
 import {Error} from '../../../services/domain/error.model';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import {OfficesStore} from '../../store/index';
 
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateOfficeFormComponent implements OnInit, OnDestroy{
+export class CreateOfficeFormComponent implements OnInit, OnDestroy {
 
   private formStateSubscription: Subscription;
 
@@ -42,8 +42,8 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
     this.formStateSubscription = store.select(fromOffice.getOfficeFormError)
       .filter((error: Error) => !!error)
       .subscribe((error: Error) => {
-        let officeDetailForm = this.formComponent.detailForm;
-        let errors = officeDetailForm.get('identifier').errors || {};
+        const officeDetailForm = this.formComponent.detailForm;
+        const errors = officeDetailForm.get('identifier').errors || {};
         errors['unique'] = true;
         officeDetailForm.get('identifier').setErrors(errors);
         this.formComponent.step.open();
@@ -59,17 +59,17 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM })
+    this.store.dispatch({ type: RESET_FORM });
   }
 
-  onSave(office: Office): void{
-    if(this.parentIdentifier){
+  onSave(office: Office): void {
+    if (this.parentIdentifier) {
       office.parentIdentifier = this.parentIdentifier;
       this.store.dispatch({ type: CREATE_BRANCH, payload: {
         office,
         activatedRoute: this.route
       }});
-    }else{
+    } else {
       this.store.dispatch({ type: CREATE, payload: {
         office,
         activatedRoute: this.route
@@ -77,14 +77,14 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  onCancel(): void{
-    this.navigateAway()
+  onCancel(): void {
+    this.navigateAway();
   }
 
-  navigateAway(): void{
-    if(this.parentIdentifier){
+  navigateAway(): void {
+    if (this.parentIdentifier) {
       this.router.navigate(['../detail', this.parentIdentifier ], { relativeTo: this.route });
-    }else{
+    } else {
       this.router.navigate(['../'], { relativeTo: this.route });
     }
   }

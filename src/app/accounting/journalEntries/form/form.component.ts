@@ -14,115 +14,98 @@
  * limitations under the License.
  */
 import {JournalEntry} from '../../../services/accounting/domain/journal-entry.model';
-import {FormComponent} from '../../../common/forms/form.component';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Account} from '../../../services/accounting/domain/account.model';
-import {Observable, Subscription} from 'rxjs';
-import {toLongISOString} from '../../../services/domain/date.converter';
+import {addCurrentTime, parseDate} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
-import * as fromAccounting from '../../store';
-import * as fromRoot from '../../../store';
-import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';
 import {Error} from '../../../services/domain/error.model';
-import {SEARCH} from '../../../store/account/account.actions';
-import {AccountingStore} from '../../store/index';
 import {JournalEntryValidators} from './journal-entry.validator';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {transactionTypeExists} from './transaction-type-select/validator/transaction-type-exists.validator';
+import {accountExists} from '../../../common/validator/account-exists.validator';
+import {Creditor} from '../../../services/accounting/domain/creditor.model';
+import {Debtor} from '../../../services/accounting/domain/debtor.model';
 
 @Component({
-  selector: 'fims-journal-entry-form-component',
+  selector: 'fims-journal-entry-form',
   templateUrl: './form.component.html'
 })
-export class JournalEntryFormComponent extends FormComponent<JournalEntry> implements OnInit, OnDestroy {
-
-  private formStateSubscription: Subscription;
-
-  private userNameSubscription: Subscription;
+export class JournalEntryFormComponent implements OnInit, OnChanges {
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-  selectedClerk: string;
+  @Input() journalEntry: JournalEntry;
 
-  term = new FormControl();
+  @Input() error: Error;
 
-  accounts: Observable<Account[]>;
+  @Output('onSave') onSave = new EventEmitter<JournalEntry>();
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private store: AccountingStore, private accountingService: AccountingService) {
-    super();
-  }
+  @Output('onCancel') onCancel = new EventEmitter<void>();
 
-  get formData(): JournalEntry {
-    return null;
-  }
+  form: FormGroup;
 
-  ngOnInit(): void {
-    this.formStateSubscription = this.store.select(fromAccounting.getJournalEntryFormError)
-      .filter((error: Error) => !!error)
-      .subscribe((error: Error) => this.setError('transactionIdentifier', 'unique', true));
-
-    this.accounts = this.store.select(fromRoot.getAccountSearchResults)
-      .map(accountPage => accountPage.accounts);
-
-    this.detailsStep.open();
-
-    this.userNameSubscription = this.store.select(fromRoot.getUsername).subscribe(username => this.selectedClerk = username);
+  constructor(private formBuilder: FormBuilder, private accountingService: AccountingService) {
 
     this.form = this.formBuilder.group({
       transactionIdentifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       transactionType: ['', [Validators.required], transactionTypeExists(this.accountingService)],
-      transactionDate: [new Date().toISOString().slice(0, 10), Validators.required],
+      transactionDate: ['', Validators.required],
       note: [''],
       message: [''],
       creditors: this.formBuilder.array([], JournalEntryValidators.minItems(1)),
       debtors: this.formBuilder.array([], JournalEntryValidators.minItems(1))
     }, { validator: JournalEntryValidators.equalSum('creditors', 'debtors') });
 
-    this.term.valueChanges
-      .debounceTime(500)
-      .subscribe((event) => this.onAccountSearch(event));
-
-    this.onAccountSearch();
   }
 
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-    this.userNameSubscription.unsubscribe();
-
-    this.store.dispatch({ type: RESET_FORM })
+  ngOnInit(): void {
+    this.detailsStep.open();
   }
 
-  onClerkSelectionChange(selections: string[]): void {
-    this.selectedClerk = selections[0];
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.journalEntry) {
+      this.form.reset({
+        transactionIdentifier: this.journalEntry.transactionIdentifier,
+        transactionType: this.journalEntry.transactionType,
+        transactionDate: this.journalEntry.transactionDate,
+        note: this.journalEntry.note,
+        message: this.journalEntry.message
+      });
+
+      this.journalEntry.debtors.forEach(debtor => this.addDebtor(debtor));
+      this.journalEntry.creditors.forEach(creditor => this.addCreditor(creditor));
+    }
+
+    if (changes.error) {
+      this.form.get('transactionIdentifier').setErrors({
+        unique: true
+      });
+      this.detailsStep.open();
+    }
   }
 
   save(): void {
-    let transactionDateString = toLongISOString(this.form.get('transactionDate').value);
+    const date: Date = parseDate(this.form.get('transactionDate').value);
+    const dateWithTime = addCurrentTime(date);
 
-    let journalEntry: JournalEntry = {
+    const journalEntry: JournalEntry = {
       transactionIdentifier: this.form.get('transactionIdentifier').value,
       transactionType: this.form.get('transactionType').value,
-      transactionDate: transactionDateString,
-      clerk: this.selectedClerk,
+      transactionDate: dateWithTime.toISOString(),
+      clerk: this.journalEntry.clerk,
       note: this.form.get('note').value,
       message: this.form.get('message').value,
       creditors: this.form.get('creditors').value,
       debtors: this.form.get('debtors').value,
     };
 
-    this.store.dispatch({ type: CREATE, payload: {
-      journalEntry,
-      activatedRoute: this.route
-    } });
+    this.onSave.emit(journalEntry);
   }
 
-  addCreditor(accountNumber: string): void {
+  addCreditor(creditor?: Creditor): void {
     const control: FormArray = this.form.get('creditors') as FormArray;
-    control.push(this.initCreditor(accountNumber));
+    control.push(this.initCreditor(creditor));
   }
 
   removeCreditor(index: number): void {
@@ -130,9 +113,9 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     control.removeAt(index);
   }
 
-  addDebtor(accountNumber: string): void {
+  addDebtor(debtor?: Debtor): void {
     const control: FormArray = this.form.get('debtors') as FormArray;
-    control.push(this.initDebtor(accountNumber));
+    control.push(this.initDebtor(debtor));
   }
 
   removeDebtor(index: number): void {
@@ -140,12 +123,8 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     control.removeAt(index);
   }
 
-  onCancel() {
-    this.navigateAway();
-  }
-
-  navigateAway(): void {
-    this.router.navigate(['../'], {relativeTo: this.route});
+  cancel() {
+    this.onCancel.emit();
   }
 
   get debtors(): AbstractControl[] {
@@ -158,30 +137,18 @@ export class JournalEntryFormComponent extends FormComponent<JournalEntry> imple
     return creditors.controls;
   }
 
-  private onAccountSearch(searchTerm?: string): void {
-    let fetchRequest: FetchRequest = {
-      page: {
-        pageIndex: 0,
-        size: 5
-      },
-      searchTerm: searchTerm
-    };
-
-    this.store.dispatch({ type: SEARCH, payload: fetchRequest });
+  private initCreditor(creditor: Creditor = { accountNumber: '', amount: '0' }): FormGroup {
+    return this.formBuilder.group({
+      accountNumber: [creditor.accountNumber, [Validators.required], accountExists(this.accountingService)],
+      amount: [creditor.amount, [Validators.required, FimsValidators.greaterThanValue(0)]]
+    });
   }
 
-  private initCreditor(accountNumber: string): FormGroup {
+  private initDebtor(debtor: Debtor = { accountNumber: '', amount: '0' }): FormGroup {
     return this.formBuilder.group({
-      accountNumber: [accountNumber],
-      amount: [0]
-    })
-  }
-
-  private initDebtor(accountNumber: string): FormGroup {
-    return this.formBuilder.group({
-      accountNumber: [accountNumber],
-      amount: [0]
-    })
+      accountNumber: [debtor.accountNumber, [Validators.required], accountExists(this.accountingService)],
+      amount: [debtor.amount, [Validators.required, FimsValidators.greaterThanValue(0)]]
+    });
   }
 
 }

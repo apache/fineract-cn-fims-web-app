@@ -1,0 +1,62 @@
+<!--
+ Copyright 2017 The Mifos Initiative.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<ng-container *ngIf="customerDocument$ | async as customerDocument">
+  <fims-layout-card-over title="{{ 'Document' | translate }}" [navigateBackTo]="['../../../../../../../../../../']" *ngIf="currentSelection$ | async as currentSelection">
+    <fims-layout-card-over-header-menu layout="row" layout-align="end center">
+      <a mat-icon-button title="{{'Edit document' | translate}}" [routerLink]="['edit']" *ngIf="canEdit$ | async">
+        <mat-icon>mode_edit</mat-icon>
+      </a>
+      <button mat-icon-button (click)="deleteDocument(currentSelection, customerDocument)" title="{{'Delete document' | translate}}" *ngIf="canEdit$ | async">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </fims-layout-card-over-header-menu>
+    <td-message *ngIf="canEdit$ | async" label="{{'Document not locked' | translate }}"
+                sublabel="{{'You can lock this document' | translate }}"
+                color="accent" icon="lock_open">
+      <button td-message-actions mat-button (click)="lock(currentSelection, customerDocument)" translate>
+        LOCK
+      </button>
+    </td-message>
+    <td-message *ngIf="customerDocument.completed" label="{{'Document locked' | translate }}" color="warn" icon="lock">
+    </td-message>
+    <div class="mat-content inset" flex>
+      <mat-list>
+        <mat-list-item>
+          <h3 matLine translate>Description</h3>
+          <p matLine>{{customerDocument.description}}</p>
+        </mat-list-item>
+        <mat-list-item>
+          <h3 matLine translate>Created by</h3>
+          <p matLine>{{customerDocument.createdBy}} - {{customerDocument.createdOn | date:'medium'}}</p>
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="pageNumbers$ | async as pageNumbers">
+        <h3 mat-subheader translate>Pages uploaded</h3>
+        <mat-list-item *ngFor="let pageNumber of pageNumbers">
+          <mat-icon mat-list-icon>content_paste</mat-icon>
+          <h4 matLine>{{pageNumber}}</h4>
+          <button mat-button color="warn" (click)="deletePage(currentSelection, customerDocument, pageNumber)" *ngIf="canEdit$ | async" translate>
+            Delete
+          </button>
+          <button mat-raised-button (click)="viewPage(currentSelection, customerDocument, pageNumber)" translate>
+            View
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </fims-layout-card-over>
+  <fims-fab-button title="{{'Upload page' | translate}}" icon="content_paste" [link]="['upload']" *ngIf="canEdit$ | async"></fims-fab-button>
+</ng-container>

@@ -23,8 +23,6 @@ import * as tellerActions from '../teller.actions';
 
 @Injectable()
 export class TellerNotificationEffects {
-  constructor(private actions$: Actions, private notificationService: NotificationService) {
-  }
 
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
@@ -45,12 +43,27 @@ export class TellerNotificationEffects {
   @Effect({ dispatch: false })
   openCommandFail$: Observable<Action> = this.actions$
     .ofType(tellerActions.EXECUTE_COMMAND_FAIL)
-    .map(action => action.payload)
-    .filter(payload => payload.command !== 'OPEN')
+    .map(action => action.payload.command)
+    .filter(command => command.action === 'OPEN')
     .do(action => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Employee already assigned',
         message: 'Employees can only be assigned to one teller. Please choose a different employee or unassign the employee first.'
       })
     );
+
+  @Effect({ dispatch: false })
+  closeCommandFail$: Observable<Action> = this.actions$
+    .ofType(tellerActions.EXECUTE_COMMAND_FAIL)
+    .map(action => action.payload.command)
+    .filter(command => command.action === 'CLOSE')
+    .do(action => this.notificationService.send({
+        type: NotificationType.ALERT,
+        title: 'Denomination required',
+        message: 'This teller requires a denomination before it can be closed.'
+      })
+    );
+
+  constructor(private actions$: Actions, private notificationService: NotificationService) {
+  }
 }

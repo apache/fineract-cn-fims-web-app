@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FimsTaskInstance} from '../store/model/fims-task-instance.model';
-import {MdCheckboxChange} from '@angular/material';
+import {MatCheckboxChange} from '@angular/material';
 
 export interface SelectTaskEvent {
   taskIdentifier: string;
@@ -37,10 +37,9 @@ export class CaseTaskComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  selectTask(change: MdCheckboxChange): void {
+  selectTask(change: MatCheckboxChange): void {
     this.onSelectTask.emit({
       taskIdentifier: this.task.taskDefinition.identifier,
       checked: change.checked

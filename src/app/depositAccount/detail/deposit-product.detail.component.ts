@@ -24,7 +24,7 @@ import * as fromRoot from '../../store';
 import {TableData} from '../../common/data-table/data-table.component';
 import {TdDialogService} from '@covalent/core';
 import {Observable} from 'rxjs/Observable';
-import {DELETE} from '../store/product.actions';
+import {DELETE, EXECUTE_COMMAND} from '../store/product.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 
 @Component({
@@ -34,7 +34,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   private productSubscription: Subscription;
 
-  numberFormat: string = '1.2-2';
+  numberFormat = '1.2-2';
 
   definition: ProductDefinition;
 
@@ -51,7 +51,8 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     { name: 'amount', label: 'Amount', numeric: true, format: value => value ? value.toFixed(2) : undefined }
   ];
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore, private dialogService: TdDialogService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore,
+              private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
     const selectedProduct$ = this.store.select(fromDepositAccounts.getSelectedProduct)
@@ -64,7 +65,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
           data: product.charges,
           totalElements: product.charges.length,
           totalPages: 1
-        }
+        };
       });
 
     this.canDistributeDividends$ = Observable.combineLatest(
@@ -82,7 +83,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
   }
 
   goToTasks(): void {
-    this.router.navigate(['tasks'], { relativeTo: this.route })
+    this.router.navigate(['tasks'], { relativeTo: this.route });
   }
 
   confirmDeletion(): Observable<boolean> {
@@ -112,6 +113,24 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
     return permissions.filter(permission =>
       permission.id === 'deposit_definitions' &&
       permission.accessLevel === 'CHANGE'
-    ).length > 0
+    ).length > 0;
+  }
+
+  enableProduct(): void {
+    this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
+      definitionId: this.definition.identifier,
+      command: {
+        action: 'ACTIVATE'
+      }
+    }});
+  }
+
+  disableProduct(): void {
+    this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
+      definitionId: this.definition.identifier,
+      command: {
+        action: 'DEACTIVATE'
+      }
+    }});
   }
 }

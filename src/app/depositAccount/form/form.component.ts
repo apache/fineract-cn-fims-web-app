@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import {
-  Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
 import {TdStepComponent} from '@covalent/core';
 import {AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
@@ -139,8 +136,8 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
     const termPeriodControl: FormControl = this.formGroup.get('termPeriod') as FormControl;
     const termTimeUnitControl: FormControl = this.formGroup.get('termTimeUnit') as FormControl;
 
-    if(enabled) {
-      this.enable(termPeriodControl, [Validators.required, FimsValidators.minValue(1)]);
+    if (enabled) {
+      this.enable(termPeriodControl, [Validators.required, FimsValidators.minValue(1), FimsValidators.maxScale(0)]);
       this.enable(termTimeUnitControl, [Validators.required]);
     } else {
       this.disable(termPeriodControl);
@@ -153,7 +150,7 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
 
     const accrueAccountControl: FormControl = this.formGroup.get('accrueAccountIdentifier') as FormControl;
 
-    if(enableAccrueAccount) {
+    if (enableAccrueAccount) {
       this.enable(accrueAccountControl, [Validators.required], accountExists(this.accountingService));
     } else {
       this.disable(accrueAccountControl);
@@ -178,7 +175,7 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
   }
 
   save(): void {
-    const currency = this.currencies.find(currency => currency.code === this.formGroup.get('currencyCode').value);
+    const foundCurrency = this.currencies.find(currency => currency.code === this.formGroup.get('currencyCode').value);
 
     const isShare = this.formGroup.get('type').value === 'SHARE';
 
@@ -198,10 +195,10 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
         interestPayable: this.formGroup.get('termInterestPayable').value
       },
       currency: {
-        code: currency.code,
-        name: currency.name,
-        sign: currency.sign,
-        scale: currency.digits
+        code: foundCurrency.code,
+        name: foundCurrency.name,
+        sign: foundCurrency.sign,
+        scale: foundCurrency.digits
       },
       charges: this.chargesForm.formData,
       expenseAccountIdentifier: this.formGroup.get('expenseAccountIdentifier').value,

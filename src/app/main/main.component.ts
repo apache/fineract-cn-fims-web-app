@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute, RouterState} from '@angular/router';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router, RouterState} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {HttpClient, Action} from '../services/http/http.service';
+import {Action, HttpClient} from '../services/http/http.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
 import {LOGOUT} from '../store/security/security.actions';
@@ -24,7 +24,8 @@ import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../services/security/authz/fims-permission.model';
 import {CountryService} from '../services/country/country.service';
 import {TdMediaService} from '@covalent/core';
-import {MdSidenav} from '@angular/material';
+import {Subscription} from 'rxjs/Subscription';
+import {MatSidenav} from '@angular/material';
 
 interface MenuItem {
   permission?: FimsPermission;
@@ -39,32 +40,82 @@ interface MenuItem {
   templateUrl: './main.component.html',
   styleUrls: ['main.component.scss']
 })
-export class MainComponent implements OnInit, AfterViewInit {
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  isOpened$: Observable<boolean>;
+  private routerEventSubscription: Subscription;
 
-  @ViewChild(MdSidenav) sidenav: MdSidenav;
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   menuItems: MenuItem[] = [
-    { title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess' },
-    { title: 'Offices', description: 'Manage offices', icon: 'store', routerLink: '/offices', permission: { id: 'office_offices', accessLevel: 'READ'} },
-    { title: 'Roles/Permissions', description: 'Manage roles and permissions', icon: 'https', routerLink: '/roles', permission: { id: 'identity_roles', accessLevel: 'READ'} },
-    { title: 'Employees', description: 'Manage employees', icon: 'group', routerLink: '/employees', permission: { id: 'office_employees', accessLevel: 'READ'} },
-    { title: 'Accounting', description: 'Manage ledger accounts', icon: 'receipt', routerLink: '/accounting', permission: { id: 'accounting_ledgers', accessLevel: 'READ'} },
-    { title: 'Customer', description: 'Manage customers', icon: 'face', routerLink: '/customers', permission: { id: 'customer_customers', accessLevel: 'READ'} },
-    { title: 'Loan products', description: 'Manage loan products', icon: 'credit_card', routerLink: '/loans', permission: { id: 'portfolio_products', accessLevel: 'READ'} },
-    { title: 'Deposit', description: 'Account management', icon: 'attach_money', routerLink: '/deposits', permission: { id: 'deposit_definitions', accessLevel: 'READ'} },
-    { title: 'Teller', description: 'Teller management', icon: 'person', routerLink: '/teller', permission: { id: 'teller_operations', accessLevel: 'READ'} },
-    { title: 'Reports', description: 'View reports', icon: 'show_chart', routerLink: '/reports', permission: { id: 'reporting_management', accessLevel: 'READ' } },
+    {title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess'},
+    {
+      title: 'Offices',
+      description: 'Manage offices',
+      icon: 'store',
+      routerLink: '/offices',
+      permission: {id: 'office_offices', accessLevel: 'READ'}
+    },
+    {
+      title: 'Roles/Permissions',
+      description: 'Manage roles and permissions',
+      icon: 'https',
+      routerLink: '/roles',
+      permission: {id: 'identity_roles', accessLevel: 'READ'}
+    },
+    {
+      title: 'Employees',
+      description: 'Manage employees',
+      icon: 'group',
+      routerLink: '/employees',
+      permission: {id: 'office_employees', accessLevel: 'READ'}
+    },
+    {
+      title: 'Accounting',
+      description: 'Manage ledger accounts',
+      icon: 'receipt',
+      routerLink: '/accounting',
+      permission: {id: 'accounting_ledgers', accessLevel: 'READ'}
+    },
+    {
+      title: 'Member',
+      description: 'Manage members',
+      icon: 'face',
+      routerLink: '/customers',
+      permission: {id: 'customer_customers', accessLevel: 'READ'}
+    },
+    {
+      title: 'Loan products',
+      description: 'Manage loan products',
+      icon: 'credit_card',
+      routerLink: '/loans',
+      permission: {id: 'portfolio_products', accessLevel: 'READ'}
+    },
+    {
+      title: 'Deposit',
+      description: 'Account management',
+      icon: 'attach_money',
+      routerLink: '/deposits',
+      permission: {id: 'deposit_definitions', accessLevel: 'READ'}
+    },
+    {
+      title: 'Teller',
+      description: 'Teller management',
+      icon: 'person',
+      routerLink: '/teller',
+      permission: {id: 'teller_operations', accessLevel: 'READ'}
+    },
+    {
+      title: 'Reports',
+      description: 'View reports',
+      icon: 'show_chart',
+      routerLink: '/reports',
+      permission: {id: 'reporting_management', accessLevel: 'READ'}
+    },
   ];
-
-  icon: string;
-
-  logo: string;
 
   isLoading$: Observable<boolean>;
 
-  title: string;
+  isOpened$: Observable<boolean>;
 
   tenant$: Observable<string>;
 
@@ -74,18 +125,20 @@ export class MainComponent implements OnInit, AfterViewInit {
               private store: Store<fromRoot.State>, private media: TdMediaService) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd){
-        let title = this.getTitle(this.router.routerState, this.router.routerState.root).join(" - ");
-        this.titleService.setTitle(title);
-        this.title = title;
-      }
-    });
+    this.routerEventSubscription = this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map(() => this.getTitle(this.router.routerState, this.router.routerState.root).join(' - '))
+      .subscribe(title => this.titleService.setTitle(title));
 
     this.tenant$ = this.store.select(fromRoot.getTenant);
     this.username$ = this.store.select(fromRoot.getUsername);
+    this.isOpened$ = this.media.registerQuery('gt-md');
 
     this.countryService.init();
+  }
+
+  ngOnDestroy(): void {
+    this.routerEventSubscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -93,23 +146,21 @@ export class MainComponent implements OnInit, AfterViewInit {
       .debounceTime(1000)
       .map((action: Action) => action === Action.QueryStart);
 
-    this.isOpened$ = this.media.registerQuery('gt-md');
-
     this.media.broadcast();
   }
 
   getTitle(state: RouterState, parent: ActivatedRoute): string[] {
-    let data = [];
+    const data = [];
 
-    if(parent && parent.snapshot.data){
-      let dataProperty: any = parent.snapshot.data;
+    if (parent && parent.snapshot.data) {
+      const dataProperty: any = parent.snapshot.data;
 
-      if(dataProperty.title){
+      if (dataProperty.title) {
         data.push(dataProperty.title);
       }
     }
 
-    if(state && parent){
+    if (state && parent) {
       data.push(... this.getTitle(state, parent.firstChild));
     }
 
@@ -117,7 +168,7 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   toggleSideNav(): void {
-    this.sidenav.toggle(!this.sidenav.opened)
+    this.sidenav.toggle(!this.sidenav.opened);
   }
 
   logout(): void {

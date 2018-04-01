@@ -16,26 +16,53 @@
 
 <fims-layout-card-over title="{{'Planned payments' | translate}}" [navigateBackTo]="['../']">
   <div layout="row" layout-margin>
-    <md-input-container layout-margin>
-      <input mdInput type="date" placeholder="{{'Start date' | translate}}" [(ngModel)]="startDate">
-    </md-input-container>
+    <mat-form-field layout-margin>
+      <input matInput type="date" placeholder="{{'Start date' | translate}}" [(ngModel)]="startDate">
+    </mat-form-field>
     <span>
-        <button layout-margin md-button md-icon-button (click)="fetchPayments(startDate)"><md-icon>search</md-icon></button>
-      </span>
+      <button layout-margin mat-button mat-icon-button (click)="fetchPayments(startDate)"><mat-icon>search</mat-icon></button>
+    </span>
   </div>
-  <div layout="row" class="md-content">
+  <div layout="row" class="mat-content">
     <table td-data-table>
-      <th td-data-table-column [active]="true" translate>Date</th>
-      <th td-data-table-column [active]="true" [numeric]="true" *ngFor="let col of (columns | async)" translate>{{col.name}}</th>
-      <th td-data-table-column [active]="true" [numeric]="true" translate>Remaining principal</th>
-
-      <tr td-data-table-row *ngFor="let row of (rows | async)">
-        <td td-data-table-cell>{{row.date | date}}</td>
-        <td td-data-table-cell [numeric]="true" *ngFor="let col of (columns | async)">
-          {{row.costComponents[col.identifier]?.amount | number}}
-        </td>
-        <td td-data-table-cell [numeric]="true">{{row.remainingPrincipal | number}}</td>
-      </tr>
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column [active]="true" translate>
+            Date
+          </th>
+          <th td-data-table-column [active]="true" [numeric]="true" translate>
+            Payment
+          </th>
+          <th td-data-table-column [active]="true" [numeric]="true" translate>
+            Interest
+          </th>
+          <th td-data-table-column [active]="true" [numeric]="true" translate>
+            Principal
+          </th>
+          <th td-data-table-column [active]="true" [numeric]="true" translate>
+            Balance
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let row of (rows | async)">
+          <td td-data-table-cell>
+            {{row.date | date}}
+          </td>
+          <td td-data-table-cell [numeric]="true">
+            {{row.payment | number}}
+          </td>
+          <td td-data-table-cell [numeric]="true">
+            {{row.interest | number}}
+          </td>
+          <td td-data-table-cell [numeric]="true">
+            {{row.principal | number}}
+          </td>
+          <td td-data-table-cell [numeric]="true">
+            {{row.balance | number}}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </fims-layout-card-over>

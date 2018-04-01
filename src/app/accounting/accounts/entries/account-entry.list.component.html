@@ -14,27 +14,29 @@
  limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Account entries for account' | translate:{ value: account.identifier} }}" [navigateBackTo]="['../']">
+<fims-layout-card-over
+  title="{{'Account entries for account' | translate:{ value: account.identifier} }}"
+  [navigateBackTo]="['../']"
+  *ngIf="account$ | async as account">
   <form [formGroup]="form">
-    <div layout="row">
-      <md-input-container layout-margin>
-        <input mdInput type="date" placeholder="{{'Start date' | translate}}" formControlName="startDate">
-      </md-input-container>
-      <md-input-container layout-margin>
-        <input mdInput type="date" placeholder="{{'End date' | translate}}" formControlName="endDate">
-        <md-error *ngIf="form.hasError('rangeInvalid')" class="tc-red-600" translate>Invalid date range</md-error>
-      </md-input-container>
-      <span>
-        <button layout-margin md-button md-icon-button (click)="fetchAccountsEntries()" [disabled]="!form.valid"><md-icon>search</md-icon></button>
-      </span>
-    </div>
+    <mat-form-field layout-margin>
+      <input matInput type="date" placeholder="{{'Start date' | translate}}" formControlName="startDate">
+    </mat-form-field>
+    <mat-form-field layout-margin>
+      <input matInput type="date" placeholder="{{'End date' | translate}}" formControlName="endDate">
+      <mat-error *ngIf="form.hasError('rangeInvalid')" class="tc-red-600" translate>Invalid date range</mat-error>
+    </mat-form-field>
+    <button layout-margin mat-button mat-icon-button (click)="fetchAccountsEntries(account.identifier)" [disabled]="!form.valid">
+      <mat-icon>search</mat-icon>
+    </button>
   </form>
   <fims-data-table flex
-                   (onFetch)="fetchAccountsEntries($event)"
+                   (onFetch)="fetchAccountsEntries(account.identifier, $event)"
                    [columns]="columns"
                    [data]="accountEntryData$ | async"
                    [actionColumn]="false"
                    [sortable]="true"
+                   [sortBy]="'transactionDate'"
                    [pageable]="true">
   </fims-data-table>
 </fims-layout-card-over>

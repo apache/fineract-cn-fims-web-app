@@ -17,27 +17,27 @@ import {Component, OnInit} from '@angular/core';
 import {TrialBalance} from '../../services/accounting/domain/trial-balance.model';
 import * as fromAccounting from '../store';
 import {LOAD_TRIAL_BALANCE} from '../store/ledger/ledger.actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AccountingStore} from '../store/index';
-import {MdCheckboxChange} from '@angular/material';
+import {MatCheckboxChange} from '@angular/material';
 
 @Component({
   templateUrl: './trail-balance.component.html'
 })
-export class TrailBalanceComponent implements OnInit{
+export class TrailBalanceComponent implements OnInit {
 
-  includeEmptyEntries: boolean = true;
+  includeEmptyEntries = false;
 
   trialBalance$: Observable<TrialBalance>;
 
-  constructor(private store: AccountingStore){}
+  constructor(private store: AccountingStore) {}
 
   ngOnInit(): void {
     this.trialBalance$ = this.store.select(fromAccounting.getTrialBalance);
     this.fetchTrialBalance();
   }
 
-  fetchTrialBalance(event?: MdCheckboxChange): void{
+  fetchTrialBalance(event?: MatCheckboxChange): void {
     this.store.dispatch({ type: LOAD_TRIAL_BALANCE, payload: this.includeEmptyEntries });
   }
 

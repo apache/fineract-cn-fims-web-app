@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-export interface ContactDetail{
-  type: ContactDetailType,
-  group: ContactDetailGroup,
-  value: string,
-  preferenceLevel: number
+export interface ContactDetail {
+  type: ContactDetailType;
+  group: ContactDetailGroup;
+  value: string;
+  preferenceLevel: number;
 }
 
-export const BUSINESS: string = 'BUSINESS';
-export const PRIVATE: string = 'PRIVATE';
+export const BUSINESS = 'BUSINESS';
+export const PRIVATE = 'PRIVATE';
 
 export type ContactDetailGroup = 'BUSINESS' | 'PRIVATE';
 
-export const EMAIL: string = 'EMAIL';
-export const PHONE: string = 'PHONE';
-export const MOBILE: string = 'MOBILE';
+export const EMAIL = 'EMAIL';
+export const PHONE = 'PHONE';
+export const MOBILE = 'MOBILE';
 
 export type ContactDetailType = 'EMAIL' | 'PHONE' | 'MOBILE';

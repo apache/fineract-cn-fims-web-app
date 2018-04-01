@@ -15,11 +15,11 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../common/data-table/data-table.component';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import * as fromDepositAccounts from './store';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {SEARCH} from './store/product.actions';
 import {DepositAccountStore} from './store/index';
 import {ProductDefinition} from '../services/depositAccount/domain/definition/product-definition.model';
@@ -27,7 +27,7 @@ import {ProductDefinition} from '../services/depositAccount/domain/definition/pr
 @Component({
   templateUrl: './deposit-account.component.html'
 })
-export class DepositProductComponent implements OnInit{
+export class DepositProductComponent implements OnInit {
 
   productData: Observable<TableData>;
 
@@ -35,7 +35,7 @@ export class DepositProductComponent implements OnInit{
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Name' },
     { name: 'type', label: 'Type' },
-    { name: 'active', label: 'Active'},
+    { name: 'active', label: 'Enabled'},
     { name: 'interest', label: 'Interest'}
   ];
 
@@ -51,11 +51,11 @@ export class DepositProductComponent implements OnInit{
     this.fetchProducts();
   }
 
-  fetchProducts(fetchRequest?: FetchRequest): void{
+  fetchProducts(fetchRequest?: FetchRequest): void {
     this.store.dispatch({ type: SEARCH });
   }
 
-  rowSelect(productDefinition: ProductDefinition): void{
-    this.router.navigate(['detail', productDefinition.identifier], { relativeTo: this.route })
+  rowSelect(productDefinition: ProductDefinition): void {
+    this.router.navigate(['detail', productDefinition.identifier], { relativeTo: this.route });
   }
 }

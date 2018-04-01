@@ -25,8 +25,6 @@ import * as identificationCards from '../identity-cards.actions';
 @Injectable()
 export class CustomerIdentificationCardApiEffects {
 
-  constructor(private actions$: Actions, private customerService: CustomerService) {}
-
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(identificationCards.LOAD_ALL)
@@ -79,5 +77,7 @@ export class CustomerIdentificationCardApiEffects {
         }))
         .catch((error) => of(new identificationCards.DeleteIdentityCardFailAction(error)))
     );
+
+  constructor(private actions$: Actions, private customerService: CustomerService) {}
 
 }
