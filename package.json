@@ -24,12 +24,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mifosio/fims.git"
+    "url": "https://github.com/apache/fineract-cn-fims-web-app.git"
   },
   "license": "Apache-2.0",
   "author": "Mark van Veen",
   "contributors": [
-    "Mark van Veen <mvanveen@mifos.org>"
+    "Mark van Veen <mvanveen@mifos.org>",
+    "Myrle Krantz <myrle@apache.org>"
   ],
   "dependencies": {
     "@angular/animations": "4.4.5",
