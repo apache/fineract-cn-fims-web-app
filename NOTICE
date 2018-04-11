@@ -1,5 +1,5 @@
-mifos.io - fims
-Copyright 2008-2017 The Apache Software Foundation
+Apache Fineract CN Fims Web App
+Copyright 2008-2018 The Apache Software Foundation
 
 This product includes software developed by The Apache Software
 Foundation (http://www.apache.org/).
@@ -12,6 +12,7 @@ CC-BY-4.0 license. You can obtain a copy of the License at:
 https://creativecommons.org/licenses/by/4.0/
 
 fims includes spdx-expression-parse.js(https://github.com/kemitchell/spdx-expression-parse.js).
+fims includes spdx-exceptions(https://github.com/kemitchell/spdx-exceptions.json).
 The Linux Foundation and its contributors license the SPDX standard under the terms
 of the Creative Commons Attribution License 3.0 Unported (SPDX: "CC-BY-3.0").
 "SPDX" is a United States federally registered trademark of the Linux Foundation.
