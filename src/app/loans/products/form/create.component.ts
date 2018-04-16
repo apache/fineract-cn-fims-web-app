@@ -55,7 +55,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
       maximum: 0
     },
     interestBasis: 'CURRENT_BALANCE',
-    patternPackage: 'io.mifos.portfolio.individuallending.v1',
+    patternPackage: 'org.apache.fineract.cn.portfolio.individuallending.v1',
     description: '',
     accountAssignments: [],
     currencyCode: 'USD',
