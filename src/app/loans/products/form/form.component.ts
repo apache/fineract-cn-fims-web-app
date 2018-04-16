@@ -130,7 +130,7 @@ export class ProductFormComponent implements OnInit {
         maximum: parseFloat(this.detailForm.formData.maximumBalance)
       },
       parameters,
-      patternPackage: 'io.mifos.individuallending.api.v1',
+      patternPackage: 'org.apache.fineract.cn.individuallending.api.v1',
       accountAssignments: this.collectAccountAssignments()
     };
 
