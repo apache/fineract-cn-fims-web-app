@@ -44,6 +44,7 @@ export interface State {
   customerSearch: SearchState;
   accountSearch: SearchState;
   ledgerSearch: SearchState;
+  groupSearch:SearchState;
 }
 
 export const reducers = {
@@ -57,6 +58,7 @@ export const reducers = {
   customerSearch: createSearchReducer('Customer'),
   accountSearch: createSearchReducer('Account', fromAccounts.reducer),
   ledgerSearch: createSearchReducer('Ledger'),
+  groupSearch: createSearchReducer('Group'),
 };
 
 export function createReducer(asyncReducers = {}): ActionReducer<any> {
@@ -201,6 +203,27 @@ export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedger
     totalElements: totalElements
   };
 });
+
+
+/**
+ * Group Search Selectors
+ */
+export const getGroupSearchState = (state: State) => state.groupSearch;
+
+export const getSearchGroups = createSelector(getGroupSearchState, getSearchEntities);
+export const getGroupSearchTotalElements = createSelector(getGroupSearchState, getSearchTotalElements);
+export const getGroupSearchTotalPages = createSelector(getGroupSearchState, getSearchTotalPages);
+export const getGroupSearchLoading = createSelector(getGroupSearchState, getSearchLoading);
+
+export const getGroupSearchResults = createSelector(getSearchGroups, getGroupSearchTotalPages, getGroupSearchTotalElements,
+  (groups, totalPages, totalElements) => {
+  return {
+    groups: groups,
+    totalPages: totalPages,
+    totalElements: totalElements
+  };
+});
+
 
 export const getAuthenticationState = (state: State) => state.authentication;
 

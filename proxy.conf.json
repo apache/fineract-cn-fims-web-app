@@ -1,72 +1,80 @@
 {
   "/identity": {
-    "target": "http://localhost:2021",
+    "target": "http://163.172.130.175:2021",
     "secure": false,
     "pathRewrite": {
       "/identity": "/identity"
     }
   },
   "/api/office": {
-    "target": "http://localhost:2023",
+    "target": "http://163.172.130.175:2023",
     "secure": false,
     "pathRewrite": {
       "^/api/office": "/office"
     }
   },
   "/api/customer": {
-    "target": "http://localhost:2024",
+    "target": "http://163.172.130.175:2024",
     "secure": false,
     "pathRewrite": {
       "^/api/customer": "/customer"
     }
   },
   "/api/accounting": {
-    "target": "http://localhost:2025",
+    "target": "http://163.172.130.175:2025",
     "secure": false,
     "pathRewrite": {
       "^/api/accounting": "/accounting"
     }
   },
   "/api/portfolio": {
-    "target": "http://localhost:2026",
+    "target": "http://163.172.130.175:2026",
     "secure": false,
     "pathRewrite": {
       "^/api/portfolio": "/portfolio"
     }
   },
   "/api/deposit": {
-    "target": "http://localhost:2027",
+    "target": "http://163.172.130.175:2027",
     "secure": false,
     "pathRewrite": {
       "^/api/deposit": "/deposit"
     }
   },
   "/api/teller": {
-    "target": "http://localhost:2028",
+    "target": "http://163.172.130.175:2028",
     "secure": false,
     "pathRewrite": {
       "^/api/teller": "/teller"
     }
   },
   "/api/reporting": {
-    "target": "http://localhost:2029",
+    "target": "http://163.172.130.175:2029",
     "secure": false,
     "pathRewrite": {
       "^/api/reporting": "/reporting"
     }
   },
   "/api/cheques": {
-    "target": "http://localhost:2030",
+    "target": "http://163.172.130.175:2030",
     "secure": false,
     "pathRewrite": {
       "^/api/cheques": "/cheques"
     }
   },
   "/api/payroll": {
-    "target": "http://localhost:2031",
+    "target": "http://163.172.130.175:2031",
     "secure": false,
     "pathRewrite": {
       "^/api/payroll": "/payroll"
+    }
+  },
+
+  "/api/group": {
+    "target": "http://163.172.130.175:2032",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/group": "/group"
     }
   }
 }

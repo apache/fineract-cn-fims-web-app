@@ -25,6 +25,7 @@ import {HttpClient} from './services/http/http.service';
 import {IdentityService} from './services/identity/identity.service';
 import {OfficeService} from './services/office/office.service';
 import {CustomerService} from './services/customer/customer.service';
+import {GroupService} from './services/group/group.service';
 import {AuthenticationService} from './services/security/authn/authentication.service';
 import {CatalogService} from './services/catalog/catalog.service';
 import {AccountingService} from './services/accounting/accounting.service';
@@ -40,6 +41,7 @@ import {OfficeSearchApiEffects} from './store/office/effects/service.effects';
 import {EmployeeSearchApiEffects} from './store/employee/effects/service.effects';
 import {RoleSearchApiEffects} from './store/role/effects/service.effects';
 import {CustomerSearchApiEffects} from './store/customer/effects/service.effects';
+import {GroupSearchApiEffects} from './store/group/effects/service.effects';
 import {AccountSearchApiEffects} from './store/account/effects/service.effects';
 import {SecurityRouteEffects} from './store/security/effects/route.effects';
 import {SecurityApiEffects} from './store/security/effects/service.effects';
@@ -91,7 +93,8 @@ export function HttpLoaderFactory(http: Http) {
     EffectsModule.run(CustomerSearchApiEffects),
     EffectsModule.run(AccountSearchApiEffects),
     EffectsModule.run(RoleSearchApiEffects),
-    EffectsModule.run(LedgerSearchApiEffects)
+    EffectsModule.run(LedgerSearchApiEffects),
+    EffectsModule.run(GroupSearchApiEffects)
   ],
   providers: [
     HttpClient,
@@ -100,6 +103,7 @@ export function HttpLoaderFactory(http: Http) {
     IdentityService,
     OfficeService,
     CustomerService,
+    GroupService,
     CatalogService,
     AccountingService,
     PortfolioService,
