@@ -28,6 +28,7 @@ import {GroupOfficesComponent} from './form/offices/offices.component';
 import {GroupEmployeesComponent} from './form/employees/employees.component';
 import {GroupCustomersComponent} from './form/customers/customers.component'
 import {EditGroupFormComponent} from './form/edit/edit.form.component';
+import {AttachMeetingDateComponent} from './form/meetingDate/meeting-date.component'
 import {GroupExistsGuard} from './group-exists.guard';
 import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
@@ -49,5 +50,10 @@ export const GroupRoutes: Routes = [
         path: 'create',
         component: CreateGroupFormComponent,
         data: {title: 'Create Group', }
+      },
+      {
+        path: 'meeting',
+        component: AttachMeetingDateComponent,
+        data: {title: 'meeting date Group', }
       }
 ]

@@ -38,22 +38,23 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
   @ViewChild('form') formComponent: GroupFormComponent;
   
   group: Group = {
-    identifier: '',
-    groupDefinitionIdentifier: '',
-    name: '',
+
+    identifier : ' ',
+    groupDefinitionIdentifier : '',
+    name : '',
     leaders :[],
     members : [],
-    office:'',
-    assignedEmployee:'',
-    weekday:2,
-    status:'PENDING',
-    
-    address: {
+    office: '',
+    assignedEmployee : 'string;',
+    weekday : 7,
+    status : 'PENDING',
+    address : {
       street: '',
-      city: '',
-      countryCode: '',
-      country: ''
-    }
+      city: 'string;',
+      countryCode: 'string;',
+      country: 'string;',
+    },
+    createdOn :' string;'
     
   };
 

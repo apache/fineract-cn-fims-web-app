@@ -33,6 +33,7 @@ import {GroupExistsGuard} from './group-exists.guard';
 import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {GroupSelectComponent} from '../common/group-select/group-select.component'
+import {AttachMeetingDateComponent} from './form/meetingDate/meeting-date.component'
 //import {CustomerNotificationEffects} from './store/effects/notification.effects';
 //import {CustomerRouteEffects} from './store/effects/route.effects';
 import {EffectsModule} from '@ngrx/effects';
@@ -96,6 +97,7 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     GroupFormComponent,
     CreateGroupFormComponent,
     EditGroupFormComponent,
+    AttachMeetingDateComponent
     
 
   ],
@@ -105,4 +107,4 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     { provide: GroupsStore, useFactory: groupStoreFactory, deps: [Store]}
   ]
 })
-export class CustomerModule {}
+export class GroupModule {}

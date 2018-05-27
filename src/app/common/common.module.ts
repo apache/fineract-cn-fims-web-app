@@ -28,6 +28,7 @@ import {CommandDisplayComponent} from './command-display/command-display.compone
 import {CustomerSelectComponent} from './customer-select/customer-select.component';
 import {SelectListComponent} from './select-list/select-list.component';
 import {EmployeeSelectComponent} from './employee-select/employee-select.component';
+import {GroupSelectComponent} from './group-select/group-select.component';
 import {AccountSelectComponent} from './account-select/account-select.component';
 import {ProductSelectComponent} from './product-select/product-select.component';
 import {TranslateModule} from '@ngx-translate/core';

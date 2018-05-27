@@ -43,8 +43,6 @@ export class GroupFormComponent implements OnInit {
       identifier: group.identifier,
       name: group.name,
       externalId: group.groupDefinitionIdentifier,
-      createdBy: group.createdBy,
-      createdOn: group.createdOn
     };
 
     this.addressFormData = group.address;
@@ -138,15 +136,13 @@ export class GroupFormComponent implements OnInit {
       identifier: detailFormData.identifier,
       groupDefinitionIdentifier: detailFormData.externalId,
       name: detailFormData.name,
-      createdBy: detailFormData.createdBy,
-      createdOn: detailFormData.createdOn,
       address: this.addressForm.formData,
       status: 'PENDING',
       weekday:2,
       office: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
-      leaders: this.selectedLeaders && this.selectedLeaders.length > 0 ? this.selectedMembers[0] : undefined,
-      members: this.selectedMembers && this.selectedMembers.length > 0 ? this.selectedMembers[0] : undefined,
+      leaders: this.selectedLeaders && this.selectedLeaders.length > 0 ? this.selectedLeaders : undefined,
+      members: this.selectedMembers && this.selectedMembers.length > 0 ? this.selectedMembers : undefined,
     };
     this.onSave.emit(group);
   }

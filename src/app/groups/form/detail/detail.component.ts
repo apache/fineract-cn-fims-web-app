@@ -26,9 +26,7 @@ export interface GroupDetailFormData {
   identifier: string;
   name: string;
   externalId: string;
-  createdBy: string;
-  createdOn:string;
-  //active:boolean
+
 }
 
 @Component({
@@ -38,43 +36,28 @@ export interface GroupDetailFormData {
 export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData> {
 
   @Input() set formData(formData: GroupDetailFormData) {
-    const createdOn = formData.createdOn;
+   // const createdOn = formData.createdOn;
 
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [formData.name, [Validators.required, Validators.maxLength(256)]],
       externalId: [formData.externalId, Validators.maxLength(256)],
-      createdBy: [formData.createdBy, [Validators.required, Validators.maxLength(256)]],
-      createdOn:[formData.createdOn, [Validators.required, Validators.maxLength(256)]],
      // active: [formData.active]
     });
   };
 
   @Input() editMode: boolean;
 
-  private formatDate(year: number, month: number, day: number): string {
-    return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
-  }
-
-  private addZero(value: number): string {
-    return ('0' + value).slice(-2);
-  }
-
-  constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder) {
     super();
   }
 
   get formData():GroupDetailFormData{
-    //const createdOn: string = this.form.get('createdOn').value;
-
-    //const chunks: string[] = createdOn ? createdOn.split('-') : [];
-
+   
     return {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
-      externalId: this.form.get('externalId').value,
-      createdBy: this.form.get(' createdBy').value,
-      createdOn:this.form.get('createdOn').value,
+      externalId: this.form.get('externalId').value
       //active: this.form.get('active').value
     };
   }

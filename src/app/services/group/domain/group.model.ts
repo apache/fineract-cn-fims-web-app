@@ -40,7 +40,7 @@ export interface Group{
     status : Status;
     address : Address;
     createdOn? : string;
-    createdBy?; string;
+    createdBy?: string;
     lastModifiedOn? : string;
     lastModifiefBy?: string;
 

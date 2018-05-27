@@ -15,13 +15,45 @@
   limitations under the License.
 -->
 
-<h3>Attach Meeting</h3>
-
+<fims-layout-card-over title="{{'Attach Meeting Date' | translate}}">
 <form [formGroup]="form" layout="column">
     <fims-text-input [form]="form" controlName="startDate" placeholder="{{'Meeting Start date*' | translate}}"></fims-text-input>
     <mat-checkbox formControlName="repeat" layout-margin translate>Repeat</mat-checkbox>
-    <fims-text-input [form]="form" controlName="externalId" placeholder="{{'External Id' | translate}}"></fims-text-input>
-    <fims-date-input [form]="form" controlName="createdOn" placeholder="{{'Submitted On' | translate}}"></fims-date-input>
-    <fims-date-input [form]="form" controlName="createdBy" placeholder="{{'Created By' | translate}}"></fims-date-input>
-    <mat-checkbox formControlName="active" layout-margin translate>Active</mat-checkbox>
+    <br>
+    <h4>Repeat details</h4>
+
+    <mat-form-field>
+      <mat-select placeholder="Repeat" #frequency>
+        <mat-option *ngFor="let frequency of Frequency" [value]="frequency.value">
+          {{ frequency.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Repeat Every" #repeat>
+        <mat-option *ngFor="let repeat of Repeat" [value]="repeat.value">
+          {{ repeat.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    
+    <p>{{'repeat'}}</p>
+
+    <mat-radio-group>
+      <mat-radio-button value="1">Mon</mat-radio-button>
+      <mat-radio-button value="2">Tue</mat-radio-button>
+      <mat-radio-button value="3">Wed</mat-radio-button>
+      <mat-radio-button value="4">Thu</mat-radio-button>
+      <mat-radio-button value="5">Fri</mat-radio-button>
+      <mat-radio-button value="6">Sat</mat-radio-button>
+      <mat-radio-button value="7">Sun</mat-radio-button>
+    </mat-radio-group>
+    <br>
+
+    <button mat-raised-button color="primary" (click)="save(frequency.value,repeat.value)" [disabled]="form.invalid">{{'Meeting date set| translate}}</button>
+      <span flex></span>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
   </form>
+  </fims-layout-card-over>  
