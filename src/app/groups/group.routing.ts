@@ -16,44 +16,86 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Routes} from '@angular/router';
-import {RouterModule} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {GroupComponent} from './group.component';
-import {GroupFormComponent} from './form/form.component';
-import {CreateGroupFormComponent} from './form/create/create.form.component';
-import {FimsSharedModule} from '../common/common.module';
-import {GroupDetailFormComponent} from './form/detail/detail.component';
-import {GroupOfficesComponent} from './form/offices/offices.component';
-import {GroupEmployeesComponent} from './form/employees/employees.component';
-import {GroupCustomersComponent} from './form/customers/customers.component'
-import {EditGroupFormComponent} from './form/edit/edit.form.component';
-import {AttachMeetingDateComponent} from './form/meetingDate/meeting-date.component'
-import {GroupExistsGuard} from './group-exists.guard';
-import {GroupsStore, groupStoreFactory} from './store/index';
-import {Store} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {GroupCommandApiEffects} from './store/commands/effects/service.effects';
-import {TranslateModule} from '@ngx-translate/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { GroupComponent } from './group.component';
+import { GroupFormComponent } from './form/form.component';
+import { CreateGroupFormComponent } from './form/create/create.form.component';
+import { FimsSharedModule } from '../common/common.module';
+import { GroupDetailFormComponent } from './form/detail/detail.component';
+import { GroupOfficesComponent } from './form/offices/offices.component';
+import { GroupEmployeesComponent } from './form/employees/employees.component';
+import { GroupCustomersComponent } from './form/customers/customers.component'
+import { EditGroupFormComponent } from './form/edit/edit.form.component';
+import { MeetingDateComponent } from './form/meetingDate/meeting-date.component'
+import { GroupExistsGuard } from './group-exists.guard';
+import { GroupsStore, groupStoreFactory } from './store/index';
+import { Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { GroupCommandApiEffects } from './store/commands/effects/service.effects';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CloseGroupComponent } from './detail/closeGroup/close-group.component';
+import { GroupDetailComponent } from './detail/group.detail.component';
+import { GroupIndexComponent } from './detail/group.index.component';
+import {MeetingDetailComponent} from './detail/meetingDetail/meeting-detail.component';
+import {ManageMemberComponent} from './detail/manageMember/manage-member.component';
+import {TransferMemberComponent} from './detail/transferMember/transfer-member.component'
 
 
 export const GroupRoutes: Routes = [
-    {
-        path: '',
-        component: GroupComponent,
-        data: {title: 'Manage Groups',},
-        //canActivate: [ CatalogExistsGuard ]
+  {
+    path: '',
+    component: GroupComponent,
+    data: { title: 'Manage Groups', },
+    //canActivate: [ CatalogExistsGuard ]
+  },
+  {
+    path: 'create',
+    component: CreateGroupFormComponent,
+    data: { title: 'Create Group', }
+  },
+  {
+    path: 'meetingDate',
+    component: MeetingDateComponent,
+    data: { title: 'meeting date Group', }
+  },
+  {
+    path: 'close',
+    component: CloseGroupComponent,
+    data: { title: 'Closing a Group' }
+  },
+  {
+    path: 'detail/:id/edit',
+    component: EditGroupFormComponent,
+    data: { title: 'Edit Group', },
+    canActivate: [GroupExistsGuard]
+  },
+  {
+    path: 'detail/:id',
+    component: GroupIndexComponent,
+    data: {},
+    canActivate: [GroupExistsGuard],
+    children: [
+     
+      {
+        path: 'meetingDetail',
+        component: MeetingDetailComponent,
+        data: { title: 'meeting details', }
       },
       {
-        path: 'create',
-        component: CreateGroupFormComponent,
-        data: {title: 'Create Group', }
+        path: 'manageMember',
+        component: ManageMemberComponent,
+        data: { title: 'Manage Members', }
       },
       {
-        path: 'meeting',
-        component: AttachMeetingDateComponent,
-        data: {title: 'meeting date Group', }
-      }
+        path: 'transferMember',
+        component: TransferMemberComponent,
+        data: { title: 'Transfer Members', }
+      },
+
+    ]
+  }
 ]

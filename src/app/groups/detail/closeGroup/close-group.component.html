@@ -1,0 +1,38 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<fims-layout-card-over title="{{'Closing Group' | translate}}">
+    <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
+
+        <fims-text-input [form]="form" controlName="closeDate" placeholder="{{'Closing date*' | translate}}"></fims-text-input>
+
+        <mat-form-field>
+            <mat-select placeholder="Closing reason" #reason>
+                <mat-option *ngFor="let reason of reasons" [value]="reason.value">
+                    {{ reason.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onSave(reason.value)" [disabled]="form.invalid">{{'Closing Group'| translate}}</button>
+        <span flex></span>
+        <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
+
+
+    </form>
+
+</fims-layout-card-over>

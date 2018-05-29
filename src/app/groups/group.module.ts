@@ -23,7 +23,9 @@ import {GroupComponent} from './group.component';
 import {GroupFormComponent} from './form/form.component';
 import {CreateGroupFormComponent} from './form/create/create.form.component';
 import {FimsSharedModule} from '../common/common.module';
-//import {CustomerDetailComponent} from './detail/customer.detail.component';
+import {ManageMemberComponent} from './detail/manageMember/manage-member.component';
+import {TransferMemberComponent} from './detail/transferMember/transfer-member.component';
+import {MeetingDetailComponent} from './detail/meetingDetail/meeting-detail.component';
 import {GroupDetailFormComponent} from './form/detail/detail.component';
 import {GroupOfficesComponent} from './form/offices/offices.component';
 import {GroupEmployeesComponent} from './form/employees/employees.component';
@@ -33,11 +35,12 @@ import {GroupExistsGuard} from './group-exists.guard';
 import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {GroupSelectComponent} from '../common/group-select/group-select.component'
-import {AttachMeetingDateComponent} from './form/meetingDate/meeting-date.component'
-//import {CustomerNotificationEffects} from './store/effects/notification.effects';
-//import {CustomerRouteEffects} from './store/effects/route.effects';
+import {MeetingDateComponent} from './form/meetingDate/meeting-date.component'
+import {CloseGroupComponent} from './detail/closeGroup/close-group.component'
+import {ReopeningGroupComponent} from './detail/reopenGroup/reopen-group.component'
 import {EffectsModule} from '@ngrx/effects';
-//import {CustomerApiEffects} from './store/effects/service.effects';
+import {GroupDetailComponent} from './detail/group.detail.component'
+import {GroupIndexComponent} from './detail/group.index.component'
 import {GroupCommandApiEffects} from './store/commands/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -52,7 +55,8 @@ import {
   MatOptionModule,
   MatRadioModule,
   MatSelectModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 
@@ -73,6 +77,7 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     MatRadioModule,
     MatCheckboxModule,
     MatOptionModule,
+    MatAutocompleteModule,
     MatSelectModule,
     CovalentSearchModule,
     CovalentStepsModule,
@@ -80,8 +85,8 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     CovalentMessageModule,
     CovalentChipsModule,
 
-   // EffectsModule.run(CustomerApiEffects),
-   // EffectsModule.run(CustomerRouteEffects),
+   // EffectsModule.run(GroupApiEffects),
+   // EffectsModule.run(GroupRouteEffects),
 ///EffectsModule.run(CustomerNotificationEffects),
 
 
@@ -97,7 +102,14 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     GroupFormComponent,
     CreateGroupFormComponent,
     EditGroupFormComponent,
-    AttachMeetingDateComponent
+    MeetingDateComponent,
+    CloseGroupComponent,
+    ReopeningGroupComponent,
+    ManageMemberComponent,
+    MeetingDetailComponent,
+    TransferMemberComponent,
+    GroupDetailComponent,
+    GroupIndexComponent
     
 
   ],

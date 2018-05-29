@@ -19,49 +19,29 @@
 import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators,FormGroup} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
-import {Frequency } from '../../../services/group/domain/cycle.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
-import { Meeting } from '../../../services/group/domain/meeting.model';
-
+import {FormBuilder, Validators,FormGroup} from '@angular/forms';
+import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../../store';
+import {SEARCH} from '../../../store/customer/customer.actions';
 
 @Component({
-    selector:'fims-group-meeting-date',
-    templateUrl:'meeting-date.component.html'
+    selector:'fims-group-transfer-member',
+    templateUrl:'./transfer-member.component.html'
 })
 
-export class MeetingDateComponent implements OnInit{
+export class TransferMemberComponent implements OnInit{
 
- // meetingDate$: Observable<MeetingDateComponent>;
-  form:FormGroup
+    constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
+    customers: Observable<Customer[]>;
 
-  Frequency=[
-      {value:'DAILY', viewValue:'Daily'},
-      {value:'WEEKLY', viewValue:'Weekly'},
-      {value:'FORTNIGHTLY', viewValue:'Fortnightly'},
-      {value:'MONTHLY', viewValue:'Monthly'},
-]
-
-Repeat =[
-    {value:'1', viewValue:'1'},
-    {value:'2', viewValue:'2'},
-    {value:'3', viewValue:'3'},
-    {value:'4', viewValue:'4'},
-    {value:'5', viewValue:'5'},
-]
-
-  constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
-
-    ngOnInit(){
-        this.form= this.formBuilder.group({
-           startDate:['',Validators.required] 
-
-        })
-    }
+    ngOnInit(){}
 
     onSave(){
-        console.log('frequency.value, repeat.value still to be implemented');
+        console.log('reason.value, to be implemented');
     }
 
     onCancel() {

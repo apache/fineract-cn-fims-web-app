@@ -21,47 +21,44 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, Validators,FormGroup} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
-import {Frequency } from '../../../services/group/domain/cycle.model';
+import { Attendee,Status} from '../../../services/group/domain/attendee.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
 import {Observable} from 'rxjs/Observable';
-import { Meeting } from '../../../services/group/domain/meeting.model';
+
 
 
 @Component({
-    selector:'fims-group-meeting-date',
-    templateUrl:'meeting-date.component.html'
+    selector:'fims-meeting-detail',
+    templateUrl:'./meeting-detail.component.html'
 })
 
-export class MeetingDateComponent implements OnInit{
-
- // meetingDate$: Observable<MeetingDateComponent>;
+export class MeetingDetailComponent implements OnInit{
   form:FormGroup
 
-  Frequency=[
-      {value:'DAILY', viewValue:'Daily'},
-      {value:'WEEKLY', viewValue:'Weekly'},
-      {value:'FORTNIGHTLY', viewValue:'Fortnightly'},
-      {value:'MONTHLY', viewValue:'Monthly'},
-]
+  customers: Observable<Customer[]>;
+  states1: Observable< Status[]>;
 
-Repeat =[
-    {value:'1', viewValue:'1'},
-    {value:'2', viewValue:'2'},
-    {value:'3', viewValue:'3'},
-    {value:'4', viewValue:'4'},
-    {value:'5', viewValue:'5'},
-]
+  states =[
+      {value:this.states1[0], viewValue:'Expected'},
+      {value:this.states1[1], viewValue:'Attended'},
+      {value:this.states1[2], viewValue:'Missed'},
+  ]
+
 
   constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit(){
         this.form= this.formBuilder.group({
-           startDate:['',Validators.required] 
+           name:['',Validators.required],
+           heldOn:['',Validators.required],
+           duration:['',Validators.required],
+           location:['',Validators.required],
+           nextMeeting:['',Validators.required],
 
         })
     }
-
     onSave(){
-        console.log('frequency.value, repeat.value still to be implemented');
+        console.log('state.value, to be implemented');
     }
 
     onCancel() {
@@ -71,4 +68,5 @@ Repeat =[
       navigateAway(): void {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
+
 }

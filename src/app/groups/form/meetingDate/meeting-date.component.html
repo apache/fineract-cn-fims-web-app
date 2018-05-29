@@ -16,7 +16,9 @@
 -->
 
 <fims-layout-card-over title="{{'Attach Meeting Date' | translate}}">
-<form [formGroup]="form" layout="column">
+<form [formGroup]="form" layout="column" #form
+                              (onSave)="onSave($event)"
+                              (onCancel)="onCancel()">
     <fims-text-input [form]="form" controlName="startDate" placeholder="{{'Meeting Start date*' | translate}}"></fims-text-input>
     <mat-checkbox formControlName="repeat" layout-margin translate>Repeat</mat-checkbox>
     <br>
@@ -52,8 +54,8 @@
     </mat-radio-group>
     <br>
 
-    <button mat-raised-button color="primary" (click)="save(frequency.value,repeat.value)" [disabled]="form.invalid">{{'Meeting date set| translate}}</button>
+    <button mat-raised-button color="primary" (click)="onSave(frequency.value,repeat.value)" [disabled]="form.invalid">{{'Meeting date set'| translate}}</button>
       <span flex></span>
-      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
   </form>
   </fims-layout-card-over>  

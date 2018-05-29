@@ -21,47 +21,34 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, Validators,FormGroup} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
-import {Frequency } from '../../../services/group/domain/cycle.model';
-import {Observable} from 'rxjs/Observable';
-import { Meeting } from '../../../services/group/domain/meeting.model';
+
 
 
 @Component({
-    selector:'fims-group-meeting-date',
-    templateUrl:'meeting-date.component.html'
+    selector:'fims-reopen-group',
+    templateUrl:'./reopen-group.component.html'
 })
 
-export class MeetingDateComponent implements OnInit{
-
- // meetingDate$: Observable<MeetingDateComponent>;
+export class ReopeningGroupComponent implements OnInit{
   form:FormGroup
 
-  Frequency=[
-      {value:'DAILY', viewValue:'Daily'},
-      {value:'WEEKLY', viewValue:'Weekly'},
-      {value:'FORTNIGHTLY', viewValue:'Fortnightly'},
-      {value:'MONTHLY', viewValue:'Monthly'},
-]
 
-Repeat =[
-    {value:'1', viewValue:'1'},
-    {value:'2', viewValue:'2'},
-    {value:'3', viewValue:'3'},
-    {value:'4', viewValue:'4'},
-    {value:'5', viewValue:'5'},
-]
+  reasons=[
+      {value:'Available members', viewValue:'Available members'},
+      {value:'Funds Available', viewValue:'Funds Available'}
+  ]
 
   constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit(){
         this.form= this.formBuilder.group({
-           startDate:['',Validators.required] 
+           openDate:['',Validators.required] 
 
         })
     }
 
     onSave(){
-        console.log('frequency.value, repeat.value still to be implemented');
+        console.log('reason.value, to be implemented');
     }
 
     onCancel() {
@@ -72,3 +59,6 @@ Repeat =[
         this.router.navigate(['../'], { relativeTo: this.route });
       }
 }
+
+
+  

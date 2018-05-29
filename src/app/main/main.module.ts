@@ -36,7 +36,8 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatOptionModule
+  MatOptionModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -58,6 +59,7 @@ import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
     MatMenuModule,
     MatTooltipModule,
     MatCardModule,
+    MatAutocompleteModule,
     MatOptionModule,
     CovalentLayoutModule,
     CovalentMediaModule
