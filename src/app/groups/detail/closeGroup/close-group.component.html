@@ -16,23 +16,9 @@
 -->
 
 <fims-layout-card-over title="{{'Closing Group' | translate}}">
-    <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
-
-        <fims-text-input [form]="form" controlName="closeDate" placeholder="{{'Closing date*' | translate}}"></fims-text-input>
-
-        <mat-form-field>
-            <mat-select placeholder="Closing reason" #reason>
-                <mat-option *ngFor="let reason of reasons" [value]="reason.value">
-                    {{ reason.viewValue }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" (click)="onSave(reason.value)" [disabled]="form.invalid">{{'Closing Group'| translate}}</button>
-        <span flex></span>
-        <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
-
-
-    </form>
-
+    <fims-group-close-component #form
+                        (onSave)="onSave($event)"
+                        (onCancel)="onCancel()"
+                        [group]="group">
+</fims-group-close-component>
 </fims-layout-card-over>

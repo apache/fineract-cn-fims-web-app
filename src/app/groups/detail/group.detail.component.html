@@ -22,18 +22,45 @@
     <br>
     <mat-form-field>
         <mat-select placeholder="More Options">
-          <mat-option>
-              <a [routerLink]="['meetingDetail']">Meeting Details</a>
-              <a [routerLink]="['close']">Close</a>
-          </mat-option>
+            <mat-option>
+                <a [routerLink]="['meetingDetail']">Meeting Details</a>
+                <a [routerLink]="['close']">Close</a>
+            </mat-option>
         </mat-select>
-      </mat-form-field>
+    </mat-form-field>
 
-<mat-card>
-    <h4>Members</h4>
-    <button mat-raised-button [routerLink]="['transferMember']">Transfer Members</button>
-    <button mat-raised-button [routerLink]="['manageMember']">Manage Members</button>
-</mat-card>
+    <mat-card>
+        <h4>Members</h4>
+        <button mat-raised-button [routerLink]="['transferMember']">Transfer Members</button>
+        <button mat-raised-button [routerLink]="['manageMember']">Manage Members</button>
+
+        <table>
+            <tr>
+                <th>Account #</th>
+                <th>Name</th>
+            </tr>
+            
+            <tr>
+                <td>Head Office</td>
+                <td>Joseph</td>
+            </tr>
+
+        </table>
+    </mat-card>
+
+    <mat-card>
+            <p>Next meeting on :<mat-icon [routerLink]="['']">edit</mat-icon></p>
+            <p> Meeting Frequency Every {{group.frequency}}</p>
+    </mat-card>
+
+    <mat-card>
+        <h4>Group Details</h4>
+        <p>Activation Date : {{group/id.createdOn}}</p>
+        <p>Staff : {{group/id. assignedEmployee}}</p>
+        <p>External Id : {{group/id.groupDefinitionIdentifier}}</p>
+        <h5>Summary</h5>
+        <p>Active Members : {{10}}</p>
+    </mat-card>
 
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit Group ' | translate}}" icon="mode_edit" [link]="['edit']" ></fims-fab-button>
+<fims-fab-button title="{{'Edit Group ' | translate}}" icon="mode_edit" [link]="['edit']"></fims-fab-button>

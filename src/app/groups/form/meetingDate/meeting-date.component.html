@@ -15,10 +15,12 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Attach Meeting Date' | translate}}">
+<fims-layout-card-over title="{{'Attach Meeting Date' | translate}}"> 
 <form [formGroup]="form" layout="column" #form
                               (onSave)="onSave($event)"
-                              (onCancel)="onCancel()">
+                              (onCancel)="onCancel()"
+>
+                              
     <fims-text-input [form]="form" controlName="startDate" placeholder="{{'Meeting Start date*' | translate}}"></fims-text-input>
     <mat-checkbox formControlName="repeat" layout-margin translate>Repeat</mat-checkbox>
     <br>
@@ -44,13 +46,13 @@
     <p>{{'repeat'}}</p>
 
     <mat-radio-group>
-      <mat-radio-button value="1">Mon</mat-radio-button>
-      <mat-radio-button value="2">Tue</mat-radio-button>
-      <mat-radio-button value="3">Wed</mat-radio-button>
-      <mat-radio-button value="4">Thu</mat-radio-button>
-      <mat-radio-button value="5">Fri</mat-radio-button>
-      <mat-radio-button value="6">Sat</mat-radio-button>
-      <mat-radio-button value="7">Sun</mat-radio-button>
+      <mat-radio-button value="1" formControlName="day" >Mon</mat-radio-button>
+      <mat-radio-button value="2" formControlName="day" >Tue</mat-radio-button>
+      <mat-radio-button value="3" formControlName="day" >Wed</mat-radio-button>
+      <mat-radio-button value="4" formControlName="day" >Thu</mat-radio-button>
+      <mat-radio-button value="5" formControlName="day" >Fri</mat-radio-button>
+      <mat-radio-button value="6" formControlName="day" >Sat</mat-radio-button>
+      <mat-radio-button value="7" formControlName="day" >Sun</mat-radio-button>
     </mat-radio-group>
     <br>
 
@@ -58,4 +60,5 @@
       <span flex></span>
       <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
   </form>
-  </fims-layout-card-over>  
+
+</fims-layout-card-over>

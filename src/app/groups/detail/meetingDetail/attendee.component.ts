@@ -32,15 +32,16 @@ import {CREATE, RESET_FORM} from '../../store/group.actions';
 import {Error} from '../../../services/domain/error.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
-
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../../store';
+import {SEARCH} from '../../../store/customer/customer.actions';
 
 
 @Component({
-    templateUrl:'./meeting-detail.component.html'
-})
-
-export class MeetingDetailComponent implements OnInit{
-  form:FormGroup
+    selector: 'fims-meeting-attendee-form',
+    templateUrl: './attendee.component.html'
+  })
+  export class MeetingAttendeeComponent implements OnInit {
   
   meetingData$: Observable<TableData>;
   customers: Observable<Customer[]>;
@@ -50,50 +51,28 @@ export class MeetingDetailComponent implements OnInit{
     {name:'customer.givenName',label:'Attendees'},
     {name:'attendee.status',label:'Status'}
   ]
+  
+  @Input() preSelection: string;
 
-  private formStateSubscription: Subscription;
+  @Output() onSelectionChange = new EventEmitter<string[]>();
 
-   meeting : Meeting={
-    meetingSequence : 1,
-    groupIdentifier : '',
-    currentCycle : 2,
-    attendees : [],
-    scheduledFor :'',
-    location : '',
-    heldOn : '',
-    duration : 40,
-    createdOn : '',
-    createdBy: ''
-   }
-    
-   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-    ;
+  constructor(private store: Store<fromRoot.State>) {}
+
+  ngOnInit(): void {
+    this.customers = this.store.select(fromRoot.getCustomerSearchResults)
+      .map(customerPage => customerPage.customers);
   }
 
+  search(searchTerm) {
+    const fetchRequest: FetchRequest = {
+      searchTerm
+    };
 
-ngOnInit(){
-
-}
-
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-
-    this.store.dispatch({ type: RESET_FORM });
+    this.store.dispatch({ type: SEARCH, payload: fetchRequest });
   }
 
-  onSave(meeting: Meeting) {
-    this.store.dispatch({ type: CREATE, payload: {
-      meeting,
-      activatedRoute: this.route
-    } });
+  select(selections: string[]): void {
+    this.onSelectionChange.emit(selections);
   }
-
-  onCancel() {
-    this.navigateAway();
-  }
-
-  navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
+  
 }

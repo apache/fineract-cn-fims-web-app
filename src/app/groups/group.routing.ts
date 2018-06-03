@@ -68,6 +68,11 @@ export const GroupRoutes: Routes = [
     data: { title: 'Closing a Group' }
   },
   {
+    path: 'meetingDetail',
+    component: MeetingDetailComponent,
+    data: { title: 'meeting details', }
+  },
+  {
     path: 'detail/:id/edit',
     component: EditGroupFormComponent,
     data: { title: 'Edit Group', },
@@ -80,11 +85,7 @@ export const GroupRoutes: Routes = [
     canActivate: [GroupExistsGuard],
     children: [
      
-      {
-        path: 'meetingDetail',
-        component: MeetingDetailComponent,
-        data: { title: 'meeting details', }
-      },
+     
       {
         path: 'manageMember',
         component: ManageMemberComponent,

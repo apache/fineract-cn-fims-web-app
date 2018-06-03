@@ -16,38 +16,10 @@
 -->
 
 <fims-layout-card-over title="{{'Meeting Details' | translate}}">
-    <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
-        <fims-text-input [form]="form" controlName="name" placeholder="{{' Group Name' | translate}}"></fims-text-input>
-        <fims-date-input [form]="form" controlName="heldOn" placeholder="{{'Held On' | translate}}"></fims-date-input>
-        <fims-text-input [form]="form" controlName="duration" placeholder="{{' Duration' | translate}}"></fims-text-input>
-        <fims-text-input [form]="form" controlName="location" placeholder="{{'location' | translate}}"></fims-text-input>
-        <fims-date-input [form]="form" controlName="nextMeeting" placeholder="{{'Next Meeting' | translate}}"></fims-date-input>
-
-
-        <h3> Attendance </h3>
-        <table>
-            <tr>
-                <th>Attendees</th>
-                <th> Status</th>
-            <tr>
-            <tr>
-                <td>John Mark</td>
-                <td><mat-form-field>
-                        <mat-select #state>
-                          <mat-option *ngFor="let state of states" [value]="state.value">
-                            {{ state.viewValue }}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </td>
-            </tr>    
-        </table>
-       
-        <button mat-raised-button color="primary" (click)="onSave(state.value)" [disabled]="form.invalid">{{'Save'| translate}}</button>
-        <span flex></span>
-        <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
-
-    </form>
-
+    <fims-meeting-detail-component #form
+                        (onSave)="onSave($event)"
+                        (onCancel)="onCancel()"
+                        [meeting]="meeting">
+</fims-meeting-detail-component>
 
 </fims-layout-card-over>

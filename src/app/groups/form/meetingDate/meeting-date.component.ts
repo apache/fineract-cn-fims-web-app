@@ -24,6 +24,7 @@ import {FimsValidators} from '../../../common/validator/validators';
 import {Frequency } from '../../../services/group/domain/cycle.model';
 import {Observable} from 'rxjs/Observable';
 import { Meeting } from '../../../services/group/domain/meeting.model';
+import {Group} from '../../../services/group/domain/group.model'
 
 
 @Component({
@@ -33,8 +34,9 @@ import { Meeting } from '../../../services/group/domain/meeting.model';
 
 export class MeetingDateComponent implements OnInit{
 
- // meetingDate$: Observable<MeetingDateComponent>;
+    private _group: Group;
   form:FormGroup
+ 
 
   Frequency=[
       {value:'DAILY', viewValue:'Daily'},
@@ -55,20 +57,23 @@ Repeat =[
 
     ngOnInit(){
         this.form= this.formBuilder.group({
-           startDate:['',Validators.required] 
+           startDate:['',Validators.required],
+           day:['',Validators.required] 
 
         })
     }
 
     onSave(){
+        
         console.log('frequency.value, repeat.value still to be implemented');
     }
 
-    onCancel() {
+   /* onCancel() {
         this.navigateAway();
       }
     
       navigateAway(): void {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
+      */
 }

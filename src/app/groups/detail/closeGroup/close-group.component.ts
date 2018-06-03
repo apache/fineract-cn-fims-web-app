@@ -16,40 +16,59 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, Validators,FormGroup} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
+import {Group} from '../../../services/group/domain/group.model'
+import {GroupCommand} from '../../../services/group/domain/group-command.model'
+import {Observable} from 'rxjs/Observable'
+import {GroupFormComponent} from '../../form/form.component';
+import * as fromGroups from '../../store';
+import {Subscription} from 'rxjs/Subscription';
+import {GroupsStore} from '../../store/index';
+import {UPDATE, RESET_FORM} from '../../store/group.actions';
+import {Error} from '../../../services/domain/error.model';
+
+
 
 
 
 @Component({
-    selector:'fims-close-group',
     templateUrl:'./close-group.component.html'
 })
 
 export class CloseGroupComponent implements OnInit{
   form:FormGroup
 
+  private formStateSubscription: Subscription;
 
-  reasons=[
-      {value:'No members', viewValue:'No Members'},
-      {value:'No Funds', viewValue:'No funds'}
-  ]
+  @ViewChild('form') formComponent: GroupFormComponent;
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
+  group: Observable<Group>;
+  
 
-    ngOnInit(){
-        this.form= this.formBuilder.group({
-           closeDate:['',Validators.required] 
+  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
-        })
-    }
+  ngOnInit() {
+    this.formStateSubscription = this.store.select(fromGroups.getGroupFormError)
+      .filter((error: Error) => !!error)
+      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
+  }
 
-    onSave(){
-        console.log('reason.value, to be implemented');
-    }
+  ngOnDestroy(): void {
+    this.formStateSubscription.unsubscribe();
+
+    this.store.dispatch({ type: RESET_FORM });
+  }
+
+  onSave(group: Group) {
+    this.store.dispatch({ type: UPDATE, payload: {
+      group,
+      activatedRoute: this.route
+    } });
+  }
 
     onCancel() {
         this.navigateAway();

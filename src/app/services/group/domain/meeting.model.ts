@@ -26,7 +26,7 @@ import {Address} from '../../domain/address/address.model';
      currentCycle : number;
      attendees : Attendee[];
      scheduledFor :string;
-     location : Address;
+     location : string;
      heldOn : string;
      duration : number;
      createdOn? : string;

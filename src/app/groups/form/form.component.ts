@@ -19,11 +19,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
 import {Group} from '../../services/group/domain/group.model';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {GroupDetailFormData,GroupDetailFormComponent} from './detail/detail.component';
 import {AddressFormComponent} from '../../common/address/address.component';
 import {Address} from '../../services/domain/address/address.model';
-//import {CustomerContactFormComponent} from './contact/contact.component';
-//import {ContactDetail} from '../../services/domain/contact/contact-detail.model';
 import {Value} from '../../services/catalog/domain/value.model';
 //import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {Catalog} from '../../services/catalog/domain/catalog.model';
@@ -36,7 +35,10 @@ export class GroupFormComponent implements OnInit {
 
   private _group: Group;
 
+  constructor(private router: Router, private route: ActivatedRoute){}
+
   @Input('group') set group(group: Group) {
+
     this._group = group;
 
     this.detailFormData = {
@@ -89,9 +91,7 @@ export class GroupFormComponent implements OnInit {
 
   selectedMembers : string[]= [];
 
-  //@ViewChild('customFieldsForm') customFieldsForm: CustomerCustomFieldsComponent;
-  //customFieldsFormData: Value[];
-
+  
   ngOnInit() {
     this.openDetailStep();
   }
@@ -119,12 +119,7 @@ export class GroupFormComponent implements OnInit {
   selectLeaders(selections:string[]):void{
     this.selectedLeaders = selections;
   }
- // get isValid(): boolean {
-   // return (this.detailForm.valid && this.addressForm.valid)
-     // && this.contactForm.validWhenOptional
-      //&& this.customFieldsForm.valid;
-  //}
-
+ 
   get group(): Group {
     return this._group;
   }
@@ -144,7 +139,10 @@ export class GroupFormComponent implements OnInit {
       leaders: this.selectedLeaders && this.selectedLeaders.length > 0 ? this.selectedLeaders : undefined,
       members: this.selectedMembers && this.selectedMembers.length > 0 ? this.selectedMembers : undefined,
     };
-    this.onSave.emit(group);
+    
+    
+    // directing to attach meeting page
+    this.router.navigate(['meetingDate'], { relativeTo: this.route });
   }
 
   cancel() {

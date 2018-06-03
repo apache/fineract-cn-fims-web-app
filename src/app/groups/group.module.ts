@@ -45,6 +45,8 @@ import {GroupCommandApiEffects} from './store/commands/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CloseGroupFormComponent} from './detail/closeGroup/form.component'
+import {MeetingDetailFormComponent} from './detail/meetingDetail/form.component'
 import {
   MatButtonModule,
   MatCardModule,
@@ -59,6 +61,7 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
+
 
 @NgModule({
   imports: [
@@ -109,7 +112,9 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     MeetingDetailComponent,
     TransferMemberComponent,
     GroupDetailComponent,
-    GroupIndexComponent
+    GroupIndexComponent,
+    CloseGroupFormComponent,
+    MeetingDetailFormComponent
     
 
   ],
