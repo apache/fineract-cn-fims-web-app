@@ -38,7 +38,6 @@ import {GroupSelectComponent} from '../common/group-select/group-select.componen
 import {MeetingDateComponent} from './form/meetingDate/meeting-date.component'
 import {CloseGroupComponent} from './detail/closeGroup/close-group.component'
 import {ReopeningGroupComponent} from './detail/reopenGroup/reopen-group.component'
-import {EffectsModule} from '@ngrx/effects';
 import {GroupDetailComponent} from './detail/group.detail.component'
 import {GroupIndexComponent} from './detail/group.index.component'
 import {GroupCommandApiEffects} from './store/commands/effects/service.effects';
@@ -47,6 +46,10 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CloseGroupFormComponent} from './detail/closeGroup/form.component'
 import {MeetingDetailFormComponent} from './detail/meetingDetail/form.component'
+import {GroupNotificationEffects} from './store/effects/notification.effects';
+import {GroupRouteEffects} from './store/effects/route.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {GroupApiEffects} from './store/effects/service.effects';
 import {
   MatButtonModule,
   MatCardModule,
@@ -88,12 +91,10 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     CovalentMessageModule,
     CovalentChipsModule,
 
-   // EffectsModule.run(GroupApiEffects),
-   // EffectsModule.run(GroupRouteEffects),
-///EffectsModule.run(CustomerNotificationEffects),
-
-
-    EffectsModule.run(GroupCommandApiEffects),
+   EffectsModule.run(GroupApiEffects),
+   EffectsModule.run(GroupRouteEffects),
+   EffectsModule.run(GroupNotificationEffects),
+   EffectsModule.run(GroupCommandApiEffects),
 
   ],
   declarations: [

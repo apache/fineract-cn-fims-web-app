@@ -68,12 +68,12 @@ Repeat =[
         console.log('frequency.value, repeat.value still to be implemented');
     }
 
-   /* onCancel() {
+    onCancel() {
         this.navigateAway();
       }
     
       navigateAway(): void {
         this.router.navigate(['../'], { relativeTo: this.route });
       }
-      */
+      
 }
