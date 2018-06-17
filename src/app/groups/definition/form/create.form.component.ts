@@ -15,57 +15,46 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */
+ 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Group} from '../../../services/group/domain/group.model';
-import {GroupFormComponent} from '../form.component';
+import {GroupsStore} from '../../store/index';
+import {CREATE,RESET_FORM} from '../../store/definition/definition.actions';
+import {Cycle} from '../../../services/group/domain/cycle.model'
+import {CycleFormComponent} from './cycle-form.component';
+import {Subscription} from 'rxjs/Subscription';
 import * as fromGroups from '../../store';
 import {Error} from '../../../services/domain/error.model';
-import {Subscription} from 'rxjs/Subscription';
-import {GroupsStore} from '../../store/index';
-import {CREATE, RESET_FORM} from '../../store/group.actions';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Observable} from 'rxjs/Observable';
+
 
 @Component({
   templateUrl: './create.form.component.html'
 })
-export class CreateGroupFormComponent implements OnInit, OnDestroy {
-
-  private formStateSubscription: Subscription;
-
-  @ViewChild('form') formComponent: GroupFormComponent;
   
-  group: Group = {
+export class CreateGroupDefinitionFormComponent implements OnInit, OnDestroy {
 
-    identifier : ' ',
-    groupDefinitionIdentifier : '',
-    name : '',
-    leaders :[],
-    members : [],
-    office: '',
-    assignedEmployee : 'string;',
-    weekday : 7,
-    status : 'PENDING',
-    address : {
-      street: '',
-      city: 'string;',
-      countryCode: 'string;',
-      country: 'string;',
-    },
-    createdOn :' string;'
-    
+private formStateSubscription: Subscription;
+@ViewChild('form') formComponent: CycleFormComponent;
+
+
+  group: GroupDefinition = {
+    identifier : '',
+    description : '',
+    minimalSize : 4,
+    maximalSize : 20,
+    cycle: {
+        numberOfMeetings : 4,
+        frequency : 'DAILY',
+        adjustment : 'SKIP'
+      },
+    createdOn : '',
+    createdBy: '',
+    lastModifiedOn :'',
+    lastModifiedBy: ''
   };
 
-  
-
-
-  catalog$: Observable<Catalog>;
-
-  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-  ;
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
   ngOnInit() {
     this.formStateSubscription = this.store.select(fromGroups.getGroupFormError)
@@ -73,15 +62,17 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
       .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
   }
 
+
+
   ngOnDestroy(): void {
     this.formStateSubscription.unsubscribe();
 
     this.store.dispatch({ type: RESET_FORM });
   }
 
-  onSave(group: Group) {
+  onSave(groupDefinition: GroupDefinition) {
     this.store.dispatch({ type: CREATE, payload: {
-      group,
+      groupDefinition,
       activatedRoute: this.route
     } });
   }
@@ -94,3 +85,4 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
+*/

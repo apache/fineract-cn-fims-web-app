@@ -17,66 +17,94 @@
  * under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild,forwardRef } from '@angular/core';
 import { TdStepComponent } from '@covalent/core';
-import { Group ,Status} from '../../../services/group/domain/group.model';
+import { Group, Status } from '../../../services/group/domain/group.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { FimsValidators } from '../../../common/validator/validators';
+import {FormComponent} from '../../../common/forms/form.component';
+
+export interface CloseGroupFormData{
+  reason:string,
+  closeDay: {
+    day?: number;
+    month?: number;
+    year?: number;
+  };
+}
 
 
 @Component({
-    selector: 'fims-group-close-component',
-    templateUrl: './form.component.html'
+  selector: 'fims-group-close-component',
+  templateUrl: './form.component.html',
 })
-export class CloseGroupFormComponent implements OnInit {
+export class CloseGroupFormComponent extends FormComponent<CloseGroupFormData> {
+  //form: FormGroup;
+  private _group: Group;
 
-    form: FormGroup;
+  reasons = [
+    { value: 'No members', viewValue: 'No Members' },
+    { value: 'No Funds', viewValue: 'No funds' }
+  ]
+ @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-    private _group: Group;
+@Output('onSave') onSave = new EventEmitter<Group>();
 
-    reasons=[
-        {value:'No members', viewValue:'No Members'},
-        {value:'No Funds', viewValue:'No funds'}
-    ]
+@Output('onCancel') onCancel = new EventEmitter<void>();
 
-    constructor(private router: Router, private route: ActivatedRoute,private formBuilder: FormBuilder) { }
+@ViewChild('detailsStep') step: TdStepComponent;
 
-     @ViewChild('detailsStep') detailsStep: TdStepComponent;
+@Input('group') group: Group[];
 
-    @Input('editMode') editMode: boolean;
+  @Input() set formData(formData: CloseGroupFormData) {
+    const closeDay = formData.closeDay;
 
-    @Output('onSave') onSave = new EventEmitter<Group>();
+    this.form = this.formBuilder.group({
+      closeDate: [closeDay ? this.formatDate(closeDay.year, closeDay.month, closeDay.day) : undefined,
+        [Validators.required,FimsValidators.afterToday]],
+      reason: [this.reasons, Validators]
+    });
+  };
 
-    @Output('onCancel') onCancel = new EventEmitter<void>();
+     @Input() editMode: boolean; 
 
-    @ViewChild('detailsStep') step: TdStepComponent;
-
-    @Input('group') group:Group[];
-
-
-    ngOnInit(): void {
-        this.form = this.formBuilder.group({
-          //identifier:[],
-          closeDate: ['23/06/19',Validators],
-          reason :[this.reasons,Validators]
-        });
-    
+    private formatDate(year: number, month: number, day: number): string {
+      return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
+    }
+  
+    private addZero(value: number): string {
+      return ('0' + value).slice(-2);
+    }
+  
+    constructor(private formBuilder: FormBuilder) {
+      super();
+    }
+    get formData() : CloseGroupFormData{
+      const birthDate: string = this.form.get('closeDate').value;
+  
+      const chunks: string[] = birthDate ? birthDate.split('-') : [];
+      return{
+        reason: this.form.get('reason').value,
+        closeDay: {
+          year: chunks.length ? Number(chunks[0]) : undefined,
+          month: chunks.length ? Number(chunks[1]) : undefined,
+          day: chunks.length ? Number(chunks[2]) : undefined,
+        }
       }
+      
+    }
 
-    
-     status: 'CLOSED'
-
-      save():void{
-        
-        this._group.status= this.status;
-        console.log();
-
-       // this.onSave.emit(_group);
-
+    save(): void {
+      //this._group.status = 'CLOSED'//this.status;
+      console.log();
+      // this.onSave.emit(_group);
       }
-
+      
       cancel() {
-        this.onCancel.emit();
+      this.onCancel.emit();
       }
-}
+  }
+
+  
+  

@@ -16,18 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
+import * as groupActions from '../../group.actions';
+import {Router} from '@angular/router';
 
- import {Cycle} from './cycle.model';
+@Injectable()
+export class GroupDefinitionRouteEffects {
 
- export interface GroupDefinition{
-    identifier : string;
-    description : string;
-    minimalSize : number;
-    maximalSize : number;
-    cycle : Cycle;
-    createdOn? : string;
-    createdBy?: string;
-    lastModifiedOn? :string;
-    lastModifiedBy?: string;
+  @Effect({ dispatch: false })
+  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
+    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
+    .map(action => action.payload)
+    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 
- }
+  constructor(private actions$: Actions, private router: Router) { }
+
+}

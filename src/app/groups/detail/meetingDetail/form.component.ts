@@ -113,13 +113,6 @@ ngOnInit(){
 
   @Output() onSelectionChange = new EventEmitter<string[]>();
 
-  //constructor(private store: Store<fromRoot.State>) {}
-
-  //ngOnInit(): void {
-   // this.customers = this.store.select(fromRoot.getCustomerSearchResults)
-     // .map(customerPage => customerPage.customers);
- // }
-
   search(searchTerm) {
     const fetchRequest: FetchRequest = {
       searchTerm

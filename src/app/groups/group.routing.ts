@@ -28,7 +28,7 @@ import { GroupOfficesComponent } from './form/offices/offices.component';
 import { GroupEmployeesComponent } from './form/employees/employees.component';
 import { GroupCustomersComponent } from './form/customers/customers.component'
 import { EditGroupFormComponent } from './form/edit/edit.form.component';
-import { MeetingDateComponent } from './form/meetingDate/meeting-date.component'
+import { MeetingDateComponent } from './detail/meetingDate/meeting-date.component'
 import { GroupExistsGuard } from './group-exists.guard';
 import { GroupsStore, groupStoreFactory } from './store/index';
 import { Store } from '@ngrx/store';
@@ -42,22 +42,62 @@ import { GroupDetailComponent } from './detail/group.detail.component';
 import { GroupIndexComponent } from './detail/group.index.component';
 import {MeetingDetailComponent} from './detail/meetingDetail/meeting-detail.component';
 import {ManageMemberComponent} from './detail/manageMember/manage-member.component';
-import {TransferMemberComponent} from './detail/transferMember/transfer-member.component'
+import {TransferMemberComponent} from './detail/transferMember/transfer-member.component';
+import {DefinitionIndexComponent} from './definition/definition.index.component';
+import {GroupDefinitionListComponent} from './definition/definition.list.component'
 
 
 export const GroupRoutes: Routes = [
   {
     path: '',
     component: GroupComponent,
-    data: { title: 'Manage Groups', },
+    data: { title: 'Manage Groups',hasPermission: {id: 'group_groups', accessLevel: 'READ'} },
     //canActivate: [ CatalogExistsGuard ]
   },
   {
     path: 'create',
     component: CreateGroupFormComponent,
-    data: { title: 'Create Group', }
+    data: { title: 'Create Group',hasPermission: { id: 'group_groupss', accessLevel: 'CHANGE' } }
   },
   {
+    path: 'detail/:id/edit',
+    component: EditGroupFormComponent,
+    data: { title: 'Edit Group', hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } },
+    canActivate: [GroupExistsGuard]
+  },
+  {
+    path: 'detail/:id',
+    component: GroupIndexComponent,
+    data: {
+      hasPermission: { id: 'group_groups', accessLevel: 'READ' }
+    },
+    canActivate: [GroupExistsGuard],
+    children: [
+     
+      {
+        path: '',
+        component: GroupDetailComponent,
+        data: {title: 'View Groups'}
+      },
+    
+      {
+        path: 'transferMember',
+        component: TransferMemberComponent,
+        data: { title: 'Transfer Members', }
+      },
+
+    ]
+  }
+  ,
+  {
+    path: 'definition',
+    component: GroupDefinitionListComponent,
+    data: {
+      hasPermission: { id: 'group_definition', accessLevel: 'READ' }
+    }
+  },
+
+ /* {
     path: 'meetingDate',
     component: MeetingDateComponent,
     data: { title: 'meeting date Group', }
@@ -72,31 +112,6 @@ export const GroupRoutes: Routes = [
     component: MeetingDetailComponent,
     data: { title: 'meeting details', }
   },
-  {
-    path: 'detail/:id/edit',
-    component: EditGroupFormComponent,
-    data: { title: 'Edit Group', },
-    canActivate: [GroupExistsGuard]
-  },
-  {
-    path: 'detail/:id',
-    component: GroupIndexComponent,
-    data: {},
-    canActivate: [GroupExistsGuard],
-    children: [
-     
-     
-      {
-        path: 'manageMember',
-        component: ManageMemberComponent,
-        data: { title: 'Manage Members', }
-      },
-      {
-        path: 'transferMember',
-        component: TransferMemberComponent,
-        data: { title: 'Transfer Members', }
-      },
-
-    ]
-  }
+  */
+  
 ]

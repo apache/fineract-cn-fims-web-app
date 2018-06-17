@@ -18,7 +18,7 @@
 <td-steps mode="'vertical'">
     <td-step #detailsStep label="{{'Meeting Detail' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
         <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
-            <fims-text-input [form]="form" controlName="sequence" placeholder="{{' Meeting sequence' | translate}}"></fims-text-input>
+            <fims-id-input [form]="form" controlName="sequence" placeholder="{{' Meeting sequence' | translate}}"></fims-id-input>
             <fims-text-input [form]="form" controlName="name" placeholder="{{' Group Name' | translate}}"></fims-text-input>
             <fims-date-input [form]="form" controlName="heldOn" placeholder="{{'Held On' | translate}}"></fims-date-input>
             <fims-text-input [form]="form" controlName="duration" placeholder="{{' Duration' | translate}}"></fims-text-input>

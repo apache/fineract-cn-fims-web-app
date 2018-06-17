@@ -84,9 +84,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       title: 'Groups',
       description: 'Manage groups',
-      icon: 'people',
+      icon: 'group',
       routerLink: '/groups',
-      //permission: {id: 'group_groups', accessLevel: 'READ'}
+     permission: {id: 'group_groups', accessLevel: 'READ'}
     },    
 
     {

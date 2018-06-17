@@ -15,11 +15,12 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Edit Meeting Dates ' | translate}}">
-        <fims-group-meeting-date #form
-                                        (onSave)="onSave($event)"
-                                        (onCancel)="onCancel()"
-        >
-        </fims-group-meeting-date> 
-      </fims-layout-card-over>
-      
+<fims-layout-card-over title="{{'Create new Group definition' | translate}}">
+    <fims-groupDefinition-form-component
+      #form
+      (onSave)="onSave($event)"
+      (onCancel)="onCancel()"
+      [groupDefinition]="groupDefinition">
+    </fims-groupDefinition-form-component>
+  </fims-layout-card-over>
+  

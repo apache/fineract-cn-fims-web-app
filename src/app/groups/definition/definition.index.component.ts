@@ -16,18 +16,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {SelectAction} from '../store/definition/definition.actions';
+import {GroupsStore} from '../store/index';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
- import {Cycle} from './cycle.model';
+@Component({
+  templateUrl: './definition.index.component.html'
+})
+export class DefinitionIndexComponent implements OnInit, OnDestroy {
 
- export interface GroupDefinition{
-    identifier : string;
-    description : string;
-    minimalSize : number;
-    maximalSize : number;
-    cycle : Cycle;
-    createdOn? : string;
-    createdBy?: string;
-    lastModifiedOn? :string;
-    lastModifiedBy?: string;
+  private actionsSubscription: Subscription;
 
- }
+  constructor(private route: ActivatedRoute, private groupsStore: GroupsStore) {}
+
+  ngOnInit(): void {
+    this.actionsSubscription = this.route.params
+      .map(params => new SelectAction(params['id']))
+      .subscribe(this.groupsStore);
+  }
+
+  ngOnDestroy(): void {
+    this.actionsSubscription.unsubscribe();
+  }
+}

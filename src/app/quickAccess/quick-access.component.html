@@ -90,7 +90,7 @@
             <a mat-button color="accent" class="text-upper" [routerLink]="['/groups']">
               <span translate>View Group </span>
             </a>
-            <a mat-button color="accent" class="text-upper" [routerLink]="['/groups/create']">
+            <a mat-button color="accent" class="text-upper" [routerLink]="['/groups/create']" *hasPermission="{ id: 'group_groups', accessLevel: 'CHANGE'}">
               <span translate>Create new group </span>
             </a>
           </mat-card-actions>

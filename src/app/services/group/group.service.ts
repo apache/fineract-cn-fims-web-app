@@ -69,5 +69,21 @@ export class GroupService{
     listGroupCommand(id: string): Observable<GroupCommand[]> {
       return this.http.get(`${this.baseUrl}/groups/${id}/commands`);
     }
+
+    fetchGroupDefinitions(): Observable<GroupDefinition[]> {
+      return this.http.get(`${this.baseUrl}/definitions`);
+    }
+  
+    getGroupDefinition(identifier: string): Observable<GroupDefinition> {
+      return this.http.get(`${this.baseUrl}/definitions/${identifier}`);
+    }
+  
+    createGroupDefinition(definition: GroupDefinition): Observable<GroupDefinition> {
+      return this.http.post(`${this.baseUrl}/definitions`, definition);
+    }
+  
+    updateGroupDefinition(definition: GroupDefinition): Observable<GroupDefinition> {
+      return this.http.put(`${this.baseUrl}/definitions/${definition.identifier}`, definition);
+    }
   
 }

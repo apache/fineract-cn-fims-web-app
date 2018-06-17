@@ -16,18 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+export class GroupPermittableGroupIds {
+    public static readonly GROUP_MANAGEMENT = 'group__v1__group';
+    public static readonly GROUP_DEFINITION = 'group__v1__definition';
 
- import {Cycle} from './cycle.model';
-
- export interface GroupDefinition{
-    identifier : string;
-    description : string;
-    minimalSize : number;
-    maximalSize : number;
-    cycle : Cycle;
-    createdOn? : string;
-    createdBy?: string;
-    lastModifiedOn? :string;
-    lastModifiedBy?: string;
-
- }
+} 

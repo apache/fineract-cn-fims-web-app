@@ -19,7 +19,16 @@
     <fims-layout-card-over-header-menu>
       <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="search($event)" [alwaysVisible]="false"></td-search-box>
     </fims-layout-card-over-header-menu>
+    <fims-two-column-layout>
+        <mat-nav-list left>
+                <h3 mat-subheader translate>Definition</h3>
+            <a mat-list-item [routerLink]="['definition']" *hasPermission="{ id: 'group_definition', accessLevel: 'READ' }">
+                <mat-icon matListAvatar>playlist_add_check</mat-icon>
+                <h3 matLine translate>Group Definitions</h3>
+            </a>
+        </mat-nav-list>
     <fims-data-table flex
+                     right
                      (onFetch)="fetchGroups($event)"
                      (onActionCellClick)="rowSelect($event)"
                      [columns]="columns"
@@ -28,6 +37,8 @@
                      [sortable]="true"
                      [pageable]="true">
     </fims-data-table>
+
+  </fims-two-column-layout>
   </fims-layout-card-over>
- <!-- <fims-fab-button title="{{'Create new group' | translate}}" icon="add" [link]="['create']"></fims-fab-button> -->
-  <fims-fab-button title="{{'Close group' | translate}}" icon="close" [link]="['meetingDetail']"></fims-fab-button>
+ <fims-fab-button title="{{'Create new group' | translate}}" icon="add" [link]="['create']"  [permission]="{ id: 'group_groups', accessLevel: 'CHANGE'}"></fims-fab-button> 
+   <!--<fims-fab-button title="{{'Close group' | translate}}" icon="close" [link]="['close']"  [permission]="{ id: 'group_groups', accessLevel: 'CHANGE'}"></fims-fab-button>-->

@@ -16,11 +16,11 @@
 -->
 
 <td-steps mode="'vertical'">
-    <td-step #detailsStep label="{{'Closing Group' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+    <td-step #detailsStep label="{{'Closing Group' | translate}}" >
       <form [formGroup]="form" layout="column">
-        <fims-text-input [form]="form" formControlName="closeDate" placeholder="closing date"></fims-text-input> 
-        <mat-form-field>
-            <mat-select placeholder="{{'Closing reason' | translate}}" formControlName="reason"> Closing Reason
+        <fims-date-input [form]="form" controlName="closeDate" placeholder="{{'closing Date' | translate}}"></fims-date-input>
+        <mat-form-field layout-margin *ngIf="!editMode">
+            <mat-select placeholder="{{'Closing reason' | translate}}" controlName="reason"> Closing Reason
                 <mat-option *ngFor="let reason of reasons" [value]="reason.value">
                     {{ reason.viewValue }}
                 </mat-option>

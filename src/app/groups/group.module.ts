@@ -35,7 +35,7 @@ import {GroupExistsGuard} from './group-exists.guard';
 import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {GroupSelectComponent} from '../common/group-select/group-select.component'
-import {MeetingDateComponent} from './form/meetingDate/meeting-date.component'
+import {MeetingDateComponent} from './detail/meetingDate/meeting-date.component'
 import {CloseGroupComponent} from './detail/closeGroup/close-group.component'
 import {ReopeningGroupComponent} from './detail/reopenGroup/reopen-group.component'
 import {GroupDetailComponent} from './detail/group.detail.component'
@@ -50,6 +50,9 @@ import {GroupNotificationEffects} from './store/effects/notification.effects';
 import {GroupRouteEffects} from './store/effects/route.effects';
 import {EffectsModule} from '@ngrx/effects';
 import {GroupApiEffects} from './store/effects/service.effects';
+import {GroupDefinitionApiEffects} from './store/definition/effects/service.effects'
+import {GroupDefinitionRouteEffects} from './store/definition/effects/route.effects'
+import {GroupDefinitionNotificationEffects} from './store/definition/effects/notification.effects'
 import {
   MatButtonModule,
   MatCardModule,
@@ -64,7 +67,8 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
-
+import { DefinitionIndexComponent} from './definition/definition.index.component';
+import {GroupDefinitionListComponent} from './definition/definition.list.component'
 
 @NgModule({
   imports: [
@@ -96,6 +100,12 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
    EffectsModule.run(GroupNotificationEffects),
    EffectsModule.run(GroupCommandApiEffects),
 
+   EffectsModule.run(GroupDefinitionApiEffects),
+   EffectsModule.run(GroupDefinitionRouteEffects),
+   EffectsModule.run(GroupDefinitionNotificationEffects),
+   //EffectsModule.run(GroupCommandApiEffects),
+
+
   ],
   declarations: [
     GroupComponent,
@@ -115,7 +125,10 @@ import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, Covalent
     GroupDetailComponent,
     GroupIndexComponent,
     CloseGroupFormComponent,
-    MeetingDetailFormComponent
+    MeetingDetailFormComponent,
+    
+    DefinitionIndexComponent,
+    GroupDefinitionListComponent
     
 
   ],

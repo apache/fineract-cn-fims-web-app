@@ -83,7 +83,7 @@ export class GroupComponent implements OnInit {
     this.store.dispatch({ type: SEARCH, payload: this.lastFetchRequest });
   }
 
-  //goToTasks(): void {
-  //  this.router.navigate(['tasks'], { relativeTo: this.route });
-  //}
+  goToDefinition(): void {
+    this.router.navigate(['definition'], { relativeTo: this.route });
+  }
 }

@@ -15,38 +15,38 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */
-import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+ 
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators,FormGroup} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Cycle} from '../../../services/group/domain/cycle.model';
 import {FimsValidators} from '../../../common/validator/validators';
-import {Frequency } from '../../../services/group/domain/cycle.model';
-import {Observable} from 'rxjs/Observable';
-import { Meeting } from '../../../services/group/domain/meeting.model';
-import {MeetingDateComponent} from '../meetingDate/meeting-date.component'
-import { ActivatedRouteStub } from '../../../common/testing/router-stubs';
-
+import {TdStepComponent} from '@covalent/core';
 
 @Component({
-  templateUrl: './edit-meeting.form.component.html'
+  selector: 'fims-groupDefinition-cycle-form',
+  templateUrl: './cycle-form.component.html'
 })
-export class EditMeetingDateComponent implements OnInit {
+export class CycleFormComponent extends FormComponent<Cycle> implements OnInit {
 
+  @ViewChild('detailsStep') step: TdStepComponent;
 
-  meetingDate$: Observable<MeetingDateComponent>;
+  @Input() Cycle: Cycle;
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
+  @Input() editMode = false;
+
+  @Output('onSave') onSave = new EventEmitter<Cycle>();
+
+  @Output('onCancel') onCancel = new EventEmitter<void>();
+
+  constructor(private formBuilder: FormBuilder) {
+    super();
+  }
 
   ngOnInit(){}
+  showIdentifierValidationError(): void {
+    this.setError('identifier', 'unique', true);
 
-
-
-  onCancel() {
-    this.navigateAway();
-  }
-
-  navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
+*/
