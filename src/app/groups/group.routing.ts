@@ -45,6 +45,14 @@ import {ManageMemberComponent} from './detail/manageMember/manage-member.compone
 import {TransferMemberComponent} from './detail/transferMember/transfer-member.component';
 import {DefinitionIndexComponent} from './definition/definition.index.component';
 import {GroupDefinitionListComponent} from './definition/definition.list.component'
+import {EditGroupDefinitionFormComponent} from './definition/form/edit.form.component';
+import {GroupDefinitionFormComponent} from './definition/form/form.component';
+import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.component';
+//import {CycleFormComponent} from './definition/form/cycle-form.component';
+import {GroupDefinitionExistsGuard} from './definition/definition-exits.guard';
+import {GroupDefinitionDetailComponent} from './definition/definition.detail.component'
+import {ReopeningGroupComponent} from './detail/reopenGroup/reopen-group.component'
+
 
 
 export const GroupRoutes: Routes = [
@@ -52,13 +60,29 @@ export const GroupRoutes: Routes = [
     path: '',
     component: GroupComponent,
     data: { title: 'Manage Groups',hasPermission: {id: 'group_groups', accessLevel: 'READ'} },
-    //canActivate: [ CatalogExistsGuard ]
   },
+
   {
     path: 'create',
     component: CreateGroupFormComponent,
-    data: { title: 'Create Group',hasPermission: { id: 'group_groupss', accessLevel: 'CHANGE' } }
+    data: { title: 'Create Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
   },
+  {
+    path: 'reopen',
+    component: ReopeningGroupComponent,
+    data: { title: 'Reopening a Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+  },
+
+  {
+    path: 'close',
+    component: CloseGroupComponent,
+    data: { title: 'Closing a Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+  },
+  //{
+    //path: 'create',
+    //component: CreateGroupFormComponent,
+    //data: { title: 'Create Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+  //},
   {
     path: 'detail/:id/edit',
     component: EditGroupFormComponent,
@@ -94,6 +118,35 @@ export const GroupRoutes: Routes = [
     component: GroupDefinitionListComponent,
     data: {
       hasPermission: { id: 'group_definition', accessLevel: 'READ' }
+    }
+  },
+  {
+    path: 'definition/detail/:id',
+    canActivate: [ GroupDefinitionExistsGuard ],
+    component: DefinitionIndexComponent,
+    data: {
+      hasPermission: { id: 'group_definition', accessLevel: 'READ' }
+    },
+    children: [
+      {
+        path: '',
+        component: GroupDefinitionDetailComponent
+      }, 
+      {
+        path: 'edit',
+        component: EditGroupDefinitionFormComponent,
+        data: {
+          hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' }
+        }
+      }
+    ]
+  },
+
+  {
+    path: 'definition/create',
+    component: CreateGroupDefinitionFormComponent,
+    data: {
+      hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' }
     }
   },
 

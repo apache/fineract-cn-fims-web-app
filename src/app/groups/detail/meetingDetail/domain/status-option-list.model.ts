@@ -16,22 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import * as groupActions from '../definition.actions';
-import {Router} from '@angular/router';
+import { Status } from '../../../../services/group/domain/attendee.model';
 
-@Injectable()
-export class GroupDefinitionRouteEffects {
-
-  @Effect({ dispatch: false })
-  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
-
-  constructor(private actions$: Actions, private router: Router) { }
-
+export interface StatusOption {
+  label: string;
+  type: Status;
 }
+
+export const StatusOptionList: StatusOption[] = [
+  { type: 'EXPECTED', label: 'Expected'},
+  { type: 'ATTENDED', label: 'Attended'},
+  { type: 'MISSED', label: 'Missed'}
+];
+

@@ -42,7 +42,7 @@ export class GroupDefinitionListComponent {
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-    this.definitionData$ = this.store.select(fromGroups.getAllTaskEntities)
+    this.definitionData$ = this.store.select(fromGroups.getAllDefinitionEntities)
       .map(definitions => ({
         data: definitions,
         totalElements: definitions.length,

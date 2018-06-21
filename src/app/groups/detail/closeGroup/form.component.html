@@ -16,22 +16,22 @@
 -->
 
 <td-steps mode="'vertical'">
-    <td-step #detailsStep label="{{'Closing Group' | translate}}" >
+  <td-step #detailsStep label="{{'Closing Group' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
       <form [formGroup]="form" layout="column">
-        <fims-date-input [form]="form" controlName="closeDate" placeholder="{{'closing Date' | translate}}"></fims-date-input>
-        <mat-form-field layout-margin *ngIf="!editMode">
-            <mat-select placeholder="{{'Closing reason' | translate}}" controlName="reason"> Closing Reason
-                <mat-option *ngFor="let reason of reasons" [value]="reason.value">
-                    {{ reason.viewValue }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>  
+        <fims-date-input [form]="form" controlName="closeDate" placeholder="{{'Closing Date' | translate}}"></fims-date-input>
+        <mat-form-field layout-margin flex>
+          <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+          <mat-error *ngIf="form.get('description').hasError('required')" translate>
+            Required
+          </mat-error>
+        </mat-form-field> 
     </form>
-      <ng-template td-step-actions>
-        <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">{{'Closing Group' | translate}}</button>
-        <span flex></span>
-        <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
-      </ng-template>
+    <ng-template td-step-actions>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">{{'Save' | translate}}</button>
+      <span flex></span>
+      <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+  </ng-template>
+
     </td-step>
   </td-steps>
   

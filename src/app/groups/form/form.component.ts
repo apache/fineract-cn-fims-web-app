@@ -24,8 +24,8 @@ import {GroupDetailFormData,GroupDetailFormComponent} from './detail/detail.comp
 import {AddressFormComponent} from '../../common/address/address.component';
 import {Address} from '../../services/domain/address/address.model';
 import {Value} from '../../services/catalog/domain/value.model';
-//import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {Catalog} from '../../services/catalog/domain/catalog.model';
+import {GroupDefinition} from '../../services/group/domain/group-definition.model'
 
 @Component({
   selector: 'fims-group-form-component',
@@ -34,6 +34,7 @@ import {Catalog} from '../../services/catalog/domain/catalog.model';
 export class GroupFormComponent implements OnInit {
 
   private _group: Group;
+  private _groupDefinition:GroupDefinition;
 
   constructor(private router: Router, private route: ActivatedRoute){}
 
@@ -44,7 +45,7 @@ export class GroupFormComponent implements OnInit {
     this.detailFormData = {
       identifier: group.identifier,
       name: group.name,
-      externalId: group.groupDefinitionIdentifier,
+      groupDefinitionIdentifier: group.groupDefinitionIdentifier,
     };
 
     this.addressFormData = group.address;
@@ -119,6 +120,10 @@ export class GroupFormComponent implements OnInit {
   selectLeaders(selections:string[]):void{
     this.selectedLeaders = selections;
   }
+
+  get isValid(): boolean {
+    return (this.detailForm.valid && this.addressForm.valid)
+  }
  
   get group(): Group {
     return this._group;
@@ -129,7 +134,7 @@ export class GroupFormComponent implements OnInit {
 
     const group: Group = {
       identifier: detailFormData.identifier,
-      groupDefinitionIdentifier: detailFormData.externalId,
+      groupDefinitionIdentifier: detailFormData.groupDefinitionIdentifier,
       name: detailFormData.name,
       address: this.addressForm.formData,
       status: 'PENDING',
@@ -140,7 +145,7 @@ export class GroupFormComponent implements OnInit {
       members: this.selectedMembers && this.selectedMembers.length > 0 ? this.selectedMembers : undefined,
     };
     
-    
+    this.onSave.emit(group);
     // directing to attach meeting page
     this.router.navigate(['meetingDate'], { relativeTo: this.route });
   }

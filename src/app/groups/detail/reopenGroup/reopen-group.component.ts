@@ -16,40 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {GroupCommand} from '../../../services/group/domain/group-command.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators,FormGroup} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
-
+import {GroupsStore} from '../../store/index';
+import {LOAD_ALL} from '../../store/commands/commands.actions';
+import {Error} from '../../../services/domain/error.model';
 
 
 @Component({
-    selector:'fims-reopen-group',
     templateUrl:'./reopen-group.component.html'
 })
 
-export class ReopeningGroupComponent implements OnInit{
-  form:FormGroup
+export class ReopeningGroupComponent{
+ 
+  groupCommand:GroupCommand={
+    action: 'REOPEN',
+    note: '',
+    createdBy: '',
+    createdOn: ''
+  }
+  
 
+  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
-  reasons=[
-      {value:'Available members', viewValue:'Available members'},
-      {value:'Funds Available', viewValue:'Funds Available'}
-  ]
-
-  constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
-
-    ngOnInit(){
-        this.form= this.formBuilder.group({
-           openDate:['',Validators.required] 
-
-        })
-    }
-
-    onSave(){
-        console.log('reason.value, to be implemented');
-    }
+  onSave(groupCommand: GroupCommand) {
+    this.store.dispatch({ type: LOAD_ALL, payload: {
+      groupCommand,
+      activatedRoute: this.route
+    } });
+  }
 
     onCancel() {
         this.navigateAway();

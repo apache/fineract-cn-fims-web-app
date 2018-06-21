@@ -16,9 +16,9 @@
 -->
 
 <form [formGroup]="form" layout="column">
-    <fims-id-input [form]="form" placeholder="Account" controlName="identifier" [readonly]="editMode"></fims-id-input>
+  <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
     <fims-text-input [form]="form" controlName="name" placeholder="{{'Name' | translate}}"></fims-text-input>
-    <fims-text-input [form]="form" controlName="externalId" placeholder="{{'External Id' | translate}}"></fims-text-input>
+    <fims-text-input [form]="form" controlName="groupDefinitionIdentifier" placeholder="{{'groupDefinitionIdentifier' | translate}}"></fims-text-input>
     <mat-checkbox  layout-margin translate>Active</mat-checkbox>
   </form>
   

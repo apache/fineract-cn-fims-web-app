@@ -16,22 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import * as groupActions from '../definition.actions';
-import {Router} from '@angular/router';
+import {Frequency} from '../../../services/group/domain/cycle.model';
 
-@Injectable()
-export class GroupDefinitionRouteEffects {
-
-  @Effect({ dispatch: false })
-  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
-
-  constructor(private actions$: Actions, private router: Router) { }
-
+export interface FrequencyOption {
+  label: string;
+  type: Frequency;
 }
+
+export const FrequencyOptionList: FrequencyOption[] = [
+  { type: 'DAILY', label: 'Daily'},
+  { type: 'WEEKLY', label: 'Weekly'},
+  { type: 'FORTNIGHTLY', label: 'Fortnightly'},
+  { type: 'MONTHLY', label: 'Monthly'}
+];
+

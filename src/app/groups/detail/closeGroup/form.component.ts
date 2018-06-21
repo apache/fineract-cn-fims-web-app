@@ -20,86 +20,51 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild,forwardRef } from '@angular/core';
 import { TdStepComponent } from '@covalent/core';
 import { Group, Status } from '../../../services/group/domain/group.model';
+import { GroupCommand} from '../../../services/group/domain/group-command.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { FimsValidators } from '../../../common/validator/validators';
 import {FormComponent} from '../../../common/forms/form.component';
-
-export interface CloseGroupFormData{
-  reason:string,
-  closeDay: {
-    day?: number;
-    month?: number;
-    year?: number;
-  };
-}
 
 
 @Component({
   selector: 'fims-group-close-component',
   templateUrl: './form.component.html',
 })
-export class CloseGroupFormComponent extends FormComponent<CloseGroupFormData> {
-  //form: FormGroup;
-  private _group: Group;
-
-  reasons = [
-    { value: 'No members', viewValue: 'No Members' },
-    { value: 'No Funds', viewValue: 'No funds' }
-  ]
+export class CloseGroupFormComponent implements OnInit {
+  form: FormGroup;
+  
  @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-@Output('onSave') onSave = new EventEmitter<Group>();
+ @Input('groupCommand') groupCommand: GroupCommand;
+
+@Output('onSave') onSave = new EventEmitter<GroupCommand>();
 
 @Output('onCancel') onCancel = new EventEmitter<void>();
 
 @ViewChild('detailsStep') step: TdStepComponent;
 
-@Input('group') group: Group[];
-
-  @Input() set formData(formData: CloseGroupFormData) {
-    const closeDay = formData.closeDay;
-
-    this.form = this.formBuilder.group({
-      closeDate: [closeDay ? this.formatDate(closeDay.year, closeDay.month, closeDay.day) : undefined,
-        [Validators.required,FimsValidators.afterToday]],
-      reason: [this.reasons, Validators]
-    });
-  };
-
-     @Input() editMode: boolean; 
-
-    private formatDate(year: number, month: number, day: number): string {
-      return `${year}-${this.addZero(month)}-${this.addZero(day)}`;
-    }
-  
-    private addZero(value: number): string {
-      return ('0' + value).slice(-2);
-    }
-  
+//@Input('group') group: Group[];
+ 
     constructor(private formBuilder: FormBuilder) {
-      super();
-    }
-    get formData() : CloseGroupFormData{
-      const birthDate: string = this.form.get('closeDate').value;
-  
-      const chunks: string[] = birthDate ? birthDate.split('-') : [];
-      return{
-        reason: this.form.get('reason').value,
-        closeDay: {
-          year: chunks.length ? Number(chunks[0]) : undefined,
-          month: chunks.length ? Number(chunks[1]) : undefined,
-          day: chunks.length ? Number(chunks[2]) : undefined,
-        }
-      }
-      
+      this.form = this.formBuilder.group({
+        closeDate:['',Validators.required],
+        description: ['', Validators.maxLength(2048)],
+      })
     }
 
-    save(): void {
-      //this._group.status = 'CLOSED'//this.status;
-      console.log();
-      // this.onSave.emit(_group);
-      }
+    ngOnInit(): void {
+      this.detailsStep.open();
+    }
+  
+    save() {
+        
+      const groupCommand : GroupCommand = {
+        action:'CLOSE',
+       note: this.form.get('description').value,
+      };
+      this.onSave.emit(groupCommand);
+    }
       
       cancel() {
       this.onCancel.emit();

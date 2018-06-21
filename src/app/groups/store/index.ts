@@ -20,6 +20,8 @@ import * as fromRoot from '../../store';
 import * as fromGroups from './groups.reducer';
 import * as fromGroupTasks from './groupTasks/group-tasks.reducer';
 import * as fromCommands from './commands/commands.reducer';
+import * as fromDefinition from './definition/definition.reducer'
+import * as fromMeeting from './meeting/meeting.reducer'
 
 
 import {ActionReducer, Store} from '@ngrx/store';
@@ -41,6 +43,11 @@ export interface State extends fromRoot.State {
   taskForm: FormState;
   groupTasks: fromGroupTasks.State;
   groupCommands: fromCommands.State;
+  definitions:ResourceState;
+  definitionForm:FormState;
+  meetings:ResourceState;
+  meetingForm:FormState;
+
 }
 
 const reducers = {
@@ -49,6 +56,10 @@ const reducers = {
   taskForm: createFormReducer('Task'),
   groupTasks: fromGroupTasks.reducer,
   groupCommands: fromCommands.reducer,
+  definitions: createResourceReducer('Definition', fromDefinition.reducer),
+  DefinitionForm: createFormReducer('Definition'),
+  meetings: createResourceReducer('Meeting', fromMeeting.reducer),
+  MeetingForm: createFormReducer('Meeting'),
   
 };
 
@@ -70,14 +81,26 @@ export const getGroupLoadedAt = createSelector(getGroupsState, getResourceLoaded
 export const getSelectedGroup = createSelector(getGroupsState, getResourceSelected);
 
 /**
- * Task Selectors
+ * Defintion Selectors
  */
-export const getTasksState = (state: State) => state.tasks;
+export const getDefinitionsState = (state: State) => state.definitions;
 
-export const getAllTaskEntities = createSelector(getTasksState, getResourceAll);
+export const getAllDefinitionEntities = createSelector(getDefinitionsState, getResourceAll);
 
-export const getTaskLoadedAt = createSelector(getTasksState, getResourceLoadedAt);
-export const getSelectedTask = createSelector(getTasksState, getResourceSelected);
+export const getDefinitionLoadedAt = createSelector(getDefinitionsState, getResourceLoadedAt);
+export const getSelectedDefinition = createSelector(getDefinitionsState, getResourceSelected);
+
+
+/**
+ * Meeting Selectors
+ */
+export const getMeetingsState = (state: State) => state.meetings;
+
+export const getAllMeetingEntities = createSelector(getMeetingsState, getResourceAll);
+
+export const getMeetingLoadedAt = createSelector(getMeetingsState, getResourceLoadedAt);
+export const getSelectedMeeting = createSelector(getMeetingsState, getResourceSelected);
+
 
 /**
  * groupTask Selectors

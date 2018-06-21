@@ -36,6 +36,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
 import {SEARCH} from '../../../store/customer/customer.actions';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {StatusOptionList} from './domain/status-option-list.model';
 
 
 @Component({
@@ -48,48 +49,51 @@ export class MeetingDetailFormComponent implements OnInit{
     
 form:FormGroup
 customers: Observable<Customer[]>;
-states1: Observable< Status[]>;
+meetingData$: Observable<TableData>;
+status: Observable< Status[]>;
+
+  columns: any[] = [
+    {name:'customer.givenName',label:'Attendees'},
+    {name:'attendee.status',label:'Status'}
+  ]
+
+statusOptions = StatusOptionList;
+
+@Input('editMode') editMode: boolean;
+
+@Output('onSave') onSave = new EventEmitter<Meeting>();
+
+@Output('onCancel') onCancel = new EventEmitter<void>();
+
+@ViewChild('detailsStep') step: TdStepComponent;
+
+@Input('meeting') group:Meeting[];
+
+selectedStatus: string[] =[];
+@ViewChild('detailsStep') detailsStep: TdStepComponent;
+@Input() preSelection: string;
+
+@Output() onSelectionChange = new EventEmitter<string[]>();
+
 
 constructor(private router: Router,private route: ActivatedRoute,private formBuilder: FormBuilder, private store: GroupsStore) {
-    ;
+    
   }
-
-/*states =[
-    {value:this.states1[0], viewValue:'Expected'},
-    {value:this.states1[1], viewValue:'Attended'},
-    {value:this.states1[2], viewValue:'Missed'},
-] */
-
-
-
-    @Input('editMode') editMode: boolean;
-
-    @Output('onSave') onSave = new EventEmitter<Meeting>();
-
-    @Output('onCancel') onCancel = new EventEmitter<void>();
-
-    @ViewChild('detailsStep') step: TdStepComponent;
-
-    @Input('meeting') group:Meeting[];
-
-
-
-
-
-    selectedStatus: string[] =[];
-
+   
 ngOnInit(){
     this.form= this.formBuilder.group({
        sequence:[Validators.required], 
        name:['',Validators.required],
        heldOn:['',Validators.required],
-       duration:['',Validators.required],
+       duration:['',[Validators.required, FimsValidators.minValue(0)]],
        location:['',Validators.required],
        nextMeeting:['',Validators.required],
 
     })
     this.customers = this.store.select(fromRoot.getCustomerSearchResults)
       .map(customerPage => customerPage.customers);
+
+      this.detailsStep.open();
 }
 
     save(){
@@ -100,18 +104,8 @@ ngOnInit(){
         this.onCancel.emit();
       }
 
-      meetingData$: Observable<TableData>;
-  //customers: Observable<Customer[]>;
-  status: Observable< Status[]>;
-
-  columns: any[] = [
-    {name:'customer.givenName',label:'Attendees'},
-    {name:'attendee.status',label:'Status'}
-  ]
   
-  @Input() preSelection: string;
-
-  @Output() onSelectionChange = new EventEmitter<string[]>();
+  
 
   search(searchTerm) {
     const fetchRequest: FetchRequest = {

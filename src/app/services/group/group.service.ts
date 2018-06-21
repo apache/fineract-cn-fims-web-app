@@ -32,6 +32,7 @@ import {Meeting} from './domain/meeting.model';
 import {SignOffMeeting} from './domain/signoff-meeting.model';
 import {Cycle} from './domain/cycle.model';
 import {AssignedEmployee} from './domain/assigned.model';
+import {Error} from '../domain/error.model';
 ;
 
 @Injectable()
@@ -47,7 +48,8 @@ export class GroupService{
         search: params
       };
   
-      return this.http.get(`${this.baseUrl}/groups`, requestOptions).share();
+      return this.http.get(`${this.baseUrl}/groups`, requestOptions).share()
+      .catch(Error.handleError);
     }
   
     getGroup(id: string, silent?: boolean): Observable<Group> {
@@ -86,4 +88,18 @@ export class GroupService{
       return this.http.put(`${this.baseUrl}/definitions/${definition.identifier}`, definition);
     }
   
+
+    getMeeting(identifier: string): Observable<Meeting> {
+      return this.http.get(`${this.baseUrl}/meeting/${identifier}`);
+    }
+  
+    createMeeting(meeting:Meeting): Observable<Meeting> {
+      return this.http.post(`${this.baseUrl}/meeting`, meeting);
+    }
+  
+    updateMeeting(meeting: Meeting): Observable<Meeting> {
+      return this.http.put(`${this.baseUrl}/meeting/${meeting.groupIdentifier}`, meeting);
+    }
+  
+
 }

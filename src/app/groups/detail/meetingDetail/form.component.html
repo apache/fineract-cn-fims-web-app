@@ -16,8 +16,8 @@
 -->
 
 <td-steps mode="'vertical'">
-    <td-step #detailsStep label="{{'Meeting Detail' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
-        <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
+    <td-step #detailsStep label="{{'Meeting details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+        <form [formGroup]="form" layout="column">
             <fims-id-input [form]="form" controlName="sequence" placeholder="{{' Meeting sequence' | translate}}"></fims-id-input>
             <fims-text-input [form]="form" controlName="name" placeholder="{{' Group Name' | translate}}"></fims-text-input>
             <fims-date-input [form]="form" controlName="heldOn" placeholder="{{'Held On' | translate}}"></fims-date-input>
@@ -27,13 +27,18 @@
 
 
             <h3> Attendance </h3>
-            <fims-data-table (onFetch)="fetchCustomers($event)" [columns]="columns" [data]="meetingData$">
-            </fims-data-table>
+<fims-data-table
+            (onActionCellClick)="rowSelect($event)" 
+            (onFetch)="fetchCustomers($event)"
+            [columns]="columns"
+            [data]="meetingData$"
+              >
+</fims-data-table>
 
         </form>
 
         <ng-template td-step-actions>
-            <button mat-raised-button color="primary" (click)="save(state.value)" [disabled]="form.invalid">{{'Save' | translate}}</button>
+            <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">{{'Save' | translate}}</button>
             <span flex></span>
             <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
         </ng-template>

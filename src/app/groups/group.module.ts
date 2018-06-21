@@ -53,6 +53,11 @@ import {GroupApiEffects} from './store/effects/service.effects';
 import {GroupDefinitionApiEffects} from './store/definition/effects/service.effects'
 import {GroupDefinitionRouteEffects} from './store/definition/effects/route.effects'
 import {GroupDefinitionNotificationEffects} from './store/definition/effects/notification.effects'
+import {MeetingApiEffects} from './store/meeting/effects/service.effects'
+import {MeetingRouteEffects} from './store/meeting/effects/route.effects'
+import {MeetingNotificationEffects} from './store/meeting/effects/notification.effects'
+import {ReopeningGroupFormComponent} from './detail/reopenGroup/form.component'
+
 import {
   MatButtonModule,
   MatCardModule,
@@ -69,6 +74,12 @@ import {
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
 import { DefinitionIndexComponent} from './definition/definition.index.component';
 import {GroupDefinitionListComponent} from './definition/definition.list.component'
+import {GroupDefinitionExistsGuard} from './definition/definition-exits.guard';
+import {GroupDefinitionDetailComponent} from './definition/definition.detail.component'
+import {EditGroupDefinitionFormComponent} from './definition/form/edit.form.component';
+import {GroupDefinitionFormComponent} from './definition/form/form.component';
+import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.component';
+
 
 @NgModule({
   imports: [
@@ -103,6 +114,12 @@ import {GroupDefinitionListComponent} from './definition/definition.list.compone
    EffectsModule.run(GroupDefinitionApiEffects),
    EffectsModule.run(GroupDefinitionRouteEffects),
    EffectsModule.run(GroupDefinitionNotificationEffects),
+
+   EffectsModule.run(MeetingApiEffects),
+   EffectsModule.run(MeetingRouteEffects),
+   EffectsModule.run(MeetingNotificationEffects),
+
+
    //EffectsModule.run(GroupCommandApiEffects),
 
 
@@ -126,14 +143,22 @@ import {GroupDefinitionListComponent} from './definition/definition.list.compone
     GroupIndexComponent,
     CloseGroupFormComponent,
     MeetingDetailFormComponent,
+    ReopeningGroupFormComponent,
     
     DefinitionIndexComponent,
-    GroupDefinitionListComponent
+    GroupDefinitionDetailComponent,
+    GroupDefinitionListComponent,
+    EditGroupDefinitionFormComponent,
+    CreateGroupDefinitionFormComponent,
+    GroupDefinitionFormComponent
+    
+    
     
 
   ],
   providers: [
     GroupExistsGuard,
+    GroupDefinitionExistsGuard,
     
     { provide: GroupsStore, useFactory: groupStoreFactory, deps: [Store]}
   ]

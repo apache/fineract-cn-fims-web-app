@@ -15,24 +15,10 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Reopening Group' | translate}}">
-        <form [formGroup]="form" layout="column" #form (onSave)="onSave($event)" (onCancel)="onCancel()">
-    
-            <fims-text-input [form]="form" controlName="openDate" placeholder="{{'Reopening date*' | translate}}"></fims-text-input>
-    
-            <mat-form-field>
-                <mat-select placeholder="{{'Reopening date*' | translate}}" #reason>
-                    <mat-option *ngFor="let reason of reasons" [value]="reason.value">
-                        {{ reason.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <button mat-raised-button color="primary" (click)="onSave(reason.value)" [disabled]="form.invalid">{{'Reopening Group'| translate}}</button>
-            <span flex></span>
-            <button mat-button (click)="onCancel()">{{'CANCEL' | translate}}</button>
-    
-    
-        </form>
-    
-    </fims-layout-card-over>
+<fims-layout-card-over title="{{'Closing Group' | translate}}">
+    <fims-group-reopen-component #form
+                        (onSave)="onSave($event)"
+                        (onCancel)="onCancel()"
+                        [groupCommand]="groupCommand">
+</fims-group-reopen-component>
+</fims-layout-card-over>

@@ -17,55 +17,32 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {GroupCommand} from '../../../services/group/domain/group-command.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators,FormGroup} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
-import {Group} from '../../../services/group/domain/group.model'
-import {GroupCommand} from '../../../services/group/domain/group-command.model'
-import {Observable} from 'rxjs/Observable'
-import {GroupFormComponent} from '../../form/form.component';
-import * as fromGroups from '../../store';
-import {Subscription} from 'rxjs/Subscription';
 import {GroupsStore} from '../../store/index';
-import {UPDATE, RESET_FORM} from '../../store/group.actions';
+import {LOAD_ALL} from '../../store/commands/commands.actions';
 import {Error} from '../../../services/domain/error.model';
-
-
-
 
 
 @Component({
     templateUrl:'./close-group.component.html'
 })
 
-export class CloseGroupComponent implements OnInit{
-  form:FormGroup
-
-  private formStateSubscription: Subscription;
-
-  @ViewChild('form') formComponent: GroupFormComponent;
-
-  group: Observable<Group>;
+export class CloseGroupComponent{
+ 
+  groupCommand:GroupCommand={
+    action: 'CLOSE',
+    note: '',
+    createdBy: '',
+    createdOn: ''
+  }
   
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
-  ngOnInit() {
-    this.formStateSubscription = this.store.select(fromGroups.getGroupFormError)
-      .filter((error: Error) => !!error)
-      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
-  }
-
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-
-    this.store.dispatch({ type: RESET_FORM });
-  }
-
-  onSave(group: Group) {
-    this.store.dispatch({ type: UPDATE, payload: {
-      group,
+  onSave(groupCommand: GroupCommand) {
+    this.store.dispatch({ type: LOAD_ALL, payload: {
+      groupCommand,
       activatedRoute: this.route
     } });
   }

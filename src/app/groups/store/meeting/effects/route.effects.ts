@@ -20,15 +20,15 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
-import * as groupActions from '../definition.actions';
+import * as meetingActions from '../meeting.actions';
 import {Router} from '@angular/router';
 
 @Injectable()
-export class GroupDefinitionRouteEffects {
+export class MeetingRouteEffects {
 
   @Effect({ dispatch: false })
-  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
+  createMeetingSuccess$: Observable<Action> = this.actions$
+    .ofType(meetingActions.CREATE_SUCCESS, meetingActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 

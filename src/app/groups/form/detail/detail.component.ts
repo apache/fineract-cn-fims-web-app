@@ -25,7 +25,7 @@ import { Status, Weekday } from '../../../services/group/domain/group.model';
 export interface GroupDetailFormData {
   identifier: string;
   name: string;
-  externalId: string;
+  groupDefinitionIdentifier: string;
 
 }
 
@@ -41,7 +41,7 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [formData.name, [Validators.required, Validators.maxLength(256)]],
-      externalId: [formData.externalId, Validators.maxLength(256)],
+      groupDefinitionIdentifier: [formData.groupDefinitionIdentifier, Validators.maxLength(256)],
      // active: [formData.active]
     });
   };
@@ -57,7 +57,7 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
     return {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
-      externalId: this.form.get('externalId').value
+      groupDefinitionIdentifier: this.form.get('groupDefinitionIdentifier').value
       //active: this.form.get('active').value
     };
   }

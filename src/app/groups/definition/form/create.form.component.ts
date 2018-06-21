@@ -15,30 +15,20 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- 
+**/ 
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GroupsStore} from '../../store/index';
-import {CREATE,RESET_FORM} from '../../store/definition/definition.actions';
-import {Cycle} from '../../../services/group/domain/cycle.model'
-import {CycleFormComponent} from './cycle-form.component';
-import {Subscription} from 'rxjs/Subscription';
-import * as fromGroups from '../../store';
-import {Error} from '../../../services/domain/error.model';
-
+import {CREATE} from '../../store/definition/definition.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
 })
   
-export class CreateGroupDefinitionFormComponent implements OnInit, OnDestroy {
+  export class CreateGroupDefinitionFormComponent {
 
-private formStateSubscription: Subscription;
-@ViewChild('form') formComponent: CycleFormComponent;
-
-
-  group: GroupDefinition = {
+  groupDefinition: GroupDefinition = {
     identifier : '',
     description : '',
     minimalSize : 4,
@@ -56,28 +46,15 @@ private formStateSubscription: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
-  ngOnInit() {
-    this.formStateSubscription = this.store.select(fromGroups.getGroupFormError)
-      .filter((error: Error) => !!error)
-      .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
-  }
 
-
-
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
-
-    this.store.dispatch({ type: RESET_FORM });
-  }
-
-  onSave(groupDefinition: GroupDefinition) {
+  onSave(groupDefinition: GroupDefinition):void{
     this.store.dispatch({ type: CREATE, payload: {
       groupDefinition,
       activatedRoute: this.route
     } });
   }
 
-  onCancel() {
+  onCancel() : void{
     this.navigateAway();
   }
 
@@ -85,4 +62,3 @@ private formStateSubscription: Subscription;
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
-*/

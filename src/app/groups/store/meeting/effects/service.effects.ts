@@ -21,36 +21,36 @@ import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
-import * as groupActions from '../definition.actions';
+import * as meetingActions from '../meeting.actions';
 import {GroupService} from '../../../../services/group/group.service';
 
 @Injectable()
-export class GroupDefinitionApiEffects {
+export class MeetingApiEffects {
 
   @Effect()
-  createGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE)
-    .map((action: groupActions.CreateGroupDefinitionAction) => action.payload)
+  createMeeting$: Observable<Action> = this.actions$
+    .ofType(meetingActions.CREATE)
+    .map((action: meetingActions.CreateMeetingAction) => action.payload)
     .mergeMap(payload =>
-      this.groupService.createGroupDefinition(payload.groupDefinition)
-        .map(() => new groupActions.CreateGroupDefinitionSuccessAction({
-          resource: payload.groupDefinition,
+      this.groupService.createMeeting(payload.meeting)
+        .map(() => new meetingActions.CreateMeetingSuccessAction({
+          resource: payload.meeting,
           activatedRoute: payload.activatedRoute
         }))
-        .catch((error) => of(new groupActions.CreateGroupDefinitionFailAction(error)))
+        .catch((error) => of(new meetingActions.CreateMeetingFailAction(error)))
     );
 
   @Effect()
-  updateGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.UPDATE)
-    .map((action: groupActions.UpdateGroupDefinitionAction) => action.payload)
+  updateMeeting$: Observable<Action> = this.actions$
+    .ofType(meetingActions.UPDATE)
+    .map((action: meetingActions.UpdateMeetingAction) => action.payload)
     .mergeMap(payload =>
-      this.groupService.updateGroupDefinition(payload.groupDefinition)
-        .map(() => new groupActions.UpdateGroupDefinitionSuccessAction({
-          resource: payload.groupDefinition,
+      this.groupService.updateMeeting(payload.meeting)
+        .map(() => new meetingActions.UpdateMeetingSuccessAction({
+          resource: payload.meeting,
           activatedRoute: payload.activatedRoute
         }))
-        .catch((error) => of(new groupActions.UpdateGroupDefinitionFailAction(error)))
+        .catch((error) => of(new meetingActions.UpdateMeetingFailAction(error)))
     );
 
   constructor(private actions$: Actions, private groupService: GroupService) { }

@@ -20,18 +20,21 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
-import * as groupActions from '../definition.actions';
-import {Router} from '@angular/router';
+import * as meetingActions from '../meeting.actions';
+import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
-export class GroupDefinitionRouteEffects {
+export class MeetingNotificationEffects {
 
   @Effect({ dispatch: false })
-  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+  createMeetingSuccess$: Observable<Action> = this.actions$
+    .ofType(meetingActions.CREATE_SUCCESS, meetingActions.UPDATE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Meeting is going to be saved'
+    }));
 
-  constructor(private actions$: Actions, private router: Router) { }
+  constructor(private actions$: Actions, private notificationService: NotificationService) {}
 
 }
+

@@ -16,22 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import * as groupActions from '../definition.actions';
-import {Router} from '@angular/router';
+import {Adjustment} from '../../../services/group/domain/cycle.model';
 
-@Injectable()
-export class GroupDefinitionRouteEffects {
-
-  @Effect({ dispatch: false })
-  createGroupDefinitionSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
-
-  constructor(private actions$: Actions, private router: Router) { }
-
+export interface AdjustmentOption {
+  label: string;
+  type: Adjustment;
 }
+
+export const AdjustmentOptionList: AdjustmentOption[] = [
+  { type: 'NEXT_BUSINESS_DAY', label: 'Next_Business_Day'},
+  { type: 'SKIP', label: 'Skip'},
+];
+
