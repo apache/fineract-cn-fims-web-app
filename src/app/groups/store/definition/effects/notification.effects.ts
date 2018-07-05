@@ -31,7 +31,16 @@ export class GroupDefinitionNotificationEffects {
     .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
-      message: 'Group is going to be saved'
+      message: 'Group Definition is going to be saved'
+    }));
+
+
+  @Effect({dispatch: false})
+  updateGroupDefinitionSuccess$: Observable<Action> = this.actions$
+    .ofType(groupActions.UPDATE_SUCCESS)
+    .do(() => this.notificationService.send({
+      type: NotificationType.MESSAGE,
+      message: 'Group Definition is going to be updated'
     }));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}

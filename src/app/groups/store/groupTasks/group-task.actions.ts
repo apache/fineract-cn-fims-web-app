@@ -18,60 +18,17 @@
  */
 import {Action} from '@ngrx/store';
 import {type} from '../../../store/util';
-import {Error} from '../../../services/domain/error.model';
 import {GroupCommand} from '../../../services/group/domain/group-command.model';
 import {RoutePayload} from '../../../common/store/route-payload';
-import {ProcessStep} from '../../../services/customer/domain/process-step.model';
-
-export const LOAD_ALL = type('[Group Task] Load All Process Steps');
-export const LOAD_ALL_COMPLETE = type('[Group Task] Load All Process Steps Complete');
-
-export const EXECUTE_TASK = type('[Group Task] Execute');
-export const EXECUTE_TASK_SUCCESS = type('[Group Task] Success');
-export const EXECUTE_TASK_FAIL = type('[Group Task] Fail');
 
 export const EXECUTE_COMMAND = type('[Group Command] Execute');
 export const EXECUTE_COMMAND_SUCCESS = type('[Group Command] Success');
 export const EXECUTE_COMMAND_FAIL = type('[Group Command] Fail');
 
-export interface ExecuteTaskPayload extends RoutePayload {
-  groupId: string;
-  taskId: string;
-}
 
-export interface ExecuteCommandPayload {
+export interface ExecuteCommandPayload extends RoutePayload {
   groupId: string;
   command: GroupCommand;
-}
-
-export class LoadAllAction implements Action {
-  readonly type = LOAD_ALL;
-
-  constructor(public payload: string) { }
-}
-
-export class LoadAllCompleteAction implements Action {
-  readonly type = LOAD_ALL_COMPLETE;
-
-  constructor(public payload: ProcessStep[]) { }
-}
-
-export class ExecuteTaskAction implements Action {
-  readonly type = EXECUTE_TASK;
-
-  constructor(public payload: ExecuteTaskPayload) { }
-}
-
-export class ExecuteTaskSuccessAction implements Action {
-  readonly type = EXECUTE_TASK_SUCCESS;
-
-  constructor(public payload: ExecuteTaskPayload) { }
-}
-
-export class ExecuteTaskFailAction implements Action {
-  readonly type = EXECUTE_TASK_FAIL;
-
-  constructor(public payload: Error) { }
 }
 
 export class ExecuteCommandAction implements Action {
@@ -93,11 +50,6 @@ export class ExecuteCommandFailAction implements Action {
 }
 
 export type Actions
-  = LoadAllAction
-  | LoadAllCompleteAction
-  | ExecuteTaskAction
-  | ExecuteTaskSuccessAction
-  | ExecuteTaskFailAction
-  | ExecuteCommandAction
+  =| ExecuteCommandAction
   | ExecuteCommandSuccessAction
   | ExecuteCommandFailAction;

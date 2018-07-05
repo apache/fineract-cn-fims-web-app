@@ -15,10 +15,12 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Closing Group' | translate}}">
-    <fims-group-reopen-component #form
-                        (onSave)="onSave($event)"
-                        (onCancel)="onCancel()"
-                        [groupCommand]="groupCommand">
-</fims-group-reopen-component>
-</fims-layout-card-over>
+<fims-layout-card-over title="{{'Activities' | translate}}" [navigateBackTo]="['../']">
+    <mat-list>
+      <h3 mat-subheader translate>Latest activity</h3>
+      <ng-template let-item let-last="last" ngFor [ngForOf]="commands">
+        <fims-command-display [command]="item"></fims-command-display>
+        <mat-divider *ngIf="!last" mat-inset></mat-divider>
+      </ng-template>
+    </mat-list>
+  </fims-layout-card-over>

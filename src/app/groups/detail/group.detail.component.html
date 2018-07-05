@@ -15,52 +15,98 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{group.name}} " [navigateBackTo]="['/groups']">
+<fims-layout-card-over title="{{group.name}}" [navigateBackTo]="['/groups']">
     <fims-layout-card-over-header-menu>
         <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchGroup($event)" [alwaysVisible]="false"></td-search-box>
     </fims-layout-card-over-header-menu>
-    <br>
-    <mat-form-field>
-        <mat-select placeholder="More Options">
-            <mat-option>
-                <a [routerLink]="['meetingDetail']">Meeting Details</a>
-                <a [routerLink]="['close']">Close</a>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <td-message *ngIf="!isGroupActive" label="{{'Group not active' | translate }}"
+              sublabel="{{'You can activate the group under tasks' | translate }}"
+              color="warn" icon="error">
+    <button td-message-actions mat-button (click)="active()"
+            *hasPermission="{ id: 'group_groups', accessLevel: 'CHANGE'}" translate>Activate Group
+    </button>
+  </td-message>
 
-    <mat-card>
-        <h4>Members</h4>
-        <button mat-raised-button [routerLink]="['transferMember']">Transfer Members</button>
-        <button mat-raised-button [routerLink]="['manageMember']">Manage Members</button>
+    <fims-two-column-layout>
+        <ng-container left>
+            <mat-nav-list>
+                <h3 mat-subheader translate>Members</h3>
+                <a mat-list-item *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>credit_card</mat-icon>
+                    <h3 matLine translate>Manage Members</h3>
+                    <p matLine translate>Manage Group Members</p>
+                </a>
+                <a mat-list-item [routerLink]="['status']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>playlist_add_check</mat-icon>
+                    <h3 matLine translate>Tasks</h3>
+                    <p matLine translate>Change the status of this group</p>
+                  </a>
 
-        <table>
-            <tr>
-                <th>Account #</th>
-                <th>Name</th>
-            </tr>
-            
-            <tr>
-                <td>Head Office</td>
-                <td>Joseph</td>
-            </tr>
 
-        </table>
-    </mat-card>
+                <mat-divider></mat-divider>
+                <h3 mat-subheader translate>More Options</h3>
+                <a mat-list-item [routerLink]="['meeting']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>event</mat-icon>
+                    <h3 matLine translate>Meeting details</h3>
+                    <p matLine translate>View Meeting Details</p>
+                </a>
+                 <a mat-list-item [routerLink]="[]">
+                <mat-icon matListAvatar>playlist_add_check</mat-icon>
+                <h3 matLine translate>Sign Off Meeting</h3>
+                <p matLine translate>Sign off Meeting Information </p>
+                </a>
+                <a mat-list-item [routerLink]="[]"> 
+                <mat-icon matListAvatar>perm_identity</mat-icon>
+                <h3 matLine translate>Assigned Employee</h3>
+                <p matLine translate>Update Assigned Employees</p>
+                </a>
+                 
+                <a mat-list-item [routerLink]="['activities']">
+                    <mat-icon matListAvatar>event</mat-icon>
+                    <h3 matLine translate>Activities</h3>
+                    <p matLine translate>Recent activities</p>
+                  </a>
 
-    <mat-card>
-            <p>Next meeting on :<mat-icon [routerLink]="['']">edit</mat-icon></p>
-            <p> Meeting Frequency Every {{group.frequency}}</p>
-    </mat-card>
+                <a mat-list-item [routerLink]="['meetingDate']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                <mat-icon matListAvatar>event</mat-icon>
+                <h3 matLine translate>Meeting Date</h3>
+                <p matLine translate> Attach Meeting Date</p>
+                </a>
+            </mat-nav-list>
+        </ng-container>
 
-    <mat-card>
-        <h4>Group Details</h4>
-        <p>Activation Date : {{group/id.createdOn}}</p>
-        <p>Staff : {{group/id. assignedEmployee}}</p>
-        <p>External Id : {{group/id.groupDefinitionIdentifier}}</p>
-        <h5>Summary</h5>
-        <p>Active Members : {{10}}</p>
-    </mat-card>
-
+        <mat-list right>
+            <h3 mat-subheader translate>Current status</h3>
+            <fims-state-display [state]="group.status"></fims-state-display>
+            <h3 mat-subheader translate>Address</h3>
+            <mat-list-item>
+                <mat-icon matListAvatar>location_on</mat-icon>
+                <h3 matLine>{{group.address?.street}}, {{group.address?.city}}, {{group.address?.postalCode}}, {{group.address?.country}}
+                </h3>
+            </mat-list-item>
+            <h3 mat-subheader translate>Group information</h3>
+            <h4 mat-subheader translate>Assigned Employee</h4>
+            <mat-list-item>
+                <mat-icon matListAvatar>perm_identity</mat-icon>
+                <h3 matLine>{{group.assignedEmployee}}</h3>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Active members</h3>
+                <p matLine>10</p>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Application date</h3>
+                <h3 matLine>{{group.applicationDate | date:'shortDate'}}</h3>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Created by</h3>
+                <p matLine>{{group.createdBy}} - {{group.createdOn | date:'medium'}}</p>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Last modified by</h3>
+                <p matLine>{{group.lastModifiedBy}} - {{group.lastModifiedOn | date:'medium'}}</p>
+            </mat-list-item>
+        </mat-list>
+    </fims-two-column-layout>
 </fims-layout-card-over>
-<fims-fab-button title="{{'Edit Group ' | translate}}" icon="mode_edit" [link]="['edit']"></fims-fab-button>
+<fims-fab-button title="{{'Edit group ' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'group_groups', accessLevel: 'CHANGE'}"></fims-fab-button>

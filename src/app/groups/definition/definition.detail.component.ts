@@ -33,7 +33,7 @@ import {AdjustmentOptionList} from './domain/adjustment-option-list.model';
     groupDefinition$: Observable<GroupDefinition>;
   
     constructor(private store: GroupsStore) {
-      this.groupDefinition$ = store.select(fromGroups.getSelectedDefinition);
+      this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
     }
 
     formatType(type: Frequency): string {

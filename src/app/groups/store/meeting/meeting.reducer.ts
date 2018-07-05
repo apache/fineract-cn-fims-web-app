@@ -17,10 +17,10 @@
  * under the License.
  */
 import * as meeting from './meeting.actions';
-import * as groupTasks from '../groupTasks/group-task.actions';
-import {GroupCommand} from '../../../services/group/domain/group-command.model';
-import {GroupState} from '../../../services/group/domain/group-state.model';
+import {Meeting} from '../../../services/group/domain/meeting.model';
 import {ResourceState} from '../../../common/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
+
 
 export const initialState: ResourceState = {
   ids: [],
@@ -29,36 +29,25 @@ export const initialState: ResourceState = {
   selectedId: null,
 };
 
-export function reducer(state = initialState, action: meeting.Actions | groupTasks.Actions): ResourceState {
-
+export function reducer(state = initialState, action: meeting.Actions): ResourceState {
   switch (action.type) {
+    case meeting.LOAD_ALL: {
+      return initialState;
+    }
 
-    case groupTasks.EXECUTE_COMMAND_SUCCESS: {
-      const payload = action.payload;
+    case meeting.LOAD_ALL_COMPLETE: {
+      const meeting1: Meeting[] = action.payload;
 
-      const meetingId = payload.groupId;
-      const command: GroupCommand = payload.command;
+      const ids = meeting1.map(meeting => meeting.groupIdentifier);
 
-      const meeting = state.entities[meetingId];
+      const entities = resourcesToHash(meeting1);
 
-      let groupState: GroupState = null;
-
-      if (command.action === 'ACTIVATE') {
-        groupState = 'ACTIVE';
-      }else if (command.action === 'CLOSE') {
-        groupState = 'CLOSED';
-      }else if (command.action === 'REOPEN') {
-        groupState = 'ACTIVE';
-      }
-
-      meeting.currentState = groupState;
+      const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...state.ids ],
-        entities: Object.assign({}, state.entities, {
-          [meeting.identifier]:meeting
-        }),
-        loadedAt: state.loadedAt,
+        ids: [ ...ids ],
+        entities: entities,
+        loadedAt: loadedAt,
         selectedId: state.selectedId
       };
     }

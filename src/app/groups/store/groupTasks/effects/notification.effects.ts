@@ -24,23 +24,7 @@ import * as taskActions from '../group-task.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 
 @Injectable()
-export class GroupTasksNotificationEffects {
-
-  @Effect({ dispatch: false })
-  executeGroupTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Task is going to be executed'
-    }));
-
-  @Effect({ dispatch: false })
-  executeGroupTaskFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_FAIL)
-    .do(() => this.notificationService.send({
-      type: NotificationType.ALERT,
-      message: 'Sorry, there was a problem executing your task'
-    }));
+export class GroupCommandNotificationEffects {
 
   @Effect({ dispatch: false })
   executeGroupCommandSuccess$: Observable<Action> = this.actions$
@@ -48,14 +32,6 @@ export class GroupTasksNotificationEffects {
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Command is going to be executed'
-    }));
-
-  @Effect({ dispatch: false })
-  executeGroupCommandFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_FAIL)
-    .do(() => this.notificationService.send({
-      type: NotificationType.ALERT,
-      message: 'Sorry, there was a problem executing your command'
     }));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}

@@ -45,16 +45,16 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
     leaders :[],
     members : [],
     office: '',
-    assignedEmployee : 'string;',
-    weekday : 7,
+    assignedEmployee : '',
+    weekday : 1,
     status : 'PENDING',
     address : {
       street: '',
-      city: 'string;',
-      countryCode: 'string;',
-      country: 'string;',
+      city: '',
+      countryCode: '',
+      country: '',
     },
-    createdOn :' string;'
+    createdOn :''
     
   };
 

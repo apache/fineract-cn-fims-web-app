@@ -17,63 +17,35 @@
  * under the License.
  */
 import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators,FormGroup} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
-import {Frequency } from '../../../services/group/domain/cycle.model';
 import {Observable} from 'rxjs/Observable';
 import { Meeting } from '../../../services/group/domain/meeting.model';
 import {Group} from '../../../services/group/domain/group.model'
+import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
+import {Frequency, Adjustment} from '../../../services/group/domain/cycle.model'
+import * as fromGroups from '../../store/index';
+import {GroupsStore} from '../../store/index';
+import { FrequencyOptionList } from '../../definition/domain/frequency-option-list.model';
+//import {FrequencyOptionList} from '../../domain/frequency-option-list.model';
 
 
 @Component({
-    selector:'fims-group-meeting-date',
     templateUrl:'meeting-date.component.html'
 })
 
-export class MeetingDateComponent implements OnInit{
+export class MeetingDateComponent{
 
-    private _group: Group;
-  form:FormGroup
- 
+    groupDefinition$: Observable<GroupDefinition>;
+    group$ : Observable<Group>;
 
-  Frequency=[
-      {value:'DAILY', viewValue:'Daily'},
-      {value:'WEEKLY', viewValue:'Weekly'},
-      {value:'FORTNIGHTLY', viewValue:'Fortnightly'},
-      {value:'MONTHLY', viewValue:'Monthly'},
-]
+  constructor(private store: GroupsStore) {
+    this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
+    this.group$= store.select(fromGroups.getSelectedGroup);
+  }
 
-Repeat =[
-    {value:'1', viewValue:'1'},
-    {value:'2', viewValue:'2'},
-    {value:'3', viewValue:'3'},
-    {value:'4', viewValue:'4'},
-    {value:'5', viewValue:'5'},
-]
-
-  constructor(private formBuilder: FormBuilder,private router: Router, private route: ActivatedRoute) {}
-
-    ngOnInit(){
-        this.form= this.formBuilder.group({
-           startDate:['',Validators.required],
-           day:['',Validators.required] 
-
-        })
-    }
-
-    onSave(){
-        
-        console.log('frequency.value, repeat.value still to be implemented');
-    }
-
-    onCancel() {
-        this.navigateAway();
-      }
-    
-      navigateAway(): void {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
-      
+  formatType(type: Frequency): string {
+    return FrequencyOptionList.find(option => option.type === type).label;
+  }
 }
+    
+
+      

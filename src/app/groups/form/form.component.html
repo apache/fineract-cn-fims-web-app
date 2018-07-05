@@ -34,7 +34,7 @@
       <ng-template td-step-actions>
         <fims-form-continue-action (onContinue)="employeeStep.open()"></fims-form-continue-action>
       </ng-template>
-      <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Member is assigned to office:'" [translateParams]="{value: selectedOffices[0]}">
+      <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Office is assigned to Group:'" [translateParams]="{value: selectedOffices[0]}">
       </ng-template>
     </td-step>
 
@@ -45,6 +45,8 @@
 
     <ng-template td-step-actions>
       <fims-form-continue-action (onContinue)="leadersStep.open()"></fims-form-continue-action>
+    </ng-template>
+    <ng-template td-step-summary *ngIf="selectedEmployees && selectedEmployees.length > 0" [translate]="'Employee is assigned to Group:'" [translateParams]="{value: selectedEmployees[0]}">
     </ng-template>
   </td-step>
   
@@ -59,7 +61,7 @@
     </ng-template>
   </td-step>
 
-  <td-step #membersStep label="{{'select members of the group' | translate}}"
+  <td-step #membersStep label="{{'Assign members to group' | translate}}"
            [state]="selectedMembers.length ? 'complete' : 'none'">
 
     <fims-group-customers-form [preSelection]="selectedMembers" (onSelectionChange)="selectMembers($event)"></fims-group-customers-form>
@@ -75,7 +77,7 @@
   
     </td-step>
   
-       <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+      <td-step label="{{'Final step' | translate}}" [state]="'complete'">
       <ng-template td-step-summary>
         <fims-form-final-action
           [resourceName]="'GROUP'"

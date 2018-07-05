@@ -31,7 +31,7 @@ import {TableData} from '../../common/data-table/data-table.component';
 })
 export class GroupDefinitionListComponent {
 
-  definitionData$: Observable<TableData>;
+  groupDefinitionsData$: Observable<TableData>;
 
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
@@ -42,10 +42,10 @@ export class GroupDefinitionListComponent {
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-    this.definitionData$ = this.store.select(fromGroups.getAllDefinitionEntities)
-      .map(definitions => ({
-        data: definitions,
-        totalElements: definitions.length,
+    this.groupDefinitionsData$ = this.store.select(fromGroups.getAllGroupDefinitionEntities)
+      .map(groupDefinitions => ({
+        data: groupDefinitions,
+        totalElements: groupDefinitions.length,
         totalPages: 1
       }));
 
@@ -58,7 +58,7 @@ export class GroupDefinitionListComponent {
     });
   }
 
-  rowSelect(definition: GroupDefinition): void {
-    this.router.navigate(['detail', definition.identifier], { relativeTo: this.route });
+  rowSelect(groupDefinition: GroupDefinition): void {
+    this.router.navigate(['detail', groupDefinition.identifier], { relativeTo: this.route });
   }
 }

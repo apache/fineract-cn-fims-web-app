@@ -19,12 +19,12 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Group} from '../../services/group/domain/group.model';
-//import {Catalog} from '../../services/catalog/domain/catalog.model';
 import * as fromGroups from '../store';
 import {Subscription} from 'rxjs/Subscription';
 import {GroupsStore} from '../store/index';
 import {GroupService} from '../../services/group/group.service';
 import {Observable} from 'rxjs/Observable';
+import {SelectAction} from '../store/group.actions';
 
 
 @Component({
@@ -34,14 +34,24 @@ styleUrls: ['./group.detail.component.scss']
 export class GroupDetailComponent implements OnInit, OnDestroy {
 
     private groupSubscription: Subscription;
+    private actionsSubscription: Subscription;
 
      group: Group;
+     isGroupActive: boolean;
+     //identifier: any;
      
     constructor(private route: ActivatedRoute, private router: Router, private store: GroupsStore,
         private groupService: GroupService) {}
 
         ngOnInit(): void {
-          }
+          this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
+            .filter(group => !!group)
+            .do(group => this.group = group)
+            .do(group => this.isGroupActive = group.status === 'ACTIVE')
+            .flatMap(group => this.groupService.getGroup(group.identifier))
+            .subscribe(group => this.group = group);
+    
+        }
     ngOnDestroy(): void {
         this.groupSubscription.unsubscribe();
       }
@@ -50,5 +60,9 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
         if (term) {
           this.router.navigate(['../../../'], { queryParams: { term: term }, relativeTo: this.route });
         }
+      }
+
+      active(): void {
+        this.router.navigate(['status'], { relativeTo: this.route });
       }
 }

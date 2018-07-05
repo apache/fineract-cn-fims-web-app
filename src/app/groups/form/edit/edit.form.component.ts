@@ -32,10 +32,7 @@ export class EditGroupFormComponent {
 
   group$: Observable<Group>;
 
-  //catalog$: Observable<Catalog>;
-
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-   // this.catalog$ = store.select(fromGroups.getGroupCatalog);
     this.group$ = store.select(fromGroups.getSelectedGroup);
   }
 

@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
 **/
-import { Component, OnDestroy, OnInit, EventEmitter, ViewChild, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupsStore } from '../../store/index';
@@ -67,6 +67,20 @@ export class GroupDefinitionFormComponent implements OnInit {
 ngOnInit(): void {
     this.detailsStep.open();
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.groupDefinition) {
+      this.form.reset({
+        identifier: this.groupDefinition.identifier,
+        minimal: this.groupDefinition.minimalSize,
+        maximal:this.groupDefinition.maximalSize,
+        description: this.groupDefinition.description,
+        number: this.groupDefinition.cycle.numberOfMeetings,
+        frequency: this.groupDefinition.cycle.frequency,
+        adjustment: this.groupDefinition.cycle.adjustment
+      });
+    }}
+
 
     save() {
         

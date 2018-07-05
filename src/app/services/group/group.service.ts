@@ -64,13 +64,14 @@ export class GroupService{
       return this.http.put(`${this.baseUrl}/groups/${group.identifier}`, group);
     }
   
-    executeGroupCommand(id: string, command: GroupCommand): Observable<void> {
-      return this.http.post(`${this.baseUrl}/groups/${id}/commands`, command);
-    }
-  
-    listGroupCommand(id: string): Observable<GroupCommand[]> {
-      return this.http.get(`${this.baseUrl}/groups/${id}/commands`);
-    }
+   
+   fetchGroupCommands(identifier: string): Observable<GroupCommand[]> {
+    return this.http.get(`${this.baseUrl}/groups/${identifier}/commands`);
+  }
+
+   groupCommand(identifier: string, command: GroupCommand): Observable<void> {
+    return this.http.post(`${this.baseUrl}/groups/${identifier}/commands`, command);
+  }
 
     fetchGroupDefinitions(): Observable<GroupDefinition[]> {
       return this.http.get(`${this.baseUrl}/definitions`);
@@ -80,12 +81,12 @@ export class GroupService{
       return this.http.get(`${this.baseUrl}/definitions/${identifier}`);
     }
   
-    createGroupDefinition(definition: GroupDefinition): Observable<GroupDefinition> {
-      return this.http.post(`${this.baseUrl}/definitions`, definition);
+    createGroupDefinition(groupDefinition: GroupDefinition): Observable<void> {
+      return this.http.post(`${this.baseUrl}/definitions`, groupDefinition);
     }
   
-    updateGroupDefinition(definition: GroupDefinition): Observable<GroupDefinition> {
-      return this.http.put(`${this.baseUrl}/definitions/${definition.identifier}`, definition);
+    updateGroupDefinition(groupDefinition: GroupDefinition): Observable<void> {
+      return this.http.put(`${this.baseUrl}/definitions/${groupDefinition.identifier}`, groupDefinition);
     }
   
 
@@ -100,6 +101,7 @@ export class GroupService{
     updateMeeting(meeting: Meeting): Observable<Meeting> {
       return this.http.put(`${this.baseUrl}/meeting/${meeting.groupIdentifier}`, meeting);
     }
+  
   
 
 }

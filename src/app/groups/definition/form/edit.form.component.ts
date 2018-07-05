@@ -22,7 +22,6 @@ import {GroupDefinition} from '../../../services/group/domain/group-definition.m
 import * as fromGroups from '../../store';
 import {GroupsStore} from '../../store/index';
 import {UPDATE} from '../../store/definition/definition.actions';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -32,14 +31,11 @@ export class EditGroupDefinitionFormComponent {
 
   groupDefinition$: Observable<GroupDefinition>;
 
-  //catalog$: Observable<Catalog>;
-
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-   // this.catalog$ = store.select(fromGroups.getGroupCatalog);
-    this.groupDefinition$ = store.select(fromGroups.getSelectedDefinition);
+    this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
   }
 
-  onSave(groupDefinition: GroupDefinition) {
+  onSave(groupDefinition: GroupDefinition):void {
     this.store.dispatch({ type: UPDATE, payload: {
       groupDefinition,
       activatedRoute: this.route

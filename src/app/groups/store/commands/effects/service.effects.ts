@@ -25,14 +25,14 @@ import * as commandActions from '../commands.actions';
 import {GroupService} from '../../../../services/group/group.service';
 
 @Injectable()
-export class GroupCommandApiEffects {
+export class CommandApiEffects {
 
   @Effect()
   loadCommands$: Observable<Action> = this.actions$
     .ofType(commandActions.LOAD_ALL)
     .map(toPayload)
     .mergeMap(groupId =>
-      this.groupService.listGroupCommand(groupId)
+      this.groupService.fetchGroupCommands(groupId)
         .map(commands => new commandActions.LoadAllCompleteAction(commands))
         .catch((error) => of(new commandActions.LoadAllCompleteAction([])))
     );

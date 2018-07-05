@@ -15,11 +15,61 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Meeting Details' | translate}}">
-    <fims-meeting-detail-component #form
-                        (onSave)="onSave($event)"
-                        (onCancel)="onCancel()"
-                        [meeting]="meeting">
-</fims-meeting-detail-component>
+<fims-layout-card-over title="{{'Meeting Details' | translate}}" [navigateBackTo]="['../']">
+
+  <td-steps mode="'vertical'">
+    <td-step #detailsStep label="{{'Meeting details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+      <form [formGroup]="form" layout="column">
+        <fims-number-input [form]="form" placeholder="Meeting Sequence" controlName="sequence"></fims-number-input>
+        <fims-number-input [form]="form" placeholder="Current Cycle" controlName="cycle"></fims-number-input>
+        <fims-text-input [form]="form" controlName="name" placeholder="{{' Group Name' | translate}}"></fims-text-input>
+        <fims-date-input [form]="form" controlName="heldOn" placeholder="{{'Held On' | translate}}"></fims-date-input>
+        <fims-text-input [form]="form" controlName="duration" placeholder="{{' Duration' | translate}}"></fims-text-input>
+        <fims-text-input [form]="form" controlName="location" placeholder="{{'location' | translate}}"></fims-text-input>
+        <fims-date-input [form]="form" controlName="nextMeeting" placeholder="{{'Next Meeting' | translate}}"></fims-date-input>
+
+
+        <h3> Attendance </h3>
+        <div layout="row">
+          <table td-data-table>
+            <thead>
+              <tr td-data-table-column-row>
+                <th td-data-table-column>
+                  <span translate>Attendee</span>
+                </th>
+                <th td-data-table-column>
+                  <span translate>Status</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr td-data-table-row>
+                <td td-data-table-cell>
+                  {{customers.givenName}}
+                </td>
+                <td>
+                  <mat-form-field layout-margin>
+                    <mat-select formControlName="status">
+                      <mat-option *ngFor="let status of statusOptions" [value]="status.type">
+                        {{ status.label }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+
+      <ng-template td-step-actions>
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">{{'Save' | translate}}</button>
+        <span flex></span>
+        <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      </ng-template>
+
+    </td-step>
+  </td-steps>
 
 </fims-layout-card-over>

@@ -34,7 +34,7 @@ import {GroupDefinition} from '../../services/group/domain/group-definition.mode
 export class GroupFormComponent implements OnInit {
 
   private _group: Group;
-  private _groupDefinition:GroupDefinition;
+  //private _groupDefinition:GroupDefinition;
 
   constructor(private router: Router, private route: ActivatedRoute){}
 
@@ -46,11 +46,10 @@ export class GroupFormComponent implements OnInit {
       identifier: group.identifier,
       name: group.name,
       groupDefinitionIdentifier: group.groupDefinitionIdentifier,
+      weekday : group.weekday
     };
 
     this.addressFormData = group.address;
-
-    //this.contactFormData = customer.contactDetails;
 
     this.selectedOffices = group.office ? [group.office] : [];
 
@@ -60,14 +59,9 @@ export class GroupFormComponent implements OnInit {
 
     this.selectedMembers = group.members;
 
-
-   // this.customFieldsFormData = customer.customValues;
   };
 
-   
-
-  @Input('catalog') catalog: Catalog;
-
+ 
   @Input('editMode') editMode: boolean;
 
   @Output('onSave') onSave = new EventEmitter<Group>();
@@ -78,8 +72,6 @@ export class GroupFormComponent implements OnInit {
 
   @ViewChild('detailForm') detailForm: GroupDetailFormComponent;
   detailFormData: GroupDetailFormData;
-
-  
 
   @ViewChild('addressForm') addressForm: AddressFormComponent;
   addressFormData: Address;
@@ -138,7 +130,7 @@ export class GroupFormComponent implements OnInit {
       name: detailFormData.name,
       address: this.addressForm.formData,
       status: 'PENDING',
-      weekday:2,
+      weekday:detailFormData.weekday,
       office: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
       leaders: this.selectedLeaders && this.selectedLeaders.length > 0 ? this.selectedLeaders : undefined,
@@ -147,7 +139,7 @@ export class GroupFormComponent implements OnInit {
     
     this.onSave.emit(group);
     // directing to attach meeting page
-    this.router.navigate(['meetingDate'], { relativeTo: this.route });
+    //this.router.navigate(['meetingDate'], { relativeTo: this.route });
   }
 
   cancel() {

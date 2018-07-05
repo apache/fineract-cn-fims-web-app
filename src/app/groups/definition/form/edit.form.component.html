@@ -17,10 +17,11 @@
 
 <fims-layout-card-over title="{{'Edit Group Definition ' | translate}}">
         <fims-groupDefinition-form-component #form
+                                        [editMode]="true"
                                         (onSave)="onSave($event)"
                                         (onCancel)="onCancel()"
                                         [groupDefinition]="groupDefinition$ | async"
-                                        [editMode]="true">
+                                        >
         </fims-groupDefinition-form-component>
       </fims-layout-card-over>
       

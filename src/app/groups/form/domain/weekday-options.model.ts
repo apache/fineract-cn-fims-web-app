@@ -16,37 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import * as task from './group-task.actions';
-import {ProcessStep} from '../../../services/customer/domain/process-step.model';
+import {Weekday} from '../../../services/group/domain/group.model';
 
-export interface State {
-  processSteps: ProcessStep[];
+interface WeekdayOption {
+  type: Weekday;
+  label: string;
 }
 
-const initialState: State = {
-  processSteps: []
-};
+export const WeekdayOptionList: WeekdayOption[] = [
+    { type: 1, label: 'Monday'},
+    { type: 2, label: 'Tuesday'},
+    { type: 3, label: 'Wednesday'},
+    { type: 4, label: 'Thursday'},
+    { type: 5, label: 'Friday'},
+    { type: 6, label: 'Saturday'},
+    { type: 7, label: 'Sunday'},
 
-export function reducer(state = initialState, action: task.Actions): State {
-
-  switch (action.type) {
-
-    case task.LOAD_ALL: {
-      return initialState;
-    }
-
-    case task.LOAD_ALL_COMPLETE: {
-      const processSteps = action.payload;
-
-      return {
-        processSteps
-      };
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
-
-export const getProcessSteps = (state: State) => state.processSteps;
+  ];
+  
+  

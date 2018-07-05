@@ -26,6 +26,19 @@ import {GroupService} from '../../../../services/group/group.service';
 
 @Injectable()
 export class GroupDefinitionApiEffects {
+  @Effect()
+  loadAll$: Observable<Action> = this.actions$
+    .ofType(groupActions.LOAD_ALL)
+    .debounceTime(300)
+    .map((action: groupActions.LoadAllAction) => action.payload)
+    .switchMap(() => {
+      const nextSearch$ = this.actions$.ofType(groupActions.LOAD_ALL).skip(1);
+
+      return this.groupService.fetchGroupDefinitions()
+        .takeUntil(nextSearch$)
+        .map(groupDefinitionPage => new groupActions.LoadAllCompleteAction(groupDefinitionPage))
+        .catch(() => of(new groupActions.LoadAllCompleteAction([])));
+    });
 
   @Effect()
   createGroupDefinition$: Observable<Action> = this.actions$
@@ -43,7 +56,7 @@ export class GroupDefinitionApiEffects {
   @Effect()
   updateGroupDefinition$: Observable<Action> = this.actions$
     .ofType(groupActions.UPDATE)
-    .map((action: groupActions.UpdateGroupDefinitionAction) => action.payload)
+    .map((action: groupActions.CreateGroupDefinitionAction) => action.payload)
     .mergeMap(payload =>
       this.groupService.updateGroupDefinition(payload.groupDefinition)
         .map(() => new groupActions.UpdateGroupDefinitionSuccessAction({
@@ -53,6 +66,5 @@ export class GroupDefinitionApiEffects {
         .catch((error) => of(new groupActions.UpdateGroupDefinitionFailAction(error)))
     );
 
-  constructor(private actions$: Actions, private groupService: GroupService) { }
-
+  constructor(private actions$: Actions, private groupService: GroupService) {}
 }

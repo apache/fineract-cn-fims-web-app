@@ -16,45 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GroupCommand} from '../../../services/group/domain/group-command.model';
-import {ActivatedRoute, Router} from '@angular/router';
 import {GroupsStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/commands/commands.actions';
-import {Error} from '../../../services/domain/error.model';
-
+import * as fromGroups from '../../store';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-    templateUrl:'./close-group.component.html'
+  templateUrl: './activity.component.html'
 })
+export class GroupActivityComponent implements OnInit, OnDestroy {
 
-export class CloseGroupComponent{
- 
-  groupCommand:GroupCommand={
-    action: 'CLOSE',
-    note: '',
-    createdBy: '',
-    createdOn: ''
-  }
-  
+  private commandsSubscription: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
+  private groupSubscription: Subscription;
 
-  onSave(groupCommand: GroupCommand) {
-    this.store.dispatch({ type: LOAD_ALL, payload: {
-      groupCommand,
-      activatedRoute: this.route
-    } });
+  commands: GroupCommand[];
+
+  constructor(private store: GroupsStore) {}
+
+  ngOnInit(): void {
+    this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
+      .subscribe(group => this.store.dispatch({ type: LOAD_ALL, payload: group.identifier }));
+
+    this.commandsSubscription = this.store.select(fromGroups.getAllGroupCommands)
+      .subscribe(commands => this.commands = commands);
   }
 
-    onCancel() {
-        this.navigateAway();
-      }
-    
-      navigateAway(): void {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
+  ngOnDestroy(): void {
+    this.commandsSubscription.unsubscribe();
+    this.groupSubscription.unsubscribe();
+  }
 }
-
-
-  

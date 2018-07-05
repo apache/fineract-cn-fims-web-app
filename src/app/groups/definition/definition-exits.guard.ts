@@ -35,7 +35,7 @@ export class GroupDefinitionExistsGuard implements CanActivate {
   }
 
   hasGroupDefinitionInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromGroups.getDefinitionLoadedAt)
+    const timestamp$: Observable<number> = this.store.select(fromGroups.getGroupDefinitionLoadedAt)
       .map(loadedAt => loadedAt[id]);
 
     return this.existsGuardService.isWithinExpiry(timestamp$);

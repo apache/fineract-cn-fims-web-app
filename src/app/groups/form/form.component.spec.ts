@@ -19,8 +19,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {GroupDetailFormComponent} from './detail/detail.component';
 import {GroupFormComponent} from './form.component';
-//import {CustomerContactFormComponent} from './contact/contact.component';
-//import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CovalentChipsModule, CovalentStepsModule} from '@covalent/core';
 import {Component, EventEmitter, ViewChild} from '@angular/core';
@@ -47,7 +45,7 @@ const groupTemplate: Group = {
   office:'test',
   assignedEmployee:'test',
   weekday:2,
-  status:'Pending',
+  status:'PENDING',
   address: {
     street: 'test',
     city: 'test',
@@ -82,8 +80,6 @@ describe('Test group form', () => {
         TestComponent,
         GroupFormComponent,
         GroupDetailFormComponent,
-        //CustomerContactFormComponent,
-        //CustomerCustomFieldsComponent,
         GroupEmployeesComponent,
         GroupOfficesComponent,
         GroupCustomersComponent

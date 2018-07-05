@@ -16,47 +16,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
-import { Action } from '@ngrx/store';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '@ngrx/store';
+import {of} from 'rxjs/observable/of';
 import * as taskActions from '../group-task.actions';
-import { GroupService } from '../../../../services/group/group.service';
+import {GroupService} from '../../../../services/group/group.service';
 
 @Injectable()
-export class GroupTasksApiEffects {
-
-  /* @Effect()
-  loadAll$: Observable<Action> = this.actions$
-    .ofType(taskActions.LOAD_ALL)
-    .debounceTime(300)
-    .map((action: taskActions.LoadAllAction) => action.payload)
-    .switchMap(id => {
-      const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).skip(1);
-
-      return this.groupService.fetchProcessSteps(id)
-        .takeUntil(nextSearch$)
-        .map(processSteps => new taskActions.LoadAllCompleteAction(processSteps))
-        .catch(() => of(new taskActions.LoadAllCompleteAction([])));
-    });
- */
- /*  @Effect()
-  executeTask: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK)
-    .map((action: taskActions.ExecuteTaskAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.markTaskAsExecuted(payload.groupId, payload.taskId)
-        .map(() => new taskActions.ExecuteTaskSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteTaskFailAction(error)))
-    ); */
+export class GroupCommandApiEffects {
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_COMMAND)
     .map((action: taskActions.ExecuteCommandAction) => action.payload)
     .mergeMap(payload =>
-      this.groupService.executeGroupCommand(payload.groupId, payload.command)
+      this.groupService.groupCommand(payload.groupId, payload.command)
         .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
         .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
     );

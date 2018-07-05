@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
+import {Component, Input,Output,OnInit,EventEmitter,ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, Validators,FormGroup} from '@angular/forms';
@@ -30,9 +30,14 @@ import {Subscription} from 'rxjs/Subscription';
 import {GroupsStore} from '../../store/index';
 import {CREATE, RESET_FORM} from '../../store/group.actions';
 import {Error} from '../../../services/domain/error.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
-
+import { TdStepComponent } from '@covalent/core';
+//import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../../store';
+//import {SEARCH} from '../../../store/customer/customer.actions';
+//import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {StatusOptionList} from './domain/status-option-list.model';
+import {CustomerService} from '../../../services/customer/customer.service';
 
 
 @Component({
@@ -40,60 +45,44 @@ import {TableData, TableFetchRequest} from '../../../common/data-table/data-tabl
 })
 
 export class MeetingDetailComponent implements OnInit{
-  form:FormGroup
-  
-  meetingData$: Observable<TableData>;
-  customers: Observable<Customer[]>;
-  status: Observable< Status[]>;
+      
+form:FormGroup
+customers: Observable<Customer>;
 
-  columns: any[] = [
-    {name:'customer.givenName',label:'Attendees'},
-    {name:'attendee.status',label:'Status'}
-  ]
+statusOptions = StatusOptionList;
 
-  private formStateSubscription: Subscription;
+@ViewChild('detailsStep') step: TdStepComponent;
 
-   meeting : Meeting={
-    meetingSequence : 1,
-    groupIdentifier : '',
-    currentCycle : 2,
-    attendees : [],
-    scheduledFor :'',
-    location : '',
-    heldOn : '',
-    duration : 40,
-    createdOn : '',
-    createdBy: ''
-   }
-    
-   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-    ;
+@ViewChild('detailsStep') detailsStep: TdStepComponent;
+
+
+constructor(private router: Router,private route: ActivatedRoute,private formBuilder: FormBuilder, private store: GroupsStore,
+  private customerService: CustomerService) {
+    this.customers = customerService.getCustomer("identifier").share();
   }
-
-
+   
 ngOnInit(){
+    this.form= this.formBuilder.group({
+       sequence: ['', [Validators.required, FimsValidators.minValue(0)]],
+       cycle : ['', [Validators.required, FimsValidators.minValue(0)]],
+       name:['',Validators.required],
+       heldOn:['',Validators.required],
+       duration:['',[Validators.required, FimsValidators.minValue(0)]],
+       location:['',Validators.required],
+       nextMeeting:['',Validators.required],
+       status: ['', [Validators.required]],
 
+    })
+
+      this.detailsStep.open();
 }
 
-  ngOnDestroy(): void {
-    this.formStateSubscription.unsubscribe();
 
-    this.store.dispatch({ type: RESET_FORM });
-  }
+    save(){
+     
+    }
 
-  onSave(meeting: Meeting) {
-    this.store.dispatch({ type: CREATE, payload: {
-      meeting,
-      activatedRoute: this.route
-    } });
-  }
-
-  onCancel() {
-    this.navigateAway();
-  }
-
-  navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
+    cancel() {
+        
+      }
 }

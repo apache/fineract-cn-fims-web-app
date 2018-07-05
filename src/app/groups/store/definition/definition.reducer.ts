@@ -17,10 +17,9 @@
  * under the License.
  */
 import * as groupDefinition from './definition.actions';
-import * as groupTasks from '../groupTasks/group-task.actions';
-import {GroupCommand} from '../../../services/group/domain/group-command.model';
-import {GroupState} from '../../../services/group/domain/group-state.model';
+import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import {ResourceState} from '../../../common/store/resource.reducer';
+import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
 
 export const initialState: ResourceState = {
   ids: [],
@@ -29,36 +28,27 @@ export const initialState: ResourceState = {
   selectedId: null,
 };
 
-export function reducer(state = initialState, action: groupDefinition.Actions | groupTasks.Actions): ResourceState {
+export function reducer(state = initialState, action: groupDefinition.Actions): ResourceState {
 
   switch (action.type) {
 
-    case groupTasks.EXECUTE_COMMAND_SUCCESS: {
-      const payload = action.payload;
+    case groupDefinition.LOAD_ALL: {
+      return initialState;
+    }
 
-      const groupDefinitionId = payload.groupId;
-      const command: GroupCommand = payload.command;
+    case groupDefinition.LOAD_ALL_COMPLETE: {
+      const groupDefinitions1: GroupDefinition[] = action.payload;
 
-      const groupDefinition = state.entities[groupDefinitionId];
+      const ids = groupDefinitions1.map(groupDefinition => groupDefinition.identifier);
 
-      let groupState: GroupState = null;
+      const entities = resourcesToHash(groupDefinitions1);
 
-      if (command.action === 'ACTIVATE') {
-        groupState = 'ACTIVE';
-      }else if (command.action === 'CLOSE') {
-        groupState = 'CLOSED';
-      }else if (command.action === 'REOPEN') {
-        groupState = 'ACTIVE';
-      }
-
-      groupDefinition.currentState = groupState;
+      const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...state.ids ],
-        entities: Object.assign({}, state.entities, {
-          [groupDefinition.identifier]: groupDefinition
-        }),
-        loadedAt: state.loadedAt,
+        ids: [ ...ids ],
+        entities: entities,
+        loadedAt: loadedAt,
         selectedId: state.selectedId
       };
     }

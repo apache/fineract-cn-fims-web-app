@@ -19,7 +19,7 @@
     <fims-data-table
       (onActionCellClick)="rowSelect($event)"
       [columns]="columns"
-      [data]="definitionData$ | async"
+      [data]="groupDefinitionsData$ | async"
       [sortable]="false"
       [pageable]="false">
     </fims-data-table>

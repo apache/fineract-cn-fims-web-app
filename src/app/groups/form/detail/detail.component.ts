@@ -21,11 +21,13 @@ import {FormComponent} from '../../../common/forms/form.component';
 import {FormBuilder, Validators} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
 import { Status, Weekday } from '../../../services/group/domain/group.model';
+import {WeekdayOptionList} from '../domain/weekday-options.model';
 
 export interface GroupDetailFormData {
   identifier: string;
   name: string;
   groupDefinitionIdentifier: string;
+  weekday:number;
 
 }
 
@@ -35,6 +37,8 @@ export interface GroupDetailFormData {
 })
 export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData> {
 
+  weekdayOptions = WeekdayOptionList;
+
   @Input() set formData(formData: GroupDetailFormData) {
    // const createdOn = formData.createdOn;
 
@@ -42,7 +46,7 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
       name: [formData.name, [Validators.required, Validators.maxLength(256)]],
       groupDefinitionIdentifier: [formData.groupDefinitionIdentifier, Validators.maxLength(256)],
-     // active: [formData.active]
+      weekday: [formData.weekday, [Validators.required, Validators.maxLength(7)]],
     });
   };
 
@@ -57,8 +61,8 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
     return {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
-      groupDefinitionIdentifier: this.form.get('groupDefinitionIdentifier').value
-      //active: this.form.get('active').value
+      groupDefinitionIdentifier: this.form.get('groupDefinitionIdentifier').value,
+      weekday:this.form.get('weekday').value
     };
   }
 

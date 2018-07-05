@@ -23,8 +23,6 @@ import {GroupComponent} from './group.component';
 import {GroupFormComponent} from './form/form.component';
 import {CreateGroupFormComponent} from './form/create/create.form.component';
 import {FimsSharedModule} from '../common/common.module';
-import {ManageMemberComponent} from './detail/manageMember/manage-member.component';
-import {TransferMemberComponent} from './detail/transferMember/transfer-member.component';
 import {MeetingDetailComponent} from './detail/meetingDetail/meeting-detail.component';
 import {GroupDetailFormComponent} from './form/detail/detail.component';
 import {GroupOfficesComponent} from './form/offices/offices.component';
@@ -36,16 +34,14 @@ import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {GroupSelectComponent} from '../common/group-select/group-select.component'
 import {MeetingDateComponent} from './detail/meetingDate/meeting-date.component'
-import {CloseGroupComponent} from './detail/closeGroup/close-group.component'
-import {ReopeningGroupComponent} from './detail/reopenGroup/reopen-group.component'
 import {GroupDetailComponent} from './detail/group.detail.component'
 import {GroupIndexComponent} from './detail/group.index.component'
-import {GroupCommandApiEffects} from './store/commands/effects/service.effects';
+import {GroupCommandApiEffects} from './store/groupTasks/effects/service.effects';
+import {CommandApiEffects} from './store/commands/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CloseGroupFormComponent} from './detail/closeGroup/form.component'
-import {MeetingDetailFormComponent} from './detail/meetingDetail/form.component'
+//import {MeetingDetailFormComponent} from './detail/meetingDetail/form.component'
 import {GroupNotificationEffects} from './store/effects/notification.effects';
 import {GroupRouteEffects} from './store/effects/route.effects';
 import {EffectsModule} from '@ngrx/effects';
@@ -56,7 +52,9 @@ import {GroupDefinitionNotificationEffects} from './store/definition/effects/not
 import {MeetingApiEffects} from './store/meeting/effects/service.effects'
 import {MeetingRouteEffects} from './store/meeting/effects/route.effects'
 import {MeetingNotificationEffects} from './store/meeting/effects/notification.effects'
-import {ReopeningGroupFormComponent} from './detail/reopenGroup/form.component'
+import {GroupCommandNotificationEffects} from './store/groupTasks/effects/notification.effects'
+import {GroupCommandRouteEffects} from './store/groupTasks/effects/route.effects'
+
 
 import {
   MatButtonModule,
@@ -79,7 +77,8 @@ import {GroupDefinitionDetailComponent} from './definition/definition.detail.com
 import {EditGroupDefinitionFormComponent} from './definition/form/edit.form.component';
 import {GroupDefinitionFormComponent} from './definition/form/form.component';
 import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.component';
-
+import {GroupStatusComponent} from './detail/status/status.component'
+import {GroupActivityComponent} from './detail/activity/activity.component'
 
 @NgModule({
   imports: [
@@ -110,6 +109,9 @@ import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.
    EffectsModule.run(GroupRouteEffects),
    EffectsModule.run(GroupNotificationEffects),
    EffectsModule.run(GroupCommandApiEffects),
+   EffectsModule.run(GroupCommandRouteEffects),
+   EffectsModule.run(GroupCommandNotificationEffects),
+   EffectsModule.run(CommandApiEffects),
 
    EffectsModule.run(GroupDefinitionApiEffects),
    EffectsModule.run(GroupDefinitionRouteEffects),
@@ -118,10 +120,6 @@ import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.
    EffectsModule.run(MeetingApiEffects),
    EffectsModule.run(MeetingRouteEffects),
    EffectsModule.run(MeetingNotificationEffects),
-
-
-   //EffectsModule.run(GroupCommandApiEffects),
-
 
   ],
   declarations: [
@@ -134,23 +132,20 @@ import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.
     CreateGroupFormComponent,
     EditGroupFormComponent,
     MeetingDateComponent,
-    CloseGroupComponent,
-    ReopeningGroupComponent,
-    ManageMemberComponent,
-    MeetingDetailComponent,
-    TransferMemberComponent,
     GroupDetailComponent,
     GroupIndexComponent,
-    CloseGroupFormComponent,
-    MeetingDetailFormComponent,
-    ReopeningGroupFormComponent,
+    MeetingDetailComponent,
+   // MeetingDetailFormComponent,
     
     DefinitionIndexComponent,
     GroupDefinitionDetailComponent,
     GroupDefinitionListComponent,
     EditGroupDefinitionFormComponent,
     CreateGroupDefinitionFormComponent,
-    GroupDefinitionFormComponent
+    GroupDefinitionFormComponent,
+    GroupStatusComponent,
+    GroupActivityComponent
+  
     
     
     
