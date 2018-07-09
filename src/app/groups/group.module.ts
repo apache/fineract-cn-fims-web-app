@@ -23,7 +23,7 @@ import {GroupComponent} from './group.component';
 import {GroupFormComponent} from './form/form.component';
 import {CreateGroupFormComponent} from './form/create/create.form.component';
 import {FimsSharedModule} from '../common/common.module';
-import {MeetingDetailComponent} from './detail/meetingDetail/meeting-detail.component';
+import {SignOffMeetingComponent} from './detail/signOffMeeting/signOff-meeting.component';
 import {GroupDetailFormComponent} from './form/detail/detail.component';
 import {GroupOfficesComponent} from './form/offices/offices.component';
 import {GroupEmployeesComponent} from './form/employees/employees.component';
@@ -41,7 +41,6 @@ import {CommandApiEffects} from './store/commands/effects/service.effects';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-//import {MeetingDetailFormComponent} from './detail/meetingDetail/form.component'
 import {GroupNotificationEffects} from './store/effects/notification.effects';
 import {GroupRouteEffects} from './store/effects/route.effects';
 import {EffectsModule} from '@ngrx/effects';
@@ -79,6 +78,8 @@ import {GroupDefinitionFormComponent} from './definition/form/form.component';
 import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.component';
 import {GroupStatusComponent} from './detail/status/status.component'
 import {GroupActivityComponent} from './detail/activity/activity.component'
+import {MeetingComponent} from './detail/meeting/meeting.component'
+
 
 @NgModule({
   imports: [
@@ -134,7 +135,8 @@ import {GroupActivityComponent} from './detail/activity/activity.component'
     MeetingDateComponent,
     GroupDetailComponent,
     GroupIndexComponent,
-    MeetingDetailComponent,
+    SignOffMeetingComponent,
+    MeetingComponent,
    // MeetingDetailFormComponent,
     
     DefinitionIndexComponent,
@@ -144,7 +146,8 @@ import {GroupActivityComponent} from './detail/activity/activity.component'
     CreateGroupDefinitionFormComponent,
     GroupDefinitionFormComponent,
     GroupStatusComponent,
-    GroupActivityComponent
+    GroupActivityComponent,
+    
   
     
     

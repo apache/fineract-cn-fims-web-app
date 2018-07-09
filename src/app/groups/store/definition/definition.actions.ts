@@ -46,6 +46,7 @@ export const RESET_FORM = type('[GroupDefinition] Reset Form');
 
 export interface GroupDefinitionRoutePayload extends RoutePayload {
   groupDefinition: GroupDefinition;
+  groupDefinitionId:string;
 }
 
 export class LoadAllAction implements Action {

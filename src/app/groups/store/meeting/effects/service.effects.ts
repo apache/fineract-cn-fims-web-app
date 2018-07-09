@@ -27,25 +27,29 @@ import {GroupService} from '../../../../services/group/group.service';
 @Injectable()
 export class MeetingApiEffects {
 
+
   @Effect()
-  createMeeting$: Observable<Action> = this.actions$
-    .ofType(meetingActions.CREATE)
-    .map((action: meetingActions.CreateMeetingAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.createMeeting(payload.meeting)
-        .map(() => new meetingActions.CreateMeetingSuccessAction({
-          resource: payload.meeting,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new meetingActions.CreateMeetingFailAction(error)))
-    );
+  loadAll$: Observable<Action> = this.actions$
+    .ofType(meetingActions.LOAD_ALL)
+    .debounceTime(300)
+    .map((action: meetingActions.LoadAllAction) => action.payload)
+    .mergeMap(groupId =>
+      this.groupService.fetchMeetings(groupId)
+    //.switchMap(Id => {
+     // const nextSearch$ = this.actions$.ofType(meetingActions.LOAD_ALL).skip(1);
+
+      //return this.groupService.fetchMeetings(Id)
+        //.takeUntil(nextSearch$)
+        .map(meetingPage => new meetingActions.LoadAllCompleteAction(meetingPage))
+        .catch(() => of(new meetingActions.LoadAllCompleteAction([]))));
+    
 
   @Effect()
   updateMeeting$: Observable<Action> = this.actions$
     .ofType(meetingActions.UPDATE)
     .map((action: meetingActions.UpdateMeetingAction) => action.payload)
     .mergeMap(payload =>
-      this.groupService.updateMeeting(payload.meeting)
+      this.groupService.updateMeeting(payload.groupId,payload.meeting)
         .map(() => new meetingActions.UpdateMeetingSuccessAction({
           resource: payload.meeting,
           activatedRoute: payload.activatedRoute

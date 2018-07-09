@@ -34,20 +34,18 @@ import { TdStepComponent } from '@covalent/core';
 //import {TableData, TableFetchRequest} from '../../../common/data-table/data-table.component';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
-//import {SEARCH} from '../../../store/customer/customer.actions';
-//import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import {StatusOptionList} from './domain/status-option-list.model';
 import {CustomerService} from '../../../services/customer/customer.service';
 
 
 @Component({
-    templateUrl:'./meeting-detail.component.html'
+    templateUrl:'./signOff-meeting.component.html'
 })
 
-export class MeetingDetailComponent implements OnInit{
+export class SignOffMeetingComponent implements OnInit{
       
 form:FormGroup
-customers: Observable<Customer>;
+customers: Observable<Customer>; 
 
 statusOptions = StatusOptionList;
 
@@ -65,11 +63,7 @@ ngOnInit(){
     this.form= this.formBuilder.group({
        sequence: ['', [Validators.required, FimsValidators.minValue(0)]],
        cycle : ['', [Validators.required, FimsValidators.minValue(0)]],
-       name:['',Validators.required],
-       heldOn:['',Validators.required],
        duration:['',[Validators.required, FimsValidators.minValue(0)]],
-       location:['',Validators.required],
-       nextMeeting:['',Validators.required],
        status: ['', [Validators.required]],
 
     })

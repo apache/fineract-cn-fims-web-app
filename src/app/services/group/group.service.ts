@@ -32,6 +32,7 @@ import {Meeting} from './domain/meeting.model';
 import {SignOffMeeting} from './domain/signoff-meeting.model';
 import {Cycle} from './domain/cycle.model';
 import {AssignedEmployee} from './domain/assigned.model';
+import {Customer} from '../customer/domain/customer.model'
 import {Error} from '../domain/error.model';
 ;
 
@@ -60,10 +61,9 @@ export class GroupService{
       return this.http.post(`${this.baseUrl}/groups`, group);
     }
   
-    updateGroup(group: Group): Observable<Group> {
-      return this.http.put(`${this.baseUrl}/groups/${group.identifier}`, group);
+   updateGroup(group: Group): Observable<Group> {
+     return this.http.put(`${this.baseUrl}/groups/${group.identifier}`, group);
     }
-  
    
    fetchGroupCommands(identifier: string): Observable<GroupCommand[]> {
     return this.http.get(`${this.baseUrl}/groups/${identifier}/commands`);
@@ -85,21 +85,17 @@ export class GroupService{
       return this.http.post(`${this.baseUrl}/definitions`, groupDefinition);
     }
   
-    updateGroupDefinition(groupDefinition: GroupDefinition): Observable<void> {
+    updateGroupDefinition(groupDefinition: GroupDefinition): Observable<GroupDefinition> {
       return this.http.put(`${this.baseUrl}/definitions/${groupDefinition.identifier}`, groupDefinition);
     }
   
 
-    getMeeting(identifier: string): Observable<Meeting> {
-      return this.http.get(`${this.baseUrl}/meeting/${identifier}`);
+    fetchMeetings(identifier: string): Observable<Meeting[]> {
+      return this.http.get(`${this.baseUrl}/groups/${identifier}/meetings`);
     }
-  
-    createMeeting(meeting:Meeting): Observable<Meeting> {
-      return this.http.post(`${this.baseUrl}/meeting`, meeting);
-    }
-  
-    updateMeeting(meeting: Meeting): Observable<Meeting> {
-      return this.http.put(`${this.baseUrl}/meeting/${meeting.groupIdentifier}`, meeting);
+
+    updateMeeting(identifier: string,meeting: Meeting): Observable<Meeting> {
+      return this.http.put(`${this.baseUrl}/groups/${identifier}/meetings/`, meeting);
     }
   
   

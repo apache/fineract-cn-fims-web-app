@@ -20,7 +20,7 @@
         <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchGroup($event)" [alwaysVisible]="false"></td-search-box>
     </fims-layout-card-over-header-menu>
     <td-message *ngIf="!isGroupActive" label="{{'Group not active' | translate }}"
-              sublabel="{{'You can activate the group under tasks' | translate }}"
+              sublabel="{{'You can activate the group under status' | translate }}"
               color="warn" icon="error">
     <button td-message-actions mat-button (click)="active()"
             *hasPermission="{ id: 'group_groups', accessLevel: 'CHANGE'}" translate>Activate Group
@@ -38,29 +38,24 @@
                 </a>
                 <a mat-list-item [routerLink]="['status']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
                     <mat-icon matListAvatar>playlist_add_check</mat-icon>
-                    <h3 matLine translate>Tasks</h3>
+                    <h3 matLine translate>Status</h3>
                     <p matLine translate>Change the status of this group</p>
                   </a>
 
 
                 <mat-divider></mat-divider>
                 <h3 mat-subheader translate>More Options</h3>
-                <a mat-list-item [routerLink]="['meeting']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+               <a mat-list-item [routerLink]="['meeting']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
                     <mat-icon matListAvatar>event</mat-icon>
-                    <h3 matLine translate>Meeting details</h3>
-                    <p matLine translate>View Meeting Details</p>
+                    <h3 matLine translate>Meeting Information</h3>
+                    <p matLine translate>View Meeting Information</p>
                 </a>
-                 <a mat-list-item [routerLink]="[]">
+                 <a mat-list-item [routerLink]="['signOff']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
                 <mat-icon matListAvatar>playlist_add_check</mat-icon>
                 <h3 matLine translate>Sign Off Meeting</h3>
                 <p matLine translate>Sign off Meeting Information </p>
                 </a>
-                <a mat-list-item [routerLink]="[]"> 
-                <mat-icon matListAvatar>perm_identity</mat-icon>
-                <h3 matLine translate>Assigned Employee</h3>
-                <p matLine translate>Update Assigned Employees</p>
-                </a>
-                 
+            
                 <a mat-list-item [routerLink]="['activities']">
                     <mat-icon matListAvatar>event</mat-icon>
                     <h3 matLine translate>Activities</h3>
