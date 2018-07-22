@@ -33,7 +33,6 @@ import {GroupExistsGuard} from './group-exists.guard';
 import {GroupsStore, groupStoreFactory} from './store/index';
 import {Store} from '@ngrx/store';
 import {GroupSelectComponent} from '../common/group-select/group-select.component'
-import {MeetingDateComponent} from './detail/meetingDate/meeting-date.component'
 import {GroupDetailComponent} from './detail/group.detail.component'
 import {GroupIndexComponent} from './detail/group.index.component'
 import {GroupCommandApiEffects} from './store/groupTasks/effects/service.effects';
@@ -132,7 +131,6 @@ import {MeetingComponent} from './detail/meeting/meeting.component'
     GroupFormComponent,
     CreateGroupFormComponent,
     EditGroupFormComponent,
-    MeetingDateComponent,
     GroupDetailComponent,
     GroupIndexComponent,
     SignOffMeetingComponent,

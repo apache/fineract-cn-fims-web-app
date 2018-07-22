@@ -42,6 +42,7 @@
                   {{customers.givenName}}
                 </td>
                 <td>
+                  <div>
                   <mat-form-field layout-margin>
                     <mat-select formControlName="status">
                       <mat-option *ngFor="let status of statusOptions" [value]="status.type">
@@ -49,7 +50,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-
+                </div>
                 </td>
               </tr>
             </tbody>

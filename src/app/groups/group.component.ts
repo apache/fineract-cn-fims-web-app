@@ -32,7 +32,6 @@ import {GroupsStore} from './store/index';
 export class GroupComponent implements OnInit {
 
   groupData$: Observable<TableData>;
-
   loading$: Observable<boolean>;
 
   columns: any[] = [

@@ -30,12 +30,12 @@
     <fims-two-column-layout>
         <ng-container left>
             <mat-nav-list>
-                <h3 mat-subheader translate>Members</h3>
+              <!--  <h3 mat-subheader translate>Members</h3>
                 <a mat-list-item *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
                     <mat-icon matListAvatar>credit_card</mat-icon>
                     <h3 matLine translate>Manage Members</h3>
-                    <p matLine translate>Manage Group Members</p>
-                </a>
+                    <p matLine translate>Manage Group Members</p> 
+                </a>  -->
                 <a mat-list-item [routerLink]="['status']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
                     <mat-icon matListAvatar>playlist_add_check</mat-icon>
                     <h3 matLine translate>Status</h3>
@@ -61,12 +61,6 @@
                     <h3 matLine translate>Activities</h3>
                     <p matLine translate>Recent activities</p>
                   </a>
-
-                <a mat-list-item [routerLink]="['meetingDate']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
-                <mat-icon matListAvatar>event</mat-icon>
-                <h3 matLine translate>Meeting Date</h3>
-                <p matLine translate> Attach Meeting Date</p>
-                </a>
             </mat-nav-list>
         </ng-container>
 
@@ -85,10 +79,16 @@
                 <mat-icon matListAvatar>perm_identity</mat-icon>
                 <h3 matLine>{{group.assignedEmployee}}</h3>
             </mat-list-item>
+            <h4 mat-subheader translate>Assigned Office</h4>
             <mat-list-item>
+                <mat-icon matListAvatar>store</mat-icon>
+                <h3 matLine>{{group.office}}</h3>
+            </mat-list-item>
+
+           <!-- <mat-list-item>
                 <h3 matLine translate>Active members</h3>
                 <p matLine>10</p>
-            </mat-list-item>
+            </mat-list-item> -->
             <mat-list-item>
                 <h3 matLine translate>Application date</h3>
                 <h3 matLine>{{group.applicationDate | date:'shortDate'}}</h3>

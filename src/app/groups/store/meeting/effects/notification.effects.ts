@@ -27,8 +27,8 @@ import {NotificationService, NotificationType} from '../../../../services/notifi
 export class MeetingNotificationEffects {
 
   @Effect({ dispatch: false })
-  createMeetingSuccess$: Observable<Action> = this.actions$
-    .ofType(meetingActions.CREATE_SUCCESS, meetingActions.UPDATE_SUCCESS)
+  updateMeetingSuccess$: Observable<Action> = this.actions$
+    .ofType( meetingActions.UPDATE_SUCCESS)
     .do(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Meeting is going to be saved'

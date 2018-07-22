@@ -27,8 +27,8 @@ import {Router} from '@angular/router';
 export class MeetingRouteEffects {
 
   @Effect({ dispatch: false })
-  createMeetingSuccess$: Observable<Action> = this.actions$
-    .ofType(meetingActions.CREATE_SUCCESS, meetingActions.UPDATE_SUCCESS)
+  updateMeetingSuccess$: Observable<Action> = this.actions$
+    .ofType( meetingActions.UPDATE_SUCCESS)
     .map(action => action.payload)
     .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
 

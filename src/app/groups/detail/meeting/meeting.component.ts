@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import * as fromGroups from '../../store/index';
 import {GroupsStore} from '../../store/index';
@@ -30,45 +30,54 @@ import {Group} from '../../../services/group/domain/group.model'
 @Component({
     templateUrl: './meeting.component.html'
   })
-  export class MeetingComponent {
+  export class MeetingComponent implements OnInit {
   
-    meeting$: Observable<Meeting>;
-    meetingData$: Observable<TableData>;
+    meetingData$:Observable<TableData>;
+    meetingData:any
     group: Group;
     private groupSubscription: Subscription;
-   
-
+    private meetingSubscription: Subscription;
+    groupIdentifier: string
+    meetingSequence: number
+    currentCycle: number
+    attendees: any
 
     columns: any[] = [
-        { name: 'customerIdentifier', label: 'Attendees' },
-        { name: 'status', label: 'Status' },
+        {name: this.groupIdentifier, label:'Group Id'},
+        { name: this.meetingSequence, label: 'Meeting Sequence' },
+        { name: this.currentCycle, label: 'Current Cycle' },
+        {name: this.attendees, label:'Attendances'}
     ]
   
     constructor(private store: GroupsStore) {
-        this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
-        .subscribe(group =>this.group = group);
-           
-          //{this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
-
-      this.meeting$ = store.select(fromGroups.getSelectedMeeting);
-
+      this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
+      .subscribe(group => {
+        this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
+        //this.fetchMeetings(group.identifier);
+      });
+      
       this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities)
       .map(meeting => ({
         data: meeting,
         totalElements: meeting.length,
         totalPages: 1
       }));
+     
+    }
 
-    this.fetchMeetings(this.group.identifier);
-  }
-identifier = this.group.identifier;
+    ngOnInit(){
+      this.meetingData = this.store.select(fromGroups.getAllMeetingEntities)
+      .subscribe(res => console.log(res))
 
-  fetchMeetings(identifier): void {
+   
+      this.fetchMeetings(this.group.identifier);
+    }
+     
+
+  fetchMeetings(identifier: string): void {
     this.store.dispatch({
       type: LOAD_ALL,
-      payload:{
-        groupId: this.group.identifier
-      }
+      payload:this.group.identifier
     });
   }
     

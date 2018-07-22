@@ -28,7 +28,6 @@ import { GroupOfficesComponent } from './form/offices/offices.component';
 import { GroupEmployeesComponent } from './form/employees/employees.component';
 import { GroupCustomersComponent } from './form/customers/customers.component'
 import { EditGroupFormComponent } from './form/edit/edit.form.component';
-import { MeetingDateComponent } from './detail/meetingDate/meeting-date.component'
 import { GroupExistsGuard } from './group-exists.guard';
 import { GroupsStore, groupStoreFactory } from './store/index';
 import { Store } from '@ngrx/store';
@@ -104,12 +103,6 @@ export const GroupRoutes: Routes = [
         component: SignOffMeetingComponent,
         data: { title: 'Meeting Details',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
       },
-      {
-        path: 'meetingDate',
-        component: MeetingDateComponent,
-        data: { title: 'meeting date Group',hasPermission: { id: 'group_groups', accessLevel: 'READ' }}
-      },
-
     ]
   }
   ,

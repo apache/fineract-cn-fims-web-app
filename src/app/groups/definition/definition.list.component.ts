@@ -18,7 +18,7 @@
  */
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromGroups from '../store';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GroupsStore} from '../store/index';
 import {GroupDefinition} from '../../services/group/domain/group-definition.model';
 import {Observable} from 'rxjs/Observable';
@@ -29,10 +29,10 @@ import {TableData} from '../../common/data-table/data-table.component';
 @Component({
   templateUrl: './definition.list.component.html'
 })
-export class GroupDefinitionListComponent {
+export class GroupDefinitionListComponent implements OnInit{
 
   groupDefinitionsData$: Observable<TableData>;
-
+  groupDefinitionsData: any
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'minimalSize', label: 'Minimum Size' },
@@ -48,8 +48,12 @@ export class GroupDefinitionListComponent {
         totalElements: groupDefinitions.length,
         totalPages: 1
       }));
-
+      
     this.fetchGroupDefinitions();
+  }
+  ngOnInit(){
+    this.groupDefinitionsData = this.store.select(fromGroups.getAllGroupDefinitionEntities)
+      .subscribe(res => console.log(res))
   }
 
   fetchGroupDefinitions(): void {

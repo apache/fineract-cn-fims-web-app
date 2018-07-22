@@ -40,7 +40,7 @@ export function reducer(state = initialState, action: meeting.Actions): Resource
 
       const ids = meeting1.map(meeting => meeting.groupIdentifier);
 
-      const entities = resourcesToHash(meeting1);
+      const entities = resourcesToHash(meeting1,'groupidentifier');
 
       const loadedAt = idsToHashWithCurrentTimestamp(ids);
 

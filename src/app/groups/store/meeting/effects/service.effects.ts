@@ -33,17 +33,17 @@ export class MeetingApiEffects {
     .ofType(meetingActions.LOAD_ALL)
     .debounceTime(300)
     .map((action: meetingActions.LoadAllAction) => action.payload)
-    .mergeMap(groupId =>
-      this.groupService.fetchMeetings(groupId)
-    //.switchMap(Id => {
-     // const nextSearch$ = this.actions$.ofType(meetingActions.LOAD_ALL).skip(1);
+    //.mergeMap(groupId =>
+      //this.groupService.fetchMeetings(groupId)
+    .switchMap(Id => {
+      const nextSearch$ = this.actions$.ofType(meetingActions.LOAD_ALL).skip(1);
 
-      //return this.groupService.fetchMeetings(Id)
-        //.takeUntil(nextSearch$)
-        .map(meetingPage => new meetingActions.LoadAllCompleteAction(meetingPage))
-        .catch(() => of(new meetingActions.LoadAllCompleteAction([]))));
+      return this.groupService.fetchMeetings(Id)
+        .takeUntil(nextSearch$)
+        .map(meeting => new meetingActions.LoadAllCompleteAction(meeting))
+        .catch(() => of(new meetingActions.LoadAllCompleteAction([])));
+    });
     
-
   @Effect()
   updateMeeting$: Observable<Action> = this.actions$
     .ofType(meetingActions.UPDATE)
