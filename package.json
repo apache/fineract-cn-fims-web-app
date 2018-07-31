@@ -47,7 +47,7 @@
     "@angular/router": "4.4.5",
     "@covalent/core": "1.0.0-beta.8-1",
     "@ngrx/core": "1.2.0",
-    "@ngrx/effects": "2.0.3",
+    "@ngrx/effects": "2.0.5",
     "@ngrx/store": "2.2.2",
     "@ngrx/store-devtools": "3.2.4",
     "@ngx-translate/core": "7.0.0",
@@ -58,7 +58,7 @@
     "highlight.js": "9.10.0",
     "ngrx-store-localstorage": "0.1.8",
     "reselect": "2.5.4",
-    "rxjs": "5.4.1",
+    "rxjs": "^5.6.0-forward-compat.5",
     "showdown": "1.6.4",
     "text-mask-addons": "^3.6.0",
     "zone.js": "0.8.17"
