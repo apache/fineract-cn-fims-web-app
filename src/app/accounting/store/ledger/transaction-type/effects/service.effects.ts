@@ -32,7 +32,7 @@ export class TransactionTypeApiEffects {
   searchTransactionTypes$: Observable<Action> = this.actions$
     .ofType(transactionTypeActions.SEARCH)
     .map((action: transactionTypeActions.SearchAction) => action.payload)
-    .mergeMap(fetchRequest =>
+    .mergeMap(({ fetchRequest }) =>
       this.accountingService.fetchTransactionTypes(fetchRequest)
         .map(transactionTypePage => new transactionTypeActions.SearchCompleteAction({
           elements: transactionTypePage.transactionTypes,

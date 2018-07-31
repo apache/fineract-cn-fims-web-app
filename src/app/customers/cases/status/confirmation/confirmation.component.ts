@@ -29,8 +29,8 @@ import {Fee} from '../services/domain/fee.model';
 import {FeeService} from '../services/fee.service';
 
 interface Parameter {
-  productId: string;
-  caseId: string;
+  productId?: string;
+  caseId?: string;
   action: string;
 }
 

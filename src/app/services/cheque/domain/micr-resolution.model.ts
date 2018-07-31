@@ -17,6 +17,6 @@
  * under the License.
  */
 export interface MICRResolution {
-  office: string;
-  customer: string;
+  office?: string;
+  customer?: string;
 }
