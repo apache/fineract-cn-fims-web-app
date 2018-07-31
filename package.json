@@ -19,7 +19,7 @@
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },
   "engines": {
-    "node": ">4.4 < 7",
+    "node": ">4.4",
     "npm": ">3"
   },
   "repository": {
