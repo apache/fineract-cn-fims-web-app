@@ -40,7 +40,7 @@ export class ImageService {
           headers: headers
         })
           .map((response: Response) => response.blob())
-          .catch(() => Observable.empty()));
+          .catch(() => Observable.of(new Blob())));
   }
 
   private mapHeader(authenticationState: State): Headers {
