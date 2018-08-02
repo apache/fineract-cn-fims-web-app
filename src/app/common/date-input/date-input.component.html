@@ -15,9 +15,11 @@
   limitations under the License.
 -->
 
-<mat-form-field layout-margin [formGroup]="form">
+<form [formGroup]="form">
+<mat-form-field layout-margin >
   <input matInput type="date" [id]="controlName" [placeholder]="placeholder" [formControlName]="controlName" [title]="title"/>
   <mat-error *ngIf="hasRequiredError" translate>Required</mat-error>
   <mat-error *ngIf="hasBeforeTodayError" translate>Date must be before today</mat-error>
   <mat-error *ngIf="hasAfterTodayError" translate>Date must be after today</mat-error>
 </mat-form-field>
+</form>

@@ -73,7 +73,7 @@
     "codelyzer": "3.0.0",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "3.2.0",
-    "karma": "1.4.1",
+    "karma": "^2.0.2",
     "karma-chrome-launcher": "2.0.0",
     "karma-cli": "1.0.1",
     "karma-coverage-istanbul-reporter": "0.2.2",
@@ -81,11 +81,11 @@
     "karma-jasmine": "1.1.0",
     "karma-jasmine-html-reporter": "0.2.2",
     "license-to-fail": "2.2.0",
-    "phantomjs-prebuilt": "2.1.7",
-    "protractor": "5.1.0",
+    "phantomjs-prebuilt": "^2.1.16",
+    "protractor": "^5.3.2",
     "ts-node": "3.0.6",
     "tslint": "5.2.0",
     "typescript": "2.3.4",
-    "webpack-bundle-analyzer": "^2.3.1"
+    "webpack-bundle-analyzer": "^2.13.1"
   }
 }

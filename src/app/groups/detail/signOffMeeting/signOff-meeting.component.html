@@ -1,0 +1,70 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<fims-layout-card-over title="{{'Sign off Meeting' | translate}}"  [navigateBackTo]="['../']">
+
+  <td-steps mode="'vertical'">
+    <td-step #detailsStep  [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+      <form [formGroup]="form" layout="column">
+        <fims-number-input [form]="form" placeholder="Meeting Sequence" controlName="sequence"></fims-number-input>
+        <fims-number-input [form]="form" placeholder="Current Cycle" controlName="cycle"></fims-number-input>
+        <fims-text-input [form]="form" controlName="duration" placeholder="{{' Duration' | translate}}"></fims-text-input>
+        <h3> Attendance </h3>
+        <div layout="row">
+          <table td-data-table>
+            <thead>
+              <tr td-data-table-column-row>
+                <th td-data-table-column>
+                  <span translate>Attendee</span>
+                </th>
+                <th td-data-table-column>
+                  <span translate>Status</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let customer of customers1">
+                <td>
+                 {{customer.identifier}}
+                </td>
+                <td>
+                  <div>
+                  <mat-form-field layout-margin>
+                    <mat-select formControlName="status">
+                      <mat-option *ngFor="let status of statusOptions" [value]="status.type">
+                        {{ status.label }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+
+      <ng-template td-step-actions>
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="!form.valid">{{'Save' | translate}}</button>
+        <span flex></span>
+        <button mat-button (click)="cancel()">{{'CANCEL' | translate}}</button>
+      </ng-template>
+
+    </td-step>
+  </td-steps>
+
+</fims-layout-card-over>

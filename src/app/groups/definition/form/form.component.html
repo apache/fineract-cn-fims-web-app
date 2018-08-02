@@ -1,0 +1,61 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+    <td-step #detailsStep label="{{'Group Definition details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
+        <form [formGroup]="form" layout="column">
+            <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
+            <fims-number-input [form]="form" placeholder="Minimal Size"  controlName="minimal"></fims-number-input>
+            <fims-number-input [form]="form" placeholder="Maximal Size" controlName="maximal"></fims-number-input>
+            <mat-form-field layout-margin flex>
+                <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
+                <mat-error *ngIf="form.get('description').hasError('required')" translate>
+                  Required
+                </mat-error>
+              </mat-form-field>
+
+            <h4 translate> Cycle details </h4>
+
+            <fims-number-input [form]="form" controlName="number" placeholder="{{'Number of meeting' | translate}}"></fims-number-input>
+            <mat-form-field layout-margin>
+                <mat-select formControlName="frequency" placeholder="{{ 'Frequency' | translate }}">
+                    <mat-option *ngFor="let frequency of frequencyOptions" [value]="frequency.type">
+                        {{ frequency.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field layout-margin>
+                <mat-select formControlName="adjustment" placeholder="{{ 'Adjustment' | translate }}">
+                    <mat-option *ngFor="let adjustment of adjustmentOptions" [value]="adjustment.type">
+                        {{ adjustment.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+        <ng-template td-step-actions>
+            <fims-form-final-action 
+            [resourceName]="'GROUPDEFINITION'"
+            [editMode]="editMode"
+            [disabled]="!form.valid" 
+            (onCancel)="cancel()"
+            (onSave)="save()">
+            </fims-form-final-action>
+        </ng-template>
+
+    </td-step>
+</td-steps>

@@ -63,6 +63,7 @@
       </mat-card>
     </div>
   </div>
+
   <div layout="column" layout-gt-sm="row" class="inset">
     <div flex-gt-sm="40" *hasPermission="{ id: 'accounting_ledgers', accessLevel: 'READ'}">
       <mat-card>
@@ -79,6 +80,24 @@
       </mat-card>
     </div>
   </div>
+
+  <div layout="column" layout-gt-sm="row" class="inset">
+      <div flex-gt-sm="40">
+        <mat-card>
+          <mat-card-title translate>Group</mat-card-title>
+          <mat-card-subtitle translate>Create/edit groups.</mat-card-subtitle>
+          <mat-card-actions>
+            <a mat-button color="accent" class="text-upper" [routerLink]="['/groups']">
+              <span translate>View Group </span>
+            </a>
+            <a mat-button color="accent" class="text-upper" [routerLink]="['/groups/create']" *hasPermission="{ id: 'group_groups', accessLevel: 'CHANGE'}">
+              <span translate>Create new group </span>
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
   <div layout="column" layout-gt-sm="row" class="inset">
     <div flex-gt-sm="40" *hasPermission="{ id: 'identity_roles', accessLevel: 'READ'}">
       <mat-card>

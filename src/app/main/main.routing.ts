@@ -33,6 +33,7 @@ export const MainRoutes: Routes = [
       { path: 'roles', loadChildren: './../roles/role.module#RoleModule' },
       { path: 'user', loadChildren: './../user/user.module#UserModule' },
       { path: 'customers', loadChildren: './../customers/customer.module#CustomerModule' },
+      { path: 'groups', loadChildren: './../groups/group.module#GroupModule' },
       { path: 'accounting', loadChildren: './../accounting/accounting.module#AccountingModule' },
       { path: 'loans', loadChildren: './../loans/products/product.module#ProductModule' },
       { path: 'deposits', loadChildren: './../depositAccount/deposit-account.module#DepositAccountModule' },

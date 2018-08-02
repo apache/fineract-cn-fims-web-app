@@ -1,0 +1,92 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<td-steps mode="'vertical'">
+    <td-step #detailsStep label="{{'Group details' | translate}}" [state]="detailForm.valid ? 'complete' : detailForm.pristine ? 'none' : 'required'">
+  
+      <fims-group-detail-form #detailForm [formData]="detailFormData" [editMode]="editMode"></fims-group-detail-form>
+  
+      <ng-template td-step-actions>
+        <fims-form-continue-action (onContinue)="officeStep.open()"></fims-form-continue-action>
+      </ng-template>
+    </td-step>
+
+
+    <td-step #officeStep label="{{'select office' | translate}}"
+             [state]="selectedOffices.length ? 'complete' : 'none'">
+  
+      <fims-group-offices-form [preSelection]="selectedOffices" (onSelectionChange)="selectOffice($event)"></fims-group-offices-form>
+  
+      <ng-template td-step-actions>
+        <fims-form-continue-action (onContinue)="employeeStep.open()"></fims-form-continue-action>
+      </ng-template>
+      <ng-template td-step-summary *ngIf="selectedOffices && selectedOffices.length > 0" [translate]="'Office is assigned to Group:'" [translateParams]="{value: selectedOffices[0]}">
+      </ng-template>
+    </td-step>
+
+    <td-step #employeeStep label="{{'Assign Employee to Group' | translate}}"
+           [state]="selectedEmployees.length ? 'complete' : 'none'">
+
+    <fims-group-employees-form [preSelection]="selectedEmployees" (onSelectionChange)="selectEmployee($event)"></fims-group-employees-form>
+
+    <ng-template td-step-actions>
+      <fims-form-continue-action (onContinue)="leadersStep.open()"></fims-form-continue-action>
+    </ng-template>
+    <ng-template td-step-summary *ngIf="selectedEmployees && selectedEmployees.length > 0" [translate]="'Employee is assigned to Group:'" [translateParams]="{value: selectedEmployees[0]}">
+    </ng-template>
+  </td-step>
+  
+  <td-step #leadersStep label="{{'Assign leaders to Group' | translate}}"
+           [state]="selectedLeaders.length ? 'complete' : 'none'">
+
+    <fims-group-customers-form [preSelection]="selectedLeaders" (onSelectionChange)="selectLeaders($event)"></fims-group-customers-form>
+
+
+    <ng-template td-step-actions>
+      <fims-form-continue-action (onContinue)="membersStep.open()"></fims-form-continue-action>
+    </ng-template>
+  </td-step>
+
+  <td-step #membersStep label="{{'Assign members to group' | translate}}"
+           [state]="selectedMembers.length ? 'complete' : 'none'">
+
+    <fims-group-customers-form [preSelection]="selectedMembers" (onSelectionChange)="selectMembers($event)"></fims-group-customers-form>
+
+    <ng-template td-step-actions>
+      <fims-form-continue-action (onContinue)="addressStep.open()"></fims-form-continue-action>
+    </ng-template>
+  </td-step>
+
+    <td-step #addressStep label="{{'Group Address' | translate}}" [state]="addressForm.valid ? 'complete' : addressForm.pristine ? 'none' : 'required'">
+  
+      <fims-address-form #addressForm [formData]="addressFormData"></fims-address-form>
+  
+    </td-step>
+  
+      <td-step label="{{'Final step' | translate}}" [state]="'complete'">
+      <ng-template td-step-summary>
+        <fims-form-final-action
+          [resourceName]="'GROUP'"
+          [editMode]="editMode"
+          [disabled]="!isValid"
+          (onCancel)="cancel()"
+          (onSave)="save()">
+        </fims-form-final-action>
+      </ng-template>
+    </td-step>
+  </td-steps>
+  

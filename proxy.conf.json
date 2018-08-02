@@ -68,5 +68,13 @@
     "pathRewrite": {
       "^/api/payroll": "/payroll"
     }
+  },
+
+  "/api/group": {
+    "target": "http://localhost:2032",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/group": "/group"
+    }
   }
 }

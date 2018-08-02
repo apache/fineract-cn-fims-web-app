@@ -24,7 +24,8 @@ import {MainRoutes, mainRoutingProviders} from './main.routing';
 import {AccessDeniedComponent} from './access.denied.component';
 import {FimsSharedModule} from '../common/common.module';
 import {NotificationComponent} from './notification.component';
-import {QuickAccessComponent} from '../quickAccess/quick-access.component';
+import {QuickAccessComponent} from '../quickAccess/quick-access.component'
+//import { BrowserModule } from '@angular/platform-browser';
 import {
   MatButtonModule,
   MatCardModule,
@@ -34,7 +35,9 @@ import {
   MatProgressBarModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatOptionModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -46,6 +49,7 @@ import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
     FimsSharedModule,
     TranslateModule,
     CommonModule,
+    //BrowserModule,
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -55,6 +59,8 @@ import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
     MatMenuModule,
     MatTooltipModule,
     MatCardModule,
+    MatAutocompleteModule,
+    MatOptionModule,
     CovalentLayoutModule,
     CovalentMediaModule
   ],

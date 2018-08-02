@@ -23,6 +23,7 @@ import {OfficePermittableGroupIds} from '../../office/domain/permittable-group-i
 import {CustomerPermittableGroupIds} from '../../customer/domain/permittable-group-ids';
 import {AccountingPermittableGroupIds} from '../../accounting/domain/permittable-group-ids';
 import {PortfolioPermittableGroupIds} from '../../portfolio/domain/permittable-group-ids';
+import {GroupPermittableGroupIds} from '../../group/domain/permittable-group-ids';
 import {PermissionId} from './permission-id.type';
 import {Injectable} from '@angular/core';
 import {DepositAccountPermittableGroupIds} from '../../depositAccount/domain/permittable-group-ids';
@@ -57,6 +58,9 @@ export class PermittableGroupIdMapper {
       id: 'identity_self',
       label: 'User created resources(Identity & Roles)'
     };
+
+    this._permittableGroupMap[GroupPermittableGroupIds.GROUP_MANAGEMENT] = {id: 'group_groups', label: 'Groups'};    
+    this._permittableGroupMap[GroupPermittableGroupIds.GROUP_DEFINITION] = {id: 'group_definition', label: 'Group definition'};
 
     this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = {id: 'customer_customers', label: 'Members'};
     this._permittableGroupMap[CustomerPermittableGroupIds.TASK_MANAGEMENT] = {id: 'customer_tasks', label: 'Tasks'};

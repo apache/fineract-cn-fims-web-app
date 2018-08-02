@@ -16,22 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input} from '@angular/core';
+import {Component, Input,forwardRef} from '@angular/core';
 import {FormGroup} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'fims-date-input',
-  templateUrl: './date-input.component.html'
+  templateUrl: './date-input.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateInputComponent),
+      multi: true
+    }
+  ]
 })
-export class DateInputComponent {
+export class DateInputComponent implements ControlValueAccessor {
 
   @Input() placeholder;
 
-  @Input() controlName: string;
+  @Input() controlName;
 
   @Input() form: FormGroup;
 
   @Input() title = '';
+   //@Input('value') _value = false;
+   onChange: any = () => { };
+   onTouched: any = () => { };
 
   get hasRequiredError(): boolean {
     return this.hasError('required');
@@ -47,5 +58,30 @@ export class DateInputComponent {
 
   hasError(key: string): boolean {
     return this.form.get(this.controlName).hasError(key);
+  }
+  get value() {
+    return this.controlName;
+  }
+
+  set value(val) {
+    this.controlName= val;
+    this.onChange(val);
+    this.onTouched();
+  }
+
+  constructor() { }
+
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) { 
+    this.onTouched = fn;
+  }
+
+  writeValue(controlName) {
+    if (controlName) {
+      this.controlName = controlName;
+    }
   }
 }

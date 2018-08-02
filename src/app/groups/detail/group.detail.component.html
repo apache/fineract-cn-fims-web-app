@@ -1,0 +1,107 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<fims-layout-card-over title="{{group.name}}" [navigateBackTo]="['/groups']">
+    <fims-layout-card-over-header-menu>
+        <td-search-box #searchBox placeholder="{{'Search' | translate}}" (search)="searchGroup($event)" [alwaysVisible]="false"></td-search-box>
+    </fims-layout-card-over-header-menu>
+    <td-message *ngIf="!isGroupActive" label="{{'Group not active' | translate }}"
+              sublabel="{{'You can activate the group under status' | translate }}"
+              color="warn" icon="error">
+    <button td-message-actions mat-button (click)="active()"
+            *hasPermission="{ id: 'group_groups', accessLevel: 'CHANGE'}" translate>Activate Group
+    </button>
+  </td-message>
+
+    <fims-two-column-layout>
+        <ng-container left>
+            <mat-nav-list>
+              <!--  <h3 mat-subheader translate>Members</h3>
+                <a mat-list-item *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>credit_card</mat-icon>
+                    <h3 matLine translate>Manage Members</h3>
+                    <p matLine translate>Manage Group Members</p> 
+                </a>  -->
+                <a mat-list-item [routerLink]="['status']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>playlist_add_check</mat-icon>
+                    <h3 matLine translate>Status</h3>
+                    <p matLine translate>Change the status of this group</p>
+                  </a>
+
+
+                <mat-divider></mat-divider>
+                <h3 mat-subheader translate>More Options</h3>
+               <a mat-list-item [routerLink]="['meeting']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                    <mat-icon matListAvatar>event</mat-icon>
+                    <h3 matLine translate>Meeting Information</h3>
+                    <p matLine translate>View Meeting Information</p>
+                </a>
+                 <a mat-list-item [routerLink]="['signOff']" *hasPermission="{ id: 'group_groups', accessLevel: 'READ'}">
+                <mat-icon matListAvatar>playlist_add_check</mat-icon>
+                <h3 matLine translate>Sign Off Meeting</h3>
+                <p matLine translate>Sign off Meeting Information </p>
+                </a>
+            
+                <a mat-list-item [routerLink]="['activities']">
+                    <mat-icon matListAvatar>event</mat-icon>
+                    <h3 matLine translate>Activities</h3>
+                    <p matLine translate>Recent activities</p>
+                  </a>
+            </mat-nav-list>
+        </ng-container>
+
+        <mat-list right>
+            <h3 mat-subheader translate>Current status</h3>
+            <fims-state-display [state]="group.status"></fims-state-display>
+            <h3 mat-subheader translate>Address</h3>
+            <mat-list-item>
+                <mat-icon matListAvatar>location_on</mat-icon>
+                <h3 matLine>{{group.address?.street}}, {{group.address?.city}}, {{group.address?.postalCode}}, {{group.address?.country}}
+                </h3>
+            </mat-list-item>
+            <h3 mat-subheader translate>Group information</h3>
+            <h4 mat-subheader translate>Assigned Employee</h4>
+            <mat-list-item>
+                <mat-icon matListAvatar>perm_identity</mat-icon>
+                <h3 matLine>{{group.assignedEmployee}}</h3>
+            </mat-list-item>
+            <h4 mat-subheader translate>Assigned Office</h4>
+            <mat-list-item>
+                <mat-icon matListAvatar>store</mat-icon>
+                <h3 matLine>{{group.office}}</h3>
+            </mat-list-item>
+
+           <!-- <mat-list-item>
+                <h3 matLine translate>Active members</h3>
+                <p matLine>10</p>
+            </mat-list-item> -->
+            <mat-list-item>
+                <h3 matLine translate>Application date</h3>
+                <h3 matLine>{{group.applicationDate | date:'shortDate'}}</h3>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Created by</h3>
+                <p matLine>{{group.createdBy}} - {{group.createdOn | date:'medium'}}</p>
+            </mat-list-item>
+            <mat-list-item>
+                <h3 matLine translate>Last modified by</h3>
+                <p matLine>{{group.lastModifiedBy}} - {{group.lastModifiedOn | date:'medium'}}</p>
+            </mat-list-item>
+        </mat-list>
+    </fims-two-column-layout>
+</fims-layout-card-over>
+<fims-fab-button title="{{'Edit group ' | translate}}" icon="mode_edit" [link]="['edit']" [permission]="{ id: 'group_groups', accessLevel: 'CHANGE'}"></fims-fab-button>
