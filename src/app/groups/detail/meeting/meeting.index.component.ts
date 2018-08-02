@@ -17,15 +17,15 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SelectAction} from '../store/definition/definition.actions';
-import {GroupsStore} from '../store/index';
+import {SelectAction} from '../../store/meeting/meeting.actions';
+import {GroupsStore} from '../../store/index';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  templateUrl: './definition.index.component.html'
+  templateUrl: './meeting.index.component.html'
 })
-export class GroupDefinitionIndexComponent implements OnInit, OnDestroy {
+export class MeetingIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 

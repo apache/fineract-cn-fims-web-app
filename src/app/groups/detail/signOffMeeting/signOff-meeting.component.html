@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Sign off Meeting' | translate}}" [navigateBackTo]="['../']">
+<fims-layout-card-over title="{{'Sign off Meeting' | translate}}"  [navigateBackTo]="['../']">
 
   <td-steps mode="'vertical'">
     <td-step #detailsStep  [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
@@ -37,9 +37,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr td-data-table-row>
-                <td td-data-table-cell>
-                  {{customers.givenName}}
+              <tr *ngFor="let customer of customers1">
+                <td>
+                 {{customer.identifier}}
                 </td>
                 <td>
                   <div>

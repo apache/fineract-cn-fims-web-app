@@ -92,7 +92,6 @@ export const getSelectedGroupDefinition = createSelector(getGroupDefinitionsStat
  * Meeting Selectors
  */
 export const getMeetingsState = (state: State) => state.meetings;
-
 export const getAllMeetingEntities = createSelector(getMeetingsState, getResourceAll);
 
 export const getMeetingLoadedAt = createSelector(getMeetingsState, getResourceLoadedAt);

@@ -39,7 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupDetailComponent } from './detail/group.detail.component';
 import { GroupIndexComponent } from './detail/group.index.component';
 import {SignOffMeetingComponent} from './detail/signOffMeeting/signOff-meeting.component';
-import {DefinitionIndexComponent} from './definition/definition.index.component';
+import {GroupDefinitionIndexComponent} from './definition/definition.index.component';
 import {GroupDefinitionListComponent} from './definition/definition.list.component'
 import {EditGroupDefinitionFormComponent} from './definition/form/edit.form.component';
 import {GroupDefinitionFormComponent} from './definition/form/form.component';
@@ -49,6 +49,8 @@ import {GroupDefinitionDetailComponent} from './definition/definition.detail.com
 import {GroupStatusComponent} from './detail/status/status.component'
 import {GroupActivityComponent} from './detail/activity/activity.component'
 import {MeetingComponent} from './detail/meeting/meeting.component'
+import {MeetingDetailComponent} from './detail/meeting/meeting.detail.component'
+import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
 
 export const GroupRoutes: Routes = [
   {
@@ -96,16 +98,31 @@ export const GroupRoutes: Routes = [
       {
         path: 'meeting',
         component: MeetingComponent,
-        data: { title: 'meeting',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
+        data: { title: 'Meeting details',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
       },
+
+      {
+        path: 'meeting/detail/:id',
+        component: MeetingIndexComponent,
+        data: {
+          hasPermission: { id: 'group_groups', accessLevel: 'READ' }
+        },
+        children: [
+          {
+            path: '',
+            component: MeetingDetailComponent
+          },
+        ]
+      }, 
+
       {
         path: 'signOff',
         component: SignOffMeetingComponent,
-        data: { title: 'Meeting Details',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+        data: { title: 'signOff-meeting',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
       },
     ]
-  }
-  ,
+  },
+  
   {
     path: 'definition',
     component: GroupDefinitionListComponent,
@@ -113,10 +130,17 @@ export const GroupRoutes: Routes = [
       hasPermission: { id: 'group_definition', accessLevel: 'READ' }
     }
   },
+
+  {
+    path: 'definition/detail/:id/edit',
+    component: EditGroupDefinitionFormComponent,
+    data: { title: 'Edit GroupDefinition',  hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' } },
+    canActivate: [GroupDefinitionExistsGuard]
+  },
   {
     path: 'definition/detail/:id',
     canActivate: [ GroupDefinitionExistsGuard ],
-    component: DefinitionIndexComponent,
+    component: GroupDefinitionIndexComponent,
     data: {
       hasPermission: { id: 'group_definition', accessLevel: 'READ' }
     },
@@ -125,13 +149,13 @@ export const GroupRoutes: Routes = [
         path: '',
         component: GroupDefinitionDetailComponent
       }, 
-      {
+     /* {
         path: 'edit',
         component: EditGroupDefinitionFormComponent,
         data: {
           hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' }
         }
-      }
+      }*/
     ]
   },
 

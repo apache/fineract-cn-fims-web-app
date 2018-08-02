@@ -34,10 +34,6 @@ export const LOAD_ALL_COMPLETE = type('[Meeting] Load All Complete');
 export const LOAD = type('[Meeting] Load');
 export const SELECT = type('[Meeting] Select');
 
-export const CREATE = type('[Meeting] Create');
-export const CREATE_SUCCESS = type('[Meeting] Create Success');
-export const CREATE_FAIL = type('[Meeting] Create Fail');
-
 export const UPDATE = type('[Meeting] Update');
 export const UPDATE_SUCCESS = type('[Meeting] Update Success');
 export const UPDATE_FAIL = type('[Meeting] Update Fail');
@@ -72,25 +68,6 @@ export class SelectAction implements Action {
 
   constructor(public payload: SelectResourcePayload) { }
 }
-
-export class CreateMeetingAction implements Action {
-  readonly type = CREATE;
-
-  constructor(public payload: MeetingRoutePayload) { }
-}
-
-export class CreateMeetingSuccessAction implements Action {
-  readonly type = CREATE_SUCCESS;
-
-  constructor(public payload: CreateResourceSuccessPayload) { }
-}
-
-export class CreateMeetingFailAction implements Action {
-  readonly type = CREATE_FAIL;
-
-  constructor(public payload: Error) { }
-}
-
 export class UpdateMeetingAction implements Action {
   readonly type = UPDATE;
 
@@ -120,9 +97,6 @@ export type Actions
   | LoadAllCompleteAction
   | LoadAction
   | SelectAction
-  | CreateMeetingAction
-  | CreateMeetingSuccessAction
-  | CreateMeetingFailAction
   | UpdateMeetingAction
   | UpdateMeetingSuccessAction
   | UpdateMeetingFailAction

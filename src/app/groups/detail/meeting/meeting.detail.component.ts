@@ -19,32 +19,24 @@
 import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import { Meeting } from '../../../services/group/domain/meeting.model';
-import {Group} from '../../../services/group/domain/group.model'
-import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
-import {Frequency, Adjustment} from '../../../services/group/domain/cycle.model'
 import * as fromGroups from '../../store/index';
 import {GroupsStore} from '../../store/index';
-import { FrequencyOptionList } from '../../definition/domain/frequency-option-list.model';
-//import {FrequencyOptionList} from '../../domain/frequency-option-list.model';
+
 
 
 @Component({
-    templateUrl:'meeting-date.component.html'
+    templateUrl:'meeting.detail.component.html'
 })
 
-export class MeetingDateComponent{
+export class MeetingDetailComponent implements OnInit{
 
-    groupDefinition$: Observable<GroupDefinition>;
-    group$ : Observable<Group>;
+    meeting$: Observable<Meeting>;  
 
-  constructor(private store: GroupsStore) {
-    this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
-    this.group$= store.select(fromGroups.getSelectedGroup);
-  }
+    constructor(private store: GroupsStore) {
+      this.meeting$ = store.select(fromGroups.getSelectedMeeting);
+    }
 
-  formatType(type: Frequency): string {
-    return FrequencyOptionList.find(option => option.type === type).label;
-  }
+  ngOnInit(){}
 }
     
 

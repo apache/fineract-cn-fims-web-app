@@ -24,7 +24,8 @@ import {Meeting} from '../../../services/group/domain/meeting.model';
 import {LOAD_ALL} from '../../store/meeting/meeting.actions';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {Subscription} from 'rxjs/Subscription';
-import {Group} from '../../../services/group/domain/group.model'
+import {Group} from '../../../services/group/domain/group.model';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -37,19 +38,15 @@ import {Group} from '../../../services/group/domain/group.model'
     group: Group;
     private groupSubscription: Subscription;
     private meetingSubscription: Subscription;
-    groupIdentifier: string
-    meetingSequence: number
-    currentCycle: number
-    attendees: any
+   
 
     columns: any[] = [
-        {name: this.groupIdentifier, label:'Group Id'},
-        { name: this.meetingSequence, label: 'Meeting Sequence' },
-        { name: this.currentCycle, label: 'Current Cycle' },
-        {name: this.attendees, label:'Attendances'}
+        { name: 'meetingSequence', label: 'Meeting Sequence' },
+        { name: 'currentCycle', label: 'Current Cycle' },
+        {name: 'scheduledFor', label:'scheduledFor'},
     ]
   
-    constructor(private store: GroupsStore) {
+    constructor(private store: GroupsStore,private router: Router, private route: ActivatedRoute) {
       this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
       .subscribe(group => {
         this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
@@ -62,15 +59,13 @@ import {Group} from '../../../services/group/domain/group.model'
         totalElements: meeting.length,
         totalPages: 1
       }));
-     
+     // this.fetchMeetings(this.group.identifier);
     }
 
     ngOnInit(){
       this.meetingData = this.store.select(fromGroups.getAllMeetingEntities)
       .subscribe(res => console.log(res))
-
-   
-      this.fetchMeetings(this.group.identifier);
+      
     }
      
 
@@ -79,6 +74,10 @@ import {Group} from '../../../services/group/domain/group.model'
       type: LOAD_ALL,
       payload:this.group.identifier
     });
+  }
+
+  rowSelect(meeting: Meeting): void {
+    this.router.navigate(['detail', meeting.meetingSequence], { relativeTo: this.route });
   }
     
 }

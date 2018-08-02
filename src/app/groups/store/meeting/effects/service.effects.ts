@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,toPayload} from '@ngrx/effects';
 import {Observable} from 'rxjs/Observable';
 import {Action} from '@ngrx/store';
 import {of} from 'rxjs/observable/of';
@@ -33,16 +33,17 @@ export class MeetingApiEffects {
     .ofType(meetingActions.LOAD_ALL)
     .debounceTime(300)
     .map((action: meetingActions.LoadAllAction) => action.payload)
-    //.mergeMap(groupId =>
-      //this.groupService.fetchMeetings(groupId)
-    .switchMap(Id => {
+    //?.mergeMap(groupId =>
+      //?this.groupService.fetchMeetings(groupId)
+    .switchMap(groupId => {
       const nextSearch$ = this.actions$.ofType(meetingActions.LOAD_ALL).skip(1);
 
-      return this.groupService.fetchMeetings(Id)
-        .takeUntil(nextSearch$)
+      return this.groupService.fetchMeetings(groupId)
+       .takeUntil(nextSearch$)
         .map(meeting => new meetingActions.LoadAllCompleteAction(meeting))
-        .catch(() => of(new meetingActions.LoadAllCompleteAction([])));
-    });
+       .catch(() => of(new meetingActions.LoadAllCompleteAction([])));
+    }
+  );
     
   @Effect()
   updateMeeting$: Observable<Action> = this.actions$

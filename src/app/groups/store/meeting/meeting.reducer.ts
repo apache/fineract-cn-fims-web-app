@@ -37,10 +37,11 @@ export function reducer(state = initialState, action: meeting.Actions): Resource
 
     case meeting.LOAD_ALL_COMPLETE: {
       const meeting1: Meeting[] = action.payload;
+ 
 
-      const ids = meeting1.map(meeting => meeting.groupIdentifier);
-
-      const entities = resourcesToHash(meeting1,'groupidentifier');
+      const ids = meeting1.map(meeting => meeting.meetingSequence.toString());
+      
+      const entities = resourcesToHash(meeting1,'meetingSequence');
 
       const loadedAt = idsToHashWithCurrentTimestamp(ids);
 

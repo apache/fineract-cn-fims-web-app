@@ -56,7 +56,7 @@ export class GroupDefinitionApiEffects {
   @Effect()
   updateGroupDefinition$: Observable<Action> = this.actions$
     .ofType(groupActions.UPDATE)
-    .map((action: groupActions.CreateGroupDefinitionAction) => action.payload)
+    .map((action: groupActions.UpdateGroupDefinitionAction) => action.payload)
     .mergeMap(payload =>
       this.groupService.updateGroupDefinition(payload.groupDefinition)
         .map(() => new groupActions.UpdateGroupDefinitionSuccessAction({

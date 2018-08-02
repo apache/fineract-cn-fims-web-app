@@ -68,7 +68,7 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import {CovalentChipsModule, CovalentFileModule, CovalentMessageModule, CovalentSearchModule, CovalentStepsModule} from '@covalent/core';
-import { DefinitionIndexComponent} from './definition/definition.index.component';
+import { GroupDefinitionIndexComponent} from './definition/definition.index.component';
 import {GroupDefinitionListComponent} from './definition/definition.list.component'
 import {GroupDefinitionExistsGuard} from './definition/definition-exits.guard';
 import {GroupDefinitionDetailComponent} from './definition/definition.detail.component'
@@ -78,6 +78,8 @@ import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.
 import {GroupStatusComponent} from './detail/status/status.component'
 import {GroupActivityComponent} from './detail/activity/activity.component'
 import {MeetingComponent} from './detail/meeting/meeting.component'
+import {MeetingDetailComponent} from './detail/meeting/meeting.detail.component'
+import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
 
 
 @NgModule({
@@ -135,9 +137,10 @@ import {MeetingComponent} from './detail/meeting/meeting.component'
     GroupIndexComponent,
     SignOffMeetingComponent,
     MeetingComponent,
-   // MeetingDetailFormComponent,
+    MeetingDetailComponent,
+    MeetingIndexComponent,
     
-    DefinitionIndexComponent,
+    GroupDefinitionIndexComponent,
     GroupDefinitionDetailComponent,
     GroupDefinitionListComponent,
     EditGroupDefinitionFormComponent,
