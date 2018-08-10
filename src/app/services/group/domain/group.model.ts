@@ -42,8 +42,9 @@ export interface Group{
     address : Address;
     createdOn? : string;
     createdBy?: string;
+    applicationDate?: string;
     lastModifiedOn? : string;
-    lastModifiefBy?: string;
+    lastModifiedBy?: string;
 
 
 }
