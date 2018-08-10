@@ -89,6 +89,7 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     ReactiveFormsModule,
     TextMaskModule,
     TranslateModule
+    GroupSelectComponent
   ],
   declarations: [
     LayoutCardOverComponent,
@@ -151,6 +152,7 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     DisplayFimsDate,
     DisplayFimsNumber,
     DisplayFimsFinancialNumber
+    GroupSelectComponent
   ],
   entryComponents: [
     ImageComponent
