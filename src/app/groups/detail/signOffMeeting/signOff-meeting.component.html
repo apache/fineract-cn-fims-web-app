@@ -15,14 +15,14 @@
   limitations under the License.
 -->
 
-<fims-layout-card-over title="{{'Sign off Meeting' | translate}}"  [navigateBackTo]="['../']">
-
+<fims-layout-card-over title="{{'Sign off Meeting' | translate}}" [navigateBackTo]="['../']">
+<div>
   <td-steps mode="'vertical'">
     <td-step #detailsStep  [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
       <form [formGroup]="form" layout="column">
         <fims-number-input [form]="form" placeholder="Meeting Sequence" controlName="sequence"></fims-number-input>
         <fims-number-input [form]="form" placeholder="Current Cycle" controlName="cycle"></fims-number-input>
-        <fims-text-input [form]="form" controlName="duration" placeholder="{{' Duration' | translate}}"></fims-text-input>
+        <fims-number-input [form]="form" controlName="duration" placeholder="Duration"></fims-number-input>
         <h3> Attendance </h3>
         <div layout="row">
           <table td-data-table>
@@ -37,19 +37,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let customer of customers1">
+              <tr *ngFor="let member of members">
                 <td>
-                 {{customer.identifier}}
+                <input matInput value="{{member}}" controlName="member">
                 </td>
                 <td>
                   <div>
-                  <mat-form-field layout-margin>
+                   <mat-form-field layout-margin>
                     <mat-select formControlName="status">
                       <mat-option *ngFor="let status of statusOptions" [value]="status.type">
                         {{ status.label }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
+                  <!-- <mat-form-field>
+                   <input matInput type="text" value="{{member}}" controlName="member" > 
+                  </mat-form-field>  -->
                 </div>
                 </td>
               </tr>
@@ -66,5 +69,5 @@
 
     </td-step>
   </td-steps>
-
+</div>
 </fims-layout-card-over>

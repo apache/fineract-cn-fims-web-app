@@ -94,8 +94,8 @@ export class GroupService{
       return this.http.get(`${this.baseUrl}/groups/${identifier}/meetings`);
     }
 
-    updateMeeting(identifier: string,meeting: Meeting): Observable<Meeting> {
-      return this.http.put(`${this.baseUrl}/groups/${identifier}/meetings/`, meeting);
+    updateMeeting(identifier: string,signoff: SignOffMeeting): Observable<Meeting> {
+      return this.http.put(`${this.baseUrl}/groups/${identifier}/meetings`, signoff);
     }
   
   

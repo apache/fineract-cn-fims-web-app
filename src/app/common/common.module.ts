@@ -100,6 +100,7 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     AccountSelectComponent,
     LedgerSelectComponent,
     ProductSelectComponent,
+    GroupSelectComponent,
     EmployeeAutoCompleteComponent,
     IdInputComponent,
     PermissionDirective,
