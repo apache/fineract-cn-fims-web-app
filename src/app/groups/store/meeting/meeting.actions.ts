@@ -20,6 +20,7 @@ import {Action} from '@ngrx/store';
 import {type} from '../../../store/util';
 import {Error} from '../../../services/domain/error.model';
 import {Meeting} from '../../../services/group/domain/meeting.model';
+import {SignOffMeeting} from '../../../services/group/domain/signoff-meeting.model';
 import {RoutePayload} from '../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload,
@@ -42,7 +43,8 @@ export const RESET_FORM = type('[Meeting] Reset Form');
 
 export interface MeetingRoutePayload extends RoutePayload {
   meeting: Meeting;
-  groupId : string
+  groupId : string;
+  signoff : SignOffMeeting
 }
 
 export class LoadAllAction implements Action {

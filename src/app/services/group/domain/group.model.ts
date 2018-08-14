@@ -40,10 +40,11 @@ export interface Group{
     weekday : number;
     status : Status;
     address : Address;
+    applicationDate?: string;
     createdOn? : string;
     createdBy?: string;
     lastModifiedOn? : string;
-    lastModifiefBy?: string;
+    lastModifiedBy?: string;
 
 
 }

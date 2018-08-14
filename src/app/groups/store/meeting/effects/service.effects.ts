@@ -50,9 +50,9 @@ export class MeetingApiEffects {
     .ofType(meetingActions.UPDATE)
     .map((action: meetingActions.UpdateMeetingAction) => action.payload)
     .mergeMap(payload =>
-      this.groupService.updateMeeting(payload.groupId,payload.meeting)
+      this.groupService.updateMeeting(payload.groupId,payload.signoff)
         .map(() => new meetingActions.UpdateMeetingSuccessAction({
-          resource: payload.meeting,
+          resource: payload.signoff,
           activatedRoute: payload.activatedRoute
         }))
         .catch((error) => of(new meetingActions.UpdateMeetingFailAction(error)))

@@ -138,8 +138,7 @@ export class GroupFormComponent implements OnInit {
     };
     
     this.onSave.emit(group);
-    // directing to attach meeting page
-    //this.router.navigate(['meetingDate'], { relativeTo: this.route });
+
   }
 
   cancel() {

@@ -57,7 +57,7 @@ const groupTemplate: Group = {
   createdOn:'21-10-2018', 
   createdBy:'test',
   lastModifiedOn:'',
-  lastModifiefBy:''
+  lastModifiedBy:''
   
 };
 const country: Country = {
