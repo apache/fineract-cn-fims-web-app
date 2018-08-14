@@ -88,7 +88,7 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     MatTooltipModule,
     ReactiveFormsModule,
     TextMaskModule,
-    TranslateModule
+    TranslateModule,
     GroupSelectComponent
   ],
   declarations: [
@@ -151,7 +151,7 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     FimsFabButtonComponent,
     DisplayFimsDate,
     DisplayFimsNumber,
-    DisplayFimsFinancialNumber
+    DisplayFimsFinancialNumber,
     GroupSelectComponent
   ],
   entryComponents: [
