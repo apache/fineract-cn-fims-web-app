@@ -26,6 +26,6 @@
 
 <mat-autocomplete #auto="matAutocomplete">
   <mat-option *ngFor="let ledger of ledgers | async" [value]="ledger.identifier" [matTooltip]="ledger.description">
-    {{ ledger.identifier }}({{ledger.name}})
+    {{ ledger.identifier }}({{ledger.description}})
   </mat-option>
 </mat-autocomplete>
