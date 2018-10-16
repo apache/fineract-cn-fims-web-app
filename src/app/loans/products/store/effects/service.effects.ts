@@ -34,10 +34,10 @@ export class ProductApiEffects {
     .ofType(productActions.SEARCH)
     .map((action: productActions.SelectAction) => action.payload)
     .debounceTime(300)
-    .switchMap(({ selectedId }) => {
+    .switchMap(fetchRequest => {
       const nextSearch$ = this.actions$.ofType(productActions.SEARCH).skip(1);
 
-      return this.portfolioService.findAllProducts(true, { searchTerm: selectedId })
+      return this.portfolioService.findAllProducts(true, fetchRequest )
         .takeUntil(nextSearch$)
         .map(productPage => new productActions.SearchCompleteAction({
           elements: mapToFimsProducts(productPage.elements),
