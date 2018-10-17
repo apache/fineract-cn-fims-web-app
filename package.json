@@ -13,8 +13,8 @@
     "karma": "karma start ./karma.conf.js --single-run",
     "devTest": "ng test",
     "dev": "ng serve --watch --verbose --proxy-config proxy.conf.json",
-    "runProd": "ng serve --proxy-config proxy.conf.json --prod",
-    "build": "ng build --prod",
+    "runProd": "ng serve --proxy-config proxy.conf.json --environment=prod",
+    "build": "ng build --environment=prod",
     "checkLicenses": "license-to-fail ./license.config.js",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json"
   },

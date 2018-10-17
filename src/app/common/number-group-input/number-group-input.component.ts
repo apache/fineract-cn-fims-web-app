@@ -21,10 +21,10 @@ import {FormGroup} from '@angular/forms';
 import {createNumberMask} from 'text-mask-addons/dist/textMaskAddons';
 
 @Component({
-  selector: 'fims-number-input',
-  templateUrl: './number-input.component.html'
+  selector: 'fims-number-group-input',
+  templateUrl: './number-group-input.component.html'
 })
-export class NumberInputComponent {
+export class NumberGroupInputComponent {
 
   @Input() placeholder;
 
@@ -32,7 +32,7 @@ export class NumberInputComponent {
 
   @Input() form: FormGroup;
 
-  @Input() requireDecimal = true;
+  @Input() requireDecimal = false;
 
   @Input() decimalLimit = 2;
 
