@@ -32,7 +32,7 @@ export class NumberInputComponent {
 
   @Input() form: FormGroup;
 
-  @Input() requireDecimal = false;
+  @Input() requireDecimal = true;
 
   @Input() decimalLimit = 2;
 
