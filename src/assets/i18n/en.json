@@ -20,5 +20,7 @@
   "Must have decimal places": "Must have {{value}} decimal places",
   "Member is assigned to office:": "Member is assigned to office: {{value}}",
   "Ledger with name": "Ledger {{value}}",
-  "Subledgers of": "Subledgers of {{value}}"
+  "Subledgers of": "Subledgers of {{value}}",
+  "tn01": "Buffalo Bank",
+  "tn02": "Lion Bank"
 }
