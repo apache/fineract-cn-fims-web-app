@@ -19,14 +19,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ITdDataTableColumn} from '@covalent/core';
 import {TableData, TableFetchRequest} from '../../../../common/data-table/data-table.component';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {PortfolioStore} from '../../store/index';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromPortfolio from '../../store';
 import {FimsRange} from '../../../../services/portfolio/domain/range-model';
-import {Subscription} from 'rxjs/Subscription';
 import {FimsProduct} from '../../store/model/fims-product.model';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './range.list.component.html'
@@ -46,15 +46,16 @@ export class ProductChargeRangeListComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.rangesData$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities)
-      .map(data => ({
+    this.rangesData$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities).pipe(
+      map(data => ({
         totalElements: data.length,
         totalPages: 1,
         data
-      }));
+      })));
 
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => {
         this.product = product;
         this.fetchRanges();

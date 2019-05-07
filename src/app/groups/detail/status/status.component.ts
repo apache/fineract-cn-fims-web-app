@@ -17,16 +17,15 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {CommandAction,GroupCommand} from '../../../services/group/domain/group-command.model';
 import {GroupsStore} from '../../store/index';
 import {EXECUTE_COMMAND} from '../../store/groupTasks/group-task.actions';
 import {Group} from '../../../services/group/domain/group.model';
 import * as fromGroups from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
-import {Observable} from 'rxjs/Observable';
 
 
 interface StatusCommand {
@@ -84,18 +83,5 @@ export class GroupStatusComponent implements OnInit {
       activatedRoute: this.route
     } });
   }
-
-
-  //executeCommand(statusCommand: StatusCommand): void {
-   // const command: GroupCommand = {
-     // note: statusCommand.note,
-      //action: statusCommand.action
-    //};
-    //this.store.dispatch({ type: EXECUTE_COMMAND, payload: {
-      //groupId: this.groupIdentifier,
-      //command: command,
-      //activatedRoute: this.route
-    //} });
- // }
 
 }

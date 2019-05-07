@@ -16,14 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {AccountingService} from '../../../../services/accounting/accounting.service';
 import {FetchRequest} from '../../../../services/domain/paging/fetch-request.model';
 import {TransactionTypePage} from '../../../../services/accounting/domain/transaction-type-page.model';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap} from 'rxjs/operators'
 
 const noop: () => void = () => {
   // empty method
@@ -57,11 +58,12 @@ export class TransactionTypeSelectComponent implements ControlValueAccessor, OnI
     this.formControl = new FormControl('');
 
     this.transactionTypes = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -89,8 +91,8 @@ export class TransactionTypeSelectComponent implements ControlValueAccessor, OnI
       searchTerm: searchTerm
     };
 
-    return this.accountingService.fetchTransactionTypes(fetchRequest)
-      .map((transactionTypePage: TransactionTypePage) => transactionTypePage.transactionTypes);
+    return this.accountingService.fetchTransactionTypes(fetchRequest).pipe(
+      map((transactionTypePage: TransactionTypePage) => transactionTypePage.transactionTypes));
   }
 
 }

@@ -17,16 +17,16 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TableData} from '../../common/data-table/data-table.component';
 import {AccountingStore} from '../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromAccounting from '../store';
-import {Observable} from 'rxjs/Observable';
 import {DELETE} from '../store/ledger/ledger.actions';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
+import { filter, flatMap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './sub-ledger.list.component.html'
@@ -55,7 +55,7 @@ export class SubLedgerListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.selectionSubscription = this.store.select(fromAccounting.getSelectedLedger)
-      .filter(ledger => !!ledger)
+      .pipe(filter(ledger => !!ledger))
       .subscribe(ledger => this.ledger = ledger);
   }
 
@@ -86,18 +86,18 @@ export class SubLedgerListComponent implements OnInit, OnDestroy {
     const button = 'DELETE LEDGER';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   deleteLedger(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({ type: DELETE, payload: {
           ledger: this.ledger,

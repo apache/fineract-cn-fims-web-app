@@ -18,33 +18,33 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as groupActions from '../group.actions';
 import {GroupService} from '../../../services/group/group.service';
 import {emptySearchResult} from '../../../common/store/search.reducer';
+import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 
 @Injectable()
 export class GroupSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(groupActions.SEARCH)
-    .debounceTime(300)
-    .map((action: groupActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(groupActions.SEARCH).skip(1);
+    .ofType(groupActions.SEARCH).pipe(
+    debounceTime(300),
+    map((action: groupActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.ofType(groupActions.SEARCH).pipe(skip(1));
 
-      return this.groupService.fetchGroups(fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(groupPage => new groupActions.SearchCompleteAction({
+      return this.groupService.fetchGroups(fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(groupPage => new groupActions.SearchCompleteAction({
           elements: groupPage.groups,
           totalElements: groupPage.totalElements,
           totalPages: groupPage.totalPages
-        }))
-        .catch(() => of(new groupActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new groupActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   constructor(private actions$: Actions, private groupService: GroupService) { }
 

@@ -18,7 +18,8 @@
  */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'fims-select-list',
@@ -58,7 +59,8 @@ export class SelectListComponent implements OnInit {
 
   ngOnInit(): void {
     this.term.valueChanges
-      .debounceTime(500)
+    .pipe(
+      debounceTime(500))
       .subscribe((event) => this.onSearch.emit(event));
   }
 

@@ -16,56 +16,56 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as catalogActions from '../catalog.actions';
-import {CatalogService} from '../../../../services/catalog/catalog.service';
+import { CatalogService } from '../../../../services/catalog/catalog.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CatalogApiEffects {
 
   @Effect()
   createCatalog$: Observable<Action> = this.actions$
-    .ofType(catalogActions.CREATE)
-    .map((action: catalogActions.CreateCatalogAction) => action.payload)
-    .mergeMap(payload =>
-      this.catalogService.createCatalog(payload.catalog)
-        .map(() => new catalogActions.CreateCatalogSuccessAction(payload))
-        .catch((error) => of(new catalogActions.CreateCatalogFailAction(error)))
-    );
+    .ofType(catalogActions.CREATE).pipe(
+      map((action: catalogActions.CreateCatalogAction) => action.payload),
+      mergeMap(payload =>
+        this.catalogService.createCatalog(payload.catalog).pipe(
+          map(() => new catalogActions.CreateCatalogSuccessAction(payload)),
+          catchError((error) => of(new catalogActions.CreateCatalogFailAction(error))))
+      ));
 
   @Effect()
   deleteCatalog$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE)
-    .map((action: catalogActions.DeleteCatalogAction) => action.payload)
-    .mergeMap(payload =>
-      this.catalogService.deleteCatalog(payload.catalog)
-        .map(() => new catalogActions.DeleteCatalogSuccessAction(payload))
-        .catch((error) => of(new catalogActions.DeleteCatalogFailAction(error)))
-    );
+    .ofType(catalogActions.DELETE).pipe(
+      map((action: catalogActions.DeleteCatalogAction) => action.payload),
+      mergeMap(payload =>
+        this.catalogService.deleteCatalog(payload.catalog).pipe(
+          map(() => new catalogActions.DeleteCatalogSuccessAction(payload)),
+          catchError((error) => of(new catalogActions.DeleteCatalogFailAction(error))))
+      ));
 
   @Effect()
   updateField$: Observable<Action> = this.actions$
-    .ofType(catalogActions.UPDATE_FIELD)
-    .map((action: catalogActions.UpdateFieldAction) => action.payload)
-    .mergeMap(payload =>
-      this.catalogService.updateField(payload.catalogIdentifier, payload.field)
-        .map(() => new catalogActions.UpdateFieldSuccessAction(payload))
-        .catch((error) => of(new catalogActions.UpdateFieldFailAction(error)))
-    );
+    .ofType(catalogActions.UPDATE_FIELD).pipe(
+      map((action: catalogActions.UpdateFieldAction) => action.payload),
+      mergeMap(payload =>
+        this.catalogService.updateField(payload.catalogIdentifier, payload.field).pipe(
+          map(() => new catalogActions.UpdateFieldSuccessAction(payload)),
+          catchError((error) => of(new catalogActions.UpdateFieldFailAction(error))))
+      ));
 
   @Effect()
   deleteField$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FIELD)
-    .map((action: catalogActions.DeleteFieldAction) => action.payload)
-    .mergeMap(payload =>
-      this.catalogService.deleteField(payload.catalogIdentifier, payload.field)
-        .map(() => new catalogActions.DeleteFieldSuccessAction(payload))
-        .catch((error) => of(new catalogActions.DeleteFieldFailAction(error)))
-    );
+    .ofType(catalogActions.DELETE_FIELD).pipe(
+      map((action: catalogActions.DeleteFieldAction) => action.payload),
+      mergeMap(payload =>
+        this.catalogService.deleteField(payload.catalogIdentifier, payload.field).pipe(
+          map(() => new catalogActions.DeleteFieldSuccessAction(payload)),
+          catchError((error) => of(new catalogActions.DeleteFieldFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private catalogService: CatalogService) { }
 

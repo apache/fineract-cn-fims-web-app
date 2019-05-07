@@ -25,8 +25,9 @@ import * as fromRoot from '../../../store';
 import {CREATE, RESET_FORM} from '../../store/ledger/journal-entry/journal-entry.actions';
 import {Error} from '../../../services/domain/error.model';
 import {AccountingStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {todayAsISOString} from '../../../services/domain/date.converter';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -44,10 +45,10 @@ export class CreateJournalEntryFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.error$ = this.store.select(fromAccounting.getJournalEntryFormError)
-      .filter((error: Error) => !!error);
+      .pipe(filter((error: Error) => !!error));
 
-    this.journalEntry$ = this.store.select(fromRoot.getUsername)
-      .map(username => ({
+    this.journalEntry$ = this.store.select(fromRoot.getUsername).pipe(
+      map(username => ({
         transactionIdentifier: '',
         transactionDate: todayAsISOString(),
         transactionType: '',
@@ -58,7 +59,7 @@ export class CreateJournalEntryFormComponent implements OnInit, OnDestroy {
         creditors: [
           { accountNumber: '', amount: '0' }
         ]
-      }));
+      })));
   }
 
   ngOnDestroy(): void {

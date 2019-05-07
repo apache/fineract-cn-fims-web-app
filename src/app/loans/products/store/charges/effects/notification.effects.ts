@@ -18,10 +18,11 @@
  */
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as chargeActions from '../charge.actions';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class ProductChargesNotificationEffects {
@@ -29,18 +30,20 @@ export class ProductChargesNotificationEffects {
   @Effect({dispatch: false})
   createUpdateCustomerChargeSuccess$: Observable<Action> = this.actions$
     .ofType(chargeActions.CREATE_SUCCESS, chargeActions.UPDATE)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Fee is going to be saved'
-    }));
+    })));
 
   @Effect({dispatch: false})
   deleteCustomerChargeSuccess$: Observable<Action> = this.actions$
     .ofType(chargeActions.DELETE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Fee is going to be deleted'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCases from '../../store/index';
 import {CasesStore} from '../../store/index';
@@ -27,6 +27,8 @@ import {CaseCommand} from '../../../../services/portfolio/domain/case-command.mo
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 import {Fee} from '../services/domain/fee.model';
 import {FeeService} from '../services/fee.service';
+import {map} from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 interface Parameter {
   productId?: string;
@@ -49,18 +51,18 @@ export class CaseCommandConfirmationComponent implements OnInit {
               private feeService: FeeService) {}
 
   ngOnInit() {
-    const parentParams$ = this.route.parent.params
-      .map(params => ({
+    const parentParams$ = this.route.parent.params.pipe(
+      map(params => ({
         caseId: params['caseId'],
         productId: params['productId']
-      }));
+      })));
 
-    this.params$ = this.route.params
-      .map(params => ({
+    this.params$ = this.route.params.pipe(
+      map(params => ({
         action: params['action']
-      }));
+      })));
 
-    this.fees$ = Observable.combineLatest(
+    this.fees$ = combineLatest(
       parentParams$,
       this.params$,
       (parentParams, params) => ({

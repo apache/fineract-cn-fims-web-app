@@ -22,8 +22,9 @@ import {Ledger} from '../services/accounting/domain/ledger.model';
 import {TableData} from '../common/data-table/data-table.component';
 import * as fromAccounting from './store';
 import {LOAD_ALL_TOP_LEVEL} from './store/ledger/ledger.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './general-ledger.component.html'
@@ -42,12 +43,12 @@ export class GeneralLedgerComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit(): void {
-    this.ledgerData = this.store.select(fromAccounting.getAllTopLevelLedgerEntities)
-      .map(ledgers => ({
+    this.ledgerData = this.store.select(fromAccounting.getAllTopLevelLedgerEntities).pipe(
+      map(ledgers => ({
         data: ledgers,
         totalElements: ledgers.length,
         totalPages: 1
-      }));
+      })));
 
     this.route.queryParams.subscribe((params: Params) => {
       this.store.dispatch({ type: LOAD_ALL_TOP_LEVEL });

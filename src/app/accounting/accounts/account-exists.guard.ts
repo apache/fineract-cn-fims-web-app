@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromAccounting from '../store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {LoadAction} from '../store/account/account.actions';
 import {AccountingStore} from '../store/index';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AccountExistsGuard implements CanActivate {
@@ -34,32 +34,32 @@ export class AccountExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasAccountInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromAccounting.getAccountsLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$: Observable<number> = this.store.select(fromAccounting.getAccountsLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasAccountInApi(id: string): Observable<boolean> {
-    const getAccount$ = this.accountingService.findAccount(id)
-      .map(accountEntity => new LoadAction({
+    const getAccount$ = this.accountingService.findAccount(id).pipe(
+      map(accountEntity => new LoadAction({
         resource: accountEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(employee => !!employee);
+      })))
+      .pipe(tap((action: LoadAction) => this.store.dispatch(action)),
+      map(employee => !!employee));
 
     return this.existsGuardService.routeTo404OnError(getAccount$);
   }
 
   hasAccount(id: string): Observable<boolean> {
-    return this.hasAccountInStore(id)
-      .switchMap(inStore => {
+    return this.hasAccountInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasAccountInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

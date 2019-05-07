@@ -16,15 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as fromPortfolio from '../../../store/index';
-import {PortfolioStore} from '../../../store/index';
-import {RangeActions} from '../../../store/ranges/range.actions';
-import {FimsProduct} from '../../../store/model/fims-product.model';
-import {Subscription} from 'rxjs/Subscription';
-import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
-
+import { PortfolioStore } from '../../../store/index';
+import { RangeActions } from '../../../store/ranges/range.actions';
+import { FimsProduct } from '../../../store/model/fims-product.model';
+import { Subscription } from 'rxjs';
+import { FimsRange } from '../../../../../services/portfolio/domain/range-model';
+import { filter } from 'rxjs/operators'
 @Component({
   templateUrl: './create.component.html'
 })
@@ -41,11 +41,12 @@ export class CreateProductChargeRangeFormComponent implements OnInit, OnDestroy 
     ]
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) { }
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => this.product = product);
   }
 

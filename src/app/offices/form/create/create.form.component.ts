@@ -23,8 +23,9 @@ import {Office} from '../../../services/office/domain/office.model';
 import * as fromOffice from '../../store';
 import {CREATE, CREATE_BRANCH, RESET_FORM} from '../../store/office.actions';
 import {Error} from '../../../services/domain/error.model';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {OfficesStore} from '../../store/index';
+import { filter } from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -42,7 +43,7 @@ export class CreateOfficeFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {
 
     this.formStateSubscription = store.select(fromOffice.getOfficeFormError)
-      .filter((error: Error) => !!error)
+      .pipe(filter((error: Error) => !!error))
       .subscribe((error: Error) => {
         const officeDetailForm = this.formComponent.detailForm;
         const errors = officeDetailForm.get('identifier').errors || {};

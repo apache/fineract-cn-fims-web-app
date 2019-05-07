@@ -18,7 +18,7 @@
  */
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ReportDefinition} from './domain/report-definition.model';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {ReportPage} from './domain/report-page.model';

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromAccounting from '../../../store/index';
 import {AccountingStore} from '../../../store/index';
@@ -25,6 +25,7 @@ import {Error} from '../../../../services/domain/error.model';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {CREATE, RESET_FORM} from '../../../store/ledger/transaction-type/transaction-type.actions';
 import {TransactionTypeFormComponent} from '../transaction-type-form.component';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -44,7 +45,7 @@ export class CreateTransactionTypeFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formStateSubscription = this.store.select(fromAccounting.getTransactionTypeFormError)
-      .filter((error: Error) => !!error)
+      .pipe(filter((error: Error) => !!error))
       .subscribe((error: Error) => {
         this.formComponent.showNumberValidationError();
       });

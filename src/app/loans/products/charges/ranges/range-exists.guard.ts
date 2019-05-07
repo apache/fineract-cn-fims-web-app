@@ -16,50 +16,51 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {Injectable} from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
 import * as fromProducts from '../../store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
-import {ExistsGuardService} from '../../../../common/guards/exists-guard';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {PortfolioStore} from '../../store/index';
-import {RangeActions} from '../../store/ranges/range.actions';
-import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+import { Observable, of } from 'rxjs';
+import { ExistsGuardService } from '../../../../common/guards/exists-guard';
+import { PortfolioService } from '../../../../services/portfolio/portfolio.service';
+import { PortfolioStore } from '../../store/index';
+import { RangeActions } from '../../store/ranges/range.actions';
+import { FimsRange } from '../../../../services/portfolio/domain/range-model';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProductChargeRangeExistsGuard implements CanActivate {
 
   constructor(private store: PortfolioStore,
-              private portfolioService: PortfolioService,
-              private existsGuardService: ExistsGuardService) {}
+    private portfolioService: PortfolioService,
+    private existsGuardService: ExistsGuardService) { }
 
   hasRangeInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromProducts.getProductChargeRangesLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromProducts.getProductChargeRangesLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasRangeInApi(productId: string, rangeId: string): Observable<boolean> {
     const getRange = this.portfolioService.getRange(productId, rangeId)
-      .do((resource: FimsRange) => this.store.dispatch(RangeActions.loadAction({
-        resource
-      })))
-      .map(resource => !!resource);
+      .pipe(
+        tap((resource: FimsRange) => this.store.dispatch(RangeActions.loadAction({
+          resource
+        }))),
+        map(resource => !!resource));
 
     return this.existsGuardService.routeTo404OnError(getRange);
   }
 
   hasRange(productId: string, rangeId: string): Observable<boolean> {
-    return this.hasRangeInStore(rangeId)
-      .switchMap(inStore => {
+    return this.hasRangeInStore(rangeId).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasRangeInApi(productId, rangeId);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

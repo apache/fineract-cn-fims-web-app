@@ -20,33 +20,33 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import * as tellerActions from '../teller.actions';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import {map, mergeMap, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class TellerProductsApiEffects {
 
   @Effect()
   loadAllDepositProducts$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOAD_ALL_DEPOSIT_PRODUCTS)
-    .map((action: tellerActions.LoadAllDepositProductsAction) => action.payload)
-    .mergeMap(customerId =>
-      this.depositService.fetchProductInstances(customerId)
-        .map(productInstances => new tellerActions.LoadAllDepositProductsSuccessAction(productInstances))
-        .catch(() => of(new tellerActions.LoadAllDepositProductsSuccessAction([])))
-    );
+    .ofType(tellerActions.LOAD_ALL_DEPOSIT_PRODUCTS).pipe(
+    map((action: tellerActions.LoadAllDepositProductsAction) => action.payload),
+    mergeMap(customerId =>
+      this.depositService.fetchProductInstances(customerId).pipe(
+        map(productInstances => new tellerActions.LoadAllDepositProductsSuccessAction(productInstances)),
+        catchError(() => of(new tellerActions.LoadAllDepositProductsSuccessAction([]))))
+    ));
 
   @Effect()
   loadAllLoanProducts$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOAD_ALL_LOAN_PRODUCTS)
-    .map((action: tellerActions.LoadAllLoanProductsAction) => action.payload)
-    .mergeMap(customerId =>
-      this.portfolioService.getAllCasesForCustomer(customerId)
-        .map(casePage => new tellerActions.LoadAllLoanProductsSuccessAction(casePage.elements))
-        .catch((error) => of(new tellerActions.LoadAllLoanProductsSuccessAction([])))
-    );
+    .ofType(tellerActions.LOAD_ALL_LOAN_PRODUCTS).pipe(
+    map((action: tellerActions.LoadAllLoanProductsAction) => action.payload),
+    mergeMap(customerId =>
+      this.portfolioService.getAllCasesForCustomer(customerId).pipe(
+        map(casePage => new tellerActions.LoadAllLoanProductsSuccessAction(casePage.elements)),
+        catchError((error) => of(new tellerActions.LoadAllLoanProductsSuccessAction([]))))
+    ));
 
   constructor(private actions$: Actions, private depositService: DepositAccountService, private portfolioService: PortfolioService) {}
 }

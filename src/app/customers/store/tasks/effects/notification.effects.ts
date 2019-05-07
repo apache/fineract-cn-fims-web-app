@@ -16,32 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
-import {Observable} from 'rxjs/Observable';
-import {Actions, Effect} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
-import {Action} from '@ngrx/store';
+import { NotificationService, NotificationType } from '../../../../services/notification/notification.service';
+import { Observable } from 'rxjs';
+import { Actions, Effect } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../task.actions';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class TasksNotificationEffects {
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   createTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.CREATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Task is going to be saved'
-    }));
+    .pipe(
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Task is going to be saved'
+      })));
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   updateTaskSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Task is going to be updated'
-    }));
+    .pipe(
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Task is going to be updated'
+      })));
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 
 }

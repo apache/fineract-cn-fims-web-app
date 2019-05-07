@@ -18,11 +18,13 @@
  */
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {ProductPage} from '../../services/portfolio/domain/product-page.model';
 import {Product} from '../../services/portfolio/domain/product.model';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 const noop: () => void = () => {
   // empty method
@@ -57,16 +59,17 @@ export class ProductSelectComponent implements ControlValueAccessor, OnInit {
     this.formControl = new FormControl('');
 
     this.products = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(product => {
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(product => {
         if (this.isObject(product)) {
           this.onProductSelected.emit(product);
         }
-      })
-      .map(product => this.isObject(product) ? product.name : product)
-      .do(product => this.changeValue(product))
-      .switchMap(name => this.onSearch(name));
+      }),
+      map(product => this.isObject(product) ? product.name : product),
+      tap(product => this.changeValue(product)),
+      switchMap(name => this.onSearch(name)));
   }
 
   private isObject(product: Product): boolean {
@@ -98,8 +101,8 @@ export class ProductSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm
     };
 
-    return this.portfolioService.findAllProducts(false, fetchRequest)
-      .map((productPage: ProductPage) => productPage.elements);
+    return this.portfolioService.findAllProducts(false, fetchRequest).pipe(
+      map((productPage: ProductPage) => productPage.elements));
   }
 
 }

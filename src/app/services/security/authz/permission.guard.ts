@@ -18,10 +18,11 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
+import {of as observableOf, Observable} from 'rxjs';
+import {take, switchMap, map, filter} from 'rxjs/operators';
 
 @Injectable()
 export class PermissionGuard implements CanActivateChild {
@@ -31,8 +32,9 @@ export class PermissionGuard implements CanActivateChild {
 
   waitForPermissions(): Observable<boolean> {
     return this.store.select(fromRoot.getPermissionsLoading)
-      .filter(loading => !loading)
-      .take(1);
+      .pipe(
+        filter(loading => !loading),
+      take(1));
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -42,26 +44,26 @@ export class PermissionGuard implements CanActivateChild {
 
     // No permission set on route at all
     if (!routePermission) {
-      return Observable.of(true);
+      return observableOf(true);
     }
 
-    return this.waitForPermissions()
-      .switchMap(() => this.hasPermission(routePermission)
-        .map(hasPermission => {
+    return this.waitForPermissions().pipe(
+      switchMap(() => this.hasPermission(routePermission).pipe(
+        map(hasPermission => {
           if (hasPermission) {
             return true;
           }
           this.router.navigate(['/denied']);
           return false;
-        }));
+        }))));
 
   }
 
   private hasPermission(routePermission: FimsPermission): Observable<boolean> {
-    return this.store.select(fromRoot.getPermissions)
-      .map(permissions => permissions.filter(permission => permission.id === routePermission.id
-        && permission.accessLevel === routePermission.accessLevel))
-      .map(matches => matches.length > 0)
-      .take(1);
+    return this.store.select(fromRoot.getPermissions).pipe(
+      map(permissions => permissions.filter(permission => permission.id === routePermission.id
+        && permission.accessLevel === routePermission.accessLevel)),
+      map(matches => matches.length > 0),
+      take(1),);
   }
 }

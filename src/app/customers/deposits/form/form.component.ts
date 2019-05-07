@@ -21,8 +21,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TdStepComponent} from '@covalent/core';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CustomerService} from '../../../services/customer/customer.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'fims-deposit-form-component',
@@ -81,6 +82,6 @@ export class DepositFormComponent implements OnInit {
   filterAsync(searchTerm: string): void {
     this.filteredCustomers = this.customerService.fetchCustomers({
       searchTerm
-    }).map(customerPage => customerPage.customers.map(customer => customer.identifier));
+    }).pipe(map(customerPage => customerPage.customers.map(customer => customer.identifier)));
   }
 }

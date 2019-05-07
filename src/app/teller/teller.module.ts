@@ -80,10 +80,13 @@ import {AvailableActionService} from './services/available-actions.service';
     CovalentStepsModule,
     CovalentSearchModule,
     CovalentDataTableModule,
-    EffectsModule.run(TellerApiEffects),
-    EffectsModule.run(TellerRouteEffects),
-    EffectsModule.run(TellerProductsApiEffects),
-    EffectsModule.run(TellerNotificationEffects)
+
+    EffectsModule.forRoot([
+      TellerApiEffects,
+      TellerRouteEffects,
+      TellerProductsApiEffects,
+      TellerNotificationEffects
+    ])
   ],
   declarations: [
     TellerIndexComponent,

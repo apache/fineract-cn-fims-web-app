@@ -18,10 +18,11 @@
  */
 import {Component} from '@angular/core';
 import {PayrollConfiguration} from '../../../services/payroll/domain/payroll-configuration.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
 import {TableData} from '../../../common/data-table/data-table.component';
+import {filter, tap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './payroll.detail.component.html'
@@ -40,11 +41,11 @@ export class CustomerPayrollDetailComponent {
 
   constructor(private store: CustomersStore) {
     this.distribution$ = store.select(fromCustomers.getPayrollDistribution)
-      .filter(distribution => !!distribution)
-      .do(distribution => this.allocationData = {
+      .pipe(filter(distribution => !!distribution),
+      tap(distribution => this.allocationData = {
         data: distribution.payrollAllocations,
         totalElements: distribution.payrollAllocations.length,
         totalPages: 1
-      });
+      }));
   }
 }

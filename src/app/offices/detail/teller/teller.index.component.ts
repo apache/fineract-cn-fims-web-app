@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {OfficesStore} from '../../store/index';
 import {SelectAction} from '../../store/teller/teller.actions';
 
@@ -33,8 +33,8 @@ export class OfficeTellerIndexComponent implements OnInit, OnDestroy {
   constructor(private store: OfficesStore, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['code']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['code'])))
       .subscribe(this.store);
   }
 

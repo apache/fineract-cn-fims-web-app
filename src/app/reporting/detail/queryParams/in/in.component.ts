@@ -30,7 +30,7 @@ import {
   Validators
 } from '@angular/forms';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {createPlaceholder} from '../query-params.helper';
 
 export const REPORTING_IN_PARAM_CONTROL_VALUE_ACCESSOR: any = {

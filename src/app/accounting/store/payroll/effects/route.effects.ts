@@ -19,18 +19,19 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as payrollActions from '../../payroll/payroll-collection.actions';
 import {Action} from '@ngrx/store';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class PayrollCollectionRouteEffects {
 
   @Effect({ dispatch: false })
   createPayrollSuccess$: Observable<Action> = this.actions$
-    .ofType(payrollActions.CREATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(payrollActions.CREATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 

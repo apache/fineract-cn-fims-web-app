@@ -17,10 +17,11 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {PortfolioStore} from './store/index';
 import {SelectAction} from './store/product.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './product.index.component.html'
@@ -32,8 +33,8 @@ export class ProductIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['productId']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['productId'])))
       .subscribe(this.store);
   }
 

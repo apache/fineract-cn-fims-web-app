@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../task.actions';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
+import { AccountingService } from '../../../../../services/accounting/accounting.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AccountCommandApiEffects {
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND)
-    .map((action: taskActions.ExecuteCommandAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.accountCommand(payload.accountId, payload.command)
-        .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
-    );
+    .ofType(taskActions.EXECUTE_COMMAND).pipe(
+      map((action: taskActions.ExecuteCommandAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.accountCommand(payload.accountId, payload.command).pipe(
+          map(() => new taskActions.ExecuteCommandSuccessAction(payload)),
+          catchError((error) => of(new taskActions.ExecuteCommandFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 

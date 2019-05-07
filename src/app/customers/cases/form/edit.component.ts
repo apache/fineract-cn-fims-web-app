@@ -24,11 +24,12 @@ import {CasesStore} from '../store/index';
 import {UPDATE} from '../store/case.actions';
 import * as fromCustomers from '../../store/index';
 import {Product} from '../../../services/portfolio/domain/product.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
+import {switchMap, map, filter, tap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './edit.component.html'
@@ -56,18 +57,20 @@ export class CaseEditComponent implements OnInit {
     });
 
     this.caseInstance$ = this.casesStore.select(fromCases.getSelectedCase)
-      .filter(caseInstance => !!caseInstance);
+    .pipe(
+      filter(caseInstance => !!caseInstance));
 
     this.customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer)
-      .do(customer => this.fullName = `${customer.givenName} ${customer.surname}`);
+    .pipe(
+      filter(customer => !!customer),
+      tap(customer => this.fullName = `${customer.givenName} ${customer.surname}`));
 
-    this.products$ = this.portfolioService.findAllProducts(false)
-      .map(productPage => productPage.elements);
+    this.products$ = this.portfolioService.findAllProducts(false).pipe(
+      map(productPage => productPage.elements));
 
-    this.productsInstances$ = this.customer$
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
-      .map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE'));
+    this.productsInstances$ = this.customer$.pipe(
+      switchMap(customer => this.depositService.fetchProductInstances(customer.identifier)),
+      map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE')),);
   }
 
   onSave(caseInstance: FimsCase) {

@@ -19,13 +19,13 @@
 import {Component, OnInit} from '@angular/core';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {RangeActions} from '../../store/ranges/range.actions';
 import {ActivatedRoute} from '@angular/router';
 import {ITdDataTableColumn, TdDialogService} from '@covalent/core';
 import {FimsProduct} from '../../store/model/fims-product.model';
-import {Subscription} from 'rxjs/Subscription';
 import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './range.detail.component.html'
@@ -48,11 +48,13 @@ export class ProductChargeRangeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => this.product = product);
 
     this.range$ = this.portfolioStore.select(fromPortfolio.getSelectedProductChargeRange)
-      .filter(range => !!range);
+      .pipe(
+        filter(range => !!range));
   }
 
   confirmDeletion(): Observable<boolean> {
@@ -65,7 +67,8 @@ export class ProductChargeRangeDetailComponent implements OnInit {
 
   deleteRange(resource: FimsRange): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => {
         this.portfolioStore.dispatch(RangeActions.deleteAction({
           resource,

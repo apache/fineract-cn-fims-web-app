@@ -16,9 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ReportDefinition} from '../../services/reporting/domain/report-definition.model';
 import {ActivatedRoute} from '@angular/router';
 import {ReportingService} from '../../services/reporting/reporting.service';
@@ -27,6 +27,7 @@ import {QueryParameter} from '../../services/reporting/domain/query-parameter.mo
 import {ReportPage} from '../../services/reporting/domain/report-page.model';
 import {DisplayableField} from '../../services/reporting/domain/displayable-field.model';
 import {GenerateReportEvent, ReportingCriteriaComponent} from './criteria/criteria.component';
+import { tap, switchMap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './reporting-definition.component.html'
@@ -49,17 +50,18 @@ export class ReportingDefinitionComponent implements OnInit {
 
   ngOnInit(): void {
     const reportDefinition$: Observable<ReportDefinition> = this.route.params
-      .do(params => {
+    .pipe(
+      tap(params => {
         this.category = params['category'];
         this.identifier = params['identifier'];
-      })
-      .switchMap(params => this.reportingService.findReportDefinition(params['category'], params['identifier']));
+      }),
+      switchMap(params => this.reportingService.findReportDefinition(params['category'], params['identifier'])));
 
-    this.queryParameter$ = reportDefinition$
-      .map(reportDefinition => reportDefinition.queryParameters);
+    this.queryParameter$ = reportDefinition$.pipe(
+      map(reportDefinition => reportDefinition.queryParameters));
 
-    this.displayableFields$ = reportDefinition$
-      .map(reportDefinition => reportDefinition.displayableFields);
+    this.displayableFields$ = reportDefinition$.pipe(
+      map(reportDefinition => reportDefinition.displayableFields));
   }
 
   generateReport(event: GenerateReportEvent): void {

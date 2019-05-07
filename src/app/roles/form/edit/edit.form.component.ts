@@ -20,9 +20,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {SelectAction, UPDATE} from '../../store/role.actions';
 import {RolesStore} from '../../store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './edit.form.component.html'
@@ -37,8 +38,8 @@ export class EditRoleFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     this.roleSubscription = this.store.select(fromRoles.getSelectedRole).subscribe((role: Role) => {

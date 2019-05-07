@@ -17,16 +17,16 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {CasesStore} from '../store/index';
 import * as fromCases from '../store';
 import {LoadAllAction} from '../store/documents/document.actions';
 import {CaseSelection} from '../store/model/case-selection.model';
-import {Subscription} from 'rxjs/Subscription';
 import {CustomerDocument} from '../../../services/customer/domain/customer-document.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './documents.component.html',
@@ -49,21 +49,21 @@ export class CaseDocumentComponent implements OnInit, OnDestroy {
   constructor(private casesStore: CasesStore, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
     this.currentSelection$ = casesStore.select(fromCases.getCaseSelection);
 
-    this.documentData$ = casesStore.select(fromCases.getAllCaseDocumentEntities)
-      .map(entities => ({
+    this.documentData$ = casesStore.select(fromCases.getAllCaseDocumentEntities).pipe(
+      map(entities => ({
         data: entities,
         totalElements: entities.length,
         totalPages: 1
-      }))
+      })))
   }
 
   ngOnInit(): void {
-    this.actionsSubscription = this.currentSelection$
-      .map(selection => new LoadAllAction({
+    this.actionsSubscription = this.currentSelection$.pipe(
+      map(selection => new LoadAllAction({
         customerId: selection.customerId,
         productId: selection.productId,
         caseId: selection.caseId
-      }))
+      })))
       .subscribe(this.casesStore);
   }
 

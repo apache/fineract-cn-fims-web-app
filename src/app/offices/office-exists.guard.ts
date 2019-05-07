@@ -20,10 +20,10 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../services/office/office.service';
 import {getOfficesLoadedAt, OfficesStore} from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from './store/office.actions';
-import {of} from 'rxjs/observable/of';
 import {ExistsGuardService} from '../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class OfficeExistsGuard implements CanActivate {
@@ -33,32 +33,32 @@ export class OfficeExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasOfficeInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(getOfficesLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(getOfficesLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasOfficeInApi(id: string): Observable<boolean> {
-    const getOffice$ = this.officeService.getOffice(id)
-      .map(officeEntity => new LoadAction({
+    const getOffice$ = this.officeService.getOffice(id).pipe(
+      map(officeEntity => new LoadAction({
         resource: officeEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(office => !!office);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(office => !!office));
 
     return this.existsGuardService.routeTo404OnError(getOffice$);
   }
 
   hasOffice(id: string): Observable<boolean> {
-    return this.hasOfficeInStore(id)
-      .switchMap(inStore => {
+    return this.hasOfficeInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasOfficeInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

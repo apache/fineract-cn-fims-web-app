@@ -16,42 +16,42 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as groupActions from '../group.actions';
-import {GroupService} from '../../../services/group/group.service';
+import { GroupService } from '../../../services/group/group.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class GroupApiEffects {
 
   @Effect()
   createGroup$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE)
-    .map((action: groupActions.CreateGroupAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.createGroup(payload.group)
-        .map(() => new groupActions.CreateGroupSuccessAction({
-          resource: payload.group,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new groupActions.CreateGroupFailAction(error)))
-    );
+    .ofType(groupActions.CREATE).pipe(
+      map((action: groupActions.CreateGroupAction) => action.payload),
+      mergeMap(payload =>
+        this.groupService.createGroup(payload.group).pipe(
+          map(() => new groupActions.CreateGroupSuccessAction({
+            resource: payload.group,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new groupActions.CreateGroupFailAction(error))))
+      ));
 
   @Effect()
   updateGroup$: Observable<Action> = this.actions$
-    .ofType(groupActions.UPDATE)
-    .map((action: groupActions.UpdateGroupAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.updateGroup(payload.group)
-        .map(() => new groupActions.UpdateGroupSuccessAction({
-          resource: payload.group,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new groupActions.UpdateGroupFailAction(error)))
-    );
+    .ofType(groupActions.UPDATE).pipe(
+      map((action: groupActions.UpdateGroupAction) => action.payload),
+      mergeMap(payload =>
+        this.groupService.updateGroup(payload.group).pipe(
+          map(() => new groupActions.UpdateGroupSuccessAction({
+            resource: payload.group,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new groupActions.UpdateGroupFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private groupService: GroupService) { }
 

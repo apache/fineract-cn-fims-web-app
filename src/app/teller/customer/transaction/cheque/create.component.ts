@@ -24,9 +24,8 @@ import * as fromTeller from '../../../store/index';
 import {TellerStore} from '../../../store/index';
 import * as fromRoot from '../../../../store/index';
 import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {TransactionForm} from '../domain/transaction-form.model';
@@ -35,6 +34,8 @@ import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {MICRResolution} from '../../../../services/cheque/domain/micr-resolution.model';
 import {Error} from '../../../../services/domain/error.model';
 import {TellerTransactionService} from '../../../services/transaction.service';
+import { filter,tap, catchError} from 'rxjs/operators'
+import { empty } from 'rxjs'
 
 @Component({
   templateUrl: './create.component.html'
@@ -73,14 +74,16 @@ export class CreateChequeTransactionFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const selectedCustomer$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .filter(customer => !!customer);
+      .pipe(
+        filter(customer => !!customer));
 
     this.productInstances$ = selectedCustomer$
       .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
       .map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE'));
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
-      .filter(teller => !!teller)
+      .pipe(
+        filter(teller => !!teller))
       .subscribe(teller => { this.teller = teller; } );
 
     this.usernameSubscription = this.store.select(fromRoot.getUsername)
@@ -97,11 +100,12 @@ export class CreateChequeTransactionFormComponent implements OnInit, OnDestroy {
 
   expandMICR(identifier: string): void {
     this.micrResolution$ = this.chequeService.expandMicr(identifier)
-      .do(resolution => this.micrResolutionError = null)
-      .catch(error => {
+    .pipe(
+      tap(resolution => this.micrResolutionError = null),
+      catchError(error => {
         this.micrResolutionError = error;
-        return Observable.empty();
-      });
+        return empty();
+      }));
   }
 
   createTransaction(formData: TransactionForm): void {
@@ -118,8 +122,9 @@ export class CreateChequeTransactionFormComponent implements OnInit, OnDestroy {
     };
 
     this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
-      .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
-      .do(() => this.transactionCreated = true);
+      .pipe(
+        tap(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier),
+      tap(() => this.transactionCreated = true));
   }
 
   confirmTransaction(chargesIncluded: boolean): void {

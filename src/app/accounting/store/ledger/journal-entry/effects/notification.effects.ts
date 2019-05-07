@@ -16,12 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import { NotificationService, NotificationType } from '../../../../../services/notification/notification.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class JournalEntryNotificationEffects {
@@ -29,12 +30,13 @@ export class JournalEntryNotificationEffects {
   @Effect({ dispatch: false })
   createJournalEntrySuccess$: Observable<Action> = this.actions$
     .ofType(journalEntryActions.CREATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Journal entry is going to be processed'
-    }));
+    .pipe(
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Journal entry is going to be processed'
+      })));
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 
 }
 

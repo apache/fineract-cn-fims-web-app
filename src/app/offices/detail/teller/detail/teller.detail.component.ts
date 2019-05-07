@@ -20,7 +20,8 @@ import {Component, OnInit} from '@angular/core';
 import * as fromOffices from '../../../store/index';
 import {OfficesStore} from '../../../store/index';
 import {Teller} from '../../../../services/teller/domain/teller.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './teller.detail.component.html'
@@ -35,10 +36,11 @@ export class OfficeTellerDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.teller$ = this.store.select(fromOffices.getSelectedTeller)
-      .filter(teller => !!teller);
+      .pipe(
+        filter(teller => !!teller));
 
-    this.isClosed$ = this.teller$
-      .map(teller => teller.state === 'CLOSED');
+    this.isClosed$ = this.teller$.pipe(
+      map(teller => teller.state === 'CLOSED'));
 
   }
 

@@ -16,15 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as fromOffices from '../../../../store/index';
-import {OfficesStore} from '../../../../store/index';
-import {Action, TellerManagementCommand} from '../../../../../services/teller/domain/teller-management-command.model';
-import {Teller} from '../../../../../services/teller/domain/teller.model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Office} from '../../../../../services/office/domain/office.model';
-import {Subscription} from 'rxjs/Subscription';
-import {EXECUTE_COMMAND} from '../../../../store/teller/teller.actions';
+import { OfficesStore } from '../../../../store/index';
+import { Action, TellerManagementCommand } from '../../../../../services/teller/domain/teller-management-command.model';
+import { Teller } from '../../../../../services/teller/domain/teller.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Office } from '../../../../../services/office/domain/office.model';
+import { Subscription } from 'rxjs';
+import { EXECUTE_COMMAND } from '../../../../store/teller/teller.actions';
+import { filter } from 'rxjs/operators'
 
 @Component({
   templateUrl: './command.component.html'
@@ -41,17 +42,19 @@ export class OfficeTellerCommandComponent implements OnInit, OnDestroy {
 
   action: Action = 'OPEN';
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => this.action = params['action']);
 
     this.officeSubscription = this.store.select(fromOffices.getSelectedOffice)
-      .filter(office => !!office)
+      .pipe(
+        filter(office => !!office))
       .subscribe(office => this.office = office);
 
     this.tellerSubscription = this.store.select(fromOffices.getSelectedTeller)
-      .filter(teller => !!teller)
+      .pipe(
+        filter(teller => !!teller))
       .subscribe(teller => this.teller = teller);
   }
 

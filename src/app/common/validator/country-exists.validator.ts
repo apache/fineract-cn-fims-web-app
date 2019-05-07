@@ -18,26 +18,27 @@
  */
 import {CountryService} from '../../services/country/country.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 export function countryExists(countryService: CountryService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     const country = control.value;
     const displayName: string = country && typeof country === 'object' ? country.displayName : country;
 
-    return Observable.of(displayName)
-      .map(searchTerm => countryService.fetchCountries(displayName))
-      .map(countries => {
+    return observableOf(displayName).pipe(
+      map(searchTerm => countryService.fetchCountries(displayName)),
+      map(countries => {
         if (countries.length === 1 && countries[0].displayName === displayName) {
           return null;
         }
         return {
           invalidCountry: true
         };
-      });
+      }),);
   };
 }

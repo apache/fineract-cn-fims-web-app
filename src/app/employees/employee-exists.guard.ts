@@ -20,11 +20,11 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../services/office/office.service';
 import * as fromEmployees from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from './store/employee.actions';
-import {of} from 'rxjs/observable/of';
 import {EmployeesStore} from './store/index';
 import {ExistsGuardService} from '../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class EmployeeExistsGuard implements CanActivate {
@@ -34,32 +34,33 @@ export class EmployeeExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasEmployeeInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromEmployees.getEmployeesLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromEmployees.getEmployeesLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasEmployeeInApi(id: string): Observable<boolean> {
-    const getEmployee$ = this.officeService.getEmployee(id)
-      .map(employeeEntity => new LoadAction({
+    const getEmployee$ = this.officeService.getEmployee(id).pipe(
+      map(employeeEntity => new LoadAction({
         resource: employeeEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(employee => !!employee);
+      })))
+      .pipe(
+        tap((action: LoadAction) => this.store.dispatch(action)),
+        map(employee => !!employee));
 
     return this.existsGuardService.routeTo404OnError(getEmployee$);
   }
 
   hasEmployee(id: string): Observable<boolean> {
-    return this.hasEmployeeInStore(id)
-      .switchMap(inStore => {
+    return this.hasEmployeeInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasEmployeeInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

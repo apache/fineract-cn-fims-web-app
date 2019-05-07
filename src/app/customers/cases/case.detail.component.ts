@@ -20,9 +20,10 @@ import {Component, OnInit} from '@angular/core';
 import * as fromCases from './store/index';
 import {CasesStore} from './store/index';
 import * as fromRoot from '../../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
+import {combineLatest} from 'rxjs/operators'
 
 @Component({
   templateUrl: './case.detail.component.html'
@@ -40,7 +41,7 @@ export class CaseDetailComponent implements OnInit {
   ngOnInit(): void {
     this.caseInstance$ = this.casesStore.select(fromCases.getSelectedCase);
 
-    this.canEdit$ = Observable.combineLatest(
+    this.canEdit$ = combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
       this.caseInstance$,
       (permissions, caseInstance: FimsCase) => ({

@@ -17,10 +17,11 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {CasesStore} from '../store/index';
 import {SelectAction} from '../store/documents/document.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './document.index.component.html'
@@ -32,8 +33,8 @@ export class CaseDocumentIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['documentId']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['documentId'])))
       .subscribe(this.casesStore);
   }
 

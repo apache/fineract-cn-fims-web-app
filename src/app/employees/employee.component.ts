@@ -23,8 +23,9 @@ import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData} from '../common/data-table/data-table.component';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from '../store/employee/employee.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'fims-employee',
@@ -50,12 +51,12 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.employeeData$ = this.store.select(fromRoot.getEmployeeSearchResults)
-      .map(employeePage => ({
+    this.employeeData$ = this.store.select(fromRoot.getEmployeeSearchResults).pipe(
+      map(employeePage => ({
         data: employeePage.employees,
         totalElements: employeePage.totalElements,
         totalPages: employeePage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromRoot.getEmployeeSearchLoading);
 

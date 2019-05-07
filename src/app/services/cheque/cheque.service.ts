@@ -18,7 +18,7 @@
  */
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {Cheque} from './domain/cheque.model';
 import {IssuingCount} from './domain/issuing-count.model';
@@ -27,6 +27,7 @@ import {ChequeTransaction} from './domain/cheque-transaction';
 import {MICRResolution} from './domain/micr-resolution.model';
 import {FimsCheque} from './domain/fims-cheque.model';
 import {mapToFimsCheque, mapToFimsCheques} from './domain/mapper/fims-cheque.mapper';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class ChequeService {
@@ -48,13 +49,13 @@ export class ChequeService {
       search
     };
 
-    return this.http.get(`${this.baseUrl}/cheques/`, requestOptions)
-      .map((cheques: Cheque[]) => mapToFimsCheques(cheques));
+    return this.http.get(`${this.baseUrl}/cheques/`, requestOptions).pipe(
+      map((cheques: Cheque[]) => mapToFimsCheques(cheques)));
   }
 
   public get(identifier: string): Observable<FimsCheque> {
-    return this.http.get(`${this.baseUrl}/cheques/${identifier}`)
-      .map((cheque: Cheque) => mapToFimsCheque(cheque));
+    return this.http.get(`${this.baseUrl}/cheques/${identifier}`).pipe(
+      map((cheque: Cheque) => mapToFimsCheque(cheque)));
   }
 
   public process(identifier: string, command: ChequeProcessingCommand): Observable<void> {

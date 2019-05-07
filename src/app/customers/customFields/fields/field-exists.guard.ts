@@ -20,8 +20,9 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import {CustomersStore} from '../../store/index';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromCustomers from '../../store';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class FieldExistsGuard implements CanActivate {
@@ -31,9 +32,9 @@ export class FieldExistsGuard implements CanActivate {
   }
 
   hasFieldInCatalog(id: string): Observable<boolean> {
-    const getField$ = this.store.select(fromCustomers.getCustomerCatalog)
-      .map(catalog => catalog.fields.find(field => field.identifier === id))
-      .map(field => !!field);
+    const getField$ = this.store.select(fromCustomers.getCustomerCatalog).pipe(
+      map(catalog => catalog.fields.find(field => field.identifier === id)),
+      map(field => !!field),);
 
     return this.existsGuardService.routeTo404OnError(getField$);
   }

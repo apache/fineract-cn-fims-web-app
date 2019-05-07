@@ -21,13 +21,13 @@ import {Account} from '../../services/accounting/domain/account.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromAccounting from '../store';
 import * as fromRoot from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
 import {DELETE, SelectAction} from '../store/account/account.actions';
-import {Observable} from 'rxjs/Observable';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
+import {map, filter, combineLatest, flatMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './account.detail.component.html'
@@ -47,12 +47,12 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     const account$: Observable<Account> = this.store.select(fromAccounting.getSelectedAccount)
-      .filter(account => !!account);
+      .pipe(filter(account => !!account));
 
     this.canDelete$ = Observable.combineLatest(
       this.store.select(fromRoot.getPermissions),
@@ -85,18 +85,18 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
     const button = 'DELETE ACCOUNT';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   deleteAccount(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({
           type: DELETE, payload: {

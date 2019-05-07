@@ -16,17 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChargeDefinition} from '../../../../services/portfolio/domain/charge-definition.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChargeDefinition } from '../../../../services/portfolio/domain/charge-definition.model';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as fromPortfolio from '../../store/index';
-import {PortfolioStore} from '../../store/index';
-import {Subscription} from 'rxjs/Subscription';
-import {CREATE} from '../../store/charges/charge.actions';
-import {FimsProduct} from '../../store/model/fims-product.model';
-import {Observable} from 'rxjs/Observable';
-import {RangeActions} from '../../store/ranges/range.actions';
-import {FimsRange} from '../../../../services/portfolio/domain/range-model';
+import { PortfolioStore } from '../../store/index';
+import { Subscription, Observable } from 'rxjs';
+import { CREATE } from '../../store/charges/charge.actions';
+import { FimsProduct } from '../../store/model/fims-product.model';
+import { RangeActions } from '../../store/ranges/range.actions';
+import { FimsRange } from '../../../../services/portfolio/domain/range-model';
+import { tap } from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.component.html'
@@ -52,11 +52,12 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy {
     proportionalTo: ''
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private portfolioStore: PortfolioStore) { }
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .do(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier)))
+      .pipe(
+        tap(product => this.portfolioStore.dispatch(RangeActions.loadAllAction(product.identifier))))
       .subscribe(product => this.product = product);
 
     this.ranges$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeRangeEntities);
@@ -67,11 +68,13 @@ export class ProductChargeCreateFormComponent implements OnInit, OnDestroy {
   }
 
   onSave(charge: ChargeDefinition): void {
-    this.portfolioStore.dispatch({ type: CREATE, payload: {
-      productId: this.product.identifier,
-      charge: charge,
-      activatedRoute: this.route
-    }});
+    this.portfolioStore.dispatch({
+      type: CREATE, payload: {
+        productId: this.product.identifier,
+        charge: charge,
+        activatedRoute: this.route
+      }
+    });
   }
 
   onCancel(): void {

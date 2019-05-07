@@ -19,7 +19,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
 import {Ledger} from './domain/ledger.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Account} from './domain/account.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {AccountCommand} from './domain/account-command.model';
@@ -36,6 +36,7 @@ import {TransactionTypePage} from './domain/transaction-type-page.model';
 import {AccountType} from './domain/account-type.model';
 import {IncomeStatement} from './domain/income-statement.model';
 import {FinancialCondition} from './domain/financial-condition.model';
+import {share} from 'rxjs/operators';
 
 @Injectable()
 export class AccountingService {
@@ -97,8 +98,8 @@ export class AccountingService {
     const requestOptions: RequestOptionsArgs = {
       params
     };
-    return this.http.get(`${this.baseUrl}/accounts`, requestOptions)
-      .share();
+    return this.http.get(`${this.baseUrl}/accounts`, requestOptions).pipe(
+      share());
   }
 
   public findAccount(identifier: string, silent?: boolean): Observable<Account> {

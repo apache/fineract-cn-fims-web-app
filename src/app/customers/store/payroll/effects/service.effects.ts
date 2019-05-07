@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
 import * as payrollActions from '../payroll.actions';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
-import {PayrollService} from '../../../../services/payroll/payroll.service';
+import { Action } from '@ngrx/store';
+import { PayrollService } from '../../../../services/payroll/payroll.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerPayrollApiEffects {
 
   @Effect()
   updatePayroll$: Observable<Action> = this.actions$
-    .ofType(payrollActions.UPDATE)
-    .map((action: payrollActions.UpdatePayrollDistributionAction) => action.payload)
-    .mergeMap(payload =>
-      this.payrollService.setPayrollConfiguration(payload.customerId, payload.distribution)
-        .map(() => new payrollActions.UpdatePayrollDistributionSuccessAction(payload))
-        .catch((error) => of(new payrollActions.UpdatePayrollDistributionFailAction(error)))
-    );
+    .ofType(payrollActions.UPDATE).pipe(
+      map((action: payrollActions.UpdatePayrollDistributionAction) => action.payload),
+      mergeMap(payload =>
+        this.payrollService.setPayrollConfiguration(payload.customerId, payload.distribution).pipe(
+          map(() => new payrollActions.UpdatePayrollDistributionSuccessAction(payload)),
+          catchError((error) => of(new payrollActions.UpdatePayrollDistributionFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private payrollService: PayrollService) { }
 

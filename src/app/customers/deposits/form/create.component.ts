@@ -25,8 +25,9 @@ import {DepositsStore} from '../store/index';
 import {CREATE} from '../store/deposit.actions';
 import * as fromCustomers from '../../store/index';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ProductDefinition} from '../../../services/depositAccount/domain/definition/product-definition.model';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.component.html'
@@ -49,10 +50,11 @@ export class DepositCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.customer$ = this.depositsStore.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer);
+      .pipe(
+        filter(customer => !!customer));
 
-    this.productDefinitions$ = this.depositService.fetchProductDefinitions()
-      .map(productDefinitions => productDefinitions.filter(definition => definition.active));
+    this.productDefinitions$ = this.depositService.fetchProductDefinitions().pipe(
+      map(productDefinitions => productDefinitions.filter(definition => definition.active)));
   }
 
   onSave(productInstance: ProductInstance): void {

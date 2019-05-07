@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DELETE_FIELD} from '../../store/catalogs/catalog.actions';
 import {Field} from '../../../services/catalog/domain/field.model';
 import {CustomersStore} from '../../store/index';
@@ -25,6 +25,7 @@ import {TdDialogService} from '@covalent/core';
 import * as fromCustomers from '../../store';
 import {ActivatedRoute} from '@angular/router';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './field.detail.component.html'
@@ -50,7 +51,8 @@ export class FieldDetailComponent {
 
   deleteField(catalogIdentifier: string, field: Field): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+    .pipe(
+      filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({ type: DELETE_FIELD, payload: {
           catalogIdentifier,

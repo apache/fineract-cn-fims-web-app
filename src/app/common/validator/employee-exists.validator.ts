@@ -18,25 +18,27 @@
  */
 import {OfficeService} from '../../services/office/office.service';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {isString} from './validators';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidEmployee: true
 });
 
 export function employeeExists(officeService: OfficeService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return officeService.getEmployee(control.value, true)
-      .map(employee => null)
-      .catch(() => invalid);
+    return officeService.getEmployee(control.value, true).pipe(
+      map(employee => null),
+      catchError(() => invalid));
   };
 }

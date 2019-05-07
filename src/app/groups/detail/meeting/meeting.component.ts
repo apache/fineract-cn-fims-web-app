@@ -17,15 +17,15 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import * as fromGroups from '../../store/index';
 import {GroupsStore} from '../../store/index';
 import {Meeting} from '../../../services/group/domain/meeting.model';
 import {LOAD_ALL} from '../../store/meeting/meeting.actions';
 import {TableData} from '../../../common/data-table/data-table.component';
-import {Subscription} from 'rxjs/Subscription';
 import {Group} from '../../../services/group/domain/group.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -50,16 +50,14 @@ import {ActivatedRoute, Router} from '@angular/router';
       this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
       .subscribe(group => {
         this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
-        //this.fetchMeetings(group.identifier);
       });
       
-      this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities)
-      .map(meeting => ({
+      this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities).pipe(
+      map(meeting => ({
         data: meeting,
         totalElements: meeting.length,
         totalPages: 1
-      }));
-     // this.fetchMeetings(this.group.identifier);
+      })));
     }
 
     ngOnInit(){

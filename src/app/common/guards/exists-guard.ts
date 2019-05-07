@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
 import {Inject, Injectable} from '@angular/core';
+import {map, catchError, take} from 'rxjs/operators';
 
 @Injectable()
 export class ExistsGuardService {
@@ -27,21 +27,21 @@ export class ExistsGuardService {
   constructor(private router: Router, @Inject('cacheExpiry') private cacheExpiry: number) {}
 
   isWithinExpiry(observable: Observable<number>): Observable<boolean> {
-    return observable
-      .map(loadedAtTimestamp => {
+    return observable.pipe(
+      map(loadedAtTimestamp => {
         if (!loadedAtTimestamp) {
           return false;
         }
         return loadedAtTimestamp + this.cacheExpiry > Date.now();
-      })
-      .take(1);
+      }),
+      take(1),);
   }
 
   routeTo404OnError(observable: Observable<any>): Observable<any> {
-    return observable.catch(() => {
+    return observable.pipe(catchError(() => {
       this.router.navigate(['/404']);
       return of(false);
-    });
+    }));
   }
 
 }

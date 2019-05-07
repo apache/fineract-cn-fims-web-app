@@ -18,25 +18,26 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
 import {Router} from '@angular/router';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ProductTasksRouteEffects {
 
   @Effect({ dispatch: false })
   createUpdateProductTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteProductTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.DELETE)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+    .ofType(taskActions.DELETE).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 

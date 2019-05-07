@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromCustomers from '../../store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {CustomersStore} from '../../store/index';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {LoadAction} from '../../store/identityCards/identity-cards.actions';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class IdentityCardExistsGuard implements CanActivate {
@@ -35,31 +35,31 @@ export class IdentityCardExistsGuard implements CanActivate {
   }
 
   hasIdentificationCardInStore(number: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromCustomers.getIdentificationCardLoadedAt)
-      .map(loadedAt => loadedAt[number]);
+    const timestamp$: Observable<number> = this.store.select(fromCustomers.getIdentificationCardLoadedAt).pipe(
+      map(loadedAt => loadedAt[number]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasIdentificationCardInApi(customerId: string, number: string): Observable<boolean> {
-    const getIdentificationCard: Observable<any> = this.customerService.getIdentificationCard(customerId, number)
-      .map(identificationCardEntity => new LoadAction({
+    const getIdentificationCard: Observable<any> = this.customerService.getIdentificationCard(customerId, number).pipe(
+      map(identificationCardEntity => new LoadAction({
         resource: identificationCardEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(identificationCard => !!identificationCard);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(identificationCard => !!identificationCard));
 
     return this.existsGuardService.routeTo404OnError(getIdentificationCard);
   }
 
   hasIdentificationCard(customerId: string, number: string): Observable<boolean> {
-    return this.hasIdentificationCardInStore(number)
-      .switchMap(inStore => {
+    return this.hasIdentificationCardInStore(number).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasIdentificationCardInApi(customerId, number);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

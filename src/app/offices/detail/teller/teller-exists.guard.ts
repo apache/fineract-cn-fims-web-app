@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromOffices from '../../store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {OfficesStore} from '../../store/index';
 import {TellerService} from '../../../services/teller/teller-service';
 import {LoadAction} from '../../store/teller/teller.actions';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TellerExistsGuard implements CanActivate {
@@ -35,31 +35,31 @@ export class TellerExistsGuard implements CanActivate {
   }
 
   hasTellerInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromOffices.getTellersLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$: Observable<number> = this.store.select(fromOffices.getTellersLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasTellerInApi(officeId: string, tellerCode: string): Observable<boolean> {
-    const getTeller$: Observable<any> = this.tellerService.find(officeId, tellerCode)
-      .map(tellerEntity => new LoadAction({
+    const getTeller$: Observable<any> = this.tellerService.find(officeId, tellerCode).pipe(
+      map(tellerEntity => new LoadAction({
         resource: tellerEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(customer => !!customer);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(customer => !!customer));
 
     return this.existsGuardService.routeTo404OnError(getTeller$);
   }
 
   hasTeller(officeId: string, tellerCode: string): Observable<boolean> {
-    return this.hasTellerInStore(tellerCode)
-      .switchMap(inStore => {
+    return this.hasTellerInStore(tellerCode).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasTellerInApi(officeId, tellerCode);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

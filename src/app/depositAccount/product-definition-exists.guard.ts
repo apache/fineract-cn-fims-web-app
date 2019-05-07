@@ -16,8 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {of} from 'rxjs/observable/of';
-import {Observable} from 'rxjs/Observable';
+import {of, Observable} from 'rxjs';
 import {LoadAction} from './store/product.actions';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
@@ -25,6 +24,7 @@ import * as fromProducts from './store/index';
 import {DepositAccountStore} from './store/index';
 import {DepositAccountService} from '../services/depositAccount/deposit-account.service';
 import {ExistsGuardService} from '../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ProductDefinitionExistsGuard implements CanActivate {
@@ -34,32 +34,33 @@ export class ProductDefinitionExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasProductInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromProducts.getProductsLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromProducts.getProductsLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasProductInApi(id: string): Observable<boolean> {
-    const getProduct = this.accountService.findProductDefinition(id)
-      .map(productEntity => new LoadAction({
+    const getProduct = this.accountService.findProductDefinition(id).pipe(
+      map(productEntity => new LoadAction({
         resource: productEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(product => !!product);
+      })))
+      .pipe(
+        tap((action: LoadAction) => this.store.dispatch(action)),
+        map(product => !!product));
 
     return this.existsGuardService.routeTo404OnError(getProduct);
   }
 
   hasProduct(id: string): Observable<boolean> {
-    return this.hasProductInStore(id)
-      .switchMap(inStore => {
+    return this.hasProductInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasProductInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

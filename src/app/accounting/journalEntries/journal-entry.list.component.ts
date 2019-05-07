@@ -22,11 +22,12 @@ import {todayAsISOString, toShortISOString} from '../../services/domain/date.con
 import {FimsValidators} from '../../common/validator/validators';
 import * as fromAccounting from '../store';
 import {SEARCH} from '../store/ledger/journal-entry/journal-entry.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
 import {DatePipe} from '@angular/common';
 import {JournalEntry} from '../../services/accounting/domain/journal-entry.model';
 import {Debtor} from '../../services/accounting/domain/debtor.model';
+import { tap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './journal-entry.list.component.html',
@@ -47,7 +48,8 @@ export class JournalEntryListComponent implements OnInit {
 
   ngOnInit(): void {
     this.journalEntries$ = this.store.select(fromAccounting.getJournalEntriesSearchResult)
-      .do(journalEntries => this.select(journalEntries.length > 0 ? journalEntries[0] : undefined));
+    .pipe(
+      tap(journalEntries => this.select(journalEntries.length > 0 ? journalEntries[0] : undefined)));
 
     const today = todayAsISOString();
 

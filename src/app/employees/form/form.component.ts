@@ -18,7 +18,7 @@
  */
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TdStepComponent} from '@covalent/core';
 import {Office} from '../../services/office/domain/office.model';
 import {Employee} from '../../services/office/domain/employee.model';
@@ -31,6 +31,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../../store';
 import {SEARCH as SEARCH_OFFICE} from '../../store/office/office.actions';
 import {SEARCH as SEARCH_ROLE} from '../../store/role/role.actions';
+import {map} from 'rxjs/operators';
 
 export interface EmployeeFormData {
   user: User;
@@ -86,11 +87,11 @@ export class EmployeeFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private store: Store<fromRoot.State>) {}
 
   ngOnInit(): void {
-    this.offices = this.store.select(fromRoot.getOfficeSearchResults)
-      .map(officePage => officePage.offices);
+    this.offices = this.store.select(fromRoot.getOfficeSearchResults).pipe(
+      map(officePage => officePage.offices));
 
-    this.roles = this.store.select(fromRoot.getRoleSearchResults)
-      .map(rolesPage => rolesPage.roles);
+    this.roles = this.store.select(fromRoot.getRoleSearchResults).pipe(
+      map(rolesPage => rolesPage.roles));
 
     this.fetchRoles();
 

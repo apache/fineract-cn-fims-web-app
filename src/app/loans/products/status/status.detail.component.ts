@@ -17,17 +17,19 @@
  * under the License.
  */
 
+
+import {map} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TaskDefinition} from '../../../services/portfolio/domain/task-definition.model';
 import {DELETE, SelectAction} from '../store/tasks/task.actions';
 import {PortfolioStore} from '../store/index';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import * as fromPortfolio from '../store';
-import {Observable} from 'rxjs/Observable';
 import {TdDialogService} from '@covalent/core';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {FimsProduct} from '../store/model/fims-product.model';
+import { filter } from 'rxjs/operators'
 
 @Component({
   templateUrl: './status.detail.component.html'
@@ -43,8 +45,8 @@ export class ProductStatusDetailComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private portfolioStore: PortfolioStore, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-    .map(params => new SelectAction(params['taskId']))
+    this.actionsSubscription = this.route.params.pipe(
+    map(params => new SelectAction(params['taskId'])))
     .subscribe(this.portfolioStore);
 
     this.task$ = this.portfolioStore.select(fromPortfolio.getSelectedProductTask);
@@ -65,7 +67,8 @@ export class ProductStatusDetailComponent implements OnInit, OnDestroy {
 
   deleteTask(product: Product, task: TaskDefinition): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => {
         this.portfolioStore.dispatch({ type: DELETE, payload: {
           productId: product.identifier,

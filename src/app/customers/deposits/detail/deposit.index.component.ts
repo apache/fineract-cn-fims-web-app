@@ -17,10 +17,11 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {DepositsStore} from '../store/index';
 import {SelectAction} from '../store/deposit.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './deposit.index.component.html'
@@ -32,8 +33,8 @@ export class DepositIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: DepositsStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
   }
 

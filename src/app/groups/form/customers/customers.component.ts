@@ -16,13 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Customer} from '../../../services/customer/domain/customer.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Store} from '@ngrx/store';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Customer } from '../../../services/customer/domain/customer.model';
+import { FetchRequest } from '../../../services/domain/paging/fetch-request.model';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../store';
-import {SEARCH} from '../../../store/customer/customer.actions';
+import { SEARCH } from '../../../store/customer/customer.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'fims-group-customers-form',
@@ -36,11 +37,11 @@ export class GroupCustomersComponent implements OnInit {
 
   @Output() onSelectionChange = new EventEmitter<string[]>();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.customers = this.store.select(fromRoot.getCustomerSearchResults)
-      .map(customerPage => customerPage.customers);
+    this.customers = this.store.select(fromRoot.getCustomerSearchResults).pipe(
+      map(customerPage => customerPage.customers));
   }
 
   search(searchTerm) {

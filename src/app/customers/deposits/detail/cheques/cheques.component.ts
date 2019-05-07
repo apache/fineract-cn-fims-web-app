@@ -19,7 +19,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as fromDeposits from '../../store/index';
 import {DepositsStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {IssuingCount} from '../../../../services/cheque/domain/issuing-count.model';
 import {ISSUE_CHEQUES} from '../../store/deposit.actions';

@@ -23,7 +23,9 @@ import {Address} from '../../services/domain/address/address.model';
 import {Country} from '../../services/country/model/country.model';
 import {CountryService} from '../../services/country/country.service';
 import {countryExists} from '../validator/country-exists.validator';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import { startWith } from 'rxjs/operators';
+import {map} from 'rxjs/operators'
 
 @Component({
   selector: 'fims-address-form',
@@ -55,9 +57,10 @@ export class AddressFormComponent extends FormComponent<Address> implements OnIn
 
   ngOnInit(): void {
     this.filteredCountries = this.form.get('country').valueChanges
-      .startWith(null)
-      .map(country => country && typeof country === 'object' ? country.displayName : country)
-      .map(searchTerm => this.countryService.fetchCountries(searchTerm));
+    .pipe(
+      startWith(null),
+      map(country => country && typeof country === 'object' ? country.displayName : country),
+      map(searchTerm => this.countryService.fetchCountries(searchTerm)));
   }
 
   get formData(): Address {

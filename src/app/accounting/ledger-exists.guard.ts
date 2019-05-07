@@ -20,11 +20,11 @@ import {Store} from '@ngrx/store';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromAccounting from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from './store/ledger/ledger.actions';
-import {of} from 'rxjs/observable/of';
 import {AccountingService} from '../services/accounting/accounting.service';
 import {ExistsGuardService} from '../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class LedgerExistsGuard implements CanActivate {
@@ -34,30 +34,30 @@ export class LedgerExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasLedgerInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromAccounting.getLedgersLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromAccounting.getLedgersLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasLedgerInApi(id: string): Observable<boolean> {
-    const findLedger$ = this.accountingService.findLedger(id)
-      .map(ledgerEntity => new LoadAction(ledgerEntity))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(ledger => !!ledger);
+    const findLedger$ = this.accountingService.findLedger(id).pipe(
+      map(ledgerEntity => new LoadAction(ledgerEntity)),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(ledger => !!ledger));
 
     return this.existsGuardService.routeTo404OnError(findLedger$);
   }
 
   hasLedger(id: string): Observable<boolean> {
-    return this.hasLedgerInStore(id)
-      .switchMap(inStore => {
+    return this.hasLedgerInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasLedgerInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

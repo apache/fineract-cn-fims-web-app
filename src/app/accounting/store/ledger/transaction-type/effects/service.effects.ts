@@ -18,55 +18,55 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as transactionTypeActions from '../transaction-type.actions';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {emptySearchResult} from '../../../../../common/store/search.reducer';
+import {map, mergeMap,catchError} from 'rxjs/operators';
 
 @Injectable()
 export class TransactionTypeApiEffects {
 
   @Effect()
   searchTransactionTypes$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.SEARCH)
-    .map((action: transactionTypeActions.SearchAction) => action.payload)
-    .mergeMap(({ fetchRequest }) =>
-      this.accountingService.fetchTransactionTypes(fetchRequest)
-        .map(transactionTypePage => new transactionTypeActions.SearchCompleteAction({
+    .ofType(transactionTypeActions.SEARCH).pipe(
+    map((action: transactionTypeActions.SearchAction) => action.payload),
+    mergeMap(({ fetchRequest }) =>
+      this.accountingService.fetchTransactionTypes(fetchRequest).pipe(
+        map(transactionTypePage => new transactionTypeActions.SearchCompleteAction({
           elements: transactionTypePage.transactionTypes,
           totalElements: transactionTypePage.totalElements,
           totalPages: transactionTypePage.totalPages
-        }))
-        .catch(() => of(new transactionTypeActions.SearchCompleteAction(emptySearchResult())))
-    );
+        })),
+        catchError(() => of(new transactionTypeActions.SearchCompleteAction(emptySearchResult()))))
+    ));
 
   @Effect()
   createTransactionType$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE)
-    .map((action: transactionTypeActions.CreateTransactionTypeAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.createTransactionType(payload.transactionType)
-        .map(() => new transactionTypeActions.CreateTransactionTypeSuccessAction({
+    .ofType(transactionTypeActions.CREATE).pipe(
+    map((action: transactionTypeActions.CreateTransactionTypeAction) => action.payload),
+    mergeMap(payload =>
+      this.accountingService.createTransactionType(payload.transactionType).pipe(
+        map(() => new transactionTypeActions.CreateTransactionTypeSuccessAction({
           resource: payload.transactionType,
           activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new transactionTypeActions.CreateTransactionTypeFailAction(error)))
-    );
+        })),
+        catchError((error) => of(new transactionTypeActions.CreateTransactionTypeFailAction(error))))
+    ));
 
   @Effect()
   updateTransactionType$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE)
-    .map((action: transactionTypeActions.UpdateTransactionTypeAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.changeTransactionType(payload.transactionType)
-        .map(() => new transactionTypeActions.UpdateTransactionTypeSuccessAction({
+    .ofType(transactionTypeActions.UPDATE).pipe(
+    map((action: transactionTypeActions.UpdateTransactionTypeAction) => action.payload),
+    mergeMap(payload =>
+      this.accountingService.changeTransactionType(payload.transactionType).pipe(
+        map(() => new transactionTypeActions.UpdateTransactionTypeSuccessAction({
           resource: payload.transactionType,
           activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new transactionTypeActions.UpdateTransactionTypeFailAction(error)))
-    );
+        })),
+        catchError((error) => of(new transactionTypeActions.UpdateTransactionTypeFailAction(error))))
+    ));
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

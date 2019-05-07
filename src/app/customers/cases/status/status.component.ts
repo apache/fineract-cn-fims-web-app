@@ -17,17 +17,18 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromRoot from '../../../store';
-import {Observable} from 'rxjs/Observable';
 import {EXECUTE_TASK, LoadAllAction} from '../store/tasks/task.actions';
 import {ExecuteTaskEvent} from './tasks.component';
 import {StatusCommand} from '../store/model/fims-command.model';
 import {WorkflowAction} from '../../../services/portfolio/domain/individuallending/workflow-action.model';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
+import {map} from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   templateUrl: './status.component.html'
@@ -47,8 +48,8 @@ export class CaseStatusComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.productId$ = this.route.parent.params
-      .map(params => params['productId']);
+    this.productId$ = this.route.parent.params.pipe(
+      map(params => params['productId']));
 
     this.currentUser$ = this.casesStore.select(fromRoot.getUsername);
 
@@ -56,7 +57,7 @@ export class CaseStatusComponent implements OnInit, OnDestroy {
 
     this.statusCommands$ = this.casesStore.select(fromCases.getCaseCommands);
 
-    this.actionSubscription = Observable.combineLatest(
+    this.actionSubscription = combineLatest(
       this.productId$,
       this.caseInstance$,
       (productId, caseInstance) => ({

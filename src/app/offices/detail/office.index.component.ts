@@ -20,7 +20,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/office.actions';
 import {OfficesStore} from '../store/index';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './office.index.component.html',
@@ -32,8 +33,8 @@ export class OfficeIndexComponent implements OnInit, OnDestroy {
   constructor(private store: OfficesStore, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
   }
 

@@ -22,7 +22,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CasesStore} from '../../store/index';
 import {CREATE, CreateDocumentAction} from '../../store/documents/document.actions';
 import * as fromCases from '../../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CaseSelection} from '../../store/model/case-selection.model';
 
 @Component({

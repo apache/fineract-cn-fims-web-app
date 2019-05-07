@@ -18,9 +18,10 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromRoot from '../../../store';
 import {Store} from '@ngrx/store';
+import {map, filter, take, switchMap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -29,22 +30,22 @@ export class AuthGuard implements CanActivate {
   }
 
   waitForAuthentication(): Observable<boolean> {
-    return this.store.select(fromRoot.getAuthenticationLoading)
-      .filter(loading => !loading)
-      .take(1);
+    return this.store.select(fromRoot.getAuthenticationLoading).pipe(
+      filter(loading => !loading),
+      take(1),);
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.waitForAuthentication()
-      .switchMap(() => this.store.select(fromRoot.getAuthentication)
-        .map(authentication => {
+    return this.waitForAuthentication().pipe(
+      switchMap(() => this.store.select(fromRoot.getAuthentication).pipe(
+        map(authentication => {
           if (!authentication) {
             this.router.navigate(['/login']);
             return false;
           }
           return true;
-        })
-      );
+        }))
+      ));
 
   }
 }

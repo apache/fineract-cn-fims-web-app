@@ -19,9 +19,11 @@
 import {Injectable} from '@angular/core';
 import {PortfolioService} from '../../../../../../services/portfolio/portfolio.service';
 import {CustomerService} from '../../../../../../services/customer/customer.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CustomerDocument} from '../../../../../../services/customer/domain/customer-document.model';
 import {CaseCustomerDocuments} from '../../../../../../services/portfolio/domain/case-customer-documents.model';
+import {map, mergeMap} from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Injectable()
 export class DocumentsService {
@@ -30,13 +32,13 @@ export class DocumentsService {
   }
 
   public createDocument(productId: string, caseId: string, customerId: string, customerDocument: CustomerDocument): Observable<void> {
-    return this.getNextDocumentId(customerId, caseId)
-      .map((nextId: string) => Object.assign({}, customerDocument, {identifier: nextId}))
-      .mergeMap((document: CustomerDocument) => this.customerService.createDocument(customerId, document)
-        .mergeMap(() => this.portfolioService.getCaseDocuments(productId, caseId))
-        .map((documents: CaseCustomerDocuments) => this.addDocument(documents, customerId, document.identifier))
-        .mergeMap((documents: CaseCustomerDocuments) => this.portfolioService.changeCaseDocuments(productId, caseId, documents))
-      )
+    return this.getNextDocumentId(customerId, caseId).pipe(
+      map((nextId: string) => Object.assign({}, customerDocument, {identifier: nextId})),
+        mergeMap((document: CustomerDocument) => this.customerService.createDocument(customerId, document).pipe(
+        mergeMap(() => this.portfolioService.getCaseDocuments(productId, caseId)),
+        map((documents: CaseCustomerDocuments) => this.addDocument(documents, customerId, document.identifier)),
+       mergeMap((documents: CaseCustomerDocuments) => this.portfolioService.changeCaseDocuments(productId, caseId, documents))
+      )))
   }
 
   /**
@@ -44,18 +46,18 @@ export class DocumentsService {
    * The document identifier follows the pattern 'caseId_increment' e.g. 'myCase_12'
    */
   private getNextDocumentId(customerId: string, caseId: string): Observable<string> {
-    return this.customerService.getDocuments(customerId)
-      .map((documents: CustomerDocument[]) => documents.filter(document => document.identifier.startsWith(caseId)))
-      .map((documents: CustomerDocument[]) => documents.map(document =>
+    return this.customerService.getDocuments(customerId).pipe(
+      map((documents: CustomerDocument[]) => documents.filter(document => document.identifier.startsWith(caseId))),
+      map((documents: CustomerDocument[]) => documents.map(document =>
         document.identifier.substr(caseId.length + 1, document.identifier.length))
-      )
-      .map((documentIds: string[]) => documentIds.map(id => parseInt(id, 10)))
-      .map((documentIds: number[]) => documentIds.length > 0 ? Math.max(...documentIds) + 1 : 1)
-      .map((nextId: number) => `${caseId}_${nextId}`);
+      ),
+      map((documentIds: string[]) => documentIds.map(id => parseInt(id, 10))),
+      map((documentIds: number[]) => documentIds.length > 0 ? Math.max(...documentIds) + 1 : 1),
+      map((nextId: number) => `${caseId}_${nextId}`),);
   }
 
   public getCustomerDocuments(customerId: string, productId: string, caseId: string): Observable<CustomerDocument[]> {
-    return Observable.combineLatest(
+    return combineLatest(
       this.portfolioService.getCaseDocuments(productId, caseId),
       this.customerService.getDocuments(customerId),
       (caseDocuments, customerDocuments) => ({
@@ -83,10 +85,11 @@ export class DocumentsService {
   }
 
   public deleteDocument(productId: string, caseId: string, customerId: string, customerDocument: CustomerDocument): Observable<void> {
-    return this.customerService.deleteDocument(customerId, customerDocument)
-      .mergeMap(() => this.portfolioService.getCaseDocuments(productId, caseId))
-      .map((documents: CaseCustomerDocuments) => this.removeDocument(documents, customerDocument.identifier))
-      .mergeMap((documents: CaseCustomerDocuments) => this.portfolioService.changeCaseDocuments(productId, caseId, documents))
+    return this.customerService.deleteDocument(customerId, customerDocument).pipe(
+      mergeMap(() => this.portfolioService.getCaseDocuments(productId, caseId)),
+      map((documents: CaseCustomerDocuments) => this.removeDocument(documents, customerDocument.identifier)),
+      mergeMap((documents: CaseCustomerDocuments) => this.portfolioService.changeCaseDocuments(productId, caseId, documents))
+    )
   }
 
   private removeDocument(documents: CaseCustomerDocuments, documentId: string): CaseCustomerDocuments {

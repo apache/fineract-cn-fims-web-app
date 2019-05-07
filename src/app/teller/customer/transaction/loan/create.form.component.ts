@@ -23,15 +23,15 @@ import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
 import {TellerStore} from '../../../store/index';
 import * as fromRoot from '../../../../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
 import {DepositTransactionFormComponent} from '../deposit/form.component';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {TransactionForm} from '../domain/transaction-form.model';
 import {FimsCase} from '../../../../services/portfolio/domain/fims-case.model';
 import {TellerTransactionService} from '../../../services/transaction.service';
+import {map, switchMap, filter, tap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -67,12 +67,13 @@ export class CreateLoanTransactionFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => this.transactionType = params['transactionType']);
 
-    this.caseInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .switchMap(customer => this.portfolioService.getAllCasesForCustomer(customer.identifier))
-      .map(casePage => casePage.elements.filter(element => element.currentState === 'ACTIVE'));
+    this.caseInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer).pipe(
+      switchMap(customer => this.portfolioService.getAllCasesForCustomer(customer.identifier)),
+      map(casePage => casePage.elements.filter(element => element.currentState === 'ACTIVE')),);
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
-      .filter(teller => !!teller)
+      .pipe(
+        filter(teller => !!teller))
       .subscribe(teller => {
         this.teller = teller;
       });
@@ -99,8 +100,9 @@ export class CreateLoanTransactionFormComponent implements OnInit, OnDestroy {
     };
 
     this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
-      .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
-      .do(() => this.transactionCreated = true);
+    .pipe(
+      tap(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier),
+      tap(() => this.transactionCreated = true));
   }
 
   confirmTransaction(chargesIncluded: boolean): void {
@@ -129,8 +131,8 @@ export class CreateLoanTransactionFormComponent implements OnInit, OnDestroy {
   }
 
   caseSelected(caseInstance: FimsCase): void {
-    this.portfolioService.getCostComponentsForAction(caseInstance.productIdentifier, caseInstance.identifier, 'ACCEPT_PAYMENT')
-      .map(payment => payment.balanceAdjustments.ey * -1)
+    this.portfolioService.getCostComponentsForAction(caseInstance.productIdentifier, caseInstance.identifier, 'ACCEPT_PAYMENT').pipe(
+      map(payment => payment.balanceAdjustments.ey * -1))
       .subscribe(paymentHint => this.paymentHint = paymentHint.toString());
   }
 

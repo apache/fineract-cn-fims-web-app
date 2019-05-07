@@ -20,11 +20,11 @@ import {Component, OnDestroy} from '@angular/core';
 import * as fromTeller from '../store/index';
 import {TellerStore} from '../store/index';
 import {Customer} from '../../services/customer/domain/customer.model';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {LoadAllDepositProductsAction, LoadAllLoanProductsAction} from '../store/teller.actions';
 import {CustomerService} from '../../services/customer/customer.service';
 import {Action, AvailableActionService} from '../services/available-actions.service';
+import {map, filter, flatMap, mergeMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './customer-detail.component.html'
@@ -47,25 +47,28 @@ export class TellerCustomerDetailComponent implements OnDestroy {
 
   constructor(private store: TellerStore, private customerService: CustomerService, private actionService: AvailableActionService) {
     this.customer$ = store.select(fromTeller.getTellerSelectedCustomer)
-      .filter(customer => !!customer);
+      .pipe(
+        filter(customer => !!customer));
 
     this.portrait$ = this.customer$
-      .flatMap(customer => this.customerService.getPortrait(customer.identifier));
+      .pipe(
+        flatMap(customer => this.customerService.getPortrait(customer.identifier)));
 
     this.hasDepositProducts$ = store.select(fromTeller.hasTellerCustomerDepositProducts);
 
     this.hasLoanProducts$ = store.select(fromTeller.hasTellerCustomerLoanProducts);
 
-    this.loadDepositProductsSubscription = this.customer$
-      .map(customer => new LoadAllDepositProductsAction(customer.identifier))
+    this.loadDepositProductsSubscription = this.customer$.pipe(
+      map(customer => new LoadAllDepositProductsAction(customer.identifier)))
       .subscribe(this.store);
 
-    this.loadLoanProductsSubscription = this.customer$
-      .map(customer => new LoadAllLoanProductsAction(customer.identifier))
+    this.loadLoanProductsSubscription = this.customer$.pipe(
+      map(customer => new LoadAllLoanProductsAction(customer.identifier)))
       .subscribe(this.store);
 
     this.availableActions$ = this.customer$
-      .mergeMap(customer => this.actionService.getAvailableActions(customer.identifier));
+      .pipe(
+        mergeMap(customer => this.actionService.getAvailableActions(customer.identifier)));
   }
 
   ngOnDestroy(): void {

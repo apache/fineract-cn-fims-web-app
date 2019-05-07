@@ -54,9 +54,11 @@ import {TranslateModule} from '@ngx-translate/core';
     MatInputModule,
     MatButtonModule,
 
-    EffectsModule.run(RoleApiEffects),
-    EffectsModule.run(RoleRouteEffects),
-    EffectsModule.run(RoleNotificationEffects)
+    EffectsModule.forRoot([
+      RoleApiEffects,
+      RoleRouteEffects,
+      RoleNotificationEffects
+    ])
   ],
   declarations: [
     RoleComponent,

@@ -19,9 +19,10 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import {RangeActions} from '../range.actions';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class ProductChargeRangesNotificationEffects {
@@ -29,18 +30,20 @@ export class ProductChargeRangesNotificationEffects {
   @Effect({ dispatch: false })
   createRangeSuccess$: Observable<Action> = this.actions$
     .ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Range is going to be saved'
-    }));
+    })));
 
   @Effect({ dispatch: false })
   deleteProductSuccess$: Observable<Action> = this.actions$
     .ofType(RangeActions.DELETE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Range is going to be deleted'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) { }
 }

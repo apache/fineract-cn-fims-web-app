@@ -16,15 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
 **/
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import { GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupsStore } from '../../store/index';
 import { CREATE, RESET_FORM } from '../../store/definition/definition.actions';
 import { Cycle } from '../../../services/group/domain/cycle.model'
-import { Subscription } from 'rxjs/Subscription';
-import * as fromGroups from '../../store';
-import { Error } from '../../../services/domain/error.model';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FimsValidators } from '../../../common/validator/validators';
 import { TdStepComponent } from '@covalent/core';

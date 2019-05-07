@@ -18,11 +18,12 @@
  */
 import {Injectable} from '@angular/core';
 import {DepositAccountService} from '../../services/depositAccount/deposit-account.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TransactionType} from '../../services/teller/domain/teller-transaction.model';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {FimsCase} from '../../services/portfolio/domain/fims-case.model';
+import {map , combineLatest} from 'rxjs/operators';
 
 export interface Action {
   transactionType: TransactionType;
@@ -61,15 +62,15 @@ export class AvailableActionService {
   }
 
   getAvailableDepositActions(customerIdentifier: string): Observable<Action[]> {
-    return this.depositService.fetchPossibleTransactionTypes(customerIdentifier)
-      .map(types => depositActions.filter(action =>
+    return this.depositService.fetchPossibleTransactionTypes(customerIdentifier).pipe(
+      map(types => depositActions.filter(action =>
         !!types.find(type => action.transactionType === type.transactionType)
-      ));
+      )));
   }
 
   getAvailableLoanActions(customerIdentifier: string): Observable<Action[]> {
-    return this.hasActivateLoans(customerIdentifier)
-      .map(hasLoanProducts => hasLoanProducts ? loanActions : []);
+    return this.hasActivateLoans(customerIdentifier).pipe(
+      map(hasLoanProducts => hasLoanProducts ? loanActions : []));
   }
 
   private hasActivateLoans(customerIdentifier: string): Observable<boolean> {
@@ -79,8 +80,8 @@ export class AvailableActionService {
         size: 100
       }
     };
-    return this.portfolioService.getAllCasesForCustomer(customerIdentifier, fetchRequest)
-      .map(page => page.totalElements > 0 && this.hasActiveLoan(page.elements));
+    return this.portfolioService.getAllCasesForCustomer(customerIdentifier, fetchRequest).pipe(
+      map(page => page.totalElements > 0 && this.hasActiveLoan(page.elements)));
   }
 
   private hasActiveLoan(cases: FimsCase[]): boolean {

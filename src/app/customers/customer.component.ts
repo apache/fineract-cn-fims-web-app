@@ -21,10 +21,11 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData, TableFetchRequest} from '../common/data-table/data-table.component';
 import {Customer} from '../services/customer/domain/customer.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromRoot from '../store';
 import {SEARCH} from '../store/customer/customer.actions';
 import {CustomersStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './customer.component.html'
@@ -49,12 +50,12 @@ export class CustomerComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.customerData$ = this.store.select(fromRoot.getCustomerSearchResults)
-      .map(customerPage => ({
+    this.customerData$ = this.store.select(fromRoot.getCustomerSearchResults).pipe(
+      map(customerPage => ({
         data: customerPage.customers,
         totalElements: customerPage.totalElements,
         totalPages: customerPage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromRoot.getCustomerSearchLoading);
 

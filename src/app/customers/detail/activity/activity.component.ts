@@ -21,7 +21,7 @@ import {Command} from '../../../services/customer/domain/command.model';
 import {CustomersStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/commands/commands.actions';
 import * as fromCustomers from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './activity.component.html'

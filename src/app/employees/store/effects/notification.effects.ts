@@ -18,10 +18,11 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as employeeActions from '../employee.actions';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class EmployeeNotificationEffects {
@@ -29,18 +30,20 @@ export class EmployeeNotificationEffects {
   @Effect({ dispatch: false })
   createEmployeeSuccess$: Observable<Action> = this.actions$
     .ofType(employeeActions.CREATE_SUCCESS, employeeActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Employee is going to be saved'
-    }));
+    })));
 
   @Effect({ dispatch: false })
   deleteEmployeeSuccess$: Observable<Action> = this.actions$
     .ofType(employeeActions.DELETE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Employee is going to be deleted'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 }

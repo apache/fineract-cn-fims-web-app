@@ -24,13 +24,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {todayAsISOString, toShortISOString} from '../../../services/domain/date.converter';
 import {FimsValidators} from '../../../common/validator/validators';
 import * as fromAccounting from '../../store';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {AccountingStore} from '../../store/index';
 import {SEARCH} from '../../store/account/entries/entries.actions';
 import {SelectAction} from '../../store/account/account.actions';
 import {DatePipe} from '@angular/common';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
+import {map, filter, tap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './account-entry.list.component.html',
@@ -70,20 +70,20 @@ export class AccountEntryListComponent implements OnInit, OnDestroy {
       'endDate': [today, [Validators.required]],
     }, {validator: FimsValidators.matchRange('startDate', 'endDate')});
 
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     this.account$ = this.store.select(fromAccounting.getSelectedAccount)
-      .filter(account => !!account)
-      .do(account => this.fetchAccountsEntries(account.identifier));
+      .pipe(filter(account => !!account),
+      tap(account => this.fetchAccountsEntries(account.identifier)));
 
-    this.accountEntryData$ = this.store.select(fromAccounting.getAccountEntrySearchResults)
-      .map(accountEntryPage => ({
+    this.accountEntryData$ = this.store.select(fromAccounting.getAccountEntrySearchResults).pipe(
+      map(accountEntryPage => ({
         totalElements: accountEntryPage.totalElements,
         totalPages: accountEntryPage.totalPages,
         data: accountEntryPage.entries
-      }));
+      })));
   }
 
   ngOnDestroy(): void {

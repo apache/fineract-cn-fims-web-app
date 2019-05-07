@@ -19,24 +19,25 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as instanceActions from '../deposit.actions';
 import {Action} from '@ngrx/store';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class DepositProductInstanceRouteEffects {
 
   @Effect({ dispatch: false })
   createProductInstanceSuccess$: Observable<Action> = this.actions$
-    .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   issueChequesSuccess$: Observable<Action> = this.actions$
-    .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 

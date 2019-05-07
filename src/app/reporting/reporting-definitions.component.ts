@@ -18,9 +18,10 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {ReportingService} from '../services/reporting/reporting.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportDefinition} from '../services/reporting/domain/report-definition.model';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './reporting-definitions.component.html'
@@ -32,8 +33,8 @@ export class ReportingDefinitionsComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private reportingService: ReportingService) {}
 
   ngOnInit(): void {
-    this.reportDefinitions$ = this.route.params
-      .switchMap(params => this.reportingService.fetchReportDefinitions(params['category']));
+    this.reportDefinitions$ = this.route.params.pipe(
+      switchMap(params => this.reportingService.fetchReportDefinitions(params['category'])));
   }
 
   goToReport(identifier: string): void {

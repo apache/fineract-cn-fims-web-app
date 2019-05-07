@@ -19,18 +19,19 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../group-task.actions';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class GroupCommandRouteEffects {
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 }

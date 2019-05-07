@@ -20,7 +20,7 @@ import {Component} from '@angular/core';
 import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Field} from '../../../../services/catalog/domain/field.model';
 import {UPDATE_FIELD} from '../../../store/catalogs/catalog.actions';
 import {Catalog} from '../../../../services/catalog/domain/catalog.model';

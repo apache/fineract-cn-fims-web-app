@@ -16,50 +16,51 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {Injectable} from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
 import * as fromGroups from './store';
-import {Observable} from 'rxjs/Observable';
-import {LoadAction} from './store/group.actions';
-import {of} from 'rxjs/observable/of';
-import {GroupService} from '../services/group/group.service';
-import {GroupsStore} from './store/index';
-import {ExistsGuardService} from '../common/guards/exists-guard';
+import { Observable, of } from 'rxjs';
+import { LoadAction } from './store/group.actions';
+import { GroupService } from '../services/group/group.service';
+import { GroupsStore } from './store/index';
+import { ExistsGuardService } from '../common/guards/exists-guard';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class GroupExistsGuard implements CanActivate {
 
   constructor(private store: GroupsStore,
-              private groupService: GroupService,
-              private existsGuardService: ExistsGuardService) {
+    private groupService: GroupService,
+    private existsGuardService: ExistsGuardService) {
   }
 
   hasGroupInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromGroups.getGroupLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$: Observable<number> = this.store.select(fromGroups.getGroupLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasGroupInApi(id: string): Observable<boolean> {
-    const getGroup$: Observable<any> = this.groupService.getGroup(id)
-      .map(groupEntity => new LoadAction({
+    const getGroup$: Observable<any> = this.groupService.getGroup(id).pipe(
+      map(groupEntity => new LoadAction({
         resource: groupEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(group => !!group);
+      })))
+      .pipe(
+        tap((action: LoadAction) => this.store.dispatch(action)),
+        map(group => !!group));
 
     return this.existsGuardService.routeTo404OnError(getGroup$);
   }
 
   hasGroup(id: string): Observable<boolean> {
-    return this.hasGroupInStore(id)
-      .switchMap(inStore => {
+    return this.hasGroupInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasGroupInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

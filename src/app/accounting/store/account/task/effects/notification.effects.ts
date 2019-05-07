@@ -16,12 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../task.actions';
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import { NotificationService, NotificationType } from '../../../../../services/notification/notification.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class AccountCommandNotificationEffects {
@@ -29,12 +30,13 @@ export class AccountCommandNotificationEffects {
   @Effect({ dispatch: false })
   executeAccountCommandSuccess$: Observable<Action> = this.actions$
     .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Command is going to be executed'
-    }));
+    .pipe(
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Command is going to be executed'
+      })));
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 
 }
 

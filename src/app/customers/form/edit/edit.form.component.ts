@@ -23,7 +23,7 @@ import * as fromCustomers from '../../store';
 import {CustomersStore} from '../../store/index';
 import {UPDATE} from '../../store/customer.actions';
 import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   templateUrl: './edit.form.component.html'

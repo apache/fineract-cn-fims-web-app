@@ -17,26 +17,28 @@
  * under the License.
  */
 import {AbstractControl, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {isString} from './validators';
+import { catchError } from 'rxjs/operators';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidLedger: true
 });
 
 export function ledgerExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return accountingService.findLedger(control.value, true)
-      .map(ledger => null)
-      .catch(() => invalid);
+    return accountingService.findLedger(control.value, true).pipe(
+      map(ledger => null),
+      catchError(() => invalid));
   };
 }

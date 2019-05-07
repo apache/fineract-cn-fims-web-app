@@ -17,26 +17,27 @@
  * under the License.
  */
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {AccountingService} from '../../../../../services/accounting/accounting.service';
 import {isEmptyInputValue, isString} from '../../../../../common/validator/validators';
+import {of as observableOf, Observable} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidTransactionType: true
 });
 
 export function transactionTypeExists(accountingService: AccountingService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || isEmptyInputValue(control.value)) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return accountingService.findTransactionType(control.value, true)
-      .map(account => null)
-      .catch(() => invalid);
+    return accountingService.findTransactionType(control.value, true).pipe(
+      map(account => null))
+      catchError(() => invalid);
   };
 }

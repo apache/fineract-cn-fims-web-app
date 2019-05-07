@@ -24,10 +24,10 @@ import {ITdDataTableColumn} from '@covalent/core';
 import {ActionOption, ActionOptions} from '../../../common/domain/action-option.model';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {LOAD_ALL} from '../store/charges/charge.actions';
 import {FimsProduct} from '../store/model/fims-product.model';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './charge.list.component.html'
@@ -56,14 +56,15 @@ export class ProductChargeListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => {
         this.product = product;
         this.fetchCharges();
       });
 
-    this.chargesData$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeEntities)
-      .map(charges => {
+    this.chargesData$ = this.portfolioStore.select(fromPortfolio.getAllProductChargeEntities).pipe(
+      map(charges => {
         const data = charges.filter(charge => !charge.readOnly);
 
         return {
@@ -71,7 +72,7 @@ export class ProductChargeListComponent implements OnInit, OnDestroy {
           totalPages: 1,
           data
         };
-      });
+      }));
   }
 
   ngOnDestroy(): void {

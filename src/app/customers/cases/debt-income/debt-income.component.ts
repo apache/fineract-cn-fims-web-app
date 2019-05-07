@@ -19,13 +19,15 @@
 import {Component, OnInit} from '@angular/core';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CreditWorthinessFactor} from '../../../services/portfolio/domain/individuallending/credit-worthiness-factor.model';
 import {CreditWorthinessSnapshot} from '../../../services/portfolio/domain/individuallending/credit-worthiness-snapshot.model';
 import * as fromCustomers from '../../store/index';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
+import {map} from 'rxjs/operators';
+import {combineLatest } from 'rxjs';
 
 interface IncomeDebtOverview {
   debtTableData: TableData;
@@ -56,10 +58,10 @@ export class CaseDebtIncomeComponent implements OnInit {
   ngOnInit(): void {
     const selectedCustomer$: Observable<Customer> = this.store.select(fromCustomers.getSelectedCustomer);
 
-    const snapshots$: Observable<CreditWorthinessSnapshot[]> = this.store.select(fromCases.getSelectedCase)
-      .map((fimsCase: FimsCase) => fimsCase.parameters.creditWorthinessSnapshots);
+    const snapshots$: Observable<CreditWorthinessSnapshot[]> = this.store.select(fromCases.getSelectedCase).pipe(
+      map((fimsCase: FimsCase) => fimsCase.parameters.creditWorthinessSnapshots));
 
-    const combined$ = Observable.combineLatest(selectedCustomer$, snapshots$, (customer, snapshots) => ({
+    const combined$ = combineLatest(selectedCustomer$, snapshots$, (customer, snapshots) => ({
       customer,
       snapshots
     }));

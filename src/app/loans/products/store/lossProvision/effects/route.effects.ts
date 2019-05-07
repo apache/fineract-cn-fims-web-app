@@ -18,19 +18,20 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as lossProvisionActions from '../loss-provision.actions';
 import {Action} from '@ngrx/store';
 import {Router} from '@angular/router';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ProductLossProvisionRouteEffects {
 
   @Effect({ dispatch: false })
   updateLossProvisionSuccess$: Observable<Action> = this.actions$
-    .ofType(lossProvisionActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} ));
+    .ofType(lossProvisionActions.UPDATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} )));
 
   constructor(private actions$: Actions, private router: Router) { }
 }

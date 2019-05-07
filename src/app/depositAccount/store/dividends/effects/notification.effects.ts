@@ -18,10 +18,11 @@
  */
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as dividendActions from '../dividend.actions';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class DepositProductDividendNotificationEffects {
@@ -29,10 +30,11 @@ export class DepositProductDividendNotificationEffects {
   @Effect({dispatch: false})
   createDividendDistributionSuccess$: Observable<Action> = this.actions$
     .ofType(dividendActions.CREATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Dividend is going to be distributed'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 

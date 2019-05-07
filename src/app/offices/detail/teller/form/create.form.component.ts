@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnDestroy, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Teller} from '../../../../services/teller/domain/teller.model';
 import {OfficeTellerFormComponent} from './form.component';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,7 +26,7 @@ import {OfficesStore} from '../../../store/index';
 import {CREATE_TELLER, RESET_FORM} from '../../../store/teller/teller.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {Office} from '../../../../services/office/domain/office.model';
-
+import { filter } from 'rxjs/operators'
 @Component({
   templateUrl: './create.form.component.html'
 })
@@ -53,11 +53,13 @@ export class CreateOfficeTellerFormComponent implements OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore) {
     this.officeSubscription = this.store.select(fromTeller.getSelectedOffice)
-      .filter(office => !!office)
+      .pipe(
+        filter(office => !!office))
       .subscribe(office => this.office = office);
 
     this.formStateSubscription = store.select(fromTeller.getTellerFormError)
-      .filter((error: Error) => !!error)
+      .pipe(
+        filter((error: Error) => !!error))
       .subscribe((error: Error) => this.formComponent.showCodeValidationError());
   }
 

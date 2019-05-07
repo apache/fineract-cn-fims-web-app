@@ -79,22 +79,25 @@ export function HttpLoaderFactory(http: Http) {
       }
     }),
     appRoutes,
-    StoreModule.provideStore(reducer),
+    StoreModule.forRoot(reducer),
 
     /**
      * Root effects
      */
-    EffectsModule.run(SecurityApiEffects),
-    EffectsModule.run(SecurityRouteEffects),
-    EffectsModule.run(SecurityNotificationEffects),
+    EffectsModule.forRoot([
+      SecurityApiEffects,
+      SecurityRouteEffects,
+      SecurityNotificationEffects,
 
-    EffectsModule.run(OfficeSearchApiEffects),
-    EffectsModule.run(EmployeeSearchApiEffects),
-    EffectsModule.run(CustomerSearchApiEffects),
-    EffectsModule.run(AccountSearchApiEffects),
-    EffectsModule.run(RoleSearchApiEffects),
-    EffectsModule.run(LedgerSearchApiEffects),
-    EffectsModule.run(GroupSearchApiEffects)
+      OfficeSearchApiEffects,
+      EmployeeSearchApiEffects,
+      CustomerSearchApiEffects,
+      AccountSearchApiEffects,
+      RoleSearchApiEffects,
+      LedgerSearchApiEffects,
+      GroupSearchApiEffects
+
+    ])
   ],
   providers: [
     HttpClient,

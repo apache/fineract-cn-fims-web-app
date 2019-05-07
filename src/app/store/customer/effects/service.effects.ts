@@ -18,33 +18,33 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as customerActions from '../customer.actions';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {emptySearchResult} from '../../../common/store/search.reducer';
+import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 
 @Injectable()
 export class CustomerSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(customerActions.SEARCH)
-    .debounceTime(300)
-    .map((action: customerActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(customerActions.SEARCH).skip(1);
+    .ofType(customerActions.SEARCH).pipe(
+    debounceTime(300),
+    map((action: customerActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.ofType(customerActions.SEARCH).pipe(skip(1));
 
-      return this.customerService.fetchCustomers(fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(customerPage => new customerActions.SearchCompleteAction({
+      return this.customerService.fetchCustomers(fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(customerPage => new customerActions.SearchCompleteAction({
           elements: customerPage.customers,
           totalElements: customerPage.totalElements,
           totalPages: customerPage.totalPages
-        }))
-        .catch(() => of(new customerActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new customerActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   constructor(private actions$: Actions, private customerService: CustomerService) { }
 

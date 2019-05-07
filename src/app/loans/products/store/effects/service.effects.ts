@@ -19,84 +19,85 @@
 import {Injectable} from '@angular/core';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import * as productActions from '../product.actions';
-import {of} from 'rxjs/observable/of';
 import {mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
+import {map, debounceTime, skip, takeUntil, mergeMap, switchMap, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class ProductApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(productActions.SEARCH)
-    .map((action: productActions.SelectAction) => action.payload)
-    .debounceTime(300)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(productActions.SEARCH).skip(1);
+    .ofType(productActions.SEARCH).pipe(
+    map((action: productActions.SelectAction) => action.payload),
+    debounceTime(300),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.ofType(productActions.SEARCH).pipe(skip(1));
 
       return this.portfolioService.findAllProducts(true, fetchRequest )
-        .takeUntil(nextSearch$)
-        .map(productPage => new productActions.SearchCompleteAction({
+        .pipe(
+          takeUntil(nextSearch$),
+         map(productPage => new productActions.SearchCompleteAction({
           elements: mapToFimsProducts(productPage.elements),
           totalElements: productPage.totalElements,
           totalPages: productPage.totalPages
-        }))
-        .catch(() => of(new productActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new productActions.SearchCompleteAction(emptySearchResult()))));
+    }));
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.CREATE)
-    .map((action: productActions.CreateProductAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.createProduct(mapToProduct(payload.product))
-        .map(() => new productActions.CreateProductSuccessAction({
+    .ofType(productActions.CREATE).pipe(
+    map((action: productActions.CreateProductAction) => action.payload),
+    mergeMap(payload =>
+      this.portfolioService.createProduct(mapToProduct(payload.product)).pipe(
+        map(() => new productActions.CreateProductSuccessAction({
           resource: payload.product,
           activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new productActions.CreateProductFailAction(error)))
-    );
+        })),
+        catchError((error) => of(new productActions.CreateProductFailAction(error))))
+    ));
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.UPDATE)
-    .map((action: productActions.UpdateProductAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.changeProduct(mapToProduct(payload.product))
-        .map(() => new productActions.UpdateProductSuccessAction({
+    .ofType(productActions.UPDATE).pipe(
+    map((action: productActions.UpdateProductAction) => action.payload),
+    mergeMap(payload =>
+      this.portfolioService.changeProduct(mapToProduct(payload.product)).pipe(
+        map(() => new productActions.UpdateProductSuccessAction({
           resource: payload.product,
           activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new productActions.UpdateProductFailAction(error)))
-    );
+        })),
+        catchError((error) => of(new productActions.UpdateProductFailAction(error))))
+    ));
 
   @Effect()
   deleteProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.DELETE)
-    .map((action: productActions.DeleteProductAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.deleteProduct(payload.product.identifier)
-        .map(() => new productActions.DeleteProductSuccessAction({
+    .ofType(productActions.DELETE).pipe(
+    map((action: productActions.DeleteProductAction) => action.payload),
+    mergeMap(payload =>
+      this.portfolioService.deleteProduct(payload.product.identifier).pipe(
+        map(() => new productActions.DeleteProductSuccessAction({
           resource: payload.product,
           activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new productActions.DeleteProductFailAction(error)))
-    );
+        })),
+        catchError((error) => of(new productActions.DeleteProductFailAction(error))))
+    ));
 
   @Effect()
   enableProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.ENABLE)
-    .map((action: productActions.EnableProductAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.enableProduct(payload.product.identifier, payload.enable)
-        .map(() => new productActions.EnableProductSuccessAction(payload))
-        .catch((error) =>
-          this.portfolioService.incompleteaccountassignments(payload.product.identifier)
-            .map(accountAssignments => new productActions.EnableProductFailAction(accountAssignments)))
-    );
+    .ofType(productActions.ENABLE).pipe(
+    map((action: productActions.EnableProductAction) => action.payload),
+    mergeMap(payload =>
+      this.portfolioService.enableProduct(payload.product.identifier, payload.enable).pipe(
+        map(() => new productActions.EnableProductSuccessAction(payload)),
+        catchError((error) =>
+          this.portfolioService.incompleteaccountassignments(payload.product.identifier).pipe(
+            map(accountAssignments => new productActions.EnableProductFailAction(accountAssignments))))
+    )));
 
   constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 }

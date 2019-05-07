@@ -19,32 +19,32 @@
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as employeeActions from '../employee.actions';
 import {emptySearchResult} from '../../../common/store/search.reducer';
+import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 
 @Injectable()
 export class EmployeeSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(employeeActions.SEARCH)
-    .debounceTime(300)
-    .map((action: employeeActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(employeeActions.SEARCH).skip(1);
+    .ofType(employeeActions.SEARCH).pipe(
+    debounceTime(300),
+    map((action: employeeActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.ofType(employeeActions.SEARCH).pipe(skip(1));
 
-      return this.officeService.listEmployees(fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(employeePage => new employeeActions.SearchCompleteAction({
+      return this.officeService.listEmployees(fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(employeePage => new employeeActions.SearchCompleteAction({
           elements: employeePage.employees,
           totalElements: employeePage.totalElements,
           totalPages: employeePage.totalPages
-        }))
-        .catch(() => of(new employeeActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new employeeActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   constructor(private actions$: Actions, private officeService: OfficeService) { }
 }

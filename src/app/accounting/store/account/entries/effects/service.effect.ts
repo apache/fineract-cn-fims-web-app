@@ -16,30 +16,30 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Actions, Effect} from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { Actions, Effect } from '@ngrx/effects';
 import * as accountEntryActions from '../entries.actions';
-import {Injectable} from '@angular/core';
-import {of} from 'rxjs/observable/of';
-import {AccountingService} from '../../../../../services/accounting/accounting.service';
+import { Injectable } from '@angular/core';
+import { AccountingService } from '../../../../../services/accounting/accounting.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AccountEntryApiEffects {
 
   @Effect()
   loadAccountEntries$: Observable<Action> = this.actions$
-    .ofType(accountEntryActions.SEARCH)
-    .map((action: accountEntryActions.SearchAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.fetchAccountEntries(payload.accountId, payload.startDate, payload.endDate, payload.fetchRequest)
-        .map(accountEntryPage => new accountEntryActions.SearchCompleteAction(accountEntryPage))
-        .catch(() => of(new accountEntryActions.SearchCompleteAction({
-          accountEntries: [],
-          totalPages: 0,
-          totalElements: 0
-        })))
-    );
+    .ofType(accountEntryActions.SEARCH).pipe(
+      map((action: accountEntryActions.SearchAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.fetchAccountEntries(payload.accountId, payload.startDate, payload.endDate, payload.fetchRequest).pipe(
+          map(accountEntryPage => new accountEntryActions.SearchCompleteAction(accountEntryPage)),
+          catchError(() => of(new accountEntryActions.SearchCompleteAction({
+            accountEntries: [],
+            totalPages: 0,
+            totalElements: 0
+          }))))
+      ));
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

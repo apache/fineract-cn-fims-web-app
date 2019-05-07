@@ -19,8 +19,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/ledger/ledger.actions';
 import {AccountingStore} from '../store/index';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './sub-ledger.component.html'
@@ -32,8 +33,8 @@ export class SubLedgerComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
   }
 

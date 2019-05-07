@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,7 +22,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/tasks/task.actions';
 import {CustomersStore} from '../store/index';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './task.index.component.html'
@@ -32,8 +34,8 @@ export class TaskIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private customersStore: CustomersStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.customersStore);
   }
 

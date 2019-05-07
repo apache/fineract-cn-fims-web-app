@@ -18,10 +18,11 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
 import {OfficeService} from '../../services/office/office.service';
 import {OfficePage} from '../../services/office/domain/office-page.model';
 import {Office} from '../../services/office/domain/office.model';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class HeadquarterGuard implements CanActivate {
@@ -32,10 +33,10 @@ export class HeadquarterGuard implements CanActivate {
     const searchTerm = route.queryParams['term'];
 
     if (searchTerm) {
-      return Observable.of(true);
+      return observableOf(true);
     }
 
-    return this.officeService.listOffices().map((officePage: OfficePage) => {
+    return this.officeService.listOffices().pipe(map((officePage: OfficePage) => {
       if (officePage.totalElements) {
         const firstOffice: Office = officePage.offices[0];
         this.router.navigate(['offices/detail', firstOffice.identifier]);
@@ -44,6 +45,6 @@ export class HeadquarterGuard implements CanActivate {
       }
 
       return false;
-    });
+    }));
   }
 }

@@ -18,12 +18,13 @@
  */
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {Account} from '../../services/accounting/domain/account.model';
 import {AccountPage} from '../../services/accounting/domain/account-page.model';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {AccountType} from '../../services/accounting/domain/account-type.model';
+import {map, distinctUntilChanged, debounceTime,tap,filter,switchMap} from 'rxjs/operators';
 
 const noop: () => void = () => {
   // empty method
@@ -58,11 +59,12 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
     this.formControl = new FormControl('');
 
     this.accounts = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -98,8 +100,8 @@ export class AccountSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm: searchTerm
     };
 
-    return this.accountingService.fetchAccounts(fetchRequest, this.type)
-      .map((accountPage: AccountPage) => accountPage.accounts);
+    return this.accountingService.fetchAccounts(fetchRequest, this.type).pipe(
+      map((accountPage: AccountPage) => accountPage.accounts));
   }
 
 }

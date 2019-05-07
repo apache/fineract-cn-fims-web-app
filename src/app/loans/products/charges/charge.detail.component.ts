@@ -19,13 +19,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ChargeDefinition} from '../../../services/portfolio/domain/charge-definition.model';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {DELETE, SelectAction} from '../store/charges/charge.actions';
 import {PortfolioStore} from '../store/index';
 import * as fromPortfolio from '../store';
 import {FimsProduct} from '../store/model/fims-product.model';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './charge.detail.component.html'
@@ -45,16 +45,18 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private dialogService: TdDialogService, private portfolioStore: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['chargeId']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['chargeId'])))
       .subscribe(this.portfolioStore);
 
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => this.product = product);
 
     this.chargeSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProductCharge)
-      .filter(charge => !!charge)
+      .pipe(
+        filter(charge => !!charge))
       .subscribe(charge => this.charge = charge);
   }
 
@@ -74,7 +76,8 @@ export class ProductChargeDetailComponent implements OnInit, OnDestroy {
 
   deleteCharge(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => {
         this.portfolioStore.dispatch({ type: DELETE, payload: {
           productId: this.product.identifier,

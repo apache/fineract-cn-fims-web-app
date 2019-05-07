@@ -22,9 +22,10 @@ import * as fromCustomers from '../store/index';
 import {CustomersStore} from '../store/index';
 import {CatalogService} from '../../services/catalog/catalog.service';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from '../store/catalogs/catalog.actions';
-import {of} from 'rxjs/observable/of';
+import {switchMap, catchError, map,tap} from 'rxjs/operators';
+import {of as observableOf} from 'rxjs';
 
 @Injectable()
 export class CatalogExistsGuard implements CanActivate {
@@ -41,23 +42,23 @@ export class CatalogExistsGuard implements CanActivate {
   }
 
   hasCatalogInApi(id: string): Observable<boolean> {
-    return this.catalogService.findCatalog(id, true)
-      .catch(() => {
-        return Observable.of(null);
-      })
-      .map(catalogEntity => new LoadAction(catalogEntity))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(catalog => !!catalog);
+    return this.catalogService.findCatalog(id, true).pipe(
+      catchError(() => {
+        return observableOf(null);
+      }),
+      map(catalogEntity => new LoadAction(catalogEntity)),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(catalog => !!catalog));
   }
 
   hasCatalog(id: string): Observable<boolean> {
-    return this.hasCatalogInStore()
-      .switchMap(inStore => {
+    return this.hasCatalogInStore().pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasCatalogInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

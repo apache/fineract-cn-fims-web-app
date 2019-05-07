@@ -18,25 +18,26 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
 import {Router} from '@angular/router';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TransactionTypeRouteEffects {
 
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .ofType(transactionTypeActions.CREATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+    .ofType(transactionTypeActions.UPDATE_SUCCESS).pipe(
+    map(action => action.payload),
+    tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 

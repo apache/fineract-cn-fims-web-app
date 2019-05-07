@@ -16,9 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {catchError, share} from 'rxjs/operators';
 import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Group} from './domain/group.model';
 import {HttpClient} from '../http/http.service';
 import {GroupPage} from './domain/group-page.model';
@@ -49,8 +49,8 @@ export class GroupService{
         search: params
       };
   
-      return this.http.get(`${this.baseUrl}/groups`, requestOptions).share()
-      .catch(Error.handleError);
+      return this.http.get(`${this.baseUrl}/groups`, requestOptions).pipe(share(),
+      catchError(Error.handleError),);
     }
   
     getGroup(id: string, silent?: boolean): Observable<Group> {

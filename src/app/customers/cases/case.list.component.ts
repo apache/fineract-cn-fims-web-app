@@ -26,10 +26,10 @@ import * as fromCases from './store/index';
 import {CasesStore} from './store/index';
 import * as fromCustomers from '../store';
 import * as fromRoot from '../../store';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from './store/case.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+import {map, filter, combineLatest} from 'rxjs/operators';
 
 @Component({
   templateUrl: './case.list.component.html'
@@ -55,15 +55,16 @@ export class CaseListComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private casesStore: CasesStore) {}
 
   ngOnInit(): void {
-    this.casesData$ = this.casesStore.select(fromCases.getCaseSearchResults)
-      .map(casePage => ({
+    this.casesData$ = this.casesStore.select(fromCases.getCaseSearchResults).pipe(
+      map(casePage => ({
         totalElements: casePage.totalElements,
         totalPages: casePage.totalPages,
         data: casePage.cases
-      }));
+      })));
 
     const customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer);
+      .pipe(
+        filter(customer => !!customer));
 
     this.customerSubscription = customer$
       .subscribe(customer => {
@@ -71,7 +72,7 @@ export class CaseListComponent implements OnInit, OnDestroy {
         this.fetchCases();
       });
 
-    this.canAdd$ = Observable.combineLatest(
+    this.canAdd$ = combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
       customer$,
       (permissions, customer: Customer) => ({

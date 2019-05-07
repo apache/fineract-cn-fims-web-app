@@ -116,32 +116,35 @@ import {FinancialConditionComponent} from './financialCondition/financial-condit
     MatOptionModule,
     CovalentDataTableModule,
     CovalentStepsModule,
+ 
+    EffectsModule.forRoot([
+      LedgerApiEffects,
+      LedgerRouteEffects,
+      LedgerNotificationEffects,
 
-    EffectsModule.run(LedgerApiEffects),
-    EffectsModule.run(LedgerRouteEffects),
-    EffectsModule.run(LedgerNotificationEffects),
+      JournalEntryApiEffects,
+      JournalEntryRouteEffects,
+      JournalEntryNotificationEffects,
 
-    EffectsModule.run(JournalEntryApiEffects),
-    EffectsModule.run(JournalEntryRouteEffects),
-    EffectsModule.run(JournalEntryNotificationEffects),
+      TransactionTypeApiEffects,
+      TransactionTypeRouteEffects,
+      TransactionTypeNotificationEffects,
+      
+      AccountApiEffects,
+      AccountRouteEffects,
+      AccountNotificationEffects,
+      AccountEntryApiEffects,
+      AccountCommandApiEffects,
+      AccountCommandRouteEffects,
+      AccountCommandNotificationEffects,
 
-    EffectsModule.run(TransactionTypeApiEffects),
-    EffectsModule.run(TransactionTypeRouteEffects),
-    EffectsModule.run(TransactionTypeNotificationEffects),
+      ChequeApiEffects,
+      PayrollCollectionApiEffects,
+      PayrollCollectionRouteEffects,
+      PayrollCollectionNotificationEffects
 
-    EffectsModule.run(AccountApiEffects),
-    EffectsModule.run(AccountRouteEffects),
-    EffectsModule.run(AccountNotificationEffects),
-    EffectsModule.run(AccountEntryApiEffects),
-    EffectsModule.run(AccountCommandApiEffects),
-    EffectsModule.run(AccountCommandRouteEffects),
-    EffectsModule.run(AccountCommandNotificationEffects),
 
-    EffectsModule.run(ChequeApiEffects),
-
-    EffectsModule.run(PayrollCollectionApiEffects),
-    EffectsModule.run(PayrollCollectionRouteEffects),
-    EffectsModule.run(PayrollCollectionNotificationEffects)
+    ])
   ],
   declarations: [
     GeneralLedgerComponent,

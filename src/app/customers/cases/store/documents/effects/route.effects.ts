@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Router} from '@angular/router';
@@ -26,6 +26,7 @@ import {
   CreateDocumentSuccessAction, DeleteDocumentSuccessAction, UpdateDocumentSuccessAction,
   UploadPageSuccessAction
 } from '../document.actions';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class CaseDocumentRouteEffects {
@@ -37,16 +38,18 @@ export class CaseDocumentRouteEffects {
       documents.UPDATE_SUCCESS,
       documents.UPLOAD_PAGE_SUCCESS
     )
-    .do((action: CreateDocumentSuccessAction | UpdateDocumentSuccessAction | UploadPageSuccessAction) =>
+    .pipe(
+      tap((action: CreateDocumentSuccessAction | UpdateDocumentSuccessAction | UploadPageSuccessAction) =>
       this.router.navigate(['../'], { relativeTo: action.payload.activatedRoute} )
-    );
+    ));
 
   @Effect({ dispatch: false })
   deleteSuccess$: Observable<Action> = this.actions$
     .ofType(documents.DELETE_SUCCESS)
-    .do((action: DeleteDocumentSuccessAction) =>
+    .pipe(
+      tap((action: DeleteDocumentSuccessAction) =>
       this.router.navigate(['../../../../../../../../../../'], { relativeTo: action.payload.activatedRoute} )
-    );
+    ));
 
   constructor(private actions$: Actions, private router: Router) { }
 

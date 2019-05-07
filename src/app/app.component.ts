@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map, take, filter} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as fromRoot from './store';
 import {Store} from '@ngrx/store';
 import {LoginSuccessAction} from './store/security/security.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {getSelectedLanguage} from './common/i18n/translate';
 
 @Component({
@@ -44,15 +44,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   relogin(): void {
-    this.store.select(fromRoot.getAuthenticationState)
-      .filter(state => !!state.authentication)
-      .take(1)
-      .map(state => ({
+    this.store.select(fromRoot.getAuthenticationState).pipe(
+      filter(state => !!state.authentication),
+      take(1),
+      map(state => ({
         username: state.username,
         tenant: state.tenant,
         authentication: state.authentication
-      }))
-      .map(payload => new LoginSuccessAction(payload))
+      })),
+      map(payload => new LoginSuccessAction(payload)),)
       .subscribe((action: LoginSuccessAction) => this.store.dispatch(action));
   }
 

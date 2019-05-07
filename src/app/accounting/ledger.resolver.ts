@@ -20,7 +20,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Ledger} from '../services/accounting/domain/ledger.model';
 import {AccountingService} from '../services/accounting/accounting.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class LedgerResolver implements Resolve<Ledger> {

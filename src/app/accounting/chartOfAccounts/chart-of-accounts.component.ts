@@ -18,7 +18,7 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {ChartOfAccountEntry} from '../../services/accounting/domain/chart-of-account-entry.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingStore} from '../store/index';
 import * as fromAccounting from '../store';
 import {LOAD_CHART_OF_ACCOUNTS} from '../store/ledger/ledger.actions';

@@ -20,10 +20,11 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../../../services/identity/domain/role.model';
 import * as fromRoles from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Error} from '../../../services/domain/error.model';
 import {RolesStore} from '../../store/index';
 import {CREATE, RESET_FORM} from '../../store/role.actions';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -40,7 +41,8 @@ export class CreateRoleFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formStateSubscription = this.store.select(fromRoles.getRoleFormError)
-      .filter((error: Error) => !!error)
+      .pipe(
+        filter((error: Error) => !!error))
       .subscribe((error: Error) => {
         const detailForm = this.formComponent.detailForm;
         const errors = detailForm.get('identifier').errors || {};

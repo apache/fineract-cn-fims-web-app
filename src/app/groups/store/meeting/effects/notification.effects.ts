@@ -18,10 +18,11 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as meetingActions from '../meeting.actions';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class MeetingNotificationEffects {
@@ -29,10 +30,11 @@ export class MeetingNotificationEffects {
   @Effect({ dispatch: false })
   updateMeetingSuccess$: Observable<Action> = this.actions$
     .ofType( meetingActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Meeting is going to be saved'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 

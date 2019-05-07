@@ -17,9 +17,8 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {IdentificationCard} from '../../../../services/customer/domain/identification-card.model';
-import {Observable} from 'rxjs/Observable';
 import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';

@@ -23,16 +23,12 @@ import {FormBuilder, Validators,FormGroup} from '@angular/forms';
 import {FimsValidators} from '../../../common/validator/validators';
 import { Attendee} from '../../../services/group/domain/attendee.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import * as fromGroups from '../../store';
-import {Subscription} from 'rxjs/Subscription';
 import { TdStepComponent } from '@covalent/core';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
 import {StatusOptionList} from './domain/status-option-list.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {SEARCH} from '../../../store/customer/customer.actions';
-import {Meeting} from '../../../services/group/domain/meeting.model'
 import {SignOffMeeting} from '../../../services/group/domain/signoff-meeting.model'
 import {UPDATE} from '../../store/meeting/meeting.actions';
 import {Group} from '../../../services/group/domain/group.model';
@@ -67,7 +63,6 @@ statusOptions = StatusOptionList;
 
 constructor(private router: Router,private route: ActivatedRoute,private formBuilder: FormBuilder, 
   private store: Store<fromRoot.State>, private store1: GroupsStore) {
-   // this.customers = customerService.getCustomer("identifier").share();
   
   }
    

@@ -20,17 +20,18 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CasesStore} from '../store/index';
 import * as fromRoot from '../../../store';
 import * as fromCases from '../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {DeleteDocumentAction, DeletePageAction, LoadAllPagesAction, LockDocumentAction} from '../store/documents/document.actions';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
 import {CaseSelection} from '../store/model/case-selection.model';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
 import {CustomerDocument} from '../../../services/customer/domain/customer-document.model';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {ImageComponent} from '../../../common/image/image.component';
 import {FimsPermission} from '../../../services/security/authz/fims-permission.model';
+import { combineLatest } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './document.detail.component.html'
@@ -52,11 +53,12 @@ export class CaseDocumentDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerDocument$ = this.casesStore.select(fromCases.getSelectedCaseDocument)
-      .filter(document => !!document);
+    .pipe(
+      filter(document => !!document));
     this.currentSelection$ = this.casesStore.select(fromCases.getCaseSelection);
     this.pageNumbers$ = this.casesStore.select(fromCases.getAllDocumentPages);
 
-    this.actionsSubscription = Observable.combineLatest(
+    this.actionsSubscription = combineLatest(
       this.customerDocument$,
       this.currentSelection$,
       (document, selection) => ({
@@ -69,7 +71,7 @@ export class CaseDocumentDetailComponent implements OnInit, OnDestroy {
       })
     ).subscribe(this.casesStore);
 
-    this.canEdit$ = Observable.combineLatest(
+    this.canEdit$ = combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
       this.customerDocument$,
       (permissions, document: CustomerDocument) => ({
@@ -85,13 +87,14 @@ export class CaseDocumentDetailComponent implements OnInit, OnDestroy {
 
   private showTranslatedDialog(title: string, message: string, button: string): Observable<boolean> {
     return this.translate.get([title, message, button])
-      .mergeMap(result =>
+    .pipe(
+      mergeMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   confirmDeletePage(): Observable<boolean> {
@@ -104,7 +107,8 @@ export class CaseDocumentDetailComponent implements OnInit, OnDestroy {
 
   deletePage(selection: CaseSelection, document: CustomerDocument, pageNumber: number): void {
     this.confirmDeletePage()
-      .filter(accept => accept)
+    .pipe(
+      filter(accept => accept))
       .subscribe(() => {
         const action = new DeletePageAction({
           customerId: selection.customerId,
@@ -135,7 +139,8 @@ export class CaseDocumentDetailComponent implements OnInit, OnDestroy {
 
   deleteDocument(selection: CaseSelection, document: CustomerDocument): void {
     this.confirmDeleteDocument()
-      .filter(accept => accept)
+    .pipe(
+      filter(accept => accept))
       .subscribe(() => {
         const action = new DeleteDocumentAction({
           customerId: selection.customerId,

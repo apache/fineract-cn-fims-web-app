@@ -21,9 +21,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Role} from '../services/identity/domain/role.model';
 import {TableData} from '../common/data-table/data-table.component';
 import * as fromRoot from '../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from '../store/role/role.actions';
 import {RolesStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './role.component.html'
@@ -41,13 +42,13 @@ export class RoleComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: RolesStore) {}
 
   ngOnInit(): void {
-    this.rolesData$ = this.store.select(fromRoot.getRoleSearchResults)
-      .map(rolePage => ({
+    this.rolesData$ = this.store.select(fromRoot.getRoleSearchResults).pipe(
+      map(rolePage => ({
           data: rolePage.roles,
           totalElements: rolePage.totalElements,
           totalPages: rolePage.totalPages
         })
-      );
+      ));
 
     this.loading$ = this.store.select(fromRoot.getRoleSearchLoading);
 

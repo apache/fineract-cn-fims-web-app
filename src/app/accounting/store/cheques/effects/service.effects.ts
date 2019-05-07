@@ -16,44 +16,44 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {of} from 'rxjs/observable/of';
+import {of, Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
 import {Actions, Effect} from '@ngrx/effects';
 import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {Injectable} from '@angular/core';
 import * as chequeActions from '../cheque.actions';
 import {ChequeCRUDActions} from '../cheque.actions';
 import {LoadAllAction} from '../../../../common/store/action-creator/actions';
+import {map, mergeMap, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class ChequeApiEffects {
 
   @Effect()
   loadAllChequesByState$: Observable<Action> = this.actions$
-    .ofType(ChequeCRUDActions.LOAD_ALL)
-    .map((action: LoadAllAction) => action.payload)
-    .mergeMap(payload =>
-      this.chequeService.fetch(payload.state)
-        .map(cheques => ChequeCRUDActions.loadAllCompleteAction({
+    .ofType(ChequeCRUDActions.LOAD_ALL).pipe(
+    map((action: LoadAllAction) => action.payload),
+    mergeMap(payload =>
+      this.chequeService.fetch(payload.state).pipe(
+        map(cheques => ChequeCRUDActions.loadAllCompleteAction({
           resources: cheques,
           data: payload.data
-        }))
-        .catch(() => of(ChequeCRUDActions.loadAllCompleteAction({
+        })),
+        catchError(() => of(ChequeCRUDActions.loadAllCompleteAction({
           resources: [],
           data: payload.data
-        })))
-    );
+        }))))
+    ));
 
   @Effect()
   processCheque$: Observable<Action> = this.actions$
-    .ofType(chequeActions.PROCESS)
-    .map((action: chequeActions.ProcessAction) => action.payload)
-    .mergeMap(payload =>
-      this.chequeService.process(payload.chequeIdentifier, payload.command)
-        .map(() => new chequeActions.ProcessSuccessAction(payload))
-        .catch(error => of(new chequeActions.ProcessFailAction(error)))
-    );
+    .ofType(chequeActions.PROCESS).pipe(
+    map((action: chequeActions.ProcessAction) => action.payload),
+    mergeMap(payload =>
+      this.chequeService.process(payload.chequeIdentifier, payload.command).pipe(
+        map(() => new chequeActions.ProcessSuccessAction(payload)),
+        catchError(error => of(new chequeActions.ProcessFailAction(error))))
+    ));
 
   constructor(private actions$: Actions, private chequeService: ChequeService) {}
 

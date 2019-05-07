@@ -19,32 +19,32 @@
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as officeActions from '../office.actions';
 import {emptySearchResult} from '../../../common/store/search.reducer';
+import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 
 @Injectable()
 export class OfficeSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(officeActions.SEARCH)
-    .debounceTime(300)
-    .map((action: officeActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(officeActions.SEARCH).skip(1);
+    .ofType(officeActions.SEARCH).pipe(
+    debounceTime(300),
+    map((action: officeActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.ofType(officeActions.SEARCH).pipe(skip(1));
 
-      return this.officeService.listOffices(fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(officePage => new officeActions.SearchCompleteAction({
+      return this.officeService.listOffices(fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(officePage => new officeActions.SearchCompleteAction({
           elements: officePage.offices,
           totalElements: officePage.totalElements,
           totalPages: officePage.totalPages
-        }))
-        .catch(() => of(new officeActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new officeActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   constructor(private actions$: Actions, private officeService: OfficeService) { }
 }

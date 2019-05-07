@@ -23,9 +23,8 @@ import {CustomersStore} from '../../../../store/index';
 import {IdentificationCardScanComponent, IdentityCardScanFormData} from './scan.form.component';
 import {CREATE, RESET_FORM} from '../../../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {Error} from '../../../../../services/domain/error.model';
-import {Subscription} from 'rxjs/Subscription';
 import {IdentificationCard} from '../../../../../services/customer/domain/identification-card.model';
 import {Customer} from '../../../../../services/customer/domain/customer.model';
 

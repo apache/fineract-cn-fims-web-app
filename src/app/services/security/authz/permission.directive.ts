@@ -20,7 +20,8 @@ import {Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from
 import {FimsPermission} from './fims-permission.model';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -43,11 +44,11 @@ export class PermissionDirective implements OnInit, OnDestroy {
       return;
     }
 
-    this.permissionSubscription = this.store.select(fromRoot.getPermissions)
-      .map(permissions => permissions.filter(permission => permission.id === this.hasPermission.id
+    this.permissionSubscription = this.store.select(fromRoot.getPermissions).pipe(
+      map(permissions => permissions.filter(permission => permission.id === this.hasPermission.id
         && permission.accessLevel === this.hasPermission.accessLevel
-      ))
-      .map(matches => matches.length > 0)
+      )),
+      map(matches => matches.length > 0),)
       .subscribe(hasPermission => {
         this.viewContainer.clear();
         if (hasPermission) {

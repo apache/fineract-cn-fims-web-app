@@ -64,9 +64,11 @@ import {ReactiveFormsModule} from '@angular/forms';
     CovalentSearchModule,
     CovalentStepsModule,
 
-    EffectsModule.run(EmployeeApiEffects),
-    EffectsModule.run(EmployeeRouteEffects),
-    EffectsModule.run(EmployeeNotificationEffects)
+    EffectsModule.forRoot([
+      EmployeeApiEffects,
+      EmployeeRouteEffects,
+      EmployeeNotificationEffects, 
+    ])
   ],
   declarations: [
     EmployeeComponent,

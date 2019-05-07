@@ -119,26 +119,29 @@ import {CustomerCustomValuesComponent} from './customFields/components/value.com
     CovalentMessageModule,
     CovalentChipsModule,
 
-    EffectsModule.run(CustomerApiEffects),
-    EffectsModule.run(CustomerRouteEffects),
-    EffectsModule.run(CustomerNotificationEffects),
+   EffectsModule.forRoot([
+    CustomerApiEffects,
+    CustomerRouteEffects,
+    CustomerNotificationEffects,
 
-    EffectsModule.run(TasksApiEffects),
-    EffectsModule.run(TasksRouteEffects),
-    EffectsModule.run(TasksNotificationEffects),
+    TasksApiEffects,
+    TasksRouteEffects,
+    TasksNotificationEffects,
+ 
+    CustomerTasksApiEffects,
+    CustomerTasksRouteEffects,
+    CustomerTasksNotificationEffects,
+    CustomerCommandApiEffects,
 
-    EffectsModule.run(CustomerTasksApiEffects),
-    EffectsModule.run(CustomerTasksRouteEffects),
-    EffectsModule.run(CustomerTasksNotificationEffects),
-    EffectsModule.run(CustomerCommandApiEffects),
+    CustomerPayrollApiEffects,
+    CustomerPayrollRouteEffects,
+    CustomerPayrollNotificationEffects,
 
-    EffectsModule.run(CustomerPayrollApiEffects),
-    EffectsModule.run(CustomerPayrollRouteEffects),
-    EffectsModule.run(CustomerPayrollNotificationEffects),
+    CatalogApiEffects,
+    CatalogRouteEffects,
+    CatalogNotificationEffects,
 
-    EffectsModule.run(CatalogApiEffects),
-    EffectsModule.run(CatalogRouteEffects),
-    EffectsModule.run(CatalogNotificationEffects),
+   ])
   ],
   declarations: [
     CustomerComponent,

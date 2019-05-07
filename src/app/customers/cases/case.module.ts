@@ -117,17 +117,19 @@ import {CreateDocumentPageComponent} from './documents/form/upload/create.form.c
     CovalentFileModule,
     CovalentNotificationsModule,
 
-    EffectsModule.run(CaseApiEffects),
-    EffectsModule.run(CaseRouteEffects),
-    EffectsModule.run(CaseNotificationEffects),
+    EffectsModule.forRoot([
+      CaseApiEffects,
+      CaseRouteEffects,
+      CaseNotificationEffects,
 
-    EffectsModule.run(CaseTasksApiEffects),
-    EffectsModule.run(CaseTasksNotificationEffects),
-    EffectsModule.run(CasePaymentsApiEffects),
+      CaseTasksApiEffects,
+      CaseTasksNotificationEffects,
+      CasePaymentsApiEffects,
 
-    EffectsModule.run(CaseDocumentApiEffects),
-    EffectsModule.run(CaseDocumentRouteEffects),
-    EffectsModule.run(CaseDocumentNotificationEffects),
+      CaseDocumentApiEffects,
+      CaseDocumentRouteEffects,
+      CaseDocumentNotificationEffects,
+    ])
 
   ],
   declarations: [

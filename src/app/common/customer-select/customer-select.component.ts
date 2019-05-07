@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,11 +20,13 @@
  */
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {CustomerService} from '../../services/customer/customer.service';
 import {CustomerPage} from '../../services/customer/domain/customer-page.model';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap } from 'rxjs/operators';
+
 
 const noop: () => void = () => {
   // empty method
@@ -55,11 +59,12 @@ export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
     this.formControl = new FormControl('');
 
     this.customers = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -87,8 +92,8 @@ export class CustomerSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm
     };
 
-    return this.customerService.fetchCustomers(fetchRequest)
-      .map((customerPage: CustomerPage) => customerPage.customers);
+    return this.customerService.fetchCustomers(fetchRequest).pipe(
+      map((customerPage: CustomerPage) => customerPage.customers));
   }
 
 }

@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../customer-task.actions';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import { CustomerService } from '../../../../services/customer/customer.service';
+import { map, debounceTime, mergeMap, skip, takeUntil, catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerTasksApiEffects {
@@ -30,36 +30,38 @@ export class CustomerTasksApiEffects {
   @Effect()
   loadAll$: Observable<Action> = this.actions$
     .ofType(taskActions.LOAD_ALL)
-    .debounceTime(300)
-    .map((action: taskActions.LoadAllAction) => action.payload)
-    .switchMap(id => {
-      const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).skip(1);
+    .pipe(
+      debounceTime(300),
+      map((action: taskActions.LoadAllAction) => action.payload),
+      switchMap(id => {
+        const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).pipe(skip(1));
 
-      return this.customerService.fetchProcessSteps(id)
-        .takeUntil(nextSearch$)
-        .map(processSteps => new taskActions.LoadAllCompleteAction(processSteps))
-        .catch(() => of(new taskActions.LoadAllCompleteAction([])));
-    });
+        return this.customerService.fetchProcessSteps(id)
+          .pipe(
+            takeUntil(nextSearch$),
+            map(processSteps => new taskActions.LoadAllCompleteAction(processSteps)),
+            catchError(() => of(new taskActions.LoadAllCompleteAction([]))));
+      }));
 
   @Effect()
   executeTask: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK)
-    .map((action: taskActions.ExecuteTaskAction) => action.payload)
-    .mergeMap(payload =>
-      this.customerService.markTaskAsExecuted(payload.customerId, payload.taskId)
-        .map(() => new taskActions.ExecuteTaskSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteTaskFailAction(error)))
-    );
+    .ofType(taskActions.EXECUTE_TASK).pipe(
+      map((action: taskActions.ExecuteTaskAction) => action.payload),
+      mergeMap(payload =>
+        this.customerService.markTaskAsExecuted(payload.customerId, payload.taskId).pipe(
+          map(() => new taskActions.ExecuteTaskSuccessAction(payload)),
+          catchError((error) => of(new taskActions.ExecuteTaskFailAction(error))))
+      ));
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND)
-    .map((action: taskActions.ExecuteCommandAction) => action.payload)
-    .mergeMap(payload =>
-      this.customerService.executeCustomerCommand(payload.customerId, payload.command)
-        .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
-    );
+    .ofType(taskActions.EXECUTE_COMMAND).pipe(
+      map((action: taskActions.ExecuteCommandAction) => action.payload),
+      mergeMap(payload =>
+        this.customerService.executeCustomerCommand(payload.customerId, payload.command).pipe(
+          map(() => new taskActions.ExecuteCommandSuccessAction(payload)),
+          catchError((error) => of(new taskActions.ExecuteCommandFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private customerService: CustomerService) { }
 

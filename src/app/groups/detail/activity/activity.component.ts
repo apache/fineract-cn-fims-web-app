@@ -21,7 +21,7 @@ import {GroupCommand} from '../../../services/group/domain/group-command.model';
 import {GroupsStore} from '../../store/index';
 import {LOAD_ALL} from '../../store/commands/commands.actions';
 import * as fromGroups from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './activity.component.html'

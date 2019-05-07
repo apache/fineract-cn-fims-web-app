@@ -19,8 +19,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectAction} from '../store/group.actions';
 import {GroupsStore} from '../store/index';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './group.index.component.html'
@@ -31,8 +32,8 @@ export class GroupIndexComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private groupsStore: GroupsStore) {}
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.groupsStore);
   }
 

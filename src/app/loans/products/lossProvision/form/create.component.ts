@@ -22,8 +22,9 @@ import * as fromPortfolio from '../../store/index';
 import {PortfolioStore} from '../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UPDATE} from '../../store/lossProvision/loss-provision.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FimsProduct} from '../../store/model/fims-product.model';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.component.html'
@@ -37,8 +38,8 @@ export class CreateProductLossProvisionFormComponent {
   constructor(private store: PortfolioStore, private router: Router, private route: ActivatedRoute) {
     this.product$ = store.select(fromPortfolio.getSelectedProduct);
 
-    this.lossProvisionSteps$ = store.select(fromPortfolio.getProductLossProvisionConfiguration)
-      .map(configuration => configuration.lossProvisionSteps);
+    this.lossProvisionSteps$ = store.select(fromPortfolio.getProductLossProvisionConfiguration).pipe(
+      map(configuration => configuration.lossProvisionSteps));
   }
 
   save(productIdentifier: string, lossProvisionSteps: LossProvisionStep[]): void {
