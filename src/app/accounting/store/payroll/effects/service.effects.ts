@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import * as payrollActions from '../payroll-collection.actions';
 import {CreateSheetPayload} from '../payroll-collection.actions';
@@ -33,7 +33,7 @@ export class PayrollCollectionApiEffects {
 
   @Effect()
   loadAllCollections$: Observable<Action> = this.actions$
-    .ofType(payrollActions.LOAD_ALL_COLLECTIONS).pipe(
+    .pipe(ofType(payrollActions.LOAD_ALL_COLLECTIONS),
     switchMap(() => this.payrollService.fetchDistributionHistory().pipe(
       map(payrolls => new payrollActions.LoadAllCompleteAction(payrolls)),
       catchError(() => of(new payrollActions.LoadAllCompleteAction([]))))
@@ -41,7 +41,7 @@ export class PayrollCollectionApiEffects {
 
   @Effect()
   createSheet$: Observable<Action> = this.actions$
-    .ofType(payrollActions.CREATE).pipe(
+    .pipe(ofType(payrollActions.CREATE),
     map((action: payrollActions.CreateAction) => action.payload),
     switchMap(payload => this.payrollService.distribute(payload.sheet).pipe(
       map(() => new payrollActions.CreateSuccessAction(this.map(payload))),
@@ -50,7 +50,7 @@ export class PayrollCollectionApiEffects {
 
   @Effect()
   searchPayments$: Observable<Action> = this.actions$
-    .ofType(paymentActions.SEARCH).pipe(
+    .pipe(ofType(paymentActions.SEARCH),
     map((action: paymentActions.SearchAction) => action.payload),
     mergeMap(payload =>
       this.payrollService.fetchPayments(payload.payrollIdentifier, payload.fetchRequest).pipe(

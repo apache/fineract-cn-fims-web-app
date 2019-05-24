@@ -30,6 +30,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {CovalentLoadingModule} from '@covalent/core';
 import {setValueByFormControlName} from '../common/testing/input-fields';
 import {MatCardModule, MatIconModule, MatInputModule, MatOptionModule, MatSelectModule, MatTooltipModule} from '@angular/material';
+import {empty} from 'rxjs';
 
 describe('Test Login Component', () => {
 
@@ -67,7 +68,7 @@ describe('Test Login Component', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = jasmine.createSpy('select').and.returnValue(Observable.empty());
+            select = jasmine.createSpy('select').and.returnValue(empty());
           }
         }
       ]

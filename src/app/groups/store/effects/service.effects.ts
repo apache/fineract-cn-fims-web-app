@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as groupActions from '../group.actions';
@@ -29,7 +29,7 @@ export class GroupApiEffects {
 
   @Effect()
   createGroup$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE).pipe(
+    .pipe(ofType(groupActions.CREATE),
       map((action: groupActions.CreateGroupAction) => action.payload),
       mergeMap(payload =>
         this.groupService.createGroup(payload.group).pipe(
@@ -42,7 +42,7 @@ export class GroupApiEffects {
 
   @Effect()
   updateGroup$: Observable<Action> = this.actions$
-    .ofType(groupActions.UPDATE).pipe(
+    .pipe(ofType(groupActions.UPDATE),
       map((action: groupActions.UpdateGroupAction) => action.payload),
       mergeMap(payload =>
         this.groupService.updateGroup(payload.group).pipe(

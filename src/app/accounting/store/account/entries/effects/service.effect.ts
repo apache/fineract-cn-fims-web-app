@@ -18,7 +18,7 @@
  */
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect ,ofType} from '@ngrx/effects';
 import * as accountEntryActions from '../entries.actions';
 import { Injectable } from '@angular/core';
 import { AccountingService } from '../../../../../services/accounting/accounting.service';
@@ -29,7 +29,7 @@ export class AccountEntryApiEffects {
 
   @Effect()
   loadAccountEntries$: Observable<Action> = this.actions$
-    .ofType(accountEntryActions.SEARCH).pipe(
+    .pipe(ofType(accountEntryActions.SEARCH),
       map((action: accountEntryActions.SearchAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.fetchAccountEntries(payload.accountId, payload.startDate, payload.endDate, payload.fetchRequest).pipe(

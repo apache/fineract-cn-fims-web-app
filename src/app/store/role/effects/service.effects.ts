@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as roleActions from '../role.actions';
@@ -33,10 +33,10 @@ export class RoleSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(roleActions.SEARCH).pipe(
+    .pipe(ofType(roleActions.SEARCH),
     debounceTime(300),
     switchMap(() => {
-      const nextSearch$ = this.actions$.ofType(roleActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(roleActions.SEARCH),(skip(1)));
 
       return this.identityService.listRoles().pipe(
         takeUntil(nextSearch$),

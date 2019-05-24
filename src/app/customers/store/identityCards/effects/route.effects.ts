@@ -18,7 +18,7 @@
  */
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as identificationCardActions from '../identity-cards.actions';
@@ -28,13 +28,13 @@ import {map, tap} from 'rxjs/operators';
 export class CustomerIdentificationCardRouteEffects {
   @Effect({ dispatch: false })
   createIdentificationCardSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteIdentificationCardSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(identificationCardActions.DELETE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute })));
 

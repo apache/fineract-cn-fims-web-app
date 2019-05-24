@@ -18,7 +18,7 @@
  */
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { CustomerService } from '../../../../services/customer/customer.service';
 import { Injectable } from '@angular/core';
 import * as identificationCards from '../identity-cards.actions';
@@ -29,12 +29,11 @@ export class CustomerIdentificationCardApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(identificationCards.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(identificationCards.LOAD_ALL),
       debounceTime(300),
       map((action: identificationCards.LoadAllAction) => action.payload),
       switchMap(id => {
-        const nextSearch$ = this.actions$.ofType(identificationCards.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(identificationCards.LOAD_ALL),(skip(1)));
 
         return this.customerService.fetchIdentificationCards(id)
           .pipe(
@@ -45,7 +44,7 @@ export class CustomerIdentificationCardApiEffects {
 
   @Effect()
   createIdentificationCard$: Observable<Action> = this.actions$
-    .ofType(identificationCards.CREATE).pipe(
+    .pipe(ofType(identificationCards.CREATE),
       map((action: identificationCards.CreateIdentityCardAction) => action.payload),
       mergeMap(payload =>
         this.customerService.createIdentificationCard(payload.customerId, payload.identificationCard).pipe(
@@ -58,7 +57,7 @@ export class CustomerIdentificationCardApiEffects {
 
   @Effect()
   updateIdentificationCard$: Observable<Action> = this.actions$
-    .ofType(identificationCards.UPDATE).pipe(
+    .pipe(ofType(identificationCards.UPDATE),
       map((action: identificationCards.UpdateIdentityCardAction) => action.payload),
       mergeMap(payload =>
         this.customerService.updateIdentificationCard(payload.customerId, payload.identificationCard).pipe(
@@ -71,7 +70,7 @@ export class CustomerIdentificationCardApiEffects {
 
   @Effect()
   deleteIdentificationCard$: Observable<Action> = this.actions$
-    .ofType(identificationCards.DELETE).pipe(
+    .pipe(ofType(identificationCards.DELETE),
       map((action: identificationCards.DeleteIdentityCardAction) => action.payload),
       mergeMap(payload =>
         this.customerService.deleteIdentificationCard(payload.customerId, payload.identificationCard.number).pipe(

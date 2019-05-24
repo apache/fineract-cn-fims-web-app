@@ -75,7 +75,7 @@ export class CaseListComponent implements OnInit, OnDestroy {
     this.canAdd$ = combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
       customer$,
-      (permissions, customer: Customer) => ({
+      (permissions:FimsPermission[], customer: Customer) => ({
         hasPermission: this.hasChangePermission(permissions),
         isCustomerActive: customer.currentState === 'ACTIVE'
       }))

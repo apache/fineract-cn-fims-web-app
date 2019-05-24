@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../group-task.actions';
@@ -29,8 +29,7 @@ export class GroupCommandNotificationEffects {
 
   @Effect({ dispatch: false })
   executeGroupCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.EXECUTE_COMMAND_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Command is going to be executed'

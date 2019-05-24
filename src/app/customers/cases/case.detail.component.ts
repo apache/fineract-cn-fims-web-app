@@ -44,7 +44,7 @@ export class CaseDetailComponent implements OnInit {
     this.canEdit$ = combineLatest(
       this.casesStore.select(fromRoot.getPermissions),
       this.caseInstance$,
-      (permissions, caseInstance: FimsCase) => ({
+      (permissions:FimsPermission[], caseInstance: FimsCase) => ({
         hasPermission: this.hasChangePermission(permissions),
         isCreatedOrPending: caseInstance.currentState === 'PENDING' || caseInstance.currentState === 'CREATED'
       }))

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as accountActions from '../account.actions';
@@ -31,11 +31,11 @@ export class AccountSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(accountActions.SEARCH).pipe(
+    .pipe(ofType(accountActions.SEARCH),
     debounceTime(300),
     map((action: accountActions.SearchAction) => action.payload),
     switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(accountActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(accountActions.SEARCH),(skip(1)));
 
       return this.accountingService.fetchAccounts(fetchRequest).pipe(
         takeUntil(nextSearch$),
@@ -46,11 +46,11 @@ export class AccountSearchApiEffects {
 
   @Effect()
   searchByLedger$: Observable<Action> = this.actions$
-    .ofType(accountActions.SEARCH_BY_LEDGER).pipe(
+    .pipe(ofType(accountActions.SEARCH_BY_LEDGER),
     debounceTime(300),
     map((action: accountActions.SearchByLedgerAction) => action.payload),
     switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(accountActions.SEARCH_BY_LEDGER).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(accountActions.SEARCH_BY_LEDGER),(skip(1)));
 
       return this.accountingService.fetchAccountsOfLedger(payload.ledgerId, payload.fetchRequest).pipe(
         takeUntil(nextSearch$),

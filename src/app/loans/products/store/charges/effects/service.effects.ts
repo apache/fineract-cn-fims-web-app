@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as chargeActions from '../charge.actions';
@@ -29,12 +29,11 @@ export class ProductChargesApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(chargeActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(chargeActions.LOAD_ALL),
       debounceTime(300),
       map((action: chargeActions.LoadAllAction) => action.payload),
       switchMap(id => {
-        const nextSearch$ = this.actions$.ofType(chargeActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(chargeActions.LOAD_ALL),(skip(1)));
 
         return this.portfolioService.findAllChargeDefinitionsForProduct(id)
           .pipe(
@@ -45,7 +44,7 @@ export class ProductChargesApiEffects {
 
   @Effect()
   createCharge$: Observable<Action> = this.actions$
-    .ofType(chargeActions.CREATE).pipe(
+    .pipe(ofType(chargeActions.CREATE),
       map((action: chargeActions.CreateChargeAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.createChargeDefinition(payload.productId, payload.charge).pipe(
@@ -58,7 +57,7 @@ export class ProductChargesApiEffects {
 
   @Effect()
   updateCharge$: Observable<Action> = this.actions$
-    .ofType(chargeActions.UPDATE).pipe(
+    .pipe(ofType(chargeActions.UPDATE),
       map((action: chargeActions.UpdateChargeAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.changeChargeDefinition(payload.productId, payload.charge).pipe(
@@ -71,7 +70,7 @@ export class ProductChargesApiEffects {
 
   @Effect()
   deleteCharge$: Observable<Action> = this.actions$
-    .ofType(chargeActions.DELETE).pipe(
+    .pipe(ofType(chargeActions.DELETE),
       map((action: chargeActions.DeleteChargeAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.deleteChargeDefinition(payload.productId, payload.charge.identifier).pipe(

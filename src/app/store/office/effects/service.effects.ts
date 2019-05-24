@@ -18,7 +18,7 @@
  */
 import {Injectable} from '@angular/core';
 import {OfficeService} from '../../../services/office/office.service';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
@@ -30,11 +30,11 @@ export class OfficeSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(officeActions.SEARCH).pipe(
+    .pipe(ofType(officeActions.SEARCH),
     debounceTime(300),
     map((action: officeActions.SearchAction) => action.payload),
     switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(officeActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(officeActions.SEARCH),(skip(1)));
 
       return this.officeService.listOffices(fetchRequest).pipe(
         takeUntil(nextSearch$),

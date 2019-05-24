@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect, toPayload, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as productActions from '../product.actions';
@@ -29,8 +29,7 @@ export class ProductNotificationEffects {
 
   @Effect({ dispatch: false })
   createProductSuccess$: Observable<Action> = this.actions$
-    .ofType(productActions.CREATE_SUCCESS, productActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(productActions.CREATE_SUCCESS, productActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Product is going to be saved'
@@ -38,8 +37,7 @@ export class ProductNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteProductSuccess$: Observable<Action> = this.actions$
-    .ofType(productActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(productActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Product is going to be deleted'
@@ -47,8 +45,7 @@ export class ProductNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteProductFail$: Observable<Action> = this.actions$
-    .ofType(productActions.DELETE_FAIL)
-    .pipe(
+    .pipe(ofType(productActions.DELETE_FAIL),
       tap(() => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Product can\'t be deleted',
@@ -57,7 +54,7 @@ export class ProductNotificationEffects {
 
   @Effect({ dispatch: false })
   enableProductSuccess$: Observable<Action> = this.actions$
-    .ofType(productActions.ENABLE_SUCCESS).pipe(
+    .pipe(ofType(productActions.ENABLE_SUCCESS),
       map(toPayload))
     .pipe(
       tap(payload => {
@@ -70,7 +67,7 @@ export class ProductNotificationEffects {
 
   @Effect({ dispatch: false })
   enableProductFail$: Observable<Action> = this.actions$
-    .ofType(productActions.ENABLE_FAIL).pipe(
+    .pipe(ofType(productActions.ENABLE_FAIL),
       map(toPayload))
     .pipe(
       tap(payload => this.notificationService.send({

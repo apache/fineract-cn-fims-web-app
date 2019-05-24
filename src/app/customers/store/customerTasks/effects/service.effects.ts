@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as taskActions from '../customer-task.actions';
@@ -29,12 +29,11 @@ export class CustomerTasksApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(taskActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(taskActions.LOAD_ALL),
       debounceTime(300),
       map((action: taskActions.LoadAllAction) => action.payload),
       switchMap(id => {
-        const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(taskActions.LOAD_ALL),(skip(1)));
 
         return this.customerService.fetchProcessSteps(id)
           .pipe(
@@ -45,7 +44,7 @@ export class CustomerTasksApiEffects {
 
   @Effect()
   executeTask: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK).pipe(
+    .pipe(ofType(taskActions.EXECUTE_TASK),
       map((action: taskActions.ExecuteTaskAction) => action.payload),
       mergeMap(payload =>
         this.customerService.markTaskAsExecuted(payload.customerId, payload.taskId).pipe(
@@ -55,7 +54,7 @@ export class CustomerTasksApiEffects {
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND).pipe(
+    .pipe(ofType(taskActions.EXECUTE_COMMAND),
       map((action: taskActions.ExecuteCommandAction) => action.payload),
       mergeMap(payload =>
         this.customerService.executeCustomerCommand(payload.customerId, payload.command).pipe(

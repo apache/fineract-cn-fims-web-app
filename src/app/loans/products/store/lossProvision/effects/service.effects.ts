@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { PortfolioService } from '../../../../../services/portfolio/portfolio.service';
@@ -29,7 +29,7 @@ export class ProductLossProvisionApiEffects {
 
   @Effect()
   updateConfiguration$: Observable<Action> = this.actions$
-    .ofType(lossProvisionActions.UPDATE).pipe(
+    .pipe(ofType(lossProvisionActions.UPDATE),
       map((action: lossProvisionActions.UpdateLossProvisionAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.changeLossProvisionConfiguration(payload.productIdentifier, payload.configuration).pipe(

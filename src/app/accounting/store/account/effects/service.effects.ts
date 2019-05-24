@@ -16,55 +16,55 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Action} from '@ngrx/store';
-import {of, Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { of, Observable } from 'rxjs';
 import * as accountActions from '../account.actions';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
-import {map, mergeMap, catchError} from 'rxjs/operators';
+import { AccountingService } from '../../../../services/accounting/accounting.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AccountApiEffects {
 
   @Effect()
   createAccount$: Observable<Action> = this.actions$
-    .ofType(accountActions.CREATE).pipe(
-    map((action: accountActions.CreateAccountAction) => action.payload),
-    mergeMap(payload =>
-      this.accountingService.createAccount(payload.account).pipe(
-        map(() => new accountActions.CreateAccountSuccessAction({
-          resource: payload.account,
-          activatedRoute: payload.activatedRoute
-        })),
-        catchError(error => of(new accountActions.CreateAccountFailAction(error))))
-    ));
+    .pipe(ofType(accountActions.CREATE),
+      map((action: accountActions.CreateAccountAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.createAccount(payload.account).pipe(
+          map(() => new accountActions.CreateAccountSuccessAction({
+            resource: payload.account,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError(error => of(new accountActions.CreateAccountFailAction(error))))
+      ));
 
   @Effect()
   updateAccount$: Observable<Action> = this.actions$
-    .ofType(accountActions.UPDATE).pipe(
-    map((action: accountActions.UpdateAccountAction) => action.payload),
-    mergeMap(payload =>
+    .pipe(ofType(accountActions.UPDATE),
+      map((action: accountActions.UpdateAccountAction) => action.payload),
+      mergeMap(payload =>
         this.accountingService.modifyAccount(payload.account).pipe(
           map(() => new accountActions.UpdateAccountSuccessAction({
             resource: payload.account,
             activatedRoute: payload.activatedRoute
           })),
           catchError(error => of(new accountActions.UpdateAccountFailAction(error))))
-    ));
+      ));
 
   @Effect()
   deleteAccount$: Observable<Action> = this.actions$
-    .ofType(accountActions.DELETE).pipe(
-    map((action: accountActions.DeleteAccountAction) => action.payload),
-    mergeMap(payload =>
-      this.accountingService.deleteAccount(payload.account).pipe(
-        map(() => new accountActions.DeleteAccountSuccessAction({
-          resource: payload.account,
-          activatedRoute: payload.activatedRoute
-        })),
-        catchError(error => of(new accountActions.DeleteAccountFailAction(error))))
-    ));
+    .pipe(ofType(accountActions.DELETE),
+      map((action: accountActions.DeleteAccountAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.deleteAccount(payload.account).pipe(
+          map(() => new accountActions.DeleteAccountSuccessAction({
+            resource: payload.account,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError(error => of(new accountActions.DeleteAccountFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 

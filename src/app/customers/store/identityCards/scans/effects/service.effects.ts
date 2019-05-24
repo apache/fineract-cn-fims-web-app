@@ -19,7 +19,7 @@
 import { of, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CustomerService } from '../../../../../services/customer/customer.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import * as identificationCardScans from '../scans.actions';
 import { map, debounceTime, mergeMap, skip, takeUntil, switchMap, catchError } from 'rxjs/operators';
@@ -29,12 +29,11 @@ export class CustomerIdentificationCardScanApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(identificationCardScans.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(identificationCardScans.LOAD_ALL),
       debounceTime(300),
       map((action: identificationCardScans.LoadAllAction) => action.payload),
       switchMap(payload => {
-        const nextSearch$ = this.actions$.ofType(identificationCardScans.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(identificationCardScans.LOAD_ALL),(skip(1)));
 
         return this.customerService.fetchIdentificationCardScans(payload.customerIdentifier, payload.identificationCardNumber)
           .pipe(
@@ -45,7 +44,7 @@ export class CustomerIdentificationCardScanApiEffects {
 
   @Effect()
   createIdentificationCardScan$: Observable<Action> = this.actions$
-    .ofType(identificationCardScans.CREATE).pipe(
+    .pipe(ofType(identificationCardScans.CREATE),
       map((action: identificationCardScans.CreateIdentityCardScanAction) => action.payload),
       mergeMap(payload =>
         this.customerService.uploadIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber,
@@ -59,7 +58,7 @@ export class CustomerIdentificationCardScanApiEffects {
 
   @Effect()
   deleteIdentificationCardScan$: Observable<Action> = this.actions$
-    .ofType(identificationCardScans.DELETE).pipe(
+    .pipe(ofType(identificationCardScans.DELETE),
       map((action: identificationCardScans.DeleteIdentityCardScanAction) => action.payload),
       mergeMap(payload =>
         this.customerService.deleteIdentificationCardScan(payload.customerIdentifier, payload.identificationCardNumber,

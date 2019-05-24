@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { NotificationService, NotificationType } from '../../../../services/notification/notification.service';
 import { Action } from '@ngrx/store';
@@ -30,8 +30,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   createCatalogSuccess$: Observable<Action> = this.actions$
-    .ofType(catalogActions.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(catalogActions.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Catalog is going to be saved'
@@ -39,8 +38,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteCatalogSuccess$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(catalogActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Catalog is going to be deleted'
@@ -48,8 +46,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteCatalogFail$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FAIL)
-    .pipe(
+    .pipe(ofType(catalogActions.DELETE_FAIL),
       tap((action: DeleteCatalogFailAction) => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Catalog can\'t be deleted',
@@ -58,8 +55,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   updateFieldSuccess$: Observable<Action> = this.actions$
-    .ofType(catalogActions.UPDATE_FIELD_SUCCESS)
-    .pipe(
+    .pipe(ofType(catalogActions.UPDATE_FIELD_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Field is going to be updated'
@@ -67,8 +63,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   updateFieldFail$: Observable<Action> = this.actions$
-    .ofType(catalogActions.UPDATE_FIELD_FAIL)
-    .pipe(
+    .pipe(ofType(catalogActions.UPDATE_FIELD_FAIL),
       tap((action: UpdateFieldFailAction) => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Field can\'t be updated',
@@ -77,8 +72,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteFieldSuccess$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FIELD_SUCCESS)
-    .pipe(
+    .pipe(ofType(catalogActions.DELETE_FIELD_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Field is going to be deleted'
@@ -86,8 +80,7 @@ export class CatalogNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteFieldFail$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FIELD_FAIL)
-    .pipe(
+    .pipe(ofType(catalogActions.DELETE_FIELD_FAIL),
       tap((action: DeleteFieldFailAction) => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Field can\'t be deleted',

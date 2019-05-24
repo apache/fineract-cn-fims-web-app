@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as roleActions from '../role.actions';
@@ -29,7 +29,7 @@ export class RoleApiEffects {
 
   @Effect()
   createRole$: Observable<Action> = this.actions$
-    .ofType(roleActions.CREATE).pipe(
+    .pipe(ofType(roleActions.CREATE),
       map((action: roleActions.CreateRoleAction) => action.payload),
       mergeMap(payload =>
         this.identityService.createRole(payload.role).pipe(
@@ -42,7 +42,7 @@ export class RoleApiEffects {
 
   @Effect()
   updateRole$: Observable<Action> = this.actions$
-    .ofType(roleActions.UPDATE).pipe(
+    .pipe(ofType(roleActions.UPDATE),
       map((action: roleActions.UpdateRoleAction) => action.payload),
       mergeMap(payload =>
         this.identityService.changeRole(payload.role).pipe(
@@ -55,7 +55,7 @@ export class RoleApiEffects {
 
   @Effect()
   deleteRole$: Observable<Action> = this.actions$
-    .ofType(roleActions.DELETE).pipe(
+    .pipe(ofType(roleActions.DELETE),
       map((action: roleActions.DeleteRoleAction) => action.payload),
       mergeMap(payload =>
         this.identityService.deleteRole(payload.role.identifier).pipe(

@@ -19,7 +19,7 @@
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { TellerService } from '../../../../services/teller/teller-service';
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as tellerActions from '../../teller/teller.actions';
@@ -29,7 +29,7 @@ export class TellerApiEffects {
 
   @Effect()
   loadTeller$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOAD_TELLER).pipe(
+    .pipe(ofType(tellerActions.LOAD_TELLER),
       map((action: tellerActions.LoadTellerAction) => action.payload),
       mergeMap(officeId =>
         this.tellerService.fetch(officeId).pipe(
@@ -39,7 +39,7 @@ export class TellerApiEffects {
 
   @Effect()
   createTeller$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CREATE_TELLER).pipe(
+    .pipe(ofType(tellerActions.CREATE_TELLER),
       map((action: tellerActions.CreateTellerAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.create(payload.officeId, payload.teller).pipe(
@@ -52,7 +52,7 @@ export class TellerApiEffects {
 
   @Effect()
   updateTeller$: Observable<Action> = this.actions$
-    .ofType(tellerActions.UPDATE_TELLER).pipe(
+    .pipe(ofType(tellerActions.UPDATE_TELLER),
       map((action: tellerActions.UpdateTellerAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.change(payload.officeId, payload.teller).pipe(
@@ -65,7 +65,7 @@ export class TellerApiEffects {
 
   @Effect()
   executeCommand$: Observable<Action> = this.actions$
-    .ofType(tellerActions.EXECUTE_COMMAND).pipe(
+    .pipe(ofType(tellerActions.EXECUTE_COMMAND),
       map((action: tellerActions.ExecuteCommandAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.createCommand(payload.officeId, payload.tellerCode, payload.command).pipe(

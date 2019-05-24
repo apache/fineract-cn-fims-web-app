@@ -18,7 +18,7 @@
  */
 import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
@@ -30,11 +30,11 @@ export class LedgerSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.SEARCH).pipe(
+    .pipe(ofType(ledgerActions.SEARCH),
     debounceTime(300),
     map((action: ledgerActions.SearchAction) => action.payload),
     switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(ledgerActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(ledgerActions.SEARCH),(skip(1)));
 
       return this.accountingService.fetchLedgers(true, fetchRequest).pipe(
         takeUntil(nextSearch$),

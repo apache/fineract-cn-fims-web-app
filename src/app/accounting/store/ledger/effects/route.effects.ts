@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
@@ -28,13 +28,13 @@ import {map, tap} from 'rxjs/operators';
 export class LedgerRouteEffects {
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(ledgerActions.DELETE_SUCCESS),
     map(action => action.payload),
     tap(payload => {
       if (payload.ledger.parentLedgerIdentifier) {

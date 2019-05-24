@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
@@ -29,8 +29,7 @@ export class JournalEntryNotificationEffects {
 
   @Effect({ dispatch: false })
   createJournalEntrySuccess$: Observable<Action> = this.actions$
-    .ofType(journalEntryActions.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(journalEntryActions.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Journal entry is going to be processed'

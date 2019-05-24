@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {Action} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
@@ -33,7 +33,7 @@ export class CaseTasksApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(taskActions.LOAD_ALL).pipe(
+    .pipe(ofType(taskActions.LOAD_ALL),
     map((action: taskActions.LoadAllAction) => action.payload),
     switchMap(payload => {
       return combineLatest(
@@ -50,7 +50,7 @@ export class CaseTasksApiEffects {
 
   @Effect()
   executeTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK).pipe(
+    .pipe(ofType(taskActions.EXECUTE_TASK),
     map((action: taskActions.ExecuteTaskAction) => action.payload),
     mergeMap(payload => this.portfolioService.taskForCaseExecuted(payload.productIdentifier, payload.caseIdentifier,
       payload.taskIdentifier, payload.executed).pipe(

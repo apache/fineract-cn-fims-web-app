@@ -16,22 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../group-task.actions';
-import {map, tap} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class GroupCommandRouteEffects {
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS).pipe(
-    map(action => action.payload),
-    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
+    .pipe(ofType(taskActions.EXECUTE_COMMAND_SUCCESS),
+      map(action => action.payload),
+      tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 }

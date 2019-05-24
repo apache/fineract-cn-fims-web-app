@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
@@ -29,13 +29,13 @@ export class ProductChargeRangesRouteEffects {
 
   @Effect({ dispatch: false })
   createRangeSuccess$: Observable<Action> = this.actions$
-    .ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.data.activatedRoute} )));
 
   @Effect({ dispatch: false })
   deleteRangeSuccess$: Observable<Action> = this.actions$
-    .ofType(RangeActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(RangeActions.DELETE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../../../../../../../'], { relativeTo: payload.data.activatedRoute} )));
 

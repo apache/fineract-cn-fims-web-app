@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as denominationActions from '../denomination.actions';
@@ -29,7 +29,7 @@ export class TellerDenominationApiEffects {
 
   @Effect()
   loadDenomination$: Observable<Action> = this.actions$
-    .ofType(denominationActions.LOAD_DENOMINATION).pipe(
+    .pipe(ofType(denominationActions.LOAD_DENOMINATION),
       map((action: denominationActions.LoadDenominationAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.fetchTellerDenominations(payload.officeId, payload.tellerCode).pipe(
@@ -39,7 +39,7 @@ export class TellerDenominationApiEffects {
 
   @Effect()
   createDenomination$: Observable<Action> = this.actions$
-    .ofType(denominationActions.CREATE_DENOMINATION).pipe(
+    .pipe(ofType(denominationActions.CREATE_DENOMINATION),
       map((action: denominationActions.CreateDenominationAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.saveTellerDenomination(payload.officeId, payload.tellerCode, payload.denomination).pipe(

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Inject, Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
 import * as securityActions from '../security.actions';
 import {AuthenticationService} from '../../../services/security/authn/authentication.service';
@@ -36,7 +36,7 @@ export class SecurityApiEffects {
 
   @Effect()
   login$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGIN).pipe(
+    .pipe(ofType(securityActions.LOGIN),
     map((action: securityActions.LoginAction) => action.payload),
     mergeMap(payload =>
       this.authenticationService.login(payload.tenant, payload.username, payload.password).pipe(
@@ -51,7 +51,7 @@ export class SecurityApiEffects {
 
   @Effect()
   loadPermissions$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGIN_SUCCESS).pipe(
+    .pipe(ofType(securityActions.LOGIN_SUCCESS),
     map((action: securityActions.LoginSuccessAction) => action.payload),
     mergeMap(payload =>
       this.fetchPermissions(payload.tenant, payload.username, payload.authentication.accessToken).pipe(
@@ -61,7 +61,7 @@ export class SecurityApiEffects {
 
   @Effect()
   startRefreshTokenTimer$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGIN_SUCCESS).pipe(
+    .pipe(ofType(securityActions.LOGIN_SUCCESS),
     map((action: securityActions.LoginSuccessAction) => action.payload),
     map(payload => new Date(payload.authentication.refreshTokenExpiration).getTime()),
     map(refreshTokenExpirationMillies => new Date(refreshTokenExpirationMillies - this.tokenExpiryBuffer)),
@@ -69,7 +69,7 @@ export class SecurityApiEffects {
 
   @Effect()
   logout$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGOUT).pipe(
+    .pipe(ofType(securityActions.LOGOUT),
     mergeMap(() => this.store.select(fromRoot.getAuthenticationState).pipe(take(1))),
     mergeMap(state =>
       this.authenticationService.logout(state.tenant, state.username, state.authentication.accessToken).pipe(
@@ -79,7 +79,7 @@ export class SecurityApiEffects {
 
   @Effect()
   refreshToken$: Observable<Action> = this.actions$
-    .ofType(securityActions.REFRESH_ACCESS_TOKEN).pipe(
+    .pipe(ofType(securityActions.REFRESH_ACCESS_TOKEN),
     mergeMap(() => this.store.select(fromRoot.getAuthenticationState).pipe(take(1))),
     mergeMap(state =>
       this.authenticationService.refreshAccessToken(state.tenant).pipe(
@@ -89,7 +89,7 @@ export class SecurityApiEffects {
 
   @Effect()
   startAccessTokenRefreshTimerAfterLogin$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGIN_SUCCESS).pipe(
+    .pipe(ofType(securityActions.LOGIN_SUCCESS),
     map((action: securityActions.LoginSuccessAction) => action.payload),
     map(payload => new Date(payload.authentication.accessTokenExpiration).getTime()),
     map(accessTokenExpirationMillies => new Date(accessTokenExpirationMillies - this.tokenExpiryBuffer)),
@@ -97,7 +97,7 @@ export class SecurityApiEffects {
 
   @Effect()
   startAccessTokenRefreshTimerAfterRefresh$: Observable<Action> = this.actions$
-    .ofType(securityActions.REFRESH_ACCESS_TOKEN_SUCCESS).pipe(
+    .pipe(ofType(securityActions.REFRESH_ACCESS_TOKEN_SUCCESS),
     map((action: securityActions.RefreshAccessTokenSuccessAction) => action.payload),
     map(payload => new Date(payload.accessTokenExpiration).getTime()),
     map(accessTokenExpirationMillies => new Date(accessTokenExpirationMillies - this.tokenExpiryBuffer)),
@@ -105,7 +105,7 @@ export class SecurityApiEffects {
 
   @Effect()
   refreshAccessTokenStartTimer$: Observable<Action> = this.actions$
-    .ofType(securityActions.REFRESH_ACCESS_TOKEN_START_TIMER).pipe(
+    .pipe(ofType(securityActions.REFRESH_ACCESS_TOKEN_START_TIMER),
     map((action: securityActions.RefreshAccessTokenStartTimerAction) => action.payload),
     mergeMap(dueTime =>
       observableTimer(dueTime).pipe(
@@ -114,7 +114,7 @@ export class SecurityApiEffects {
 
   @Effect()
   refreshTokenStartTimer$: Observable<Action> = this.actions$
-    .ofType(securityActions.REFRESH_TOKEN_START_TIMER).pipe(
+    .pipe(ofType(securityActions.REFRESH_TOKEN_START_TIMER),
     map((action: securityActions.RefreshTokenStartTimerAction) => action.payload),
     mergeMap(dueTime =>
       observableTimer(dueTime).pipe(
@@ -123,7 +123,7 @@ export class SecurityApiEffects {
 
   @Effect()
   changePassword$: Observable<Action> = this.actions$
-    .ofType(securityActions.CHANGE_PASSWORD).pipe(
+    .pipe(ofType(securityActions.CHANGE_PASSWORD),
     map((action: securityActions.ChangePasswordAction) => action.payload),
     mergeMap(payload =>
       this.identityService.changePassword(payload.username, new Password(payload.password)).pipe(
@@ -133,7 +133,7 @@ export class SecurityApiEffects {
 
   @Effect()
   logoutOnPasswordChange$: Observable<Action> = this.actions$
-    .ofType(securityActions.CHANGE_PASSWORD_SUCCESS).pipe(
+    .pipe(ofType(securityActions.CHANGE_PASSWORD_SUCCESS),
     mergeMap(() => observableOf(new securityActions.LogoutAction())));
 
   private fetchPermissions(tenantId: string, username: string, accessToken: string): Observable<FimsPermission[]> {

@@ -16,22 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as meetingActions from '../meeting.actions';
-import {Router} from '@angular/router';
-import {map, tap} from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class MeetingRouteEffects {
 
   @Effect({ dispatch: false })
   updateMeetingSuccess$: Observable<Action> = this.actions$
-    .ofType( meetingActions.UPDATE_SUCCESS).pipe(
-    map(action => action.payload),
-    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
+    .pipe(ofType(meetingActions.UPDATE_SUCCESS),
+      map(action => action.payload),
+      tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 

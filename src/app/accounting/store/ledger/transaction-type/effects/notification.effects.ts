@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
@@ -29,8 +29,7 @@ export class TransactionTypeNotificationEffects {
 
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(transactionTypeActions.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Transaction type is going to be created'
@@ -38,8 +37,7 @@ export class TransactionTypeNotificationEffects {
 
   @Effect({ dispatch: false })
   updateTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(transactionTypeActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Transaction type is going to be updated'

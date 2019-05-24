@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as groupActions from '../group.actions';
@@ -30,11 +30,11 @@ export class GroupSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(groupActions.SEARCH).pipe(
+    .pipe(ofType(groupActions.SEARCH),
     debounceTime(300),
     map((action: groupActions.SearchAction) => action.payload),
     switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(groupActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(groupActions.SEARCH),(skip(1)));
 
       return this.groupService.fetchGroups(fetchRequest).pipe(
         takeUntil(nextSearch$),

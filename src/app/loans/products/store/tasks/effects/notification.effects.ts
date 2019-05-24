@@ -19,7 +19,7 @@
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as taskActions from '../task.actions';
 import { tap } from 'rxjs/operators'
@@ -28,8 +28,7 @@ export class ProductTasksNotificationEffects {
 
   @Effect({dispatch: false})
   createUpdateCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Task is going to be created'
@@ -37,8 +36,7 @@ export class ProductTasksNotificationEffects {
 
   @Effect({dispatch: false})
   deleteCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Task is going to be deleted'

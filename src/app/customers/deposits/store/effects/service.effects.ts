@@ -18,7 +18,7 @@
  */
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { emptySearchResult } from '../../../../common/store/search.reducer';
 import { DepositAccountService } from '../../../../services/depositAccount/deposit-account.service';
 import { Injectable } from '@angular/core';
@@ -31,12 +31,11 @@ export class DepositProductInstanceApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(instanceActions.SEARCH)
-    .pipe(
+    .pipe(ofType(instanceActions.SEARCH),
       debounceTime(300),
       map(action => action.payload),
       switchMap(payload => {
-        const nextSearch$ = this.actions$.ofType(instanceActions.SEARCH).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(instanceActions.SEARCH),(skip(1)));
 
         return this.depositService.fetchProductInstances(payload.customerId)
           .pipe(
@@ -51,7 +50,7 @@ export class DepositProductInstanceApiEffects {
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$
-    .ofType(instanceActions.CREATE).pipe(
+    .pipe(ofType(instanceActions.CREATE),
       map((action: instanceActions.CreateProductInstanceAction) => action.payload),
       mergeMap(payload =>
         this.depositService.createProductInstance(payload.productInstance).pipe(
@@ -64,7 +63,7 @@ export class DepositProductInstanceApiEffects {
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$
-    .ofType(instanceActions.UPDATE).pipe(
+    .pipe(ofType(instanceActions.UPDATE),
       map((action: instanceActions.UpdateProductInstanceAction) => action.payload),
       mergeMap(payload =>
         this.depositService.updateProductInstance(payload.productInstance).pipe(
@@ -77,7 +76,7 @@ export class DepositProductInstanceApiEffects {
 
   @Effect()
   issueCheques$: Observable<Action> = this.actions$
-    .ofType(instanceActions.ISSUE_CHEQUES).pipe(
+    .pipe(ofType(instanceActions.ISSUE_CHEQUES),
       map((action: instanceActions.IssueChequesAction) => action.payload),
       mergeMap(payload =>
         this.chequeService.issue(payload.issuingCount).pipe(

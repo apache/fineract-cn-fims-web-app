@@ -18,7 +18,7 @@
  */
 import { Injectable } from '@angular/core';
 import { OfficeService } from '../../../services/office/office.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as officeActions from '../office.actions';
@@ -29,7 +29,7 @@ export class OfficeApiEffects {
 
   @Effect()
   createOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE).pipe(
+    .pipe(ofType(officeActions.CREATE),
       map((action: officeActions.CreateOfficeAction) => action.payload),
       mergeMap(payload =>
         this.officeService.createOffice(payload.office).pipe(
@@ -42,7 +42,7 @@ export class OfficeApiEffects {
 
   @Effect()
   createBranchOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE_BRANCH).pipe(
+    .pipe(ofType(officeActions.CREATE_BRANCH),
       map((action: officeActions.CreateBranchOfficeAction) => action.payload),
       mergeMap(payload =>
         this.officeService.addBranch(payload.office.parentIdentifier, payload.office).pipe(
@@ -55,7 +55,7 @@ export class OfficeApiEffects {
 
   @Effect()
   updateOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.UPDATE).pipe(
+    .pipe(ofType(officeActions.UPDATE),
       map((action: officeActions.UpdateOfficeAction) => action.payload),
       mergeMap(payload =>
         this.officeService.updateOffice(payload.office).pipe(
@@ -68,7 +68,7 @@ export class OfficeApiEffects {
 
   @Effect()
   deleteOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.DELETE).pipe(
+    .pipe(ofType(officeActions.DELETE),
       map((action: officeActions.DeleteOfficeAction) => action.payload),
       mergeMap(payload =>
         this.officeService.deleteOffice(payload.office.identifier).pipe(

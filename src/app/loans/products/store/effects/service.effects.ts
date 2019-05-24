@@ -20,7 +20,7 @@ import {Injectable} from '@angular/core';
 import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
 import {Action} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as productActions from '../product.actions';
 import {mapToFimsProducts, mapToProduct} from '../model/fims-product.mapper';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
@@ -31,11 +31,11 @@ export class ProductApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(productActions.SEARCH).pipe(
+    .pipe(ofType(productActions.SEARCH),
     map((action: productActions.SelectAction) => action.payload),
     debounceTime(300),
     switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(productActions.SEARCH).pipe(skip(1));
+      const nextSearch$ = this.actions$.pipe(ofType(productActions.SEARCH),(skip(1)));
 
       return this.portfolioService.findAllProducts(true, fetchRequest )
         .pipe(
@@ -50,7 +50,7 @@ export class ProductApiEffects {
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.CREATE).pipe(
+    .pipe(ofType(productActions.CREATE),
     map((action: productActions.CreateProductAction) => action.payload),
     mergeMap(payload =>
       this.portfolioService.createProduct(mapToProduct(payload.product)).pipe(
@@ -63,7 +63,7 @@ export class ProductApiEffects {
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.UPDATE).pipe(
+    .pipe(ofType(productActions.UPDATE),
     map((action: productActions.UpdateProductAction) => action.payload),
     mergeMap(payload =>
       this.portfolioService.changeProduct(mapToProduct(payload.product)).pipe(
@@ -76,7 +76,7 @@ export class ProductApiEffects {
 
   @Effect()
   deleteProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.DELETE).pipe(
+    .pipe(ofType(productActions.DELETE),
     map((action: productActions.DeleteProductAction) => action.payload),
     mergeMap(payload =>
       this.portfolioService.deleteProduct(payload.product.identifier).pipe(
@@ -89,7 +89,7 @@ export class ProductApiEffects {
 
   @Effect()
   enableProduct$: Observable<Action> = this.actions$
-    .ofType(productActions.ENABLE).pipe(
+    .pipe(ofType(productActions.ENABLE),
     map((action: productActions.EnableProductAction) => action.payload),
     mergeMap(payload =>
       this.portfolioService.enableProduct(payload.product.identifier, payload.enable).pipe(

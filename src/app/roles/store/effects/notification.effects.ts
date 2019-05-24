@@ -18,7 +18,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as roleActions from '../role.actions';
@@ -30,8 +30,7 @@ export class RoleNotificationEffects {
 
   @Effect({ dispatch: false })
   createRoleSuccess$: Observable<Action> = this.actions$
-    .ofType(roleActions.CREATE_SUCCESS, roleActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(roleActions.CREATE_SUCCESS, roleActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Role is going to be saved'
@@ -39,8 +38,7 @@ export class RoleNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteRoleSuccess$: Observable<Action> = this.actions$
-    .ofType(roleActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(roleActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Role is going to be deleted'

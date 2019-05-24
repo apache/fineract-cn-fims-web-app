@@ -17,7 +17,8 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { Actions, Effect, toPayload} from '@ngrx/effects';
+import { ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as commandActions from '../commands.actions';
@@ -29,7 +30,7 @@ export class CustomerCommandApiEffects {
 
   @Effect()
   loadCommands$: Observable<Action> = this.actions$
-    .ofType(commandActions.LOAD_ALL).pipe(
+    .pipe(ofType(commandActions.LOAD_ALL),
       map(toPayload),
       mergeMap(customerId =>
         this.customerService.listCustomerCommand(customerId).pipe(

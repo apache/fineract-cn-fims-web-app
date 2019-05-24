@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
@@ -29,7 +29,7 @@ export class OfficeRouteEffects {
 
   @Effect({ dispatch: false })
   createOfficeSuccess$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE_SUCCESS).pipe(
+    .pipe(ofType(officeActions.CREATE_SUCCESS),
     map(action => action.payload),
     tap(payload => {
       if (payload.resource.parentIdentifier) {
@@ -41,13 +41,13 @@ export class OfficeRouteEffects {
 
   @Effect({ dispatch: false })
   updateOfficeSuccess$: Observable<Action> = this.actions$
-    .ofType(officeActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(officeActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../../', payload.resource.identifier], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteOfficeSuccess$: Observable<Action> = this.actions$
-    .ofType(officeActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(officeActions.DELETE_SUCCESS),
     map((action) => action.payload),
     tap(payload => {
       if (payload.resource.parentIdentifier) {

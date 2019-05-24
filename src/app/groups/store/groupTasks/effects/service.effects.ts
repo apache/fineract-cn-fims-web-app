@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as taskActions from '../group-task.actions';
@@ -29,7 +29,7 @@ export class GroupCommandApiEffects {
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND).pipe(
+    .pipe(ofType(taskActions.EXECUTE_COMMAND),
       map((action: taskActions.ExecuteCommandAction) => action.payload),
       mergeMap(payload =>
         this.groupService.groupCommand(payload.groupId, payload.command).pipe(

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as securityActions from '../security.actions';
@@ -30,7 +30,7 @@ export class SecurityNotificationEffects {
 
   @Effect({ dispatch: false })
   loginSuccess$: Observable<Action> = this.actions$
-    .ofType(securityActions.LOGIN_SUCCESS).pipe(
+    .pipe(ofType(securityActions.LOGIN_SUCCESS),
     tap((action: LoginSuccessAction) => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: `You are logged in with user '${action.payload.username}'`
@@ -38,7 +38,7 @@ export class SecurityNotificationEffects {
 
   @Effect({ dispatch: false })
   changePasswordSuccess$: Observable<Action> = this.actions$
-    .ofType(securityActions.CHANGE_PASSWORD_SUCCESS).pipe(
+    .pipe(ofType(securityActions.CHANGE_PASSWORD_SUCCESS),
     tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Your password has been changed'

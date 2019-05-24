@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {Observable, of} from 'rxjs';
@@ -30,7 +30,7 @@ export class TellerProductsApiEffects {
 
   @Effect()
   loadAllDepositProducts$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOAD_ALL_DEPOSIT_PRODUCTS).pipe(
+    .pipe(ofType(tellerActions.LOAD_ALL_DEPOSIT_PRODUCTS),
     map((action: tellerActions.LoadAllDepositProductsAction) => action.payload),
     mergeMap(customerId =>
       this.depositService.fetchProductInstances(customerId).pipe(
@@ -40,7 +40,7 @@ export class TellerProductsApiEffects {
 
   @Effect()
   loadAllLoanProducts$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOAD_ALL_LOAN_PRODUCTS).pipe(
+    .pipe(ofType(tellerActions.LOAD_ALL_LOAN_PRODUCTS),
     map((action: tellerActions.LoadAllLoanProductsAction) => action.payload),
     mergeMap(customerId =>
       this.portfolioService.getAllCasesForCustomer(customerId).pipe(

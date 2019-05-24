@@ -18,7 +18,7 @@
  */
 import { NotificationService, NotificationType } from '../../../../services/notification/notification.service';
 import { Observable } from 'rxjs';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import * as taskActions from '../task.actions';
@@ -29,8 +29,7 @@ export class TasksNotificationEffects {
 
   @Effect({ dispatch: false })
   createTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Task is going to be saved'
@@ -38,8 +37,7 @@ export class TasksNotificationEffects {
 
   @Effect({ dispatch: false })
   updateTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Task is going to be updated'

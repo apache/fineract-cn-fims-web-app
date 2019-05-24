@@ -17,7 +17,7 @@
  * under the License.
  */
 import { DepositAccountService } from '../../../../services/depositAccount/deposit-account.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -29,7 +29,7 @@ export class DepositProductDividendApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(dividendActions.LOAD_ALL).pipe(
+    .pipe(ofType(dividendActions.LOAD_ALL),
       switchMap((action) => {
         return this.depositService.fetchDividendDistributions(action.payload).pipe(
           map(dividendDistributions => new dividendActions.LoadAllCompleteAction(dividendDistributions)),
@@ -38,7 +38,7 @@ export class DepositProductDividendApiEffects {
 
   @Effect()
   createDividendDistribution$: Observable<Action> = this.actions$
-    .ofType(dividendActions.CREATE).pipe(
+    .pipe(ofType(dividendActions.CREATE),
       map((action: dividendActions.CreateDividendDistributionAction) => action.payload),
       mergeMap(payload =>
         this.depositService.distributeDividend(payload.productDefinitionId, payload.dividendDistribution).pipe(

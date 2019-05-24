@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as journalEntryActions from '../journal-entry.actions';
@@ -29,7 +29,7 @@ export class JournalEntryApiEffects {
 
   @Effect()
   loadJournalEntries$: Observable<Action> = this.actions$
-    .ofType(journalEntryActions.SEARCH).pipe(
+    .pipe(ofType(journalEntryActions.SEARCH),
       map((action: journalEntryActions.SearchAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.fetchJournalEntries(payload.startDate, payload.endDate, payload.account, payload.amount).pipe(
@@ -39,7 +39,7 @@ export class JournalEntryApiEffects {
 
   @Effect()
   createJournalEntry$: Observable<Action> = this.actions$
-    .ofType(journalEntryActions.CREATE).pipe(
+    .pipe(ofType(journalEntryActions.CREATE),
       map((action: journalEntryActions.CreateJournalEntryAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.createJournalEntry(payload.journalEntry).pipe(

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as employeeActions from '../employee.actions';
@@ -29,8 +29,7 @@ export class EmployeeNotificationEffects {
 
   @Effect({ dispatch: false })
   createEmployeeSuccess$: Observable<Action> = this.actions$
-    .ofType(employeeActions.CREATE_SUCCESS, employeeActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(employeeActions.CREATE_SUCCESS, employeeActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Employee is going to be saved'
@@ -38,8 +37,7 @@ export class EmployeeNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteEmployeeSuccess$: Observable<Action> = this.actions$
-    .ofType(employeeActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(employeeActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Employee is going to be deleted'

@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as accountActions from '../account.actions';
@@ -29,19 +29,19 @@ export class AccountRouteEffects {
 
   @Effect({ dispatch: false })
   createAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.CREATE_SUCCESS).pipe(
+    .pipe(ofType(accountActions.CREATE_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(accountActions.UPDATE_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(accountActions.DELETE_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../../../ledgers/detail', payload.resource.ledger], { relativeTo: payload.activatedRoute })));
 

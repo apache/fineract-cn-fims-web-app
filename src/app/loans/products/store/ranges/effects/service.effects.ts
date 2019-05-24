@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as resourceActions from '../../../../../common/store/action-creator/actions';
@@ -31,12 +31,11 @@ export class ProductChargeRangesApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(RangeActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(RangeActions.LOAD_ALL),
       debounceTime(300),
       map((action: resourceActions.LoadAllAction) => action.payload),
       switchMap(id => {
-        const nextSearch$ = this.actions$.ofType(RangeActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(RangeActions.LOAD_ALL),(skip(1)));
 
         return this.portfolioService.findAllRanges(id)
           .pipe(
@@ -51,7 +50,7 @@ export class ProductChargeRangesApiEffects {
 
   @Effect()
   createRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.CREATE).pipe(
+    .pipe(ofType(RangeActions.CREATE),
       map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
       mergeMap(payload =>
         this.portfolioService.createRange(payload.data.productIdentifier, payload.resource).pipe(
@@ -65,7 +64,7 @@ export class ProductChargeRangesApiEffects {
 
   @Effect()
   updateRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.UPDATE).pipe(
+    .pipe(ofType(RangeActions.UPDATE),
       map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
       mergeMap(payload =>
         this.portfolioService.changeRange(payload.data.productIdentifier, payload.resource).pipe(
@@ -79,7 +78,7 @@ export class ProductChargeRangesApiEffects {
 
   @Effect()
   deleteRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.DELETE).pipe(
+    .pipe(ofType(RangeActions.DELETE),
       map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
       mergeMap(payload =>
         this.portfolioService.deleteRange(payload.data.productIdentifier, payload.resource.identifier).pipe(

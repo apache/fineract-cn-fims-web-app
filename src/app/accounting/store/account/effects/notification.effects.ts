@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as accountActions from '../account.actions';
@@ -29,8 +29,7 @@ export class AccountNotificationEffects {
 
   @Effect({ dispatch: false })
   createAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.CREATE_SUCCESS, accountActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(accountActions.CREATE_SUCCESS, accountActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Account is going to be saved'
@@ -38,8 +37,7 @@ export class AccountNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteAccountSuccess$: Observable<Action> = this.actions$
-    .ofType(accountActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(accountActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Account is going to be deleted'
@@ -47,8 +45,7 @@ export class AccountNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteAccountFail$: Observable<Action> = this.actions$
-    .ofType(accountActions.DELETE_FAIL)
-    .pipe(
+    .pipe(ofType(accountActions.DELETE_FAIL),
       tap(() => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Account can\'t be deleted',

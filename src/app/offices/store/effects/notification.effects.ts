@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as officeActions from '../office.actions';
@@ -29,8 +29,7 @@ export class OfficeNotificationEffects {
 
   @Effect({ dispatch: false })
   createOfficeSuccess$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE_SUCCESS, officeActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(officeActions.CREATE_SUCCESS, officeActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Office is going to be saved'
@@ -38,8 +37,7 @@ export class OfficeNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteOfficeSuccess$: Observable<Action> = this.actions$
-    .ofType(officeActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(officeActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Office is going to be deleted'
@@ -47,8 +45,7 @@ export class OfficeNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteOfficeFail$: Observable<Action> = this.actions$
-    .ofType(officeActions.DELETE_FAIL)
-    .pipe(
+    .pipe(ofType(officeActions.DELETE_FAIL),
       tap(() => this.notificationService.send({
       type: NotificationType.ALERT,
       title: 'Office can\'t be deleted',

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as meetingActions from '../meeting.actions';
@@ -29,8 +29,7 @@ export class MeetingNotificationEffects {
 
   @Effect({ dispatch: false })
   updateMeetingSuccess$: Observable<Action> = this.actions$
-    .ofType( meetingActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType( meetingActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Meeting is going to be saved'

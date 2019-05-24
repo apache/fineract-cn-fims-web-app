@@ -18,7 +18,7 @@
  */
 import { Injectable } from '@angular/core';
 import { OfficeService } from '../../../services/office/office.service';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as employeeActions from '../employee.actions';
@@ -33,7 +33,7 @@ export class EmployeeApiEffects {
 
   @Effect()
   createEmployee$: Observable<Action> = this.actions$
-    .ofType(employeeActions.CREATE).pipe(
+    .pipe(ofType(employeeActions.CREATE),
       map((action: employeeActions.CreateEmployeeAction) => action.payload),
       mergeMap(payload =>
         this.identityService.createUser(payload.user)
@@ -48,7 +48,7 @@ export class EmployeeApiEffects {
 
   @Effect()
   updateEmployee$: Observable<Action> = this.actions$
-    .ofType(employeeActions.UPDATE).pipe(
+    .pipe(ofType(employeeActions.UPDATE),
       map((action: employeeActions.UpdateEmployeeAction) => action.payload),
       mergeMap(payload => {
         const employee = payload.employee;
@@ -79,7 +79,7 @@ export class EmployeeApiEffects {
 
   @Effect()
   deleteEmployee$: Observable<Action> = this.actions$
-    .ofType(employeeActions.DELETE).pipe(
+    .pipe(ofType(employeeActions.DELETE),
       map((action: employeeActions.DeleteEmployeeAction) => action.payload),
       mergeMap(payload => {
         return forkJoin(

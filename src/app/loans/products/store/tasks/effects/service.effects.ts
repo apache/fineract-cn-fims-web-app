@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as taskActions from '../task.actions';
@@ -29,12 +29,11 @@ export class ProductTasksApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(taskActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(taskActions.LOAD_ALL),
       debounceTime(300),
       map((action: taskActions.LoadAllAction) => action.payload),
       switchMap(id => {
-        const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(taskActions.LOAD_ALL),(skip(1)));
 
         return this.portfolioService.findAllTaskDefinitionsForProduct(id)
           .pipe(
@@ -45,7 +44,7 @@ export class ProductTasksApiEffects {
 
   @Effect()
   createTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE).pipe(
+    .pipe(ofType(taskActions.CREATE),
       map((action: taskActions.CreateTaskAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.createTaskDefinition(payload.productId, payload.task).pipe(
@@ -58,7 +57,7 @@ export class ProductTasksApiEffects {
 
   @Effect()
   updateTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.UPDATE).pipe(
+    .pipe(ofType(taskActions.UPDATE),
       map((action: taskActions.UpdateTaskAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.changeTaskDefinition(payload.productId, payload.task).pipe(
@@ -71,7 +70,7 @@ export class ProductTasksApiEffects {
 
   @Effect()
   deleteTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.DELETE).pipe(
+    .pipe(ofType(taskActions.DELETE),
       map((action: taskActions.DeleteTaskAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.deleteTaskDefinition(payload.productId, payload.task.identifier).pipe(

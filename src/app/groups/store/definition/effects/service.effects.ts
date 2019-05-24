@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as groupActions from '../definition.actions';
@@ -28,12 +28,11 @@ import { map, debounceTime, switchMap, mergeMap, catchError, skip, takeUntil } f
 export class GroupDefinitionApiEffects {
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(groupActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(groupActions.LOAD_ALL),
       debounceTime(300),
       map((action: groupActions.LoadAllAction) => action.payload),
       switchMap(() => {
-        const nextSearch$ = this.actions$.ofType(groupActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(groupActions.LOAD_ALL),(skip(1)));
 
         return this.groupService.fetchGroupDefinitions()
           .pipe(
@@ -44,7 +43,7 @@ export class GroupDefinitionApiEffects {
 
   @Effect()
   createGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE).pipe(
+    .pipe(ofType(groupActions.CREATE),
       map((action: groupActions.CreateGroupDefinitionAction) => action.payload),
       mergeMap(payload =>
         this.groupService.createGroupDefinition(payload.groupDefinition).pipe(
@@ -57,7 +56,7 @@ export class GroupDefinitionApiEffects {
 
   @Effect()
   updateGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.UPDATE).pipe(
+    .pipe(ofType(groupActions.UPDATE),
       map((action: groupActions.UpdateGroupDefinitionAction) => action.payload),
       mergeMap(payload =>
         this.groupService.updateGroupDefinition(payload.groupDefinition).pipe(

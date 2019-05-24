@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -29,12 +29,11 @@ export class CasePaymentsApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(paymentActions.SEARCH)
-    .pipe(
+    .pipe(ofType(paymentActions.SEARCH),
       debounceTime(300),
       map((action: paymentActions.SearchAction) => action.payload),
       switchMap(payload => {
-        const nextSearch$ = this.actions$.ofType(paymentActions.SEARCH).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(paymentActions.SEARCH),(skip(1)));
 
         return this.portfolioService.getPaymentScheduleForCase(payload.productIdentifier, payload.caseIdentifier,
           payload.initialDisbursalDate)

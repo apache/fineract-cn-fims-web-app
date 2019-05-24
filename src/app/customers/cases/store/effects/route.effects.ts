@@ -18,7 +18,7 @@
  */
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import * as caseActions from '../case.actions';
 import {Injectable} from '@angular/core';
@@ -29,13 +29,13 @@ export class CaseRouteEffects {
 
   @Effect({ dispatch: false })
   createCaseSuccess$: Observable<Action> = this.actions$
-    .ofType(caseActions.CREATE_SUCCESS, caseActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(caseActions.CREATE_SUCCESS, caseActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} )));
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(caseActions.EXECUTE_COMMAND_SUCCESS).pipe(
+    .pipe(ofType(caseActions.EXECUTE_COMMAND_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute} )));
 

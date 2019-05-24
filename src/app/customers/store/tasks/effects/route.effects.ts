@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Observable} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
@@ -29,7 +29,7 @@ export class TasksRouteEffects {
 
   @Effect({ dispatch: false })
   createCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 

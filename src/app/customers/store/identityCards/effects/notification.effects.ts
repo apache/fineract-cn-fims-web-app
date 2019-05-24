@@ -19,7 +19,7 @@
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import * as identificationCardActions from '../identity-cards.actions';
 import { tap} from 'rxjs/operators'
@@ -29,8 +29,7 @@ export class CustomerIdentificationCardNotificationEffects {
 
   @Effect({ dispatch: false })
   createIdentificationCardSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Identification card is going to be saved'
@@ -38,8 +37,7 @@ export class CustomerIdentificationCardNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteIdentificationCardSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(identificationCardActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Identification card is going to be deleted'

@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { TellerService } from '../../../services/teller/teller-service';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -29,7 +29,7 @@ export class TellerApiEffects {
 
   @Effect()
   unlockDrawer$: Observable<Action> = this.actions$
-    .ofType(tellerActions.UNLOCK_DRAWER).pipe(
+    .pipe(ofType(tellerActions.UNLOCK_DRAWER),
       map((action: tellerActions.UnlockDrawerAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.unlockDrawer(payload.tellerCode, { employeeIdentifier: payload.employeeId, password: payload.password }).pipe(
@@ -39,7 +39,7 @@ export class TellerApiEffects {
 
   @Effect()
   lockDrawer$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOCK_DRAWER).pipe(
+    .pipe(ofType(tellerActions.LOCK_DRAWER),
       map((action: tellerActions.LockDrawerAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.executeCommand(payload.tellerCode, 'PAUSE').pipe(
@@ -49,7 +49,7 @@ export class TellerApiEffects {
 
   @Effect()
   confirmTransaction$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CONFIRM_TRANSACTION).pipe(
+    .pipe(ofType(tellerActions.CONFIRM_TRANSACTION),
       map((action: tellerActions.ConfirmTransactionAction) => action.payload),
       mergeMap(payload =>
         this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command,

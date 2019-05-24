@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
@@ -30,7 +30,7 @@ export class TransactionTypeApiEffects {
 
   @Effect()
   searchTransactionTypes$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.SEARCH).pipe(
+    .pipe(ofType(transactionTypeActions.SEARCH),
     map((action: transactionTypeActions.SearchAction) => action.payload),
     mergeMap(({ fetchRequest }) =>
       this.accountingService.fetchTransactionTypes(fetchRequest).pipe(
@@ -44,7 +44,7 @@ export class TransactionTypeApiEffects {
 
   @Effect()
   createTransactionType$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE).pipe(
+    .pipe(ofType(transactionTypeActions.CREATE),
     map((action: transactionTypeActions.CreateTransactionTypeAction) => action.payload),
     mergeMap(payload =>
       this.accountingService.createTransactionType(payload.transactionType).pipe(
@@ -57,7 +57,7 @@ export class TransactionTypeApiEffects {
 
   @Effect()
   updateTransactionType$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE).pipe(
+    .pipe(ofType(transactionTypeActions.UPDATE),
     map((action: transactionTypeActions.UpdateTransactionTypeAction) => action.payload),
     mergeMap(payload =>
       this.accountingService.changeTransactionType(payload.transactionType).pipe(

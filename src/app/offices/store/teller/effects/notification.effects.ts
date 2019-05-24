@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect , ofType} from '@ngrx/effects';
 import { NotificationService, NotificationType } from '../../../../services/notification/notification.service';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -29,8 +29,7 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS)
-    .pipe(
+    .pipe(ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Teller is going to be saved'
@@ -38,8 +37,7 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.EXECUTE_COMMAND_SUCCESS)
-    .pipe(
+    .pipe(ofType(tellerActions.EXECUTE_COMMAND_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Teller is going to be updated'
@@ -47,7 +45,7 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   openCommandFail$: Observable<Action> = this.actions$
-    .ofType(tellerActions.EXECUTE_COMMAND_FAIL).pipe(
+    .pipe(ofType(tellerActions.EXECUTE_COMMAND_FAIL),
       map(action => action.payload.command),
       filter(command => command.action === 'OPEN'),
       tap(action => this.notificationService.send({
@@ -59,7 +57,7 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   closeCommandFail$: Observable<Action> = this.actions$
-    .ofType(tellerActions.EXECUTE_COMMAND_FAIL).pipe(
+    .pipe(ofType(tellerActions.EXECUTE_COMMAND_FAIL),
       map(action => action.payload.command),
       filter(command => command.action === 'CLOSE'),
       tap(action => this.notificationService.send({

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../customer-task.actions';
@@ -29,8 +29,7 @@ export class CustomerTasksNotificationEffects {
 
   @Effect({ dispatch: false })
   executeCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.EXECUTE_TASK_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Task is going to be executed'
@@ -38,8 +37,7 @@ export class CustomerTasksNotificationEffects {
 
   @Effect({ dispatch: false })
   executeCustomerTaskFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_FAIL)
-    .pipe(
+    .pipe(ofType(taskActions.EXECUTE_TASK_FAIL),
       tap(() => this.notificationService.send({
       type: NotificationType.ALERT,
       message: 'Sorry, there was a problem executing your task'
@@ -47,8 +45,7 @@ export class CustomerTasksNotificationEffects {
 
   @Effect({ dispatch: false })
   executeCustomerCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_SUCCESS)
-    .pipe(
+    .pipe(ofType(taskActions.EXECUTE_COMMAND_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Command is going to be executed'
@@ -56,8 +53,7 @@ export class CustomerTasksNotificationEffects {
 
   @Effect({ dispatch: false })
   executeCustomerCommandFail$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND_FAIL)
-    .pipe(
+    .pipe(ofType(taskActions.EXECUTE_COMMAND_FAIL),
       tap(() => this.notificationService.send({
       type: NotificationType.ALERT,
       message: 'Sorry, there was a problem executing your command'

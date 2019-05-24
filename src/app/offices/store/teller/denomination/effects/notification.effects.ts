@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as denominationActions from '../denomination.actions';
@@ -29,8 +29,7 @@ export class TellerDenominationNotificationEffects {
 
   @Effect({ dispatch: false })
   createDenominationSuccess$: Observable<Action> = this.actions$
-    .ofType(denominationActions.CREATE_DENOMINATION_SUCCESS)
-    .pipe(
+    .pipe(ofType(denominationActions.CREATE_DENOMINATION_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Denomination is going to be saved'

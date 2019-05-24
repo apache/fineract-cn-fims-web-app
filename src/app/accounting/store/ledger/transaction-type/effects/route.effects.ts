@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
@@ -29,13 +29,13 @@ export class TransactionTypeRouteEffects {
 
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE_SUCCESS).pipe(
+    .pipe(ofType(transactionTypeActions.CREATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(transactionTypeActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 

@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as catalogActions from '../catalog.actions';
@@ -29,7 +29,7 @@ export class CatalogApiEffects {
 
   @Effect()
   createCatalog$: Observable<Action> = this.actions$
-    .ofType(catalogActions.CREATE).pipe(
+    .pipe(ofType(catalogActions.CREATE),
       map((action: catalogActions.CreateCatalogAction) => action.payload),
       mergeMap(payload =>
         this.catalogService.createCatalog(payload.catalog).pipe(
@@ -39,7 +39,7 @@ export class CatalogApiEffects {
 
   @Effect()
   deleteCatalog$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE).pipe(
+    .pipe(ofType(catalogActions.DELETE),
       map((action: catalogActions.DeleteCatalogAction) => action.payload),
       mergeMap(payload =>
         this.catalogService.deleteCatalog(payload.catalog).pipe(
@@ -49,7 +49,7 @@ export class CatalogApiEffects {
 
   @Effect()
   updateField$: Observable<Action> = this.actions$
-    .ofType(catalogActions.UPDATE_FIELD).pipe(
+    .pipe(ofType(catalogActions.UPDATE_FIELD),
       map((action: catalogActions.UpdateFieldAction) => action.payload),
       mergeMap(payload =>
         this.catalogService.updateField(payload.catalogIdentifier, payload.field).pipe(
@@ -59,7 +59,7 @@ export class CatalogApiEffects {
 
   @Effect()
   deleteField$: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FIELD).pipe(
+    .pipe(ofType(catalogActions.DELETE_FIELD),
       map((action: catalogActions.DeleteFieldAction) => action.payload),
       mergeMap(payload =>
         this.catalogService.deleteField(payload.catalogIdentifier, payload.field).pipe(

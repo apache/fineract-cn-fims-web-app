@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
 import {Observable} from 'rxjs';
@@ -29,8 +29,7 @@ export class CustomerIdentificationCardScanNotificationEffects {
 
   @Effect({ dispatch: false })
   createIdentificationCardScanSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardScanActions.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(identificationCardScanActions.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Scan is going to be uploaded'
@@ -38,8 +37,7 @@ export class CustomerIdentificationCardScanNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteIdentificationCardScanSuccess$: Observable<Action> = this.actions$
-    .ofType(identificationCardScanActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(identificationCardScanActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Scan is going to be deleted'

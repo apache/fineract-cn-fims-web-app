@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect ,ofType} from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as customerActions from '../customer.actions';
@@ -29,7 +29,7 @@ export class CustomerApiEffects {
 
   @Effect()
   createCustomer$: Observable<Action> = this.actions$
-    .ofType(customerActions.CREATE).pipe(
+    .pipe(ofType(customerActions.CREATE),
       map((action: customerActions.CreateCustomerAction) => action.payload),
       mergeMap(payload =>
         this.customerService.createCustomer(payload.customer).pipe(
@@ -42,7 +42,7 @@ export class CustomerApiEffects {
 
   @Effect()
   updateCustomer$: Observable<Action> = this.actions$
-    .ofType(customerActions.UPDATE).pipe(
+    .pipe(ofType(customerActions.UPDATE),
       map((action: customerActions.UpdateCustomerAction) => action.payload),
       mergeMap(payload =>
         this.customerService.updateCustomer(payload.customer).pipe(

@@ -18,7 +18,7 @@
  */
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as instanceActions from '../deposit.actions';
@@ -29,8 +29,7 @@ export class DepositProductInstanceNotificationEffects {
 
   @Effect({dispatch: false})
   createProductInstanceSuccess$: Observable<Action> = this.actions$
-    .ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(instanceActions.CREATE_SUCCESS, instanceActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Deposit account is going to be saved'
@@ -38,8 +37,7 @@ export class DepositProductInstanceNotificationEffects {
 
   @Effect({dispatch: false})
   issueChequesSuccess$: Observable<Action> = this.actions$
-    .ofType(instanceActions.ISSUE_CHEQUES_SUCCESS)
-    .pipe(
+    .pipe(ofType(instanceActions.ISSUE_CHEQUES_SUCCESS),
       tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Cheques are going to be issued'
@@ -47,8 +45,7 @@ export class DepositProductInstanceNotificationEffects {
 
   @Effect({dispatch: false})
   issueChequesFail$: Observable<Action> = this.actions$
-    .ofType(instanceActions.ISSUE_CHEQUES_FAIL)
-    .pipe(
+    .pipe(ofType(instanceActions.ISSUE_CHEQUES_FAIL),
       tap(() => this.notificationService.send({
       type: NotificationType.ALERT,
       message: 'There was an issue issuing cheques'

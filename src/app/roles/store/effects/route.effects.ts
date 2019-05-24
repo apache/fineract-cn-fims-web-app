@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as roleActions from '../role.actions';
@@ -29,13 +29,13 @@ export class RoleRouteEffects {
 
   @Effect({ dispatch: false })
   createRoleSuccess$: Observable<Action> = this.actions$
-    .ofType(roleActions.CREATE_SUCCESS, roleActions.UPDATE_SUCCESS).pipe(
+    .pipe(ofType(roleActions.CREATE_SUCCESS, roleActions.UPDATE_SUCCESS),
     map(action => action.payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteRoleSuccess$: Observable<Action> = this.actions$
-    .ofType(roleActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(roleActions.DELETE_SUCCESS),
     map(action => action.payload),
     tap((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 

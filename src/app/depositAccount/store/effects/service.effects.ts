@@ -19,7 +19,7 @@
 import * as definitionActions from '../product.actions';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { DepositAccountService } from '../../../services/depositAccount/deposit-account.service';
 import { emptySearchResult } from '../../../common/store/search.reducer';
@@ -30,11 +30,10 @@ export class DepositProductDefinitionApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(definitionActions.SEARCH)
-    .pipe(
+    .pipe(ofType(definitionActions.SEARCH),
       debounceTime(300),
       switchMap(() => {
-        const nextSearch$ = this.actions$.ofType(definitionActions.SEARCH).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(definitionActions.SEARCH),(skip(1)));
 
         return this.depositService.fetchProductDefinitions()
           .pipe(
@@ -49,7 +48,7 @@ export class DepositProductDefinitionApiEffects {
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$
-    .ofType(definitionActions.CREATE).pipe(
+    .pipe(ofType(definitionActions.CREATE),
       map((action: definitionActions.CreateProductDefinitionAction) => action.payload),
       mergeMap(payload =>
         this.depositService.createProductDefinition(payload.productDefinition).pipe(
@@ -62,7 +61,7 @@ export class DepositProductDefinitionApiEffects {
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$
-    .ofType(definitionActions.UPDATE).pipe(
+    .pipe(ofType(definitionActions.UPDATE),
       map((action: definitionActions.UpdateProductDefinitionAction) => action.payload),
       mergeMap(payload =>
         this.depositService.updateProductDefinition(payload.productDefinition).pipe(
@@ -75,7 +74,7 @@ export class DepositProductDefinitionApiEffects {
 
   @Effect()
   deleteProduct$: Observable<Action> = this.actions$
-    .ofType(definitionActions.DELETE).pipe(
+    .pipe(ofType(definitionActions.DELETE),
       map((action: definitionActions.DeleteProductDefinitionAction) => action.payload),
       mergeMap(payload =>
         this.depositService.deleteProductDefinition(payload.productDefinition.identifier).pipe(
@@ -88,7 +87,7 @@ export class DepositProductDefinitionApiEffects {
 
   @Effect()
   executeCommand$: Observable<Action> = this.actions$
-    .ofType(definitionActions.EXECUTE_COMMAND).pipe(
+    .pipe(ofType(definitionActions.EXECUTE_COMMAND),
       map((action: definitionActions.ExecuteCommandAction) => action.payload),
       mergeMap(payload =>
         this.depositService.processCommand(payload.definitionId, payload.command).pipe(

@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import * as documents from '../document.actions';
 import { Action } from '@ngrx/store';
@@ -29,8 +29,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   createDocumentSuccess$: Observable<Action> = this.actions$
-    .ofType(documents.CREATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(documents.CREATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Document is going to be saved'
@@ -38,8 +37,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteDocumentSuccess$: Observable<Action> = this.actions$
-    .ofType(documents.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(documents.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Document is going to be deleted'
@@ -47,8 +45,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   uploadPageSuccess$: Observable<Action> = this.actions$
-    .ofType(documents.UPLOAD_PAGE_SUCCESS)
-    .pipe(
+    .pipe(ofType(documents.UPLOAD_PAGE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Page is going to be uploaded'
@@ -56,8 +53,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   uploadPageFail$: Observable<Action> = this.actions$
-    .ofType(documents.UPLOAD_PAGE_FAIL)
-    .pipe(
+    .pipe(ofType(documents.UPLOAD_PAGE_FAIL),
       tap(() => this.notificationService.send({
         type: NotificationType.ALERT,
         message: 'Please choose a different page number'
@@ -65,8 +61,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   deletePageSuccess$: Observable<Action> = this.actions$
-    .ofType(documents.DELETE_PAGE_SUCCESS)
-    .pipe(
+    .pipe(ofType(documents.DELETE_PAGE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Page is going to be deleted'
@@ -74,8 +69,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   lockDocumentSuccess$: Observable<Action> = this.actions$
-    .ofType(documents.LOCK_SUCCESS)
-    .pipe(
+    .pipe(ofType(documents.LOCK_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Document locked'
@@ -83,8 +77,7 @@ export class CaseDocumentNotificationEffects {
 
   @Effect({ dispatch: false })
   lockDocumentFail$: Observable<Action> = this.actions$
-    .ofType(documents.LOCK_FAIL)
-    .pipe(
+    .pipe(ofType(documents.LOCK_FAIL),
       tap(() => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Document could not be locked',

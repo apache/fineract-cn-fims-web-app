@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
@@ -29,23 +29,23 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   unlockDrawerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.UNLOCK_DRAWER_SUCCESS)
-    .pipe(tap(() => this.notificationService.send({
+    .pipe(ofType(tellerActions.UNLOCK_DRAWER_SUCCESS),
+    tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Teller drawer unlocked'
     })));
 
   @Effect({ dispatch: false })
   lockDrawerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOCK_DRAWER_SUCCESS)
-    .pipe(tap(() => this.notificationService.send({
+    .pipe(ofType(tellerActions.LOCK_DRAWER_SUCCESS),
+    tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Teller drawer is now locked'
     })));
 
   @Effect({ dispatch: false })
   confirmTransactionSuccess: Observable<Action> = this.actions$
-    .ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS).pipe(
+    .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS),
     map(action => action.payload),
     tap((payload) => {
       const action: string = payload.command === 'CONFIRM' ? 'confirmed' : 'canceled';
@@ -57,7 +57,7 @@ export class TellerNotificationEffects {
 
   @Effect({ dispatch: false })
   confirmTransactionFail: Observable<Action> = this.actions$
-    .ofType(tellerActions.CONFIRM_TRANSACTION_FAIL).pipe(
+    .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_FAIL),
     map(action => action.payload),
     tap((error) => {
       this.notificationService.send({

@@ -18,7 +18,7 @@
  */
 import {of, Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {ChequeService} from '../../../../services/cheque/cheque.service';
 import {Injectable} from '@angular/core';
 import * as chequeActions from '../cheque.actions';
@@ -31,7 +31,7 @@ export class ChequeApiEffects {
 
   @Effect()
   loadAllChequesByState$: Observable<Action> = this.actions$
-    .ofType(ChequeCRUDActions.LOAD_ALL).pipe(
+    .pipe(ofType(ChequeCRUDActions.LOAD_ALL),
     map((action: LoadAllAction) => action.payload),
     mergeMap(payload =>
       this.chequeService.fetch(payload.state).pipe(
@@ -47,7 +47,7 @@ export class ChequeApiEffects {
 
   @Effect()
   processCheque$: Observable<Action> = this.actions$
-    .ofType(chequeActions.PROCESS).pipe(
+    .pipe(ofType(chequeActions.PROCESS),
     map((action: chequeActions.ProcessAction) => action.payload),
     mergeMap(payload =>
       this.chequeService.process(payload.chequeIdentifier, payload.command).pipe(

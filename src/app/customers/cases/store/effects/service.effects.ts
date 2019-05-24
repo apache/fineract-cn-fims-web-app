@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as caseActions from '../case.actions';
@@ -30,12 +30,11 @@ export class CaseApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(caseActions.SEARCH)
-    .pipe(
+    .pipe(ofType(caseActions.SEARCH),
       debounceTime(300),
       map((action: caseActions.SearchAction) => action.payload),
       switchMap(payload => {
-        const nextSearch$ = this.actions$.ofType(caseActions.SEARCH).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(caseActions.SEARCH), (skip(1)));
 
         return this.portfolioService.getAllCasesForCustomer(payload.customerId, payload.fetchRequest)
           .pipe(
@@ -50,7 +49,7 @@ export class CaseApiEffects {
 
   @Effect()
   createCase$: Observable<Action> = this.actions$
-    .ofType(caseActions.CREATE).pipe(
+    .pipe(ofType(caseActions.CREATE),
       map((action: caseActions.CreateCaseAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.createCase(payload.productId, payload.caseInstance).pipe(
@@ -64,7 +63,7 @@ export class CaseApiEffects {
 
   @Effect()
   updateCase$: Observable<Action> = this.actions$
-    .ofType(caseActions.UPDATE).pipe(
+    .pipe(ofType(caseActions.UPDATE),
       map((action: caseActions.UpdateCaseAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.changeCase(payload.productId, payload.caseInstance).pipe(
@@ -77,7 +76,7 @@ export class CaseApiEffects {
 
   @Effect()
   loadProduct$: Observable<Action> = this.actions$
-    .ofType(caseActions.LOAD_PRODUCT).pipe(
+    .pipe(ofType(caseActions.LOAD_PRODUCT),
       map((action: caseActions.LoadProductAction) => action.payload),
       mergeMap(productId =>
         this.portfolioService.getProduct(productId).pipe(
@@ -87,7 +86,7 @@ export class CaseApiEffects {
 
   @Effect()
   executeCommand$: Observable<Action> = this.actions$
-    .ofType(caseActions.EXECUTE_COMMAND).pipe(
+    .pipe(ofType(caseActions.EXECUTE_COMMAND),
       map((action: caseActions.ExecuteCommandAction) => action.payload),
       mergeMap(payload =>
         this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.action, payload.command).pipe(

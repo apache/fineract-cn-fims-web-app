@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
@@ -29,11 +29,10 @@ export class LedgerApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_ALL_TOP_LEVEL)
-    .pipe(
+    .pipe(ofType(ledgerActions.LOAD_ALL_TOP_LEVEL),
       debounceTime(300),
       switchMap(() => {
-        const nextSearch$ = this.actions$.ofType(ledgerActions.LOAD_ALL_TOP_LEVEL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(ledgerActions.LOAD_ALL_TOP_LEVEL),(skip(1)));
 
         return this.accountingService.fetchLedgers()
           .pipe(takeUntil(nextSearch$),
@@ -44,7 +43,7 @@ export class LedgerApiEffects {
 
   @Effect()
   createLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE).pipe(
+    .pipe(ofType(ledgerActions.CREATE),
       map((action: ledgerActions.CreateLedgerAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.createLedger(payload.ledger).pipe(
@@ -54,7 +53,7 @@ export class LedgerApiEffects {
 
   @Effect()
   createSubLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE_SUB_LEDGER).pipe(
+    .pipe(ofType(ledgerActions.CREATE_SUB_LEDGER),
       map((action: ledgerActions.CreateSubLedgerAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.addSubLedger(payload.parentLedgerId, payload.ledger).pipe(
@@ -64,7 +63,7 @@ export class LedgerApiEffects {
 
   @Effect()
   updateLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.UPDATE).pipe(
+    .pipe(ofType(ledgerActions.UPDATE),
       map((action: ledgerActions.UpdateLedgerAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.modifyLedger(payload.ledger).pipe(
@@ -74,7 +73,7 @@ export class LedgerApiEffects {
 
   @Effect()
   deleteLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE).pipe(
+    .pipe(ofType(ledgerActions.DELETE),
       map((action: ledgerActions.DeleteLedgerAction) => action.payload),
       mergeMap(payload =>
         this.accountingService.deleteLedger(payload.ledger.identifier).pipe(
@@ -84,7 +83,7 @@ export class LedgerApiEffects {
 
   @Effect()
   loadTrialBalance$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_TRIAL_BALANCE).pipe(
+    .pipe(ofType(ledgerActions.LOAD_TRIAL_BALANCE),
       map((action: ledgerActions.LoadTrialBalanceAction) => action.payload),
       mergeMap(includeEmpty =>
         this.accountingService.getTrialBalance(includeEmpty).pipe(
@@ -94,8 +93,7 @@ export class LedgerApiEffects {
 
   @Effect()
   loadChartOfAccounts$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_CHART_OF_ACCOUNTS)
-    .pipe(
+    .pipe(ofType(ledgerActions.LOAD_CHART_OF_ACCOUNTS),
       mergeMap(() =>
         this.accountingService.getChartOfAccounts().pipe(
           map(chartOfAccountEntries => new ledgerActions.LoadChartOfAccountsActionComplete(chartOfAccountEntries)),

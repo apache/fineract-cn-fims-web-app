@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
@@ -29,8 +29,7 @@ export class LedgerNotificationEffects {
 
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS)
-    .pipe(
+    .pipe(ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Ledger is going to be saved'
@@ -38,8 +37,7 @@ export class LedgerNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE_SUCCESS)
-    .pipe(
+    .pipe(ofType(ledgerActions.DELETE_SUCCESS),
       tap(() => this.notificationService.send({
         type: NotificationType.MESSAGE,
         message: 'Ledger is going to be deleted'
@@ -47,8 +45,7 @@ export class LedgerNotificationEffects {
 
   @Effect({ dispatch: false })
   deleteLedgerFail$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE_FAIL)
-    .pipe(
+    .pipe(ofType(ledgerActions.DELETE_FAIL),
       tap(() => this.notificationService.send({
         type: NotificationType.ALERT,
         title: 'Ledger can\'t be deleted',

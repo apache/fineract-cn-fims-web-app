@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect,ofType } from '@ngrx/effects';
 import { CustomerService } from '../../../../services/customer/customer.service';
 import * as taskActions from '../task.actions';
 import { Observable, of } from 'rxjs';
@@ -29,12 +29,11 @@ export class TasksApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(taskActions.LOAD_ALL)
-    .pipe(
+    .pipe(ofType(taskActions.LOAD_ALL),
       debounceTime(300),
       map((action: taskActions.LoadAllAction) => action.payload),
       switchMap(() => {
-        const nextSearch$ = this.actions$.ofType(taskActions.LOAD_ALL).pipe(skip(1));
+        const nextSearch$ = this.actions$.pipe(ofType(taskActions.LOAD_ALL),(skip(1)));
 
         return this.customerService.fetchTasks()
           .pipe(
@@ -45,7 +44,7 @@ export class TasksApiEffects {
 
   @Effect()
   createTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE).pipe(
+    .pipe(ofType(taskActions.CREATE),
       map((action: taskActions.CreateTaskAction) => action.payload),
       mergeMap(payload =>
         this.customerService.createTask(payload.task).pipe(
@@ -58,7 +57,7 @@ export class TasksApiEffects {
 
   @Effect()
   updateTask$: Observable<Action> = this.actions$
-    .ofType(taskActions.UPDATE).pipe(
+    .pipe(ofType(taskActions.UPDATE),
       map((action: taskActions.CreateTaskAction) => action.payload),
       mergeMap(payload =>
         this.customerService.updateTask(payload.task).pipe(

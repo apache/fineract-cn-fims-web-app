@@ -17,7 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import * as catalogActions from '../catalog.actions';
 import { Action } from '@ngrx/store';
@@ -29,25 +29,25 @@ export class CatalogRouteEffects {
 
   @Effect({ dispatch: false })
   createCatalogSuccess: Observable<Action> = this.actions$
-    .ofType(catalogActions.CREATE_SUCCESS).pipe(
+    .pipe(ofType(catalogActions.CREATE_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteCatalogSuccess: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_SUCCESS).pipe(
+    .pipe(ofType(catalogActions.DELETE_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateFieldSuccess: Observable<Action> = this.actions$
-    .ofType(catalogActions.UPDATE_FIELD_SUCCESS).pipe(
+    .pipe(ofType(catalogActions.UPDATE_FIELD_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteFieldSuccess: Observable<Action> = this.actions$
-    .ofType(catalogActions.DELETE_FIELD_SUCCESS).pipe(
+    .pipe(ofType(catalogActions.DELETE_FIELD_SUCCESS),
       map(action => action.payload),
       tap(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute })));
 
