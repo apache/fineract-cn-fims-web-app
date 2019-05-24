@@ -29,13 +29,13 @@ export class LedgerRouteEffects {
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteLedgerSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(ledgerActions.DELETE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => {
       if (payload.ledger.parentLedgerIdentifier) {
         this.router.navigate(['../../', payload.ledger.parentLedgerIdentifier, 'ledgers'], { relativeTo: payload.activatedRoute });

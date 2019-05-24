@@ -29,13 +29,13 @@ export class CustomerIdentificationCardRouteEffects {
   @Effect({ dispatch: false })
   createIdentificationCardSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(identificationCardActions.CREATE_SUCCESS, identificationCardActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteIdentificationCardSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(identificationCardActions.DELETE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

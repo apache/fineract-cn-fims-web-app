@@ -33,7 +33,7 @@ export class DepositProductInstanceApiEffects {
   search$: Observable<Action> = this.actions$
     .pipe(ofType(instanceActions.SEARCH),
       debounceTime(300),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       switchMap(payload => {
         const nextSearch$ = this.actions$.pipe(ofType(instanceActions.SEARCH),(skip(1)));
 

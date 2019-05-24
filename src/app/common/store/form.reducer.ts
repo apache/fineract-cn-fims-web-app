@@ -34,7 +34,7 @@ export const createFormReducer = (resource: string, reducer?: ActionReducer<Form
       case `[${resource}] Create Fail`:
       case `[${resource}] Update Fail`: {
         return Object.assign({}, state, {
-          error: action.payload
+          error: (action as any).payload
         });
       }
 

@@ -68,7 +68,7 @@ export const createResourceReducer =
       switch (action.type) {
 
         case `[${resourceId}] Load`: {
-          const resource = action.payload.resource;
+          const resource = (action as any).payload.resource;
 
           const newIds = state.ids.filter(id => id !== identifier(resource));
 
@@ -86,12 +86,12 @@ export const createResourceReducer =
 
         case `[${resourceId}] Select`: {
           return Object.assign({}, state, {
-            selectedId: action.payload
+            selectedId: (action as any).payload
           });
         }
 
         case `[${resourceId}] Create Success`: {
-          const resource = action.payload.resource;
+          const resource = (action as any).payload.resource;
 
           return {
             ids: [...state.ids, identifier(resource)],
@@ -104,7 +104,7 @@ export const createResourceReducer =
         }
 
         case `[${resourceId}] Update Success`: {
-          const resource = action.payload.resource;
+          const resource = (action as any).payload.resource;
 
           return {
             ids: state.ids,
@@ -117,7 +117,7 @@ export const createResourceReducer =
         }
 
         case `[${resourceId}] Delete Success`: {
-          const resource = action.payload.resource;
+          const resource = (action as any).payload.resource;
 
           const newIds = state.ids.filter(id => id !== identifier(resource));
 

@@ -30,7 +30,7 @@ export class TellerDenominationRouteEffects {
   @Effect({ dispatch: false })
   createDenominationSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(denominationActions.CREATE_DENOMINATION_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => {
       this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
     }));

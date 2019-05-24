@@ -30,13 +30,13 @@ export class CaseRouteEffects {
   @Effect({ dispatch: false })
   createCaseSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(caseActions.CREATE_SUCCESS, caseActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute} )));
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(caseActions.EXECUTE_COMMAND_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute} )));
 
   constructor(private actions$: Actions, private router: Router) { }

@@ -30,13 +30,13 @@ export class ProductChargeRangesRouteEffects {
   @Effect({ dispatch: false })
   createRangeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(RangeActions.CREATE_SUCCESS, RangeActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.data.activatedRoute} )));
 
   @Effect({ dispatch: false })
   deleteRangeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(RangeActions.DELETE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../../../../../../../'], { relativeTo: payload.data.activatedRoute} )));
 
   constructor(private actions$: Actions, private router: Router) { }

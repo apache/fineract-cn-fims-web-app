@@ -60,7 +60,7 @@ export const createSearchReducer = (entityName: string, reducer?: ActionReducer<
     switch (action.type) {
 
       case `[${entityName}] Search`: {
-        const fetchRequest: FetchRequest = action.payload;
+        const fetchRequest: FetchRequest = (action as any).payload;
 
         return Object.assign({}, state, {
           fetchRequest,
@@ -70,7 +70,7 @@ export const createSearchReducer = (entityName: string, reducer?: ActionReducer<
       }
 
       case `[${entityName}] Search Complete`: {
-        const searchResult: SearchResult = action.payload;
+        const searchResult: SearchResult = (action as any).payload;
 
         return Object.assign({}, state, {
           entities: searchResult.elements,

@@ -30,7 +30,7 @@ export class GroupRouteEffects {
   @Effect({ dispatch: false })
   createGroupSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

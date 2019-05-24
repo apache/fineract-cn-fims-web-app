@@ -29,7 +29,7 @@ export class CustomerPayrollRouteEffects {
   @Effect({ dispatch: false })
   updatePayrollSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(payrollActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

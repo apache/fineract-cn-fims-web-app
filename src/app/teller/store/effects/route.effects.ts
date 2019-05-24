@@ -40,7 +40,7 @@ export class TellerRouteEffects {
   @Effect({ dispatch: false })
   confirmTransactionSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) {

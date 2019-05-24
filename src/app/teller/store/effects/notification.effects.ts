@@ -46,7 +46,7 @@ export class TellerNotificationEffects {
   @Effect({ dispatch: false })
   confirmTransactionSuccess: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap((payload) => {
       const action: string = payload.command === 'CONFIRM' ? 'confirmed' : 'canceled';
       this.notificationService.send({
@@ -58,7 +58,7 @@ export class TellerNotificationEffects {
   @Effect({ dispatch: false })
   confirmTransactionFail: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_FAIL),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap((error) => {
       this.notificationService.send({
         title: 'Invalid transaction',

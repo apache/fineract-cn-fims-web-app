@@ -30,13 +30,13 @@ export class TransactionTypeRouteEffects {
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(transactionTypeActions.CREATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateTransactionTypeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(transactionTypeActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

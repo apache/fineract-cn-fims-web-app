@@ -30,7 +30,7 @@ export class TellerRouteEffects {
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => {
         this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
       }));
@@ -38,7 +38,7 @@ export class TellerRouteEffects {
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.EXECUTE_COMMAND_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => {
         this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
       }));

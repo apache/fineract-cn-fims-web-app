@@ -31,7 +31,7 @@ export class DepositProductDividendApiEffects {
   loadAll$: Observable<Action> = this.actions$
     .pipe(ofType(dividendActions.LOAD_ALL),
       switchMap((action) => {
-        return this.depositService.fetchDividendDistributions(action.payload).pipe(
+        return this.depositService.fetchDividendDistributions((action as any).payload).pipe(
           map(dividendDistributions => new dividendActions.LoadAllCompleteAction(dividendDistributions)),
           catchError(() => of(new dividendActions.LoadAllCompleteAction([]))));
       }));

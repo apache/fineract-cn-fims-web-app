@@ -46,7 +46,7 @@ export class TellerNotificationEffects {
   @Effect({ dispatch: false })
   openCommandFail$: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.EXECUTE_COMMAND_FAIL),
-      map(action => action.payload.command),
+      map(action => (action as any).payload.command),
       filter(command => command.action === 'OPEN'),
       tap(action => this.notificationService.send({
         type: NotificationType.ALERT,
@@ -58,7 +58,7 @@ export class TellerNotificationEffects {
   @Effect({ dispatch: false })
   closeCommandFail$: Observable<Action> = this.actions$
     .pipe(ofType(tellerActions.EXECUTE_COMMAND_FAIL),
-      map(action => action.payload.command),
+      map(action => (action as any).payload.command),
       filter(command => command.action === 'CLOSE'),
       tap(action => this.notificationService.send({
         type: NotificationType.ALERT,

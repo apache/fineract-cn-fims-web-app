@@ -30,25 +30,25 @@ export class CatalogRouteEffects {
   @Effect({ dispatch: false })
   createCatalogSuccess: Observable<Action> = this.actions$
     .pipe(ofType(catalogActions.CREATE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteCatalogSuccess: Observable<Action> = this.actions$
     .pipe(ofType(catalogActions.DELETE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   updateFieldSuccess: Observable<Action> = this.actions$
     .pipe(ofType(catalogActions.UPDATE_FIELD_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteFieldSuccess: Observable<Action> = this.actions$
     .pipe(ofType(catalogActions.DELETE_FIELD_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../../../../../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

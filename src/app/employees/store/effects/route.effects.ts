@@ -30,13 +30,13 @@ export class EmployeeRouteEffects {
   @Effect({ dispatch: false })
   createEmployeeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(employeeActions.CREATE_SUCCESS, employeeActions.UPDATE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteEmployeeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(employeeActions.DELETE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }

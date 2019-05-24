@@ -30,7 +30,7 @@ export class OfficeRouteEffects {
   @Effect({ dispatch: false })
   createOfficeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(officeActions.CREATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => {
       if (payload.resource.parentIdentifier) {
         this.router.navigate(['../detail', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute });
@@ -42,13 +42,13 @@ export class OfficeRouteEffects {
   @Effect({ dispatch: false })
   updateOfficeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(officeActions.UPDATE_SUCCESS),
-    map(action => action.payload),
+    map(action => (action as any).payload),
     tap(payload => this.router.navigate(['../../', payload.resource.identifier], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteOfficeSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(officeActions.DELETE_SUCCESS),
-    map((action) => action.payload),
+    map((action) => (action as any).payload),
     tap(payload => {
       if (payload.resource.parentIdentifier) {
         this.router.navigate(['../../', payload.resource.parentIdentifier], { relativeTo: payload.activatedRoute});

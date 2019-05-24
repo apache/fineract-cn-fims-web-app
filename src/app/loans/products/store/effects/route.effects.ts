@@ -30,13 +30,13 @@ export class ProductRouteEffects {
   @Effect({ dispatch: false })
   createProductSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(productActions.CREATE_SUCCESS, productActions.UPDATE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   @Effect({ dispatch: false })
   deleteProductSuccess$: Observable<Action> = this.actions$
     .pipe(ofType(productActions.DELETE_SUCCESS),
-      map(action => action.payload),
+      map(action => (action as any).payload),
       tap(payload => this.router.navigate(['../../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
