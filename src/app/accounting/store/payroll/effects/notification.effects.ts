@@ -17,22 +17,23 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as payrollActions from '../../payroll/payroll-collection.actions';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class PayrollCollectionNotificationEffects {
 
   @Effect({ dispatch: false })
   createPayrollSuccess$: Observable<Action> = this.actions$
-    .ofType(payrollActions.CREATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(ofType(payrollActions.CREATE_SUCCESS),
+    tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Payroll is going to be created'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 

@@ -17,11 +17,12 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromOffices from '../../../../store/index';
 import {OfficesStore} from '../../../../store/index';
 import {TellerBalance} from './services/teller-balance.model';
 import {BalanceSheetService} from './services/balance-sheet.service';
+import { filter, combineLatest, switchMap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './balance.component.html'
@@ -35,9 +36,11 @@ export class TellerBalanceComponent implements OnInit {
   constructor(private balanceSheetService: BalanceSheetService, private store: OfficesStore) {}
 
   ngOnInit(): void {
-    this.balance$ = Observable.combineLatest(
-      this.store.select(fromOffices.getSelectedTeller).filter(teller => !!teller),
-      this.store.select(fromOffices.getSelectedOffice).filter(office => !!office),
+    this.balance$ = combineLatest(
+      this.store.select(fromOffices.getSelectedTeller).pipe(
+        filter(teller => !!teller)),
+      this.store.select(fromOffices.getSelectedOffice).pipe(
+        filter(office => !!office)),
       (teller, office) => ({
         teller,
         office

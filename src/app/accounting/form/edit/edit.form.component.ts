@@ -22,7 +22,7 @@ import {LedgerFormComponent} from '../form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UPDATE} from '../../store/ledger/ledger.actions';
 import * as fromAccounting from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {AccountingStore} from '../../store/index';
 
 @Component({

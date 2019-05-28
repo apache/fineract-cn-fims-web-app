@@ -16,36 +16,37 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Actions, Effect} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
-import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 import * as paymentActions from '../payment.actions';
-import {of} from 'rxjs/observable/of';
-import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
+import { PortfolioService } from '../../../../../services/portfolio/portfolio.service';
+import { map, debounceTime, switchMap, skip, takeUntil, catchError } from 'rxjs/operators'
 
 @Injectable()
 export class CasePaymentsApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(paymentActions.SEARCH)
-    .debounceTime(300)
-    .map((action: paymentActions.SearchAction) => action.payload)
-    .switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(paymentActions.SEARCH).skip(1);
+    .pipe(ofType(paymentActions.SEARCH),
+      debounceTime(300),
+      map((action: paymentActions.SearchAction) => action.payload),
+      switchMap(payload => {
+        const nextSearch$ = this.actions$.pipe(ofType(paymentActions.SEARCH),(skip(1)));
 
-      return this.portfolioService.getPaymentScheduleForCase(payload.productIdentifier, payload.caseIdentifier,
-        payload.initialDisbursalDate)
-        .takeUntil(nextSearch$)
-        .map(paymentsPage => new paymentActions.SearchCompleteAction(paymentsPage))
-        .catch(() => of(new paymentActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          elements: [],
-          chargeNames: []
-        })));
-    });
+        return this.portfolioService.getPaymentScheduleForCase(payload.productIdentifier, payload.caseIdentifier,
+          payload.initialDisbursalDate)
+          .pipe(
+            takeUntil(nextSearch$),
+            map(paymentsPage => new paymentActions.SearchCompleteAction(paymentsPage)),
+            catchError(() => of(new paymentActions.SearchCompleteAction({
+              totalElements: 0,
+              totalPages: 0,
+              elements: [],
+              chargeNames: []
+            }))));
+      }));
 
-  constructor(private actions$: Actions, private portfolioService: PortfolioService) {}
+  constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 }

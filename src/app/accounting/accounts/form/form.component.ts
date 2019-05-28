@@ -21,7 +21,7 @@ import {Account} from '../../../services/accounting/domain/account.model';
 import {FormBuilder, Validators} from '@angular/forms';
 import {FormComponent} from '../../../common/forms/form.component';
 import {TdStepComponent} from '@covalent/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountTypeOption, accountTypes} from '../../account-types.model';
 import {FimsValidators} from '../../../common/validator/validators';
 

@@ -21,7 +21,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Office} from '../../../services/office/domain/office.model';
 import {getSelectedOffice, OfficesStore} from '../../store';
 import {UPDATE} from '../../store/office.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   templateUrl: './edit.form.component.html'

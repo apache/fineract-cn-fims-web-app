@@ -31,8 +31,9 @@ import {typeOptionList} from '../domain/type-option-list.model';
 import {accountExists} from '../../common/validator/account-exists.validator';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {ledgerExists} from '../../common/validator/ledger-exists.validator';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Type} from '../../services/depositAccount/domain/type.model';
+import { startWith} from 'rxjs/operators'
 
 @Component({
   selector: 'fims-deposit-product-form',
@@ -90,11 +91,11 @@ export class DepositProductFormComponent implements OnInit, OnDestroy, OnChanges
     });
 
     this.termChangeSubscription = this.formGroup.get('fixedTermEnabled').valueChanges
-      .startWith(null)
+      .pipe(startWith(null))
       .subscribe(enabled => this.toggleFixedTerm(enabled));
 
     this.typeChangeSubscription = this.formGroup.get('type').valueChanges
-      .startWith(null)
+      .pipe(startWith(null))
       .subscribe(type => this.toggleType(type));
   }
 

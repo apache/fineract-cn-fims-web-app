@@ -19,6 +19,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {AdjustmentOption} from '../model/adjustment-option.model';
+import { startWith} from 'rxjs/operators'
 
 @Component({
   selector: 'fims-teller-adjustment-form',
@@ -32,7 +33,8 @@ export class AdjustmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.get('adjustment').valueChanges
-      .startWith(this.form.get('adjustment').value)
+    .pipe(
+      startWith(this.form.get('adjustment').value))
       .subscribe(adjustment => {
         const amountControl = this.form.get('amount');
         if (adjustment === 'NONE') {

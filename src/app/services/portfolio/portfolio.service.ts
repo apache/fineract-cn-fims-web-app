@@ -18,7 +18,7 @@
  */
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Product} from './domain/product.model';
 import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import {TaskDefinition} from './domain/task-definition.model';
@@ -43,6 +43,7 @@ import {FimsRange} from './domain/range-model';
 import {Payment} from './domain/payment.model';
 import {LossProvisionConfiguration} from './domain/loss-provision-configuration.model';
 import {CaseCustomerDocuments} from './domain/case-customer-documents.model';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class PortfolioService {
@@ -143,8 +144,8 @@ export class PortfolioService {
       search: params
     };
 
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/`, requestOptions)
-      .map((casePage: CasePage) => mapToFimsCasePage(casePage));
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/`, requestOptions).pipe(
+      map((casePage: CasePage) => mapToFimsCasePage(casePage)));
   }
 
   createCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
@@ -154,8 +155,8 @@ export class PortfolioService {
   }
 
   getCase(productIdentifier: string, caseIdentifier: string): Observable<FimsCase> {
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}`)
-      .map((caseInstance: Case) => mapToFimsCase(caseInstance));
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/cases/${caseIdentifier}`).pipe(
+      map((caseInstance: Case) => mapToFimsCase(caseInstance)));
   }
 
   changeCase(productIdentifier: string, fimsCase: FimsCase): Observable<void> {
@@ -211,8 +212,8 @@ export class PortfolioService {
       search
     };
 
-    return this.http.get(`${this.baseUrl}/cases/`, requestOptions)
-      .map((caseInstances: Case[]) => mapToFimsCases(caseInstances));
+    return this.http.get(`${this.baseUrl}/cases/`, requestOptions).pipe(
+      map((caseInstances: Case[]) => mapToFimsCases(caseInstances)));
   }
 
   getPaymentScheduleForCase(productIdentifier: string, caseIdentifier: string,
@@ -235,13 +236,13 @@ export class PortfolioService {
       search
     };
 
-    return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions)
-      .map((casePage: CasePage) => mapToFimsCasePage(casePage));
+    return this.http.get(`${this.baseUrl}/individuallending/customers/${customerIdentifier}/cases`, requestOptions).pipe(
+      map((casePage: CasePage) => mapToFimsCasePage(casePage)));
   }
 
   findAllRanges(productIdentifier: string): Observable<FimsRange[]> {
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`)
-      .map((segments: BalanceSegmentSet[]) => mapToFimsRanges(segments));
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/`).pipe(
+      map((segments: BalanceSegmentSet[]) => mapToFimsRanges(segments)));
   }
 
   createRange(productIdentifier: string, range: FimsRange): Observable<void> {
@@ -250,8 +251,8 @@ export class PortfolioService {
   }
 
   getRange(productIdentifier: string, rangeIdentifier: string): Observable<FimsRange> {
-    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`)
-      .map(segments => mapToFimsRange(segments));
+    return this.http.get(`${this.baseUrl}/products/${productIdentifier}/balancesegmentsets/${rangeIdentifier}`).pipe(
+      map(segments => mapToFimsRange(segments)));
   }
 
   changeRange(productIdentifier: string, range: FimsRange): Observable<void> {

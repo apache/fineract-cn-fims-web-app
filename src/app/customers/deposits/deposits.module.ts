@@ -71,9 +71,11 @@ import {IssueChequeComponent} from './detail/cheques/cheques.component';
     CovalentStepsModule,
     CovalentChipsModule,
 
-    EffectsModule.run(DepositProductInstanceApiEffects),
-    EffectsModule.run(DepositProductInstanceRouteEffects),
-    EffectsModule.run(DepositProductInstanceNotificationEffects),
+    EffectsModule.forRoot([
+      DepositProductInstanceApiEffects,
+      DepositProductInstanceRouteEffects,
+      DepositProductInstanceNotificationEffects
+    ])
   ],
   declarations: [
     DepositsListComponent,

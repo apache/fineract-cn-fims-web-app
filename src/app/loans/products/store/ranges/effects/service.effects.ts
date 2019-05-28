@@ -16,78 +16,79 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as resourceActions from '../../../../../common/store/action-creator/actions';
-import {PortfolioService} from '../../../../../services/portfolio/portfolio.service';
-import {RangeActions} from '../range.actions';
-import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
+import { PortfolioService } from '../../../../../services/portfolio/portfolio.service';
+import { RangeActions } from '../range.actions';
+import { FimsRange } from '../../../../../services/portfolio/domain/range-model';
+import { map, debounceTime, skip, takeUntil, switchMap, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ProductChargeRangesApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(RangeActions.LOAD_ALL)
-    .debounceTime(300)
-    .map((action: resourceActions.LoadAllAction) => action.payload)
-    .switchMap(id => {
-      const nextSearch$ = this.actions$.ofType(RangeActions.LOAD_ALL).skip(1);
+    .pipe(ofType(RangeActions.LOAD_ALL),
+      debounceTime(300),
+      map((action: resourceActions.LoadAllAction) => action.payload),
+      switchMap(id => {
+        const nextSearch$ = this.actions$.pipe(ofType(RangeActions.LOAD_ALL),(skip(1)));
 
-      return this.portfolioService.findAllRanges(id)
-        .takeUntil(nextSearch$)
-        .map(resources => RangeActions.loadAllCompleteAction({
-          resources
-        }))
-        .catch(() => of(RangeActions.loadAllCompleteAction({
-          resources: []
-        })));
-    });
+        return this.portfolioService.findAllRanges(id)
+          .pipe(
+            takeUntil(nextSearch$),
+            map(resources => RangeActions.loadAllCompleteAction({
+              resources
+            })),
+            catchError(() => of(RangeActions.loadAllCompleteAction({
+              resources: []
+            }))));
+      }));
 
   @Effect()
   createRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.CREATE)
-    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.createRange(payload.data.productIdentifier, payload.resource)
-        .map(() => RangeActions.createSuccessAction(payload))
-        .catch((error) => of(RangeActions.createFailAction({
-          resource: payload.resource,
-          data: payload.data,
-          error
-        })))
-    );
+    .pipe(ofType(RangeActions.CREATE),
+      map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.createRange(payload.data.productIdentifier, payload.resource).pipe(
+          map(() => RangeActions.createSuccessAction(payload)),
+          catchError((error) => of(RangeActions.createFailAction({
+            resource: payload.resource,
+            data: payload.data,
+            error
+          }))))
+      ));
 
   @Effect()
   updateRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.UPDATE)
-    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.changeRange(payload.data.productIdentifier, payload.resource)
-        .map(() => RangeActions.updateSuccessAction(payload))
-        .catch((error) => of(RangeActions.updateFailAction({
-          resource: payload.resource,
-          data: payload.data,
-          error
-        })))
-    );
+    .pipe(ofType(RangeActions.UPDATE),
+      map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.changeRange(payload.data.productIdentifier, payload.resource).pipe(
+          map(() => RangeActions.updateSuccessAction(payload)),
+          catchError((error) => of(RangeActions.updateFailAction({
+            resource: payload.resource,
+            data: payload.data,
+            error
+          }))))
+      ));
 
   @Effect()
   deleteRange$: Observable<Action> = this.actions$
-    .ofType(RangeActions.DELETE)
-    .map((action: resourceActions.ResourceAction<FimsRange>) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.deleteRange(payload.data.productIdentifier, payload.resource.identifier)
-        .map(() => RangeActions.deleteSuccessAction(payload))
-        .catch((error) => of(RangeActions.deleteFailAction({
-          resource: payload.resource,
-          data: payload.data,
-          error
-        })))
-    );
+    .pipe(ofType(RangeActions.DELETE),
+      map((action: resourceActions.ResourceAction<FimsRange>) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.deleteRange(payload.data.productIdentifier, payload.resource.identifier).pipe(
+          map(() => RangeActions.deleteSuccessAction(payload)),
+          catchError((error) => of(RangeActions.deleteFailAction({
+            resource: payload.resource,
+            data: payload.data,
+            error
+          }))))
+      ));
 
   constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 

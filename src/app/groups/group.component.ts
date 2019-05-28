@@ -21,10 +21,11 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData, TableFetchRequest} from '../common/data-table/data-table.component';
 import {Group} from '../services/group/domain/group.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromRoot from '../store';
 import {SEARCH} from '../store/group/group.actions';
 import {GroupsStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './group.component.html'
@@ -37,7 +38,6 @@ export class GroupComponent implements OnInit {
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Group Name' },
-    //{ name: 'groupDefinitionIdentifier', label: 'External Id' },
     { name: 'status', label: 'Status' },
     { name: 'office', label: 'Office' }
   ];
@@ -49,12 +49,12 @@ export class GroupComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
   ngOnInit(): void {
-    this.groupData$ = this.store.select(fromRoot.getGroupSearchResults)
-      .map(groupPage => ({
+    this.groupData$ = this.store.select(fromRoot.getGroupSearchResults).pipe(
+      map(groupPage => ({
         data: groupPage.groups,
         totalElements: groupPage.totalElements,
         totalPages: groupPage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromRoot.getGroupSearchLoading);
 

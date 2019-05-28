@@ -17,22 +17,23 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as lossProvisionActions from '../loss-provision.actions';
+import {tap} from 'rxjs/operators'
 
 @Injectable()
 export class ProductLossProvisionNotificationEffects {
 
   @Effect({ dispatch: false })
   updateLossProvisionSuccess$: Observable<Action> = this.actions$
-    .ofType(lossProvisionActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(ofType(lossProvisionActions.UPDATE_SUCCESS),
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Loss provision configuration is going to be saved'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) { }
 }

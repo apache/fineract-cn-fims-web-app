@@ -22,8 +22,8 @@ import * as fromAccounting from '../../../store/index';
 import {AccountingStore} from '../../../store/index';
 import {TransactionType} from '../../../../services/accounting/domain/transaction-type.model';
 import {SelectAction, UPDATE} from '../../../store/ledger/transaction-type/transaction-type.actions';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './edit.form.component.html'
@@ -37,8 +37,8 @@ export class EditTransactionTypeFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['code']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['code'])))
       .subscribe(this.store);
 
     this.transactionType$ = this.store.select(fromAccounting.getSelectedTransactionType);

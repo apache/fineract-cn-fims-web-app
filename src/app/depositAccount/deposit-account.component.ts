@@ -21,10 +21,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../common/data-table/data-table.component';
 import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import * as fromDepositAccounts from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from './store/product.actions';
 import {DepositAccountStore} from './store/index';
 import {ProductDefinition} from '../services/depositAccount/domain/definition/product-definition.model';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './deposit-account.component.html'
@@ -44,12 +45,12 @@ export class DepositProductComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: DepositAccountStore) {}
 
   ngOnInit(): void {
-    this.productData = this.store.select(fromDepositAccounts.getProductSearchResults)
-      .map(productPage => ({
+    this.productData = this.store.select(fromDepositAccounts.getProductSearchResults).pipe(
+      map(productPage => ({
         data: productPage.products,
         totalElements: productPage.totalElements,
         totalPages: productPage.totalPages
-      }));
+      })));
     this.fetchProducts();
   }
 

@@ -25,7 +25,7 @@ import {FormPermission} from '../model/form-permission.model';
 import {FimsValidators} from '../../common/validator/validators';
 import {FormPermissionService} from '../helper/form-permission.service';
 import {FormPermissionGroup} from '../model/form-permission-group.model';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'fims-role-form-component',

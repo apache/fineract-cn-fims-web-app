@@ -19,8 +19,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CustomersStore} from '../../store/index';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {SelectFieldAction} from '../../store/catalogs/catalog.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './field.index.component.html'
@@ -32,8 +33,8 @@ export class FieldIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectFieldAction(params['fieldId']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectFieldAction(params['fieldId'])))
       .subscribe(this.store);
   }
 

@@ -18,12 +18,14 @@
  */
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {LedgerPage} from '../../services/accounting/domain/ledger-page.model';
 import {AccountType} from '../../services/accounting/domain/account-type.model';
+import {map} from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap } from 'rxjs/operators';
 
 const noop: () => void = () => {
   // empty method
@@ -58,11 +60,12 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit {
     this.formControl = new FormControl('');
 
     this.ledgers = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -90,8 +93,8 @@ export class LedgerSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm
     };
 
-    return this.accountingService.fetchLedgers(true, fetchRequest, this.type)
-      .map((ledgerPage: LedgerPage) => ledgerPage.ledgers);
+    return this.accountingService.fetchLedgers(true, fetchRequest, this.type).pipe(
+      map((ledgerPage: LedgerPage) => ledgerPage.ledgers));
   }
 
 }

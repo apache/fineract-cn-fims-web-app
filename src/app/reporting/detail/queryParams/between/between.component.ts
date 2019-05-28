@@ -30,11 +30,11 @@ import {
   Validators
 } from '@angular/forms';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {FimsValidators} from '../../../../common/validator/validators';
-import {Subscription} from 'rxjs/Subscription';
 import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {createPlaceholder} from '../query-params.helper';
+import { combineLatest, filter } from 'rxjs/operators'
 
 export const REPORTING_BETWEEN_PARAM_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -80,7 +80,7 @@ export class ReportingBetweenParamComponent extends AbstractControlValueAccessor
       end: ['', this.required ? [Validators.required] : []]
     }, { validator });
 
-    this.changeSubscription = Observable.combineLatest(
+    this.changeSubscription = combineLatest(
       this.formGroup.get('start').valueChanges,
       this.formGroup.get('end').valueChanges,
       (start, end) => ({

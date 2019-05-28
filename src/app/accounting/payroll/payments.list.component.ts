@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnDestroy} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {TableData} from '../../common/data-table/data-table.component';
 import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
@@ -26,7 +26,7 @@ import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {PayrollCollectionHistory} from '../../services/payroll/domain/payroll-collection-history.model';
 import {SelectAction} from '../store/payroll/payroll-collection.actions';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {map, tap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './payments.list.component.html'
@@ -46,14 +46,15 @@ export class PaymentsListComponent implements OnDestroy {
   ];
 
   constructor(private route: ActivatedRoute, private store: AccountingStore) {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     this.paymentData$ = this.store.select(fromAccounting.getPayrollPaymentSearchResults);
 
     this.selectedPayrollCollection$ = this.store.select(fromAccounting.getSelectedPayrollCollection)
-      .do((payrollCollection: PayrollCollectionHistory) => this.fetchPayments(payrollCollection.identifier));
+    .pipe(
+      tap((payrollCollection: PayrollCollectionHistory) => this.fetchPayments(payrollCollection.identifier)));
   }
 
   ngOnDestroy(): void {

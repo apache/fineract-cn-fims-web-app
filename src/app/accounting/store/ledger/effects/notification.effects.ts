@@ -16,41 +16,42 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
-import {NotificationService, NotificationType} from '../../../../services/notification/notification.service';
+import { NotificationService, NotificationType } from '../../../../services/notification/notification.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class LedgerNotificationEffects {
 
   @Effect({ dispatch: false })
   createLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Ledger is going to be saved'
-    }));
+    .pipe(ofType(ledgerActions.CREATE_SUCCESS, ledgerActions.CREATE_SUB_LEDGER_SUCCESS, ledgerActions.UPDATE_SUCCESS),
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Ledger is going to be saved'
+      })));
 
   @Effect({ dispatch: false })
   deleteLedgerSuccess$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Ledger is going to be deleted'
-    }));
+    .pipe(ofType(ledgerActions.DELETE_SUCCESS),
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Ledger is going to be deleted'
+      })));
 
   @Effect({ dispatch: false })
   deleteLedgerFail$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE_FAIL)
-    .do(() => this.notificationService.send({
-      type: NotificationType.ALERT,
-      title: 'Ledger can\'t be deleted',
-      message: 'Ledger has accounts or sub ledgers'
-    }));
+    .pipe(ofType(ledgerActions.DELETE_FAIL),
+      tap(() => this.notificationService.send({
+        type: NotificationType.ALERT,
+        title: 'Ledger can\'t be deleted',
+        message: 'Ledger has accounts or sub ledgers'
+      })));
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 }
 

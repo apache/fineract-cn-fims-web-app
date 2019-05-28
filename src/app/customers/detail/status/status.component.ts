@@ -21,12 +21,12 @@ import {Customer} from '../../../services/customer/domain/customer.model';
 import {Command} from '../../../services/customer/domain/command.model';
 import {ActivatedRoute} from '@angular/router';
 import * as fromCustomers from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {EXECUTE_COMMAND, EXECUTE_TASK, LOAD_ALL} from '../../store/customerTasks/customer-task.actions';
 import {CustomersStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
 import {ProcessStep} from '../../../services/customer/domain/process-step.model';
 import {SelectTaskEvent} from './customer-task.component';
+import {tap } from 'rxjs/operators'
 
 
 @Component({
@@ -46,7 +46,8 @@ export class CustomerStatusComponent implements OnInit, OnDestroy {
     this.processSteps$ = this.store.select(fromCustomers.getCustomerTaskProcessSteps);
 
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
-      .do(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier }))
+      .pipe(
+        tap(customer => this.store.dispatch({ type: LOAD_ALL, payload: customer.identifier })))
       .subscribe(customer => this.customer = customer);
   }
 

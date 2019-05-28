@@ -20,10 +20,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FimsValidators} from '../common/validator/validators';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../store';
 import {CHANGE_PASSWORD} from '../store/security/security.actions';
+import {filter} from 'rxjs/operators'
 
 @Component({
   selector: 'fims-user-password',
@@ -54,7 +55,8 @@ export class PasswordComponent implements OnInit, OnDestroy {
       .subscribe(username => this.currentUser = username);
 
     this.passwordErrorSubscription = this.store.select(fromRoot.getPasswordError)
-      .filter(error => !!error)
+      .pipe(
+        filter(error => !!error))
       .subscribe(error => this.error = 'There was an error changing your password');
 
     this.passwordForm = this.createFormGroup();

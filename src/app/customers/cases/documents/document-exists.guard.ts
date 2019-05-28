@@ -21,13 +21,14 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {CasesStore} from '../store/index';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
-import {Observable} from 'rxjs/Observable';
 import * as fromCases from '../store';
 import {LoadAction} from '../store/documents/document.actions';
-import {of} from 'rxjs/observable/of';
 import {CustomerService} from '../../../services/customer/customer.service';
 import {CaseCustomerDocuments, Document} from '../../../services/portfolio/domain/case-customer-documents.model';
 import {CustomerDocument} from '../../../services/customer/domain/customer-document.model';
+import {throwError as observableThrowError, Observable, of} from 'rxjs';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {of as observableOf} from 'rxjs';
 
 @Injectable()
 export class DocumentExistsGuard implements CanActivate {
@@ -38,21 +39,21 @@ export class DocumentExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasDocumentInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromCases.getCaseDocumentLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromCases.getCaseDocumentLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasDocumentInApi(productId: string, caseId: string, documentId: string): Observable<boolean> {
-    const getDocument$ = this.portfolioService.getCaseDocuments(productId, caseId)
-      .switchMap((documents: CaseCustomerDocuments) => this.findDocument(documentId, documents.documents))
-      .switchMap((document: Document) => this.customerService.getDocument(document.customerId, document.documentId))
-      .map((customerDocument: CustomerDocument) => new LoadAction({
+    const getDocument$ = this.portfolioService.getCaseDocuments(productId, caseId).pipe(
+      switchMap((documents: CaseCustomerDocuments) => this.findDocument(documentId, documents.documents)),
+      switchMap((document: Document) => this.customerService.getDocument(document.customerId, document.documentId)),
+      map((customerDocument: CustomerDocument) => new LoadAction({
         resource: customerDocument
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(document => !!document);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(document => !!document));
 
     return this.existsGuardService.routeTo404OnError(getDocument$);
   }
@@ -61,21 +62,21 @@ export class DocumentExistsGuard implements CanActivate {
     const foundDocument = documents.find(document => document.documentId === documentId);
 
     if (!foundDocument) {
-      return Observable.throw(new Error('Document not found'));
+      return observableThrowError(new Error('Document not found'));
     }
 
-    return Observable.of(foundDocument);
+    return observableOf(foundDocument);
   }
 
   hasDocument(productId: string, caseId: string, documentId: string): Observable<boolean> {
-    return this.hasDocumentInStore(documentId)
-      .switchMap(inStore => {
+    return this.hasDocumentInStore(documentId).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasDocumentInApi(productId, caseId, documentId);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

@@ -18,16 +18,16 @@
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductDefinition} from '../../services/depositAccount/domain/definition/product-definition.model';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DepositAccountStore} from '../store/index';
 import * as fromDepositAccounts from './../store';
 import * as fromRoot from '../../store';
 import {TableData} from '../../common/data-table/data-table.component';
 import {TdDialogService} from '@covalent/core';
-import {Observable} from 'rxjs/Observable';
 import {DELETE, EXECUTE_COMMAND} from '../store/product.actions';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
+import {filter, combineLatest} from 'rxjs/operators'
 
 @Component({
   templateUrl: './deposit-product.detail.component.html'
@@ -58,7 +58,8 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const selectedProduct$ = this.store.select(fromDepositAccounts.getSelectedProduct)
-      .filter(product => !!product);
+      .pipe(
+        filter(product => !!product));
 
     this.productSubscription = selectedProduct$
       .subscribe(product => {
@@ -98,7 +99,7 @@ export class DepositProductDetailComponent implements OnInit, OnDestroy {
 
   deleteProduct(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => this.store.dispatch({
         type: DELETE, payload: {
           productDefinition: this.definition,

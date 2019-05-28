@@ -18,11 +18,13 @@
  */
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Group} from '../../services/group/domain/group.model';
 import {GroupService} from '../../services/group/group.service';
 import {GroupPage} from '../../services/group/domain/group-page.model';
+import {map} from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap } from 'rxjs/operators';
 
 const noop: () => void = () => {
   // empty method
@@ -55,11 +57,12 @@ export class GroupSelectComponent implements ControlValueAccessor, OnInit {
     this.formControl = new FormControl('');
 
     this.groups = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -87,8 +90,8 @@ export class GroupSelectComponent implements ControlValueAccessor, OnInit {
       searchTerm
     };
 
-    return this.groupService.fetchGroups(fetchRequest)
-      .map((groupPage: GroupPage) => groupPage.groups);
+    return this.groupService.fetchGroups(fetchRequest).pipe(
+      map((groupPage: GroupPage) => groupPage.groups));
   }
 
 }

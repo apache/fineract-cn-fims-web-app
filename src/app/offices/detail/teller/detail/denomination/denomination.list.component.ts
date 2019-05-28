@@ -18,12 +18,12 @@
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TableData} from '../../../../../common/data-table/data-table.component';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
+import {Subscription, Observable} from 'rxjs';
 import * as fromOffices from '../../../../store/index';
 import {OfficesStore} from '../../../../store/index';
 import {LoadDenominationAction} from '../../../../store/teller/denomination/denomination.actions';
 import {DatePipe} from '@angular/common';
+import {map, filter, combineLatest} from 'rxjs/operators';
 
 @Component({
   templateUrl: './denomination.list.component.html',
@@ -52,12 +52,12 @@ export class TellerDenominationListComponent implements OnInit, OnDestroy {
   constructor(private store: OfficesStore, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    const selectedTeller$ = this.store.select(fromOffices.getSelectedTeller).filter(teller => !!teller);
+    const selectedTeller$ = this.store.select(fromOffices.getSelectedTeller).pipe(filter(teller => !!teller));
 
     this.isTellerNotPaused$ = selectedTeller$.map(teller => teller.state !== 'PAUSED');
 
-    this.loadDenominationSubscription = Observable.combineLatest(
-      this.store.select(fromOffices.getSelectedOffice).filter(office => !!office),
+    this.loadDenominationSubscription = combineLatest(
+      this.store.select(fromOffices.getSelectedOffice).pipe(filter(office => !!office)),
       selectedTeller$,
       (office, teller) => ({
         office,
@@ -68,12 +68,12 @@ export class TellerDenominationListComponent implements OnInit, OnDestroy {
       tellerCode: result.teller.code
     })).subscribe(this.store);
 
-    this.denominationData$ = this.store.select(fromOffices.getDenominationsEntities)
-      .map(tellers => ({
+    this.denominationData$ = this.store.select(fromOffices.getDenominationsEntities).pipe(
+      map(tellers => ({
         data: tellers,
         totalElements: tellers.length,
         totalPages: 1
-      }));
+      })));
   }
 
   ngOnDestroy(): void {

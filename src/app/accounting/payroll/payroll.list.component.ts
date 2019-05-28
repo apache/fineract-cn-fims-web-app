@@ -19,12 +19,13 @@
 import {Component, OnInit} from '@angular/core';
 import * as fromAccouting from '../store/index';
 import {AccountingStore} from '../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TableData} from '../../common/data-table/data-table.component';
 import {PayrollCollectionHistory} from '../../services/payroll/domain/payroll-collection-history.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {LOAD_ALL_COLLECTIONS} from '../store/payroll/payroll-collection.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   providers: [DatePipe],
@@ -42,12 +43,12 @@ export class PayrollListComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private datePipe: DatePipe,
               private store: AccountingStore) {
-    this.payrollData$ = this.store.select(fromAccouting.getAllPayrollCollectionEntities)
-      .map((collections: PayrollCollectionHistory[]) => ({
+    this.payrollData$ = this.store.select(fromAccouting.getAllPayrollCollectionEntities).pipe(
+      map((collections: PayrollCollectionHistory[]) => ({
         data: collections,
         totalElements: collections.length,
         totalPages: 1
-      }));
+      })));
   }
 
   ngOnInit(): void {

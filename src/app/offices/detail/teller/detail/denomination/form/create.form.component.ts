@@ -22,9 +22,10 @@ import * as fromOffices from '../../../../../store/index';
 import {OfficesStore} from '../../../../../store/index';
 import {TellerDenomination} from '../../../../../../services/teller/domain/teller-denomination.model';
 import {CREATE_DENOMINATION} from '../../../../../store/teller/denomination/denomination.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TellerService} from '../../../../../../services/teller/teller-service';
 import {TellerBalanceSheet} from '../../../../../../services/teller/domain/teller-balance-sheet.model';
+import {switchMap, filter, combineLatest, map} from 'rxjs/operators';
 
 interface CurrentSelection {
   officeId: string;
@@ -41,9 +42,9 @@ export class CreateDenominationFormComponent {
   balanceSheet$: Observable<TellerBalanceSheet>;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: OfficesStore, private tellerService: TellerService) {
-    this.currentSelection$ = Observable.combineLatest(
-      this.store.select(fromOffices.getSelectedOffice).filter(office => !!office),
-      this.store.select(fromOffices.getSelectedTeller).filter(teller => !!teller),
+    this.currentSelection$ = combineLatest(
+      this.store.select(fromOffices.getSelectedOffice).pipe(filter(office => !!office)),
+      this.store.select(fromOffices.getSelectedTeller).pipe(filter(teller => !!teller)),
       (office, teller) => ({
         office,
         teller
@@ -52,8 +53,8 @@ export class CreateDenominationFormComponent {
         tellerId: result.teller.code
       }));
 
-    this.balanceSheet$ = this.currentSelection$
-      .switchMap(selection => this.tellerService.getBalance(selection.officeId, selection.tellerId));
+    this.balanceSheet$ = this.currentSelection$.pipe(
+      switchMap(selection => this.tellerService.getBalance(selection.officeId, selection.tellerId)));
   }
 
   onSave(officeId: string, tellerCode: string, denomination: TellerDenomination): void {

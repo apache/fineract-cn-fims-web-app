@@ -16,13 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Office} from '../../../services/office/domain/office.model';
-import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
-import {Store} from '@ngrx/store';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Office } from '../../../services/office/domain/office.model';
+import { FetchRequest } from '../../../services/domain/paging/fetch-request.model';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../store';
-import {SEARCH} from '../../../store/office/office.actions';
+import { SEARCH } from '../../../store/office/office.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'fims-group-offices-form',
@@ -36,11 +37,11 @@ export class GroupOfficesComponent implements OnInit {
 
   @Output() onSelectionChange = new EventEmitter<string[]>();
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit(): void {
-    this.offices = this.store.select(fromRoot.getOfficeSearchResults)
-      .map(officePage => officePage.offices);
+    this.offices = this.store.select(fromRoot.getOfficeSearchResults).pipe(
+      map(officePage => officePage.offices));
   }
 
   search(searchTerm) {

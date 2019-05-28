@@ -16,35 +16,35 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
-import {Actions, Effect} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { DepositAccountService } from '../../../../services/depositAccount/deposit-account.service';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as dividendActions from '../dividend.actions';
+import { map, switchMap, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DepositProductDividendApiEffects {
 
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(dividendActions.LOAD_ALL)
-    .switchMap((action) => {
-      return this.depositService.fetchDividendDistributions(action.payload)
-        .map(dividendDistributions => new dividendActions.LoadAllCompleteAction(dividendDistributions))
-        .catch(() => of(new dividendActions.LoadAllCompleteAction([])));
-    });
+    .pipe(ofType(dividendActions.LOAD_ALL),
+      switchMap((action) => {
+        return this.depositService.fetchDividendDistributions((action as any).payload).pipe(
+          map(dividendDistributions => new dividendActions.LoadAllCompleteAction(dividendDistributions)),
+          catchError(() => of(new dividendActions.LoadAllCompleteAction([]))));
+      }));
 
   @Effect()
   createDividendDistribution$: Observable<Action> = this.actions$
-    .ofType(dividendActions.CREATE)
-    .map((action: dividendActions.CreateDividendDistributionAction) => action.payload)
-    .mergeMap(payload =>
-      this.depositService.distributeDividend(payload.productDefinitionId, payload.dividendDistribution)
-        .map(() => new dividendActions.CreateDividendDistributionSuccessAction(payload))
-        .catch((error) => of(new dividendActions.CreateDividendDistributionFailAction(error)))
-    );
+    .pipe(ofType(dividendActions.CREATE),
+      map((action: dividendActions.CreateDividendDistributionAction) => action.payload),
+      mergeMap(payload =>
+        this.depositService.distributeDividend(payload.productDefinitionId, payload.dividendDistribution).pipe(
+          map(() => new dividendActions.CreateDividendDistributionSuccessAction(payload)),
+          catchError((error) => of(new dividendActions.CreateDividendDistributionFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private depositService: DepositAccountService) {
   }

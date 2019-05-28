@@ -22,7 +22,7 @@ import {GroupDefinition} from '../../../services/group/domain/group-definition.m
 import * as fromGroups from '../../store';
 import {GroupsStore} from '../../store/index';
 import {UPDATE} from '../../store/definition/definition.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   templateUrl: './edit.form.component.html'

@@ -18,7 +18,7 @@
  */
 import {Component} from '@angular/core';
 import {TaskDefinition} from '../../../services/customer/domain/task-definition.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromCustomer from '../../store/index';
 import {CustomersStore} from '../../store/index';

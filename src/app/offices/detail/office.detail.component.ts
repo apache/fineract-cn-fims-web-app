@@ -22,13 +22,14 @@ import {OfficeService} from '../../services/office/office.service';
 import {Office} from '../../services/office/domain/office.model';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {OfficePage} from '../../services/office/domain/office-page.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {TableData} from '../../common/data-table/data-table.component';
 import {DELETE} from '../store/office.actions';
 import {getSelectedOffice, OfficesStore} from '../store/index';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
 import * as fromRoot from '../../store/index';
+import { filter, combineLatest, tap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './office.detail.component.html'
@@ -57,10 +58,11 @@ export class OfficeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.office$ = this.store.select(getSelectedOffice)
-      .filter(office => !!office)
-      .do(office => this.fetchBranches(office.identifier));
+      .pipe(
+        filter(office => !!office),
+      tap(office => this.fetchBranches(office.identifier)));
 
-    this.canDelete$ = Observable.combineLatest(
+    this.canDelete$ = combineLatest(
       this.store.select(fromRoot.getPermissions),
       this.office$,
       (permissions, office: Office) => ({
@@ -99,7 +101,8 @@ export class OfficeDetailComponent implements OnInit {
 
   deleteOffice(office: Office): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => this.store.dispatch({
         type: DELETE, payload: {
           office,

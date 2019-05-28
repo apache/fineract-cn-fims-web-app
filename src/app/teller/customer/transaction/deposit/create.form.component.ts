@@ -16,22 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TellerTransaction, TransactionType} from '../../../../services/teller/domain/teller-transaction.model';
-import {TellerTransactionCosts} from '../../../../services/teller/domain/teller-transaction-costs.model';
-import {CONFIRM_TRANSACTION} from '../../../store/teller.actions';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { TellerTransaction, TransactionType } from '../../../../services/teller/domain/teller-transaction.model';
+import { TellerTransactionCosts } from '../../../../services/teller/domain/teller-transaction-costs.model';
+import { CONFIRM_TRANSACTION } from '../../../store/teller.actions';
 import * as fromTeller from '../../../store/index';
-import {TellerStore} from '../../../store/index';
+import { TellerStore } from '../../../store/index';
 import * as fromRoot from '../../../../store/index';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {DepositTransactionFormComponent} from './form.component';
-import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
-import {Teller} from '../../../../services/teller/domain/teller.model';
-import {TransactionForm} from '../domain/transaction-form.model';
-import {TellerTransactionService} from '../../../services/transaction.service';
+import { DepositAccountService } from '../../../../services/depositAccount/deposit-account.service';
+import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DepositTransactionFormComponent } from './form.component';
+import { ProductInstance } from '../../../../services/depositAccount/domain/instance/product-instance.model';
+import { Teller } from '../../../../services/teller/domain/teller.model';
+import { TransactionForm } from '../domain/transaction-form.model';
+import { TellerTransactionService } from '../../../services/transaction.service';
+import { switchMap, map, filter, tap, combineLatest } from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -59,16 +59,16 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
   transactionCreated: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private store: TellerStore,
-              private depositService: DepositAccountService, private tellerTransactionService: TellerTransactionService) {
+    private depositService: DepositAccountService, private tellerTransactionService: TellerTransactionService) {
   }
 
   ngOnInit(): void {
-    const transactionType$ = this.route.queryParams
-      .map(params => params['transactionType'])
-      .do(transactionType => this.transactionType = transactionType);
+    const transactionType$ = this.route.queryParams.pipe(
+      map(params => params['transactionType']),
+      tap(transactionType => this.transactionType = transactionType));
 
-    const allProductInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer)
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier));
+    const allProductInstances$ = this.store.select(fromTeller.getTellerSelectedCustomer).pipe(
+      switchMap(customer => this.depositService.fetchProductInstances(customer.identifier)));
 
     this.productInstances$ = Observable.combineLatest(
       transactionType$,
@@ -77,7 +77,7 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
     );
 
     this.authenticatedTellerSubscription = this.store.select(fromTeller.getAuthenticatedTeller)
-      .filter(teller => !!teller)
+      .pipe(filter(teller => !!teller))
       .subscribe(teller => {
         this.teller = teller;
       });
@@ -111,8 +111,9 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
     };
 
     this.transactionCosts$ = this.tellerTransactionService.createTransaction(this.teller.code, transaction)
-      .do(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier)
-      .do(() => this.transactionCreated = true);
+      .pipe(
+        tap(transactionCosts => this.tellerTransactionIdentifier = transactionCosts.tellerTransactionIdentifier),
+        tap(() => this.transactionCreated = true));
   }
 
   confirmTransaction(chargesIncluded: boolean): void {
@@ -141,6 +142,6 @@ export class CreateDepositTransactionFormComponent implements OnInit, OnDestroy 
   }
 
   cancel(): void {
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 }

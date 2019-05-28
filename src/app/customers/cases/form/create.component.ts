@@ -22,16 +22,16 @@ import {CaseFormComponent} from './form.component';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {CREATE, RESET_FORM} from '../store/case.actions';
 import {Error} from '../../../services/domain/error.model';
 import {Product} from '../../../services/portfolio/domain/product.model';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
-import {Observable} from 'rxjs/Observable';
 import {DepositAccountService} from '../../../services/depositAccount/deposit-account.service';
 import {ProductInstance} from '../../../services/depositAccount/domain/instance/product-instance.model';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
 import {Customer} from '../../../services/customer/domain/customer.model';
+import {switchMap, map, filter, tap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './create.component.html'
@@ -79,19 +79,21 @@ export class CaseCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customer$ = this.casesStore.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer)
-      .do(customer => this.fullName = `${customer.givenName} ${customer.surname}`);
+    .pipe(
+      filter(customer => !!customer),
+      tap(customer => this.fullName = `${customer.givenName} ${customer.surname}`));
 
     this.formStateSubscription = this.casesStore.select(fromCases.getCaseFormError)
-      .filter((error: Error) => !!error)
+    .pipe(
+      filter((error: Error) => !!error))
       .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
-    this.products$ = this.portfolioService.findAllProducts(false)
-      .map(productPage => productPage.elements);
+    this.products$ = this.portfolioService.findAllProducts(false).pipe(
+      map(productPage => productPage.elements));
 
-    this.productsInstances$ = this.customer$
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
-      .map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE'));
+    this.productsInstances$ = this.customer$.pipe(
+      switchMap(customer => this.depositService.fetchProductInstances(customer.identifier)),
+      map((instances: ProductInstance[]) => instances.filter(instance => instance.state === 'ACTIVE')),);
   }
 
   ngOnDestroy(): void {

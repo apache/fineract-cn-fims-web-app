@@ -26,7 +26,8 @@ import {Error} from '../../../services/domain/error.model';
 import {FimsProduct} from '../store/model/fims-product.model';
 import {Currency} from '../../../services/currency/domain/currency.model';
 import {CurrencyService} from '../../../services/currency/currency.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import { filter } from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.component.html'
@@ -74,7 +75,8 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.error$ = this.portfolioStore.select(fromPortfolio.getProductFormError)
-      .filter(error => !!error);
+      .pipe(
+        filter(error => !!error));
 
     this.currencies$ = this.currencyService.fetchCurrencies();
   }

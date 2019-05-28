@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromProducts from '../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from '../store/tasks/task.actions';
-import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class ProductTaskExistsGuard implements CanActivate {
@@ -34,32 +34,32 @@ export class ProductTaskExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasTaskInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromProducts.getProductTasksLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromProducts.getProductTasksLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasTaskInApi(productId: string, taskId: string): Observable<boolean> {
-    const getTaskDefintion$ = this.portfolioService.getTaskDefinition(productId, taskId)
-      .map(taskEntity => new LoadAction({
+    const getTaskDefintion$ = this.portfolioService.getTaskDefinition(productId, taskId).pipe(
+      map(taskEntity => new LoadAction({
         resource: taskEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(task => !!task);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(task => !!task));
 
     return this.existsGuardService.routeTo404OnError(getTaskDefintion$);
   }
 
   hasTask(productId: string, taskId: string): Observable<boolean> {
-    return this.hasTaskInStore(taskId)
-      .switchMap(inStore => {
+    return this.hasTaskInStore(taskId).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasTaskInApi(productId, taskId);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

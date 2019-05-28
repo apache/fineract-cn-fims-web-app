@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {SelectCustomerAction} from '../store/teller.actions';
 import {TellerStore} from '../store/index';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
@@ -33,8 +33,8 @@ export class TellerCustomerIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: TellerStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectCustomerAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectCustomerAction(params['id'])))
       .subscribe(this.store);
   }
 

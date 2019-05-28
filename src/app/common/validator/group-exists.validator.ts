@@ -17,27 +17,29 @@
  * under the License.
  */
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {GroupService} from '../../services/group/group.service';
 import {isString} from './validators';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidGroup: true
 });
 
 export function groupExists(groupService: GroupService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return groupService.getGroup(control.value, true)
-      .map(group => null)
-      .catch(() => invalid);
+    return groupService.getGroup(control.value, true).pipe(
+      map(group => null),
+      catchError(() => invalid));
   };
 }
 

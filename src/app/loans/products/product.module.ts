@@ -112,25 +112,27 @@ import {LossProvisionDetailComponent} from './lossProvision/loss-provision.detai
     CovalentStepsModule,
     CovalentMessageModule,
 
-    EffectsModule.run(ProductApiEffects),
-    EffectsModule.run(ProductRouteEffects),
-    EffectsModule.run(ProductNotificationEffects),
+    EffectsModule.forRoot([
+      ProductApiEffects,
+      ProductRouteEffects,
+      ProductNotificationEffects,
 
-    EffectsModule.run(ProductTasksApiEffects),
-    EffectsModule.run(ProductTasksRouteEffects),
-    EffectsModule.run(ProductTasksNotificationEffects),
+      ProductTasksApiEffects,
+      ProductTasksRouteEffects,
+      ProductTasksNotificationEffects,
 
-    EffectsModule.run(ProductChargesApiEffects),
-    EffectsModule.run(ProductChargesRouteEffects),
-    EffectsModule.run(ProductChargesNotificationEffects),
+      ProductChargesApiEffects,
+      ProductChargesRouteEffects,
+      ProductChargesNotificationEffects,
+      
+      ProductChargeRangesApiEffects,
+      ProductChargeRangesRouteEffects,
+      ProductChargeRangesNotificationEffects,
 
-    EffectsModule.run(ProductChargeRangesApiEffects),
-    EffectsModule.run(ProductChargeRangesRouteEffects),
-    EffectsModule.run(ProductChargeRangesNotificationEffects),
-
-    EffectsModule.run(ProductLossProvisionApiEffects),
-    EffectsModule.run(ProductLossProvisionRouteEffects),
-    EffectsModule.run(ProductLossProvisionNotificationEffects),
+      ProductLossProvisionApiEffects,
+      ProductLossProvisionRouteEffects,
+      ProductLossProvisionNotificationEffects,
+    ])
   ],
   declarations: [
     // product

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 export enum NotificationType {
   MESSAGE, ALERT

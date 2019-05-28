@@ -16,69 +16,69 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {OfficeService} from '../../../services/office/office.service';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { OfficeService } from '../../../services/office/office.service';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as officeActions from '../office.actions';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class OfficeApiEffects {
 
   @Effect()
   createOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE)
-    .map((action: officeActions.CreateOfficeAction) => action.payload)
-    .mergeMap(payload =>
-      this.officeService.createOffice(payload.office)
-        .map(() => new officeActions.CreateOfficeSuccessAction({
-          resource: payload.office,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new officeActions.CreateOfficeFailAction(error)))
-    );
+    .pipe(ofType(officeActions.CREATE),
+      map((action: officeActions.CreateOfficeAction) => action.payload),
+      mergeMap(payload =>
+        this.officeService.createOffice(payload.office).pipe(
+          map(() => new officeActions.CreateOfficeSuccessAction({
+            resource: payload.office,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new officeActions.CreateOfficeFailAction(error))))
+      ));
 
   @Effect()
   createBranchOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.CREATE_BRANCH)
-    .map((action: officeActions.CreateBranchOfficeAction) => action.payload)
-    .mergeMap(payload =>
-      this.officeService.addBranch(payload.office.parentIdentifier, payload.office)
-        .map(() => new officeActions.CreateOfficeSuccessAction({
-          resource: payload.office,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new officeActions.CreateOfficeFailAction(error)))
-    );
+    .pipe(ofType(officeActions.CREATE_BRANCH),
+      map((action: officeActions.CreateBranchOfficeAction) => action.payload),
+      mergeMap(payload =>
+        this.officeService.addBranch(payload.office.parentIdentifier, payload.office).pipe(
+          map(() => new officeActions.CreateOfficeSuccessAction({
+            resource: payload.office,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new officeActions.CreateOfficeFailAction(error))))
+      ));
 
   @Effect()
   updateOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.UPDATE)
-    .map((action: officeActions.UpdateOfficeAction) => action.payload)
-    .mergeMap(payload =>
-      this.officeService.updateOffice(payload.office)
-        .map(() => new officeActions.UpdateOfficeSuccessAction({
-          resource: payload.office,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new officeActions.UpdateOfficeFailAction(error)))
-    );
+    .pipe(ofType(officeActions.UPDATE),
+      map((action: officeActions.UpdateOfficeAction) => action.payload),
+      mergeMap(payload =>
+        this.officeService.updateOffice(payload.office).pipe(
+          map(() => new officeActions.UpdateOfficeSuccessAction({
+            resource: payload.office,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new officeActions.UpdateOfficeFailAction(error))))
+      ));
 
   @Effect()
   deleteOffice$: Observable<Action> = this.actions$
-    .ofType(officeActions.DELETE)
-    .map((action: officeActions.DeleteOfficeAction) => action.payload)
-    .mergeMap(payload =>
-      this.officeService.deleteOffice(payload.office.identifier)
-        .map(() => new officeActions.DeleteOfficeSuccessAction({
-          resource: payload.office,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new officeActions.DeleteOfficeFailAction(error)))
-    );
+    .pipe(ofType(officeActions.DELETE),
+      map((action: officeActions.DeleteOfficeAction) => action.payload),
+      mergeMap(payload =>
+        this.officeService.deleteOffice(payload.office.identifier).pipe(
+          map(() => new officeActions.DeleteOfficeSuccessAction({
+            resource: payload.office,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new officeActions.DeleteOfficeFailAction(error))))
+      ));
 
-  constructor(private actions$: Actions, private officeService: OfficeService) {}
+  constructor(private actions$: Actions, private officeService: OfficeService) { }
 
 }

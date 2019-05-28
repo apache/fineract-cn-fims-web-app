@@ -16,31 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as transactionTypeActions from '../transaction-type.actions';
-import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
+import { NotificationService, NotificationType } from '../../../../../services/notification/notification.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class TransactionTypeNotificationEffects {
 
   @Effect({ dispatch: false })
   createTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.CREATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Transaction type is going to be created'
-    }));
+    .pipe(ofType(transactionTypeActions.CREATE_SUCCESS),
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Transaction type is going to be created'
+      })));
 
   @Effect({ dispatch: false })
   updateTransactionTypeSuccess$: Observable<Action> = this.actions$
-    .ofType(transactionTypeActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
-      type: NotificationType.MESSAGE,
-      message: 'Transaction type is going to be updated'
-    }));
+    .pipe(ofType(transactionTypeActions.UPDATE_SUCCESS),
+      tap(() => this.notificationService.send({
+        type: NotificationType.MESSAGE,
+        message: 'Transaction type is going to be updated'
+      })));
 
-  constructor(private actions$: Actions, private notificationService: NotificationService) {}
+  constructor(private actions$: Actions, private notificationService: NotificationService) { }
 }

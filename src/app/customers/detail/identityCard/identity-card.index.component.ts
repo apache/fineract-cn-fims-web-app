@@ -17,10 +17,11 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {CustomersStore} from '../../store/index';
 import {SelectAction} from '../../store/identityCards/identity-cards.actions';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './identity-card.index.component.html'
@@ -32,8 +33,8 @@ export class CustomerIdentityCardIndexComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private customersStore: CustomersStore) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['number']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['number'])))
       .subscribe(this.customersStore);
   }
 

@@ -16,31 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Router} from '@angular/router';
-import {Actions, Effect} from '@ngrx/effects';
-import {Injectable} from '@angular/core';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
 import * as tellerActions from '../../store/teller.actions';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TellerRouteEffects {
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   unlockDrawerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.UNLOCK_DRAWER_SUCCESS)
-    .do((payload) => this.router.navigate(['/teller']));
+    .pipe(ofType(tellerActions.UNLOCK_DRAWER_SUCCESS),
+      tap((payload) => this.router.navigate(['/teller'])));
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   lockDrawerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOCK_DRAWER_SUCCESS)
-    .do((payload) => this.router.navigate(['/teller/auth']));
+    .pipe(ofType(tellerActions.LOCK_DRAWER_SUCCESS),
+      tap((payload) => this.router.navigate(['/teller/auth'])));
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   confirmTransactionSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS)
-    .map(action => action.payload)
-    .do((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute }));
+    .pipe(ofType(tellerActions.CONFIRM_TRANSACTION_SUCCESS),
+      map(action => (action as any).payload),
+      tap((payload) => this.router.navigate(['../../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) {
   }

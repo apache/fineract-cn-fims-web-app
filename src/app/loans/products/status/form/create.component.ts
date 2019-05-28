@@ -20,12 +20,13 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TaskDefinition} from '../../../../services/portfolio/domain/task-definition.model';
 import {ProductTaskFormComponent} from './form.component';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {PortfolioStore} from '../../store/index';
 import * as fromPortfolio from '../../store';
 import {CREATE, RESET_FORM} from '../../store/tasks/task.actions';
 import {Error} from '../../../../services/domain/error.model';
 import {FimsProduct} from '../../store/model/fims-product.model';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.component.html'
@@ -56,7 +57,8 @@ export class ProductStatusCreateFormComponent implements OnInit, OnDestroy {
       .subscribe(product => this.product = product);
 
     this.formStateSubscription = this.portfolioStore.select(fromPortfolio.getProductTaskFormError)
-      .filter((error: Error) => !!error)
+      .pipe(
+        filter((error: Error) => !!error))
       .subscribe((error: Error) => {
         const detailForm = this.formComponent.detailForm;
         const errors = detailForm.get('identifier').errors || {};

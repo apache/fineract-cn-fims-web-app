@@ -20,14 +20,14 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PlannedPaymentPage} from '../../../services/portfolio/domain/individuallending/planned-payment-page.model';
 import * as fromCases from '../store/index';
 import {CasesStore} from '../store/index';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {SEARCH} from '../store/payments/payment.actions';
 import {PlannedPayment} from '../../../services/portfolio/domain/individuallending/planned-payment.model';
 import {CostComponent} from '../../../services/portfolio/domain/cost-component.model';
 import {ChargeName} from '../../../services/portfolio/domain/individuallending/charge-name.model';
 import {todayAsISOString} from '../../../services/domain/date.converter';
 import {FimsCase} from '../../../services/portfolio/domain/fims-case.model';
+import {map} from 'rxjs/operators';
 
 interface CostComponents {
   [id: string]: CostComponent;
@@ -98,11 +98,11 @@ export class CasePaymentsComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.columns = this.casesStore.select(fromCases.getSearchCasePaymentPage)
-      .map((page: PlannedPaymentPage) => page.chargeNames);
+    this.columns = this.casesStore.select(fromCases.getSearchCasePaymentPage).pipe(
+      map((page: PlannedPaymentPage) => page.chargeNames));
 
-    this.rows = this.casesStore.select(fromCases.getSearchCasePaymentPage)
-      .map((page: PlannedPaymentPage) => this.createRows(page.elements));
+    this.rows = this.casesStore.select(fromCases.getSearchCasePaymentPage).pipe(
+      map((page: PlannedPaymentPage) => this.createRows(page.elements)));
 
     this.caseSubscription = this.casesStore.select(fromCases.getSelectedCase)
       .subscribe(caseInstance => {

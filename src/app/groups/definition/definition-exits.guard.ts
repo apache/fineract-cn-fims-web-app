@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromGroups from '../store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {GroupsStore} from '../store/index';
 import {GroupService} from '../../services/group/group.service';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
 import {LoadAction} from '../store/definition/definition.actions';
+import {switchMap, map,tap} from 'rxjs/operators';
 
 @Injectable()
 export class GroupDefinitionExistsGuard implements CanActivate {
@@ -35,31 +35,32 @@ export class GroupDefinitionExistsGuard implements CanActivate {
   }
 
   hasGroupDefinitionInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromGroups.getGroupDefinitionLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$: Observable<number> = this.store.select(fromGroups.getGroupDefinitionLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasGroupDefinitionInApi(id: string): Observable<boolean> {
-    const getGroupDefinition$: Observable<any> = this.groupService.getGroupDefinition(id)
-      .map(groupDefinitionEntity => new LoadAction({
+    const getGroupDefinition$: Observable<any> = this.groupService.getGroupDefinition(id).pipe(
+      map(groupDefinitionEntity => new LoadAction({
         resource: groupDefinitionEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(groupDefinition => !!groupDefinition);
+      })))
+      .pipe(
+        tap((action: LoadAction) => this.store.dispatch(action)),
+        map(groupDefinition => !!groupDefinition));
 
     return this.existsGuardService.routeTo404OnError(getGroupDefinition$);
   }
 
   hasGroupDefinition(id: string): Observable<boolean> {
-    return this.hasGroupDefinitionInStore(id)
-      .switchMap(inStore => {
+    return this.hasGroupDefinitionInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasGroupDefinitionInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

@@ -17,30 +17,31 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {NotificationService, NotificationType} from '../../../../../services/notification/notification.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as taskActions from '../task.actions';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class CaseTasksNotificationEffects {
 
   @Effect({dispatch: false})
   createTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(ofType(taskActions.EXECUTE_TASK_SUCCESS),
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Task executed successfully'
-    }));
+    })));
 
   @Effect({dispatch: false})
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_TASK_FAIL)
-    .do(() => this.notificationService.send({
+    .pipe(ofType(taskActions.EXECUTE_TASK_FAIL),
+      tap(() => this.notificationService.send({
       type: NotificationType.ALERT,
       message: 'Task execution failed'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {
   }

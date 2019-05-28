@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
 import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
@@ -25,6 +25,7 @@ import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {SEARCH} from '../store/ledger/transaction-type/transaction-type.actions';
 import {TransactionType} from '../../services/accounting/domain/transaction-type.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './transaction-types.list.component.html'
@@ -48,12 +49,12 @@ export class TransactionTypeListComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit(): void {
-    this.transactionTypesData$ = this.store.select(fromAccounting.getTransactionTypeSearchResults)
-      .map(transactionTypePage => ({
+    this.transactionTypesData$ = this.store.select(fromAccounting.getTransactionTypeSearchResults).pipe(
+      map(transactionTypePage => ({
         data: transactionTypePage.transactionTypes,
         totalElements: transactionTypePage.totalElements,
         totalPages: transactionTypePage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromAccounting.getTransactionTypeSearchLoading);
 

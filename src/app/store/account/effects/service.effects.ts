@@ -17,47 +17,47 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as accountActions from '../account.actions';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {emptySearchResult, SearchResult} from '../../../common/store/search.reducer';
 import {AccountPage} from '../../../services/accounting/domain/account-page.model';
+import {skip, takeUntil, catchError, switchMap, map, debounceTime} from 'rxjs/operators';
 
 @Injectable()
 export class AccountSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(accountActions.SEARCH)
-    .debounceTime(300)
-    .map((action: accountActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(accountActions.SEARCH).skip(1);
+    .pipe(ofType(accountActions.SEARCH),
+    debounceTime(300),
+    map((action: accountActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.pipe(ofType(accountActions.SEARCH),(skip(1)));
 
-      return this.accountingService.fetchAccounts(fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(this.mapToSearchResult)
-        .map(searchResult => new accountActions.SearchCompleteAction(searchResult))
-        .catch(() => of(new accountActions.SearchCompleteAction(emptySearchResult())));
-    });
+      return this.accountingService.fetchAccounts(fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(this.mapToSearchResult),
+        map(searchResult => new accountActions.SearchCompleteAction(searchResult)),
+        catchError(() => of(new accountActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   @Effect()
   searchByLedger$: Observable<Action> = this.actions$
-    .ofType(accountActions.SEARCH_BY_LEDGER)
-    .debounceTime(300)
-    .map((action: accountActions.SearchByLedgerAction) => action.payload)
-    .switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(accountActions.SEARCH_BY_LEDGER).skip(1);
+    .pipe(ofType(accountActions.SEARCH_BY_LEDGER),
+    debounceTime(300),
+    map((action: accountActions.SearchByLedgerAction) => action.payload),
+    switchMap(payload => {
+      const nextSearch$ = this.actions$.pipe(ofType(accountActions.SEARCH_BY_LEDGER),(skip(1)));
 
-      return this.accountingService.fetchAccountsOfLedger(payload.ledgerId, payload.fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(this.mapToSearchResult)
-        .map(searchResult => new accountActions.SearchCompleteAction(searchResult))
-        .catch(() => of(new accountActions.SearchCompleteAction(emptySearchResult())));
-    });
+      return this.accountingService.fetchAccountsOfLedger(payload.ledgerId, payload.fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(this.mapToSearchResult),
+        map(searchResult => new accountActions.SearchCompleteAction(searchResult)),
+        catchError(() => of(new accountActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   private mapToSearchResult(accountPage: AccountPage): SearchResult {
     return {

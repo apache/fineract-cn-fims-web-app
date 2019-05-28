@@ -16,89 +16,89 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as ledgerActions from '../ledger.actions';
-import {AccountingService} from '../../../../services/accounting/accounting.service';
+import { AccountingService } from '../../../../services/accounting/accounting.service';
+import { map, debounceTime, switchMap, mergeMap, skip, takeUntil, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class LedgerApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_ALL_TOP_LEVEL)
-    .debounceTime(300)
-    .switchMap(() => {
-      const nextSearch$ = this.actions$.ofType(ledgerActions.LOAD_ALL_TOP_LEVEL).skip(1);
+    .pipe(ofType(ledgerActions.LOAD_ALL_TOP_LEVEL),
+      debounceTime(300),
+      switchMap(() => {
+        const nextSearch$ = this.actions$.pipe(ofType(ledgerActions.LOAD_ALL_TOP_LEVEL),(skip(1)));
 
-      return this.accountingService.fetchLedgers()
-        .takeUntil(nextSearch$)
-        .map(ledgerPage => ledgerPage.ledgers)
-        .map(ledgers => new ledgerActions.LoadAllTopLevelComplete(ledgers))
-        .catch(() => of(new ledgerActions.LoadAllTopLevelComplete([])));
-    });
+        return this.accountingService.fetchLedgers()
+          .pipe(takeUntil(nextSearch$),
+            map(ledgerPage => ledgerPage.ledgers),
+            map(ledgers => new ledgerActions.LoadAllTopLevelComplete(ledgers)),
+            catchError(() => of(new ledgerActions.LoadAllTopLevelComplete([]))));
+      }));
 
   @Effect()
   createLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE)
-    .map((action: ledgerActions.CreateLedgerAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.createLedger(payload.ledger)
-        .map(() => new ledgerActions.CreateLedgerSuccessAction(payload))
-        .catch((error) => of(new ledgerActions.CreateLedgerFailAction(error)))
-    );
+    .pipe(ofType(ledgerActions.CREATE),
+      map((action: ledgerActions.CreateLedgerAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.createLedger(payload.ledger).pipe(
+          map(() => new ledgerActions.CreateLedgerSuccessAction(payload)),
+          catchError((error) => of(new ledgerActions.CreateLedgerFailAction(error))))
+      ));
 
   @Effect()
   createSubLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.CREATE_SUB_LEDGER)
-    .map((action: ledgerActions.CreateSubLedgerAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.addSubLedger(payload.parentLedgerId, payload.ledger)
-        .map(() => new ledgerActions.CreateSubLedgerSuccessAction(payload))
-        .catch((error) => of(new ledgerActions.CreateSubLedgerFailAction(error)))
-    );
+    .pipe(ofType(ledgerActions.CREATE_SUB_LEDGER),
+      map((action: ledgerActions.CreateSubLedgerAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.addSubLedger(payload.parentLedgerId, payload.ledger).pipe(
+          map(() => new ledgerActions.CreateSubLedgerSuccessAction(payload)),
+          catchError((error) => of(new ledgerActions.CreateSubLedgerFailAction(error))))
+      ));
 
   @Effect()
   updateLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.UPDATE)
-    .map((action: ledgerActions.UpdateLedgerAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.modifyLedger(payload.ledger)
-          .map(() => new ledgerActions.UpdateLedgerSuccessAction(payload))
-          .catch((error) => of(new ledgerActions.UpdateLedgerFailAction(error)))
-    );
+    .pipe(ofType(ledgerActions.UPDATE),
+      map((action: ledgerActions.UpdateLedgerAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.modifyLedger(payload.ledger).pipe(
+          map(() => new ledgerActions.UpdateLedgerSuccessAction(payload)),
+          catchError((error) => of(new ledgerActions.UpdateLedgerFailAction(error))))
+      ));
 
   @Effect()
   deleteLedger$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.DELETE)
-    .map((action: ledgerActions.DeleteLedgerAction) => action.payload)
-    .mergeMap(payload =>
-      this.accountingService.deleteLedger(payload.ledger.identifier)
-        .map(() => new ledgerActions.DeleteLedgerSuccessAction(payload))
-        .catch((error) => of(new ledgerActions.DeleteLedgerFailAction(error)))
-    );
+    .pipe(ofType(ledgerActions.DELETE),
+      map((action: ledgerActions.DeleteLedgerAction) => action.payload),
+      mergeMap(payload =>
+        this.accountingService.deleteLedger(payload.ledger.identifier).pipe(
+          map(() => new ledgerActions.DeleteLedgerSuccessAction(payload)),
+          catchError((error) => of(new ledgerActions.DeleteLedgerFailAction(error))))
+      ));
 
   @Effect()
   loadTrialBalance$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_TRIAL_BALANCE)
-    .map((action: ledgerActions.LoadTrialBalanceAction) => action.payload)
-    .mergeMap(includeEmpty =>
-      this.accountingService.getTrialBalance(includeEmpty)
-        .map(trialBalance => new ledgerActions.LoadTrialBalanceActionComplete(trialBalance))
-        .catch(() => of(new ledgerActions.LoadTrialBalanceActionComplete(null)))
-    );
+    .pipe(ofType(ledgerActions.LOAD_TRIAL_BALANCE),
+      map((action: ledgerActions.LoadTrialBalanceAction) => action.payload),
+      mergeMap(includeEmpty =>
+        this.accountingService.getTrialBalance(includeEmpty).pipe(
+          map(trialBalance => new ledgerActions.LoadTrialBalanceActionComplete(trialBalance)),
+          catchError(() => of(new ledgerActions.LoadTrialBalanceActionComplete(null))))
+      ));
 
   @Effect()
   loadChartOfAccounts$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.LOAD_CHART_OF_ACCOUNTS)
-    .mergeMap(() =>
-      this.accountingService.getChartOfAccounts()
-        .map(chartOfAccountEntries => new ledgerActions.LoadChartOfAccountsActionComplete(chartOfAccountEntries))
-        .catch(() => of(new ledgerActions.LoadChartOfAccountsActionComplete([])))
-    );
+    .pipe(ofType(ledgerActions.LOAD_CHART_OF_ACCOUNTS),
+      mergeMap(() =>
+        this.accountingService.getChartOfAccounts().pipe(
+          map(chartOfAccountEntries => new ledgerActions.LoadChartOfAccountsActionComplete(chartOfAccountEntries)),
+          catchError(() => of(new ledgerActions.LoadChartOfAccountsActionComplete([]))))
+      ));
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 

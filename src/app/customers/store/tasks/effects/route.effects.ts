@@ -16,21 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Observable} from 'rxjs/Observable';
-import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs';
+import {Actions, Effect,ofType} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Router} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as taskActions from '../task.actions';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TasksRouteEffects {
 
   @Effect({ dispatch: false })
   createCustomerTaskSuccess$: Observable<Action> = this.actions$
-    .ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute }));
+    .pipe(ofType(taskActions.CREATE_SUCCESS, taskActions.UPDATE_SUCCESS),
+    map(action => (action as any).payload),
+    tap(payload => this.router.navigate(['../'], { relativeTo: payload.activatedRoute })));
 
   constructor(private actions$: Actions, private router: Router) { }
 }

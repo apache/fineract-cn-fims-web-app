@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {take} from 'rxjs/operators';
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {NotificationEvent, NotificationService, NotificationType} from '../services/notification/notification.service';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '../services/http/http.service';
 import {TdDialogService} from '@covalent/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from '@angular/material';
 
 @Component({
@@ -90,8 +90,8 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private showMessage(message: string, config: MatSnackBarConfig): void {
-    this.translate.get(message)
-      .take(1)
+    this.translate.get(message).pipe(
+      take(1))
       .subscribe((result) => {
         const snackBarRef: MatSnackBarRef<any> = this.snackBar.open(result, '', config);
         setTimeout(() => snackBarRef.dismiss(), 3000);
@@ -99,8 +99,8 @@ export class NotificationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private showAlert(title: string = '', message: string): void {
-    this.translate.get([title, message, 'OK'])
-      .take(1)
+    this.translate.get([title, message, 'OK']).pipe(
+      take(1))
       .subscribe((result) => {
         this.dialogService.openAlert({
           message: result[message],

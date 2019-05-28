@@ -19,8 +19,9 @@
 import {Component} from '@angular/core';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {IncomeStatement} from '../../services/accounting/domain/income-statement.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {IncomeStatementSection} from '../../services/accounting/domain/income-statement-section.model';
+import {share, map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './income-statement.component.html',
@@ -35,16 +36,16 @@ export class IncomeStatementComponent {
   expenses$: Observable<IncomeStatementSection>;
 
   constructor(private accountingService: AccountingService) {
-    this.incomeStatement$ = accountingService.getIncomeStatement().share();
+    this.incomeStatement$ = accountingService.getIncomeStatement().pipe(share());
 
-    this.income$ = this.incomeStatement$
-      .map(statement => statement.incomeStatementSections
+    this.income$ = this.incomeStatement$.pipe(
+      map(statement => statement.incomeStatementSections
         .find(section => section.type === 'INCOME')
-      );
+      ));
 
-    this.expenses$ = this.incomeStatement$
-      .map(statement => statement.incomeStatementSections
+    this.expenses$ = this.incomeStatement$.pipe(
+      map(statement => statement.incomeStatementSections
         .find(section => section.type === 'EXPENSES')
-      );
+      ));
   }
 }

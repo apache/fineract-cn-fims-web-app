@@ -22,9 +22,9 @@ import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import * as fromPortfolio from '../store/index';
 import {PortfolioStore} from '../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from '../store/lossProvision/loss-provision.actions';
-import {of} from 'rxjs/observable/of';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class LoanLossProvisionExistsGuard implements CanActivate {
@@ -41,20 +41,20 @@ export class LoanLossProvisionExistsGuard implements CanActivate {
   }
 
   hasConfigurationInApi(id: string): Observable<boolean> {
-    return this.portfolioService.getLossProvisionConfiguration(id)
-      .map(configuration => new LoadAction(configuration))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(catalog => !!catalog);
+    return this.portfolioService.getLossProvisionConfiguration(id).pipe(
+      map(configuration => new LoadAction(configuration)),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(catalog => !!catalog));
   }
 
   hasConfiguration(id: string): Observable<boolean> {
-    return this.hasConfigurationInStore()
-      .switchMap(inStore => {
+    return this.hasConfigurationInStore().pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasConfigurationInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

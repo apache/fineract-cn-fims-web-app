@@ -18,15 +18,15 @@
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CustomerService} from '../../../services/customer/customer.service';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {Customer} from '../../../services/customer/domain/customer.model';
 import {CustomersStore} from '../../store/index';
 import * as fromCustomers from '../../store';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
 import {TdDialogService} from '@covalent/core';
-import {Observable} from 'rxjs/Observable';
 import {TranslateService} from '@ngx-translate/core';
+import { tap, flatMap, filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './portrait.component.html'
@@ -50,8 +50,9 @@ export class CustomerPortraitComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
-      .do(customer => this.customer = customer)
-      .flatMap(customer => this.customerService.getPortrait(customer.identifier))
+      .pipe(
+      tap(customer => this.customer = customer),
+      flatMap(customer => this.customerService.getPortrait(customer.identifier)))
       .subscribe(portrait => this.portrait = portrait);
   }
 
@@ -84,19 +85,19 @@ export class CustomerPortraitComponent implements OnInit, OnDestroy {
     const button = 'DELETE PORTRAIT';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   deletePortrait(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
-      .flatMap(() => this.customerService.deletePortrait(this.customer.identifier))
+      .pipe(filter(accept => accept),
+      flatMap(() => this.customerService.deletePortrait(this.customer.identifier)))
       .subscribe(() => {
         this.notificationService.send({
           type: NotificationType.MESSAGE,

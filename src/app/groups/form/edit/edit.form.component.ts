@@ -22,8 +22,7 @@ import {Group} from '../../../services/group/domain/group.model';
 import * as fromGroups from '../../store';
 import {GroupsStore} from '../../store/index';
 import {UPDATE} from '../../store/group.actions';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   templateUrl: './edit.form.component.html'

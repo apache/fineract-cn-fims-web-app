@@ -21,10 +21,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Customer} from '../../services/customer/domain/customer.model';
 import {Catalog} from '../../services/catalog/domain/catalog.model';
 import * as fromCustomers from '../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {CustomersStore} from '../store/index';
 import {CustomerService} from '../../services/customer/customer.service';
-import {Observable} from 'rxjs/Observable';
+import { filter, tap, flatMap} from 'rxjs/operators'
 
 
 interface CustomDetailField {
@@ -53,10 +53,10 @@ export class CustomerDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer)
-      .do(customer => this.customer = customer)
-      .do(customer => this.isCustomerActive = customer.currentState === 'ACTIVE')
-      .flatMap(customer => this.customerService.getPortrait(customer.identifier))
+      .pipe(filter(customer => !!customer),
+      tap(customer => this.customer = customer),
+      tap(customer => this.isCustomerActive = customer.currentState === 'ACTIVE'),
+      flatMap(customer => this.customerService.getPortrait(customer.identifier)))
       .subscribe(portrait => this.portrait = portrait);
 
     this.catalog$ = this.store.select(fromCustomers.getCustomerCatalog);

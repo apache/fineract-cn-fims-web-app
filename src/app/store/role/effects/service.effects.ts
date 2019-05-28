@@ -17,14 +17,14 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as roleActions from '../role.actions';
 import {IdentityService} from '../../../services/identity/identity.service';
 import {emptySearchResult} from '../../../common/store/search.reducer';
 import {Role} from '../../../services/identity/domain/role.model';
+import {catchError, map, takeUntil, debounceTime, switchMap, skip} from 'rxjs/operators';
 
 const SYSTEM_ROLES: string[] = ['pharaoh', 'scheduler'];
 
@@ -33,21 +33,21 @@ export class RoleSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(roleActions.SEARCH)
-    .debounceTime(300)
-    .switchMap(() => {
-      const nextSearch$ = this.actions$.ofType(roleActions.SEARCH).skip(1);
+    .pipe(ofType(roleActions.SEARCH),
+    debounceTime(300),
+    switchMap(() => {
+      const nextSearch$ = this.actions$.pipe(ofType(roleActions.SEARCH),(skip(1)));
 
-      return this.identityService.listRoles()
-        .takeUntil(nextSearch$)
-        .map(this.excludeSystemRoles)
-        .map(roles => new roleActions.SearchCompleteAction({
+      return this.identityService.listRoles().pipe(
+        takeUntil(nextSearch$),
+        map(this.excludeSystemRoles),
+        map(roles => new roleActions.SearchCompleteAction({
           elements: roles,
           totalPages: 1,
           totalElements: roles.length
-        }))
-        .catch(() => of(new roleActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new roleActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   private excludeSystemRoles(roles: Role[]): Role[] {
     return roles.filter(role => SYSTEM_ROLES.indexOf(role.identifier) === -1);

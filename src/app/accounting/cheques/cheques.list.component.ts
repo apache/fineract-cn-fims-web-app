@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ITdDataTableColumn, TdDialogService} from '@covalent/core';
 import {AccountingStore} from '../store/index';
 import * as fromAccounting from '../store';
@@ -25,6 +25,7 @@ import {ChequeCRUDActions, ProcessAction} from '../store/cheques/cheque.actions'
 import {TranslateService} from '@ngx-translate/core';
 import {FimsCheque} from '../../services/cheque/domain/fims-cheque.model';
 import {DatePipe} from '@angular/common';
+import { filter, flatMap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './cheques.list.component.html',
@@ -61,18 +62,18 @@ export class ChequesListComponent implements OnInit {
     const button = `${action} cheque`;
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   approveCheque(cheque: FimsCheque): void {
     this.confirmAction('APPROVE')
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch(new ProcessAction({
           chequeIdentifier: cheque.identifier,
@@ -85,7 +86,7 @@ export class ChequesListComponent implements OnInit {
 
   cancelCheque(cheque: FimsCheque): void {
     this.confirmAction('CANCEL')
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch(new ProcessAction({
           chequeIdentifier: cheque.identifier,

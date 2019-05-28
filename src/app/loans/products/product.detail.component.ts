@@ -20,13 +20,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PortfolioStore} from './store/index';
 import {DELETE, ENABLE} from './store/product.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import * as fromPortfolio from './store';
 import * as fromRoot from '../../store';
 import {FimsProduct} from './store/model/fims-product.model';
 import {FimsPermission} from '../../services/security/authz/fims-permission.model';
-import {Observable} from 'rxjs/Observable';
 import {TdDialogService} from '@covalent/core';
+import { filter, combineLatest} from 'rxjs/operators'
 
 @Component({
   templateUrl: './product.detail.component.html'
@@ -45,7 +45,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const product$: Observable<FimsProduct> = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product);
+      .pipe(
+        filter(product => !!product));
 
     this.productSubscription = product$
       .subscribe(product => this.product = product);
@@ -99,7 +100,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   deleteProduct(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => this.portfolioStore.dispatch({
         type: DELETE, payload: {
           product: this.product,

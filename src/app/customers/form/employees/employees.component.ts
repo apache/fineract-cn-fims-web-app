@@ -17,12 +17,13 @@
  * under the License.
  */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {FetchRequest} from '../../../services/domain/paging/fetch-request.model';
 import * as fromRoot from '../../../store';
 import {SEARCH} from '../../../store/employee/employee.actions';
 import {Store} from '@ngrx/store';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'fims-customer-employees-form',
@@ -39,8 +40,8 @@ export class CustomerEmployeesComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit(): void {
-    this.employees = this.store.select(fromRoot.getEmployeeSearchResults)
-      .map(employeePage => employeePage.employees);
+    this.employees = this.store.select(fromRoot.getEmployeeSearchResults).pipe(
+      map(employeePage => employeePage.employees));
   }
 
   search(searchTerm) {

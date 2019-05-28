@@ -16,13 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {switchMap, map, tap} from 'rxjs/operators';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromProducts from '../store';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from '../store/charges/charge.actions';
-import {of} from 'rxjs/observable/of';
 import {PortfolioStore} from '../store/index';
 import {PortfolioService} from '../../../services/portfolio/portfolio.service';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
@@ -35,32 +34,32 @@ export class ProductChargeExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasChargeInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromProducts.getProductChargesLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromProducts.getProductChargesLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasChargeInApi(productId: string, chargeId: string): Observable<boolean> {
-    const getChargeDefinition = this.portfolioService.getChargeDefinition(productId, chargeId)
-      .map(chargeEntity => new LoadAction({
+    const getChargeDefinition = this.portfolioService.getChargeDefinition(productId, chargeId).pipe(
+      map(chargeEntity => new LoadAction({
         resource: chargeEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(charge => !!charge);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(charge => !!charge));
 
     return this.existsGuardService.routeTo404OnError(getChargeDefinition);
   }
 
   hasCharge(productId: string, chargeId: string): Observable<boolean> {
-    return this.hasChargeInStore(chargeId)
-      .switchMap(inStore => {
+    return this.hasChargeInStore(chargeId).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasChargeInApi(productId, chargeId);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

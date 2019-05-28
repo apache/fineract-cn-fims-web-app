@@ -18,15 +18,15 @@
  */
 
 import {Component, OnDestroy} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {UploadPageFormData} from './upload-page.form.component';
 import {UploadPageAction} from '../../../store/documents/document.actions';
 import {CasesStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
 import {CaseSelection} from '../../../store/model/case-selection.model';
 import * as fromCases from '../../../store';
 import {CustomerDocument} from '../../../../../services/customer/domain/customer-document.model';
+import { combineLatest } from 'rxjs';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -51,7 +51,7 @@ export class CreateDocumentPageComponent implements OnDestroy {
   }
 
   onSave(formData: UploadPageFormData): void {
-    this.actionsSubscription = Observable.combineLatest(
+    this.actionsSubscription = combineLatest(
       this.currentSelection$,
       this.document$,
       (selection, document) => ({

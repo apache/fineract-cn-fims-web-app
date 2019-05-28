@@ -16,72 +16,73 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {of} from 'rxjs/observable/of';
-import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Actions, Effect} from '@ngrx/effects';
-import {emptySearchResult} from '../../../../common/store/search.reducer';
-import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
-import {Injectable} from '@angular/core';
+import { of, Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { emptySearchResult } from '../../../../common/store/search.reducer';
+import { DepositAccountService } from '../../../../services/depositAccount/deposit-account.service';
+import { Injectable } from '@angular/core';
 import * as instanceActions from '../deposit.actions';
-import {ChequeService} from '../../../../services/cheque/cheque.service';
+import { ChequeService } from '../../../../services/cheque/cheque.service';
+import { map, debounceTime, takeUntil, mergeMap, skip, catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class DepositProductInstanceApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(instanceActions.SEARCH)
-    .debounceTime(300)
-    .map(action => action.payload)
-    .switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(instanceActions.SEARCH).skip(1);
+    .pipe(ofType(instanceActions.SEARCH),
+      debounceTime(300),
+      map(action => (action as any).payload),
+      switchMap(payload => {
+        const nextSearch$ = this.actions$.pipe(ofType(instanceActions.SEARCH),(skip(1)));
 
-      return this.depositService.fetchProductInstances(payload.customerId)
-        .takeUntil(nextSearch$)
-        .map(productInstances => new instanceActions.SearchCompleteAction({
-          elements: productInstances,
-          totalElements: productInstances.length,
-          totalPages: 1
-        }))
-        .catch(() => of(new instanceActions.SearchCompleteAction(emptySearchResult())));
-    });
+        return this.depositService.fetchProductInstances(payload.customerId)
+          .pipe(
+            takeUntil(nextSearch$),
+            map(productInstances => new instanceActions.SearchCompleteAction({
+              elements: productInstances,
+              totalElements: productInstances.length,
+              totalPages: 1
+            })),
+            catchError(() => of(new instanceActions.SearchCompleteAction(emptySearchResult()))));
+      }));
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$
-    .ofType(instanceActions.CREATE)
-    .map((action: instanceActions.CreateProductInstanceAction) => action.payload)
-    .mergeMap(payload =>
-      this.depositService.createProductInstance(payload.productInstance)
-        .map(() => new instanceActions.CreateProductInstanceSuccessAction({
-          resource: payload.productInstance,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new instanceActions.CreateProductInstanceFailAction(error)))
-    );
+    .pipe(ofType(instanceActions.CREATE),
+      map((action: instanceActions.CreateProductInstanceAction) => action.payload),
+      mergeMap(payload =>
+        this.depositService.createProductInstance(payload.productInstance).pipe(
+          map(() => new instanceActions.CreateProductInstanceSuccessAction({
+            resource: payload.productInstance,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new instanceActions.CreateProductInstanceFailAction(error)))
+        )));
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$
-    .ofType(instanceActions.UPDATE)
-    .map((action: instanceActions.UpdateProductInstanceAction) => action.payload)
-    .mergeMap(payload =>
-      this.depositService.updateProductInstance(payload.productInstance)
-        .map(() => new instanceActions.UpdateProductInstanceSuccessAction({
-          resource: payload.productInstance,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new instanceActions.UpdateProductInstanceFailAction(error)))
-    );
+    .pipe(ofType(instanceActions.UPDATE),
+      map((action: instanceActions.UpdateProductInstanceAction) => action.payload),
+      mergeMap(payload =>
+        this.depositService.updateProductInstance(payload.productInstance).pipe(
+          map(() => new instanceActions.UpdateProductInstanceSuccessAction({
+            resource: payload.productInstance,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new instanceActions.UpdateProductInstanceFailAction(error))))
+      ));
 
   @Effect()
   issueCheques$: Observable<Action> = this.actions$
-    .ofType(instanceActions.ISSUE_CHEQUES)
-    .map((action: instanceActions.IssueChequesAction) => action.payload)
-    .mergeMap(payload =>
-      this.chequeService.issue(payload.issuingCount)
-        .map(() => new instanceActions.IssueChequesSuccessAction(payload))
-        .catch((error) => of(new instanceActions.IssueChequesFailAction(error)))
-    );
+    .pipe(ofType(instanceActions.ISSUE_CHEQUES),
+      map((action: instanceActions.IssueChequesAction) => action.payload),
+      mergeMap(payload =>
+        this.chequeService.issue(payload.issuingCount).pipe(
+          map(() => new instanceActions.IssueChequesSuccessAction(payload)),
+          catchError((error) => of(new instanceActions.IssueChequesFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private depositService: DepositAccountService, private chequeService: ChequeService) { }
 }

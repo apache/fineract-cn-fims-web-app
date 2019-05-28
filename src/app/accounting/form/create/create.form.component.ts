@@ -22,9 +22,10 @@ import {LedgerFormComponent} from '../form.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Error} from '../../../services/domain/error.model';
 import * as fromAccounting from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {CREATE, CREATE_SUB_LEDGER, RESET_FORM} from '../../store/ledger/ledger.actions';
 import {AccountingStore} from '../../store/index';
+import {filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -52,7 +53,7 @@ export class CreateLedgerFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formStateSubscription = this.store.select(fromAccounting.getLedgerFormError)
-      .filter((error: Error) => !!error)
+      .pipe(filter((error: Error) => !!error))
       .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)

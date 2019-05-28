@@ -17,25 +17,25 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType,toPayload} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as commandActions from '../commands.actions';
 import {GroupService} from '../../../../services/group/group.service';
+import {map, mergeMap, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class CommandApiEffects {
 
   @Effect()
   loadCommands$: Observable<Action> = this.actions$
-    .ofType(commandActions.LOAD_ALL)
-    .map(toPayload)
-    .mergeMap(groupId =>
-      this.groupService.fetchGroupCommands(groupId)
-        .map(commands => new commandActions.LoadAllCompleteAction(commands))
-        .catch((error) => of(new commandActions.LoadAllCompleteAction([])))
-    );
+    .pipe(ofType(commandActions.LOAD_ALL),
+    map(toPayload),
+    mergeMap(groupId =>
+      this.groupService.fetchGroupCommands(groupId).pipe(
+        map(commands => new commandActions.LoadAllCompleteAction(commands)),
+        catchError((error) => of(new commandActions.LoadAllCompleteAction([]))))
+    ));
 
   constructor(private actions$: Actions, private groupService: GroupService) { }
 

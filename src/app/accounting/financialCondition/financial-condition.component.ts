@@ -19,8 +19,9 @@
 import {Component} from '@angular/core';
 import {AccountingService} from '../../services/accounting/accounting.service';
 import {FinancialCondition} from '../../services/accounting/domain/financial-condition.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FinancialConditionSection} from '../../services/accounting/domain/financial-condition-section.model';
+import {map, share} from 'rxjs/operators';
 
 @Component({
   templateUrl: './financial-condition.component.html',
@@ -37,21 +38,21 @@ export class FinancialConditionComponent {
   liabilities$: Observable<FinancialConditionSection>;
 
   constructor(private accountingService: AccountingService) {
-    this.financialCondition$ = accountingService.getFinancialCondition().share();
+    this.financialCondition$ = accountingService.getFinancialCondition().pipe(share());
 
-    this.assets$ = this.financialCondition$
-      .map(statement => statement.financialConditionSections
+    this.assets$ = this.financialCondition$.pipe(
+      map(statement => statement.financialConditionSections
         .find(section => section.type === 'ASSET')
-      );
+      ));
 
-    this.equities$ = this.financialCondition$
-      .map(statement => statement.financialConditionSections
+    this.equities$ = this.financialCondition$.pipe(
+      map(statement => statement.financialConditionSections
         .find(section => section.type === 'EQUITY')
-      );
+      ));
 
-    this.liabilities$ = this.financialCondition$
-      .map(statement => statement.financialConditionSections
+    this.liabilities$ = this.financialCondition$.pipe(
+      map(statement => statement.financialConditionSections
         .find(section => section.type === 'LIABILITY')
-      );
+      ));
   }
 }

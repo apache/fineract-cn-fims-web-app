@@ -17,50 +17,50 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
 import * as payrollActions from '../payroll-collection.actions';
 import {CreateSheetPayload} from '../payroll-collection.actions';
 import * as paymentActions from '../payment.actions';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import {CreateResourceSuccessPayload} from '../../../../common/store/resource.reducer';
 import {emptySearchResult} from '../../../../common/store/search.reducer';
 import {PayrollService} from '../../../../services/payroll/payroll.service';
+import {switchMap, map, catchError, mergeMap} from 'rxjs/operators';
 
 @Injectable()
 export class PayrollCollectionApiEffects {
 
   @Effect()
   loadAllCollections$: Observable<Action> = this.actions$
-    .ofType(payrollActions.LOAD_ALL_COLLECTIONS)
-    .switchMap(() => this.payrollService.fetchDistributionHistory()
-      .map(payrolls => new payrollActions.LoadAllCompleteAction(payrolls))
-      .catch(() => of(new payrollActions.LoadAllCompleteAction([])))
-    );
+    .pipe(ofType(payrollActions.LOAD_ALL_COLLECTIONS),
+    switchMap(() => this.payrollService.fetchDistributionHistory().pipe(
+      map(payrolls => new payrollActions.LoadAllCompleteAction(payrolls)),
+      catchError(() => of(new payrollActions.LoadAllCompleteAction([]))))
+    ));
 
   @Effect()
   createSheet$: Observable<Action> = this.actions$
-    .ofType(payrollActions.CREATE)
-    .map((action: payrollActions.CreateAction) => action.payload)
-    .switchMap(payload => this.payrollService.distribute(payload.sheet)
-      .map(() => new payrollActions.CreateSuccessAction(this.map(payload)))
-      .catch(error => of(new payrollActions.CreateFailAction(error)))
-    );
+    .pipe(ofType(payrollActions.CREATE),
+    map((action: payrollActions.CreateAction) => action.payload),
+    switchMap(payload => this.payrollService.distribute(payload.sheet).pipe(
+      map(() => new payrollActions.CreateSuccessAction(this.map(payload))),
+      catchError(error => of(new payrollActions.CreateFailAction(error))))
+    ),);
 
   @Effect()
   searchPayments$: Observable<Action> = this.actions$
-    .ofType(paymentActions.SEARCH)
-    .map((action: paymentActions.SearchAction) => action.payload)
-    .mergeMap(payload =>
-      this.payrollService.fetchPayments(payload.payrollIdentifier, payload.fetchRequest)
-        .map(payrollPaymentPage => new paymentActions.SearchCompleteAction({
+    .pipe(ofType(paymentActions.SEARCH),
+    map((action: paymentActions.SearchAction) => action.payload),
+    mergeMap(payload =>
+      this.payrollService.fetchPayments(payload.payrollIdentifier, payload.fetchRequest).pipe(
+        map(payrollPaymentPage => new paymentActions.SearchCompleteAction({
           elements: payrollPaymentPage.payrollPayments,
           totalElements: payrollPaymentPage.totalElements,
           totalPages: payrollPaymentPage.totalPages
-        }))
-        .catch(() => of(new paymentActions.SearchCompleteAction(emptySearchResult())))
-    );
+        })),
+        catchError(() => of(new paymentActions.SearchCompleteAction(emptySearchResult()))))
+    ));
 
   private map(payload: CreateSheetPayload): CreateResourceSuccessPayload {
     return {

@@ -16,31 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as tellerActions from '../teller.actions';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TellerRouteEffects {
 
   @Effect({ dispatch: false })
   createTellerSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => {
-      this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
-    });
+    .pipe(ofType(tellerActions.CREATE_TELLER_SUCCESS, tellerActions.UPDATE_TELLER_SUCCESS),
+      map(action => (action as any).payload),
+      tap(payload => {
+        this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
+      }));
 
   @Effect({ dispatch: false })
   executeCommandSuccess$: Observable<Action> = this.actions$
-    .ofType(tellerActions.EXECUTE_COMMAND_SUCCESS)
-    .map(action => action.payload)
-    .do(payload => {
-      this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
-    });
+    .pipe(ofType(tellerActions.EXECUTE_COMMAND_SUCCESS),
+      map(action => (action as any).payload),
+      tap(payload => {
+        this.router.navigate(['../'], { relativeTo: payload.activatedRoute });
+      }));
 
   constructor(private actions$: Actions, private router: Router) { }
 }

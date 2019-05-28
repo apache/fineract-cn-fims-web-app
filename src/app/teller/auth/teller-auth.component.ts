@@ -21,9 +21,9 @@ import * as fromTeller from '../store/index';
 import {TellerStore} from '../store/index';
 import * as fromRoot from '../../store/index';
 import {UNLOCK_DRAWER} from '../store/teller.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './teller-auth.component.html'
@@ -49,8 +49,8 @@ export class TellerAuthComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    this.error$ = this.store.select(fromTeller.getAuthenticationError)
-      .map(error => !!error);
+    this.error$ = this.store.select(fromTeller.getAuthenticationError).pipe(
+      map(error => !!error));
   }
 
   ngOnDestroy(): void {

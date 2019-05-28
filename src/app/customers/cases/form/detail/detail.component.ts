@@ -28,6 +28,7 @@ import {temporalOptionList} from '../../../../common/domain/temporal.domain';
 import {Product} from '../../../../services/portfolio/domain/product.model';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {maxPayment, maxTerm} from './validator/max-term.validators';
+import {filter, map } from 'rxjs/operators'
 
 export interface DetailFormData {
   identifier: string;
@@ -111,8 +112,9 @@ export class CaseDetailFormComponent extends FormComponent<DetailFormData> imple
     });
 
     this.form.get('productIdentifier').valueChanges
-      .filter(() => !!this.products)
-      .map(identifier => this.products.find(product => product.identifier === identifier))
+    .pipe(
+      filter(() => !!this.products),
+      map(identifier => this.products.find(product => product.identifier === identifier)))
       .subscribe(product => this.toggleProduct(product));
 
     this.form.get('paymentTemporalUnit').valueChanges

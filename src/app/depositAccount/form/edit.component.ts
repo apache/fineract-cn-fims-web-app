@@ -27,7 +27,7 @@ import {CurrencyService} from '../../services/currency/currency.service';
 import {DepositAccountService} from '../../services/depositAccount/deposit-account.service';
 import {Currency} from '../../services/currency/domain/currency.model';
 import {Action} from '../../services/depositAccount/domain/definition/action.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   templateUrl: './edit.component.html'

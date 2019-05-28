@@ -24,7 +24,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as fromDeposits from '../store/index';
 import {DepositsStore} from '../store/index';
 import * as fromCustomers from '../../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {UPDATE} from '../store/deposit.actions';
 
 @Component({

@@ -16,82 +16,83 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as caseActions from '../case.actions';
-import {PortfolioService} from '../../../../services/portfolio/portfolio.service';
-import {Product} from '../../../../services/portfolio/domain/product.model';
+import { PortfolioService } from '../../../../services/portfolio/portfolio.service';
+import { Product } from '../../../../services/portfolio/domain/product.model';
+import { map, mergeMap, catchError, debounceTime, takeUntil, skip, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CaseApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(caseActions.SEARCH)
-    .debounceTime(300)
-    .map((action: caseActions.SearchAction) => action.payload)
-    .switchMap(payload => {
-      const nextSearch$ = this.actions$.ofType(caseActions.SEARCH).skip(1);
+    .pipe(ofType(caseActions.SEARCH),
+      debounceTime(300),
+      map((action: caseActions.SearchAction) => action.payload),
+      switchMap(payload => {
+        const nextSearch$ = this.actions$.pipe(ofType(caseActions.SEARCH), (skip(1)));
 
-      return this.portfolioService.getAllCasesForCustomer(payload.customerId, payload.fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(fimsCasePage => new caseActions.SearchCompleteAction(fimsCasePage))
-        .catch(() => of(new caseActions.SearchCompleteAction({
-          totalElements: 0,
-          totalPages: 0,
-          elements: []
-        })));
-    });
+        return this.portfolioService.getAllCasesForCustomer(payload.customerId, payload.fetchRequest)
+          .pipe(
+            takeUntil(nextSearch$),
+            map(fimsCasePage => new caseActions.SearchCompleteAction(fimsCasePage)),
+            catchError(() => of(new caseActions.SearchCompleteAction({
+              totalElements: 0,
+              totalPages: 0,
+              elements: []
+            }))));
+      }));
 
   @Effect()
   createCase$: Observable<Action> = this.actions$
-    .ofType(caseActions.CREATE)
-    .map((action: caseActions.CreateCaseAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.createCase(payload.productId, payload.caseInstance)
-        .map(() => new caseActions.CreateCaseSuccessAction({
-          resource: payload.caseInstance,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new caseActions.CreateCaseFailAction(error)))
-    );
+    .pipe(ofType(caseActions.CREATE),
+      map((action: caseActions.CreateCaseAction) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.createCase(payload.productId, payload.caseInstance).pipe(
+          map(() => new caseActions.CreateCaseSuccessAction({
+            resource: payload.caseInstance,
+            activatedRoute: payload.activatedRoute
+          })))
+          .pipe(catchError((error) => of(new caseActions.CreateCaseFailAction(error)))
+          )));
 
 
   @Effect()
   updateCase$: Observable<Action> = this.actions$
-    .ofType(caseActions.UPDATE)
-    .map((action: caseActions.UpdateCaseAction) => action.payload)
-    .mergeMap(payload =>
-        this.portfolioService.changeCase(payload.productId, payload.caseInstance)
-          .map(() => new caseActions.UpdateCaseSuccessAction({
+    .pipe(ofType(caseActions.UPDATE),
+      map((action: caseActions.UpdateCaseAction) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.changeCase(payload.productId, payload.caseInstance).pipe(
+          map(() => new caseActions.UpdateCaseSuccessAction({
             resource: payload.caseInstance,
             activatedRoute: payload.activatedRoute
-          }))
-          .catch((error) => of(new caseActions.UpdateCaseFailAction(error)))
-    );
+          })))
+          .pipe(catchError((error) => of(new caseActions.UpdateCaseFailAction(error)))
+          )));
 
   @Effect()
   loadProduct$: Observable<Action> = this.actions$
-    .ofType(caseActions.LOAD_PRODUCT)
-    .map((action: caseActions.LoadProductAction) => action.payload)
-    .mergeMap(productId =>
-      this.portfolioService.getProduct(productId)
-        .map((product: Product) => new caseActions.LoadProductSuccessAction(product))
-        .catch((error) => of(new caseActions.LoadProductFailAction(error)))
-    );
+    .pipe(ofType(caseActions.LOAD_PRODUCT),
+      map((action: caseActions.LoadProductAction) => action.payload),
+      mergeMap(productId =>
+        this.portfolioService.getProduct(productId).pipe(
+          map((product: Product) => new caseActions.LoadProductSuccessAction(product)))
+          .pipe(catchError((error) => of(new caseActions.LoadProductFailAction(error)))
+          )));
 
   @Effect()
   executeCommand$: Observable<Action> = this.actions$
-    .ofType(caseActions.EXECUTE_COMMAND)
-    .map((action: caseActions.ExecuteCommandAction) => action.payload)
-    .mergeMap(payload =>
-      this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.action, payload.command)
-        .map(() => new caseActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new caseActions.ExecuteCommandFailAction(error)))
-    );
+    .pipe(ofType(caseActions.EXECUTE_COMMAND),
+      map((action: caseActions.ExecuteCommandAction) => action.payload),
+      mergeMap(payload =>
+        this.portfolioService.executeCaseCommand(payload.productId, payload.caseId, payload.action, payload.command).pipe(
+          map(() => new caseActions.ExecuteCommandSuccessAction(payload)))
+          .pipe(catchError((error) => of(new caseActions.ExecuteCommandFailAction(error)))
+          )));
 
   constructor(private actions$: Actions, private portfolioService: PortfolioService) { }
 

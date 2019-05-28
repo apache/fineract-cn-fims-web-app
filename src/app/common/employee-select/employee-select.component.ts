@@ -18,10 +18,11 @@
  */
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'fims-employee-select',
@@ -53,7 +54,7 @@ export class EmployeeSelectComponent implements OnInit {
       },
       searchTerm
     };
-    this.employees = this.officeService.listEmployees(fetchRequest).map((employeePage: EmployeePage) => employeePage.employees);
+    this.employees = this.officeService.listEmployees(fetchRequest).pipe(map((employeePage: EmployeePage) => employeePage.employees));
   }
 
   selectionChange(selections: string[]): void {

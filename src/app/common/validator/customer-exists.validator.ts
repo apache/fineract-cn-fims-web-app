@@ -17,26 +17,28 @@
  * under the License.
  */
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {CustomerService} from '../../services/customer/customer.service';
 import {isString} from './validators';
+import { catchError } from 'rxjs/operators';
+import {of as observableOf, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidCustomer: true
 });
 
 export function customerExists(customerService: CustomerService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return customerService.getCustomer(control.value, true)
-      .map(customer => null)
-      .catch(() => invalid);
+    return customerService.getCustomer(control.value, true).pipe(
+      map(customer => null),
+      catchError(() => invalid));
   };
 }

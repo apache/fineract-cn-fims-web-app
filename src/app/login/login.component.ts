@@ -16,17 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ITdLoadingConfig, LoadingType, TdLoadingService} from '@covalent/core';
-import {TranslateService} from '@ngx-translate/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ITdLoadingConfig, LoadingType, TdLoadingService } from '@covalent/core';
+import { TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as fromRoot from '../store';
-import {Store} from '@ngrx/store';
-import {LOGIN} from '../store/security/security.actions';
-import {Subscription} from 'rxjs/Subscription';
-import {TRANSLATE_STORAGE_KEY} from '../common/i18n/translate';
-import {Observable} from 'rxjs/Observable';
-import {MatSelectChange} from '@angular/material';
+import { Store } from '@ngrx/store';
+import { LOGIN } from '../store/security/security.actions';
+import { Subscription, Observable } from 'rxjs';
+import { TRANSLATE_STORAGE_KEY } from '../common/i18n/translate';
+import { MatSelectChange } from '@angular/material';
+import { filter, tap, map } from 'rxjs/operators'
 
 @Component({
   selector: 'fims-login',
@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   currentLanguage: string;
 
   languageOptions: any[] = [
-    {id: 'en', label: 'Welcome to fims'},
-    {id: 'es', label: 'Bienvenido a fims'}
+    { id: 'en', label: 'Welcome to fims' },
+    { id: 'es', label: 'Bienvenido a fims' }
   ];
 
   form: FormGroup;
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   error$: Observable<string>;
 
   constructor(private _loadingService: TdLoadingService, private translate: TranslateService, private formBuilder: FormBuilder,
-              private store: Store<fromRoot.State>) {
+    private store: Store<fromRoot.State>) {
   }
 
   ngOnInit() {
@@ -68,9 +68,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.error$ = this.store.select(fromRoot.getAuthenticationError)
-      .filter(error => !!error)
-      .do(() => this.form.get('password').setValue(''))
-      .map(error => 'Sorry, that login did not work.');
+      .pipe(
+        filter(error => !!error),
+        tap(() => this.form.get('password').setValue('')),
+        map(error => 'Sorry, that login did not work.'));
 
     this.loadingSubscription = this.store.select(fromRoot.getAuthenticationLoading).subscribe(loading => {
       if (loading) {

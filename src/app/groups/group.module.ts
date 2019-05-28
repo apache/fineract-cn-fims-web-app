@@ -107,22 +107,23 @@ import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
     CovalentMessageModule,
     CovalentChipsModule,
 
-   EffectsModule.run(GroupApiEffects),
-   EffectsModule.run(GroupRouteEffects),
-   EffectsModule.run(GroupNotificationEffects),
-   EffectsModule.run(GroupCommandApiEffects),
-   EffectsModule.run(GroupCommandRouteEffects),
-   EffectsModule.run(GroupCommandNotificationEffects),
-   EffectsModule.run(CommandApiEffects),
+    EffectsModule.forRoot([
+      GroupApiEffects,
+      GroupRouteEffects,
+      GroupNotificationEffects,
+      GroupCommandApiEffects,
+      GroupCommandRouteEffects,
+      GroupCommandNotificationEffects,
+      CommandApiEffects,
 
-   EffectsModule.run(GroupDefinitionApiEffects),
-   EffectsModule.run(GroupDefinitionRouteEffects),
-   EffectsModule.run(GroupDefinitionNotificationEffects),
+      GroupDefinitionApiEffects,
+      GroupDefinitionRouteEffects,
+      GroupDefinitionNotificationEffects,
 
-   EffectsModule.run(MeetingApiEffects),
-   EffectsModule.run(MeetingRouteEffects),
-   EffectsModule.run(MeetingNotificationEffects),
-
+      MeetingApiEffects,
+      MeetingRouteEffects,
+      MeetingNotificationEffects
+    ])
   ],
   declarations: [
     GroupComponent,

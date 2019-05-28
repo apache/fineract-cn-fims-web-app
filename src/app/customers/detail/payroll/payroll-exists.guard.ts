@@ -20,11 +20,11 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {Injectable} from '@angular/core';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of, of as observableOf} from 'rxjs';
 import {ExistsGuardService} from '../../../common/guards/exists-guard';
 import {LoadAction} from '../../store/payroll/payroll.actions';
 import {PayrollService} from '../../../services/payroll/payroll.service';
+import {switchMap, catchError, tap, map} from 'rxjs/operators';
 
 @Injectable()
 export class PayrollExistsGuard implements CanActivate {
@@ -40,27 +40,27 @@ export class PayrollExistsGuard implements CanActivate {
 
   loadPayrollFromApi(id: string): Observable<boolean> {
     const getPayroll$ = this.payrollService.findPayrollConfiguration(id, true)
-      .catch(() => {
-        return Observable.of({
+      .pipe(catchError(() => {
+        return observableOf({
           mainAccountNumber: '',
           payrollAllocations: []
         });
-      })
-      .map(distribution => new LoadAction(distribution))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(distribution => !!distribution);
+      }),
+      map(distribution => new LoadAction(distribution)),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(distribution => !!distribution));
 
     return this.existsGuardService.routeTo404OnError(getPayroll$);
   }
 
   hasPayroll(id: string): Observable<boolean> {
-    return this.hasPayrollInStore()
-      .switchMap(inStore => {
+    return this.hasPayrollInStore().pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.loadPayrollFromApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

@@ -18,9 +18,10 @@
  */
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromTeller from './store/index';
 import {TellerStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class TellerLoginGuard implements CanActivate {
@@ -28,13 +29,13 @@ export class TellerLoginGuard implements CanActivate {
   constructor(private store: TellerStore, private router: Router, private route: ActivatedRoute) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.store.select(fromTeller.isAuthenticated)
-      .map(isAuthenticated => {
+    return this.store.select(fromTeller.isAuthenticated).pipe(
+      map(isAuthenticated => {
         if (!isAuthenticated) {
           this.router.navigate(['/teller/auth'], { relativeTo: this.route });
           return false;
         }
         return true;
-      });
+      }));
   }
 }

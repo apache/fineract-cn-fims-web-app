@@ -20,7 +20,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
 import {Teller} from './domain/teller.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TellerManagementCommand} from './domain/teller-management-command.model';
 import {TellerBalanceSheet} from './domain/teller-balance-sheet.model';
 import {TellerAuthentication} from './domain/teller-authentication.model';

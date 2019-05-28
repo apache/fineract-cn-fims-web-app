@@ -16,12 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {catchError, takeUntil, debounceTime, map, switchMap, skip} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
 import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
 import * as ledgerActions from '../ledger.actions';
 import {AccountingService} from '../../../services/accounting/accounting.service';
 import {emptySearchResult} from '../../../common/store/search.reducer';
@@ -31,21 +30,21 @@ export class LedgerSearchApiEffects {
 
   @Effect()
   search$: Observable<Action> = this.actions$
-    .ofType(ledgerActions.SEARCH)
-    .debounceTime(300)
-    .map((action: ledgerActions.SearchAction) => action.payload)
-    .switchMap(fetchRequest => {
-      const nextSearch$ = this.actions$.ofType(ledgerActions.SEARCH).skip(1);
+    .pipe(ofType(ledgerActions.SEARCH),
+    debounceTime(300),
+    map((action: ledgerActions.SearchAction) => action.payload),
+    switchMap(fetchRequest => {
+      const nextSearch$ = this.actions$.pipe(ofType(ledgerActions.SEARCH),(skip(1)));
 
-      return this.accountingService.fetchLedgers(true, fetchRequest)
-        .takeUntil(nextSearch$)
-        .map(ledgerPage => new ledgerActions.SearchCompleteAction({
+      return this.accountingService.fetchLedgers(true, fetchRequest).pipe(
+        takeUntil(nextSearch$),
+        map(ledgerPage => new ledgerActions.SearchCompleteAction({
           elements: ledgerPage.ledgers,
           totalPages: ledgerPage.totalPages,
           totalElements: ledgerPage.totalElements
-        }))
-        .catch(() => of(new ledgerActions.SearchCompleteAction(emptySearchResult())));
-    });
+        })),
+        catchError(() => of(new ledgerActions.SearchCompleteAction(emptySearchResult()))),);
+    }),);
 
   constructor(private actions$: Actions, private accountingService: AccountingService) { }
 }

@@ -22,9 +22,9 @@ import * as fromTeller from '../store/index';
 import {TellerStore} from '../store/index';
 import {CustomerService} from '../../services/customer/customer.service';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadCustomerAction} from '../store/teller.actions';
-import {of} from 'rxjs/observable/of';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TellerCustomerExistsGuard implements CanActivate {
@@ -35,31 +35,31 @@ export class TellerCustomerExistsGuard implements CanActivate {
   }
 
   hasCustomerInStore(id: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromTeller.getTellerCustomerLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$: Observable<number> = this.store.select(fromTeller.getTellerCustomerLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasCustomerInApi(id: string): Observable<boolean> {
-    const getCustomer$: Observable<any> = this.customerService.getCustomer(id)
-      .map(customerEntity => new LoadCustomerAction({
+    const getCustomer$: Observable<any> = this.customerService.getCustomer(id).pipe(
+      map(customerEntity => new LoadCustomerAction({
         resource: customerEntity
-      }))
-      .do((action: LoadCustomerAction) => this.store.dispatch(action))
-      .map(customer => !!customer);
+      })),
+      tap((action: LoadCustomerAction) => this.store.dispatch(action)),
+      map(customer => !!customer));
 
     return this.existsGuardService.routeTo404OnError(getCustomer$);
   }
 
   hasCustomer(id: string): Observable<boolean> {
-    return this.hasCustomerInStore(id)
-      .switchMap(inStore => {
+    return this.hasCustomerInStore(id).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasCustomerInApi(id);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

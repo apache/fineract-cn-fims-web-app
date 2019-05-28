@@ -49,7 +49,7 @@ describe('Group Search Api Effects', () => {
     function setup(params?: {searchGroupsReturnValue: any}) {
       const groupService = TestBed.get(GroupService);
       if (params) {
-        groupService.fetchCustomers.and.returnValue(params.searchGroupsReturnValue);
+        groupService.fetchGroups.and.returnValue(params.searchGroupsReturnValue);
       }
 
       return {
@@ -61,8 +61,9 @@ describe('Group Search Api Effects', () => {
     it('should return a new SearchCompleteAction with GroupPage', fakeAsync(() => {
       const groupPage: GroupPage = {
         groups: [
-          { name: '',identifier:'', groupDefinitionIdentifier: '', status: {}, office: ''}
-        ],
+          { identifier:'', groupDefinitionIdentifier: '',name: '', leaders:[],members:[], office: '',assignedEmployee:'',weekday:1,status:'PENDING',
+          address:{street:'', city:'',countryCode:'',country:''}
+        }],
         totalElements: 1,
         totalPages: 1
       };
@@ -86,7 +87,7 @@ describe('Group Search Api Effects', () => {
       expect(result).toEqual(expectedResult);
     }));
 
-    it('should return a new SearchCompleteAction, with an empty array, if customer service throws', fakeAsync(() => {
+    it('should return a new SearchCompleteAction, with an empty array, if group service throws', fakeAsync(() => {
       const {runner, groupEffects} = setup({searchGroupsReturnValue: Observable.throw(new Error())});
 
       const expectedResult = new SearchCompleteAction(emptySearchResult());

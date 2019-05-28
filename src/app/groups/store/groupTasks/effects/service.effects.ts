@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as taskActions from '../group-task.actions';
-import {GroupService} from '../../../../services/group/group.service';
+import { GroupService } from '../../../../services/group/group.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class GroupCommandApiEffects {
 
   @Effect()
   executeCommand: Observable<Action> = this.actions$
-    .ofType(taskActions.EXECUTE_COMMAND)
-    .map((action: taskActions.ExecuteCommandAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.groupCommand(payload.groupId, payload.command)
-        .map(() => new taskActions.ExecuteCommandSuccessAction(payload))
-        .catch((error) => of(new taskActions.ExecuteCommandFailAction(error)))
-    );
+    .pipe(ofType(taskActions.EXECUTE_COMMAND),
+      map((action: taskActions.ExecuteCommandAction) => action.payload),
+      mergeMap(payload =>
+        this.groupService.groupCommand(payload.groupId, payload.command).pipe(
+          map(() => new taskActions.ExecuteCommandSuccessAction(payload)),
+          catchError((error) => of(new taskActions.ExecuteCommandFailAction(error))))
+      ));
 
   constructor(private actions$: Actions, private groupService: GroupService) { }
 

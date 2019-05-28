@@ -23,7 +23,7 @@ import {mapContactDetails, mapEmployee} from '../form.mapper';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {User} from '../../../services/identity/domain/user.model';
 import {UPDATE} from '../../store/employee.actions';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {EmployeesStore, getSelectedEmployee} from '../../store/index';
 
 @Component({

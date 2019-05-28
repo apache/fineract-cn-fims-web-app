@@ -18,10 +18,11 @@
  */
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Country} from './model/country.model';
 import {TranslateService} from '@ngx-translate/core';
 import {escapeRegexPattern} from '../../common/regex/escape';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class CountryService {
@@ -32,12 +33,12 @@ export class CountryService {
   }
 
   init(): void {
-    this.getCountries()
-      .map(countries => this.translate(countries))
+    this.getCountries().pipe(
+      map(countries => this.translate(countries)))
       .subscribe(countries => this.countries = countries);
 
-    this.translateService.onLangChange
-      .map(() => this.translate(this.countries))
+    this.translateService.onLangChange.pipe(
+      map(() => this.translate(this.countries)))
       .subscribe(countries => this.countries = countries);
   }
 
@@ -70,8 +71,8 @@ export class CountryService {
   }
 
   private getCountries(): Observable<Country[]> {
-    return this.http.get('https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;translations')
-      .map(response => response.json());
+    return this.http.get('https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;translations').pipe(
+      map(response => response.json()));
   }
 
 }

@@ -16,47 +16,47 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {TellerService} from '../../../services/teller/teller-service';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { TellerService } from '../../../services/teller/teller-service';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as tellerActions from '../teller.actions';
-import {of} from 'rxjs/observable/of';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TellerApiEffects {
 
   @Effect()
   unlockDrawer$: Observable<Action> = this.actions$
-    .ofType(tellerActions.UNLOCK_DRAWER)
-    .map((action: tellerActions.UnlockDrawerAction) => action.payload)
-    .mergeMap(payload =>
-      this.tellerService.unlockDrawer(payload.tellerCode, {employeeIdentifier: payload.employeeId, password: payload.password})
-        .map(teller => new tellerActions.UnlockDrawerSuccessAction(teller))
-        .catch((error) => of(new tellerActions.UnlockDrawerFailAction(error)))
-    );
+    .pipe(ofType(tellerActions.UNLOCK_DRAWER),
+      map((action: tellerActions.UnlockDrawerAction) => action.payload),
+      mergeMap(payload =>
+        this.tellerService.unlockDrawer(payload.tellerCode, { employeeIdentifier: payload.employeeId, password: payload.password }).pipe(
+          map(teller => new tellerActions.UnlockDrawerSuccessAction(teller)),
+          catchError((error) => of(new tellerActions.UnlockDrawerFailAction(error))))
+      ));
 
   @Effect()
   lockDrawer$: Observable<Action> = this.actions$
-    .ofType(tellerActions.LOCK_DRAWER)
-    .map((action: tellerActions.LockDrawerAction) => action.payload)
-    .mergeMap(payload =>
-      this.tellerService.executeCommand(payload.tellerCode, 'PAUSE')
-        .map(() => new tellerActions.LockDrawerSuccessAction())
-        .catch((error) => of(new tellerActions.LockDrawerSuccessAction()))
-    );
+    .pipe(ofType(tellerActions.LOCK_DRAWER),
+      map((action: tellerActions.LockDrawerAction) => action.payload),
+      mergeMap(payload =>
+        this.tellerService.executeCommand(payload.tellerCode, 'PAUSE').pipe(
+          map(() => new tellerActions.LockDrawerSuccessAction()),
+          catchError((error) => of(new tellerActions.LockDrawerSuccessAction())))
+      ));
 
   @Effect()
   confirmTransaction$: Observable<Action> = this.actions$
-    .ofType(tellerActions.CONFIRM_TRANSACTION)
-    .map((action: tellerActions.ConfirmTransactionAction) => action.payload)
-    .mergeMap(payload =>
-      this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command,
-        payload.chargesIncluded)
-        .map(() => new tellerActions.ConfirmTransactionSuccessAction(payload))
-        .catch((error) => of(new tellerActions.ConfirmTransactionFailAction(error)))
-    );
+    .pipe(ofType(tellerActions.CONFIRM_TRANSACTION),
+      map((action: tellerActions.ConfirmTransactionAction) => action.payload),
+      mergeMap(payload =>
+        this.tellerService.confirmTransaction(payload.tellerCode, payload.tellerTransactionIdentifier, payload.command,
+          payload.chargesIncluded).pipe(
+            map(() => new tellerActions.ConfirmTransactionSuccessAction(payload)),
+            catchError((error) => of(new tellerActions.ConfirmTransactionFailAction(error))))
+      ));
 
-  constructor(private actions$: Actions, private tellerService: TellerService) {}
+  constructor(private actions$: Actions, private tellerService: TellerService) { }
 }

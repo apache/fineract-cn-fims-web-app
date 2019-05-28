@@ -18,8 +18,6 @@
  */
 import {Injectable} from '@angular/core';
 import {Headers, Http, Request, RequestMethod, RequestOptions, RequestOptionsArgs, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../store';
 import {LOGOUT} from '../../store/security/security.actions';
@@ -29,6 +27,8 @@ export enum Action { QueryStart, QueryStop }
 export const TENANT_HEADER = 'X-Tenant-Identifier';
 export const USER_HEADER = 'User';
 export const AUTHORIZATION_HEADER = 'Authorization';
+import {throwError as observableThrowError, Observable, Subject} from 'rxjs';
+import {mergeMap, map, take, finalize, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class HttpClient {
@@ -82,34 +82,34 @@ export class HttpClient {
   }
 
   private createRequest(method: RequestMethod, url: string, body?: any, options?: RequestOptionsArgs, silent?: boolean): Observable<any> {
-    return this.store.select(fromRoot.getAuthenticationState)
-      .take(1)
-      .map(state => this._buildRequestOptions(method, url, body, state.tenant, state.username, state.authentication.accessToken, options))
-      .flatMap(requestOptions => {
+    return this.store.select(fromRoot.getAuthenticationState).pipe(
+      take(1),
+      map(state => this._buildRequestOptions(method, url, body, state.tenant, state.username, state.authentication.accessToken, options)),
+      mergeMap(requestOptions => {
         this.process.next(Action.QueryStart);
 
-        const request: Observable<any> = this.http.request(new Request(requestOptions))
-          .catch((err: any) => {
+        const request: Observable<any> = this.http.request(new Request(requestOptions)).pipe(
+          catchError((err: any) => {
             const error = err.json();
             if (silent) {
-              return Observable.throw(error);
+              return observableThrowError(error);
             }
 
             switch (error.status) {
               case 409:
-                return Observable.throw(error);
+                return observableThrowError(error);
               case 401:
               case 403:
                 this.store.dispatch({type: LOGOUT});
-                return Observable.throw('User is not authenticated');
+                return observableThrowError('User is not authenticated');
               default:
                 console.error('Error', error);
                 this.error.next(error);
-                return Observable.throw(error);
+                return observableThrowError(error);
             }
-          }).finally(() => this.process.next(Action.QueryStop));
+          }),finalize(() => this.process.next(Action.QueryStop)),);
 
-        return request.map((res: Response) => {
+        return request.pipe(map((res: Response) => {
           if (res.text()) {
             try {
               return res.json();
@@ -117,8 +117,8 @@ export class HttpClient {
               return res.text();
             }
           }
-        });
-      });
+        }));
+      }),);
   }
 
 }

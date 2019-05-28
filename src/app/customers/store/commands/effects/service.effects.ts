@@ -16,26 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, toPayload} from '@ngrx/effects';
+import { ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as commandActions from '../commands.actions';
-import {CustomerService} from '../../../../services/customer/customer.service';
+import { CustomerService } from '../../../../services/customer/customer.service';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerCommandApiEffects {
 
   @Effect()
   loadCommands$: Observable<Action> = this.actions$
-    .ofType(commandActions.LOAD_ALL)
-    .map(toPayload)
-    .mergeMap(customerId =>
-      this.customerService.listCustomerCommand(customerId)
-        .map(commands => new commandActions.LoadAllCompleteAction(commands))
-        .catch((error) => of(new commandActions.LoadAllCompleteAction([])))
-    );
+    .pipe(ofType(commandActions.LOAD_ALL),
+      map(toPayload),
+      mergeMap(customerId =>
+        this.customerService.listCustomerCommand(customerId).pipe(
+          map(commands => new commandActions.LoadAllCompleteAction(commands)),
+          catchError((error) => of(new commandActions.LoadAllCompleteAction([]))))
+      ));
 
   constructor(private actions$: Actions, private customerService: CustomerService) { }
 

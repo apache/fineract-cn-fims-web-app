@@ -17,9 +17,8 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {Customer} from '../../services/customer/domain/customer.model';
-import {Subscription} from 'rxjs/Subscription';
 import {TableData} from '../../common/data-table/data-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromDeposits from './store/index';
@@ -29,6 +28,7 @@ import {SEARCH} from './store/deposit.actions';
 import {ProductInstance} from '../../services/depositAccount/domain/instance/product-instance.model';
 import * as fromCustomers from '../store';
 import {DatePipe} from '@angular/common';
+import {map, filter} from 'rxjs/operators';
 
 
 @Component({
@@ -63,15 +63,16 @@ export class DepositsListComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private depositsStore: DepositsStore, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    this.productInstancesData$ = this.depositsStore.select(fromDeposits.getDepositSearchResults)
-      .map(depositsPage => ({
+    this.productInstancesData$ = this.depositsStore.select(fromDeposits.getDepositSearchResults).pipe(
+      map(depositsPage => ({
         totalElements: depositsPage.totalElements,
         totalPages: depositsPage.totalPages,
         data: depositsPage.deposits
-      }));
+      })));
 
     this.customerSubscription = this.depositsStore.select(fromCustomers.getSelectedCustomer)
-      .filter(customer => !!customer)
+      .pipe(
+        filter(customer => !!customer))
       .subscribe(customer => {
         this.customer = customer;
         this.fetchProductInstances();

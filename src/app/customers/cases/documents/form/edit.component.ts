@@ -18,12 +18,11 @@
  */
 import {Component, OnDestroy} from '@angular/core';
 import {CustomerDocument} from '../../../../services/customer/domain/customer-document.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CaseSelection} from '../../store/model/case-selection.model';
 import {CasesStore} from '../../store/index';
 import * as fromCases from '../../store';
-import {Subscription} from 'rxjs/Subscription';
 import {UpdateDocumentAction} from '../../store/documents/document.actions';
 
 @Component({

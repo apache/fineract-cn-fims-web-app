@@ -18,7 +18,7 @@
  */
 import {Component} from '@angular/core';
 import {Catalog} from '../../services/catalog/domain/catalog.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CustomersStore} from '../store/index';
 import * as fromCustomers from '../store';
 import {TableData} from '../../common/data-table/data-table.component';
@@ -27,6 +27,7 @@ import {TdDialogService} from '@covalent/core';
 import {DELETE} from '../store/catalogs/catalog.actions';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Field} from '../../services/catalog/domain/field.model';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './catalog.detail.component.html'
@@ -49,14 +50,15 @@ export class CatalogDetailComponent {
   constructor(private store: CustomersStore, private dialogService: TdDialogService, private route: ActivatedRoute,
               private router: Router) {
     this.catalog$ = store.select(fromCustomers.getCustomerCatalog)
-      .filter(catalog => !!catalog);
+      .pipe(
+        filter(catalog => !!catalog));
 
-    this.fieldData$ = this.catalog$
-      .map(catalog => ({
+    this.fieldData$ = this.catalog$.pipe(
+      map(catalog => ({
         data: catalog.fields,
         totalElements: catalog.fields.length,
         totalPages: 1
-      }));
+      })));
   }
 
   rowSelect(field: Field): void {
@@ -73,7 +75,8 @@ export class CatalogDetailComponent {
 
   deleteCatalog(catalog: Catalog): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(
+        filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({ type: DELETE, payload: {
           catalog,

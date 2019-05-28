@@ -17,22 +17,23 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Observable} from 'rxjs';
 import {Action} from '@ngrx/store';
 import * as groupActions from '../group.actions';
 import {NotificationService, NotificationType} from '../../../services/notification/notification.service';
+import { tap} from 'rxjs/operators'
 
 @Injectable()
 export class GroupNotificationEffects {
 
   @Effect({ dispatch: false })
   createGroupSuccess$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS)
-    .do(() => this.notificationService.send({
+    .pipe(ofType(groupActions.CREATE_SUCCESS, groupActions.UPDATE_SUCCESS),
+      tap(() => this.notificationService.send({
       type: NotificationType.MESSAGE,
       message: 'Group is going to be saved'
-    }));
+    })));
 
   constructor(private actions$: Actions, private notificationService: NotificationService) {}
 

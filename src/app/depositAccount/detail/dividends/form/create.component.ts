@@ -21,8 +21,9 @@ import {DepositAccountStore} from '../../../store/index';
 import {CREATE} from '../../../store/dividends/dividend.actions';
 import * as fromDepositAccounts from './../../../store';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DistributeDividendFormData} from './form.component';
+import {filter, map} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.component.html'
@@ -35,8 +36,9 @@ export class CreateDividendFormComponent implements OnInit {
 
   ngOnInit() {
     this.productDefinitionId$ = this.store.select(fromDepositAccounts.getSelectedProduct)
-      .filter(product => !!product)
-      .map(product => product.identifier);
+      .pipe(
+        filter(product => !!product),
+        map(product => product.identifier));
   }
 
   save(payload: DistributeDividendFormData): void {

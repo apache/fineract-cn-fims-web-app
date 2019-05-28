@@ -17,14 +17,14 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {LOAD_ALL} from '../../store/identityCards/identity-cards.actions';
 import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './identity-card.list.component.html'
@@ -44,12 +44,12 @@ export class CustomerIdentityCardListComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {}
 
   ngOnInit(): void {
-    this.identityCardData$ = this.store.select(fromCustomers.getAllCustomerIdentificationCardEntities)
-      .map(entities => ({
+    this.identityCardData$ = this.store.select(fromCustomers.getAllCustomerIdentificationCardEntities).pipe(
+      map(entities => ({
         data: entities,
         totalElements: entities.length,
         totalPages: 1
-      }));
+      })));
 
     this.customerSubscription = this.store.select(fromCustomers.getSelectedCustomer)
       .subscribe(customer => {

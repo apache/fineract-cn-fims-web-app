@@ -19,11 +19,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as fromDepositAccounts from '../../store/index';
 import {DepositAccountStore} from '../../store/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {TableData} from '../../../common/data-table/data-table.component';
 import {LOAD_ALL} from '../../store/dividends/dividend.actions';
-import {Subscription} from 'rxjs/Subscription';
 import {DisplayFimsDate} from '../../../common/date/fims-date.pipe';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   providers: [DisplayFimsDate],
@@ -46,15 +46,16 @@ export class DepositProductDividendsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.productSubscription = this.store.select(fromDepositAccounts.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => this.productIdentifer = product.identifier);
 
-    this.dividendData$ = this.store.select(fromDepositAccounts.getDividends)
-      .map(dividends => ({
+    this.dividendData$ = this.store.select(fromDepositAccounts.getDividends).pipe(
+      map(dividends => ({
         data: dividends,
         totalElements: dividends.length,
         totalPages: 1
-      }));
+      })));
 
     this.store.dispatch({
       type: LOAD_ALL,

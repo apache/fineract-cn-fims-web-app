@@ -20,8 +20,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../services/accounting/domain/ledger.model';
 import {TableData, TableFetchRequest} from '../../common/data-table/data-table.component';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {TdDialogService} from '@covalent/core';
 import {TranslateService} from '@ngx-translate/core';
 import * as fromAccounting from '../store';
@@ -31,6 +30,7 @@ import {AccountingStore} from '../store/index';
 import {SEARCH_BY_LEDGER} from '../../store/account/account.actions';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {Account} from '../../services/accounting/domain/account.model';
+import {map, filter, flatMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './sub-ledger.detail.component.html'
@@ -59,18 +59,18 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.ledgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
-      .filter(ledger => !!ledger)
+      .pipe(filter(ledger => !!ledger))
       .subscribe(ledger => {
         this.ledger = ledger;
         this.fetchAccounts();
       });
 
-    this.accountData$ = this.store.select(fromRoot.getAccountSearchResults)
-      .map(accountPage => ({
+    this.accountData$ = this.store.select(fromRoot.getAccountSearchResults).pipe(
+      map(accountPage => ({
         data: accountPage.accounts,
         totalElements: accountPage.totalElements,
         totalPages: accountPage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromRoot.getAccountSearchLoading);
   }
@@ -89,18 +89,18 @@ export class SubLedgerDetailComponent implements OnInit, OnDestroy {
     const button = 'DELETE LEDGER';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-    );
+    ));
   }
 
   deleteLedger(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({ type: DELETE, payload: {
           ledger: this.ledger,

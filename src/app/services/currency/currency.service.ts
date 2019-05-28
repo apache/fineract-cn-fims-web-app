@@ -17,8 +17,8 @@
  * under the License.
  */
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {Currency} from './domain/currency.model';
+import {of as observableOf, Observable} from 'rxjs';
 
 @Injectable()
 export class CurrencyService {
@@ -35,7 +35,7 @@ export class CurrencyService {
   ];
 
   fetchCurrencies(): Observable<Currency[]> {
-    return Observable.of(this.currencies.slice(0));
+    return observableOf(this.currencies.slice(0));
   }
 
   getCurrency(code: string): Currency {

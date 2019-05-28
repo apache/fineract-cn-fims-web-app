@@ -16,55 +16,56 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import * as groupActions from '../definition.actions';
-import {GroupService} from '../../../../services/group/group.service';
+import { GroupService } from '../../../../services/group/group.service';
+import { map, debounceTime, switchMap, mergeMap, catchError, skip, takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class GroupDefinitionApiEffects {
   @Effect()
   loadAll$: Observable<Action> = this.actions$
-    .ofType(groupActions.LOAD_ALL)
-    .debounceTime(300)
-    .map((action: groupActions.LoadAllAction) => action.payload)
-    .switchMap(() => {
-      const nextSearch$ = this.actions$.ofType(groupActions.LOAD_ALL).skip(1);
+    .pipe(ofType(groupActions.LOAD_ALL),
+      debounceTime(300),
+      map((action: groupActions.LoadAllAction) => action.payload),
+      switchMap(() => {
+        const nextSearch$ = this.actions$.pipe(ofType(groupActions.LOAD_ALL),(skip(1)));
 
-      return this.groupService.fetchGroupDefinitions()
-        .takeUntil(nextSearch$)
-        .map(groupDefinitionPage => new groupActions.LoadAllCompleteAction(groupDefinitionPage))
-        .catch(() => of(new groupActions.LoadAllCompleteAction([])));
-    });
+        return this.groupService.fetchGroupDefinitions()
+          .pipe(
+            takeUntil(nextSearch$),
+            map(groupDefinitionPage => new groupActions.LoadAllCompleteAction(groupDefinitionPage)),
+            catchError(() => of(new groupActions.LoadAllCompleteAction([]))));
+      }));
 
   @Effect()
   createGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.CREATE)
-    .map((action: groupActions.CreateGroupDefinitionAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.createGroupDefinition(payload.groupDefinition)
-        .map(() => new groupActions.CreateGroupDefinitionSuccessAction({
-          resource: payload.groupDefinition,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new groupActions.CreateGroupDefinitionFailAction(error)))
-    );
+    .pipe(ofType(groupActions.CREATE),
+      map((action: groupActions.CreateGroupDefinitionAction) => action.payload),
+      mergeMap(payload =>
+        this.groupService.createGroupDefinition(payload.groupDefinition).pipe(
+          map(() => new groupActions.CreateGroupDefinitionSuccessAction({
+            resource: payload.groupDefinition,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new groupActions.CreateGroupDefinitionFailAction(error))))
+      ));
 
   @Effect()
   updateGroupDefinition$: Observable<Action> = this.actions$
-    .ofType(groupActions.UPDATE)
-    .map((action: groupActions.UpdateGroupDefinitionAction) => action.payload)
-    .mergeMap(payload =>
-      this.groupService.updateGroupDefinition(payload.groupDefinition)
-        .map(() => new groupActions.UpdateGroupDefinitionSuccessAction({
-          resource: payload.groupDefinition,
-          activatedRoute: payload.activatedRoute
-        }))
-        .catch((error) => of(new groupActions.UpdateGroupDefinitionFailAction(error)))
-    );
+    .pipe(ofType(groupActions.UPDATE),
+      map((action: groupActions.UpdateGroupDefinitionAction) => action.payload),
+      mergeMap(payload =>
+        this.groupService.updateGroupDefinition(payload.groupDefinition).pipe(
+          map(() => new groupActions.UpdateGroupDefinitionSuccessAction({
+            resource: payload.groupDefinition,
+            activatedRoute: payload.activatedRoute
+          })),
+          catchError((error) => of(new groupActions.UpdateGroupDefinitionFailAction(error))))
+      ));
 
-  constructor(private actions$: Actions, private groupService: GroupService) {}
+  constructor(private actions$: Actions, private groupService: GroupService) { }
 }

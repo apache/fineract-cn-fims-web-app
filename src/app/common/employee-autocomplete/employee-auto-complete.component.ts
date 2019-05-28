@@ -18,11 +18,13 @@
  */
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Employee} from '../../services/office/domain/employee.model';
 import {OfficeService} from '../../services/office/office.service';
 import {EmployeePage} from '../../services/office/domain/employee-page.model';
+import {map} from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, tap, filter, switchMap } from 'rxjs/operators';
 
 const noop: () => void = () => {
   // empty method
@@ -55,11 +57,12 @@ export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnIn
     this.formControl = new FormControl('');
 
     this.employees = this.formControl.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(500)
-      .do(name => this.changeValue(name))
-      .filter(name => name)
-      .switchMap(name => this.onSearch(name));
+    .pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+      tap(name => this.changeValue(name)),
+      filter(name => name),
+      switchMap(name => this.onSearch(name)));
   }
 
   changeValue(value: string): void {
@@ -87,8 +90,8 @@ export class EmployeeAutoCompleteComponent implements ControlValueAccessor, OnIn
       searchTerm
     };
 
-    return this.officeService.listEmployees(fetchRequest)
-      .map((employeePage: EmployeePage) => employeePage.employees);
+    return this.officeService.listEmployees(fetchRequest).pipe(
+      map((employeePage: EmployeePage) => employeePage.employees));
   }
 
 }

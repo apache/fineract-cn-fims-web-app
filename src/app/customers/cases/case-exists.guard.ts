@@ -19,12 +19,12 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import * as fromCases from './store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
+import {Observable, of} from 'rxjs';
 import {CasesStore} from './store/index';
 import {PortfolioService} from '../../services/portfolio/portfolio.service';
 import {LoadAction} from './store/case.actions';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
+import {switchMap, map,tap} from 'rxjs/operators';
 
 @Injectable()
 export class CaseExistsGuard implements CanActivate {
@@ -34,32 +34,32 @@ export class CaseExistsGuard implements CanActivate {
               private existsGuardService: ExistsGuardService) {}
 
   hasCaseInStore(id: string): Observable<boolean> {
-    const timestamp$ = this.store.select(fromCases.getCasesLoadedAt)
-      .map(loadedAt => loadedAt[id]);
+    const timestamp$ = this.store.select(fromCases.getCasesLoadedAt).pipe(
+      map(loadedAt => loadedAt[id]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasCaseInApi(productId: string, caseId: string): Observable<boolean> {
-    const getCase$ = this.portfolioService.getCase(productId, caseId)
-      .map(caseEntity => new LoadAction({
+    const getCase$ = this.portfolioService.getCase(productId, caseId).pipe(
+      map(caseEntity => new LoadAction({
         resource: caseEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(caseEntity => !!caseEntity);
+      })),
+      tap((action: LoadAction) => this.store.dispatch(action)),
+      map(caseEntity => !!caseEntity));
 
     return this.existsGuardService.routeTo404OnError(getCase$);
   }
 
   hasCase(productId: string, caseId: string): Observable<boolean> {
-    return this.hasCaseInStore(caseId)
-      .switchMap(inStore => {
+    return this.hasCaseInStore(caseId).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
 
         return this.hasCaseInApi(productId, caseId);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

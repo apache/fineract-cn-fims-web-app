@@ -19,8 +19,9 @@
 import {Injectable} from '@angular/core';
 import {TellerService} from '../../../../../../services/teller/teller-service';
 import {TellerBalance} from './teller-balance.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TellerEntry} from '../../../../../../services/teller/domain/teller-entry.model';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class BalanceSheetService {
@@ -33,8 +34,8 @@ export class BalanceSheetService {
   }
 
   getBalance(officeIdentifier: string, tellerCode: string): Observable<TellerBalance> {
-    return this.tellerService.getBalance(officeIdentifier, tellerCode)
-      .map(balance => {
+    return this.tellerService.getBalance(officeIdentifier, tellerCode).pipe(
+      map(balance => {
         const chequeEntries = balance.chequeEntries || [];
         const cashEntries = balance.cashEntries || [];
 
@@ -49,6 +50,6 @@ export class BalanceSheetService {
           chequesReceivedTotal: balance.chequesReceivedTotal,
           entries
         };
-      });
+      }));
   }
 }

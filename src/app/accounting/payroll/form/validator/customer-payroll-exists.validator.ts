@@ -16,30 +16,31 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {of as observableOf, Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import {CustomerService} from '../../../../services/customer/customer.service';
 import {isString} from '../../../../common/validator/validators';
 import {PayrollService} from '../../../../services/payroll/payroll.service';
+import { catchError} from 'rxjs/operators'
 
-const invalid = Observable.of({
+const invalid = observableOf({
   invalidCustomer: true
 });
 
 export function customerWithConfigExists(customerService: CustomerService, payrollService: PayrollService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<any> => {
     if (!control.dirty || !control.value || control.value.length === 0) {
-      return Observable.of(null);
+      return observableOf(null);
     }
 
     if (isString(control.value) && control.value.trim().length === 0) {
       return invalid;
     }
 
-    return customerService.getCustomer(control.value, true)
-      .switchMap(customer => payrollService.findPayrollConfiguration(customer.identifier, true))
-      .map(config => null)
-      .catch(() => invalid);
+    return customerService.getCustomer(control.value, true).pipe(
+      switchMap(customer => payrollService.findPayrollConfiguration(customer.identifier, true)),
+      map(config => null),
+      catchError(() => invalid));
   };
 }

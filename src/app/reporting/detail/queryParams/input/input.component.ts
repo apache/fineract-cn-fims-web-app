@@ -28,7 +28,7 @@ import {
   Validator,
   Validators
 } from '@angular/forms';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {AbstractControlValueAccessor} from '../abstract-value-accessor';
 import {Operator} from '../../../../services/reporting/domain/query-parameter.model';
 import {createPlaceholder} from '../query-params.helper';

@@ -23,10 +23,11 @@ import {mapEmployee, mapUser} from '../form.mapper';
 import {Employee} from '../../../services/office/domain/employee.model';
 import {UserWithPassword} from '../../../services/identity/domain/user-with-password.model';
 import * as fromEmployees from '../../store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {CREATE, RESET_FORM} from '../../store/employee.actions';
 import {Error} from '../../../services/domain/error.model';
 import {EmployeesStore} from '../../store/index';
+import {filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -46,7 +47,7 @@ export class CreateEmployeeFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formStateSubscription = this.store.select(fromEmployees.getEmployeeFormError)
-      .filter((error: Error) => !!error)
+      .pipe(filter((error: Error) => !!error))
       .subscribe((error: Error) => {
         const detailForm = this.formComponent.detailForm;
         const errors = detailForm.get('identifier').errors || {};

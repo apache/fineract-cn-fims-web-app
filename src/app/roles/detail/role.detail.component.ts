@@ -16,20 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RolesStore} from '../store/index';
 import * as fromRoles from '../store';
 import {Role} from '../../services/identity/domain/role.model';
 import {DELETE, SelectAction} from '../store/role.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {IdentityService} from '../../services/identity/identity.service';
 import {PermittableGroup} from '../../services/anubis/permittable-group.model';
-import {Observable} from 'rxjs/Observable';
 import {FormPermissionService} from '../helper/form-permission.service';
 import {TdDialogService} from '@covalent/core';
 import {FormPermissionGroup} from '../model/form-permission-group.model';
+import { filter, combineLatest} from 'rxjs/operators'
 
 @Component({
   templateUrl: './role.detail.component.html'
@@ -46,12 +46,13 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
               private formPermissionService: FormPermissionService, private dialogService: TdDialogService) {}
 
   ngOnInit(): void {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     this.role$ = this.store.select(fromRoles.getSelectedRole)
-      .filter(role => !!role);
+      .pipe(
+        filter(role => !!role));
 
     this.permissionGroup$ = Observable.combineLatest(
       this.identityService.getPermittableGroups(),
@@ -70,7 +71,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
 
   deleteRole(role: Role): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.store.dispatch({ type: DELETE, payload: {
           role,

@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Customer} from './domain/customer.model';
 import {HttpClient} from '../http/http.service';
 import {CustomerPage} from './domain/customer-page.model';
@@ -31,6 +31,7 @@ import {IdentificationCard} from './domain/identification-card.model';
 import {IdentificationCardScan} from './domain/identification-card-scan.model';
 import {ProcessStep} from './domain/process-step.model';
 import {CustomerDocument} from './domain/customer-document.model';
+import {share} from 'rxjs/operators';
 
 @Injectable()
 export class CustomerService {
@@ -45,7 +46,7 @@ export class CustomerService {
       search: params
     };
 
-    return this.http.get(`${this.baseUrl}/customers`, requestOptions).share();
+    return this.http.get(`${this.baseUrl}/customers`, requestOptions).pipe(share());
   }
 
   getCustomer(id: string, silent?: boolean): Observable<Customer> {

@@ -20,8 +20,10 @@ import {Injectable} from '@angular/core';
 import {NotificationService, NotificationType} from '../../services/notification/notification.service';
 import {TellerService} from '../../services/teller/teller-service';
 import {TellerTransaction} from '../../services/teller/domain/teller-transaction.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {TellerTransactionCosts} from '../../services/teller/domain/teller-transaction-costs.model';
+import { catchError} from 'rxjs/operators'
+import { empty} from 'rxjs'
 
 @Injectable()
 export class TellerTransactionService {
@@ -31,13 +33,14 @@ export class TellerTransactionService {
 
   createTransaction(tellerCode: string, tellerTransaction: TellerTransaction): Observable<TellerTransactionCosts> {
     return this.tellerService.createTransaction(tellerCode, tellerTransaction)
-      .catch((error: Error) => {
+      .pipe(
+        catchError((error: Error) => {
         this.notificationService.send({
           type: NotificationType.ALERT,
           title: 'Invalid transaction',
           message: error.message
         });
-        return Observable.empty();
-      });
+        return empty();
+      }));
   }
 }

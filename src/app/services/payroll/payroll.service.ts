@@ -17,15 +17,15 @@
  * under the License.
  */
 import {Inject, Injectable} from '@angular/core';
-import {RequestOptionsArgs} from '@angular/http';
 import {buildSearchParams} from '../domain/paging/search-param.builder';
 import {PayrollPaymentPage} from './domain/payroll-payment-page.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {FetchRequest} from '../domain/paging/fetch-request.model';
 import {PayrollCollectionHistory} from './domain/payroll-collection-history.model';
 import {PayrollCollectionSheet} from './domain/payroll-collection-sheet.model';
 import {HttpClient} from '../http/http.service';
 import {PayrollConfiguration} from './domain/payroll-configuration.model';
+import {RequestOptionsArgs, URLSearchParams} from '@angular/http';
 
 @Injectable()
 export class PayrollService {

@@ -22,10 +22,10 @@ import {FetchRequest} from '../services/domain/paging/fetch-request.model';
 import {TableData} from '../common/data-table/data-table.component';
 import {Office} from '../services/office/domain/office.model';
 import * as fromRoot from '../store';
-
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from '../store/office/office.actions';
 import {OfficesStore} from './store/index';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'fims-office',
@@ -53,12 +53,12 @@ export class OfficeComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       this.search(params['term']);
     });
-    this.officeData$ = this.store.select(fromRoot.getOfficeSearchResults)
-      .map(officePage => ({
+    this.officeData$ = this.store.select(fromRoot.getOfficeSearchResults).pipe(
+      map(officePage => ({
         data: officePage.offices,
         totalElements: officePage.totalElements,
         totalPages: officePage.totalPages
-      }));
+      })));
 
     this.loading$ = this.store.select(fromRoot.getOfficeSearchLoading);
   }

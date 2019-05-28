@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -21,7 +23,7 @@ import * as fromCustomers from '../store';
 import {Component} from '@angular/core';
 import {CustomersStore} from '../store/index';
 import {TaskDefinition, TaskDefinitionType} from '../../services/customer/domain/task-definition.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {LOAD_ALL} from '../store/tasks/task.actions';
 import {TableData} from '../../common/data-table/data-table.component';
 import {defaultTypeOptions} from './domain/type-options.model';
@@ -45,12 +47,12 @@ export class TaskListComponent {
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: CustomersStore) {
-    this.tasksData$ = this.store.select(fromCustomers.getAllTaskEntities)
-      .map(tasks => ({
+    this.tasksData$ = this.store.select(fromCustomers.getAllTaskEntities).pipe(
+      map(tasks => ({
         data: tasks,
         totalElements: tasks.length,
         totalPages: 1
-      }));
+      })));
 
     this.fetchTasks();
   }

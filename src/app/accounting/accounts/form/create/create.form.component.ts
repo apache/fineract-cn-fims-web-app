@@ -23,9 +23,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Ledger} from '../../../../services/accounting/domain/ledger.model';
 import * as fromAccounting from '../../../store';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {Error} from '../../../../services/domain/error.model';
 import {CREATE, RESET_FORM} from '../../../store/account/account.actions';
+import {filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -50,11 +51,11 @@ export class CreateAccountFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formStateSubscription = this.store.select(fromAccounting.getAccountFormError)
-      .filter((error: Error) => !!error)
+      .pipe(filter((error: Error) => !!error))
       .subscribe((error: Error) => this.formComponent.showIdentifierValidationError());
 
     this.selectedLedgerSubscription = this.store.select(fromAccounting.getSelectedLedger)
-      .filter(ledger => !!ledger)
+      .pipe(filter(ledger => !!ledger))
       .subscribe(ledger => {
         this.ledger = ledger;
         this.account.ledger = this.ledger.identifier;

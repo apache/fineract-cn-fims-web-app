@@ -17,7 +17,7 @@
  * under the License.
  */
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import * as fromCustomers from '../../store/index';
 import {CustomersStore} from '../../store/index';
 import {Customer} from '../../../services/customer/domain/customer.model';
@@ -25,13 +25,13 @@ import {DELETE} from '../../store/identityCards/identity-cards.actions';
 import {CREATE, DELETE as DELETE_SCAN, LoadAllAction} from '../../store/identityCards/scans/scans.actions';
 import {ActivatedRoute} from '@angular/router';
 import {IdentificationCard} from '../../../services/customer/domain/identification-card.model';
-import {Observable} from 'rxjs/Observable';
 import {TranslateService} from '@ngx-translate/core';
 import {TdDialogService} from '@covalent/core';
 import {IdentificationCardScan} from '../../../services/customer/domain/identification-card-scan.model';
 import {UploadIdentificationCardScanEvent} from './scans/scan.list.component';
 import {ImageComponent} from '../../../common/image/image.component';
 import {CustomerService} from '../../../services/customer/customer.service';
+import {filter, combineLatest,flatMap, tap} from 'rxjs/operators'
 
 @Component({
   templateUrl: './identity-card.detail.component.html'
@@ -52,9 +52,9 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.scans$ = this.customersStore.select(fromCustomers.getAllIdentificationCardScanEntities);
 
-    this.actionSubscription = Observable.combineLatest(
+    this.actionSubscription = combineLatest(
       this.customersStore.select(fromCustomers.getSelectedIdentificationCard)
-        .filter(identificationCard => !!identificationCard),
+        .pipe(filter(identificationCard => !!identificationCard)),
       this.customersStore.select(fromCustomers.getSelectedCustomer),
       (identificationCard, customer) => ({
         identificationCard,
@@ -79,18 +79,18 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
     const button = 'DELETE IDENTIFICATION CARD';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   deleteIdentificationCard(): void {
     this.confirmDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.customersStore.dispatch({ type: DELETE, payload: {
           customerId: this.customer.identifier,
@@ -127,18 +127,18 @@ export class CustomerIdentityCardDetailComponent implements OnInit, OnDestroy {
     const button = 'DELETE SCAN';
 
     return this.translate.get([title, message, button])
-      .flatMap(result =>
+      .pipe(flatMap(result =>
         this.dialogService.openConfirm({
           message: result[message],
           title: result[title],
           acceptButton: result[button]
         }).afterClosed()
-      );
+      ));
   }
 
   deleteScan(scan: IdentificationCardScan): void {
     this.confirmScanDeletion()
-      .filter(accept => accept)
+      .pipe(filter(accept => accept))
       .subscribe(() => {
         this.customersStore.dispatch({ type: DELETE_SCAN, payload: {
           customerIdentifier: this.customer.identifier,

@@ -16,14 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import {map} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TableData} from '../../common/data-table/data-table.component';
 import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
 import {PortfolioStore} from './store/index';
 import * as fromPortfolio from './store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SEARCH} from './store/product.actions';
 import {FimsProduct} from './store/model/fims-product.model';
 
@@ -43,12 +43,12 @@ export class ProductListComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private store: PortfolioStore) {}
 
   ngOnInit(): void {
-    this.productData = this.store.select(fromPortfolio.getProductSearchResults)
-      .map(productPage => ({
+    this.productData = this.store.select(fromPortfolio.getProductSearchResults).pipe(
+      map(productPage => ({
         data: productPage.products,
         totalElements: productPage.totalElements,
         totalPages: productPage.totalPages
-      }));
+      })));
     this.fetchProducts();
   }
 

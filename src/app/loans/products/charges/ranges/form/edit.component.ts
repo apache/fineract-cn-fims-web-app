@@ -21,10 +21,10 @@ import * as fromPortfolio from '../../../store/index';
 import {PortfolioStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RangeActions} from '../../../store/ranges/range.actions';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, Observable} from 'rxjs';
 import {FimsProduct} from '../../../store/model/fims-product.model';
-import {Observable} from 'rxjs/Observable';
 import {FimsRange} from '../../../../../services/portfolio/domain/range-model';
+import { filter} from 'rxjs/operators'
 
 @Component({
   templateUrl: './edit.component.html'
@@ -41,7 +41,8 @@ export class EditProductChargeRangeFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.productSubscription = this.portfolioStore.select(fromPortfolio.getSelectedProduct)
-      .filter(product => !!product)
+      .pipe(
+        filter(product => !!product))
       .subscribe(product => this.product = product);
 
     this.range$ = this.portfolioStore.select(fromPortfolio.getSelectedProductChargeRange);

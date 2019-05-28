@@ -18,13 +18,14 @@
  */
 import {Component} from '@angular/core';
 import {PayrollConfiguration} from '../../../../services/payroll/domain/payroll-configuration.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import * as fromCustomers from '../../../store/index';
 import {CustomersStore} from '../../../store/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UPDATE} from '../../../store/payroll/payroll.actions';
 import {ProductInstance} from '../../../../services/depositAccount/domain/instance/product-instance.model';
 import {DepositAccountService} from '../../../../services/depositAccount/deposit-account.service';
+import {tap, switchMap, map} from 'rxjs/operators'
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -42,9 +43,10 @@ export class CreateCustomerPayrollFormComponent {
     this.distribution$ = store.select(fromCustomers.getPayrollDistribution);
 
     this.productInstances$ = this.store.select(fromCustomers.getSelectedCustomer)
-      .do(customer => this.customerId = customer.identifier)
-      .switchMap(customer => this.depositService.fetchProductInstances(customer.identifier))
-      .map(instances => instances.filter(instance => instance.state === 'ACTIVE'));
+    .pipe(
+      tap(customer => this.customerId = customer.identifier),
+      switchMap(customer => this.depositService.fetchProductInstances(customer.identifier)),
+      map(instances => instances.filter(instance => instance.state === 'ACTIVE')));
   }
 
   onSave(distribution: PayrollConfiguration): void {

@@ -18,7 +18,7 @@
  */
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '../http/http.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {ProductDefinition} from './domain/definition/product-definition.model';
 import {ProductDefinitionCommand} from './domain/definition/product-definition-command.model';
 import {ProductInstance} from './domain/instance/product-instance.model';

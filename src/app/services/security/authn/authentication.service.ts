@@ -17,11 +17,12 @@
  * under the License.
  */
 import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Headers, Http, RequestOptionsArgs, Response} from '@angular/http';
 import {Error} from '../../domain/error.model';
 import {Authentication} from '../../identity/domain/authentication.model';
 import {Permission} from '../../identity/domain/permission.model';
+import {catchError, map} from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -36,30 +37,30 @@ export class AuthenticationService {
   login(tenantId: string, userId: string, password: string): Observable<Authentication> {
     const encodedPassword: string = AuthenticationService.encodePassword(password);
     const loginUrl = '/token?grant_type=password&username=';
-    return this.http.post(this.identityBaseUrl + loginUrl + userId + '&password=' + encodedPassword, {}, this.tenantHeader(tenantId))
-      .map((response: Response) => this.mapResponse(response))
-      .catch(Error.handleError);
+    return this.http.post(this.identityBaseUrl + loginUrl + userId + '&password=' + encodedPassword, {}, this.tenantHeader(tenantId)).pipe(
+      map((response: Response) => this.mapResponse(response)),
+      catchError(Error.handleError),);
   }
 
   logout(tenantId: string, userId: string, accessToken: string): Observable<Response> {
-    return this.http.delete(this.identityBaseUrl + '/token/_current', this.authorizationHeader(tenantId, userId, accessToken))
-      .map((response: Response) => this.mapResponse(response))
-      .catch(Error.handleError);
+    return this.http.delete(this.identityBaseUrl + '/token/_current', this.authorizationHeader(tenantId, userId, accessToken)).pipe(
+      map((response: Response) => this.mapResponse(response)),
+      catchError(Error.handleError),);
   }
 
   getUserPermissions(tenantId: string, userId: string, accessToken: string): Observable<Permission[]> {
     return this.http.get(this.identityBaseUrl + '/users/' + userId + '/permissions',
       this.authorizationHeader(tenantId, userId, accessToken)
-    )
-    .map((response: Response) => this.mapResponse(response))
-    .catch(Error.handleError);
+    ).pipe(
+    map((response: Response) => this.mapResponse(response)),
+    catchError(Error.handleError),);
   }
 
   refreshAccessToken(tenantId: string): Observable<Authentication> {
     const refreshTokenUrl = '/token?grant_type=refresh_token';
-    return this.http.post(this.identityBaseUrl + refreshTokenUrl, {}, this.tenantHeader(tenantId))
-      .map((response: Response): Authentication => this.mapResponse(response))
-      .catch(Error.handleError);
+    return this.http.post(this.identityBaseUrl + refreshTokenUrl, {}, this.tenantHeader(tenantId)).pipe(
+      map((response: Response): Authentication => this.mapResponse(response)),
+      catchError(Error.handleError),);
   }
 
   private mapResponse(response: Response): any {

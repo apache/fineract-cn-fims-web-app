@@ -22,9 +22,9 @@ import * as fromAccounting from '../store/index';
 import {AccountingStore} from '../store/index';
 import {ExistsGuardService} from '../../common/guards/exists-guard';
 import {AccountingService} from '../../services/accounting/accounting.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {LoadAction} from '../store/ledger/transaction-type/transaction-type.actions';
-import {of} from 'rxjs/observable/of';
+import {switchMap, map, tap} from 'rxjs/operators';
 
 @Injectable()
 export class TransactionTypeExistsGuard implements CanActivate {
@@ -35,31 +35,32 @@ export class TransactionTypeExistsGuard implements CanActivate {
   }
 
   hasTransactionTypeInStore(code: string): Observable<boolean> {
-    const timestamp$: Observable<number> = this.store.select(fromAccounting.getTransactionTypeLoadedAt)
-      .map(loadedAt => loadedAt[code]);
+    const timestamp$: Observable<number> = this.store.select(fromAccounting.getTransactionTypeLoadedAt).pipe(
+      map(loadedAt => loadedAt[code]));
 
     return this.existsGuardService.isWithinExpiry(timestamp$);
   }
 
   hasTransactionTypeInApi(code: string): Observable<boolean> {
-    const getTransactionType: Observable<any> = this.accountingService.findTransactionType(code)
-      .map(transactionTypeEntity => new LoadAction({
+    const getTransactionType: Observable<any> = this.accountingService.findTransactionType(code).pipe(
+      map(transactionTypeEntity => new LoadAction({
         resource: transactionTypeEntity
-      }))
-      .do((action: LoadAction) => this.store.dispatch(action))
-      .map(transactionType => !!transactionType);
+      })))
+      .pipe(
+        tap((action: LoadAction) => this.store.dispatch(action)),
+        map(transactionType => !!transactionType));
 
     return this.existsGuardService.routeTo404OnError(getTransactionType);
   }
 
   hasTransactionType(code: string): Observable<boolean> {
-    return this.hasTransactionTypeInStore(code)
-      .switchMap(inStore => {
+    return this.hasTransactionTypeInStore(code).pipe(
+      switchMap(inStore => {
         if (inStore) {
           return of(inStore);
         }
         return this.hasTransactionTypeInApi(code);
-      });
+      }));
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

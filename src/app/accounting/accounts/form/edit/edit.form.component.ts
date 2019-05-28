@@ -20,10 +20,11 @@ import {Account} from '../../../../services/accounting/domain/account.model';
 import {AccountFormComponent} from '../form.component';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import * as fromAccounting from '../../../store';
 import {AccountingStore} from '../../../store/index';
 import {SelectAction, UPDATE} from '../../../store/account/account.actions';
+import {map, filter} from 'rxjs/operators';
 
 @Component({
   templateUrl: './edit.form.component.html'
@@ -41,12 +42,12 @@ export class EditAccountFormComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private store: AccountingStore) {}
 
   ngOnInit() {
-    this.actionsSubscription = this.route.params
-      .map(params => new SelectAction(params['id']))
+    this.actionsSubscription = this.route.params.pipe(
+      map(params => new SelectAction(params['id'])))
       .subscribe(this.store);
 
     this.accountSubscription = this.store.select(fromAccounting.getSelectedAccount)
-      .filter(account => !!account)
+      .pipe(filter(account => !!account))
       .subscribe(account => this.account = account);
   }
 
