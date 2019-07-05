@@ -7,7 +7,7 @@
 
 ## Development
 * Follow instructions at https://github.com/apache/fineract-cn-demo-server and start demo-server
-* Run local dev environment `npm run dev`
+* Run local development environment `npm run dev`
 * Go to http://localhost:4200
 
 ## Production build
