@@ -50,6 +50,6 @@ export class ExecuteCommandFailAction implements Action {
 }
 
 export type Actions
-  =| ExecuteCommandAction
+  = | ExecuteCommandAction
   | ExecuteCommandSuccessAction
   | ExecuteCommandFailAction;

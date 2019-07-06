@@ -29,9 +29,9 @@ import {AdjustmentOptionList} from './domain/adjustment-option-list.model';
     templateUrl: './definition.detail.component.html'
   })
   export class GroupDefinitionDetailComponent {
-  
+
     groupDefinition$: Observable<GroupDefinition>;
-  
+
     constructor(private store: GroupsStore) {
       this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
     }
@@ -43,5 +43,5 @@ import {AdjustmentOptionList} from './domain/adjustment-option-list.model';
       formatType1(type: Adjustment): string {
         return AdjustmentOptionList.find(option => option.type === type).label;
       }
-      
+
 }

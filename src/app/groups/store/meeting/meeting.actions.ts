@@ -43,8 +43,8 @@ export const RESET_FORM = type('[Meeting] Reset Form');
 
 export interface MeetingRoutePayload extends RoutePayload {
   meeting: Meeting;
-  groupId : string;
-  signoff : SignOffMeeting
+  groupId: string;
+  signoff: SignOffMeeting
 }
 
 export class LoadAllAction implements Action {

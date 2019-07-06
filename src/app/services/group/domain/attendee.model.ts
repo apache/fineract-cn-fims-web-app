@@ -19,7 +19,7 @@
 
 export type Status= 'EXPECTED' | 'ATTENDED' | 'MISSED';
 
-export interface Attendee{
-    status : Status;
-    customerIdentifier : string;
+export interface Attendee {
+    status: Status;
+    customerIdentifier: string;
 }

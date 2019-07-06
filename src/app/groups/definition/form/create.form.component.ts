@@ -15,8 +15,8 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
-**/ 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+**/
+import {Component} from '@angular/core';
 import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GroupsStore} from '../../store/index';
@@ -25,7 +25,7 @@ import {CREATE} from '../../store/definition/definition.actions';
 @Component({
   templateUrl: './create.form.component.html'
 })
-  
+
   export class CreateGroupDefinitionFormComponent {
 
   groupDefinition: GroupDefinition = {
@@ -40,21 +40,21 @@ import {CREATE} from '../../store/definition/definition.actions';
       },
     createdOn : '',
     createdBy: '',
-    lastModifiedOn :'',
+    lastModifiedOn : '',
     lastModifiedBy: ''
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
 
 
-  onSave(groupDefinition: GroupDefinition):void{
+  onSave(groupDefinition: GroupDefinition): void {
     this.store.dispatch({ type: CREATE, payload: {
       groupDefinition,
       activatedRoute: this.route
     } });
   }
 
-  onCancel() : void{
+  onCancel(): void {
     this.navigateAway();
   }
 

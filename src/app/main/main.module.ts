@@ -25,7 +25,7 @@ import {AccessDeniedComponent} from './access.denied.component';
 import {FimsSharedModule} from '../common/common.module';
 import {NotificationComponent} from './notification.component';
 import {QuickAccessComponent} from '../quickAccess/quick-access.component'
-//import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
 import {
   MatButtonModule,
   MatCardModule,
@@ -49,7 +49,7 @@ import {CovalentLayoutModule, CovalentMediaModule} from '@covalent/core';
     FimsSharedModule,
     TranslateModule,
     CommonModule,
-    //BrowserModule,
+    // BrowserModule,
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,

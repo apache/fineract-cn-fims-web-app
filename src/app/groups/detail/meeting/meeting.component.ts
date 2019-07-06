@@ -32,27 +32,27 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './meeting.component.html'
   })
   export class MeetingComponent implements OnInit {
-  
-    meetingData$:Observable<TableData>;
-    meetingData:any
+
+    meetingData$: Observable<TableData>;
+    meetingData: any
     group: Group;
     private groupSubscription: Subscription;
     private meetingSubscription: Subscription;
-   
+
 
     columns: any[] = [
         { name: 'meetingSequence', label: 'Meeting Sequence' },
         { name: 'currentCycle', label: 'Current Cycle' },
-        {name: 'scheduledFor', label:'scheduledFor'},
+        {name: 'scheduledFor', label: 'scheduledFor'},
     ]
-  
-    constructor(private store: GroupsStore,private router: Router, private route: ActivatedRoute) {
+
+    constructor(private store: GroupsStore, private router: Router, private route: ActivatedRoute) {
       this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
       .subscribe(group => {
         this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
-        //this.fetchMeetings(group.identifier);
+        // this.fetchMeetings(group.identifier);
       });
-      
+
       this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities)
       .map(meeting => ({
         data: meeting,
@@ -62,22 +62,22 @@ import {ActivatedRoute, Router} from '@angular/router';
      // this.fetchMeetings(this.group.identifier);
     }
 
-    ngOnInit(){
+    ngOnInit() {
       this.meetingData = this.store.select(fromGroups.getAllMeetingEntities)
       .subscribe(res => console.log(res))
-      
+
     }
-     
+
 
   fetchMeetings(identifier: string): void {
     this.store.dispatch({
       type: LOAD_ALL,
-      payload:this.group.identifier
+      payload: this.group.identifier
     });
   }
 
   rowSelect(meeting: Meeting): void {
     this.router.navigate(['detail', meeting.meetingSequence], { relativeTo: this.route });
   }
-    
+
 }

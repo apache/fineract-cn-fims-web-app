@@ -19,10 +19,10 @@
 
 import {Attendee} from './attendee.model'
 
- export interface SignOffMeeting{
-     cycle : number;
-     sequence : number;
-     attendees : Attendee[];
-     duration : number;
+ export interface SignOffMeeting {
+     cycle: number;
+     sequence: number;
+     attendees: Attendee[];
+     duration: number;
 
  }

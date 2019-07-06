@@ -19,13 +19,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {TdStepComponent} from '@covalent/core';
 import {Group} from '../../services/group/domain/group.model';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {GroupDetailFormData,GroupDetailFormComponent} from './detail/detail.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GroupDetailFormComponent, GroupDetailFormData} from './detail/detail.component';
 import {AddressFormComponent} from '../../common/address/address.component';
 import {Address} from '../../services/domain/address/address.model';
-import {Value} from '../../services/catalog/domain/value.model';
-import {Catalog} from '../../services/catalog/domain/catalog.model';
-import {GroupDefinition} from '../../services/group/domain/group-definition.model'
 
 @Component({
   selector: 'fims-group-form-component',
@@ -33,10 +30,33 @@ import {GroupDefinition} from '../../services/group/domain/group-definition.mode
 })
 export class GroupFormComponent implements OnInit {
 
-  private _group: Group;
-  //private _groupDefinition:GroupDefinition;
+  addressFormData: Address;
 
-  constructor(private router: Router, private route: ActivatedRoute){}
+  selectedOffices: string[] = [];
+
+  selectedEmployees: string[] = [];
+
+  selectedLeaders: string[] = [];
+
+  selectedMembers: string[] = [];
+  detailFormData: GroupDetailFormData;
+
+  @Input('editMode') editMode: boolean;
+
+  @Output('onSave') onSave = new EventEmitter<Group>();
+
+  @Output('onCancel') onCancel = new EventEmitter<void>();
+
+  @ViewChild('detailsStep') step: TdStepComponent;
+
+  @ViewChild('detailForm') detailForm: GroupDetailFormComponent;
+
+  @ViewChild('addressForm') addressForm: AddressFormComponent;
+
+  private _group: Group;
+  // private _groupDefinition:GroupDefinition;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   @Input('group') set group(group: Group) {
 
@@ -54,37 +74,13 @@ export class GroupFormComponent implements OnInit {
     this.selectedOffices = group.office ? [group.office] : [];
 
     this.selectedEmployees = group.assignedEmployee ? [group.assignedEmployee] : [];
-    
+
     this.selectedLeaders = group.leaders;
 
     this.selectedMembers = group.members;
 
   };
 
- 
-  @Input('editMode') editMode: boolean;
-
-  @Output('onSave') onSave = new EventEmitter<Group>();
-
-  @Output('onCancel') onCancel = new EventEmitter<void>();
-
-  @ViewChild('detailsStep') step: TdStepComponent;
-
-  @ViewChild('detailForm') detailForm: GroupDetailFormComponent;
-  detailFormData: GroupDetailFormData;
-
-  @ViewChild('addressForm') addressForm: AddressFormComponent;
-  addressFormData: Address;
-
-  selectedOffices: string[] =[];
-
-  selectedEmployees: string[]= [];
-
-  selectedLeaders :string[]= [];
-
-  selectedMembers : string[]= [];
-
-  
   ngOnInit() {
     this.openDetailStep();
   }
@@ -105,18 +101,18 @@ export class GroupFormComponent implements OnInit {
   selectEmployee(selections: string[]): void {
     this.selectedEmployees = selections;
   }
-  selectMembers(selections:string[]):void{
+  selectMembers(selections: string[]): void {
     this.selectedMembers = selections;
   }
 
-  selectLeaders(selections:string[]):void{
+  selectLeaders(selections: string[]): void {
     this.selectedLeaders = selections;
   }
 
   get isValid(): boolean {
     return (this.detailForm.valid && this.addressForm.valid)
   }
- 
+
   get group(): Group {
     return this._group;
   }
@@ -130,13 +126,13 @@ export class GroupFormComponent implements OnInit {
       name: detailFormData.name,
       address: this.addressForm.formData,
       status: 'PENDING',
-      weekday:detailFormData.weekday,
+      weekday: detailFormData.weekday,
       office: this.selectedOffices && this.selectedOffices.length > 0 ? this.selectedOffices[0] : undefined,
       assignedEmployee: this.selectedEmployees && this.selectedEmployees.length > 0 ? this.selectedEmployees[0] : undefined,
       leaders: this.selectedLeaders && this.selectedLeaders.length > 0 ? this.selectedLeaders : undefined,
       members: this.selectedMembers && this.selectedMembers.length > 0 ? this.selectedMembers : undefined,
     };
-    
+
     this.onSave.emit(group);
 
   }

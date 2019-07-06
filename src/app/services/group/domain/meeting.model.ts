@@ -20,15 +20,15 @@
 import {Attendee} from './attendee.model';
 import {Address} from '../../domain/address/address.model';
 
- export interface Meeting{
-     meetingSequence : number;
-     groupIdentifier : string;
-     currentCycle : number;
-     attendees : Attendee[];
-     scheduledFor :string;
-     location : string;
-     heldOn : string;
-     duration : number;
-     createdOn? : string;
+ export interface Meeting {
+     meetingSequence: number;
+     groupIdentifier: string;
+     currentCycle: number;
+     attendees: Attendee[];
+     scheduledFor: string;
+     location: string;
+     heldOn: string;
+     duration: number;
+     createdOn?: string;
      createdBy?: string;
  }

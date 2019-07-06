@@ -139,7 +139,7 @@ import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
     MeetingComponent,
     MeetingDetailComponent,
     MeetingIndexComponent,
-    
+
     GroupDefinitionIndexComponent,
     GroupDefinitionDetailComponent,
     GroupDefinitionListComponent,
@@ -148,17 +148,12 @@ import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
     GroupDefinitionFormComponent,
     GroupStatusComponent,
     GroupActivityComponent,
-    
-  
-    
-    
-    
 
   ],
   providers: [
     GroupExistsGuard,
     GroupDefinitionExistsGuard,
-    
+
     { provide: GroupsStore, useFactory: groupStoreFactory, deps: [Store]}
   ]
 })

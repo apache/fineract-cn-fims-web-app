@@ -33,5 +33,5 @@ export const WeekdayOptionList: WeekdayOption[] = [
     { type: 7, label: 'Sunday'},
 
   ];
-  
-  
+
+

@@ -35,7 +35,7 @@ export class EditGroupDefinitionFormComponent {
     this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
   }
 
-  onSave(groupDefinition: GroupDefinition){
+  onSave(groupDefinition: GroupDefinition) {
     this.store.dispatch({ type: UPDATE, payload: {
       groupDefinition,
       activatedRoute: this.route

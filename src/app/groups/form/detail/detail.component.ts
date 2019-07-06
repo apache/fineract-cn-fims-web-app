@@ -27,7 +27,7 @@ export interface GroupDetailFormData {
   identifier: string;
   name: string;
   groupDefinitionIdentifier: string;
-  weekday:number;
+  weekday: number;
 
 }
 
@@ -56,13 +56,13 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
     super();
   }
 
-  get formData():GroupDetailFormData{
-   
+  get formData(): GroupDetailFormData{
+
     return {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
       groupDefinitionIdentifier: this.form.get('groupDefinitionIdentifier').value,
-      weekday:this.form.get('weekday').value
+      weekday: this.form.get('weekday').value
     };
   }
 

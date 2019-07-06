@@ -36,13 +36,13 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
   private formStateSubscription: Subscription;
 
   @ViewChild('form') formComponent: GroupFormComponent;
-  
+
   group: Group = {
 
     identifier : ' ',
     groupDefinitionIdentifier : '',
     name : '',
-    leaders :[],
+    leaders : [],
     members : [],
     office: '',
     assignedEmployee : '',
@@ -54,11 +54,11 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
       countryCode: '',
       country: '',
     },
-    createdOn :''
-    
+    createdOn : ''
+
   };
 
-  
+
 
 
   catalog$: Observable<Catalog>;

@@ -17,6 +17,6 @@
  * under the License.
  */
 
- export interface AssignedEmployee{
-     identifier : string;
+ export interface AssignedEmployee {
+     identifier: string;
  }

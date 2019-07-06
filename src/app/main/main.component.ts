@@ -80,14 +80,14 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       permission: {id: 'accounting_ledgers', accessLevel: 'READ'}
     },
 
-  
+
     {
       title: 'Groups',
       description: 'Manage groups',
       icon: 'group',
       routerLink: '/groups',
      permission: {id: 'group_groups', accessLevel: 'READ'}
-    },    
+    },
 
     {
       title: 'Member',

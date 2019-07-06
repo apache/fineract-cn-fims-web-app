@@ -56,13 +56,13 @@ export const GroupRoutes: Routes = [
   {
     path: '',
     component: GroupComponent,
-    data: { title: 'Manage Groups',hasPermission: {id: 'group_groups', accessLevel: 'READ'} },
+    data: { title: 'Manage Groups', hasPermission: {id: 'group_groups', accessLevel: 'READ'} },
   },
 
   {
     path: 'create',
     component: CreateGroupFormComponent,
-    data: { title: 'Create Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+    data: { title: 'Create Group', hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
   },
   {
     path: 'detail/:id/edit',
@@ -78,13 +78,13 @@ export const GroupRoutes: Routes = [
     },
     canActivate: [GroupExistsGuard],
     children: [
-     
+
       {
         path: '',
         component: GroupDetailComponent,
         data: {title: 'View Groups'}
       },
-    
+
       {
         path: 'activities',
         component: GroupActivityComponent,
@@ -93,12 +93,12 @@ export const GroupRoutes: Routes = [
       {
         path: 'status',
         component: GroupStatusComponent,
-        data: { title: 'Active Group',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
+        data: { title: 'Active Group', hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
       },
       {
         path: 'meeting',
         component: MeetingComponent,
-        data: { title: 'Meeting details',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
+        data: { title: 'Meeting details', hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
       },
 
       {
@@ -113,16 +113,16 @@ export const GroupRoutes: Routes = [
             component: MeetingDetailComponent
           },
         ]
-      }, 
+      },
 
       {
         path: 'signOff',
         component: SignOffMeetingComponent,
-        data: { title: 'signOff-meeting',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+        data: { title: 'signOff-meeting', hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
       },
     ]
   },
-  
+
   {
     path: 'definition',
     component: GroupDefinitionListComponent,
@@ -148,7 +148,7 @@ export const GroupRoutes: Routes = [
       {
         path: '',
         component: GroupDefinitionDetailComponent
-      }, 
+      },
      /* {
         path: 'edit',
         component: EditGroupDefinitionFormComponent,

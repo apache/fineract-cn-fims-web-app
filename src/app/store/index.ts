@@ -44,7 +44,7 @@ export interface State {
   customerSearch: SearchState;
   accountSearch: SearchState;
   ledgerSearch: SearchState;
-  groupSearch:SearchState;
+  groupSearch: SearchState;
 }
 
 export const reducers = {

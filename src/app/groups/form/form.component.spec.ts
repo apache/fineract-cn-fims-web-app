@@ -41,11 +41,11 @@ const groupTemplate: Group = {
   groupDefinitionIdentifier: 'test',
   name: 'test',
   leaders: [],
-  members:[],
-  office:'test',
-  assignedEmployee:'test',
-  weekday:2,
-  status:'PENDING',
+  members: [],
+  office: 'test',
+  assignedEmployee: 'test',
+  weekday: 2,
+  status: 'PENDING',
   address: {
     street: 'test',
     city: 'test',
@@ -54,11 +54,11 @@ const groupTemplate: Group = {
     region: 'test',
     postalCode: 'test'
   },
-  createdOn:'21-10-2018', 
-  createdBy:'test',
-  lastModifiedOn:'',
-  lastModifiedBy:''
-  
+  createdOn: '21-10-2018',
+  createdBy: 'test',
+  lastModifiedOn: '',
+  lastModifiedBy: ''
+
 };
 const country: Country = {
   displayName: '',
@@ -148,7 +148,7 @@ describe('Test group form', () => {
       expect(groupTemplate.address.street).toEqual(group.address.street);
 
       expect(groupTemplate.createdOn).toEqual(group.createdOn);
-     
+
     });
 
     testComponent.triggerSave();

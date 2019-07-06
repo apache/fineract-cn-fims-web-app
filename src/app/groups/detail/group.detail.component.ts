@@ -23,8 +23,6 @@ import * as fromGroups from '../store';
 import {Subscription} from 'rxjs/Subscription';
 import {GroupsStore} from '../store/index';
 import {GroupService} from '../../services/group/group.service';
-import {Observable} from 'rxjs/Observable';
-import {SelectAction} from '../store/group.actions';
 
 
 @Component({
@@ -38,8 +36,8 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
      group: Group;
      isGroupActive: boolean;
-     //identifier: any;
-     
+     // identifier: any;
+
     constructor(private route: ActivatedRoute, private router: Router, private store: GroupsStore,
         private groupService: GroupService) {}
 
@@ -50,7 +48,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
             .do(group => this.isGroupActive = group.status === 'ACTIVE')
             .flatMap(group => this.groupService.getGroup(group.identifier))
             .subscribe(group => this.group = group);
-    
+
         }
     ngOnDestroy(): void {
         this.groupSubscription.unsubscribe();

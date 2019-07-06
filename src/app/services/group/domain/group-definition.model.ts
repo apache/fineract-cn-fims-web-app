@@ -19,15 +19,15 @@
 
  import {Cycle} from './cycle.model';
 
- export interface GroupDefinition{
-    identifier : string;
-    description : string;
-    minimalSize : number;
-    maximalSize : number;
-    cycle : Cycle;
-    createdOn? : string;
+ export interface GroupDefinition {
+    identifier: string;
+    description: string;
+    minimalSize: number;
+    maximalSize: number;
+    cycle: Cycle;
+    createdOn?: string;
     createdBy?: string;
-    lastModifiedOn? :string;
+    lastModifiedOn?: string;
     lastModifiedBy?: string;
 
  }

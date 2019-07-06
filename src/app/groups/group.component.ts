@@ -37,7 +37,7 @@ export class GroupComponent implements OnInit {
   columns: any[] = [
     { name: 'identifier', label: 'Id' },
     { name: 'name', label: 'Group Name' },
-    //{ name: 'groupDefinitionIdentifier', label: 'External Id' },
+    // { name: 'groupDefinitionIdentifier', label: 'External Id' },
     { name: 'status', label: 'Status' },
     { name: 'office', label: 'Office' }
   ];

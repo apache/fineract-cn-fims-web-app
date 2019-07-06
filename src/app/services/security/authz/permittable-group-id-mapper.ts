@@ -59,7 +59,7 @@ export class PermittableGroupIdMapper {
       label: 'User created resources(Identity & Roles)'
     };
 
-    this._permittableGroupMap[GroupPermittableGroupIds.GROUP_MANAGEMENT] = {id: 'group_groups', label: 'Groups'};    
+    this._permittableGroupMap[GroupPermittableGroupIds.GROUP_MANAGEMENT] = {id: 'group_groups', label: 'Groups'};
     this._permittableGroupMap[GroupPermittableGroupIds.GROUP_DEFINITION] = {id: 'group_definition', label: 'Group definition'};
 
     this._permittableGroupMap[CustomerPermittableGroupIds.CUSTOMER_MANAGEMENT] = {id: 'customer_customers', label: 'Members'};

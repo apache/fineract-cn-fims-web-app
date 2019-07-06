@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input,Output,OnInit,EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import { Meeting } from '../../../services/group/domain/meeting.model';
 import * as fromGroups from '../../store/index';
@@ -25,19 +25,19 @@ import {GroupsStore} from '../../store/index';
 
 
 @Component({
-    templateUrl:'meeting.detail.component.html'
+    templateUrl: 'meeting.detail.component.html'
 })
 
-export class MeetingDetailComponent implements OnInit{
+export class MeetingDetailComponent implements OnInit {
 
-    meeting$: Observable<Meeting>;  
+    meeting$: Observable<Meeting>;
 
     constructor(private store: GroupsStore) {
       this.meeting$ = store.select(fromGroups.getSelectedMeeting);
     }
 
-  ngOnInit(){}
+  ngOnInit() {}
 }
-    
 
-      
+
+

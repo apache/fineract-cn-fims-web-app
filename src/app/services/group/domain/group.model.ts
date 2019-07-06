@@ -18,10 +18,10 @@
  */
 
 export type Status = 'PENDING' | 'ACTIVE' | 'CLOSED';
-//export type Weekday = 'MONDAY(1)' | 'TUESDAY(2)' | 'WEDNESDAY(3)' | 'THURSDAY(4)' |
+// export type Weekday = 'MONDAY(1)' | 'TUESDAY(2)' | 'WEDNESDAY(3)' | 'THURSDAY(4)' |
 //                      'FRIDAY(5)' | 'SATURDAY(6)' | 'SUNDAY(7)';
 
-export type Weekday = 1 | 2 | 3 | 4 | 5 | 6 | 7 ; 
+export type Weekday = 1 | 2 | 3 | 4 | 5 | 6 | 7 ;
 import {Address} from '../../domain/address/address.model';
 import {AssignedEmployee} from './assigned.model';
 import {Office} from '../../office/domain/office.model';
@@ -29,22 +29,20 @@ import {Office} from '../../office/domain/office.model';
 
 
 
-export interface Group{
-    identifier : string;
-    groupDefinitionIdentifier : string;
-    name : string;
-    leaders :string[];
-    members : string[];
+export interface Group {
+    identifier: string;
+    groupDefinitionIdentifier: string;
+    name: string;
+    leaders: string[];
+    members: string[];
     office: string;
-    assignedEmployee : string;
-    weekday : number;
-    status : Status;
-    address : Address;
+    assignedEmployee: string;
+    weekday: number;
+    status: Status;
+    address: Address;
     applicationDate?: string;
-    createdOn? : string;
+    createdOn?: string;
     createdBy?: string;
-    lastModifiedOn? : string;
+    lastModifiedOn?: string;
     lastModifiedBy?: string;
-
-
 }

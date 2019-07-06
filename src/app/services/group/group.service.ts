@@ -37,34 +37,34 @@ import {Error} from '../domain/error.model';
 ;
 
 @Injectable()
-export class GroupService{
+export class GroupService {
 
     constructor(@Inject('groupBaseUrl') private baseUrl: string, private http: HttpClient, private imageService: ImageService) {
     }
-  
+
     fetchGroups(fetchRequest: FetchRequest): Observable<GroupPage> {
       const params: URLSearchParams = buildSearchParams(fetchRequest);
-  
+
       const requestOptions: RequestOptionsArgs = {
         search: params
       };
-  
+
       return this.http.get(`${this.baseUrl}/groups`, requestOptions).share()
       .catch(Error.handleError);
     }
-  
+
     getGroup(id: string, silent?: boolean): Observable<Group> {
       return this.http.get(`${this.baseUrl}/groups/${id}`, {}, silent);
     }
-  
+
     createGroup(group: Group): Observable<Group> {
       return this.http.post(`${this.baseUrl}/groups`, group);
     }
-  
+
    updateGroup(group: Group): Observable<Group> {
      return this.http.put(`${this.baseUrl}/groups/${group.identifier}`, group);
     }
-   
+
    fetchGroupCommands(identifier: string): Observable<GroupCommand[]> {
     return this.http.get(`${this.baseUrl}/groups/${identifier}/commands`);
   }
@@ -76,28 +76,28 @@ export class GroupService{
     fetchGroupDefinitions(): Observable<GroupDefinition[]> {
       return this.http.get(`${this.baseUrl}/definitions`);
     }
-  
+
     getGroupDefinition(identifier: string): Observable<GroupDefinition> {
       return this.http.get(`${this.baseUrl}/definitions/${identifier}`);
     }
-  
+
     createGroupDefinition(groupDefinition: GroupDefinition): Observable<void> {
       return this.http.post(`${this.baseUrl}/definitions`, groupDefinition);
     }
-  
+
     updateGroupDefinition(groupDefinition: GroupDefinition): Observable<GroupDefinition> {
       return this.http.put(`${this.baseUrl}/definitions/${groupDefinition.identifier}`, groupDefinition);
     }
-  
+
 
     fetchMeetings(identifier: string): Observable<Meeting[]> {
       return this.http.get(`${this.baseUrl}/groups/${identifier}/meetings`);
     }
 
-    updateMeeting(identifier: string,signoff: SignOffMeeting): Observable<Meeting> {
+    updateMeeting(identifier: string, signoff: SignOffMeeting): Observable<Meeting> {
       return this.http.put(`${this.baseUrl}/groups/${identifier}/meetings`, signoff);
     }
-  
-  
+
+
 
 }

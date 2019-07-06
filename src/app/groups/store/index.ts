@@ -41,10 +41,10 @@ export interface State extends fromRoot.State {
   tasks: ResourceState;
   taskForm: FormState;
   groupCommands: fromCommands.State;
-  groupDefinitions:ResourceState;
-  groupDefinitionForm:FormState;
-  meetings:ResourceState;
-  meetingForm:FormState;
+  groupDefinitions: ResourceState;
+  groupDefinitionForm: FormState;
+  meetings: ResourceState;
+  meetingForm: FormState;
 
 }
 
@@ -57,7 +57,7 @@ const reducers = {
   groupDefinitionForm: createFormReducer('GroupDefinition'),
   meetings: createResourceReducer('Meeting', fromMeeting.reducer),
   MeetingForm: createFormReducer('Meeting'),
-  
+
 };
 
 export class GroupsStore extends Store<State> {}
