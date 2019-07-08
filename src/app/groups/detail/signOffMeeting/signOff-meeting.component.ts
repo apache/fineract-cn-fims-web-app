@@ -16,54 +16,40 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { FimsValidators } from '../../../common/validator/validators';
-import { Attendee } from '../../../services/group/domain/attendee.model';
-import { Customer } from '../../../services/customer/domain/customer.model';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FimsValidators} from '../../../common/validator/validators';
+import {Attendee} from '../../../services/group/domain/attendee.model';
+import {Customer} from '../../../services/customer/domain/customer.model';
+import {Observable} from 'rxjs/Observable';
 import * as fromGroups from '../../store';
-import { Subscription } from 'rxjs/Subscription';
-import { TdStepComponent } from '@covalent/core';
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../store';
-import { StatusOptionList } from './domain/status-option-list.model';
-import { SignOffMeeting } from '../../../services/group/domain/signoff-meeting.model'
-import { UPDATE } from '../../store/meeting/meeting.actions';
-import { Group } from '../../../services/group/domain/group.model';
-import { GroupsStore } from '../../store/index';
-
+import {Subscription} from 'rxjs/Subscription';
+import {TdStepComponent} from '@covalent/core';
+import {StatusOptionList} from './domain/status-option-list.model';
+import {SignOffMeeting} from '../../../services/group/domain/signoff-meeting.model'
+import {UPDATE} from '../../store/meeting/meeting.actions';
+import {Group} from '../../../services/group/domain/group.model';
+import {GroupsStore} from '../../store/index';
 
 @Component({
   templateUrl: './signOff-meeting.component.html'
 })
-
 export class SignOffMeetingComponent implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
   customers: Observable<Customer[]>;
-  customers1: Customer[];
   name: Subscription;
   groupSubscription: Subscription;
   group: Group;
   members: any[];
-
-
-  attendee: Attendee[] = [];
-  len: number;
-  i: any;
-
-
   statusOptions = StatusOptionList;
 
   @ViewChild('detailsStep') step: TdStepComponent;
 
   @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder,
-    private store: Store<fromRoot.State>, private store1: GroupsStore) {
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private store: GroupsStore) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -72,39 +58,29 @@ export class SignOffMeetingComponent implements OnInit {
       duration: ['', [Validators.required, FimsValidators.minValue(0)]],
       status: ['', [Validators.required]],
       member: ['']
+    });
 
-    })
-
-    this.groupSubscription = this.store1.select(fromGroups.getSelectedGroup)
+    this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
       .subscribe(group => this.group = group);
 
     this.detailsStep.open();
-    console.log(this.group.members)
     this.members = this.group.members;
-    this.len = this.members.length
   }
 
   save() {
-    for (this.i in this.members) {
-      if (this.members.hasOwnProperty(this.i)) {
-        const attend: Attendee = {
-          customerIdentifier: this.members[this.i],
-          status: this.form.get('status').value,
-        }
-        console.log(attend);
-        this.attendee.push(attend);
-      }
-    }
-    console.log('attendde', this.attendee)
+    const attendees: Attendee[] = this.members.map(customerIdentifier => ({
+      customerIdentifier,
+      status: this.form.get('status').value,
+    }));
 
     const signoff: SignOffMeeting = {
       sequence: this.form.get('sequence').value,
       cycle: this.form.get('cycle').value,
       duration: this.form.get('duration').value,
-      attendees: this.attendee
+      attendees
     };
 
-    this.store1.dispatch({
+    this.store.dispatch({
       type: UPDATE, payload: {
         groupId: this.group.identifier,
         signoff,
@@ -118,7 +94,7 @@ export class SignOffMeetingComponent implements OnInit {
   }
 
   navigateAway(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }
