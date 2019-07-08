@@ -16,18 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input} from '@angular/core';
-import {FormComponent} from '../../../common/forms/form.component';
-import {FormBuilder, Validators} from '@angular/forms';
-import {FimsValidators} from '../../../common/validator/validators';
+import { Component, Input } from '@angular/core';
+import { FormComponent } from '../../../common/forms/form.component';
+import { FormBuilder, Validators } from '@angular/forms';
+import { FimsValidators } from '../../../common/validator/validators';
 import { Status, Weekday } from '../../../services/group/domain/group.model';
-import {WeekdayOptionList} from '../domain/weekday-options.model';
+import { WeekdayOptionList } from '../domain/weekday-options.model';
 
 export interface GroupDetailFormData {
   identifier: string;
   name: string;
   groupDefinitionIdentifier: string;
-  weekday:number;
+  weekday: number;
 
 }
 
@@ -40,7 +40,6 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
   weekdayOptions = WeekdayOptionList;
 
   @Input() set formData(formData: GroupDetailFormData) {
-   // const createdOn = formData.createdOn;
 
     this.form = this.formBuilder.group({
       identifier: [formData.identifier, [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
@@ -52,17 +51,17 @@ export class GroupDetailFormComponent extends FormComponent<GroupDetailFormData>
 
   @Input() editMode: boolean;
 
-    constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     super();
   }
 
-  get formData():GroupDetailFormData{
-   
+  get formData(): GroupDetailFormData {
+
     return {
       identifier: this.form.get('identifier').value,
       name: this.form.get('name').value,
       groupDefinitionIdentifier: this.form.get('groupDefinitionIdentifier').value,
-      weekday:this.form.get('weekday').value
+      weekday: this.form.get('weekday').value
     };
   }
 

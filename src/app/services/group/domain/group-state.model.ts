@@ -16,4 +16,4 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-export type GroupState = 'PENDING' | 'ACTIVE' |'CLOSED';
+export type GroupState = 'PENDING' | 'ACTIVE' | 'CLOSED';

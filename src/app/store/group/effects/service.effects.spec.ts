@@ -17,14 +17,14 @@
  * under the License.
  */
 
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
-import {GroupSearchApiEffects} from './service.effects';
-import {Observable} from 'rxjs/Observable';
-import {GroupService} from '../../../services/group/group.service';
-import {SearchAction, SearchCompleteAction} from '../group.actions';
-import {GroupPage} from '../../../services/group/domain/group-page.model';
-import {emptySearchResult} from '../../../common/store/search.reducer';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
+import { GroupSearchApiEffects } from './service.effects';
+import { Observable } from 'rxjs/Observable';
+import { GroupService } from '../../../services/group/group.service';
+import { SearchAction, SearchCompleteAction } from '../group.actions';
+import { GroupPage } from '../../../services/group/domain/group-page.model';
+import { emptySearchResult } from '../../../common/store/search.reducer';
 
 describe('Group Search Api Effects', () => {
   beforeEach(() => {
@@ -46,10 +46,10 @@ describe('Group Search Api Effects', () => {
 
   describe('search$', () => {
 
-    function setup(params?: {searchGroupsReturnValue: any}) {
+    function setup(params?: { searchGroupsReturnValue: any }) {
       const groupService = TestBed.get(GroupService);
       if (params) {
-        groupService.fetchCustomers.and.returnValue(params.searchGroupsReturnValue);
+        groupService.fetchGroups.and.returnValue(params.searchGroupsReturnValue);
       }
 
       return {
@@ -61,8 +61,11 @@ describe('Group Search Api Effects', () => {
     it('should return a new SearchCompleteAction with GroupPage', fakeAsync(() => {
       const groupPage: GroupPage = {
         groups: [
-          { name: '',identifier:'', groupDefinitionIdentifier: '', status: {}, office: ''}
-        ],
+          {
+            identifier: '', groupDefinitionIdentifier: '', name: '', leaders: [], members: [], office: '',
+            assignedEmployee: '', weekday: 1, status: 'PENDING',
+            address: { street: '', city: '', countryCode: '', country: '' }
+          }],
         totalElements: 1,
         totalPages: 1
       };
@@ -86,8 +89,8 @@ describe('Group Search Api Effects', () => {
       expect(result).toEqual(expectedResult);
     }));
 
-    it('should return a new SearchCompleteAction, with an empty array, if customer service throws', fakeAsync(() => {
-      const {runner, groupEffects} = setup({searchGroupsReturnValue: Observable.throw(new Error())});
+    it('should return a new SearchCompleteAction, with an empty array, if group service throws', fakeAsync(() => {
+      const { runner, groupEffects } = setup({ searchGroupsReturnValue: Observable.throw(new Error()) });
 
       const expectedResult = new SearchCompleteAction(emptySearchResult());
 

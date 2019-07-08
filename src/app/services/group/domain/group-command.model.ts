@@ -20,8 +20,8 @@
 export type CommandAction = 'ACTIVATE' | 'CLOSE' | 'REOPEN';
 
 export interface GroupCommand {
-    action: CommandAction;
-    note?: string;
-    createdBy?: string;
-    createdOn?: string;
-  }
+  action: CommandAction;
+  note?: string;
+  createdBy?: string;
+  createdOn?: string;
+}

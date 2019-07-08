@@ -16,12 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Action} from '@ngrx/store';
-import {type} from '../../../store/util';
-import {Error} from '../../../services/domain/error.model';
-import {Meeting} from '../../../services/group/domain/meeting.model';
-import {SignOffMeeting} from '../../../services/group/domain/signoff-meeting.model';
-import {RoutePayload} from '../../../common/store/route-payload';
+import { Action } from '@ngrx/store';
+import { type } from '../../../store/util';
+import { Error } from '../../../services/domain/error.model';
+import { Meeting } from '../../../services/group/domain/meeting.model';
+import { SignOffMeeting } from '../../../services/group/domain/signoff-meeting.model';
+import { RoutePayload } from '../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload,
   LoadResourcePayload,
@@ -43,8 +43,8 @@ export const RESET_FORM = type('[Meeting] Reset Form');
 
 export interface MeetingRoutePayload extends RoutePayload {
   meeting: Meeting;
-  groupId : string;
-  signoff : SignOffMeeting
+  groupId: string;
+  signoff: SignOffMeeting
 }
 
 export class LoadAllAction implements Action {
@@ -91,7 +91,7 @@ export class UpdateMeetingFailAction implements Action {
 export class ResetMeetingFormAction implements Action {
   readonly type = RESET_FORM;
 
-  constructor() {}
+  constructor() { }
 }
 
 export type Actions

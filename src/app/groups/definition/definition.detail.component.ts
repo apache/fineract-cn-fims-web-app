@@ -16,32 +16,32 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component} from '@angular/core';
-import {GroupDefinition} from '../../services/group/domain/group-definition.model';
-import {Frequency, Adjustment} from '../../services/group/domain/cycle.model'
-import {Observable} from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { GroupDefinition } from '../../services/group/domain/group-definition.model';
+import { Frequency, Adjustment } from '../../services/group/domain/cycle.model'
+import { Observable } from 'rxjs/Observable';
 import * as fromGroups from '../store/index';
-import {GroupsStore} from '../store/index';
-import {FrequencyOptionList} from './domain/frequency-option-list.model';
-import {AdjustmentOptionList} from './domain/adjustment-option-list.model';
+import { GroupsStore } from '../store/index';
+import { FrequencyOptionList } from './domain/frequency-option-list.model';
+import { AdjustmentOptionList } from './domain/adjustment-option-list.model';
 
 @Component({
-    templateUrl: './definition.detail.component.html'
-  })
-  export class GroupDefinitionDetailComponent {
-  
-    groupDefinition$: Observable<GroupDefinition>;
-  
-    constructor(private store: GroupsStore) {
-      this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
-    }
+  templateUrl: './definition.detail.component.html'
+})
+export class GroupDefinitionDetailComponent {
 
-    formatType(type: Frequency): string {
-        return FrequencyOptionList.find(option => option.type === type).label;
-      }
+  groupDefinition$: Observable<GroupDefinition>;
 
-      formatType1(type: Adjustment): string {
-        return AdjustmentOptionList.find(option => option.type === type).label;
-      }
-      
+  constructor(private store: GroupsStore) {
+    this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
+  }
+
+  formatType(type: Frequency): string {
+    return FrequencyOptionList.find(option => option.type === type).label;
+  }
+
+  formatType1(type: Adjustment): string {
+    return AdjustmentOptionList.find(option => option.type === type).label;
+  }
+
 }

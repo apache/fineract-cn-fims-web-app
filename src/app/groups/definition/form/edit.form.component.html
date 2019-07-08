@@ -16,12 +16,12 @@
 -->
 
 <fims-layout-card-over title="{{'Edit Group Definition ' | translate}}">
-        <fims-groupDefinition-form-component #form
+        <fims-group-definition-form-component #form
                                         [editMode]="true"
                                         (onSave)="onSave($event)"
                                         (onCancel)="onCancel()"
                                         [groupDefinition]="groupDefinition$ | async"
                                         >
-        </fims-groupDefinition-form-component>
+        </fims-group-definition-form-component>
       </fims-layout-card-over>
       

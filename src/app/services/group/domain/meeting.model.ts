@@ -17,18 +17,18 @@
  * under the License.
  */
 
-import {Attendee} from './attendee.model';
-import {Address} from '../../domain/address/address.model';
+import { Attendee } from './attendee.model';
+import { Address } from '../../domain/address/address.model';
 
- export interface Meeting{
-     meetingSequence : number;
-     groupIdentifier : string;
-     currentCycle : number;
-     attendees : Attendee[];
-     scheduledFor :string;
-     location : string;
-     heldOn : string;
-     duration : number;
-     createdOn? : string;
-     createdBy?: string;
- }
+export interface Meeting {
+    meetingSequence: number;
+    groupIdentifier: string;
+    currentCycle: number;
+    attendees: Attendee[];
+    scheduledFor: string;
+    location: string;
+    heldOn: string;
+    duration: number;
+    createdOn?: string;
+    createdBy?: string;
+}

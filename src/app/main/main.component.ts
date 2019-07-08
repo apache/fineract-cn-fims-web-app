@@ -16,19 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router, RouterState} from '@angular/router';
-import {Title} from '@angular/platform-browser';
-import {Action, HttpClient} from '../services/http/http.service';
-import {Store} from '@ngrx/store';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterState } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Action, HttpClient } from '../services/http/http.service';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../store';
-import {LOGOUT} from '../store/security/security.actions';
-import {Observable} from 'rxjs/Observable';
-import {FimsPermission} from '../services/security/authz/fims-permission.model';
-import {CountryService} from '../services/country/country.service';
-import {TdMediaService} from '@covalent/core';
-import {Subscription} from 'rxjs/Subscription';
-import {MatSidenav} from '@angular/material';
+import { LOGOUT } from '../store/security/security.actions';
+import { Observable } from 'rxjs/Observable';
+import { FimsPermission } from '../services/security/authz/fims-permission.model';
+import { CountryService } from '../services/country/country.service';
+import { TdMediaService } from '@covalent/core';
+import { Subscription } from 'rxjs/Subscription';
+import { MatSidenav } from '@angular/material';
 
 interface MenuItem {
   permission?: FimsPermission;
@@ -50,79 +50,79 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   menuItems: MenuItem[] = [
-    {title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess'},
+    { title: 'Quick access', icon: 'dashboard', routerLink: '/quickAccess' },
     {
       title: 'Offices',
       description: 'Manage offices',
       icon: 'store',
       routerLink: '/offices',
-      permission: {id: 'office_offices', accessLevel: 'READ'}
+      permission: { id: 'office_offices', accessLevel: 'READ' }
     },
     {
       title: 'Roles/Permissions',
       description: 'Manage roles and permissions',
       icon: 'https',
       routerLink: '/roles',
-      permission: {id: 'identity_roles', accessLevel: 'READ'}
+      permission: { id: 'identity_roles', accessLevel: 'READ' }
     },
     {
       title: 'Employees',
       description: 'Manage employees',
       icon: 'group',
       routerLink: '/employees',
-      permission: {id: 'office_employees', accessLevel: 'READ'}
+      permission: { id: 'office_employees', accessLevel: 'READ' }
     },
     {
       title: 'Accounting',
       description: 'Manage ledger accounts',
       icon: 'receipt',
       routerLink: '/accounting',
-      permission: {id: 'accounting_ledgers', accessLevel: 'READ'}
+      permission: { id: 'accounting_ledgers', accessLevel: 'READ' }
     },
 
-  
+
     {
       title: 'Groups',
       description: 'Manage groups',
       icon: 'group',
       routerLink: '/groups',
-     permission: {id: 'group_groups', accessLevel: 'READ'}
-    },    
+      permission: { id: 'group_groups', accessLevel: 'READ' }
+    },
 
     {
       title: 'Member',
       description: 'Manage members',
       icon: 'face',
       routerLink: '/customers',
-      permission: {id: 'customer_customers', accessLevel: 'READ'}
+      permission: { id: 'customer_customers', accessLevel: 'READ' }
     },
     {
       title: 'Loan products',
       description: 'Manage loan products',
       icon: 'credit_card',
       routerLink: '/loans',
-      permission: {id: 'portfolio_products', accessLevel: 'READ'}
+      permission: { id: 'portfolio_products', accessLevel: 'READ' }
     },
     {
       title: 'Deposit',
       description: 'Account management',
       icon: 'attach_money',
       routerLink: '/deposits',
-      permission: {id: 'deposit_definitions', accessLevel: 'READ'}
+      permission: { id: 'deposit_definitions', accessLevel: 'READ' }
     },
     {
       title: 'Teller',
       description: 'Teller management',
       icon: 'person',
       routerLink: '/teller',
-      permission: {id: 'teller_operations', accessLevel: 'READ'}
+      permission: { id: 'teller_operations', accessLevel: 'READ' }
     },
     {
       title: 'Reports',
       description: 'View reports',
       icon: 'show_chart',
       routerLink: '/reports',
-      permission: {id: 'reporting_management', accessLevel: 'READ'}
+      permission: { id: 'reporting_management', accessLevel: 'READ' }
     },
   ];
 
@@ -135,7 +135,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   username$: Observable<string>;
 
   constructor(private router: Router, private titleService: Title, private httpClient: HttpClient, private countryService: CountryService,
-              private store: Store<fromRoot.State>, private media: TdMediaService) {}
+    private store: Store<fromRoot.State>, private media: TdMediaService) { }
 
   ngOnInit(): void {
     this.routerEventSubscription = this.router.events

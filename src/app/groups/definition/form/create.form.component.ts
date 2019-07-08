@@ -15,46 +15,48 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
-**/ 
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
-import {ActivatedRoute, Router} from '@angular/router';
-import {GroupsStore} from '../../store/index';
-import {CREATE} from '../../store/definition/definition.actions';
+**/
+import { Component } from '@angular/core';
+import { GroupDefinition } from '../../../services/group/domain/group-definition.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupsStore } from '../../store/index';
+import { CREATE } from '../../store/definition/definition.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
 })
-  
-  export class CreateGroupDefinitionFormComponent {
+
+export class CreateGroupDefinitionFormComponent {
 
   groupDefinition: GroupDefinition = {
-    identifier : '',
-    description : '',
-    minimalSize : 4,
-    maximalSize : 20,
+    identifier: '',
+    description: '',
+    minimalSize: 4,
+    maximalSize: 20,
     cycle: {
-        numberOfMeetings : 4,
-        frequency : 'DAILY',
-        adjustment : 'SKIP'
-      },
-    createdOn : '',
+      numberOfMeetings: 4,
+      frequency: 'DAILY',
+      adjustment: 'SKIP'
+    },
+    createdOn: '',
     createdBy: '',
-    lastModifiedOn :'',
+    lastModifiedOn: '',
     lastModifiedBy: ''
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {}
+  constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) { }
 
 
-  onSave(groupDefinition: GroupDefinition):void{
-    this.store.dispatch({ type: CREATE, payload: {
-      groupDefinition,
-      activatedRoute: this.route
-    } });
+  onSave(groupDefinition: GroupDefinition): void {
+    this.store.dispatch({
+      type: CREATE, payload: {
+        groupDefinition,
+        activatedRoute: this.route
+      }
+    });
   }
 
-  onCancel() : void{
+  onCancel(): void {
     this.navigateAway();
   }
 

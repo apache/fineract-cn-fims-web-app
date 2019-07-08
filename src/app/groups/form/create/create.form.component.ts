@@ -16,17 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Group} from '../../../services/group/domain/group.model';
-import {GroupFormComponent} from '../form.component';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Group } from '../../../services/group/domain/group.model';
+import { GroupFormComponent } from '../form.component';
 import * as fromGroups from '../../store';
-import {Error} from '../../../services/domain/error.model';
-import {Subscription} from 'rxjs/Subscription';
-import {GroupsStore} from '../../store/index';
-import {CREATE, RESET_FORM} from '../../store/group.actions';
-import {Catalog} from '../../../services/catalog/domain/catalog.model';
-import {Observable} from 'rxjs/Observable';
+import { Error } from '../../../services/domain/error.model';
+import { Subscription } from 'rxjs/Subscription';
+import { GroupsStore } from '../../store/index';
+import { CREATE, RESET_FORM } from '../../store/group.actions';
 
 @Component({
   templateUrl: './create.form.component.html'
@@ -36,35 +34,30 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
   private formStateSubscription: Subscription;
 
   @ViewChild('form') formComponent: GroupFormComponent;
-  
+
   group: Group = {
 
-    identifier : ' ',
-    groupDefinitionIdentifier : '',
-    name : '',
-    leaders :[],
-    members : [],
+    identifier: ' ',
+    groupDefinitionIdentifier: '',
+    name: '',
+    leaders: [],
+    members: [],
     office: '',
-    assignedEmployee : '',
-    weekday : 1,
-    status : 'PENDING',
-    address : {
+    assignedEmployee: '',
+    weekday: 1,
+    status: 'PENDING',
+    address: {
       street: '',
       city: '',
       countryCode: '',
       country: '',
     },
-    createdOn :''
-    
+    createdOn: ''
+
   };
 
-  
-
-
-  catalog$: Observable<Catalog>;
-
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
-  ;
+    ;
   }
 
   ngOnInit() {
@@ -80,10 +73,12 @@ export class CreateGroupFormComponent implements OnInit, OnDestroy {
   }
 
   onSave(group: Group) {
-    this.store.dispatch({ type: CREATE, payload: {
-      group,
-      activatedRoute: this.route
-    } });
+    this.store.dispatch({
+      type: CREATE, payload: {
+        group,
+        activatedRoute: this.route
+      }
+    });
   }
 
   onCancel() {

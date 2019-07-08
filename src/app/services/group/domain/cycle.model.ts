@@ -17,11 +17,11 @@
  * under the License.
  */
 
- export type Frequency = 'DAILY' | 'WEEKLY' | 'FORTNIGHTLY' | 'MONTHLY';
- export type Adjustment = 'NEXT_BUSINESS_DAY' | 'SKIP';
+export type Frequency = 'DAILY' | 'WEEKLY' | 'FORTNIGHTLY' | 'MONTHLY';
+export type Adjustment = 'NEXT_BUSINESS_DAY' | 'SKIP';
 
- export interface Cycle{
-     numberOfMeetings : number;
-     frequency : Frequency;
-     adjustment : Adjustment;
- }
+export interface Cycle {
+    numberOfMeetings: number;
+    frequency: Frequency;
+    adjustment: Adjustment;
+}

@@ -16,14 +16,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
-import {of} from 'rxjs/observable/of';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Observable } from 'rxjs/Observable';
+import { Action } from '@ngrx/store';
+import { of } from 'rxjs/observable/of';
 import * as groupActions from '../group.actions';
-import {GroupService} from '../../../services/group/group.service';
-import {emptySearchResult} from '../../../common/store/search.reducer';
+import { GroupService } from '../../../services/group/group.service';
+import { emptySearchResult } from '../../../common/store/search.reducer';
 
 @Injectable()
 export class GroupSearchApiEffects {
