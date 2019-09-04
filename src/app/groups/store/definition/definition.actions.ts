@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Action} from '@ngrx/store';
-import {type} from '../../../store/util';
-import {Error} from '../../../services/domain/error.model';
-import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
-import {RoutePayload} from '../../../common/store/route-payload';
+import { Action } from '@ngrx/store';
+import { type } from '../../../store/util';
+import { Error } from '../../../services/domain/error.model';
+import { GroupDefinition } from '../../../services/group/domain/group-definition.model';
+import { RoutePayload } from '../../../common/store/route-payload';
 import {
   CreateResourceSuccessPayload,
   LoadResourcePayload,
@@ -46,7 +46,7 @@ export const RESET_FORM = type('[GroupDefinition] Reset Form');
 
 export interface GroupDefinitionRoutePayload extends RoutePayload {
   groupDefinition: GroupDefinition;
-  groupDefinitionId:string;
+  groupDefinitionId: string;
 }
 
 export class LoadAllAction implements Action {
@@ -112,7 +112,7 @@ export class UpdateGroupDefinitionFailAction implements Action {
 export class ResetGroupDefinitionFormAction implements Action {
   readonly type = RESET_FORM;
 
-  constructor() {}
+  constructor() { }
 }
 
 export type Actions

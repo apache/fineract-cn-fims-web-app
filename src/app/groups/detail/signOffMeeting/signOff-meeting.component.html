@@ -20,9 +20,9 @@
   <td-steps mode="'vertical'">
     <td-step #detailsStep  [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
       <form [formGroup]="form" layout="column">
-        <fims-number-input [form]="form" placeholder="Meeting Sequence" controlName="sequence"></fims-number-input>
-        <fims-number-input [form]="form" placeholder="Current Cycle" controlName="cycle"></fims-number-input>
-        <fims-number-input [form]="form" controlName="duration" placeholder="Duration"></fims-number-input>
+        <fims-number-group-input [form]="form" placeholder="Meeting Sequence" controlName="sequence"></fims-number-group-input>
+        <fims-number-group-input [form]="form" placeholder="Current Cycle" controlName="cycle"></fims-number-group-input>
+        <fims-number-group-input [form]="form" controlName="duration" placeholder="Duration"></fims-number-group-input>
         <h3> Attendance </h3>
         <div layout="row">
           <table td-data-table>

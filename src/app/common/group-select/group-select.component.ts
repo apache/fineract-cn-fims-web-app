@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {FetchRequest} from '../../services/domain/paging/fetch-request.model';
-import {Observable} from 'rxjs/Observable';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Group} from '../../services/group/domain/group.model';
-import {GroupService} from '../../services/group/group.service';
-import {GroupPage} from '../../services/group/domain/group-page.model';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { FetchRequest } from '../../services/domain/paging/fetch-request.model';
+import { Observable } from 'rxjs/Observable';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Group } from '../../services/group/domain/group.model';
+import { GroupService } from '../../services/group/group.service';
+import { GroupPage } from '../../services/group/domain/group-page.model';
 
 const noop: () => void = () => {
   // empty method
@@ -49,7 +49,7 @@ export class GroupSelectComponent implements ControlValueAccessor, OnInit {
 
   private _onChangeCallback: (_: any) => void = noop;
 
-  constructor(private groupService: GroupService) {}
+  constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
     this.formControl = new FormControl('');

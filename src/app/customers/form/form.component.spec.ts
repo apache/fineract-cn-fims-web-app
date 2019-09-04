@@ -16,26 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CustomerDetailFormComponent} from './detail/detail.component';
-import {CustomerFormComponent} from './form.component';
-import {CustomerContactFormComponent} from './contact/contact.component';
-import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentChipsModule, CovalentStepsModule} from '@covalent/core';
-import {Component, EventEmitter, ViewChild} from '@angular/core';
-import {Customer} from '../../services/customer/domain/customer.model';
-import {TranslateModule} from '@ngx-translate/core';
-import {CustomerEmployeesComponent} from './employees/employees.component';
-import {CustomerOfficesComponent} from './offices/offices.component';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {CustomersStore} from '../store/index';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CountryService} from '../../services/country/country.service';
-import {Country} from '../../services/country/model/country.model';
-import {FimsSharedModule} from '../../common/common.module';
-import {MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule, MatRadioModule} from '@angular/material';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CustomerDetailFormComponent } from './detail/detail.component';
+import { CustomerFormComponent } from './form.component';
+import { CustomerContactFormComponent } from './contact/contact.component';
+import { CustomerCustomFieldsComponent } from './customFields/custom-fields.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CovalentChipsModule, CovalentStepsModule } from '@covalent/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Customer } from '../../services/customer/domain/customer.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { CustomerEmployeesComponent } from './employees/employees.component';
+import { CustomerOfficesComponent } from './offices/offices.component';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { CustomersStore } from '../store/index';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CountryService } from '../../services/country/country.service';
+import { Country } from '../../services/country/model/country.model';
+import { FimsSharedModule } from '../../common/common.module';
+import { MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule, MatRadioModule } from '@angular/material';
 
 const customerTemplate: Customer = {
   identifier: 'test',
@@ -198,5 +198,5 @@ class TestComponent {
     this.saveEmitter.emit(customer);
   }
 
-  onCancel(): void {}
+  onCancel(): void { }
 }

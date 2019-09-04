@@ -16,36 +16,40 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {GroupDetailFormComponent} from './detail/detail.component';
-import {GroupFormComponent} from './form.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {CovalentChipsModule, CovalentStepsModule} from '@covalent/core';
-import {Component, EventEmitter, ViewChild} from '@angular/core';
-import {Group} from '../../services/group/domain/group.model';
-import {TranslateModule} from '@ngx-translate/core';
-import {GroupEmployeesComponent} from './employees/employees.component';
-import {GroupOfficesComponent} from './offices/offices.component';
-import {GroupCustomersComponent} from './customers/customers.component';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {GroupsStore} from '../store/index';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {CountryService} from '../../services/country/country.service';
-import {Country} from '../../services/country/model/country.model';
-import {FimsSharedModule} from '../../common/common.module';
-import {MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule, MatRadioModule} from '@angular/material';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { GroupDetailFormComponent } from './detail/detail.component';
+import { GroupFormComponent } from './form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CovalentChipsModule, CovalentStepsModule } from '@covalent/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Group } from '../../services/group/domain/group.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupEmployeesComponent } from './employees/employees.component';
+import { GroupOfficesComponent } from './offices/offices.component';
+import { GroupCustomersComponent } from './customers/customers.component';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { GroupsStore } from '../store/index';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CountryService } from '../../services/country/country.service';
+import { Country } from '../../services/country/model/country.model';
+import { FimsSharedModule } from '../../common/common.module';
+import {
+  MatAutocompleteModule, MatCheckboxModule, MatIconModule, MatInputModule,
+  MatRadioModule, MatSelectModule
+} from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const groupTemplate: Group = {
   identifier: 'test',
   groupDefinitionIdentifier: 'test',
   name: 'test',
-  leaders: [],
-  members:[],
-  office:'test',
-  assignedEmployee:'test',
-  weekday:2,
-  status:'PENDING',
+  leaders: ['test', 'test1', 'test2'],
+  members: ['test', 'test1', 'test2'],
+  office: 'test',
+  assignedEmployee: 'test',
+  weekday: 1,
+  status: 'PENDING',
   address: {
     street: 'test',
     city: 'test',
@@ -53,12 +57,8 @@ const groupTemplate: Group = {
     country: 'test',
     region: 'test',
     postalCode: 'test'
-  },
-  createdOn:'21-10-2018', 
-  createdBy:'test',
-  lastModifiedOn:'',
-  lastModifiedBy:''
-  
+  }
+
 };
 const country: Country = {
   displayName: '',
@@ -93,13 +93,15 @@ describe('Test group form', () => {
         MatRadioModule,
         MatAutocompleteModule,
         MatCheckboxModule,
+        MatSelectModule,
         CovalentStepsModule,
         CovalentChipsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        RouterTestingModule
       ],
       providers: [
         {
-          // Used by address component
+
           provide: CountryService, useClass: class {
             fetchByCountryCode = jasmine.createSpy('fetchByCountryCode').and.returnValue(country);
             fetchCountries = jasmine.createSpy('fetchCountries').and.returnValue([country]);
@@ -127,19 +129,16 @@ describe('Test group form', () => {
   it('should test if the form save the original values', () => {
     fixture.detectChanges();
 
-    testComponent.saveEmitter.subscribe((group: Group) => {
+    testComponent.saveEmitter.subscribe((group) => {
       expect(groupTemplate.identifier).toEqual(group.identifier);
       expect(groupTemplate.groupDefinitionIdentifier).toEqual(group.groupDefinitionIdentifier);
       expect(groupTemplate.name).toEqual(group.name);
       expect(groupTemplate.leaders).toEqual(group.leaders);
       expect(groupTemplate.members).toEqual(group.members);
       expect(groupTemplate.office).toEqual(group.office);
-
-      expect(groupTemplate.status).toEqual(group.status);
-      expect(groupTemplate.weekday).toEqual(group.weekday);
       expect(groupTemplate.assignedEmployee).toEqual(group.assignedEmployee);
-      expect(groupTemplate.createdBy).toEqual(group.createdBy);
-
+      expect(groupTemplate.weekday).toEqual(group.weekday);
+      expect(groupTemplate.status).toEqual(group.status);
       expect(groupTemplate.address.city).toEqual(group.address.city);
       expect(groupTemplate.address.country).toEqual(group.address.country);
       expect(groupTemplate.address.countryCode).toEqual(group.address.countryCode);
@@ -147,8 +146,6 @@ describe('Test group form', () => {
       expect(groupTemplate.address.region).toEqual(group.address.region);
       expect(groupTemplate.address.street).toEqual(group.address.street);
 
-      expect(groupTemplate.createdOn).toEqual(group.createdOn);
-     
     });
 
     testComponent.triggerSave();
@@ -178,5 +175,5 @@ class TestComponent {
     this.saveEmitter.emit(group);
   }
 
-  onCancel(): void {}
+  onCancel(): void { }
 }

@@ -19,8 +19,8 @@
     <td-step #detailsStep label="{{'Group Definition details' | translate}}" [state]="form.valid ? 'complete' : form.pristine ? 'none' : 'required'">
         <form [formGroup]="form" layout="column">
             <fims-id-input flex [form]="form" controlName="identifier" [readonly]="editMode"></fims-id-input>
-            <fims-number-input [form]="form" placeholder="Minimal Size"  controlName="minimal"></fims-number-input>
-            <fims-number-input [form]="form" placeholder="Maximal Size" controlName="maximal"></fims-number-input>
+            <fims-number-group-input [form]="form" placeholder="Minimal Size"  controlName="minimal"></fims-number-group-input>
+            <fims-number-group-input [form]="form" placeholder="Maximal Size" controlName="maximal"></fims-number-group-input>
             <mat-form-field layout-margin flex>
                 <textarea matInput placeholder="{{'Description' | translate}}" formControlName="description"></textarea>
                 <mat-error *ngIf="form.get('description').hasError('required')" translate>
@@ -30,7 +30,7 @@
 
             <h4 translate> Cycle details </h4>
 
-            <fims-number-input [form]="form" controlName="number" placeholder="{{'Number of meeting' | translate}}"></fims-number-input>
+            <fims-number-group-input [form]="form" controlName="number" placeholder="{{'Number of meeting' | translate}}"></fims-number-group-input>
             <mat-form-field layout-margin>
                 <mat-select formControlName="frequency" placeholder="{{ 'Frequency' | translate }}">
                     <mat-option *ngFor="let frequency of frequencyOptions" [value]="frequency.type">

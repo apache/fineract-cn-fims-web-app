@@ -16,55 +16,48 @@
  * specific language governing permissions and limitations
  * under the License.
 **/
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import { GroupDefinition} from '../../../services/group/domain/group-definition.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GroupsStore } from '../../store/index';
-import { CREATE, RESET_FORM } from '../../store/definition/definition.actions';
-import { Cycle } from '../../../services/group/domain/cycle.model'
-import { Subscription } from 'rxjs/Subscription';
-import * as fromGroups from '../../store';
-import { Error } from '../../../services/domain/error.model';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, OnChanges } from '@angular/core';
+import { GroupDefinition } from '../../../services/group/domain/group-definition.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FimsValidators } from '../../../common/validator/validators';
 import { TdStepComponent } from '@covalent/core';
-import {FrequencyOptionList} from '../domain/frequency-option-list.model';
-import {AdjustmentOptionList} from '../domain/adjustment-option-list.model';
+import { FrequencyOptionList } from '../domain/frequency-option-list.model';
+import { AdjustmentOptionList } from '../domain/adjustment-option-list.model';
 
 @Component({
-    selector: 'fims-groupDefinition-form-component',
-    templateUrl: './form.component.html'
+  selector: 'fims-group-definition-form-component',
+  templateUrl: './form.component.html'
 })
-export class GroupDefinitionFormComponent implements OnInit {
-    form: FormGroup;
+export class GroupDefinitionFormComponent implements OnInit, OnChanges {
+  form: FormGroup;
 
-    frequencyOptions = FrequencyOptionList;
+  frequencyOptions = FrequencyOptionList;
 
-    adjustmentOptions = AdjustmentOptionList;
+  adjustmentOptions = AdjustmentOptionList;
 
-    @Input('editMode') editMode: boolean;
+  @Input('editMode') editMode: boolean;
 
-    @Input('groupDefinition') groupDefinition: GroupDefinition;
+  @Input('groupDefinition') groupDefinition: GroupDefinition;
 
-    @Output('onSave') onSave = new EventEmitter<GroupDefinition>();
+  @Output('onSave') onSave = new EventEmitter<GroupDefinition>();
 
-    @Output('onCancel') onCancel = new EventEmitter<void>();
+  @Output('onCancel') onCancel = new EventEmitter<void>();
 
-    @ViewChild('detailsStep') detailsStep: TdStepComponent;
+  @ViewChild('detailsStep') detailsStep: TdStepComponent;
 
-    constructor(private formBuilder: FormBuilder){
-    
-        this.form = this.formBuilder.group({
-            identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
-            minimal: ['', [Validators.required, FimsValidators.minValue(0)]],
-            maximal: ['', [Validators.required, FimsValidators.minValue(0)]],
-            description: ['', Validators.maxLength(2048)],
-            number: ['', [Validators.required, FimsValidators.minValue(0)]],
-            frequency: ['', [Validators.required]],
-            adjustment: ['', [Validators.required]],
-        });
-}
-ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder) {
+
+    this.form = this.formBuilder.group({
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32), FimsValidators.urlSafe]],
+      minimal: ['', [Validators.required, FimsValidators.minValue(0)]],
+      maximal: ['', [Validators.required, FimsValidators.minValue(0)]],
+      description: ['', Validators.maxLength(2048)],
+      number: ['', [Validators.required, FimsValidators.minValue(0)]],
+      frequency: ['', [Validators.required]],
+      adjustment: ['', [Validators.required]],
+    });
+  }
+  ngOnInit(): void {
     this.detailsStep.open();
   }
 
@@ -73,33 +66,32 @@ ngOnInit(): void {
       this.form.reset({
         identifier: this.groupDefinition.identifier,
         minimal: this.groupDefinition.minimalSize,
-        maximal:this.groupDefinition.maximalSize,
+        maximal: this.groupDefinition.maximalSize,
         description: this.groupDefinition.description,
         number: this.groupDefinition.cycle.numberOfMeetings,
         frequency: this.groupDefinition.cycle.frequency,
         adjustment: this.groupDefinition.cycle.adjustment
-      });
-    }}
-
-
-    save() {
-        
-        const groupDefinition : GroupDefinition = {
-          identifier :this.form.get('identifier').value,
-          description: this.form.get('description').value,
-          minimalSize:this.form.get('minimal').value,
-          maximalSize: this.form.get('maximal').value,
-          cycle:{
-              numberOfMeetings:this.form.get('number').value,
-              frequency:this.form.get('frequency').value,
-              adjustment:this.form.get('adjustment').value
-          }
-        };
-        this.onSave.emit(groupDefinition);
+      })
     }
+  }
 
-    cancel() {
-        this.onCancel.emit();
-    }
+  save() {
+    const groupDefinition: GroupDefinition = {
+      identifier: this.form.get('identifier').value,
+      description: this.form.get('description').value,
+      minimalSize: this.form.get('minimal').value,
+      maximalSize: this.form.get('maximal').value,
+      cycle: {
+        numberOfMeetings: this.form.get('number').value,
+        frequency: this.form.get('frequency').value,
+        adjustment: this.form.get('adjustment').value
+      }
+    };
+    this.onSave.emit(groupDefinition);
+  }
+
+  cancel() {
+    this.onCancel.emit();
+  }
 
 }

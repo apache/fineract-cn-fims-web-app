@@ -16,15 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {createSelector} from 'reselect';
-import {ActionReducer, combineReducers} from '@ngrx/store';
+import { createSelector } from 'reselect';
+import { ActionReducer, combineReducers } from '@ngrx/store';
 
 import * as fromAuthentication from './security/authentication.reducer';
 import * as fromAuthorization from './security/authorization.reducer';
 import * as fromAccounts from './account/accounts.reducer';
 import * as authenticationActions from './security/security.actions';
-import {compose} from '@ngrx/core/compose';
-import {localStorageSync} from 'ngrx-store-localstorage';
+import { compose } from '@ngrx/core/compose';
+import { localStorageSync } from 'ngrx-store-localstorage';
 import {
   createSearchReducer,
   getSearchEntities,
@@ -44,7 +44,7 @@ export interface State {
   customerSearch: SearchState;
   accountSearch: SearchState;
   ledgerSearch: SearchState;
-  groupSearch:SearchState;
+  groupSearch: SearchState;
 }
 
 export const reducers = {
@@ -67,7 +67,7 @@ export function createReducer(asyncReducers = {}): ActionReducer<any> {
     rehydrate: true
   }), combineReducers)(Object.assign(reducers, asyncReducers));
 
-  return function(state: any, action: any) {
+  return function (state: any, action: any) {
     // Reset state
     if (action.type === authenticationActions.LOGOUT_SUCCESS) {
       return actionReducer(undefined, action);
@@ -95,12 +95,12 @@ export const getOfficeSearchLoading = createSelector(getOfficeSearchState, getSe
 
 export const getOfficeSearchResults = createSelector(getSearchOffices, getOfficeSearchTotalPages, getOfficeSearchTotalElements,
   (offices, totalPages, totalElements) => {
-  return {
-    offices: offices,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      offices: offices,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Country Search Selectors
@@ -122,12 +122,12 @@ export const getEmployeeSearchLoading = createSelector(getEmployeeSearchState, g
 
 export const getEmployeeSearchResults = createSelector(getSearchEmployees, getEmployeeSearchTotalPages, getEmployeeSearchTotalElements,
   (employees, totalPages, totalElements) => {
-  return {
-    employees: employees,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      employees: employees,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Role Search Selectors
@@ -141,12 +141,12 @@ export const getRoleSearchLoading = createSelector(getRoleSearchState, getSearch
 
 export const getRoleSearchResults = createSelector(getSearchRoles, getRoleSearchTotalPages, getRoleSearchTotalElements,
   (roles, totalPages, totalElements) => {
-  return {
-    roles: roles,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      roles: roles,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Customer Search Selectors
@@ -160,12 +160,12 @@ export const getCustomerSearchLoading = createSelector(getCustomerSearchState, g
 
 export const getCustomerSearchResults = createSelector(getSearchCustomers, getCustomerSearchTotalPages, getCustomerSearchTotalElements,
   (customers, totalPages, totalElements) => {
-  return {
-    customers: customers,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      customers: customers,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Account Search Selectors
@@ -179,12 +179,12 @@ export const getAccountSearchLoading = createSelector(getAccountSearchState, get
 
 export const getAccountSearchResults = createSelector(getSearchAccounts, getAccountSearchTotalPages, getAccountSearchTotalElements,
   (accounts, totalPages, totalElements) => {
-  return {
-    accounts: accounts,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      accounts: accounts,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 /**
  * Ledger Search Selectors
@@ -197,12 +197,12 @@ export const getLedgerSearchTotalPages = createSelector(getLedgerSearchState, ge
 
 export const getLedgerSearchResults = createSelector(getSearchLedgers, getLedgerSearchTotalElements, getLedgerSearchTotalPages,
   (ledgers, totalPages, totalElements) => {
-  return {
-    ledgers: ledgers,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      ledgers: ledgers,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 
 /**
@@ -217,12 +217,12 @@ export const getGroupSearchLoading = createSelector(getGroupSearchState, getSear
 
 export const getGroupSearchResults = createSelector(getSearchGroups, getGroupSearchTotalPages, getGroupSearchTotalElements,
   (groups, totalPages, totalElements) => {
-  return {
-    groups: groups,
-    totalPages: totalPages,
-    totalElements: totalElements
-  };
-});
+    return {
+      groups: groups,
+      totalPages: totalPages,
+      totalElements: totalElements
+    };
+  });
 
 
 export const getAuthenticationState = (state: State) => state.authentication;

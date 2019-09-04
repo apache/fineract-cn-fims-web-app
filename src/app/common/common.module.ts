@@ -65,6 +65,7 @@ import {DateInputComponent} from './date-input/date-input.component';
 import {TextInputComponent} from './text-input/text-input.component';
 import {DisplayFimsNumber} from './number/fims-number.pipe';
 import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
+import {NumberGroupInputComponent} from './number-group-input/number-group-input.component'
 
 @NgModule({
   imports: [
@@ -120,7 +121,8 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     FimsFabButtonComponent,
     DisplayFimsDate,
     DisplayFimsNumber,
-    DisplayFimsFinancialNumber
+    DisplayFimsFinancialNumber,
+    NumberGroupInputComponent
   ],
   exports: [
     LayoutCardOverComponent,
@@ -151,7 +153,8 @@ import {DisplayFimsFinancialNumber} from './number/fims-financial-number.pipe';
     FimsFabButtonComponent,
     DisplayFimsDate,
     DisplayFimsNumber,
-    DisplayFimsFinancialNumber
+    DisplayFimsFinancialNumber,
+    NumberGroupInputComponent
   ],
   entryComponents: [
     ImageComponent

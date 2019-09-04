@@ -17,9 +17,9 @@
  * under the License.
  */
 import * as meeting from './meeting.actions';
-import {Meeting} from '../../../services/group/domain/meeting.model';
-import {ResourceState} from '../../../common/store/resource.reducer';
-import {idsToHashWithCurrentTimestamp, resourcesToHash} from '../../../common/store/reducer.helper';
+import { Meeting } from '../../../services/group/domain/meeting.model';
+import { ResourceState } from '../../../common/store/resource.reducer';
+import { idsToHashWithCurrentTimestamp, resourcesToHash } from '../../../common/store/reducer.helper';
 
 
 export const initialState: ResourceState = {
@@ -37,16 +37,16 @@ export function reducer(state = initialState, action: meeting.Actions): Resource
 
     case meeting.LOAD_ALL_COMPLETE: {
       const meeting1: Meeting[] = action.payload;
- 
+
 
       const ids = meeting1.map(meeting => meeting.meetingSequence.toString());
-      
-      const entities = resourcesToHash(meeting1,'meetingSequence');
+
+      const entities = resourcesToHash(meeting1, 'meetingSequence');
 
       const loadedAt = idsToHashWithCurrentTimestamp(ids);
 
       return {
-        ids: [ ...ids ],
+        ids: [...ids],
         entities: entities,
         loadedAt: loadedAt,
         selectedId: state.selectedId

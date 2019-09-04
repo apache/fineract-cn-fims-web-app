@@ -17,52 +17,36 @@
  * under the License.
  */
 import { Routes } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
 import { GroupComponent } from './group.component';
-import { GroupFormComponent } from './form/form.component';
 import { CreateGroupFormComponent } from './form/create/create.form.component';
-import { FimsSharedModule } from '../common/common.module';
-import { GroupDetailFormComponent } from './form/detail/detail.component';
-import { GroupOfficesComponent } from './form/offices/offices.component';
-import { GroupEmployeesComponent } from './form/employees/employees.component';
-import { GroupCustomersComponent } from './form/customers/customers.component'
 import { EditGroupFormComponent } from './form/edit/edit.form.component';
 import { GroupExistsGuard } from './group-exists.guard';
-import { GroupsStore, groupStoreFactory } from './store/index';
-import { Store } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { GroupCommandApiEffects } from './store/groupTasks/effects/service.effects';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupDetailComponent } from './detail/group.detail.component';
 import { GroupIndexComponent } from './detail/group.index.component';
-import {SignOffMeetingComponent} from './detail/signOffMeeting/signOff-meeting.component';
-import {GroupDefinitionIndexComponent} from './definition/definition.index.component';
-import {GroupDefinitionListComponent} from './definition/definition.list.component'
-import {EditGroupDefinitionFormComponent} from './definition/form/edit.form.component';
-import {GroupDefinitionFormComponent} from './definition/form/form.component';
-import {CreateGroupDefinitionFormComponent} from './definition/form/create.form.component';
-import {GroupDefinitionExistsGuard} from './definition/definition-exits.guard';
-import {GroupDefinitionDetailComponent} from './definition/definition.detail.component'
-import {GroupStatusComponent} from './detail/status/status.component'
-import {GroupActivityComponent} from './detail/activity/activity.component'
-import {MeetingComponent} from './detail/meeting/meeting.component'
-import {MeetingDetailComponent} from './detail/meeting/meeting.detail.component'
-import {MeetingIndexComponent} from './detail/meeting/meeting.index.component'
+import { SignOffMeetingComponent } from './detail/signOffMeeting/signOff-meeting.component';
+import { GroupDefinitionIndexComponent } from './definition/definition.index.component';
+import { GroupDefinitionListComponent } from './definition/definition.list.component'
+import { EditGroupDefinitionFormComponent } from './definition/form/edit.form.component';
+import { CreateGroupDefinitionFormComponent } from './definition/form/create.form.component';
+import { GroupDefinitionExistsGuard } from './definition/definition-exits.guard';
+import { GroupDefinitionDetailComponent } from './definition/definition.detail.component'
+import { GroupStatusComponent } from './detail/status/status.component'
+import { GroupActivityComponent } from './detail/activity/activity.component'
+import { MeetingComponent } from './detail/meeting/meeting.component'
+import { MeetingDetailComponent } from './detail/meeting/meeting.detail.component'
+import { MeetingIndexComponent } from './detail/meeting/meeting.index.component'
 
 export const GroupRoutes: Routes = [
   {
     path: '',
     component: GroupComponent,
-    data: { title: 'Manage Groups',hasPermission: {id: 'group_groups', accessLevel: 'READ'} },
+    data: { title: 'Manage Groups', hasPermission: { id: 'group_groups', accessLevel: 'READ' } },
   },
 
   {
     path: 'create',
     component: CreateGroupFormComponent,
-    data: { title: 'Create Group',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+    data: { title: 'Create Group', hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
   },
   {
     path: 'detail/:id/edit',
@@ -78,27 +62,27 @@ export const GroupRoutes: Routes = [
     },
     canActivate: [GroupExistsGuard],
     children: [
-     
+
       {
         path: '',
         component: GroupDetailComponent,
-        data: {title: 'View Groups'}
+        data: { title: 'View Groups' }
       },
-    
+
       {
         path: 'activities',
         component: GroupActivityComponent,
-        data: {title: 'Manage groups'}
+        data: { title: 'Manage groups' }
       },
       {
         path: 'status',
         component: GroupStatusComponent,
-        data: { title: 'Active Group',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
+        data: { title: 'Active Group', hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
       },
       {
         path: 'meeting',
         component: MeetingComponent,
-        data: { title: 'Meeting details',hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
+        data: { title: 'Meeting details', hasPermission: { id: 'group_groups', accessLevel: 'READ' } }
       },
 
       {
@@ -113,16 +97,16 @@ export const GroupRoutes: Routes = [
             component: MeetingDetailComponent
           },
         ]
-      }, 
+      },
 
       {
         path: 'signOff',
         component: SignOffMeetingComponent,
-        data: { title: 'signOff-meeting',hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
+        data: { title: 'signOff-meeting', hasPermission: { id: 'group_groups', accessLevel: 'CHANGE' } }
       },
     ]
   },
-  
+
   {
     path: 'definition',
     component: GroupDefinitionListComponent,
@@ -134,12 +118,12 @@ export const GroupRoutes: Routes = [
   {
     path: 'definition/detail/:id/edit',
     component: EditGroupDefinitionFormComponent,
-    data: { title: 'Edit GroupDefinition',  hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' } },
+    data: { title: 'Edit GroupDefinition', hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' } },
     canActivate: [GroupDefinitionExistsGuard]
   },
   {
     path: 'definition/detail/:id',
-    canActivate: [ GroupDefinitionExistsGuard ],
+    canActivate: [GroupDefinitionExistsGuard],
     component: GroupDefinitionIndexComponent,
     data: {
       hasPermission: { id: 'group_definition', accessLevel: 'READ' }
@@ -148,14 +132,7 @@ export const GroupRoutes: Routes = [
       {
         path: '',
         component: GroupDefinitionDetailComponent
-      }, 
-     /* {
-        path: 'edit',
-        component: EditGroupDefinitionFormComponent,
-        data: {
-          hasPermission: { id: 'group_definition', accessLevel: 'CHANGE' }
-        }
-      }*/
+      },
     ]
   },
 

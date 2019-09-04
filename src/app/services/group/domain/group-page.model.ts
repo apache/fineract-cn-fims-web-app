@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import {Group} from './group.model';
+import { Group } from './group.model';
 
 export interface GroupPage {
   groups: Group[];
