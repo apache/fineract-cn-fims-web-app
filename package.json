@@ -9,7 +9,7 @@
     "e2e-test": "protractor ./protractor.conf.js",
     "tslint": "tslint -c ./tslint.json \"./src/**/*.ts\" -e \"./src/**/typings.d.ts\" -e \"./src/environments/**\"",
     "postinstall": "webdriver-manager update",
-    "test": "ng test --single-run",
+    "test": "ng test --single-run --sm=false",
     "karma": "karma start ./karma.conf.js --single-run",
     "devTest": "ng test",
     "dev": "ng serve --watch --verbose --proxy-config proxy.conf.json",

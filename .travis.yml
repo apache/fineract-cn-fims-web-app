@@ -26,10 +26,6 @@ language: node_js
 node_js:
 - '6.9.4'
 
-branches:
-  only:
-    - develop
-
 before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
