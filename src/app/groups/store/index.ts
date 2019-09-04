@@ -23,9 +23,9 @@ import * as fromGroupDefinition from './definition/definition.reducer'
 import * as fromMeeting from './meeting/meeting.reducer'
 
 
-import {ActionReducer, Store} from '@ngrx/store';
-import {createReducer} from '../../store/index';
-import {createSelector} from 'reselect';
+import { ActionReducer, Store } from '@ngrx/store';
+import { createReducer } from '../../store/index';
+import { createSelector } from 'reselect';
 import {
   createResourceReducer,
   getResourceAll,
@@ -33,7 +33,7 @@ import {
   getResourceSelected,
   ResourceState
 } from '../../common/store/resource.reducer';
-import {createFormReducer, FormState, getFormError} from '../../common/store/form.reducer';
+import { createFormReducer, FormState, getFormError } from '../../common/store/form.reducer';
 
 export interface State extends fromRoot.State {
   groups: ResourceState;
@@ -41,10 +41,10 @@ export interface State extends fromRoot.State {
   tasks: ResourceState;
   taskForm: FormState;
   groupCommands: fromCommands.State;
-  groupDefinitions:ResourceState;
-  groupDefinitionForm:FormState;
-  meetings:ResourceState;
-  meetingForm:FormState;
+  groupDefinitions: ResourceState;
+  groupDefinitionForm: FormState;
+  meetings: ResourceState;
+  meetingForm: FormState;
 
 }
 
@@ -57,10 +57,10 @@ const reducers = {
   groupDefinitionForm: createFormReducer('GroupDefinition'),
   meetings: createResourceReducer('Meeting', fromMeeting.reducer),
   MeetingForm: createFormReducer('Meeting'),
-  
+
 };
 
-export class GroupsStore extends Store<State> {}
+export class GroupsStore extends Store<State> { }
 
 export const groupModuleReducer: ActionReducer<State> = createReducer(reducers);
 

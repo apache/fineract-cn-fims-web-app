@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Action} from '@ngrx/store';
-import {type} from '../../../store/util';
-import {GroupCommand} from '../../../services/group/domain/group-command.model';
-import {RoutePayload} from '../../../common/store/route-payload';
+import { Action } from '@ngrx/store';
+import { type } from '../../../store/util';
+import { GroupCommand } from '../../../services/group/domain/group-command.model';
+import { RoutePayload } from '../../../common/store/route-payload';
 
 export const EXECUTE_COMMAND = type('[Group Command] Execute');
 export const EXECUTE_COMMAND_SUCCESS = type('[Group Command] Success');
@@ -50,6 +50,6 @@ export class ExecuteCommandFailAction implements Action {
 }
 
 export type Actions
-  =| ExecuteCommandAction
+  = | ExecuteCommandAction
   | ExecuteCommandSuccessAction
   | ExecuteCommandFailAction;

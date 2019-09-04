@@ -16,17 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {TdStepComponent} from '@covalent/core';
-import {Customer} from '../../services/customer/domain/customer.model';
-import {CustomerDetailFormComponent, CustomerDetailFormData} from './detail/detail.component';
-import {AddressFormComponent} from '../../common/address/address.component';
-import {Address} from '../../services/domain/address/address.model';
-import {CustomerContactFormComponent} from './contact/contact.component';
-import {ContactDetail} from '../../services/domain/contact/contact-detail.model';
-import {Value} from '../../services/catalog/domain/value.model';
-import {CustomerCustomFieldsComponent} from './customFields/custom-fields.component';
-import {Catalog} from '../../services/catalog/domain/catalog.model';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { TdStepComponent } from '@covalent/core';
+import { Customer } from '../../services/customer/domain/customer.model';
+import { CustomerDetailFormComponent, CustomerDetailFormData } from './detail/detail.component';
+import { AddressFormComponent } from '../../common/address/address.component';
+import { Address } from '../../services/domain/address/address.model';
+import { CustomerContactFormComponent } from './contact/contact.component';
+import { ContactDetail } from '../../services/domain/contact/contact-detail.model';
+import { Value } from '../../services/catalog/domain/value.model';
+import { CustomerCustomFieldsComponent } from './customFields/custom-fields.component';
+import { Catalog } from '../../services/catalog/domain/catalog.model';
 
 @Component({
   selector: 'fims-customer-form-component',

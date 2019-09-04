@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Weekday} from '../../../services/group/domain/group.model';
+import { Weekday } from '../../../services/group/domain/group.model';
 
 interface WeekdayOption {
   type: Weekday;
@@ -24,14 +24,12 @@ interface WeekdayOption {
 }
 
 export const WeekdayOptionList: WeekdayOption[] = [
-    { type: 1, label: 'Monday'},
-    { type: 2, label: 'Tuesday'},
-    { type: 3, label: 'Wednesday'},
-    { type: 4, label: 'Thursday'},
-    { type: 5, label: 'Friday'},
-    { type: 6, label: 'Saturday'},
-    { type: 7, label: 'Sunday'},
+  { type: 1, label: 'Monday' },
+  { type: 2, label: 'Tuesday' },
+  { type: 3, label: 'Wednesday' },
+  { type: 4, label: 'Thursday' },
+  { type: 5, label: 'Friday' },
+  { type: 6, label: 'Saturday' },
+  { type: 7, label: 'Sunday' },
 
-  ];
-  
-  
+];

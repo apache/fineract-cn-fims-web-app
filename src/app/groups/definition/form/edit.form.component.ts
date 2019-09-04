@@ -16,13 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {GroupDefinition} from '../../../services/group/domain/group-definition.model';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupDefinition } from '../../../services/group/domain/group-definition.model';
 import * as fromGroups from '../../store';
-import {GroupsStore} from '../../store/index';
-import {UPDATE} from '../../store/definition/definition.actions';
-import {Observable} from 'rxjs/Observable';
+import { GroupsStore } from '../../store/index';
+import { UPDATE } from '../../store/definition/definition.actions';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   templateUrl: './edit.form.component.html'
@@ -35,11 +35,13 @@ export class EditGroupDefinitionFormComponent {
     this.groupDefinition$ = store.select(fromGroups.getSelectedGroupDefinition);
   }
 
-  onSave(groupDefinition: GroupDefinition){
-    this.store.dispatch({ type: UPDATE, payload: {
-      groupDefinition,
-      activatedRoute: this.route
-    } });
+  onSave(groupDefinition: GroupDefinition) {
+    this.store.dispatch({
+      type: UPDATE, payload: {
+        groupDefinition,
+        activatedRoute: this.route
+      }
+    });
   }
 
   onCancel() {

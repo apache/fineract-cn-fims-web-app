@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SelectAction} from '../../store/meeting/meeting.actions';
-import {GroupsStore} from '../../store/index';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SelectAction } from '../../store/meeting/meeting.actions';
+import { GroupsStore } from '../../store/index';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   templateUrl: './meeting.index.component.html'
@@ -29,7 +29,7 @@ export class MeetingIndexComponent implements OnInit, OnDestroy {
 
   private actionsSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private groupsStore: GroupsStore) {}
+  constructor(private route: ActivatedRoute, private groupsStore: GroupsStore) { }
 
   ngOnInit(): void {
     this.actionsSubscription = this.route.params

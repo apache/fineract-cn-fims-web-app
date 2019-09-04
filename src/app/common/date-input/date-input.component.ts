@@ -16,8 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, Input,forwardRef} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -40,9 +40,9 @@ export class DateInputComponent implements ControlValueAccessor {
   @Input() form: FormGroup;
 
   @Input() title = '';
-   //@Input('value') _value = false;
-   onChange: any = () => { };
-   onTouched: any = () => { };
+  // @Input('value') _value = false;
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   get hasRequiredError(): boolean {
     return this.hasError('required');
@@ -64,7 +64,7 @@ export class DateInputComponent implements ControlValueAccessor {
   }
 
   set value(val) {
-    this.controlName= val;
+    this.controlName = val;
     this.onChange(val);
     this.onTouched();
   }
@@ -75,7 +75,7 @@ export class DateInputComponent implements ControlValueAccessor {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) { 
+  registerOnTouched(fn) {
     this.onTouched = fn;
   }
 

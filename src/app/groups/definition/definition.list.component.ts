@@ -16,20 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as fromGroups from '../store';
-import {Component, OnInit} from '@angular/core';
-import {GroupsStore} from '../store/index';
-import {GroupDefinition} from '../../services/group/domain/group-definition.model';
-import {Observable} from 'rxjs/Observable';
-import {LOAD_ALL} from '../store/definition/definition.actions';
-import {TableData} from '../../common/data-table/data-table.component';
-//import {defaultTypeOptions} from '../domain/type-options.model';
+import { Component, OnInit } from '@angular/core';
+import { GroupsStore } from '../store/index';
+import { GroupDefinition } from '../../services/group/domain/group-definition.model';
+import { Observable } from 'rxjs/Observable';
+import { LOAD_ALL } from '../store/definition/definition.actions';
+import { TableData } from '../../common/data-table/data-table.component';
+// import {defaultTypeOptions} from '../domain/type-options.model';
 
 @Component({
   templateUrl: './definition.list.component.html'
 })
-export class GroupDefinitionListComponent implements OnInit{
+export class GroupDefinitionListComponent implements OnInit {
 
   groupDefinitionsData$: Observable<TableData>;
   groupDefinitionsData: any
@@ -37,8 +37,8 @@ export class GroupDefinitionListComponent implements OnInit{
     { name: 'identifier', label: 'Id' },
     { name: 'minimalSize', label: 'Minimum Size' },
     { name: 'maximalSize', label: 'Maximum Size' },
-   // { name: 'predefined', label: 'Auto assign?' },
-    
+    // { name: 'predefined', label: 'Auto assign?' },
+
   ];
 
   constructor(private router: Router, private route: ActivatedRoute, private store: GroupsStore) {
@@ -48,10 +48,10 @@ export class GroupDefinitionListComponent implements OnInit{
         totalElements: groupDefinitions.length,
         totalPages: 1
       }));
-      
+
     this.fetchGroupDefinitions();
   }
-  ngOnInit(){
+  ngOnInit() {
     this.groupDefinitionsData = this.store.select(fromGroups.getAllGroupDefinitionEntities)
       .subscribe(res => console.log(res))
   }

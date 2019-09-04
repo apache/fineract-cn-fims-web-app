@@ -16,68 +16,64 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import * as fromGroups from '../../store/index';
-import {GroupsStore} from '../../store/index';
-import {Meeting} from '../../../services/group/domain/meeting.model';
-import {LOAD_ALL} from '../../store/meeting/meeting.actions';
-import {TableData} from '../../../common/data-table/data-table.component';
-import {Subscription} from 'rxjs/Subscription';
-import {Group} from '../../../services/group/domain/group.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import { GroupsStore } from '../../store/index';
+import { Meeting } from '../../../services/group/domain/meeting.model';
+import { LOAD_ALL } from '../../store/meeting/meeting.actions';
+import { TableData } from '../../../common/data-table/data-table.component';
+import { Subscription } from 'rxjs/Subscription';
+import { Group } from '../../../services/group/domain/group.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-    templateUrl: './meeting.component.html'
-  })
-  export class MeetingComponent implements OnInit {
-  
-    meetingData$:Observable<TableData>;
-    meetingData:any
-    group: Group;
-    private groupSubscription: Subscription;
-    private meetingSubscription: Subscription;
-   
+  templateUrl: './meeting.component.html'
+})
+export class MeetingComponent implements OnInit {
 
-    columns: any[] = [
-        { name: 'meetingSequence', label: 'Meeting Sequence' },
-        { name: 'currentCycle', label: 'Current Cycle' },
-        {name: 'scheduledFor', label:'scheduledFor'},
-    ]
-  
-    constructor(private store: GroupsStore,private router: Router, private route: ActivatedRoute) {
-      this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
+  meetingData$: Observable<TableData>;
+  meetingData: any
+  group: Group;
+  private groupSubscription: Subscription;
+  private meetingSubscription: Subscription;
+
+
+  columns: any[] = [
+    { name: 'meetingSequence', label: 'Meeting Sequence' },
+    { name: 'currentCycle', label: 'Current Cycle' },
+    { name: 'scheduledFor', label: 'scheduledFor' },
+  ]
+
+  constructor(private store: GroupsStore, private router: Router, private route: ActivatedRoute) {
+    this.groupSubscription = this.store.select(fromGroups.getSelectedGroup)
       .subscribe(group => {
-        this.store.dispatch({ type: LOAD_ALL, payload: group.identifier});
-        //this.fetchMeetings(group.identifier);
+        this.store.dispatch({ type: LOAD_ALL, payload: group.identifier });
       });
-      
-      this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities)
+
+    this.meetingData$ = this.store.select(fromGroups.getAllMeetingEntities)
       .map(meeting => ({
         data: meeting,
         totalElements: meeting.length,
         totalPages: 1
       }));
-     // this.fetchMeetings(this.group.identifier);
-    }
+  }
 
-    ngOnInit(){
-      this.meetingData = this.store.select(fromGroups.getAllMeetingEntities)
+  ngOnInit() {
+    this.meetingData = this.store.select(fromGroups.getAllMeetingEntities)
       .subscribe(res => console.log(res))
-      
-    }
-     
+  }
 
   fetchMeetings(identifier: string): void {
     this.store.dispatch({
       type: LOAD_ALL,
-      payload:this.group.identifier
+      payload: this.group.identifier
     });
   }
 
   rowSelect(meeting: Meeting): void {
     this.router.navigate(['detail', meeting.meetingSequence], { relativeTo: this.route });
   }
-    
+
 }
