@@ -21,7 +21,7 @@
     }
   },
   "/api/accounting": {
-    "target": "http://ledger-ms:2025",
+    "target": "http://accounting-ms:2025",
     "secure": false,
     "pathRewrite": {
       "^/api/accounting": "/accounting"
