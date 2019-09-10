@@ -21,23 +21,8 @@
 
 ## Running from Docker container
 
-### If you want to run other services from localhost
-
-Then you need to add the following to hosts file.
-```
-127.0.0.1 provisioner-ms
-127.0.0.1 identity-ms
-127.0.0.1 office-ms
-127.0.0.1 customer-ms
-127.0.0.1 accounting-ms
-127.0.0.1 portfolio-ms
-127.0.0.1 deposit-account-management-ms
-127.0.0.1 teller-ms
-127.0.0.1 reporting-ms
-127.0.0.1 cheques-ms
-127.0.0.1 payroll-ms
-127.0.0.1 group-ms
-```
+See [https://github.com/apache/fineract-cn-docker-compose](https://github.com/apache/fineract-cn-docker-compose)
+for running all the Fineract-CN services from Docker.
 
 ## Versioning
 The version numbers follow the [Semantic Versioning](http://semver.org/) scheme.
