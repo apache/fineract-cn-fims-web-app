@@ -1,80 +1,86 @@
 {
   "/identity": {
-    "target": "http://identity-ms:2021",
+    "target": "http://localhost:2021",
     "secure": false,
     "pathRewrite": {
       "/identity": "/identity"
     }
   },
   "/api/office": {
-    "target": "http://office-ms:2023",
+    "target": "http://localhost:2023",
     "secure": false,
     "pathRewrite": {
       "^/api/office": "/office"
     }
   },
   "/api/customer": {
-    "target": "http://customer-ms:2024",
+    "target": "http://localhost:2024",
     "secure": false,
     "pathRewrite": {
       "^/api/customer": "/customer"
     }
   },
   "/api/accounting": {
-    "target": "http://accounting-ms:2025",
+    "target": "http://localhost:2025",
     "secure": false,
     "pathRewrite": {
       "^/api/accounting": "/accounting"
     }
   },
   "/api/portfolio": {
-    "target": "http://portfolio-ms:2026",
+    "target": "http://localhost:2026",
     "secure": false,
     "pathRewrite": {
       "^/api/portfolio": "/portfolio"
     }
   },
   "/api/deposit": {
-    "target": "http://deposit-account-management-ms:2027",
+    "target": "http://localhost:2027",
     "secure": false,
     "pathRewrite": {
       "^/api/deposit": "/deposit"
     }
   },
   "/api/teller": {
-    "target": "http://teller-ms:2028",
+    "target": "http://localhost:2028",
     "secure": false,
     "pathRewrite": {
       "^/api/teller": "/teller"
     }
   },
   "/api/reporting": {
-    "target": "http://reporting-ms:2029",
+    "target": "http://localhost:2029",
     "secure": false,
     "pathRewrite": {
       "^/api/reporting": "/reporting"
     }
   },
   "/api/cheques": {
-    "target": "http://cheques-ms:2030",
+    "target": "http://localhost:2030",
     "secure": false,
     "pathRewrite": {
       "^/api/cheques": "/cheques"
     }
   },
   "/api/payroll": {
-    "target": "http://payroll-ms:2031",
+    "target": "http://localhost:2031",
     "secure": false,
     "pathRewrite": {
       "^/api/payroll": "/payroll"
     }
   },
-
   "/api/group": {
-    "target": "http://group-ms:2032",
+    "target": "http://localhost:2032",
     "secure": false,
     "pathRewrite": {
       "^/api/group": "/group"
+    }
+  },
+  "/api/notification": {
+    "target": "http://localhost:2033",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/notification": "/notification"
     }
   }
 }
