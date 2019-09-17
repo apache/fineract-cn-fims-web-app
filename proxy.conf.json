@@ -69,12 +69,18 @@
       "^/api/payroll": "/payroll"
     }
   },
-
   "/api/group": {
     "target": "http://localhost:2032",
     "secure": false,
     "pathRewrite": {
       "^/api/group": "/group"
+    }
+  },
+  "/api/notification": {
+    "target": "http://localhost:2033",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/notification": "/notification"
     }
   }
 }

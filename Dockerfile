@@ -18,7 +18,7 @@ RUN rm -f /etc/nginx/nginx.conf
 
 COPY --from=node /usr/src/app/dist /usr/share/nginx/html
 
-COPY ./scripts/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./scripts/nginx/docker.nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8888
 

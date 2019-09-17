@@ -1,4 +1,4 @@
-# Fims QuickStart
+# Fims QuickStart  [![Build Status](https://travis-ci.com/apache/fineract-cn-fims-web-app.svg?branch=develop)](https://travis-ci.com/apache/fineract-cn-fims-web-app) [![Docker Build](https://img.shields.io/docker/cloud/build/apache/fineract-cn-fims-web-app.svg)](https://hub.docker.com/r/apache/fineract-cn-fims-web-app/builds)
 
 ## Setup
 
@@ -19,6 +19,10 @@
 * Please follow the best practices here [Angular Testing](https://angular.io/docs/ts/latest/guide/testing.html)
 * Run karma tests `npm run test`
 
+## Running from Docker container
+
+See [https://github.com/apache/fineract-cn-docker-compose](https://github.com/apache/fineract-cn-docker-compose)
+for running all the Fineract-CN services from Docker.
 
 ## Versioning
 The version numbers follow the [Semantic Versioning](http://semver.org/) scheme.
