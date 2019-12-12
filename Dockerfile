@@ -1,5 +1,5 @@
 # Stage 1: Build fims web app
-FROM node:8.11.2-alpine as node
+FROM node:8.16.1-alpine as node
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Host Fims web app on Nginx
-FROM nginx:1.16.0
+FROM nginx:1.17.4
 
 RUN rm -f /etc/nginx/nginx.conf
 
