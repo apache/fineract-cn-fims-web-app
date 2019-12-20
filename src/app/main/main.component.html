@@ -49,7 +49,7 @@
       <mat-toolbar>
         <div layout="column">
           <span layout="row" layout-align="start center">
-            <span class="mat-subhead" matTooltip="{{ 'Tenant' | translate }}" matTooltipPosition="right">{{tenant$ | async}}</span>
+            <span class="mat-subhead" matTooltip="{{ 'Tenant' | translate }} {{tenant$ | async}}" matTooltipPosition="right">{{tenant$ | async | translate}}</span>
           </span>
         </div>
       </mat-toolbar>
