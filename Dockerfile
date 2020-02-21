@@ -20,6 +20,9 @@ COPY --from=node /usr/src/app/dist /usr/share/nginx/html
 
 COPY ./scripts/nginx/docker.nginx.conf /etc/nginx/nginx.conf
 
+# support running as arbitrary user which belogs to the root group
+RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
+
 EXPOSE 8888
 
 CMD ["nginx", "-g", "daemon off;"]
