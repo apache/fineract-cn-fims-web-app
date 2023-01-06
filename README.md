@@ -1,4 +1,4 @@
-# Fims QuickStart  [![Build Status](https://travis-ci.com/apache/fineract-cn-fims-web-app.svg?branch=develop)](https://travis-ci.com/apache/fineract-cn-fims-web-app) [![Docker Build](https://img.shields.io/docker/cloud/build/apache/fineract-cn-fims-web-app.svg)](https://hub.docker.com/r/apache/fineract-cn-fims-web-app/builds)
+# Fims QuickStart  [![Docker Build](https://img.shields.io/docker/cloud/build/apache/fineract-cn-fims-web-app.svg)](https://hub.docker.com/r/apache/fineract-cn-fims-web-app/builds)
 
 ## Setup
 
