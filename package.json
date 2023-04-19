@@ -64,7 +64,7 @@
     "zone.js": "0.8.17"
   },
   "devDependencies": {
-    "@angular/cli": "1.4.7",
+    "@angular/cli": "15.2.6",
     "@angular/compiler-cli": "4.4.5",
     "@types/hammerjs": "2.0.30",
     "@types/jasmine": "2.5.38",
@@ -86,6 +86,6 @@
     "ts-node": "3.0.6",
     "tslint": "5.2.0",
     "typescript": "2.3.4",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "webpack-bundle-analyzer": "^4.8.0"
   }
 }
